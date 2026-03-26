@@ -128,16 +128,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'min'     => 0,
 		) );
 
-		$this->add_control( 'form_theme', array(
-			'label'   => esc_html__( 'Form Theme', 'kdnaforms' ),
-			'type'    => \Elementor\Controls_Manager::SELECT,
-			'options' => array(
-				''         => esc_html__( 'Default', 'kdnaforms' ),
-				'orbital'  => esc_html__( 'Orbital', 'kdnaforms' ),
-				'gravity'  => esc_html__( 'Classic', 'kdnaforms' ),
-			),
-			'default' => '',
-		) );
+		// Theme selector removed - forms are styled via Elementor widget controls.
 
 		$this->add_control( 'custom_class', array(
 			'label'       => esc_html__( 'Custom CSS Class', 'kdnaforms' ),
@@ -1362,7 +1353,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 4 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gfield' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gform_body .gfield' => 'margin-bottom: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .gform_wrapper .gform_fields' => 'row-gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .gform_wrapper' => '--gf-field-gap-y: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -1375,8 +1368,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 4 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gform_fields' => 'column-gap: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gform_body .gform_fields' => 'column-gap: {{SIZE}}{{UNIT}} !important;',
 				'{{WRAPPER}} .gform_body .gfield--width-half' => 'padding-right: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gform_wrapper' => '--gf-field-gap-x: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -1418,8 +1412,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$show_description = $settings['show_description'] === 'yes';
 		$use_ajax         = $settings['use_ajax'] === 'yes';
 		$tab_index        = absint( $settings['tab_index'] );
-		$form_theme       = sanitize_text_field( $settings['form_theme'] );
-		$custom_class     = sanitize_html_class( $settings['custom_class'] );
+		$custom_class     = sanitize_html_class( $settings['custom_class'] ?? '' );
 
 		$wrapper_classes = array( 'kdna-elementor-form-wrapper' );
 		if ( ! empty( $custom_class ) ) {
@@ -1436,10 +1429,6 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'ajax'        => $use_ajax ? 'true' : 'false',
 			'tabindex'    => $tab_index,
 		);
-
-		if ( ! empty( $form_theme ) ) {
-			$shortcode_atts['theme'] = $form_theme;
-		}
 
 		$shortcode_parts = array();
 		foreach ( $shortcode_atts as $key => $value ) {

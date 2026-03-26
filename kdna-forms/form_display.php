@@ -109,7 +109,7 @@ class KDNAFormDisplay {
 
 		KDNACommon::log_debug( "KDNAFormDisplay::process_form(): Source page number: {$source_page_number}. Target page number: {$target_page}." );
 
-		$saving_for_later = rgpost( 'kdnaform_save' ) ? true : false;
+		$saving_for_later = rgpost( 'gform_save' ) ? true : false;
 
 		$is_valid = true;
 
@@ -1014,7 +1014,7 @@ class KDNAFormDisplay {
 
 		$action = wp_doing_ajax() ? remove_query_arg( 'gf_token', wp_get_referer() ) : remove_query_arg( 'gf_token' );
 
-		if ( rgpost( 'kdnaform_send_resume_link' ) == $form_id ) {
+		if ( rgpost( 'gform_send_resume_link' ) == $form_id ) {
 			$save_email_confirmation = self::handle_save_email_confirmation( $form, $ajax );
 			if ( is_wp_error( $save_email_confirmation ) ) { // Failed email validation
 				$resume_token               = rgpost( 'gform_resume_token' );
@@ -4864,9 +4864,9 @@ class KDNAFormDisplay {
 
 	public static function process_send_resume_link() {
 
-		$form_id      = rgpost( 'kdnaform_send_resume_link' );
+		$form_id      = rgpost( 'gform_send_resume_link' );
 		$form_id      = absint( $form_id );
-		$email        = rgpost( 'kdnaform_resume_email' );
+		$email        = rgpost( 'gform_resume_email' );
 		$resume_token = rgpost( 'gform_resume_token' );
 		$resume_token = sanitize_key( $resume_token );
 
@@ -5065,7 +5065,7 @@ class KDNAFormDisplay {
 	}
 
 	public static function handle_save_email_confirmation( $form, $ajax ) {
-		$resume_email = rgpost( 'kdnaform_resume_email' );
+		$resume_email = rgpost( 'gform_resume_email' );
 		if ( ! KDNACommon::is_valid_email( $resume_email ) ) {
 			KDNACommon::log_debug( 'KDNAFormDisplay::handle_save_email_confirmation(): Invalid email address: ' . $resume_email );
 
@@ -5287,7 +5287,7 @@ class KDNAFormDisplay {
 	 */
 	public static function get_submission_method( $method = '' ) {
 		if ( empty( $method ) ) {
-			$method = rgpost( 'kdnaform_submission_method' );
+			$method = rgpost( 'gform_submission_method' );
 		}
 
 		return KDNACommon::whitelist( $method, array(
@@ -5330,7 +5330,7 @@ class KDNAFormDisplay {
 		}
 
 		$args  = array();
-		$value = rgpost( 'kdnaform_ajax' );
+		$value = rgpost( 'gform_ajax' );
 		if ( empty( $value ) || ! is_string( $value ) ) {
 			return array();
 		}

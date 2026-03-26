@@ -875,7 +875,7 @@ class KDNAForms {
 			return;
 		}
 
-		if ( isset( $_POST['kdnaform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['gform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			KDNAFormDisplay::process_send_resume_link();
 		} elseif ( isset( $_POST['gform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$form_id = KDNAFormDisplay::is_submit_form_id_valid();
@@ -3034,7 +3034,7 @@ class KDNAForms {
 	 */
 	public static function maybe_prepend_hooks_js_script( $form_string ) {
 
-		$is_gf_ajax = ! empty( rgpost( 'kdnaform_ajax' ) );
+		$is_gf_ajax = ! empty( rgpost( 'gform_ajax' ) );
 		$doing_ajax = defined( 'DOING_AJAX' ) && DOING_AJAX;
 
 		if ( $doing_ajax || $is_gf_ajax ) {
