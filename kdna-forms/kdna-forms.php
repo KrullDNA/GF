@@ -302,34 +302,25 @@ class KDNAForms {
 		$container = self::get_service_container();
 
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider() );
-		// Auto-updates service provider removed - license/updates functionality removed.
-		// License service provider removed - plugin is now free.
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Config\KDNA_Config_Service_Provider() );
-        $container->add_provider( new \KDNA_Forms\KDNA_Forms\Editor_Button\KDNA_Editor_Service_Provider() );
+		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Editor_Button\KDNA_Editor_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Embed_Form\KDNA_Embed_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Merge_Tags\KDNA_Merge_Tags_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Duplicate_Submissions\KDNA_Duplicate_Submissions_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Save_Form\KDNA_Save_Form_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Template_Library\KDNA_Template_Library_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Form_Editor\KDNA_Form_Editor_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Post_Custom_Field_Select\KDNA_Post_Custom_Field_Select_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Splash_Page\KDNA_Splash_Page_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Query\Batch_Processing\KDNA_Batch_Operations_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Settings\KDNA_Settings_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Author_Select\KDNA_Author_Select_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Assets\KDNA_Asset_Service_Provider( plugin_dir_path( __FILE__ ) ) );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Honeypot\KDNA_Honeypot_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Ajax\KDNA_Ajax_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Notification\Payment_Stale_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Theme_Layers\KDNA_Theme_Layers_Provider( KDNACommon::get_base_url(), 'gf_theme_layers' ) );
+		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Theme_Layers\KDNA_Theme_Layers_Provider( KDNACommon::get_base_url(), 'kdna_theme_layers' ) );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Blocks\KDNA_Blocks_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Setup_Wizard\KDNA_Setup_Wizard_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Query\KDNA_Query_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Form_Display\GF_Form_Display_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Async\KDNA_Background_Process_Service_Provider() );
-		$container->add_provider( new \KDNA_System_Report_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Telemetry\KDNA_Telemetry_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Form_Switcher\KDNA_Form_Switcher_Service_Provider() );
 	}
 
@@ -7022,8 +7013,7 @@ class KDNAForms {
  * Exists only for backwards compatibility. Used KDNAForms instead.
  * @remove-in 3.0
  */
-class KDNAForms extends KDNAForms {
-}
+// Legacy alias removed - KDNAForms is the canonical class.
 
 /**
  * Main KDNA Forms function call.
