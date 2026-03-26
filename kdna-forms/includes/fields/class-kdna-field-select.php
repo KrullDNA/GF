@@ -1,0 +1,250 @@
+<?php
+
+if ( ! class_exists( 'KDNAForms' ) ) {
+	die();
+}
+
+
+class KDNA_Field_Select extends KDNA_Field {
+
+	public $type = 'select';
+
+	/**
+	 * Indicates if this field supports state validation.
+	 *
+	 * @since 2.5.11
+	 *
+	 * @var bool
+	 */
+	protected $_supports_state_validation = true;
+
+	public function get_form_editor_field_title() {
+		return esc_attr__( 'Drop Down', 'kdnaforms' );
+	}
+
+	/**
+	 * Returns the field's form editor description.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public function get_form_editor_field_description() {
+		return esc_attr__( 'Allows users to select one option from a list.', 'kdnaforms' );
+	}
+
+	/**
+	 * Returns the field's form editor icon.
+	 *
+	 * This could be an icon url or a kdnaform-icon class.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public function get_form_editor_field_icon() {
+		return 'kdnaform-icon--dropdown';
+	}
+
+
+	function get_form_editor_field_settings() {
+		return array(
+			'conditional_logic_field_setting',
+			'prepopulate_field_setting',
+			'error_message_setting',
+			'enable_enhanced_ui_setting',
+			'label_setting',
+			'label_placement_setting',
+			'admin_label_setting',
+			'size_setting',
+			'choices_setting',
+			'rules_setting',
+			'placeholder_setting',
+			'default_value_setting',
+			'visibility_setting',
+			'duplicate_setting',
+			'description_setting',
+			'css_class_setting',
+			'autocomplete_setting',
+		);
+	}
+
+	public function is_conditional_logic_supported() {
+		return true;
+	}
+
+	public function get_field_input( $form, $value = '', $entry = null ) {
+		$form_id         = absint( $form['id'] );
+		$is_entry_detail = $this->is_entry_detail();
+		$is_form_editor  = $this->is_form_editor();
+
+		$id       = $this->id;
+		$field_id = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
+
+		$size                   = $this->size;
+		$class_suffix           = $is_entry_detail ? '_admin' : '';
+		$class                  = $size . $class_suffix;
+		$css_class              = trim( esc_attr( $class ) . ' kdnafield_select' );
+		$tabindex               = $this->get_tabindex();
+		$disabled_text          = $is_form_editor ? 'disabled="disabled"' : '';
+		$required_attribute     = $this->isRequired ? 'aria-required="true"' : '';
+		$invalid_attribute      = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
+		$describedby_attribute = $this->get_aria_describedby();
+		$autocomplete_attribute = $this->enableAutocomplete ? $this->get_field_autocomplete_attribute() : '';
+
+		return sprintf( "<div class='kdnainput_container kdnainput_container_select'><select name='input_%d' id='%s' class='%s' $tabindex $describedby_attribute %s %s %s %s>%s</select></div>", $id, $field_id, $css_class, $disabled_text, $required_attribute, $invalid_attribute, $autocomplete_attribute, $this->get_choices( $value ) );
+
+	}
+
+	public function get_choices( $value ) {
+		return KDNACommon::get_select_choices( $this, $value );
+	}
+
+	public function get_value_entry_list( $value, $entry, $field_id, $columns, $form ) {
+		return esc_html( $this->get_selected_choice_output( $value, rgar( $entry, 'currency' ) ) );
+	}
+
+
+	/**
+	 * Gets merge tag values.
+	 *
+	 * @since  Unknown
+	 * @access public
+	 *
+	 * @uses KDNACommon::to_money()
+	 * @uses KDNACommon::format_post_category()
+	 * @uses KDNAFormsModel::is_field_hidden()
+	 * @uses KDNAFormsModel::get_choice_text()
+	 * @uses KDNACommon::format_variable_value()
+	 * @uses KDNACommon::implode_non_blank()
+	 *
+	 * @param array|string $value      The value of the input.
+	 * @param string       $input_id   The input ID to use.
+	 * @param array        $entry      The Entry Object.
+	 * @param array        $form       The Form Object
+	 * @param string       $modifier   The modifier passed.
+	 * @param array|string $raw_value  The raw value of the input.
+	 * @param bool         $url_encode If the result should be URL encoded.
+	 * @param bool         $esc_html   If the HTML should be escaped.
+	 * @param string       $format     The format that the value should be.
+	 * @param bool         $nl2br      If the nl2br function should be used.
+	 *
+	 * @return string The processed merge tag.
+	 */
+	public function get_value_merge_tag( $value, $input_id, $entry, $form, $modifier, $raw_value, $url_encode, $esc_html, $format, $nl2br ) {
+		$modifiers       = $this->get_modifiers();
+		$use_value       = in_array( 'value', $modifiers );
+		$format_currency = ! $use_value && in_array( 'currency', $modifiers );
+		$use_price       = $format_currency || ( ! $use_value && in_array( 'price', $modifiers ) );
+
+		if ( is_array( $raw_value ) && (string) intval( $input_id ) != $input_id ) {
+			$items = array( $input_id => $value ); // Float input Ids. (i.e. 4.1 ). Used when targeting specific checkbox items.
+		} elseif ( is_array( $raw_value ) ) {
+			$items = $raw_value;
+		} else {
+			$items = array( $input_id => $raw_value );
+		}
+
+		$ary = array();
+
+		foreach ( $items as $input_id => $item ) {
+			if ( $use_value ) {
+				list( $val, $price ) = rgexplode( '|', $item, 2, true );
+			} elseif ( $use_price ) {
+				list( $name, $val ) = rgexplode( '|', $item, 2, true );
+				if ( $format_currency ) {
+					$val = KDNACommon::to_money( $val, rgar( $entry, 'currency' ) );
+				}
+			} elseif ( $this->type == 'post_category' ) {
+				$use_id     = strtolower( $modifier ) == 'id';
+				$item_value = KDNACommon::format_post_category( $item, $use_id );
+
+				$val = KDNAFormsModel::is_field_hidden( $form, $this, array(), $entry ) ? '' : $item_value;
+			} else {
+				$val = KDNAFormsModel::is_field_hidden( $form, $this, array(), $entry ) ? '' : KDNAFormsModel::get_choice_text( $this, $raw_value, $input_id );
+			}
+
+			$ary[] = KDNACommon::format_variable_value( $val, $url_encode, $esc_html, $format );
+		}
+
+		return KDNACommon::implode_non_blank( ', ', $ary );
+	}
+
+	/**
+	 * Format the entry value for display on the entry detail page and for the {all_fields} merge tag.
+	 *
+	 * @since 1.9
+	 * @since 2.9.29 Changed the second parameter $currency (string) to $entry (array).
+	 *
+	 * @param string|array $value    The field value.
+	 * @param array        $entry    The entry.
+	 * @param bool|false   $use_text When processing choice based fields should the choice text be returned instead of the value.
+	 * @param string       $format   The format requested for the location the merge is being used. Possible values: html, text or url.
+	 * @param string       $media    The location where the value will be displayed. Possible values: screen or email.
+	 *
+	 * @return string
+	 */
+	public function get_value_entry_detail( $value, $entry = array(), $use_text = false, $format = 'html', $media = 'screen' ) {
+		return esc_html( $this->get_selected_choice_output( $value, rgar( $entry, 'currency' ), $use_text ) );
+	}
+
+	public function get_value_export( $entry, $input_id = '', $use_text = false, $is_csv = false ) {
+		if ( empty( $input_id ) ) {
+			$input_id = $this->id;
+		}
+
+		$value = rgar( $entry, $input_id );
+
+		return $is_csv ? $value : KDNACommon::selection_display( $value, $this, rgar( $entry, 'currency' ), $use_text );
+	}
+
+	/**
+	 * Strips all tags from the input value.
+	 *
+	 * @since 1.9
+	 * @since 2.9.18 Added check for state validation.
+	 *
+	 * @param string $value The field value to be processed.
+	 * @param int $form_id The ID of the form currently being processed.
+	 *
+	 * @return string
+	 */
+	public function sanitize_entry_value( $value, $form_id ) {
+		if ( $this->is_state_validation_supported() ) {
+			return parent::sanitize_entry_value( $value, $form_id );
+		}
+
+		return wp_strip_all_tags( $value );
+	}
+
+	/**
+	 * Forces settings into expected values while saving the form object.
+	 *
+	 * @since 2.9.16
+	 * @access public
+	 *
+	 * @return void
+	 */
+	public function sanitize_settings() {
+		parent::sanitize_settings();
+		$this->enableEnhancedUI = (bool) $this->enableEnhancedUI;
+	}
+
+	// # FIELD FILTER UI HELPERS ---------------------------------------------------------------------------------------
+
+	/**
+	 * Returns the filter operators for the current field.
+	 *
+	 * @since 2.4
+	 *
+	 * @return array
+	 */
+	public function get_filter_operators() {
+		$operators = $this->type == 'product' ? array( 'is' ) : array( 'is', 'isnot', '>', '<' );
+
+		return $operators;
+	}
+
+}
+
+KDNA_Fields::register( new KDNA_Field_Select() );
