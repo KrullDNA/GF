@@ -65,6 +65,32 @@ class KDNAFormDetail {
 			<?php KDNACommon::gf_vars(); ?>
 		</script>
 
+		<!-- KDNA Debug Script -->
+		<script type="text/javascript">
+			console.log('[KDNA Debug] ============ FORM EDITOR DEBUG ============');
+			console.log('[KDNA Debug] gf_vars defined:', typeof gf_vars !== 'undefined');
+			console.log('[KDNA Debug] gf_global defined:', typeof gf_global !== 'undefined');
+			console.log('[KDNA Debug] gform defined:', typeof gform !== 'undefined');
+			console.log('[KDNA Debug] jQuery defined:', typeof jQuery !== 'undefined');
+			console.log('[KDNA Debug] jQuery.ui defined:', typeof jQuery !== 'undefined' && typeof jQuery.ui !== 'undefined');
+			console.log('[KDNA Debug] jQuery.ui.draggable:', typeof jQuery !== 'undefined' && typeof jQuery.fn.draggable !== 'undefined');
+			console.log('[KDNA Debug] jQuery.ui.sortable:', typeof jQuery !== 'undefined' && typeof jQuery.fn.sortable !== 'undefined');
+			console.log('[KDNA Debug] jQuery.ui.droppable:', typeof jQuery !== 'undefined' && typeof jQuery.fn.droppable !== 'undefined');
+			console.log('[KDNA Debug] jQuery.toJSON:', typeof jQuery !== 'undefined' && typeof jQuery.toJSON !== 'undefined');
+			console.log('[KDNA Debug] gfAjaxSpinner:', typeof gfAjaxSpinner !== 'undefined');
+			console.log('[KDNA Debug] ajaxurl:', typeof ajaxurl !== 'undefined' ? ajaxurl : 'UNDEFINED');
+			console.log('[KDNA Debug] StartAddField:', typeof StartAddField !== 'undefined');
+			console.log('[KDNA Debug] InitializeForm:', typeof InitializeForm !== 'undefined');
+			if (typeof gf_vars !== 'undefined') {
+				console.log('[KDNA Debug] gf_vars.baseUrl:', gf_vars.baseUrl);
+				console.log('[KDNA Debug] gf_vars.save:', gf_vars.save);
+			}
+			// Log any JS errors
+			window.addEventListener('error', function(e) {
+				console.error('[KDNA Debug] JS Error:', e.message, 'at', e.filename + ':' + e.lineno);
+			});
+		</script>
+
 		<script type="text/javascript">
 
 			var submitted_fields = [];
