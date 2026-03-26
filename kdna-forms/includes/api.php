@@ -1,6 +1,7 @@
 <?php
 
-use KDNA_Forms\KDNA_Forms\Async;
+// Async module removed.
+// use KDNA_Forms\KDNA_Forms\Async;
 
 if ( ! class_exists( 'KDNAForms' ) ) {
 	die();
@@ -2612,26 +2613,8 @@ class KDNAAPI {
 			return $notifications_to_send;
 		}
 
-		/**
-		 * @var Async\GF_Notifications_Processor $processor
-		 */
-		$processor       = KDNAForms::get_service_container()->get( Async\KDNA_Background_Process_Service_Provider::NOTIFICATIONS );
-		$is_asynchronous = $processor->is_enabled( $notifications_to_send, $form, $entry, $event, $data );
-
-		if ( $is_asynchronous ) {
-			KDNACommon::log_debug( __METHOD__ . sprintf( '(): Adding %d notification(s) to the async processing queue for entry #%d.', count( $notifications_to_send ), $entry_id ) );
-
-			$processor->push_to_queue( array(
-				'notifications' => $notifications_to_send,
-				'form_id'       => $form_id,
-				'entry_id'      => $entry_id,
-				'event'         => $event,
-				'data'          => $data,
-			) );
-			$processor->save()->dispatch_on_shutdown();
-		} else {
-			KDNACommon::send_notifications( $notifications_to_send, $form, $entry, true, $event, $data );
-		}
+		// Async background process removed - always send notifications synchronously.
+		KDNACommon::send_notifications( $notifications_to_send, $form, $entry, true, $event, $data );
 
 		return $notifications_to_send;
 	}

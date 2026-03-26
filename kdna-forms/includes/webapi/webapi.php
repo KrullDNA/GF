@@ -2157,56 +2157,9 @@ if ( class_exists( 'KDNAForms' ) ) {
 					unset( $results['progress'] );
 				}
 			} else {
-
-				$state = get_option( $key_tmp );
-
-				if ( empty( $state ) || ( 'complete' == rgar( $data, 'status' ) && $cache_expired ) ) {
-					if ( ! class_exists( 'KDNAResults' ) ) {
-						require_once( KDNACommon::get_base_path() . '/includes/addon/class-kdna-results.php' );
-					}
-					$gf_results         = new KDNAResults( $this->get_slug(), array() );
-					$max_execution_time = 5;
-					$results            = $gf_results->get_results_data( $form, $fields, $search_criteria, $state, $max_execution_time );
-					if ( 'complete' == rgar( $data, 'status' ) ) {
-						$status = 200;
-						if ( false == empty( $state ) ) {
-							delete_option( $key_tmp );
-						}
-					} else {
-
-						if ( false === empty( $data ) && 'complete' == rgar( $data, 'status' ) && $cache_expired ) {
-							$data['status']   = 'expired';
-							$data['progress'] = $results['progress'];
-							$this->update_results_cache( $key, $data );
-						}
-
-						$this->update_results_cache( $key_tmp, $results );
-
-						$this->schedule_results_cron( $form, $fields, $search_criteria );
-
-						if ( $data ) {
-							$results = $data;
-						}
-
-						$status = 202;
-					}
-				} else {
-
-					// The cron task is recursive, not periodic, so system restarts, script timeouts and memory issues can prevent the cron from restarting.
-					// Check timestamp and kick off the cron again if it appears to have stopped
-					$state_timestamp = rgar( $state, 'timestamp' );
-					$state_age       = time() - $state_timestamp;
-					if ( $state_age > 180 && ! $this->results_cron_is_scheduled( $form, $fields, $search_criteria ) ) {
-						$this->schedule_results_cron( $form, $fields, $search_criteria );
-					}
-
-					if ( false === empty( $data ) && 'expired' == rgar( $data, 'status' ) ) {
-						$results = $data;
-					} else {
-						$results = $state;
-					}
-					$status = 202;
-				}
+				// Results module removed - return empty results.
+				$results = array( 'status' => 'complete', 'timestamp' => time(), 'entry_count' => 0 );
+				$status  = 200;
 			}
 
 			$fields = rgar( $results, 'field_data' );
@@ -2444,23 +2397,8 @@ if ( class_exists( 'KDNAForms' ) ) {
 		}
 
 		public static function ajax_qrcode() {
-			require_once KDNACommon::get_base_path() . '/includes/phpqrcode/phpqrcode.php';
-			$settings = get_option( 'kdnaformsaddon_kdnaformswebapi_settings' );
-			if ( empty( $settings ) ) {
-				die();
-			}
-
-			if ( ! KDNAAPI::current_user_can_any( 'kdnaforms_api_settings' ) ) {
-				die();
-			}
-
-			$data['url']         = site_url();
-			$data['name']        = get_bloginfo();
-			$data['public_key']  = rgar( $settings, 'public_key' );
-			$data['private_key'] = rgar( $settings, 'private_key' );
-
-			QRcode::png( json_encode( $data ), false, QR_ECLEVEL_L, 4, 1, false );
-			die();
+			// phpqrcode library removed.
+			wp_die( esc_html__( 'QR code generation is not available.', 'kdnaforms' ), 501 );
 		}
 
 		/**
