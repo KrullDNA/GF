@@ -1807,7 +1807,7 @@ class KDNAForms {
 		// Add a top-level left nav.
 		$update_icon = current_user_can( 'install_plugins' ) && KDNACommon::has_update() ? "<span title='" . esc_attr( __( 'Update Available', 'kdnaforms' ) ) . "' class='update-plugins count-1'><span class='update-count'>&#49;</span></span>" : '';
 
-		$admin_icon = self::get_admin_icon_b64( KDNAForms::is_kdna_page() ? '#fff' : '#a0a5aa' );
+		$admin_icon = 'dashicons-feedback';
 
 		$forms_hook_suffix = add_menu_page( __( 'Forms', 'kdnaforms' ), __( 'Forms', 'kdnaforms' ) . $update_icon, $has_full_access ? 'kdnaform_full_access' : $min_cap, $parent_menu['name'], $parent_menu['callback'], $admin_icon, apply_filters( 'kdnaform_menu_position', '16.9' ) );
 
@@ -2427,7 +2427,7 @@ class KDNAForms {
                  padding-left: 0.4em;
                 }
              </style>
-              <a href="#" class="button kdnaform_media_link" id="add_gform" aria-label="' . esc_attr__( 'Add Gravity Form', 'kdnaforms' ) . '"><div class="kdnaform_media_icon svg" style="background-image: url(\'' . esc_attr( self::get_admin_icon_b64( '#0071a1' ) ) . '\')"><br /></div><div style="padding-left: 20px;">' . esc_html__( 'Add Form', 'kdnaforms' ) . '</div></a>';
+              <a href="#" class="button kdnaform_media_link" id="add_gform" aria-label="' . esc_attr__( 'Add Form', 'kdnaforms' ) . '"><div class="kdnaform_media_icon"><span class="dashicons dashicons-feedback" style="vertical-align: middle; color: #0071a1;"></span></div><div style="padding-left: 20px;">' . esc_html__( 'Add Form', 'kdnaforms' ) . '</div></a>';
 	}
 
 	/**
@@ -5689,7 +5689,7 @@ class KDNAForms {
 
 		$args = array(
 			'id'    => 'kdnaform-forms',
-			'title' => '<div class="ab-item gforms-menu-icon svg" style="background-image: url(\'' . self::get_admin_icon_b64( '#888888' ) . '\');"></div><span class="ab-label">' . esc_html__( 'Forms', 'kdnaforms' ) . '</span>',
+			'title' => '<span class="ab-icon dashicons dashicons-feedback"></span><span class="ab-label">' . esc_html__( 'Forms', 'kdnaforms' ) . '</span>',
 			'href'  => admin_url( 'admin.php?page=gf_edit_forms' ),
 		);
 

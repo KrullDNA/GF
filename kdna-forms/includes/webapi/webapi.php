@@ -26,7 +26,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 	class KDNAWebAPI extends KDNAAddOn {
 		protected $_version = '1.0';
-		protected $_min_kdnaforms_version = '1.7.9999';
+		protected $_min_kdnaforms_version = '1.0.0';
 		protected $_slug = 'kdnaformswebapi';
 		protected $_path = 'kdnaformswebapi/webapi.php';
 		protected $_full_path = __FILE__;
