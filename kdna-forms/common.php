@@ -5220,7 +5220,7 @@ Content-Type: text/html;
 	public static function add_categories_as_choices( $field, $value ) {
 
 		$choices         = $inputs = array();
-		$is_post         = isset( $_POST['kdnaform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$is_post         = isset( $_POST['gform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$has_placeholder = $field->categoryInitialItemEnabled && KDNAFormsModel::get_input_type( $field ) == 'select';
 
 		if ( $has_placeholder ) {

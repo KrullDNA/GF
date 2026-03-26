@@ -877,7 +877,7 @@ class KDNAForms {
 
 		if ( isset( $_POST['kdnaform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			KDNAFormDisplay::process_send_resume_link();
-		} elseif ( isset( $_POST['kdnaform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		} elseif ( isset( $_POST['gform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$form_id = KDNAFormDisplay::is_submit_form_id_valid();
 			if ( $form_id ) {
 				KDNAFormDisplay::process_form( $form_id, KDNAFormDisplay::SUBMISSION_INITIATED_BY_WEBFORM );
@@ -2314,7 +2314,7 @@ class KDNAForms {
 	 * @param null $wp Not used.
 	 */
 	public static function ajax_parse_request( $wp ) {
-		if ( isset( $_POST['kdnaform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['gform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			die( self::get_ajax_form_response() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
@@ -2335,7 +2335,7 @@ class KDNAForms {
 		\KDNAFormDisplay::enqueue_scripts();
 
 		if ( $form_id && KDNAFormDisplay::is_submit_form_id_valid( $form_id ) ) {
-			$field_values       = rgpost( 'kdnaform_field_values' );
+			$field_values       = rgpost( 'gform_field_values' );
 			$field_values_array = array();
 			if ( is_string( $field_values ) ) {
 				parse_str( $field_values, $field_values_array );

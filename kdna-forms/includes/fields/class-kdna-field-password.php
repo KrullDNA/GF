@@ -427,7 +427,7 @@ class KDNA_Field_Password extends KDNA_Field {
 		foreach( $form['fields'] as $field ) {
 			/* @var KDNA_Field $field */
 			if ( $field->get_input_type() == 'password' ) {
-				self::$passwords[ $field->id ] = $field->get_value_submission( rgpost( 'kdnaform_field_values' ) );
+				self::$passwords[ $field->id ] = $field->get_value_submission( rgpost( 'gform_field_values' ) );
 			}
 		}
 	}

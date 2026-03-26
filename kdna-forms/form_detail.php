@@ -38,10 +38,10 @@ class KDNAFormDetail {
 			</script>
 			<?php
 			exit;
-		} elseif ( ! rgempty( 'kdnaform_meta' ) && $save_form_helper->is_ajax_save_action() === false ) {
+		} elseif ( ! rgempty( 'gform_meta' ) && $save_form_helper->is_ajax_save_action() === false ) {
 			check_admin_referer( "gforms_update_form_{$form_id}", 'gforms_update_form' );
 
-			$update_result = self::save_form_info( $form_id, rgpost( 'kdnaform_meta', false ) );
+			$update_result = self::save_form_info( $form_id, rgpost( 'gform_meta', false ) );
 
 			?>
 			<script type="text/javascript">
@@ -224,22 +224,22 @@ class KDNAFormDetail {
 			<div id="field_settings">
 				<ul>
 					<li style="width:100px; padding:0px;">
-						<a href="#kdnaform_tab_1"><?php esc_html_e( 'General', 'kdnaforms' ); ?></a>
+						<a href="#gform_tab_1"><?php esc_html_e( 'General', 'kdnaforms' ); ?></a>
 					</li>
 					<li style="width:100px; padding:0px; ">
-						<a href="#kdnaform_tab_3"><?php esc_html_e( 'Appearance', 'kdnaforms' ); ?></a>
+						<a href="#gform_tab_3"><?php esc_html_e( 'Appearance', 'kdnaforms' ); ?></a>
 					</li>
 					<li style="width:100px; padding:0px; ">
-						<a href="#kdnaform_tab_2"><?php esc_html_e( 'Advanced', 'kdnaforms' ); ?></a>
+						<a href="#gform_tab_2"><?php esc_html_e( 'Advanced', 'kdnaforms' ); ?></a>
 					</li>
 				</ul>
-				<div id="kdnaform_tab_1">
+				<div id="gform_tab_1">
 
 				</div>
-				<div id="kdnaform_tab_3">
+				<div id="gform_tab_3">
 				</div>
 
-				<div id="kdnaform_tab_2">
+				<div id="gform_tab_2">
 				</div>
 
 
@@ -380,7 +380,7 @@ class KDNAFormDetail {
 
 			<div class="kdnaform_editor gform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--orbital<?php echo esc_attr( $form_wrapper_compact_view_class . $form_wrapper_compact_view_id_class . $form_wrapper_legacy_class ); ?>">
 
-				<div id="kdnaform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
+				<div id="gform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
 					<div class="gf-pagebreak-first gf-pagebreak"><?php esc_html_e( 'Start Paging', 'kdnaforms' ) ?></div>
 				</div>
 
@@ -402,7 +402,7 @@ class KDNAFormDetail {
 					<p><?php esc_html_e( 'Simply drag and drop the fields or elements you want in this form.', 'kdnaforms' ); ?></p>
 				</div>
 
-				<div id="kdnaform_last_page_settings" data-title="<?php esc_attr_e('Last page options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage last page options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
+				<div id="gform_last_page_settings" data-title="<?php esc_attr_e('Last page options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage last page options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
 					<div class="gf-pagebreak-end gf-pagebreak"><?php esc_html_e( 'End Paging', 'kdnaforms' ) ?></div>
 				</div>
 
@@ -518,12 +518,12 @@ class KDNAFormDetail {
 
 					<!-- this field allows us to force onblur events for field setting inputs that are otherwise not triggered
 									when closing the field settings UI -->
-					<input type="text" id="kdnaform_force_focus" style="position:absolute;left:-9999em;" data-js="force-focus" />
+					<input type="text" id="gform_force_focus" style="position:absolute;left:-9999em;" data-js="force-focus" />
 
-					<form method="post" id="kdnaform_update">
+					<form method="post" id="gform_update">
 						<?php wp_nonce_field( "gforms_update_form_{$form_id}", 'gforms_update_form' ); ?>
-						<input type="hidden" id="kdnaform_meta" name="kdnaform_meta" />
-						<input type="hidden" id="kdnaform_export" name="kdnaform_export" value="false"/>
+						<input type="hidden" id="gform_meta" name="gform_meta" />
+						<input type="hidden" id="gform_export" name="gform_export" value="false"/>
 					</form>
 				</div>
 				<div class="sidebar__panel sidebar__panel--settings" id="field_settings_container" data-active-field-class="">
@@ -1512,7 +1512,7 @@ class KDNAFormDetail {
 									<?php kdnaform_tooltip( 'form_field_multiple_files' ); ?>
 								</label>
 
-								<div id="kdnaform_multiple_files_options">
+								<div id="gform_multiple_files_options">
 									<br/>
 
 									<div>
@@ -1537,7 +1537,7 @@ class KDNAFormDetail {
 								<input type="text" id="field_max_file_size" autocomplete="off" placeholder="<?php $max_upload_size = wp_max_upload_size() / 1048576;
 								echo esc_attr( $max_upload_size ); ?>MB"/>
 
-								<div id="kdnaform_server_max_file_size_notice">
+								<div id="gform_server_max_file_size_notice">
 									<small><?php printf( esc_html__( 'Maximum allowed on this server: %sMB', 'kdnaforms' ), esc_html( $max_upload_size ) ); ?></small>
 								</div>
 							</li>
@@ -1970,7 +1970,7 @@ class KDNAFormDetail {
 									<?php kdnaform_tooltip( 'form_field_mask' ); ?>
 								</label><br/>
 
-								<div id="kdnaform_input_mask">
+								<div id="gform_input_mask">
 									<fieldset>
 										<legend>
 											<?php esc_html_e( 'Mask Type', 'kdnaforms' ); ?>

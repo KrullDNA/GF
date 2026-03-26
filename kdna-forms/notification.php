@@ -753,7 +753,7 @@ Class KDNANotification {
 					<?php
 				},
 				'after_fields'   => function() use ( &$notification_id ) {
-					printf( '<input type="hidden" id="kdnaform_notification_id" name="kdnaform_notification_id" value="%s" />', esc_attr( $notification_id ) );
+					printf( '<input type="hidden" id="gform_notification_id" name="gform_notification_id" value="%s" />', esc_attr( $notification_id ) );
 				}
 			)
 		);

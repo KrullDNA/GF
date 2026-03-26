@@ -637,7 +637,7 @@ class KDNAExport {
 		</script>
 
         <div class="gform-settings__content">
-            <form method="post" id="kdnaform_export" class="kdnaform_settings_form">
+            <form method="post" id="gform_export" class="kdnaform_settings_form">
 	            <?php wp_nonce_field( 'gf_export_forms', 'gf_export_forms_nonce' ); ?>
                 <div class="gform-settings-panel gform-settings-panel--full">
                     <header class="gform-settings-panel__header"><legend class="gform-settings-panel__title"><?php esc_html_e( 'Export Forms', 'kdnaforms' )?></legend></header>
@@ -683,7 +683,7 @@ class KDNAExport {
                         </table>
 
                         <br /><br />
-						<input type="hidden" name="kdnaform_automatic_submit" id="kdnaform_automatic_submit" value="false" />
+						<input type="hidden" name="gform_automatic_submit" id="gform_automatic_submit" value="false" />
                         <input type="submit" value="<?php esc_attr_e( 'Download Export File', 'kdnaforms' ) ?>" name="export_forms" class="button large primary" />
                     </div>
                 </div>
@@ -722,8 +722,8 @@ class KDNAExport {
 					});
 
 					if ( clickSubmit ) {
-						jQuery( '#kdnaform_automatic_submit' ).val( true );
-						jQuery( '#kdnaform_export input[type="submit"]' ).click();
+						jQuery( '#gform_automatic_submit' ).val( true );
+						jQuery( '#gform_export input[type="submit"]' ).click();
 					}
 				})
 			</script>
@@ -777,7 +777,7 @@ class KDNAExport {
 					return;
 				}
 
-				var fieldList = "<li><input id='select_all' type='checkbox' onclick=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#kdnaform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \" onkeypress=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#kdnaform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \"> <label id='kdnaform_export_check_all' for='select_all'><strong><?php esc_html_e( 'Select All', 'kdnaforms' ) ?></strong></label></li>";
+				var fieldList = "<li><input id='select_all' type='checkbox' onclick=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#gform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \" onkeypress=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#gform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \"> <label id='gform_export_check_all' for='select_all'><strong><?php esc_html_e( 'Select All', 'kdnaforms' ) ?></strong></label></li>";
 				for (var i = 0; i < aryFields.length; i++) {
 					fieldList += "<li><input type='checkbox' id='export_field_" + i + "' name='export_field[]' value='" + aryFields[i][0] + "' class='kdnaform_export_field'> <label for='export_field_" + i + "'>" + aryFields[i][1] + "</label></li>";
 				}
@@ -821,7 +821,7 @@ class KDNAExport {
 						exportId = 0;
 					}
 
-					var data = $('#kdnaform_export').serialize();
+					var data = $('#gform_export').serialize();
 
 					data += '&action=gf_process_export';
 					data += '&offset=' + offset;
@@ -853,7 +853,7 @@ class KDNAExport {
 		</script>
 
         <div class="gform-settings__content">
-            <form method="post" id="kdnaform_export" class="kdnaform_settings_form" data-js="page-loader">
+            <form method="post" id="gform_export" class="kdnaform_settings_form" data-js="page-loader">
 	            <?php echo wp_nonce_field( 'rg_start_export', 'rg_start_export_nonce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field is safe ?>
                 <div class="gform-settings-panel gform-settings-panel--full">
                     <header class="gform-settings-panel__header"><legend class="gform-settings-panel__title"><?php esc_html_e( 'Export Entries', 'kdnaforms' ) ;?></legend></header>

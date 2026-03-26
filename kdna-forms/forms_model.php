@@ -4303,7 +4303,7 @@ class KDNAFormsModel {
 		$submission['field_values']     = $field_values;
 		$submission['page_number']      = $page_number;
 		$submission['files']            = $files;
-		$submission['kdnaform_unique_id']  = $form_unique_id;
+		$submission['gform_unique_id']  = $form_unique_id;
 
 		// Issue a new token if no longer valid
 		if ( ! empty( $resume_token ) ) {
@@ -5052,8 +5052,8 @@ class KDNAFormsModel {
 
 	public static function get_form_unique_id( $form_id ) {
 		$unique_id = '';
-		if ( rgpost( 'kdnaform_submit' ) == $form_id ) {
-			$posted_uid = rgpost( 'kdnaform_unique_id' );
+		if ( rgpost( 'gform_submit' ) == $form_id ) {
+			$posted_uid = rgpost( 'gform_unique_id' );
 			if ( false === empty( $posted_uid ) && ctype_alnum( $posted_uid )) {
 				$unique_id = $posted_uid;
 				self::$unique_ids[ $form_id ] = $unique_id;
@@ -7219,7 +7219,7 @@ class KDNAFormsModel {
 	 * @return false|array
 	 */
 	public static function get_current_lead( $form = array() ) {
-		$form_id = absint( rgpost( 'kdnaform_submit' ) );
+		$form_id = absint( rgpost( 'gform_submit' ) );
 
 		// If a GF submission is not in process, always return false.
 		if ( empty( $form_id ) ) {
@@ -8490,7 +8490,7 @@ class KDNAFormsModel {
 
 	/**
 	 * Sanitizes the names of the files that have been uploaded to the tmp directory and sent in
-	 * $_POST['kdnaform_uploaded_files'] and caches them in KDNAFormsModel::$uploaded_files.
+	 * $_POST['gform_uploaded_files'] and caches them in KDNAFormsModel::$uploaded_files.
 	 *
 	 * @since 2.4.3.5
 	 * @since 2.9.18 Deprecated the string-based (file/basename) input value. Added support for dynamically populated file URLs using the `url` key.
@@ -8500,7 +8500,7 @@ class KDNAFormsModel {
 	 * @return array
 	 */
 	public static function set_uploaded_files( $form_id ) {
-		$files = KDNACommon::json_decode( rgpost( 'kdnaform_uploaded_files' ) );
+		$files = KDNACommon::json_decode( rgpost( 'gform_uploaded_files' ) );
 		if ( ! is_array( $files ) ) {
 			$files = array();
 		}
