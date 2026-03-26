@@ -897,11 +897,15 @@ class KDNAForms {
 	 * @return void
 	 */
 	public static function process_exterior_pages() {
-		if ( rgempty( 'kdna_page', $_GET ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// Support both gf_page (used by original JS) and kdna_page query params
+		if ( rgempty( 'kdna_page', $_GET ) && rgempty( 'gf_page', $_GET ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
 		$page = rgget( 'kdna_page' );
+		if ( empty( $page ) ) {
+			$page = rgget( 'gf_page' );
+		}
 
 		$is_legacy_upload_page = $_SERVER['REQUEST_METHOD'] == 'POST' && $page == 'upload'; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotValidated
 
@@ -3403,6 +3407,13 @@ class KDNAForms {
 				// Our form editor scripts
 				echo '<script src="' . esc_url( $base_url . "/js/layout_editor{$min}.js?ver={$version}" ) . '"></script>' . "\n";
 				echo '<script src="' . esc_url( $base_url . "/js/form_editor{$min}.js?ver={$version}" ) . '"></script>' . "\n";
+
+				// Mark as done so WP doesn't output them again (prevents double initialization)
+				foreach ( $force_handles as $handle ) {
+					$wp_scripts->done[] = $handle;
+				}
+				$wp_scripts->done[] = 'kdnaform_layout_editor';
+				$wp_scripts->done[] = 'kdnaform_form_editor';
 			}, 999 );
 		}
 
