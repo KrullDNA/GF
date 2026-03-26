@@ -8,7 +8,7 @@ use KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Endpoints\KDNA_Save_Form_Endpoin
 
 class KDNA_Form_Editor_Form_Save_Config extends GF_Admin_Form_Save_Config {
 
-	protected $name = 'kdnaform_admin_config';
+	protected $name = 'gform_admin_config';
 
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 

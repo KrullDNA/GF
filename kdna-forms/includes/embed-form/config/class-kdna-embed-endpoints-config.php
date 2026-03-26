@@ -14,7 +14,7 @@ use KDNA_Forms\KDNA_Forms\Embed_Form\Endpoints\KDNA_Embed_Endpoint_Get_Posts;
 class KDNA_Embed_Endpoints_Config extends KDNA_Config {
 
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
-	protected $name               = 'kdnaform_admin_config';
+	protected $name               = 'gform_admin_config';
 	protected $overwrite          = false;
 
 	/**

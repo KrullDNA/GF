@@ -17,7 +17,7 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 *
 	 * @var string
 	 */
-	protected $name = 'kdnaform_admin_config';
+	protected $name = 'gform_admin_config';
 
 	/**
 	 * The ID of the script to localize the data to.

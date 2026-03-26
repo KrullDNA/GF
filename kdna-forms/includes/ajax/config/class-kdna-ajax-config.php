@@ -12,7 +12,7 @@ use KDNAForms;
  */
 class KDNA_Ajax_Config extends KDNA_Config {
 
-	protected $name               = 'kdnaform_theme_config';
+	protected $name               = 'gform_theme_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_theme';
 
 	/**

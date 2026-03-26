@@ -11,7 +11,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
  */
 class GF_Pagination_Config extends KDNA_Config {
 
-	protected $name               = 'kdnaform_theme_config';
+	protected $name               = 'gform_theme_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_theme';
 
 	/**

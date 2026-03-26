@@ -1758,8 +1758,8 @@ class KDNAFormDetail {
 										</div>
 
 										<script type="text/javascript">
-											var kdnaform_selected_custom_choice = '';
-											var kdnaform_custom_choices = <?php echo KDNACommon::json_encode( $custom_choices ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
+											var gform_selected_custom_choice = '';
+											var gform_custom_choices = <?php echo KDNACommon::json_encode( $custom_choices ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
 											var kdnaform_predefined_choices = <?php echo KDNACommon::json_encode( $predefined_choices ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
 										</script>
 
