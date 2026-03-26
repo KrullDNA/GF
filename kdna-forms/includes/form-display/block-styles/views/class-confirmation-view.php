@@ -1,0 +1,58 @@
+<?php
+
+namespace KDNA_Forms\KDNA_Forms\Form_Display\Block_Styles\Views;
+
+use KDNA_Forms\KDNA_Forms\Settings\Fields\Text;
+use KDNA_Forms\KDNA_Forms\Theme_Layers\API\View;
+use \KDNAFormDisplay;
+
+class Confirmation_View extends Form_View {
+
+	protected $string_search = "class='kdnaform_confirmation_wrapper";
+	protected $retain_original = true;
+
+	public function get_markup( $content, $form, $value, $lead_id, $form_id ) {
+		$content = $this->add_wrapper_class( $content, $form );
+		$content = $this->add_form_theme_data_attr( $content, $form );
+		return $content;
+	}
+
+	protected function add_wrapper_class( $content, $form ) {
+		$theme_slug = KDNAFormDisplay::get_form_theme_slug( $form );
+		$classes    = '';
+
+		switch ( $theme_slug ) {
+			case 'orbital':
+				$classes = 'kdnaform_confirmation_wrapper kdnaform_wrapper kdnaform-theme kdnaform-theme--foundation kdnaform-theme--framework kdnaform-theme--' . $theme_slug;
+				break;
+			case 'gravity-theme':
+			default:
+				$classes = 'kdnaform_confirmation_wrapper gravity-theme kdnaform-theme--no-framework';
+				break;
+			case 'legacy':
+				$classes = 'kdnaform_confirmation_wrapper kdnaform_legacy_markup_wrapper kdnaform_legacy_confirmation_markup_wrapper kdnaform-theme--no-framework';
+				break;
+		}
+		$classes = sprintf( "class='%s", $classes );
+
+		return str_replace( $this->string_search, $classes, $content );
+	}
+
+	/**
+	 * Add the form theme data attribute to the confirmation wrapper class.
+	 *
+	 * @since 2.7
+	 *
+	 * @param $content
+	 * @param $form
+	 *
+	 * @return array|string|string[]
+	 */
+	protected function add_form_theme_data_attr( $content, $form ) {
+		$theme_slug = KDNAFormDisplay::get_form_theme_slug( $form );
+		$theme_attr = sprintf( "data-form-theme='%s' class='kdnaform_confirmation_wrapper", $theme_slug );
+
+		return str_replace( $this->string_search, $theme_attr, $content );
+	}
+
+}

@@ -1,0 +1,58 @@
+<?php
+
+if ( ! class_exists( 'KDNAForms' ) ) {
+	die();
+}
+
+
+class KDNA_Field_Quantity extends KDNA_Field {
+
+	public $type = 'quantity';
+
+	function get_form_editor_field_settings() {
+		return array(
+			'product_field_setting',
+			'quantity_field_type_setting',
+			'conditional_logic_field_setting',
+			'prepopulate_field_setting',
+			'label_setting',
+			'admin_label_setting',
+			'label_placement_setting',
+			'default_value_setting',
+			'placeholder_setting',
+			'description_setting',
+			'css_class_setting',
+		);
+	}
+
+	public function get_form_editor_field_title() {
+		return esc_attr__( 'Quantity', 'kdnaforms' );
+	}
+
+	/**
+	 * Returns the field's form editor description.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public function get_form_editor_field_description() {
+		return esc_attr__( 'Allows a quantity to be specified for product field.', 'kdnaforms' );
+	}
+
+	/**
+	 * Returns the field's form editor icon.
+	 *
+	 * This could be an icon url or a kdnaform-icon class.
+	 *
+	 * @since 2.5
+	 *
+	 * @return string
+	 */
+	public function get_form_editor_field_icon() {
+		return 'kdnaform-icon--quantity';
+	}
+
+}
+
+KDNA_Fields::register( new KDNA_Field_Quantity() );

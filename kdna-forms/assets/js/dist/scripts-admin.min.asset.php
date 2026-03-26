@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('kdnaform_kdnaforms_admin_components', 'kdnaform_kdnaforms_libraries', 'kdnaform_kdnaforms_react_utils', 'kdnaform_kdnaforms_utils', 'jquery', 'wp-block-editor', 'wp-components', 'wp-data', 'wp-edit-post', 'wp-element', 'wp-i18n', 'wp-plugins', 'wp-polyfill', 'wp-server-side-render'), 'version' => '25c2329699cf7be0729c');
