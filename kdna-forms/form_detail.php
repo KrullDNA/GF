@@ -253,23 +253,20 @@ class KDNAFormDetail {
 			#form_editor_fields_container .simplebar-content-wrapper { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
-			/* Move field panel to left side, after WP admin menu */
+			/* Put field panel inside normal document flow on the left */
 			.editor-sidebar {
+				position: relative !important;
 				right: unset !important;
-				left: 160px !important;
+				left: unset !important;
+				top: unset !important;
+				float: left !important;
+				height: auto !important;
+				max-height: calc(100vh - 120px);
+				overflow-y: auto;
 			}
-			/* When WP menu is collapsed (folded) */
-			.folded .editor-sidebar {
-				left: 36px !important;
-			}
-			/* Shift canvas and toolbar to make room */
 			#form_editor_fields_container {
-				margin-left: 280px !important;
 				margin-right: 0 !important;
-			}
-			.gforms_edit_form .gform-form-toolbar {
-				margin-left: 270px !important;
-				margin-right: 0 !important;
+				overflow: visible !important;
 			}
 		</style>
 		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
