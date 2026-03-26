@@ -1643,7 +1643,7 @@ class KDNAAPI {
 	 * $input_values['input_2_3'] = 'First name';
 	 * $input_values['input_2_6'] = 'Last name';
 	 * $input_values['input_5']   = 'A paragraph of text.';
-	 * //$input_values['kdnaform_save'] = true; // support for save and continue
+	 * //$input_values['gform_save'] = true; // support for save and continue
 	 *
 	 * $result = KDNAAPI::submit_form( 52, $input_values );
 	 *

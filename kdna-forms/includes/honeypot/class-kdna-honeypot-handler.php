@@ -76,7 +76,7 @@ class KDNA_Honeypot_Handler {
 		}
 
 		$honeypot_action  = rgar( $form, 'honeypotAction', 'spam' );
-		$saving_for_later = (bool) rgpost( 'kdnaform_save' );
+		$saving_for_later = (bool) rgpost( 'gform_save' );
 
 		// Do not abort submission if honeypot action is set to create an entry and the user is not saving their progress via save & continue.
 		if ( $honeypot_action === 'spam' && ! $saving_for_later ) {
@@ -554,7 +554,7 @@ class KDNA_Honeypot_Handler {
 			return array();
 		}
 
-		$json = rgpost( 'kdnaform_submission_speeds' );
+		$json = rgpost( 'gform_submission_speeds' );
 		if ( empty( $json ) ) {
 			return array();
 		}

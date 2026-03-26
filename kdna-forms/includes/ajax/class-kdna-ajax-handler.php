@@ -99,7 +99,7 @@ class KDNA_Ajax_Handler {
 		gf_do_action( array( 'kdnaform_ajax_pre_submit_form', $form_id ), $form_id );
 
 		// Handling the save link submission.
-		if ( isset( $_POST['kdnaform_send_resume_link'] ) ) {
+		if ( isset( $_POST['gform_send_resume_link'] ) ) {
 			$this->submit_save_link();
 			return;
 		}
@@ -177,7 +177,7 @@ class KDNA_Ajax_Handler {
 	 * @return string The submission type. Possible values are SUBMISSION_TYPE_SUBMIT, SUBMISSION_TYPE_NEXT, SUBMISSION_TYPE_PREVIOUS, and SUBMISSION_TYPE_SAVE_AND_CONTINUE.
 	 */
 	public function get_submission_type( $target_page, $source_page ) {
-		if ( isset( $_POST['kdnaform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['gform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SEND_LINK;
 		} elseif ( rgpost( 'kdnaform_save') ) {
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SAVE_AND_CONTINUE;
