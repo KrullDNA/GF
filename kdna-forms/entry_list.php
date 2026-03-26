@@ -919,7 +919,10 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $entry_id ); ?>"><?php esc_html_e( 'Select entry', 'kdnaforms' ); ?></label>
 		<input type="checkbox" class="kdnaform_list_checkbox" name="entry[]" value="<?php echo esc_attr( $entry_id ); ?>" />
 		<?php
-		$this->locking_info->lock_indicator();
+		// Locking removed.
+		if ( $this->locking_info ) {
+			$this->locking_info->lock_indicator();
+		}
 	}
 
 	/**
@@ -1126,7 +1129,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 	public function single_row( $entry ) {
 		$class = 'entry_row';
 		$class .= $entry['is_read'] ? '' : ' entry_unread';
-		$class .= $this->locking_info->list_row_class( $entry['id'], false );
+		$class .= $this->locking_info ? $this->locking_info->list_row_class( $entry['id'], false ) : '';
 		$class .= $entry['is_starred'] ? ' entry_starred' : '';
 		$class .= in_array( $this->filter, array( 'trash', 'spam' ) ) ? ' entry_spam_trash' : '';
 		echo sprintf( '<tr id="entry_row_%d" class="%s" data-id="%d">', esc_attr( $entry['id'] ), esc_attr( $class ), esc_attr( $entry['id'] ) );

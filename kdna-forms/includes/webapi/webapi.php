@@ -2097,31 +2097,9 @@ if ( class_exists( 'KDNAForms' ) ) {
 			$key_tmp = 'tmp' . $key;
 			$state   = get_option( $key_tmp, array() );
 
+			// Results module removed - no-op.
 			if ( ! empty( $state ) ) {
-				if ( ! class_exists( 'KDNAResults' ) ) {
-					require_once( KDNACommon::get_base_path() . '/includes/addon/class-kdna-results.php' );
-				}
-				$gf_results = new KDNAResults( $this->get_slug(), array() );
-				$results    = $gf_results->get_results_data( $form, $fields, $search_criteria, $state );
-				if ( 'complete' == $results['status'] ) {
-					if ( isset( $results['progress'] ) ) {
-						unset( $results['progress'] );
-					}
-					$this->update_results_cache( $key, $results );
-					if ( false == empty( $state ) ) {
-						delete_option( $key_tmp );
-					}
-				} else {
-					$this->update_results_cache( $key_tmp, $results );
-
-					$data = get_option( $key );
-					if ( $data ) {
-						$data['progress'] = $results['progress'];
-						$this->update_results_cache( $key, $data );
-					}
-
-					$this->schedule_results_cron( $form, $fields, $search_criteria );
-				}
+				delete_option( $key_tmp );
 			}
 		}
 
