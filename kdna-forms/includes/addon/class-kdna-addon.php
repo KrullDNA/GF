@@ -516,13 +516,13 @@ abstract class KDNAAddOn {
 			}
 		}
 
-		// Locking
-		if ( $this->method_is_overridden( 'get_locking_config' ) ) {
-			require_once( KDNACommon::get_base_path() . '/includes/locking/class-kdna-locking.php' );
-			require_once( 'class-kdna-addon-locking.php' );
-			$config = $this->get_locking_config();
-			new KDNAAddonLocking( $config, $this );
-		}
+		// Locking removed.
+		// if ( $this->method_is_overridden( 'get_locking_config' ) ) {
+		// 	require_once( KDNACommon::get_base_path() . '/includes/locking/class-kdna-locking.php' );
+		// 	require_once( 'class-kdna-addon-locking.php' );
+		// 	$config = $this->get_locking_config();
+		// 	new KDNAAddonLocking( $config, $this );
+		// }
 
 		// No conflict scripts
 		add_filter( 'kdnaform_noconflict_scripts', array( $this, 'register_noconflict_scripts' ) );
@@ -590,17 +590,8 @@ abstract class KDNAAddOn {
 	 * @since 2.4.23
 	 */
 	private function maybe_cache_gravityapi_oauth_response() {
-		KDNAForms::include_gravity_api();
-
-		$referer     = isset( $_SERVER['HTTP_REFERER'] ) ? wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) ) : array();
-		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_parse_url( esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) ) : array();
-
-		if (
-			( rgar( $referer, 'host' ) !== rgar( wp_parse_url( GRAVITY_API_URL ), 'host' ) )
-			|| empty( $request_uri )
-		) {
-			return;
-		}
+		// OAuth caching removed - KDNA Forms is a free plugin.
+		return;
 
 		// Set up post data.
 		$data = array_filter(
@@ -634,18 +625,13 @@ abstract class KDNAAddOn {
 	 * Override this function to add AJAX hooks or to add initialization code when an AJAX request is being performed
 	 */
 	public function init_ajax() {
-		if ( rgpost( 'view' ) == 'gf_results_' . $this->get_slug() ) {
-			require_once( KDNACommon::get_base_path() . '/tooltips.php' );
-			require_once( 'class-kdna-results.php' );
-			$gf_results = new KDNAResults( $this->get_slug(), $this->get_results_page_config() );
-			add_action( 'wp_ajax_gresults_get_results_gf_results_' . $this->get_slug(), array( $gf_results, 'ajax_get_results' ) );
-			add_action( 'wp_ajax_gresults_get_more_results_gf_results_' . $this->get_slug(), array( $gf_results, 'ajax_get_more_results' ) );
-		} elseif ( $this->method_is_overridden( 'get_locking_config' ) ) {
-			require_once( KDNACommon::get_base_path() . '/includes/locking/class-kdna-locking.php' );
-			require_once( 'class-kdna-addon-locking.php' );
-			$config = $this->get_locking_config();
-			new KDNAAddonLocking( $config, $this );
-		}
+		// Results and locking removed.
+		// if ( rgpost( 'view' ) == 'gf_results_' . $this->get_slug() ) {
+		// 	require_once( 'class-kdna-results.php' );
+		// 	...
+		// } elseif ( $this->method_is_overridden( 'get_locking_config' ) ) {
+		// 	...
+		// }
 
 		if ( $this->has_plugin_settings_page() && $this->current_user_can_any( $this->_capabilities_settings_page ) ) {
 			add_filter( 'plugin_action_links', array( $this, 'plugin_settings_link' ), 10, 2 );
@@ -1108,7 +1094,7 @@ abstract class KDNAAddOn {
 				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_results{$min}.js",
 				'version'  => KDNACommon::$version,
 				'deps'     => array( 'jquery', 'sack', 'jquery-ui-resizable', 'kdnaform_datepicker_init', 'google_charts', 'kdnaform_field_filter' ),
-				'callback' => array( 'KDNAResults', 'localize_results_scripts' ),
+				'callback' => class_exists( 'KDNAResults' ) ? array( 'KDNAResults', 'localize_results_scripts' ) : null,
 				'enqueue'  => array(
 					array( 'admin_page' => array( 'results' ) ),
 				)
@@ -1688,18 +1674,10 @@ abstract class KDNAAddOn {
 	 * @param $results_page_config - configuration returned by get_results_page_config()
 	 */
 	public function results_page_init( $results_page_config ) {
-		require_once( 'class-kdna-results.php' );
-
-		if ( isset( $results_page_config['callbacks']['filters'] ) ) {
-			add_filter( 'kdnaform_filters_pre_results', $results_page_config['callbacks']['filters'], 10, 2 );
-		}
-
-		if ( isset( $results_page_config['callbacks']['filter_ui'] ) ) {
-			add_filter( 'kdnaform_filter_ui', $results_page_config['callbacks']['filter_ui'], 10, 5 );
-		}
-
-		$gf_results = new KDNAResults( $this->get_slug(), $results_page_config );
-		$gf_results->init();
+		// Results module removed.
+		// require_once( 'class-kdna-results.php' );
+		// $gf_results = new KDNAResults( $this->get_slug(), $results_page_config );
+		// $gf_results->init();
 	}
 
 	//--------------  Logging integration  --------------------------------------
@@ -5904,13 +5882,8 @@ abstract class KDNAAddOn {
 	 * @return string The markup for the lock info
 	 */
 	public function lock_info( $object_id, $echo = true ) {
-		$gf_locking = new KDNAAddonLocking( $this->get_locking_config(), $this );
-		$lock_info  = $gf_locking->lock_info( $object_id, false );
-		if ( $echo ) {
-			echo $lock_info; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
-
-		return $lock_info;
+		// Locking removed.
+		return '';
 	}
 
 	/**
@@ -5922,13 +5895,8 @@ abstract class KDNAAddOn {
 	 * @return string The markup for the class
 	 */
 	public function list_row_class( $object_id, $echo = true ) {
-		$gf_locking = new KDNAAddonLocking( $this->get_locking_config(), $this );
-		$class      = $gf_locking->list_row_class( $object_id, false );
-		if ( $echo ) {
-			echo $class; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
-
-		return $class;
+		// Locking removed.
+		return '';
 	}
 
 	/**
@@ -5939,9 +5907,8 @@ abstract class KDNAAddOn {
 	 * @return bool
 	 */
 	public function is_object_locked( $object_id ) {
-		$gf_locking = new KDNAAddonLocking( $this->get_locking_config(), $this );
-
-		return $gf_locking->is_locked( $object_id );
+		// Locking removed.
+		return false;
 	}
 
 	//------------- Field Value Retrieval -------------------------------------------------

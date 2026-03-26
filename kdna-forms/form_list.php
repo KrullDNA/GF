@@ -804,7 +804,10 @@ class KDNA_Form_List_Table extends WP_List_Table {
 		<label class="screen-reader-text" for="cb-select-<?php echo esc_attr( $form_id ); ?>"><?php esc_html_e( 'Select form' ); ?></label>
 		<input type="checkbox" class="kdnaform_list_checkbox" name="form[]" value="<?php echo esc_attr( $form_id ); ?>" />
 		<?php
-		$this->locking_info->lock_indicator();
+		// Locking removed.
+		if ( $this->locking_info ) {
+			$this->locking_info->lock_indicator();
+		}
 	}
 
 	protected function handle_row_actions( $form, $column_name, $primary ) {
@@ -838,7 +841,10 @@ class KDNA_Form_List_Table extends WP_List_Table {
 
 			} else {
 
-				$this->locking_info->lock_info( $form->id );
+				// Locking removed.
+				if ( $this->locking_info ) {
+					$this->locking_info->lock_info( $form->id );
+				}
 
 				require_once( KDNACommon::get_base_path() . '/form_settings.php' );
 
@@ -1071,7 +1077,8 @@ class KDNA_Form_List_Table extends WP_List_Table {
 	}
 
 	public function single_row( $form ) {
-		echo '<tr class="' . esc_attr( $this->locking_info->list_row_class( $form->id, false ) ) . '">';
+		$row_class = $this->locking_info ? $this->locking_info->list_row_class( $form->id, false ) : '';
+		echo '<tr class="' . esc_attr( $row_class ) . '">';
 		$this->single_row_columns( $form );
 		echo '</tr>';
 	}

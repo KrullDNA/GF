@@ -8,6 +8,10 @@
  * @package KDNAForms
  */
 
+if ( ! defined( 'GRAVITY_API_URL' ) ) {
+	define( 'GRAVITY_API_URL', '' );
+}
+
 if ( ! class_exists( 'KDNA_Api_Stub' ) ) {
 
 	/**
