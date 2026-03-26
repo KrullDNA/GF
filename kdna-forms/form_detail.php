@@ -247,6 +247,13 @@ class KDNAFormDetail {
 		</div>
 		<!-- End legacy container -->
 		<h1 class="gform-visually-hidden"><?php esc_html_e( 'Edit Form', 'kdnaforms' ); ?></h1>
+		<style>
+			/* Fix field action buttons being cut off at the top of the editor canvas */
+			#form_editor_fields_container { overflow: visible !important; }
+			#form_editor_fields_container .simplebar-content-wrapper { overflow: visible !important; }
+			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
+			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
+		</style>
 		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
 		<?php
 		$forms         = KDNAFormsModel::get_forms( null, 'title' );
