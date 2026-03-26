@@ -14,6 +14,7 @@ class KDNAFormList {
 		}
 
 		wp_print_styles( array( 'thickbox' ) );
+		wp_enqueue_script( 'thickbox' );
 
 		add_action( 'admin_print_footer_scripts', array( __class__, 'output_form_list_script_block' ), 20 );
 
@@ -291,13 +292,18 @@ class KDNAFormList {
 			} );
 
 			function loadNewFormModal() {
-				return;
 				resetNewFormModal();
-				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__logo"></div><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=gf_new_form_modal');
+				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=gf_new_form_modal');
 				jQuery('#new_form_title').focus();
 
 				return false;
 			}
+
+			// Bind Add New button to open the ThickBox modal
+			jQuery(document).on('click', '[data-js="kdnaform-add-new-form"]', function(e) {
+				e.preventDefault();
+				loadNewFormModal();
+			});
 
 			function saveNewForm() {
 
