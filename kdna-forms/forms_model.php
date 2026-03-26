@@ -105,9 +105,9 @@ class KDNAFormsModel {
 		if ( empty( $db_version[ $blog_id ] ) ) {
 			$db_version[ $blog_id ] = get_option( 'gf_db_version' );
 			// KDNA Forms: if no db version is set, assume modern tables (gf_ prefix).
-			// This prevents fallback to legacy rg_form/rg_lead tables.
+			// Must be >= 2.3-dev-1 to avoid legacy rg_form/rg_lead table fallback.
 			if ( empty( $db_version[ $blog_id ] ) ) {
-				$db_version[ $blog_id ] = KDNAForms::$version;
+				$db_version[ $blog_id ] = '2.9.30';
 			}
 		}
 
