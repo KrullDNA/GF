@@ -915,6 +915,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 	// ==========================================
 
 	private function register_style_submit_button() {
+
+		// Use a short variable for the high-specificity button selector
+		$btn = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]';
+		$btn_hover = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover';
+
 		$this->start_controls_section( 'section_style_submit', array(
 			'label' => esc_html__( 'Submit Button', 'kdnaforms' ),
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
@@ -922,7 +927,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'submit_typography',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]',
+			'selector' => $btn,
 		) );
 
 		$this->start_controls_tabs( 'submit_tabs' );
@@ -932,31 +937,30 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'submit_text_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]' => 'color: {{VALUE}};' ),
+			'selectors' => array( $btn => 'color: {{VALUE}} !important;' ),
 		) );
 
-		$this->add_group_control( \Elementor\Group_Control_Background::get_type(), array(
-			'name'     => 'submit_background',
-			'types'    => array( 'classic', 'gradient' ),
-			'exclude'  => array( 'image' ),
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]',
+		$this->add_control( 'submit_bg_color', array(
+			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array( $btn => 'background-color: {{VALUE}} !important; background-image: none !important;' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'submit_border',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]',
+			'selector' => $btn,
 		) );
 
 		$this->add_responsive_control( 'submit_border_radius', array(
 			'label'      => esc_html__( 'Border Radius', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( $btn => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'submit_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]',
+			'selector' => $btn,
 		) );
 
 		$this->end_controls_tab();
@@ -966,25 +970,24 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'submit_hover_text_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover' => 'color: {{VALUE}};' ),
+			'selectors' => array( $btn_hover => 'color: {{VALUE}} !important;' ),
 		) );
 
-		$this->add_group_control( \Elementor\Group_Control_Background::get_type(), array(
-			'name'     => 'submit_hover_background',
-			'types'    => array( 'classic', 'gradient' ),
-			'exclude'  => array( 'image' ),
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover',
+		$this->add_control( 'submit_hover_bg_color', array(
+			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array( $btn_hover => 'background-color: {{VALUE}} !important; background-image: none !important;' ),
 		) );
 
 		$this->add_control( 'submit_hover_border_color', array(
 			'label'     => esc_html__( 'Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover' => 'border-color: {{VALUE}};' ),
+			'selectors' => array( $btn_hover => 'border-color: {{VALUE}} !important;' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'submit_hover_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover',
+			'selector' => $btn_hover,
 		) );
 
 		$this->end_controls_tab();
@@ -995,7 +998,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'separator'  => 'before',
-			'selectors'  => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( $btn => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;' ),
 		) );
 
 		$this->add_control( 'submit_width', array(
@@ -1006,7 +1009,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'100%' => esc_html__( 'Full Width', 'kdnaforms' ),
 			),
 			'default'   => 'auto',
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]' => 'width: {{VALUE}};' ),
+			'selectors' => array( $btn => 'width: {{VALUE}} !important;' ),
 		) );
 
 		$this->add_responsive_control( 'submit_alignment', array(
@@ -1017,14 +1020,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'center' => array( 'title' => esc_html__( 'Center', 'kdnaforms' ), 'icon' => 'eicon-text-align-center' ),
 				'right'  => array( 'title' => esc_html__( 'Right', 'kdnaforms' ), 'icon' => 'eicon-text-align-right' ),
 			),
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer' => 'text-align: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'text-align: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'submit_transition', array(
 			'label'     => esc_html__( 'Transition Duration (ms)', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::SLIDER,
 			'range'     => array( 'px' => array( 'min' => 0, 'max' => 1000, 'step' => 50 ) ),
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]' => 'transition: all {{SIZE}}ms ease;' ),
+			'selectors' => array( $btn => 'transition: all {{SIZE}}ms ease !important;' ),
 		) );
 
 		$this->end_controls_section();
