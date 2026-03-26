@@ -991,7 +991,7 @@ class KDNAExport {
 				);
 			} else {
 				$sql = $wpdb->prepare( "SELECT d.meta_key as field_id, d.meta_value as value
-                    FROM {$wpdb->prefix}kdna_entry_meta d
+                    FROM {$wpdb->prefix}gf_entry_meta d
                     WHERE d.form_id=%d AND d.meta_key IN ({$field_ids})
                     LIMIT %d, %d",
 					$form['id'],

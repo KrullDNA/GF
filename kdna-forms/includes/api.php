@@ -2025,7 +2025,7 @@ class KDNAAPI {
 	public static function get_feeds( $feed_ids = null, $form_ids = null, $addon_slug = null, $is_active = true ) {
 		global $wpdb;
 
-		$table = $wpdb->prefix . 'kdna_addon_feed';
+		$table = $wpdb->prefix . 'gf_addon_feed';
 
 		if ( ! KDNACommon::table_exists( $table ) ) {
 			return self::get_missing_table_wp_error( $table );
@@ -2170,7 +2170,7 @@ class KDNAAPI {
 			return new WP_Error( 'submissions_blocked', __( 'Submissions are currently blocked due to an upgrade in progress', 'kdnaforms' ) );
 		}
 
-		$table = $wpdb->prefix . 'kdna_addon_feed';
+		$table = $wpdb->prefix . 'gf_addon_feed';
 
 		if ( ! KDNACommon::table_exists( $table ) ) {
 			return self::get_missing_table_wp_error( $table );
@@ -2218,7 +2218,7 @@ class KDNAAPI {
 		$feed_meta = self::encrypt_feed_meta( $feed_meta, $lookup_result[0]['addon_slug'] );
 
 		$feed_meta_json = json_encode( $feed_meta );
-		$table          = $wpdb->prefix . 'kdna_addon_feed';
+		$table          = $wpdb->prefix . 'gf_addon_feed';
 		if ( empty( $form_id ) ) {
 			$sql = $wpdb->prepare( "UPDATE {$table} SET meta= %s WHERE id=%d", $feed_meta_json, $feed_id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		} else {
@@ -2256,7 +2256,7 @@ class KDNAAPI {
 			return new WP_Error( 'submissions_blocked', __( 'Submissions are currently blocked due to an upgrade in progress', 'kdnaforms' ) );
 		}
 
-		$table = $wpdb->prefix . 'kdna_addon_feed';
+		$table = $wpdb->prefix . 'gf_addon_feed';
 
 		if ( ! KDNACommon::table_exists( $table ) ) {
 			return self::get_missing_table_wp_error( $table );

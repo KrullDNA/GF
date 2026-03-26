@@ -346,7 +346,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 	 */
 	public function get_site_key() {
 		if ( ! $this->site_key ) {
-			$this->site_key = get_option( 'kdna_forms_captcha_public_key', '' );
+			$this->site_key = get_option( 'rg_gforms_captcha_public_key', '' );
 		}
 
 		return $this->site_key;
@@ -361,7 +361,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 	 */
 	public function get_secret_key() {
 		if ( ! $this->secret_key ) {
-			$this->secret_key = get_option( 'kdna_forms_captcha_private_key', '' );
+			$this->secret_key = get_option( 'rg_gforms_captcha_private_key', '' );
 		}
 
 		return $this->secret_key;
@@ -462,7 +462,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 				$this->site_key   = $this->get_site_key();
 				$this->secret_key = $this->get_secret_key();
 				$theme      = in_array( $this->captchaTheme, array( 'blackglass', 'dark' ) ) ? 'dark' : 'light';
-				$type 		= get_option( 'kdna_forms_captcha_type' );
+				$type 		= get_option( 'rg_gforms_captcha_type' );
 				if ( $is_entry_detail || $is_form_editor ){
 
 					if ( empty( $this->site_key ) || empty( $this->secret_key ) ) {

@@ -42,7 +42,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 	private function get_forms_list() {
 		global $wpdb;
 		$forms = array( '' => esc_html__( '-- Select a Form --', 'kdnaforms' ) );
-		$table = $wpdb->prefix . 'kdna_form';
+		$table = $wpdb->prefix . 'gf_form';
 
 		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$table}'" ) === $table ) {
 			$results = $wpdb->get_results( "SELECT id, title FROM {$table} WHERE is_active = 1 AND is_trash = 0 ORDER BY title ASC" );

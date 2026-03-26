@@ -15,7 +15,7 @@ class KDNA_String_JSON_Handler extends GF_JSON_Handler {
 
 		$setting_name   = $this->get_setting_name();
 		$like_statement = sprintf( '%%"%s":"%s"%%', $setting_name, $slug );
-		$query          = "SELECT form_id FROM {$wpdb->prefix}kdna_form_meta AS meta LEFT JOIN {$wpdb->prefix}kdna_form AS form ON form.id = meta.form_id WHERE is_trash = 0 AND is_active = 1 AND display_meta LIKE %s";
+		$query          = "SELECT form_id FROM {$wpdb->prefix}gf_form_meta AS meta LEFT JOIN {$wpdb->prefix}gf_form AS form ON form.id = meta.form_id WHERE is_trash = 0 AND is_active = 1 AND display_meta LIKE %s";
 		$prepared_query = $wpdb->prepare( $query, $like_statement ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 		return $wpdb->get_var( $prepared_query ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared

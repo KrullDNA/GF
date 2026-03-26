@@ -759,7 +759,7 @@ class KDNAFormSettings {
 	public static function show_legacy_markup_setting() {
 		$show_legacy_setting = true;
 
-		if ( version_compare( get_option( 'kdna_form_original_version', '1.0' ), '2.7.14.2', '>=' ) && ! self::legacy_is_in_use() ) {
+		if ( version_compare( get_option( 'rg_form_original_version', '1.0' ), '2.7.14.2', '>=' ) && ! self::legacy_is_in_use() ) {
 			$show_legacy_setting = false;
 		}
 		// if this is a new install, and if there are no forms with legacy markup enabled, do not show the legacy markup setting

@@ -69,7 +69,7 @@ class KDNA_Upgrade {
 
 			$this->update_db_version();
 
-			update_option( 'kdna_form_version', KDNAForms::$version, false );
+			update_option( 'rg_form_version', KDNAForms::$version, false );
 
 		} elseif ( $this->requires_upgrade() && ! $this->requires_upgrade_wizard() ) {
 
@@ -98,7 +98,7 @@ class KDNA_Upgrade {
 		if ( $is_downgrading ) {
 
 			// Making sure version has really changed. Gets around aggressive caching issue on some sites that cause setup to run multiple times.
-			$versions['current_version'] = $this->get_wp_option( 'kdna_form_version' );
+			$versions['current_version'] = $this->get_wp_option( 'rg_form_version' );
 
 			$is_downgrading = version_compare( $versions['version'], $versions['current_version'], '<' );
 		}
@@ -127,7 +127,7 @@ class KDNA_Upgrade {
 			$from_db_version = empty( $versions['current_db_version'] ) ? $versions['current_version'] : $versions['current_db_version'];
 			if ( $from_db_version != $versions['previous_db_version'] ) {
 				// Updating previous DB version ( used when upgrade process is re-run )
-				update_option( 'kdna_previous_db_version', $from_db_version );
+				update_option( 'gf_previous_db_version', $from_db_version );
 				$this->flush_versions();
 			}
 		}
@@ -215,9 +215,9 @@ class KDNA_Upgrade {
 		$this->flush_versions();
 
 		// Setting Database version
-		update_option( 'kdna_db_version', KDNAForms::$version, false );
+		update_option( 'gf_db_version', KDNAForms::$version, false );
 
-		update_option( 'kdna_form_version', KDNAForms::$version, false );
+		update_option( 'rg_form_version', KDNAForms::$version, false );
 
 		// Installing schema
 		$this->upgrade_schema();
@@ -226,10 +226,10 @@ class KDNA_Upgrade {
 		update_option( 'kdnaform_enable_background_updates', true );
 
 		// Set Orbital as the default theme for all new installations.
-		update_option( 'kdna_forms_default_theme', 'orbital', false );
+		update_option( 'rg_gforms_default_theme', 'orbital', false );
 
 		// Setting the version of KDNA Forms that was installed initially
-		update_option( 'kdna_form_original_version', KDNAForms::$version, false );
+		update_option( 'rg_form_original_version', KDNAForms::$version, false );
 
 		// Auto-setting and auto-validating license key based on value configured via the KDNA_LICENSE_KEY constant or the gf_license_key variable
 		// Auto-populating reCAPTCHA keys base on constant
@@ -261,7 +261,7 @@ class KDNA_Upgrade {
 
 		$wpdb->flush();
 
-		$is_upgrading = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name='kdna_upgrade_lock'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$is_upgrading = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name='gf_upgrade_lock'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		return $is_upgrading ? true : false;
 	}
@@ -296,14 +296,14 @@ class KDNA_Upgrade {
 
 			$lock_params_serialized = serialize( $lock_params );
 
-			$sql = $wpdb->prepare( "INSERT INTO {$wpdb->options}(option_name, option_value) VALUES('kdna_upgrade_lock', %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)", $lock_params_serialized );
+			$sql = $wpdb->prepare( "INSERT INTO {$wpdb->options}(option_name, option_value) VALUES('gf_upgrade_lock', %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)", $lock_params_serialized );
 
 			// Lock upgrade
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 			KDNACommon::log_debug( __METHOD__ . '(): Upgrade Locked.' );
 		} else {
 
-			$sql = $wpdb->prepare( "UPDATE {$wpdb->options} SET option_value=%s WHERE option_name='kdna_upgrade_lock'", $lock_params_serialized );
+			$sql = $wpdb->prepare( "UPDATE {$wpdb->options} SET option_value=%s WHERE option_name='gf_upgrade_lock'", $lock_params_serialized );
 
 			// Lock upgrade
 			$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
@@ -350,7 +350,7 @@ class KDNA_Upgrade {
 		delete_option( 'kdnaform_upgrade_status' );
 
 		// Updating current KDNA Forms version.
-		update_option( 'kdna_form_version', $version );
+		update_option( 'rg_form_version', $version );
 
 		$this->flush_versions();
 
@@ -447,15 +447,15 @@ class KDNA_Upgrade {
 
 		// Tables that should have an ID column with auto increment enabled.
 		$table_names = array(
-			$wpdb->prefix . 'kdna_form',
-			$wpdb->prefix . 'kdna_form_view',
-			$wpdb->prefix . 'kdna_form_revisions',
-			$wpdb->prefix . 'kdna_entry',
-			$wpdb->prefix . 'kdna_entry_notes',
-			$wpdb->prefix . 'kdna_entry_meta',
-			$wpdb->prefix . 'kdna_addon_feed',
-			$wpdb->prefix . 'kdna_addon_payment_transaction',
-			$wpdb->prefix . 'kdna_addon_payment_callback',
+			$wpdb->prefix . 'gf_form',
+			$wpdb->prefix . 'gf_form_view',
+			$wpdb->prefix . 'gf_form_revisions',
+			$wpdb->prefix . 'gf_entry',
+			$wpdb->prefix . 'gf_entry_notes',
+			$wpdb->prefix . 'gf_entry_meta',
+			$wpdb->prefix . 'gf_addon_feed',
+			$wpdb->prefix . 'gf_addon_payment_transaction',
+			$wpdb->prefix . 'gf_addon_payment_callback',
 		);
 
 		// create a string of %s - one for each array value.
@@ -571,7 +571,7 @@ class KDNA_Upgrade {
 
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$form_table_name            = $wpdb->prefix . 'kdna_form';
+		$form_table_name            = $wpdb->prefix . 'gf_form';
 		$tables[ $form_table_name ] =
 			'CREATE TABLE ' . $form_table_name . " (
               id mediumint unsigned not null auto_increment,
@@ -583,7 +583,7 @@ class KDNA_Upgrade {
               PRIMARY KEY  (id)
             ) $charset_collate;";
 
-		$meta_table_name            = $wpdb->prefix . 'kdna_form_meta';
+		$meta_table_name            = $wpdb->prefix . 'gf_form_meta';
 		$tables[ $meta_table_name ] = 'CREATE TABLE ' . $meta_table_name . " (
               form_id mediumint unsigned not null,
               display_meta longtext,
@@ -593,7 +593,7 @@ class KDNA_Upgrade {
               PRIMARY KEY  (form_id)
             ) $charset_collate;";
 
-		$form_view_table_name            = $wpdb->prefix . 'kdna_form_view';
+		$form_view_table_name            = $wpdb->prefix . 'gf_form_view';
 		$tables[ $form_view_table_name ] =
 			'CREATE TABLE ' . $form_view_table_name . " (
               id bigint unsigned not null auto_increment,
@@ -793,8 +793,8 @@ class KDNA_Upgrade {
 		// Setting the version of KDNA Forms that was installed initially.
 		// If upgrading from a version prior to 2.7.14.2 and this option's existence,
 		// we set this to be the version you are upgrading from as that's all we can do.
-		if ( ! get_option( 'kdna_form_original_version' ) ) {
-			update_option( 'kdna_form_original_version', $versions['previous_db_version'], false );
+		if ( ! get_option( 'rg_form_original_version' ) ) {
+			update_option( 'rg_form_original_version', $versions['previous_db_version'], false );
 		}
 
 		// Background upgrader removed - always complete inline.
@@ -864,7 +864,7 @@ class KDNA_Upgrade {
 		// Migrate form headers
 
 		$legacy_forms_table = $wpdb->prefix . 'rg_form';
-		$new_forms_table = $wpdb->prefix . 'kdna_form';
+		$new_forms_table = $wpdb->prefix . 'gf_form';
 
 		$sql = "
 INSERT INTO {$new_forms_table}
@@ -882,8 +882,8 @@ WHERE lf.id NOT IN
 
 		// Migrate form meta
 
-		$legacy_form_meta_table = $wpdb->prefix . 'kdna_form_meta';
-		$new_form_meta_table = $wpdb->prefix . 'kdna_form_meta';
+		$legacy_form_meta_table = $wpdb->prefix . 'gf_form_meta';
+		$new_form_meta_table = $wpdb->prefix . 'gf_form_meta';
 
 		$sql = "
 INSERT INTO {$new_form_meta_table}
@@ -901,8 +901,8 @@ WHERE lfm.form_id NOT IN
 
 		// Migrate form view data
 
-		$legacy_form_view_table = $wpdb->prefix . 'kdna_form_view';
-		$new_form_view_table = $wpdb->prefix . 'kdna_form_view';
+		$legacy_form_view_table = $wpdb->prefix . 'gf_form_view';
+		$new_form_view_table = $wpdb->prefix . 'gf_form_view';
 
 		$sql = "
 INSERT INTO {$new_form_view_table}
@@ -1313,12 +1313,12 @@ WHERE ln.id NOT IN
 		global $kdna_recaptcha_public_key, $kdna_recaptcha_private_key;
 		$private_key = defined( 'KDNA_RECAPTCHA_PRIVATE_KEY' ) && empty( $kdna_recaptcha_private_key ) ? KDNA_RECAPTCHA_PRIVATE_KEY : $kdna_recaptcha_private_key;
 		if ( ! empty( $private_key ) ) {
-			update_option( 'kdna_forms_captcha_private_key', $private_key );
+			update_option( 'rg_gforms_captcha_private_key', $private_key );
 		}
 
 		$public_key = defined( 'KDNA_RECAPTCHA_PUBLIC_KEY' ) && empty( $kdna_recaptcha_public_key ) ? KDNA_RECAPTCHA_PUBLIC_KEY : $kdna_recaptcha_public_key;
 		if ( ! empty( $public_key ) ) {
-			update_option( 'kdna_forms_captcha_public_key', $public_key );
+			update_option( 'rg_gforms_captcha_public_key', $public_key );
 		}
 
 	}
@@ -1889,12 +1889,12 @@ HAVING count(*) > 1;" );
 			return $this->versions;
 		}
 
-		$previous_db_version = get_option( 'kdna_previous_db_version' );
+		$previous_db_version = get_option( 'gf_previous_db_version' );
 
 
 		$this->versions = array(
 			'version'             => KDNAForms::$version,
-			'current_version'     => get_option( 'kdna_form_version' ),
+			'current_version'     => get_option( 'rg_form_version' ),
 			'current_db_version'  => KDNAFormsModel::get_database_version(),
 			'previous_db_version' => empty( $previous_db_version ) ? '0' : $previous_db_version,
 		);
@@ -1907,8 +1907,8 @@ HAVING count(*) > 1;" );
 	 */
 	public function flush_versions() {
 		$this->versions = null;
-		wp_cache_delete( 'kdna_db_version' );
-		wp_cache_delete( 'kdna_form_version' );
+		wp_cache_delete( 'gf_db_version' );
+		wp_cache_delete( 'rg_form_version' );
 	}
 
 	/**
@@ -1945,7 +1945,7 @@ HAVING count(*) > 1;" );
 		if ( $upgrade_required ) {
 
 			// Making sure version has really changed. Gets around aggressive caching issue on some sites that cause setup to run multiple times.
-			$versions['current_version'] = $this->get_wp_option( 'kdna_form_version' );
+			$versions['current_version'] = $this->get_wp_option( 'rg_form_version' );
 
 			$upgrade_required = version_compare( $versions['version'], $versions['current_version'], '>' );
 		}
@@ -2009,7 +2009,7 @@ HAVING count(*) > 1;" );
 	 */
 	public function update_db_version( $version = null ) {
 		$version = is_null( $version ) ? KDNAForms::$version : $version;
-		update_option( 'kdna_db_version', $version, false );
+		update_option( 'gf_db_version', $version, false );
 	}
 
 	/**
@@ -2068,7 +2068,7 @@ HAVING count(*) > 1;" );
 	 * @return bool False if value was not updated and true if value was updated.
 	 */
 	public function clear_upgrade_lock() {
-		$result = update_option( 'kdna_upgrade_lock', false );
+		$result = update_option( 'gf_upgrade_lock', false );
 		return $result;
 	}
 
@@ -2082,7 +2082,7 @@ HAVING count(*) > 1;" );
 	public function get_upgrade_lock() {
 		global $wpdb;
 
-		$lock_params_serialized = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name='kdna_upgrade_lock'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$lock_params_serialized = $wpdb->get_var( "SELECT option_value FROM {$wpdb->options} WHERE option_name='gf_upgrade_lock'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		$lock_params = maybe_unserialize( $lock_params_serialized );
 
@@ -2143,7 +2143,7 @@ HAVING count(*) > 1;" );
 	 * @since 2.3
 	 */
 	public function add_post_upgrade_admin_notices() {
-		$previous_db_version = get_option( 'kdna_previous_db_version' );
+		$previous_db_version = get_option( 'gf_previous_db_version' );
 
 		$key = sanitize_key( 'kdnaforms_outdated_addons_2.3' );
 

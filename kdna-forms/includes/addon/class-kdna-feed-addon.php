@@ -979,7 +979,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		global $wpdb;
 
 		if ( ! $this->addon_feed_table_exists() ) {
-			$this->show_table_not_exists_error( $wpdb->prefix . 'kdna_addon_feed' );
+			$this->show_table_not_exists_error( $wpdb->prefix . 'gf_addon_feed' );
 			return array();
 		}
 
@@ -1027,7 +1027,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		global $wpdb;
 
 		if ( ! $this->addon_feed_table_exists() ) {
-			$this->show_table_not_exists_error( $wpdb->prefix . 'kdna_addon_feed' );
+			$this->show_table_not_exists_error( $wpdb->prefix . 'gf_addon_feed' );
 			return false;
 		}
 
@@ -1318,7 +1318,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		global $wpdb;
 
 		if ( ! $this->addon_feed_table_exists() ) {
-			$this->show_table_not_exists_error( $wpdb->prefix . 'kdna_addon_feed' );
+			$this->show_table_not_exists_error( $wpdb->prefix . 'gf_addon_feed' );
 			return false;
 		}
 
@@ -1460,7 +1460,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	 */
 	private function addon_feed_table_exists() {
 		global $wpdb;
-		return $this->table_exists( $wpdb->prefix . 'kdna_addon_feed' );
+		return $this->table_exists( $wpdb->prefix . 'gf_addon_feed' );
 	}
 
 	/**
@@ -1561,7 +1561,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		foreach ( $feed_order as $feed_id => $position ) {
 
 			$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-				$wpdb->prefix . 'kdna_addon_feed',
+				$wpdb->prefix . 'gf_addon_feed',
 				array( 'feed_order' => $position ),
 				array( 'id' => $feed_id ),
 				array( '%d' ),
@@ -1953,7 +1953,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		global $wpdb;
 
 		if ( ! $this->addon_feed_table_exists() ) {
-			$this->show_table_not_exists_error( $wpdb->prefix . 'kdna_addon_feed' );
+			$this->show_table_not_exists_error( $wpdb->prefix . 'gf_addon_feed' );
 			return;
 		}
 
@@ -2102,7 +2102,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	public function get_save_error_message( $sections ) {
 		if ( ! $this->addon_feed_table_exists() ) {
 			global $wpdb;
-			return $this->get_table_not_exists_error( $wpdb->prefix . 'kdna_addon_feed' );
+			return $this->get_table_not_exists_error( $wpdb->prefix . 'gf_addon_feed' );
 		}
 
 		if ( ! $this->is_detail_page() )

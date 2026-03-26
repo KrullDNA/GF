@@ -360,7 +360,7 @@ class KDNA_Honeypot_Handler {
 		// Allow password to validate on current version and previous version.
 		$allowed_hashes = array( wp_hash( \KDNAForms::$version ) );
 
-		$previous_version = get_option( 'kdna_previous_db_version' );
+		$previous_version = get_option( 'gf_previous_db_version' );
 		if ( ! empty( $previous_version ) ) {
 			$allowed_hashes[] = wp_hash( $previous_version );
 		}

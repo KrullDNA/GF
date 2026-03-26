@@ -1259,8 +1259,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		if (field.type == "captcha") {
 			<?php
-			$publickey = get_option( 'kdna_forms_captcha_public_key' );
-			$privatekey = get_option( 'kdna_forms_captcha_private_key' );
+			$publickey = get_option( 'rg_gforms_captcha_public_key' );
+			$privatekey = get_option( 'rg_gforms_captcha_private_key' );
 			$site_key = get_option( 'kdna_forms_captcha_site_key' );
 			$secret_key = get_option( 'kdna_forms_captcha_secret_key' );
 			if ( class_exists( 'ReallySimpleCaptcha' ) && ( ( empty( $publickey ) || empty( $privatekey ) ) && ( empty( $site_key ) || empty( $secret_key ) ) ) ){

@@ -188,20 +188,20 @@ class KDNASettings {
 			KDNAFormsModel::drop_tables();
 
 			// Removing options
-			delete_option( 'kdna_form_version' );
-			delete_option( 'kdna_forms_disable_css' );
-			delete_option( 'kdna_forms_enable_html5' );
-			delete_option( 'kdna_forms_captcha_public_key' );
-			delete_option( 'kdna_forms_captcha_private_key' );
-			delete_option( 'kdna_forms_captcha_type' );
+			delete_option( 'rg_form_version' );
+			delete_option( 'rg_gforms_disable_css' );
+			delete_option( 'rg_gforms_enable_html5' );
+			delete_option( 'rg_gforms_captcha_public_key' );
+			delete_option( 'rg_gforms_captcha_private_key' );
+			delete_option( 'rg_gforms_captcha_type' );
 			delete_option( 'kdna_forms_message' );
-			delete_option( 'kdna_forms_currency' );
-			delete_option( 'kdna_forms_enable_akismet' );
+			delete_option( 'rg_gforms_currency' );
+			delete_option( 'rg_gforms_enable_akismet' );
 
 			delete_option( 'kdna_dismissed_upgrades' );
-			delete_option( 'kdna_db_version' );
-			delete_option( 'kdna_previous_db_version' );
-			delete_option( 'kdna_upgrade_lock' );
+			delete_option( 'gf_db_version' );
+			delete_option( 'gf_previous_db_version' );
+			delete_option( 'gf_upgrade_lock' );
 			delete_option( 'gf_submissions_block' );
 			delete_option( 'kdna_imported_file' );
 			delete_option( 'gf_imported_theme_file' );
@@ -237,8 +237,8 @@ class KDNASettings {
 			// gf_logging()->delete_log_files();
 
 			delete_option( 'widget_kdnaform_widget' );
-			delete_option( 'kdna_forms_default_theme' );
-			delete_option( 'kdna_form_original_version' );
+			delete_option( 'rg_gforms_default_theme' );
+			delete_option( 'rg_form_original_version' );
 			delete_option( 'kdnaform_version_info' );
 
 			delete_option( 'gf_telemetry_data' );
@@ -387,14 +387,14 @@ class KDNASettings {
 	* @return bool
 	*/
     public static function is_orbital_default() {
-		$theme_option = get_option( 'kdna_forms_default_theme' );
+		$theme_option = get_option( 'rg_gforms_default_theme' );
 
 		// Fallback if the option is not set
 		if ( ! $theme_option ) {
 			$versions = kdna_upgrade()->get_versions();
 
 			// New install or upgrade from version that supports this feature
-			if ( version_compare( get_option( 'kdna_form_original_version', $versions['version'] ), '2.7.14.2', '>=' ) ) {
+			if ( version_compare( get_option( 'rg_form_original_version', $versions['version'] ), '2.7.14.2', '>=' ) ) {
 				return true;
 			}
 
@@ -437,7 +437,7 @@ class KDNASettings {
 						'enhanced_ui'   => false,
 						'after_select'  => self::currency_message_callback(),
 						'save_callback' => function( $field, $value ) {
-							update_option( 'kdna_forms_currency', $value );
+							update_option( 'rg_gforms_currency', $value );
 
 							return $value;
 						},
@@ -496,7 +496,7 @@ class KDNASettings {
 						esc_html__( '(opens in a new tab)', 'kdnaforms' )
 					),
 					'save_callback' => function( $field, $value ) {
-						update_option( 'kdna_forms_default_theme', $value );
+						update_option( 'rg_gforms_default_theme', $value );
 
 						return $value;
 					},
@@ -595,7 +595,7 @@ class KDNASettings {
 						'toggle_label'  => esc_html__( 'Enable Akismet Integration', 'kdnaforms' ),
 						'default_value' => true,
 						'save_callback' => function( $field, $value ) {
-							update_option( 'kdna_forms_enable_akismet', (bool) $value );
+							update_option( 'rg_gforms_enable_akismet', (bool) $value );
 
 							return $value;
 						},
@@ -634,7 +634,7 @@ class KDNASettings {
 		 *
 		 * @param bool $kdnaform_display_disable_css_setting Indicates if the disable CSS setting should be displayed or not.
 		 */
-		$kdnaform_display_disable_css_setting = apply_filters( 'kdnaform_display_disable_css_setting', (bool) get_option( 'kdna_forms_disable_css' ) );
+		$kdnaform_display_disable_css_setting = apply_filters( 'kdnaform_display_disable_css_setting', (bool) get_option( 'rg_gforms_disable_css' ) );
 
 		if ( $kdnaform_display_disable_css_setting ) {
 			$fields['css'] = array(
@@ -653,7 +653,7 @@ class KDNASettings {
 						'type'          => 'toggle',
 						'toggle_label'  => esc_html__( 'Disable CSS', 'kdnaforms' ),
 						'save_callback' => function( $field, $value ) {
-							update_option( 'kdna_forms_disable_css', ! (bool) $value );
+							update_option( 'rg_gforms_disable_css', ! (bool) $value );
 
 							return $value;
 						},
@@ -797,11 +797,11 @@ class KDNASettings {
 
 		$initial_values = array(
 			// 'license_key' removed - license functionality removed.
-			'default_theme'             => get_option( 'kdna_forms_default_theme', 'gravity-theme' ),
+			'default_theme'             => get_option( 'rg_gforms_default_theme', 'gravity-theme' ),
 			'currency'                  => KDNACommon::get_currency(),
-			'disable_css'               => ! (bool) get_option( 'kdna_forms_disable_css' ),
+			'disable_css'               => ! (bool) get_option( 'rg_gforms_disable_css' ),
 			'enable_noconflict'         => (bool) get_option( 'kdnaform_enable_noconflict' ),
-			'enable_akismet'            => (bool) get_option( 'kdna_forms_enable_akismet', true ),
+			'enable_akismet'            => (bool) get_option( 'rg_gforms_enable_akismet', true ),
 			'enable_background_updates' => (bool) get_option( 'kdnaform_enable_background_updates' ),
 			'enable_toolbar'            => (bool) get_option( 'kdnaform_enable_toolbar_menu' ),
 			'enable_logging'            => (bool) get_option( 'kdnaform_enable_logging' ),
@@ -992,16 +992,16 @@ class KDNASettings {
 				'input_name_prefix' => '_kdnaform_setting',
 				'capability'        => 'kdnaforms_edit_settings',
 				'initial_values'    => array(
-					'public_key'  => get_option( 'kdna_forms_captcha_public_key' ),
-					'private_key' => get_option( 'kdna_forms_captcha_private_key' ),
-					'type'        => get_option( 'kdna_forms_captcha_type' ),
+					'public_key'  => get_option( 'rg_gforms_captcha_public_key' ),
+					'private_key' => get_option( 'rg_gforms_captcha_private_key' ),
+					'type'        => get_option( 'rg_gforms_captcha_type' ),
 				),
 				'save_callback'     => function( $values ) {
 
 					// reCAPTCHA.
-					update_option( 'kdna_forms_captcha_public_key', rgar( $values, 'public_key' ) );
-					update_option( 'kdna_forms_captcha_private_key', rgar( $values, 'private_key' ) );
-					update_option( 'kdna_forms_captcha_type', rgar( $values, 'type' ) );
+					update_option( 'rg_gforms_captcha_public_key', rgar( $values, 'public_key' ) );
+					update_option( 'rg_gforms_captcha_private_key', rgar( $values, 'private_key' ) );
+					update_option( 'rg_gforms_captcha_type', rgar( $values, 'type' ) );
 
 				},
 				'after_fields'      => function() {
