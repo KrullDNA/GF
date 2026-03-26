@@ -253,7 +253,21 @@ class KDNAFormDetail {
 			#form_editor_fields_container .simplebar-content-wrapper { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
-			/* Field panel stays on the right (default position) */
+			/* Put field panel inside normal document flow on the left */
+			.editor-sidebar {
+				position: relative !important;
+				right: unset !important;
+				left: unset !important;
+				top: unset !important;
+				float: left !important;
+				height: auto !important;
+				max-height: calc(100vh - 120px);
+				overflow-y: auto;
+			}
+			#form_editor_fields_container {
+				margin-right: 0 !important;
+				overflow: visible !important;
+			}
 		</style>
 		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
 		<?php
