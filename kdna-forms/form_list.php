@@ -207,7 +207,7 @@ class KDNAFormList {
 
 	public static function save_new_form() {
 
-		if ( ! check_admin_referer( 'gf_save_new_form', 'gf_save_new_form' ) ) {
+		if ( ! check_admin_referer( 'kdna_save_new_form', 'kdna_save_new_form' ) ) {
 			die( json_encode( array( 'error' => __( 'There was an issue creating your form.', 'kdnaforms' ) ) ) );
 		}
 
@@ -237,7 +237,7 @@ class KDNAFormList {
 
 			default:
 				$form_id = absint( $result['status'] );
-				die( json_encode( array( 'redirect' => admin_url( "admin.php?page=gf_edit_forms&id={$form_id}&isnew=1" ) ) ) );
+				die( json_encode( array( 'redirect' => admin_url( "admin.php?page=kdna_edit_forms&id={$form_id}&isnew=1" ) ) ) );
 		}
 	}
 
@@ -247,7 +247,7 @@ class KDNAFormList {
 			jQuery( document ).ready( function( $ ) {
 				$( 'body' ).addClass( 'kdnaform_new_form' );
 				// load new form modal on New Form page
-				<?php if ( KDNAForms::get_page_query_arg() == 'gf_new_form' && ! rgget( 'paged' ) ) :    ?>
+				<?php if ( KDNAForms::get_page_query_arg() == 'kdna_new_form' && ! rgget( 'paged' ) ) :    ?>
 					loadNewFormModal();
 				<?php endif; ?>
 
@@ -327,8 +327,8 @@ class KDNAFormList {
 
 				jQuery.post(ajaxurl, {
 					form: jQuery.toJSON(form),
-					action: 'gf_save_new_form',
-					gf_save_new_form: <?php echo json_encode( wp_create_nonce( 'gf_save_new_form' ) ); ?>
+					action: 'kdna_save_new_form',
+					kdna_save_new_form: <?php echo json_encode( wp_create_nonce( 'kdna_save_new_form' ) ); ?>
 				}, function(response){
 
 					spinner.destroy();
@@ -568,10 +568,10 @@ class KDNA_Form_List_Table extends WP_List_Table {
 		$trash_class = ( $this->filter == 'trash' ) ? 'current' : '' ;
 
 		$views = array(
-			'all' => '<a class="' . $all_class . '" href="?page=gf_edit_forms">' . esc_html( _x( 'All', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="all_count">' . $form_count['total'] . '</span>)</span></a>',
-			'active' => '<a class="' . $active_class . '" href="?page=gf_edit_forms&filter=active">' . esc_html( _x( 'Active', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="active_count">' . $form_count['active'] . '</span>)</span></a>',
-			'inactive' => '<a class="' . $inactive_class . '" href="?page=gf_edit_forms&filter=inactive">' . esc_html( _x( 'Inactive', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="inactive_count">' . $form_count['inactive'] . '</span>)</span></a>',
-			'trash' => '<a class="' . $trash_class . '" href="?page=gf_edit_forms&filter=trash">' . esc_html( _x( 'Trash', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="trash_count">' . $form_count['trash'] . '</span>)</span></a>',
+			'all' => '<a class="' . $all_class . '" href="?page=kdna_edit_forms">' . esc_html( _x( 'All', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="all_count">' . $form_count['total'] . '</span>)</span></a>',
+			'active' => '<a class="' . $active_class . '" href="?page=kdna_edit_forms&filter=active">' . esc_html( _x( 'Active', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="active_count">' . $form_count['active'] . '</span>)</span></a>',
+			'inactive' => '<a class="' . $inactive_class . '" href="?page=kdna_edit_forms&filter=inactive">' . esc_html( _x( 'Inactive', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="inactive_count">' . $form_count['inactive'] . '</span>)</span></a>',
+			'trash' => '<a class="' . $trash_class . '" href="?page=kdna_edit_forms&filter=trash">' . esc_html( _x( 'Trash', 'Form List', 'kdnaforms' ) ) . ' <span class="count">(<span id="trash_count">' . $form_count['trash'] . '</span>)</span></a>',
 		);
   
 		return $views;
@@ -775,11 +775,11 @@ class KDNA_Form_List_Table extends WP_List_Table {
 	}
 
 	function column_title( $form ) {
-		echo '<strong><a href="?page=gf_edit_forms&id='. absint( $form->id ) .'" aria-label="' . esc_attr( $form->title ) . ' ' . esc_attr( '(Edit)', 'kdnaforms' ) . '">' . esc_html( $form->title ) . '</a></strong>';
+		echo '<strong><a href="?page=kdna_edit_forms&id='. absint( $form->id ) .'" aria-label="' . esc_attr( $form->title ) . ' ' . esc_attr( '(Edit)', 'kdnaforms' ) . '">' . esc_html( $form->title ) . '</a></strong>';
 	}
 
 	function column_id( $form ) {
-		echo '<a href="?page=gf_edit_forms&id='. absint( $form->id ) .'">' .absint( $form->id ) . '</a>';
+		echo '<a href="?page=kdna_edit_forms&id='. absint( $form->id ) .'">' .absint( $form->id ) . '</a>';
 	}
 
 	function column_view_count( $form ) {
@@ -787,7 +787,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 	}
 
 	function column_entry_count( $form ) {
-		echo '<a href="?page=gf_entries&id='. absint( $form->id ) .'">' . absint( $form->entry_count ) . '</a>';
+		echo '<a href="?page=kdna_entries&id='. absint( $form->id ) .'">' . absint( $form->entry_count ) . '</a>';
 	}
 
 	function column_conversion( $form ) {
@@ -893,7 +893,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 		} else if ( $this->filter == 'trash' ) {
 			esc_html_e( 'There are no forms in the trash.', 'kdnaforms' );
 		} else {
-			printf( esc_html__( "You don't have any forms. Let's go %screate one%s!", 'kdnaforms' ), '<a href="admin.php?page=gf_new_form">', '</a>' );
+			printf( esc_html__( "You don't have any forms. Let's go %screate one%s!", 'kdnaforms' ), '<a href="admin.php?page=kdna_new_form">', '</a>' );
 		}
 	}
 

@@ -161,7 +161,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
                     // Translators: 1. Opening <a> tag with link to the Forms > Settings > reCAPTCHA page. 2. closing <a> tag.
 				sprintf(
 					esc_html__( 'To use the reCAPTCHA field, please configure your %1$sreCAPTCHA settings.%2$s', 'kdnaforms' ),
-					'<a href="?page=gf_settings&subview=recaptcha" target="_blank">',
+					'<a href="?page=kdna_settings&subview=recaptcha" target="_blank">',
 					'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
 				)
 			),
@@ -478,7 +478,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 										<div class="kdnaform-spacing kdnaform-spacing--top-1">'. sprintf(
 									'%s %s%s.%s',
 									__( 'To use the reCAPTCHA field, please configure your', 'kdnaforms' ),
-											'<a href="?page=gf_settings&subview=recaptcha" target="_blank">',
+											'<a href="?page=kdna_settings&subview=recaptcha" target="_blank">',
 											__( 'reCAPTCHA settings', 'kdnaforms' ),
 											'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
 										) .'</div>
@@ -495,7 +495,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 				}
 
 				if ( empty( $this->site_key ) || empty( $this->secret_key ) ) {
-					KDNACommon::log_error( __METHOD__ . sprintf( '(): reCAPTCHA secret keys not saved in the reCAPTCHA Settings (%s). The reCAPTCHA field will always fail validation during form submission.', admin_url( 'admin.php' ) . '?page=gf_settings&subview=recaptcha' ) );
+					KDNACommon::log_error( __METHOD__ . sprintf( '(): reCAPTCHA secret keys not saved in the reCAPTCHA Settings (%s). The reCAPTCHA field will always fail validation during form submission.', admin_url( 'admin.php' ) . '?page=kdna_settings&subview=recaptcha' ) );
 				}
 
 				$stoken = '';
@@ -757,7 +757,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 
 		// If required cypher is not available, skip
 		if ( ! defined( 'MCRYPT_RIJNDAEL_128' ) ) {
-			KDNACommon::log_error( __METHOD__ . sprintf( '(): Legacy MCRYPT_RIJNDAEL_128 cypher not available on system. Generate new reCAPTCHA v2 keys (https://www.google.com/recaptcha/admin/create) and update your KDNA Forms reCAPTCHA Settings (%s) to resolve.', admin_url( 'admin.php' ) . '?page=gf_settings&subview=recaptcha' ) );
+			KDNACommon::log_error( __METHOD__ . sprintf( '(): Legacy MCRYPT_RIJNDAEL_128 cypher not available on system. Generate new reCAPTCHA v2 keys (https://www.google.com/recaptcha/admin/create) and update your KDNA Forms reCAPTCHA Settings (%s) to resolve.', admin_url( 'admin.php' ) . '?page=kdna_settings&subview=recaptcha' ) );
 
 			return '';
 		}

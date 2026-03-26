@@ -1219,7 +1219,7 @@ class KDNASettings {
 					foreach ( $setting_tabs as $tab ) {
 
 						// Prepare tab URL.
-						$url  = add_query_arg( array( 'subview' => $tab['name'] ), admin_url( 'admin.php?page=gf_settings' ) );
+						$url  = add_query_arg( array( 'subview' => $tab['name'] ), admin_url( 'admin.php?page=kdna_settings' ) );
 
 						// Get tab icon.
 						$icon_markup = KDNACommon::get_icon_markup( $tab, 'kdnaform-icon--cog' );

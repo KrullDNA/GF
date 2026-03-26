@@ -168,7 +168,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		parent::init_ajax();
 
 		add_action( "wp_ajax_kdna_feed_is_active_{$this->get_slug()}", array( $this, 'ajax_toggle_is_active' ) );
-		add_action( 'wp_ajax_gf_save_feed_order', array( $this, 'ajax_save_feed_order' ) );
+		add_action( 'wp_ajax_kdna_save_feed_order', array( $this, 'ajax_save_feed_order' ) );
 
 	}
 
@@ -1471,7 +1471,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	 * @param string $table The missing table name.
 	 */
 	private function get_table_not_exists_error( $table ) {
-		$status_page_url = admin_url( 'admin.php?page=gf_system_status' );
+		$status_page_url = admin_url( 'admin.php?page=kdna_system_status' );
 
 		return sprintf(
 			// translators: %1$s represents the missing table, %2$s is the opening link tag, %3$s is the closing link tag.

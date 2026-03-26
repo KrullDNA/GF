@@ -21,7 +21,7 @@ class KDNA_Post_Custom_Field_Select {
 	 * @since 2.9.20
 	 */
 	public function init() {
-		add_action( 'wp_ajax_gf_get_custom_fields', array( $this, 'ajax_custom_fields' ) );
+		add_action( 'wp_ajax_kdna_get_custom_fields', array( $this, 'ajax_custom_fields' ) );
 	}
 
 	/**

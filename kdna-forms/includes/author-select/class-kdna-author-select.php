@@ -21,7 +21,7 @@ class KDNA_Author_Select {
 	 * @since 2.9.20
 	 */
 	public function init() {
-		add_action( 'wp_ajax_gf_get_users', array( $this, 'ajax_get_users' ) );
+		add_action( 'wp_ajax_kdna_get_users', array( $this, 'ajax_get_users' ) );
 	}
 
 	/**

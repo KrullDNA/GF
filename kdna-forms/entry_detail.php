@@ -453,7 +453,7 @@ class KDNAEntryDetail {
 					wp_die( esc_html__( "You don't have adequate permission to trash entries.", 'kdnaforms' ) );
 				}
 				KDNAFormsModel::update_entry_property( $lead['id'], 'status', 'trash' );
-				$admin_url = admin_url( 'admin.php?page=gf_entries&view=entries&id=' . absint( $form['id'] ) . '&trashed_entry=' . absint( $lead['id'] ) );
+				$admin_url = admin_url( 'admin.php?page=kdna_entries&view=entries&id=' . absint( $form['id'] ) . '&trashed_entry=' . absint( $lead['id'] ) );
 				?>
 				<script type="text/javascript">
 					document.location.href = <?php echo json_encode( $admin_url ); ?>;
@@ -491,7 +491,7 @@ class KDNAEntryDetail {
 					wp_die( esc_html__( "You don't have adequate permission to delete entries.", 'kdnaforms' ) );
 				}
 				KDNAFormsModel::delete_entry( $lead['id'] );
-				$admin_url = admin_url( 'admin.php?page=gf_entries&view=entries&id=' . absint( $form['id'] ) . '&deleted=' . absint( $lead['id'] ) );
+				$admin_url = admin_url( 'admin.php?page=kdna_entries&view=entries&id=' . absint( $form['id'] ) . '&deleted=' . absint( $lead['id'] ) );
 				?>
 				<script type="text/javascript">
 					document.location.href = <?php echo json_encode( $admin_url ); ?>;
@@ -608,7 +608,7 @@ class KDNAEntryDetail {
 
 				jQuery.post(ajaxurl, {
 						action                 : "gf_resend_notifications",
-						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'gf_resend_notifications' ) ); ?>',
+						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
 						notifications          : jQuery.toJSON(selectedNotifications),
 						sendTo                 : sendTo,
 						leadIds                : '<?php echo absint( $lead['id'] ); ?>',
@@ -1499,7 +1499,7 @@ class KDNAEntryDetail {
 				?>
 				<p class="description"><?php esc_html_e( 'You cannot resend notifications for this entry because this form does not currently have any notifications configured.', 'kdnaforms' ); ?></p>
 
-				<a href="<?php echo esc_url_raw( admin_url( "admin.php?page=gf_edit_forms&view=settings&subview=notification&id={$form_id}" ) ) ?>" class="button"><?php esc_html_e( 'Configure Notifications', 'kdnaforms' ) ?></a>
+				<a href="<?php echo esc_url_raw( admin_url( "admin.php?page=kdna_edit_forms&view=settings&subview=notification&id={$form_id}" ) ) ?>" class="button"><?php esc_html_e( 'Configure Notifications', 'kdnaforms' ) ?></a>
 				<?php
 			} else {
 				foreach ( $notifications as $notification ) {

@@ -3382,7 +3382,7 @@ class KDNAFormsModel {
 	private static function get_source_id( $form ) {
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX && ! empty( $_SERVER['HTTP_REFERER'] ) ) {
 			$id = url_to_postid( $_SERVER['HTTP_REFERER'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
-		} elseif ( rgget( 'gf_page' ) === 'preview' ) {
+		} elseif ( rgget( 'kdna_page' ) === 'preview' ) {
 			return null;
 		} elseif ( is_singular() ) {
 			$id = get_the_ID();
@@ -6990,8 +6990,8 @@ class KDNAFormsModel {
 		$field_label = ( KDNAForms::get_page() ||
 		                 RG_CURRENT_PAGE == 'select_columns.php' ||
 		                 RG_CURRENT_PAGE == 'print-entry.php' ||
-		                 rgget( 'gf_page', $_GET ) == 'select_columns' || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		                 rgget( 'gf_page', $_GET ) == 'print-entry' ||  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		                 rgget( 'kdna_page', $_GET ) == 'select_columns' || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		                 rgget( 'kdna_page', $_GET ) == 'print-entry' ||  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		                 $field->get_context_property( 'use_admin_label' )
 		               ) && ! empty( $field->adminLabel ) && $allow_admin_label ? $field->adminLabel : $field->label;
 
@@ -7003,8 +7003,8 @@ class KDNAFormsModel {
 			if ( self::get_input_type( $field ) === 'consent' &&
 			     ( RG_CURRENT_PAGE == 'select_columns.php' ||
 			       RG_CURRENT_PAGE == 'print-entry.php' ||
-			       rgget( 'gf_page', $_GET ) == 'select_columns' || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			       rgget( 'gf_page', $_GET ) == 'print-entry' || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			       rgget( 'kdna_page', $_GET ) == 'select_columns' || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			       rgget( 'kdna_page', $_GET ) == 'print-entry' || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			       KDNAForms::get_page() === 'entry_list'
 			     ) ) {
 				return $field_label;

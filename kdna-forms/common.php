@@ -1320,7 +1320,7 @@ class KDNACommon {
 
 		if ( false !== strpos( $text, '{entry_url}' ) ) {
 			// Entry URL.
-			$entry_url = get_bloginfo( 'wpurl' ) . '/wp-admin/admin.php?page=gf_entries&view=entry&id=' . rgar( $form, 'id' ) . '&lid=' . rgar( $lead, 'id' );
+			$entry_url = get_bloginfo( 'wpurl' ) . '/wp-admin/admin.php?page=kdna_entries&view=entry&id=' . rgar( $form, 'id' ) . '&lid=' . rgar( $lead, 'id' );
 
 			/**
 			 * Filter the entry URL
@@ -4024,7 +4024,7 @@ Content-Type: text/html;
 		$url_info  = parse_url( KDNAFormsModel::get_current_page_url() );
 		$file_name = basename( rgar( $url_info, 'path' ) );
 
-		return $file_name == 'preview.php' || rgget( 'gf_page', $_GET ) == 'preview' || rgget( 'gf_ajax_page', $_GET ) == 'preview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return $file_name == 'preview.php' || rgget( 'kdna_page', $_GET ) == 'preview' || rgget( 'gf_ajax_page', $_GET ) == 'preview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**

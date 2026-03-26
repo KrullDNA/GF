@@ -310,7 +310,7 @@ class KDNA_Upgrade {
 			KDNACommon::log_debug( __METHOD__ . '(): Upgrade Locked.' );
 		}
 
-		$system_status_link_open  = sprintf( '<a href="%s">', admin_url( 'admin.php?page=gf_system_status' ) );
+		$system_status_link_open  = sprintf( '<a href="%s">', admin_url( 'admin.php?page=kdna_system_status' ) );
 		$system_status_link_close = '</a>';
 
 		/* translators: 1: version number 2: open link tag 3: closing link tag. */

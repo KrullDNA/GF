@@ -168,7 +168,7 @@ class Dismissable_Messages {
 				?>
 				<div class="notice below-h1 notice-<?php echo esc_attr( $class ); ?> is-dismissible gf-notice"
 				     data-gf_dismissible_key="<?php echo esc_attr( $message['key'] ) ?>"
-				     data-gf_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'gf_dismissible_nonce' ) ) ?>">
+				     data-gf_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'kdna_dismissible_nonce' ) ) ?>">
 					<p>
 						<?php echo $message['text']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</p>
@@ -183,12 +183,12 @@ class Dismissable_Messages {
 							var $div = $( this ).closest( 'div.notice' );
 							if ( $div.length > 0 ) {
 								var messageKey = $div.data( 'gf_dismissible_key' );
-								var nonce      = $div.data( 'gf_dismissible_nonce' );
+								var nonce      = $div.data( 'kdna_dismissible_nonce' );
 								if ( messageKey ) {
 									jQuery.ajax( {
 										url: ajaxurl,
 										data: {
-											action: 'gf_dismiss_message',
+											action: 'kdna_dismiss_message',
 											message_key: messageKey,
 											nonce: nonce,
 										},
@@ -246,14 +246,14 @@ class Dismissable_Messages {
 	}
 
 	/**
-	 * Target for the wp_ajax_gf_dismiss_message ajax action requested from the KDNA Forms admin pages.
+	 * Target for the wp_ajax_kdna_dismiss_message ajax action requested from the KDNA Forms admin pages.
 	 *
 	 * @since  2.5.7
 	 *
 	 * @return void
 	 */
 	public function ajax_dismiss() {
-		check_admin_referer( 'gf_dismissible_nonce', 'nonce' );
+		check_admin_referer( 'kdna_dismissible_nonce', 'nonce' );
 
 		$key = rgget( 'message_key' );
 		$key = sanitize_key( $key );

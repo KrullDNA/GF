@@ -2754,7 +2754,7 @@ class Settings {
 
 		$query_params = array();
 		parse_str( $referer['query'], $query_params );
-		if( 'gf_edit_forms' !== rgar( $query_params, 'page' ) && 'settings' !== rgar( $query_params, 'view' ) ) {
+		if( 'kdna_edit_forms' !== rgar( $query_params, 'page' ) && 'settings' !== rgar( $query_params, 'view' ) ) {
 			return $prepared_args;
 		}
 
