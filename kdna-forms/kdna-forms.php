@@ -253,7 +253,7 @@ class KDNAForms {
 	 * @since 2.8.17
 	 * @deprecated No longer used. License functionality has been removed.
 	 */
-	const LICENSE_KEY_OPT = 'kdna_forms_key';
+	const LICENSE_KEY_OPT = 'rg_gforms_key';
 
 	/**
 	 * Runs after KDNA Forms is loaded.
@@ -2165,7 +2165,7 @@ class KDNAForms {
 	}
 
 	public static function get_default_theme() {
-		return get_option( 'kdna_forms_default_theme', 'gravity-theme' );
+		return get_option( 'rg_gforms_default_theme', 'gravity-theme' );
 	}
 
 	/**
@@ -6772,7 +6772,7 @@ class KDNAForms {
 		_deprecated_function( 'This function has been deprecated. Use kdna_upgrade()->maybe_upgrade() or kdna_upgrade()->upgrade() instead', '2.2', 'kdna_upgrade()->upgrade() or kdna_upgrade()->maybe_upgrade()' );
 
 		if ( $force_setup ) {
-			$current_version = get_option( 'kdna_form_version' );
+			$current_version = get_option( 'rg_form_version' );
 			kdna_upgrade()->upgrade( $current_version, true );
 		} else {
 			kdna_upgrade()->maybe_upgrade();

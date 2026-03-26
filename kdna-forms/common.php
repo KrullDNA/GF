@@ -4282,7 +4282,7 @@ Content-Type: text/html;
 	}
 
 	public static function get_currency() {
-		$currency = get_option( 'kdna_forms_currency' );
+		$currency = get_option( 'rg_gforms_currency' );
 		$currency = empty( $currency ) ? 'USD' : $currency;
 
 		return apply_filters( 'kdnaform_currency', $currency );
@@ -4777,7 +4777,7 @@ Content-Type: text/html;
 		}
 
 		// if no option is set, leave akismet enabled; otherwise, use option value true/false
-		$enabled = get_option( 'kdna_forms_enable_akismet' ) === false ? true : get_option( 'kdna_forms_enable_akismet' ) == true;
+		$enabled = get_option( 'rg_gforms_enable_akismet' ) === false ? true : get_option( 'rg_gforms_enable_akismet' ) == true;
 
 		/**
 		 * Allows the Akismet integration to be enabled or disabled.
@@ -8205,7 +8205,7 @@ Content-Type: text/html;
 		 *
 		 * @param boolean Whether to disable css.
 		 */
-		return apply_filters( 'kdnaform_disable_css', get_option( 'kdna_forms_disable_css' ) );
+		return apply_filters( 'kdnaform_disable_css', get_option( 'rg_gforms_disable_css' ) );
 	}
 
 	/**

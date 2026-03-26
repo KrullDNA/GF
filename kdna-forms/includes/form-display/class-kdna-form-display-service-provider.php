@@ -60,7 +60,7 @@ class GF_Form_Display_Service_Provider extends KDNA_Service_Provider {
 				$form_styles         = KDNAFormDisplay::get_form_styles( $form_style_settings );
 
 				return array(
-					'theme'                        => get_option( 'kdna_forms_default_theme', 'gravity-theme' ),
+					'theme'                        => get_option( 'rg_gforms_default_theme', 'gravity-theme' ),
 					'inputSize'                    => rgar( $form_styles, 'inputSize' ) ? $form_styles['inputSize'] : 'md',
 					'inputBorderRadius'            => rgar( $form_styles, 'inputBorderRadius' ) ? $form_styles['inputBorderRadius'] : 3,
 					'inputBorderColor'             => rgar( $form_styles, 'inputBorderColor' ) ? $form_styles['inputBorderColor'] : '#686e77',

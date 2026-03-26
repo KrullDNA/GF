@@ -96,7 +96,7 @@ class Form_CSS_Properties_Output_Engine extends Output_Engine {
 		// Merge the settings - block styles get priority.
 		$style_settings = ! empty( $block_settings ) ? array_merge( $form_style, $block_settings ) : $form_style;
 		if ( ! rgar( $style_settings, 'theme' ) || '' == $style_settings['theme'] ) {
-			$style_settings['theme'] = get_option( 'kdna_forms_default_theme', 'orbital' );
+			$style_settings['theme'] = get_option( 'rg_gforms_default_theme', 'orbital' );
 		}
 
 		$properties = call_user_func_array( $this->properties_cb, array( $form_id, $settings, $style_settings, $form ) );

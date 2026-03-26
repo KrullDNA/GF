@@ -973,7 +973,7 @@ class KDNAFormDetail {
 								<?php
 								}
 								do_action( 'kdnaform_field_standard_settings', 600, $form_id );
-								$recaptcha_type = get_option( 'kdna_forms_captcha_type' );
+								$recaptcha_type = get_option( 'rg_gforms_captcha_type' );
 								$recaptcha_image_base = $recaptcha_type == 'invisible' ? '/images/captcha_invisible_' : '/images/captcha_';
 								?>
 								<li class="captcha_theme_setting field_setting">
@@ -3470,32 +3470,8 @@ class KDNAFormDetail {
 	 * @param array $form
 	 */
 	public static function editor_notice_for_legacy_form( $form ) {
-		if ( ! KDNACommon::is_legacy_markup_enabled_og( $form ) ) {
-			return '';
-		}
-
-		?>
-		<div class="kdnaform-alert" data-js="kdnaform-alert" role="status">
-			<span
-				class="kdnaform-alert__icon kdnaform-icon kdnaform-icon--campaign"
-				aria-hidden="true"
-			></span>
-			<div class="kdnaform-alert__message-wrap">
-				<p class="kdnaform-alert__message"><?php echo esc_html_e( 'This form has legacy markup enabled, which may prevent some new features from functioning.', 'kdnaforms' ); ?></p>
-				<p class="kdnaform-alert__message"><?php echo esc_html_e( 'Legacy markup will be removed from KDNA Forms in version 4.0, and then all forms will use modern markup.  We recommend updating this form\'s settings to use modern markup.', 'kdnaforms' ); ?></p>
-				<a
-					class="kdnaform-alert__cta kdnaform-button kdnaform-button--white kdnaform-button--size-xs"
-					href="https://docs.kdnaforms.com/about-legacy-markup"
-					target="_blank"
-				>
-					<?php echo esc_html_e( 'Learn More', 'kdnaforms' ); ?>
-					<span class="screen-reader-text"><?php echo esc_html__('about form legacy markup', 'kdnaforms'); ?></span>
-					<span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;
-					<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
-				</a>
-			</div>
-		</div>
-		<?php
+		// Legacy markup notice removed for KDNA Forms.
+		return '';
 	}
 
 	/**

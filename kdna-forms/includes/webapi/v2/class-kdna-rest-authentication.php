@@ -691,7 +691,7 @@ class KDNA_REST_Authentication {
 		$used_nonces = maybe_serialize( $used_nonces );
 
 		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$wpdb->prefix . 'kdna_rest_api_keys',
+			$wpdb->prefix . 'gf_rest_api_keys',
 			array( 'nonces' => $used_nonces ),
 			array( 'key_id' => $user->key_id ),
 			array( '%s' ),
@@ -781,7 +781,7 @@ class KDNA_REST_Authentication {
 		global $wpdb;
 
 		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$wpdb->prefix . 'kdna_rest_api_keys',
+			$wpdb->prefix . 'gf_rest_api_keys',
 			array( 'last_access' => current_time( 'mysql' ) ),
 			array( 'key_id' => $this->user->key_id ),
 			array( '%s' ),

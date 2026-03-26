@@ -103,7 +103,7 @@ class KDNAFormsModel {
 		static $db_version = array();
 		$blog_id = get_current_blog_id();
 		if ( empty( $db_version[ $blog_id ] ) ) {
-			$db_version[ $blog_id ] = get_option( 'kdna_db_version' );
+			$db_version[ $blog_id ] = get_option( 'gf_db_version' );
 		}
 
 		return $db_version[ $blog_id ];
@@ -182,7 +182,7 @@ class KDNAFormsModel {
 			return $wpdb->prefix . 'rg_form';
 		}
 
-		return $wpdb->prefix . 'kdna_form';
+		return $wpdb->prefix . 'gf_form';
 	}
 
 	/**
@@ -198,10 +198,10 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return $wpdb->prefix . 'kdna_form_meta';
+			return $wpdb->prefix . 'gf_form_meta';
 		}
 
-		return $wpdb->prefix . 'kdna_form_meta';
+		return $wpdb->prefix . 'gf_form_meta';
 	}
 
 	/**
@@ -217,10 +217,10 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return $wpdb->prefix . 'kdna_form_view';
+			return $wpdb->prefix . 'gf_form_view';
 		}
 
-		return $wpdb->prefix . 'kdna_form_view';
+		return $wpdb->prefix . 'gf_form_view';
 	}
 
 	/**
@@ -233,7 +233,7 @@ class KDNAFormsModel {
 	public static function get_form_revisions_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_form_revisions';
+		return $wpdb->prefix . 'gf_form_revisions';
 	}
 
 	/**
@@ -339,7 +339,7 @@ class KDNAFormsModel {
 	public static function get_entry_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_entry';
+		return $wpdb->prefix . 'gf_entry';
 	}
 
 	/**
@@ -354,7 +354,7 @@ class KDNAFormsModel {
 	public static function get_entry_meta_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_entry_meta';
+		return $wpdb->prefix . 'gf_entry_meta';
 	}
 
 	/**
@@ -369,7 +369,7 @@ class KDNAFormsModel {
 	public static function get_entry_notes_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_entry_notes';
+		return $wpdb->prefix . 'gf_entry_notes';
 	}
 
 
@@ -385,7 +385,7 @@ class KDNAFormsModel {
 	public static function get_draft_submissions_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_draft_submissions';
+		return $wpdb->prefix . 'gf_draft_submissions';
 	}
 
 	/**
@@ -400,7 +400,7 @@ class KDNAFormsModel {
 	public static function get_rest_api_keys_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_rest_api_keys';
+		return $wpdb->prefix . 'gf_rest_api_keys';
 	}
 
 	/**
@@ -413,7 +413,7 @@ class KDNAFormsModel {
 	public static function get_addon_feed_table_name() {
 		global $wpdb;
 
-		return $wpdb->prefix . 'kdna_addon_feed';
+		return $wpdb->prefix . 'gf_addon_feed';
 	}
 
 
@@ -6198,8 +6198,8 @@ class KDNAFormsModel {
 
 		$addon_tables = array(
 			self::get_addon_feed_table_name(),
-			$wpdb->prefix . 'kdna_addon_payment_callback',
-			$wpdb->prefix . 'kdna_addon_payment_transaction',
+			$wpdb->prefix . 'gf_addon_payment_callback',
+			$wpdb->prefix . 'gf_addon_payment_transaction',
 		);
 
 		$drop_tables = array_merge( $drop_tables, $addon_tables );

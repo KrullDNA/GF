@@ -3,7 +3,7 @@
 
 print.css
 Gravity Forms Print Entry Styles
-http://www.kdnaforms.com
+http://www.gravityforms.com
 updated: April 23, 2013 10:38 AM
 
 Gravity Forms is a Rocketgenius project
@@ -343,20 +343,20 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 
 	/* list table styles  ------------------------------------------------------------------------- */
 
-	table.kdnafield_list td.kdnafield_list_cell {
+	table.gfield_list td.gfield_list_cell {
 		padding: 8px 0
 	}
-	table.kdnafield_list td.kdnafield_list_cell + td.kdnafield_list_cell {
+	table.gfield_list td.gfield_list_cell + td.gfield_list_cell {
 		padding: 8px 10px
 	}
-	table.kdnafield_list thead tr th  {
+	table.gfield_list thead tr th  {
 		padding: 8px 0;
 		font-weight: bold
 	}
-	table.kdnafield_list thead tr th + th {
+	table.gfield_list thead tr th + th {
 		padding: 8px 10px
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list {
 		border-top: 1px solid #DFDFDF !important;
 		border-left: 1px solid #DFDFDF !important;
 		border-spacing: 0;
@@ -364,11 +364,11 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 		margin: 2px 0 6px;
 		width: 100%
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list td {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list td {
 		border-right: 1px solid #DFDFDF !important;
 		font-family: sans-serif !important
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list thead tr th {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list thead tr th {
 		background-image: none !important;
 		border-right: 1px solid #DFDFDF !important;
 		padding: 6px 10px;
@@ -377,20 +377,20 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 	table.widefat tbody tr td.entry-view-field-value ul li {
 		color: #555 !important
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list td,
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list th {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list td,
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list th {
     		border-bottom: 1px solid #DFDFDF;
     		padding: 6px 10px
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list td {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list td {
     		border-top: 1px solid #FFF
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list th {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list th {
 		color: #333;
 		background-color: #F1F1F1;
 		font-size: 12px
 	}
-	table.widefat tbody tr td.entry-view-field-value table.kdnafield_list td {
+	table.widefat tbody tr td.entry-view-field-value table.gfield_list td {
 		font-size: 12px;
     		padding: 4px 7px 3px 10px;
     		vertical-align: top;
