@@ -38,12 +38,12 @@ class KDNA_Ajax_Handler {
 		}
 
 		$form_id     = absint( rgpost( 'form_id' ) );
-		$target_page = absint( rgpost( 'kdnaform_target_page_number_' . $form_id ) );
-		$source_page = absint( rgpost( 'kdnaform_source_page_number_' . $form_id ) );
+		$target_page = absint( rgpost( 'gform_target_page_number_' . $form_id ) );
+		$source_page = absint( rgpost( 'gform_source_page_number_' . $form_id ) );
 
 		$this->hydrate_get_from_current_page_url();
 
-		$result = \KDNAAPI::validate_form( $form_id, array(), rgpost( 'kdnaform_field_values' ), $target_page, $source_page );
+		$result = \KDNAAPI::validate_form( $form_id, array(), rgpost( 'gform_field_values' ), $target_page, $source_page );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( $result->get_error_message() );
 		}
@@ -105,9 +105,9 @@ class KDNA_Ajax_Handler {
 		}
 
 		// Getting posted values.
-		$target_page       = absint( rgpost( 'kdnaform_target_page_number_' . $form_id ) );
-		$source_page       = absint( rgpost( 'kdnaform_source_page_number_' . $form_id ) );
-		$field_values      = rgpost( 'kdnaform_field_values' );
+		$target_page       = absint( rgpost( 'gform_target_page_number_' . $form_id ) );
+		$source_page       = absint( rgpost( 'gform_source_page_number_' . $form_id ) );
+		$field_values      = rgpost( 'gform_field_values' );
 		$theme             = rgpost( 'kdnaform_theme' );
 		$style             = rgpost( 'kdnaform_style_settings' );
 		$submission_method = rgpost( 'kdnaform_submission_method' );
@@ -202,7 +202,7 @@ class KDNA_Ajax_Handler {
 
 		\KDNAFormDisplay::process_send_resume_link();
 
-		$confirmation = \KDNAFormDisplay::get_form( $form_id, false, false, false, rgpost( 'kdnaform_field_values' ) );
+		$confirmation = \KDNAFormDisplay::get_form( $form_id, false, false, false, rgpost( 'gform_field_values' ) );
 
 		KDNACommon::send_json_success(
 			array(

@@ -11,7 +11,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
  */
 class GF_Choices_UI_Config extends KDNA_Config {
 
-	protected $name               = 'kdnaform_admin_config';
+	protected $name               = 'gform_admin_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
 

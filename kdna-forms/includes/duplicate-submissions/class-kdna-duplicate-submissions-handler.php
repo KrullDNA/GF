@@ -45,7 +45,7 @@ class KDNA_Duplicate_Submissions_Handler {
 	 */
 	public function is_enabled() {
 
-		$form_id = filter_input( INPUT_POST, 'kdnaform_submit', FILTER_SANITIZE_NUMBER_INT );
+		$form_id = filter_input( INPUT_POST, 'gform_submit', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( empty( $form_id ) ) {
 			return false;
@@ -96,7 +96,7 @@ class KDNA_Duplicate_Submissions_Handler {
 	 * @return bool
 	 */
 	private function is_valid_submission() {
-		$form_id = filter_input( INPUT_POST, 'kdnaform_submit', FILTER_SANITIZE_NUMBER_INT );
+		$form_id = filter_input( INPUT_POST, 'gform_submit', FILTER_SANITIZE_NUMBER_INT );
 
 		if ( empty( $form_id ) || ! class_exists( '\KDNAFormDisplay' ) ) {
 			return false;

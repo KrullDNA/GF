@@ -562,8 +562,8 @@ class KDNA_Field_Repeater extends KDNA_Field {
 	 * @return mixed
 	 */
 	public function get_sub_field_input( $field, $form, $field_value, $entry, $index ) {
-		$target_page = rgpost( 'kdnaform_target_page_number_' . $this->formId );
-		$source_page = rgpost( 'kdnaform_source_page_number_' . $this->formId );
+		$target_page = rgpost( 'gform_target_page_number_' . $this->formId );
+		$source_page = rgpost( 'gform_source_page_number_' . $this->formId );
 		$validate    = $source_page == $field->pageNumber && rgpost( 'is_submit_' . $this->formId ) && ( $target_page == 0 || $target_page > $source_page );
 
 		if ( $validate ) {

@@ -1783,9 +1783,9 @@ class KDNAAPI {
 	 *
 	 * @param int   $form_id      The ID of the form this submission belongs to.
 	 * @param array $input_values Optional. An associative array containing the values to be validated using the field input names as the keys. Will be merged into the $_POST.
-	 * @param array $field_values Optional. An array of dynamic population parameter keys with their corresponding values used to populate the fields. Overwrites `$_POST['kdnaform_field_values']`.
-	 * @param int   $target_page  Optional. For multi-page forms; indicates which page would be loaded next if the current page passes validation. Overwrites `$_POST[ 'kdnaform_target_page_number_' . $form_id ]`.
-	 * @param int   $source_page  Optional. For multi-page forms; indicates which page was active when the values were submitted for validation. Overwrites `$_POST[ 'kdnaform_source_page_number_' . $form_id ]`.
+	 * @param array $field_values Optional. An array of dynamic population parameter keys with their corresponding values used to populate the fields. Overwrites `$_POST['gform_field_values']`.
+	 * @param int   $target_page  Optional. For multi-page forms; indicates which page would be loaded next if the current page passes validation. Overwrites `$_POST[ 'gform_target_page_number_' . $form_id ]`.
+	 * @param int   $source_page  Optional. For multi-page forms; indicates which page was active when the values were submitted for validation. Overwrites `$_POST[ 'gform_source_page_number_' . $form_id ]`.
 	 *
 	 * @return WP_Error|array
 	 */
@@ -1944,10 +1944,10 @@ class KDNAAPI {
 		self::normalize_post_keys();
 
 		$_POST[ 'is_submit_' . $form_id ]                = '1';
-		$_POST['kdnaform_submit']                           = $form_id;
-		$_POST[ 'kdnaform_target_page_number_' . $form_id ] = absint( $target_page );
-		$_POST[ 'kdnaform_source_page_number_' . $form_id ] = absint( $source_page );
-		$_POST['kdnaform_field_values']                     = $field_values;
+		$_POST['gform_submit']                           = $form_id;
+		$_POST[ 'gform_target_page_number_' . $form_id ] = absint( $target_page );
+		$_POST[ 'gform_source_page_number_' . $form_id ] = absint( $source_page );
+		$_POST['gform_field_values']                     = $field_values;
 
 		// Adds the state to the $_POST, if missing.
 		add_filter( 'kdnaform_pre_validation', array( 'KDNAAPI', 'submit_form_filter_kdnaform_pre_validation' ), 50 );
@@ -1998,7 +1998,7 @@ class KDNAAPI {
 	public static function submit_form_filter_kdnaform_pre_validation( $form ) {
 		$name = 'state_' . absint( $form['id'] );
 		if ( ! isset( $_POST[ $name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$field_values   = rgpost( 'kdnaform_field_values' );
+			$field_values   = rgpost( 'gform_field_values' );
 			$_POST[ $name ] = KDNAFormDisplay::get_state( $form, $field_values );
 		}
 

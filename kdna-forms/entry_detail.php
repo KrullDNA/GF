@@ -510,7 +510,7 @@ class KDNAEntryDetail {
 
 			jQuery(document).ready(function () {
 				toggleNotificationOverride(true);
-				jQuery('#kdnaform_update_button').prop('disabled', false);
+				jQuery('#gform_update_button').prop('disabled', false);
 				if(typeof postboxes != 'undefined'){
 					jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 					postboxes.add_postbox_toggles( <?php echo json_encode( $screen->id ); ?>);
@@ -548,7 +548,7 @@ class KDNAEntryDetail {
 					jQuery('#upload_' + fieldId).show('slow');
 				}
 
-				var $multiFileContainer = jQuery( '#kdnaform_multifile_upload_' + formId + '_' + fieldId );
+				var $multiFileContainer = jQuery( '#gform_multifile_upload_' + formId + '_' + fieldId );
 				if ( ! $multiFileContainer.hasClass( 'kdnaform_fileupload_multifile' ) ) {
 					return;
 				}
@@ -860,8 +860,8 @@ class KDNAEntryDetail {
 				<br />
 
 				<div class="gform_footer">
-					<input type="hidden" name="kdnaform_unique_id" value="" />
-					<input type="hidden" name="kdnaform_uploaded_files" id='kdnaform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
+					<input type="hidden" name="gform_unique_id" value="" />
+					<input type="hidden" name="gform_uploaded_files" id='gform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
 				</div>
 			</div>
 		</div>
@@ -1206,7 +1206,7 @@ class KDNAEntryDetail {
 					?>
 					<div id="gf_payment_status" class="gf_payment_detail">
 						<?php esc_html_e( 'Status', 'kdnaforms' ) ?>:
-						<span id="kdnaform_payment_status"><?php echo $payment_status; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+						<span id="gform_payment_status"><?php echo $payment_status; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 					</div>
 
 					<?php
@@ -1222,7 +1222,7 @@ class KDNAEntryDetail {
 						?>
 						<div id="gf_payment_date" class="gf_payment_detail">
 							<?php echo $entry['transaction_type'] == 2 ? esc_html__( 'Start Date', 'kdnaforms' ) : esc_html__( 'Date', 'kdnaforms' ) ?>:
-							<span id='kdnaform_payment_date'><?php echo $payment_date; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+							<span id='gform_payment_date'><?php echo $payment_date; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 						</div>
 						<?php
 					}
@@ -1239,7 +1239,7 @@ class KDNAEntryDetail {
 						?>
 						<div id="gf_payment_transaction_id" class="gf_payment_detail">
 							<?php echo $entry['transaction_type'] == 2 ? esc_html__( 'Subscription Id', 'kdnaforms' ) : esc_html__( 'Transaction Id', 'kdnaforms' ); ?>:
-							<span id='kdnaform_payment_transaction_id'><?php echo $transaction_id; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+							<span id='gform_payment_transaction_id'><?php echo $transaction_id; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 						</div>
 						<?php
 					}
@@ -1257,7 +1257,7 @@ class KDNAEntryDetail {
 						?>
 						<div id="gf_payment_amount" class="gf_payment_detail">
 							<?php echo $entry['transaction_type'] == 2 ? esc_html__( 'Recurring Amount', 'kdnaforms' ) : esc_html__( 'Amount', 'kdnaforms' ); ?>:
-							<span id='kdnaform_payment_amount'><?php echo $payment_amount; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+							<span id='gform_payment_amount'><?php echo $payment_amount; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 						</div>
 						<?php
 					}
@@ -1317,12 +1317,12 @@ class KDNAEntryDetail {
 		<div class="detail-view-print">
 			<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_view_entry_notes' ) ) { ?>
 
-				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="kdnaform_print_notes" />
+				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="gform_print_notes" />
 				<label for="print_notes"><?php esc_html_e( 'Include Notes', 'kdnaforms' ); ?></label>
 
 			<?php } ?>
 			<br><br>
-			<a href="javascript:;" onclick="var notes_qs = jQuery('#kdnaform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?gf_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
+			<a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?gf_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
 		</div>
 		<!-- end print button -->
 		<?php

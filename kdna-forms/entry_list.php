@@ -208,7 +208,7 @@ class KDNAEntryList {
 			$id           = esc_attr( $filter['id'] );
 			$label        = esc_attr( $filter['label'] );
 			$checked      = checked( $filter['id'], $selected_filter, false );
-			$radios_arr[] = sprintf( '<div><input type="radio" name="kdnaform_default_filter" value="%s" id="kdnaform_default_filter_%s" %s /><label for="kdnaform_default_filter_%s">%s</label></div>', $id, $id, $checked, $id, $label );
+			$radios_arr[] = sprintf( '<div><input type="radio" name="gform_default_filter" value="%s" id="gform_default_filter_%s" %s /><label for="kdnaform_default_filter_%s">%s</label></div>', $id, $id, $checked, $id, $label );
 		}
 
 		$radios_str = join( "\n", $radios_arr );
@@ -231,8 +231,8 @@ class KDNAEntryList {
 			<h5>{$pagination_title}</h5>
 
             	<label for='kdnaform_per_page%s'>{$entries_label}</label>
-            	<input type='number' step='1' min='1' max='100' class='screen-per-page' name='kdnaform_per_page'
-					id='kdnaform_per_page' maxlength='3' value='{$per_page}' />
+            	<input type='number' step='1' min='1' max='100' class='screen-per-page' name='gform_per_page'
+					id='gform_per_page' maxlength='3' value='{$per_page}' />
             	<input type='hidden' name='wp_screen_options[option]' value='kdnaform_entries_screen_options' />
             	<input type='hidden' name='wp_screen_options[value]' value='yes' />
 			</fieldset>
@@ -282,7 +282,7 @@ class KDNAEntryList {
 			}
 
 			$checked             = checked( $display_mode['id'], $selected_display_mode, false );
-			$display_modes_arr[] = sprintf( '<label for="%s_view_mode"><input type="radio" name="kdnaform_entries_display_mode" id="%s_view_mode" value="%s" %s />%s</label>', $id, $id, $id, $checked, $label );
+			$display_modes_arr[] = sprintf( '<label for="%s_view_mode"><input type="radio" name="gform_entries_display_mode" id="%s_view_mode" value="%s" %s />%s</label>', $id, $id, $id, $checked, $label );
 		}
 
 		return $display_modes_arr;
@@ -1849,8 +1849,8 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 					'kdna_page':    'print-entry',
 					'fid':        <?php echo json_encode( $form['id'] ); ?>,
 					'lid':        entryIDs,
-					'notes':      jQuery( '#kdnaform_print_notes' ).is( ':checked' ) ? '1' : '',
-					'page_break': jQuery( '#kdnaform_print_page_break' ).is( ':checked' ) ? '1' : '',
+					'notes':      jQuery( '#gform_print_notes' ).is( ':checked' ) ? '1' : '',
+					'page_break': jQuery( '#gform_print_page_break' ).is( ':checked' ) ? '1' : '',
 					'filter':     <?php echo json_encode( rgget( 'filter' ) ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>,
 					's':          <?php echo json_encode( rgget( 's' ) ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>,
 					'field_id':   <?php echo json_encode( rgget( 'field_id' ) ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>,
@@ -2200,12 +2200,12 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 						<p class="description"><?php esc_html_e( 'Print all of the selected entries at once.', 'kdnaforms' ); ?></p>
 
 						<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_view_entry_notes' ) ) { ?>
-							<input type="checkbox" name="kdnaform_print_notes" value="print_notes" checked="checked" id="kdnaform_print_notes" />
+							<input type="checkbox" name="gform_print_notes" value="print_notes" checked="checked" id="gform_print_notes" />
 							<label for="kdnaform_print_notes"><?php esc_html_e( 'Include notes', 'kdnaforms' ); ?></label>
 							<br /><br />
 						<?php } ?>
 
-						<input type="checkbox" name="kdnaform_print_page_break" value="print_page_break" checked="checked" id="kdnaform_print_page_break" />
+						<input type="checkbox" name="gform_print_page_break" value="print_page_break" checked="checked" id="gform_print_page_break" />
 						<label for="kdnaform_print_page_break"><?php esc_html_e( 'Add page break between entries', 'kdnaforms' ); ?></label>
 						<br /><br />
 

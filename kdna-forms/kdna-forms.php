@@ -877,7 +877,7 @@ class KDNAForms {
 
 		if ( isset( $_POST['kdnaform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			KDNAFormDisplay::process_send_resume_link();
-		} elseif ( isset( $_POST['kdnaform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		} elseif ( isset( $_POST['gform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$form_id = KDNAFormDisplay::is_submit_form_id_valid();
 			if ( $form_id ) {
 				KDNAFormDisplay::process_form( $form_id, KDNAFormDisplay::SUBMISSION_INITIATED_BY_WEBFORM );
@@ -2314,7 +2314,7 @@ class KDNAForms {
 	 * @param null $wp Not used.
 	 */
 	public static function ajax_parse_request( $wp ) {
-		if ( isset( $_POST['kdnaform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['gform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			die( self::get_ajax_form_response() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
@@ -2335,7 +2335,7 @@ class KDNAForms {
 		\KDNAFormDisplay::enqueue_scripts();
 
 		if ( $form_id && KDNAFormDisplay::is_submit_form_id_valid( $form_id ) ) {
-			$field_values       = rgpost( 'kdnaform_field_values' );
+			$field_values       = rgpost( 'gform_field_values' );
 			$field_values_array = array();
 			if ( is_string( $field_values ) ) {
 				parse_str( $field_values, $field_values_array );
@@ -3378,28 +3378,27 @@ class KDNAForms {
 		// Force-print critical form editor scripts in the page head.
 		// WordPress enqueue system marks them as done but never outputs them.
 		if ( $page === 'form_editor' ) {
-			add_action( 'admin_head', function() {
+			add_action( 'admin_print_footer_scripts', function() {
 				$base_url = KDNACommon::get_base_url();
 				$version  = KDNAForms::$version;
 				$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-				// jQuery UI scripts - load in correct dependency order
-				$jquery_ui = array(
-					includes_url( 'js/jquery/ui/core.min.js' ),
-					includes_url( 'js/jquery/ui/widget.min.js' ),
-					includes_url( 'js/jquery/ui/mouse.min.js' ),
-					includes_url( 'js/jquery/ui/sortable.min.js' ),
-					includes_url( 'js/jquery/ui/draggable.min.js' ),
-					includes_url( 'js/jquery/ui/droppable.min.js' ),
-					includes_url( 'js/jquery/ui/resizable.min.js' ),
-					includes_url( 'js/jquery/ui/tabs.min.js' ),
-					includes_url( 'js/jquery/ui/accordion.min.js' ),
-					includes_url( 'js/jquery/ui/autocomplete.min.js' ),
-					includes_url( 'js/jquery/ui/menu.min.js' ),
-					includes_url( 'js/jquery/jquery.ui.touch-punch.js' ),
-				);
+				// jQuery UI scripts - use WP's registered URLs to get correct paths
 				echo "<!-- KDNA Forms: Force-loading jQuery UI for form editor -->\n";
-				foreach ( $jquery_ui as $url ) {
-					echo '<script src="' . esc_url( $url ) . '"></script>' . "\n";
+				$force_handles = array(
+					'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse',
+					'jquery-ui-sortable', 'jquery-ui-draggable', 'jquery-ui-droppable',
+					'jquery-ui-resizable', 'jquery-ui-tabs', 'jquery-ui-accordion',
+					'jquery-ui-autocomplete', 'jquery-ui-menu', 'jquery-touch-punch',
+				);
+				global $wp_scripts;
+				foreach ( $force_handles as $handle ) {
+					if ( isset( $wp_scripts->registered[ $handle ] ) ) {
+						$src = $wp_scripts->registered[ $handle ]->src;
+						if ( strpos( $src, 'http' ) !== 0 ) {
+							$src = site_url( $src );
+						}
+						echo '<script src="' . esc_url( $src ) . '"></script>' . "\n";
+					}
 				}
 				// Our form editor scripts
 				echo '<script src="' . esc_url( $base_url . "/js/layout_editor{$min}.js?ver={$version}" ) . '"></script>' . "\n";

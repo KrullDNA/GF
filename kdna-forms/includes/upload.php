@@ -22,7 +22,7 @@ class KDNAAsyncUpload {
 			self::die_error( 500, __( 'Failed to upload file.', 'kdnaforms' ) );
 		}
 
-		$form_unique_id = rgpost( 'kdnaform_unique_id' );
+		$form_unique_id = rgpost( 'gform_unique_id' );
 		if ( ! ctype_alnum( $form_unique_id ) ) {
 			self::die_error();
 		}
