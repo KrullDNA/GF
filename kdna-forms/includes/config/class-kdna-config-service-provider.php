@@ -159,11 +159,11 @@ class KDNA_Config_Service_Provider extends KDNA_Service_Provider {
 		} );
 
 		// Add global config data to admin and theme.
-		add_filter( 'kdnaform_localized_script_data_kdnaform_admin_config', function ( $data ) use ( $self ) {
+		add_filter( 'kdnaform_localized_script_data_gform_admin_config', function ( $data ) use ( $self ) {
 			return $self->add_global_config_data( $data );
 		} );
 
-		add_filter( 'kdnaform_localized_script_data_kdnaform_theme_config', function ( $data ) use ( $self ) {
+		add_filter( 'kdnaform_localized_script_data_gform_theme_config', function ( $data ) use ( $self ) {
 			return $self->add_global_config_data( $data );
 		} );
 	}
