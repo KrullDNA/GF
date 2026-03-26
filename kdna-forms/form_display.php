@@ -2019,7 +2019,9 @@ class KDNAFormDisplay {
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_entry_post_save.' );
 		}
 
-		kdna_feed_processor()->save()->dispatch_on_shutdown();
+		if ( function_exists( 'kdna_feed_processor' ) ) {
+			kdna_feed_processor()->save()->dispatch_on_shutdown();
+		}
 
 		KDNAFormsModel::set_current_lead( $lead, false );
 
