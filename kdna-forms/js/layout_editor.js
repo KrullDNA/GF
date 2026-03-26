@@ -93,8 +93,8 @@ function initLayoutEditor( $ ) {
 	}
 
 	var $editorContainer = $( '#form_editor_fields_container' ),
-		$editor = $( '.kdnaform_editor' ),
-		$container = $( '#kdnaform_fields' ),
+		$editor = $( '.gform_editor' ),
+		$container = $( '#gform_fields' ),
 		$noFields = $( '#no-fields' ),
 		$noFieldsDropzone = $( '#no-fields-drop' ),
 		$sidebar = $( '.editor-sidebar' ),
@@ -185,7 +185,7 @@ function initLayoutEditor( $ ) {
 	} );
 
 	// Handle adding a new field.
-	$( document ).on( 'kdnaform_field_added', function ( event, form, field ) {
+	$( document ).on( 'gform_field_added', function ( event, form, field ) {
 
 		var $field = $( '#field_' + field.id );
 
@@ -239,24 +239,24 @@ function initLayoutEditor( $ ) {
 	} );
 
 	// Save the group ID of the deleted field.
-	$( document ).on( 'kdnaform_field_deleted', function ( event, form, fieldId ) {
+	$( document ).on( 'gform_field_deleted', function ( event, form, fieldId ) {
 		deletedFieldGroupId = getGroupId( $( '#field_' + fieldId ) );
 		if ( ! HasPageField() ) {
 			jQuery('input[name="submit_location"][value="inline"]').prop( 'disabled', false );
 			jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
 		}
 
-		var nativeEvent = new Event('gform/layout_editor/kdnaform_field_deleted');
+		var nativeEvent = new Event('gform/layout_editor/gform_field_deleted');
 		document.dispatchEvent(nativeEvent);
 	} );
 
 	// Handle resizing the group after the deleted field has been fully removed from the DOM.
-	gform.addAction( 'kdnaform_after_field_removed', function ( form, fieldId ) {
+	gform.addAction( 'gform_after_field_removed', function ( form, fieldId ) {
 		resizeGroup( deletedFieldGroupId );
 	} );
 
 	// Handle duplicating a field.
-	gform.addAction( 'kdnaform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
+	gform.addAction( 'gform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
 
 		var $source      = $( '#field_' + sourceFieldId );
 		var $sourceGroup = getGroup( getGroupId( $source ) );
@@ -273,42 +273,42 @@ function initLayoutEditor( $ ) {
 	} );
 
 	// Re-initialize the field after it's markup is refreshed (e.g. after the description is updated).
-	gform.addAction( 'kdnaform_after_refresh_field_preview', function( fieldId ) {
+	gform.addAction( 'gform_after_refresh_field_preview', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
 
-	gform.addAction( 'kdnaform_after_change_input_type', function( fieldId ) {
+	gform.addAction( 'gform_after_change_input_type', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
 
-	gform.addAction( 'kdnaform_before_get_field_markup', function( form, field, index ) {
+	gform.addAction( 'gform_before_get_field_markup', function( form, field, index ) {
 		addFieldPlaceholder( field, index );
 	} );
 
-	gform.addAction( 'kdnaform_after_get_field_markup', function( form, field, index ) {
+	gform.addAction( 'gform_after_get_field_markup', function( form, field, index ) {
 		removeFieldPlaceholder();
 	} );
 
-	gform.addAction( 'kdnaform_after_get_field_markup', function( form, field, index ) {
+	gform.addAction( 'gform_after_get_field_markup', function( form, field, index ) {
 		initSubmit();
 	} );
 
-	gform.addAction( 'kdnaform_before_field_duplicated', function( sourcefieldId ) {
+	gform.addAction( 'gform_before_field_duplicated', function( sourcefieldId ) {
 		var $source = $( '#field_' + sourcefieldId );
 		var $index  = $container.children().index( $source );
 
 		addFieldPlaceholder( null, $index + 1 );
 	} );
 
-	gform.addAction( 'kdnaform_field_duplicated', function() {
+	gform.addAction( 'gform_field_duplicated', function() {
 		removeFieldPlaceholder();
 	} );
 
-	gform.addAction( 'kdnaform_before_refresh_field_preview', function( field_id ) {
+	gform.addAction( 'gform_before_refresh_field_preview', function( field_id ) {
 		addFieldUpdateIndicator( field_id );
 	} );
 
-	gform.addAction( 'kdnaform_after_refresh_field_preview', function( field_id ) {
+	gform.addAction( 'gform_after_refresh_field_preview', function( field_id ) {
 		removeFieldUpdateIndicator( field_id );
 	} );
 
@@ -332,15 +332,15 @@ function initLayoutEditor( $ ) {
 		//sets up DOM for new field
 		if ( typeof index != 'undefined' ) {
 			if ( index === 0 ) {
-				$( '#kdnaform_fields' ).prepend( fieldString );
+				$( '#gform_fields' ).prepend( fieldString );
 			} else {
-				$( '#kdnaform_fields' ).children().eq( index - 1 ).after( fieldString );
+				$( '#gform_fields' ).children().eq( index - 1 ).after( fieldString );
 			}
 		} else {
 			if ( jQuery( '#field_submit' ) ) {
 				jQuery( fieldString ).insertBefore ( jQuery( '#field_submit' ) );
 			} else {
-				$( '#kdnaform_fields' ).append( fieldString );
+				$( '#gform_fields' ).append( fieldString );
 			}
 		}
 
@@ -391,7 +391,7 @@ function initLayoutEditor( $ ) {
 						fieldId = $( this ).attr( 'id' ).replace( 'field_', '' ),
 						field = fieldId ? GetFieldById( fieldId ) : false;
 
-					if ( field && field.layoutGroupId && ! $editor.hasClass( 'kdnaform_legacy_markup' ) ) {
+					if ( field && field.layoutGroupId && ! $editor.hasClass( 'gform_legacy_markup' ) ) {
 						groupId = field.layoutGroupId;
 					}
 					// This applies when initializing a newly added field.
@@ -441,17 +441,17 @@ function initLayoutEditor( $ ) {
 			.resizable( {
 				handles: 'e, w',
 				start: function( event, ui ) {
-					if ( kdna_legacy.is_legacy === '1' ) {
+					if ( gf_legacy.is_legacy === '1' ) {
 						$element.resizable( 'option', 'minWidth', ui.size.width );
 						$element.resizable( 'option', 'maxWidth', ui.size.width );
-						alert( kdna_vars.alertLegacyMode );
+						alert( gf_vars.alertLegacyMode );
 						return;
 					}
 					max = null;
 					$container.addClass( 'resizing' );
 				},
 				resize: function( event, ui ) {
-					if ( kdna_legacy.is_legacy === '1' ) {
+					if ( gf_legacy.is_legacy === '1' ) {
 						return;
 					}
 					var columnWidth = $container.outerWidth() / columnCount,
@@ -478,7 +478,7 @@ function initLayoutEditor( $ ) {
 						}
 					}
 
-					if ( ui.element.data( 'fieldClass' ) === 'kdnaform_editor_submit_container' ) {
+					if ( ui.element.data( 'fieldClass' ) === 'gform_editor_submit_container' ) {
 						min = 1;
 					} else {
 						min = columnCount / 4;
@@ -492,7 +492,7 @@ function initLayoutEditor( $ ) {
 					 * the field to it's right. If it the last field, we do not have to save this room.
 					 */
 					var calculatedMax = max;
-					if ( $item.next().data( 'fieldClass' ) === 'kdnaform_editor_submit_container' ) {
+					if ( $item.next().data( 'fieldClass' ) === 'gform_editor_submit_container' ) {
 						calculatedMax = max - 1;
 					} else if ( $group.length > 1 && ! lastInGroup ) {
 						calculatedMax = max - min;
@@ -521,7 +521,7 @@ function initLayoutEditor( $ ) {
 					}
 				},
 				stop: function() {
-					if ( kdna_legacy.is_legacy === '1' ) {
+					if ( gf_legacy.is_legacy === '1' ) {
 						return;
 					}
 					$container.removeClass( 'resizing' );
@@ -593,7 +593,7 @@ function initLayoutEditor( $ ) {
 
 	function validateGroupIds() {
 		// no need to run in legacy mode or if no fields
-		if ( window.kdna_legacy.is_legacy === '1' || ! $fields.length ) {
+		if ( window.gf_legacy.is_legacy === '1' || ! $fields.length ) {
 			return;
 		}
 		var rows = getFieldsAsRows();
@@ -667,7 +667,7 @@ function initLayoutEditor( $ ) {
 
 					$editorContainer.addClass( 'droppable' );
 
-					if ( kdna_vars[ 'currentlyAddingField' ] == true ) {
+					if ( gf_vars[ 'currentlyAddingField' ] == true ) {
 						return false;
 					}
 
@@ -691,7 +691,7 @@ function initLayoutEditor( $ ) {
 
 					/**
 					 * New field buttons are dragged relative to #wpbody so their position needs to be adjusted to work
-					 * the same way as dragging an existing field (which is relative to #kdnaform_fields).
+					 * the same way as dragging an existing field (which is relative to #gform_fields).
 					 */
 					var helperTop = ui.position.top - 0 + ( ui.helper.outerHeight() / 2 ),
 						helperLeft = ui.position.left - 0 + ( ui.helper.outerWidth() / 2 );
@@ -778,7 +778,7 @@ function initLayoutEditor( $ ) {
 		}
 		// Check if field is dragged *below* all other fields.
 		else if ( helperTop > $container.outerHeight() ) {
-			if ( $elements().last().data( 'field-class' ) !== 'kdnaform_editor_submit_container' && $elements().last().prev().data( 'field-class' ) !== 'kdnaform_editor_submit_container' ) {
+			if ( $elements().last().data( 'field-class' ) !== 'gform_editor_submit_container' && $elements().last().prev().data( 'field-class' ) !== 'gform_editor_submit_container' ) {
 				$indicator()
 					.css( {
 						top: $container.outerHeight() - bottomDistanceAllFields,
@@ -832,7 +832,7 @@ function initLayoutEditor( $ ) {
 
 				var available = isSpaceAvailable( ui, $target );
 
-				if ( $target.data( 'field-class' ) === 'kdnaform_editor_submit_container' ) {
+				if ( $target.data( 'field-class' ) === 'gform_editor_submit_container' ) {
 					if ( gform.tools.isRtl() ) {
 						if ( where === 'left' || where === 'bottom' ) {
 							return;
@@ -923,15 +923,15 @@ function initLayoutEditor( $ ) {
 	 */
 	function areColumnsEnabled( $target, $elem ) {
 
-		if ( $editor.hasClass( 'kdnaform_legacy_markup' ) ) {
+		if ( $editor.hasClass( 'gform_legacy_markup' ) ) {
 			return false;
 		}
 
-		if ( $target.hasClass( 'gpage' ) || $target.hasClass( 'gsection' ) || $target.hasClass( 'kdnaform_hidden' ) ) {
+		if ( $target.hasClass( 'gpage' ) || $target.hasClass( 'gsection' ) || $target.hasClass( 'gform_hidden' ) ) {
 			return false;
 		}
 
-		if ( $elem.hasClass( 'gpage' ) || $elem.hasClass( 'gsection' ) || $elem.hasClass( 'kdnaform_hidden' ) || $elem.data( 'type' ) === 'hidden' ) {
+		if ( $elem.hasClass( 'gpage' ) || $elem.hasClass( 'gsection' ) || $elem.hasClass( 'gform_hidden' ) || $elem.data( 'type' ) === 'hidden' ) {
 			return false;
 		}
 
@@ -1072,7 +1072,7 @@ function initLayoutEditor( $ ) {
 			return;
 		}
 
-		if ( $target.hasClass( 'kdnaform_button' ) ) {
+		if ( $target.hasClass( 'gform_button' ) ) {
 			return;
 		}
 
@@ -1296,7 +1296,7 @@ function initLayoutEditor( $ ) {
 	 * @returns {boolean}
 	 */
 	function isButtonInGroup( $group ) {
-		return $group.filter( '[data-field-class="kdnaform_editor_submit_container"]' ).length > 0;
+		return $group.filter( '[data-field-class="gform_editor_submit_container"]' ).length > 0;
 	}
 
 	/**
@@ -1367,7 +1367,7 @@ function initLayoutEditor( $ ) {
 	}
 
 	/**
-	 * Get the KDNA Forms field object based on the given element.
+	 * Get the Gravity Forms field object based on the given element.
 	 *
 	 * @param {jQuery} $elem The element to be used to fetch the field object.
 	 *

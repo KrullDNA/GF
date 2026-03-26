@@ -1,4 +1,4 @@
-(function ($, gform, kdnaform_i18n) {
+(function ($, gform, gform_i18n) {
 
 	/**
 	 * @function getDatepickerI18n
@@ -12,7 +12,7 @@
 	 */
 
 	function getDatepickerI18n() {
-		var i18n = kdnaform_i18n.datepicker;
+		var i18n = gform_i18n.datepicker;
 		return {
 			dayNamesMin: [
 				i18n.days.sunday,
@@ -65,12 +65,12 @@
 
 	function getDatepickerBaseOptions( $element ) {
 		var i18n = getDatepickerI18n();
-		var isThemeDatepicker = $element.closest( '.kdnaform_wrapper' ).length > 0;
+		var isThemeDatepicker = $element.closest( '.gform_wrapper' ).length > 0;
 		var isPreview = $( '#preview_form_container' ).length > 0;
 		var isRTL = window.getComputedStyle($element[0], null).getPropertyValue('direction') === 'rtl';
-		var formTheme = isThemeDatepicker ? $element.closest( '.kdnaform_wrapper' ).data( 'form-theme' ) : 'gravity-theme';
-		var formId = isThemeDatepicker ? $element.closest( '.kdnaform_wrapper' ).attr( 'id' ).replace( 'kdnaform_wrapper_', '' ) : '';
-		var formPageInstance = isThemeDatepicker ? $element.closest( '.kdnaform_wrapper' ).attr( 'data-form-index' ) : '';
+		var formTheme = isThemeDatepicker ? $element.closest( '.gform_wrapper' ).data( 'form-theme' ) : 'gravity-theme';
+		var formId = isThemeDatepicker ? $element.closest( '.gform_wrapper' ).attr( 'id' ).replace( 'gform_wrapper_', '' ) : '';
+		var formPageInstance = isThemeDatepicker ? $element.closest( '.gform_wrapper' ).attr( 'data-form-index' ) : '';
 
 		return {
 			yearRange: '-100:+20',
@@ -171,7 +171,7 @@
 		inputId = inputId.split( '_' );
 
 		// allow the user to override the datepicker options object
-		optionsObj = gform.applyFilters( 'kdnaform_datepicker_options_pre_init', optionsObj, inputId[ 1 ], inputId[ 2 ], $element );
+		optionsObj = gform.applyFilters( 'gform_datepicker_options_pre_init', optionsObj, inputId[ 1 ], inputId[ 2 ], $element );
 
 		$element.datepicker( optionsObj );
 
@@ -206,4 +206,4 @@
 	window.gformInitDatepicker = initDatepickers;
 	window.gformInitSingleDatepicker = initSingleDatepicker;
 
-})(jQuery, gform, kdnaform_i18n);
+})(jQuery, gform, gform_i18n);

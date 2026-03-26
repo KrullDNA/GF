@@ -1,7 +1,7 @@
 
 var __gf_timeout_handle;
 
-gform.addAction( 'kdnaform_input_change', function( elem, formId, fieldId ) {
+gform.addAction( 'gform_input_change', function( elem, formId, fieldId ) {
 	if( ! window.gf_form_conditional_logic ) {
 		return;
 	}
@@ -13,7 +13,7 @@ gform.addAction( 'kdnaform_input_change', function( elem, formId, fieldId ) {
 
 function gf_apply_rules(formId, fields, isInit){
 
-	jQuery(document).trigger( 'kdnaform_pre_conditional_logic', [ formId, fields, isInit ] );
+	jQuery(document).trigger( 'gform_pre_conditional_logic', [ formId, fields, isInit ] );
 	gform.utils.trigger( {
 		event: 'gform/conditionalLogic/applyRules/start',
 		native: false,
@@ -35,7 +35,7 @@ function gf_apply_rules(formId, fields, isInit){
 					});
 				}
 
-				jQuery(document).trigger('kdnaform_post_conditional_logic', [formId, fields, isInit]);
+				jQuery(document).trigger('gform_post_conditional_logic', [formId, fields, isInit]);
 				gform.utils.trigger( {
 					event: 'gform/conditionalLogic/applyRules/end',
 					native: false,
@@ -132,7 +132,7 @@ function gf_get_field_action(formId, conditionalLogic){
 		 *
 		 * @since 2.4.22
 		 */
-		var rule = gform.applyFilters( 'kdnaform_rule_pre_evaluation', jQuery.extend( {}, conditionalLogic["rules"][i] ), formId, conditionalLogic );
+		var rule = gform.applyFilters( 'gform_rule_pre_evaluation', jQuery.extend( {}, conditionalLogic["rules"][i] ), formId, conditionalLogic );
 		if(gf_is_match(formId, rule))
 			matches++;
 	}
@@ -164,7 +164,7 @@ function gf_is_match( formId, rule ) {
 	var isCheckable = $.inArray( $inputs.attr( 'type' ), [ 'checkbox', 'radio' ] ) !== -1;
 	var isMatch     = isCheckable ? gf_is_match_checkable( $inputs, rule, formId, fieldId ) : gf_is_match_default( $inputs.eq( 0 ), rule, formId, fieldId );
 
-	return gform.applyFilters( 'kdnaform_is_value_match', isMatch, formId, rule );
+	return gform.applyFilters( 'gform_is_value_match', isMatch, formId, rule );
 }
 
 function gf_is_match_checkable( $inputs, rule, formId, fieldId ) {
@@ -370,7 +370,7 @@ function gf_do_field_action(formId, action, fieldId, isInit, callback){
 	var dependent_fields = conditional_logic["dependents"][fieldId];
 
 	for(var i=0; i < dependent_fields.length; i++){
-		var targetId = fieldId == 0 ? "#kdnaform_submit_button_" + formId : "#field_" + formId + "_" + dependent_fields[i];
+		var targetId = fieldId == 0 ? "#gform_submit_button_" + formId : "#field_" + formId + "_" + dependent_fields[i];
 		var defaultValues = conditional_logic["defaults"][dependent_fields[i]];
 
 		//calling callback function on the last dependent field, to make sure it is only called once
@@ -390,20 +390,20 @@ function gf_do_field_action(formId, action, fieldId, isInit, callback){
 		 * @param array  $formId       The current form ID.
 		 * @param func   $do_callback   Callback function to be executed after conditional logic is executed.
 		 */
-		let abort = gform.applyFilters( 'kdnaform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, formId, do_callback );
+		let abort = gform.applyFilters( 'gform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, formId, do_callback );
 		if ( ! abort ) {
 			gf_do_action( action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, do_callback, formId );
 		} else if ( do_callback ) {
 			do_callback();
 		}
 
-		gform.doAction('kdnaform_post_conditional_logic_field_action', formId, action, targetId, defaultValues, isInit);
+		gform.doAction('gform_post_conditional_logic_field_action', formId, action, targetId, defaultValues, isInit);
 	}
 }
 
 function gf_do_next_button_action(formId, action, fieldId, isInit){
 	var conditional_logic = window["gf_form_conditional_logic"][formId];
-	var targetId = "#kdnaform_next_button_" + formId + "_" + fieldId;
+	var targetId = "#gform_next_button_" + formId + "_" + fieldId;
 
 	/**
 	 * Allow add-ons to abort gf_do_action() function.
@@ -419,7 +419,7 @@ function gf_do_next_button_action(formId, action, fieldId, isInit){
 	 * @param array  $formId       The current form ID.
 	 * @param func   $do_callback   Callback function to be executed after conditional logic is executed.
 	 */
-	let abort = gform.applyFilters( 'kdnaform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], null, isInit, formId, null );
+	let abort = gform.applyFilters( 'gform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], null, isInit, formId, null );
 	if ( ! abort ) {
 		gf_do_action( action, targetId, conditional_logic[ "animation" ], null, isInit, null, formId );
 	}
@@ -452,7 +452,7 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		if(useAnimation && !isInit){
 			if($target.length > 0){
 				$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false );
-				if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kdnaform_next_button' ) ) {
+				if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
 					gf_show_button( $target );
 				}
 				$target.slideDown(callback);
@@ -466,12 +466,12 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 
 			// set display if previous (saved) display isn't set for any reason
 			if ( display == '' || display == 'none' ){
-				display = '1' === kdna_legacy.is_legacy ? 'list-item' : 'block';
+				display = '1' === gf_legacy.is_legacy ? 'list-item' : 'block';
 			}
 			$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false ).attr( 'data-conditional-logic', 'visible' );
 
 			// Handle conditional submit and next buttons.
-			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kdnaform_next_button' ) ) {
+			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
 				gf_show_button( $target );
 			} else {
 				$target.css( 'display', display );
@@ -492,7 +492,7 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		//if field is not already hidden, reset its values to the default
 		var child = $target.children().first();
 		if (child.length > 0){
-			var reset = gform.applyFilters('kdnaform_reset_pre_conditional_logic_field_action', true, formId, targetId, defaultValues, isInit);
+			var reset = gform.applyFilters('gform_reset_pre_conditional_logic_field_action', true, formId, targetId, defaultValues, isInit);
 
 			if(reset && !gformIsHidden(child)){
 				gf_reset_to_default(targetId, defaultValues);
@@ -511,7 +511,7 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		}
 
 		if(useAnimation && !isInit){
-			if( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kdnaform_next_button' ) ) {
+			if( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
 				gf_hide_button( $target );
 			} else if ( $target.length > 0 && $target.is( ":visible" ) ) {
 				$target.slideUp( callback );
@@ -522,7 +522,7 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		} else{
 
 			// Handle conditional submit and next buttons.
-			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kdnaform_next_button' ) ) {
+			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
 				gf_hide_button( $target );
 			} else {
 				$target.css( 'display', 'none' );
@@ -540,13 +540,13 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 function gf_show_button( $target ) {
 	$target.prop( 'disabled', false ).css( 'display', '' );
 	$target.attr( 'data-conditional-logic', 'visible' );
-	if ( '1' == kdna_legacy.is_legacy ) {
+	if ( '1' == gf_legacy.is_legacy ) {
 		// for legacy markup, remove screen reader class.
 		$target.removeClass( 'screen-reader-text' );
 	}
 
 	// Sometimes the next button is pretending to be a submit button, so it needs conditional logic too.
-	var fauxSubmitButton = jQuery( 'input.kdnaform_next_button[type="button"][value="Submit"]' );
+	var fauxSubmitButton = jQuery( 'input.gform_next_button[type="button"][value="Submit"]' );
 	if ( fauxSubmitButton ) {
 		fauxSubmitButton.prop( 'disabled', false ).css( 'display', '' );
 		fauxSubmitButton.attr( 'data-conditional-logic', 'visible' );
@@ -556,13 +556,13 @@ function gf_show_button( $target ) {
 function gf_hide_button( $target ) {
 	$target.attr( 'disabled', 'disabled' ).hide();
 	$target.attr( 'data-conditional-logic', 'hidden' );
-	if ( '1' === kdna_legacy.is_legacy ) {
+	if ( '1' === gf_legacy.is_legacy ) {
 		// for legacy markup, let screen readers read the button.
 		$target.addClass( 'screen-reader-text' );
 	}
 
 	// Sometimes the next button is pretending to be a submit button, so it needs conditional logic too.
-	var fauxSubmitButton = jQuery( 'input.kdnaform_next_button[type="button"][value="Submit"]' );
+	var fauxSubmitButton = jQuery( 'input.gform_next_button[type="button"][value="Submit"]' );
 	if ( fauxSubmitButton ) {
 		fauxSubmitButton.attr( 'disabled', 'disabled' ).hide();
 		fauxSubmitButton.attr( 'data-conditional-logic', 'hidden' );

@@ -1,7 +1,7 @@
 function Form(){
     this.id = 0;
-    this.title = kdna_vars.formTitle;
-    this.description = kdna_vars.formDescription;
+    this.title = gf_vars.formTitle;
+    this.description = gf_vars.formDescription;
     this.labelPlacement = "top_label";
     this.subLabelPlacement = "below";
     this.maxEntriesMessage = "";
@@ -12,7 +12,7 @@ function Form(){
 
 function Confirmation(){
     this.type = "message";
-    this.message = kdna_vars.formConfirmationMessage;
+    this.message = gf_vars.formConfirmationMessage;
     this.url = "";
     this.pageId = "";
     this.queryString="";
@@ -20,7 +20,7 @@ function Confirmation(){
 
 function Button(){
     this.type = "text";
-    this.text = kdna_vars.buttonText;
+    this.text = gf_vars.buttonText;
     this.imageUrl = "";
 }
 
