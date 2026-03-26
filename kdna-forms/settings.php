@@ -627,6 +627,29 @@ class KDNASettings {
 				),
 			);
 
+		$fields['email_logo'] = array(
+			'id'          => 'section_email_logo',
+			'title'       => esc_html__( 'Email Logo', 'kdnaforms' ),
+			'description' => esc_html__( 'Upload a logo to display at the top of email notifications. Recommended max size: 300x100px.', 'kdnaforms' ),
+			'class'       => 'gform-settings-panel--half',
+			'fields'      => array(
+				array(
+					'name'          => 'kdna_email_logo_url',
+					'label'         => esc_html__( 'Email Logo URL', 'kdnaforms' ),
+					'type'          => 'text',
+					'class'         => 'large',
+					'default_value' => get_option( 'kdna_email_logo_url', '' ),
+					'description'   => esc_html__( 'Enter the URL of the logo image, or use the button below to select from the media library.', 'kdnaforms' ),
+					'after_input'   => '<button type="button" class="button kdna-email-logo-upload" onclick="var mediaUploader=wp.media({title:\'Select Logo\',button:{text:\'Use as Logo\'},multiple:false});mediaUploader.on(\'select\',function(){var attachment=mediaUploader.state().get(\'selection\').first().toJSON();document.getElementById(\'kdna_email_logo_url\').value=attachment.url;});mediaUploader.open();">' . esc_html__( 'Select Image', 'kdnaforms' ) . '</button>',
+					'save_callback' => function( $field, $value ) {
+						update_option( 'kdna_email_logo_url', sanitize_url( $value ) );
+
+						return $value;
+					},
+				),
+			),
+		);
+
 		/**
 		 * Allows forcing the display of the disable CSS setting.
 		 *

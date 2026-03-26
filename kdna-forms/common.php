@@ -1693,7 +1693,12 @@ class KDNACommon {
 
 		$field_data = '';
 		if ( $format == 'html' ) {
-			$field_data = '<table width="99%" border="0" cellpadding="1" cellspacing="0" bgcolor="#EAEAEA"><tr><td>
+			$logo_url = get_option( 'kdna_email_logo_url', '' );
+			$logo_html = '';
+			if ( ! empty( $logo_url ) ) {
+				$logo_html = '<div style="text-align:center;margin-bottom:20px;"><img src="' . esc_url( $logo_url ) . '" style="max-width:300px;max-height:100px;height:auto;width:auto;" alt="Logo" /></div>';
+			}
+			$field_data = $logo_html . '<table width="99%" border="0" cellpadding="1" cellspacing="0" bgcolor="#EAEAEA"><tr><td>
                             <table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#FFFFFF">
                             ';
 		}
@@ -1810,7 +1815,7 @@ class KDNACommon {
 		                                        <font style="font-family: sans-serif; font-size:12px;">%2$s</font>
 		                                    </td>
 		                               </tr>
-		                               ', $field_label, empty( $field_value ) && strlen( $field_value ) == 0 ? '&nbsp;' : $field_value, esc_attr( apply_filters( 'kdnaform_email_background_color_label', '#EAF2FA', $field, $lead ) ), esc_attr( apply_filters( 'kdnaform_email_background_color_data', '#FFFFFF', $field, $lead ) )
+		                               ', $field_label, empty( $field_value ) && strlen( $field_value ) == 0 ? '&nbsp;' : $field_value, esc_attr( apply_filters( 'kdnaform_email_background_color_label', '#e9e9e9', $field, $lead ) ), esc_attr( apply_filters( 'kdnaform_email_background_color_data', '#FFFFFF', $field, $lead ) )
 								);
 								break;
 						}
