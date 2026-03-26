@@ -1,5 +1,5 @@
 <?php
-if ( ! class_exists( 'GFForms' ) ) {
+if ( ! class_exists( 'KDNAForms' ) ) {
 	die();
 }
 ?>
@@ -16,7 +16,7 @@ if ( ! class_exists( 'GFForms' ) ) {
             if (!confirmed) return;
 
             //Sending AJAX request
-            jQuery.post( ajaxurl, {action: "gf_delete_custom_choice", name: gform_selected_custom_choice, gf_delete_custom_choice: "<?php echo wp_create_nonce( 'gf_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+            jQuery.post( ajaxurl, {action: "kdna_delete_custom_choice", name: gform_selected_custom_choice, kdna_delete_custom_choice: "<?php echo wp_create_nonce( 'kdna_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
             //Updating UI
             delete gform_custom_choices[gform_selected_custom_choice];
@@ -47,7 +47,7 @@ if ( ! class_exists( 'GFForms' ) ) {
 		var choices = jQuery('#gfield_bulk_add_input').val().split('\n');
 
 		//Sending AJAX request
-		jQuery.post(ajaxurl, {action: "gf_save_custom_choice", previous_name: gform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), gf_save_custom_choice: "<?php echo wp_create_nonce( 'gf_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+		jQuery.post(ajaxurl, {action: "kdna_save_custom_choice", previous_name: gform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), kdna_save_custom_choice: "<?php echo wp_create_nonce( 'kdna_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
 		//deleting existing custom choice
 		if (gform_selected_custom_choice.length > 0)
@@ -837,7 +837,7 @@ if ( ! class_exists( 'GFForms' ) ) {
 
 				if (!field.label)
 					field.label = <?php echo json_encode( esc_html__( 'Address', 'kdnaforms' ) ); ?>;
-				field.addressType = <?php echo json_encode( GF_Fields::get( 'address' )->get_default_address_type( rgget( 'id' ) ) ) ?>;
+				field.addressType = <?php echo json_encode( KDNA_Fields::get( 'address' )->get_default_address_type( rgget( 'id' ) ) ) ?>;
 				field.inputs = [
 					new Input(
 						field.id + 0.1,
