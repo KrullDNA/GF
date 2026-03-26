@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Orders\Factories;
 
 use \KDNA_Forms\KDNA_Forms\Orders\KDNA_Order;
 use \KDNA_Forms\KDNA_Forms\Orders\Items\KDNA_Order_Item;
-use \KDNA_Forms\KDNA_Forms\Orders\Items\GF_Form_Product_Item;
+use \KDNA_Forms\KDNA_Forms\Orders\Items\KDNA_Form_Product_Item;
 use \KDNA_Forms\KDNA_Forms\Orders\Exporters\KDNA_Save_Entry_Order_Exporter;
 use \KDNACommon;
 
@@ -274,7 +274,7 @@ final class KDNA_Order_Factory {
 
 	/**
 	/**
-	 * Gets the product fields in the form as GF_Form_Product_Item objects.
+	 * Gets the product fields in the form as KDNA_Form_Product_Item objects.
 	 *
 	 * @since 2.6
 	 *
@@ -283,7 +283,7 @@ final class KDNA_Order_Factory {
 	 * @param bool  $use_choice_text  If the product field has choices, this decided if the choice text should be retrieved along with the product name or not.
 	 * @param bool  $use_admin_labels Whether to use the product admin label or the front end label.
 	 *
-	 * @return array|GF_Form_Product_Item[] and empty array if the form has no products, or the products array.
+	 * @return array|KDNA_Form_Product_Item[] and empty array if the form has no products, or the products array.
 	 */
 	public static function get_products( $form, $entry, $use_choice_text, $use_admin_labels ) {
 		$form_product_items = KDNACommon::get_product_fields( $form, $entry, $use_choice_text, $use_admin_labels );
@@ -303,7 +303,7 @@ final class KDNA_Order_Factory {
 		$product_items = array();
 		foreach ( $products as $id => $product ) {
 			$product['id']                   = $id;
-			$product_items[ $product['id'] ] = new GF_Form_Product_Item( $product['id'], $product );
+			$product_items[ $product['id'] ] = new KDNA_Form_Product_Item( $product['id'], $product );
 		}
 
 		return $product_items;

@@ -596,7 +596,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 		$this->set_columns();
 
-		$this->locking_info = new KDNAEntryLocking();
+		$this->locking_info = null; // Locking removed for lean plugin.
 	}
 
 	/**

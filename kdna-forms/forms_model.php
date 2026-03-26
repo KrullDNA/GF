@@ -5,7 +5,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 }
 
 // use KDNA_Forms\KDNA_Forms\License; // Removed - license functionality removed.
-use KDNA_Forms\KDNA_Forms\Query\Batch_Processing\GF_Entry_Meta_Batch_Processor;
+use KDNA_Forms\KDNA_Forms\Query\Batch_Processing\KDNA_Entry_Meta_Batch_Processor;
 use KDNA_Forms\KDNA_Forms\Query\Batch_Processing\KDNA_Batch_Operations_Service_Provider;
 
 require_once KDNA_PLUGIN_DIR_PATH . 'includes/legacy/forms_model_legacy.php';
@@ -73,7 +73,7 @@ class KDNAFormsModel {
 	 *
 	 * @since 2.5.16
 	 *
-	 * @var GF_Entry_Meta_Batch_Processor
+	 * @var KDNA_Entry_Meta_Batch_Processor
 	 */
 	private static $entry_meta_batch_processor;
 
@@ -3427,7 +3427,7 @@ class KDNAFormsModel {
 	 *
 	 * @since 2.5.16
 	 *
-	 * @return GF_Entry_Meta_Batch_Processor
+	 * @return KDNA_Entry_Meta_Batch_Processor
 	 */
 	public static function get_entry_meta_batch_processor() {
 		if ( is_null( self::$entry_meta_batch_processor ) ) {

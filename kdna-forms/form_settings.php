@@ -1160,11 +1160,8 @@ class KDNAFormSettings {
 
 		self::page_header( __( 'Personal Data', 'kdnaforms' ) );
 
-		require_once( 'includes/class-personal-data.php' );
-
 		$form_id = absint( rgget( 'id' ) );
-
-		KDNA_Personal_Data::form_settings( $form_id );
+		echo '<p>' . esc_html__( 'Personal data settings are not available in this version.', 'kdnaforms' ) . '</p>';
 
 		self::page_footer();
 

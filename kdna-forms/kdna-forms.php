@@ -164,10 +164,10 @@ require_once KDNA_PLUGIN_DIR_PATH . 'includes/messages/class-dismissable-message
 require_once KDNA_PLUGIN_DIR_PATH . 'includes/orders/factories/class-kdna-order-factory.php';
 require_once KDNA_PLUGIN_DIR_PATH . 'includes/orders/summaries/class-kdna-order-summary.php';
 
-// Load Logging if Logging Add-On is not active.
-if ( ! KDNACommon::is_logging_plugin_active() ) {
-	require_once KDNA_PLUGIN_DIR_PATH . 'includes/logging/logging.php';
-}
+// Logging module removed.
+// if ( ! KDNACommon::is_logging_plugin_active() ) {
+// 	require_once KDNA_PLUGIN_DIR_PATH . 'includes/logging/logging.php';
+// }
 
 // KDNACommon::$version is deprecated, set it to current version for backwards compatibility
 KDNACommon::$version = KDNAForms::$version;
@@ -285,10 +285,10 @@ class KDNAForms {
 			KDNAAddOn::init_addons();
 		}
 
-		if ( defined( 'OSDXP_DASHBOARD_VER' ) ) {
-			// Integration with osDXP.
-			require_once  KDNA_PLUGIN_DIR_PATH . 'includes/class-kdna-osdxp.php';
-		}
+		// OSDXP integration removed.
+		// if ( defined( 'OSDXP_DASHBOARD_VER' ) ) {
+		// 	require_once  KDNA_PLUGIN_DIR_PATH . 'includes/class-kdna-osdxp.php';
+		// }
 	}
 
 	/**
@@ -339,7 +339,8 @@ class KDNAForms {
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/post-custom-field-select/class-kdna-post-custom-field-select-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/embed-form/class-kdna-embed-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/form-editor/class-kdna-form-editor-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . 'includes/splash-page/class-kdna-splash-page-service-provider.php';
+		// Splash page removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . 'includes/splash-page/class-kdna-splash-page-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/query/batch-processing/class-kdna-batch-operations-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/save-form/class-kdna-save-form-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/merge-tags/class-kdna-merge-tags-service-provider.php';
@@ -348,17 +349,23 @@ class KDNAForms {
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/assets/class-kdna-asset-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . '/includes/honeypot/class-kdna-honeypot-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . '/includes/ajax/class-kdna-ajax-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . '/includes/notification/class-payment-stale-service-provider.php';
+		// Payment stale service provider removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . '/includes/notification/class-payment-stale-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . '/includes/theme-layers/class-kdna-theme-layers-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . '/includes/blocks/class-kdna-blocks-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . '/includes/setup-wizard/class-kdna-setup-wizard-service-provider.php';
+		// Setup wizard removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . '/includes/setup-wizard/class-kdna-setup-wizard-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . '/includes/query/class-kdna-query-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . '/includes/form-display/class-kdna-form-display-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . '/includes/template-library/class-kdna-template-library-service-provider.php';
+		// Template library removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . '/includes/template-library/class-kdna-template-library-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/environment-config/class-kdna-environment-config-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . 'includes/async/class-kdna-background-process-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . 'includes/system-status/class-kdna-system-report-service-provider.php';
-		require_once KDNA_PLUGIN_DIR_PATH . 'includes/telemetry/class-kdna-telemetry-service-provider.php';
+		// Async/background process removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . 'includes/async/class-kdna-background-process-service-provider.php';
+		// System status removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . 'includes/system-status/class-kdna-system-report-service-provider.php';
+		// Telemetry removed.
+		// require_once KDNA_PLUGIN_DIR_PATH . 'includes/telemetry/class-kdna-telemetry-service-provider.php';
 		require_once KDNA_PLUGIN_DIR_PATH . 'includes/form-switcher/class-kdna-form-switcher-service-provider.php';
 
 		if ( ! empty( self::$container ) ) {
@@ -501,7 +508,8 @@ class KDNAForms {
 					// Display admin notice if logging is enabled.
 					add_action( 'admin_notices', array( 'KDNAForms', 'maybe_display_logging_notice' ) );
 
-					require_once( KDNACommon::get_base_path() . '/includes/locking/locking.php' );
+					// Locking removed.
+					// require_once( KDNACommon::get_base_path() . '/includes/locking/locking.php' );
 
 					if ( self::is_kdna_page() ) {
 						require_once( KDNACommon::get_base_path() . '/tooltips.php' );
@@ -741,13 +749,13 @@ class KDNAForms {
 			KDNAFormSettings::initialize_settings_renderer();
 		}
 
-		// Initialize Personal Data settings.
-		if ( $gf_page === 'personal_data' ) {
-			if ( ! class_exists( 'KDNA_Personal_Data' ) ) {
-				require_once( KDNACommon::get_base_path() . '/includes/class-personal-data.php' );
-			}
-			KDNA_Personal_Data::initialize_settings_renderer();
-		}
+		// Personal Data module removed.
+		// if ( $gf_page === 'personal_data' ) {
+		// 	if ( ! class_exists( 'KDNA_Personal_Data' ) ) {
+		// 		require_once( KDNACommon::get_base_path() . '/includes/class-personal-data.php' );
+		// 	}
+		// 	KDNA_Personal_Data::initialize_settings_renderer();
+		// }
 
 		// Initialize Confirmation settings.
 		if ( $gf_page === 'confirmation' && isset( $_GET['cid'] ) ) { //phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -2289,7 +2297,10 @@ class KDNAForms {
 	 * @access public
 	 */
 	public static function include_payment_addon_framework() {
-		require_once( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' );
+		// Payment addon removed; load feed addon as base fallback.
+		if ( file_exists( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' ) ) {
+			require_once( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' );
+		}
 	}
 
 	/**
@@ -2595,27 +2606,9 @@ class KDNAForms {
 
 			$message = esc_html__( 'IMPORTANT: As this is a major update, we strongly recommend creating a backup of your site before updating.', 'kdnaforms' );
 
-			require_once( KDNACommon::get_base_path() . '/includes/system-status/class-kdna-update.php' );
-
-			$updates = KDNA_Update::available_updates();
-
-			$addons_requiring_updates = array();
-
-			foreach ( $updates as $update ) {
-				if ( $update['slug'] == 'kdnaforms' ) {
-					continue;
-				}
-				$update_available = version_compare( $update['installed_version'], $update['latest_version'], '<' );
-				if ( $update_available ) {
-					$addons_requiring_updates[] = $update['name'] . ' ' . $update['installed_version'];
-				}
-			}
-
-			if ( count( $addons_requiring_updates ) > 0 ) {
-				/* translators: %s: version number */
-				$message .= '<br />' . sprintf( esc_html__( "The versions of the following add-ons you're running haven't been tested with KDNA Forms %s. Please update them or confirm compatibility before updating KDNA Forms, or you may experience issues:", 'kdnaforms' ), $args['new_version'] );
-				$message .= ' ' . join( ', ', $addons_requiring_updates );
-			}
+			// System status removed - skip update checks.
+			// require_once( KDNACommon::get_base_path() . '/includes/system-status/class-kdna-update.php' );
+			// $updates = KDNA_Update::available_updates();
 
 			echo sprintf( '<br /><br /><span style="display:inline-block;background-color: #d54e21; padding: 10px; color: #f9f9f9;">%s</span><br /><br />', $message ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
@@ -2969,7 +2962,8 @@ class KDNAForms {
 		wp_register_script( 'kdnaform_kdnaforms_theme', $base_url . "/assets/js/dist/scripts-theme{$dev_min}.js", array(
 			'kdnaform_kdnaforms_theme_vendors',
 		), $version, true );
-		wp_register_script( 'kdnaform_system_report_clipboard', $base_url . '/includes/system-status/js/clipboard.min.js', array( 'jquery' ), $version, true );
+		// System status removed.
+		// wp_register_script( 'kdnaform_system_report_clipboard', $base_url . '/includes/system-status/js/clipboard.min.js', array( 'jquery' ), $version, true );
 		wp_register_script( 'kdnaform_preview', $base_url . "/js/preview{$min}.js", array( 'jquery' ), $version, false );
 		wp_register_script( 'kdnaform_plugin_settings', $base_url . "/js/plugin_settings{$min}.js", array(
 			'jquery',
@@ -3602,11 +3596,8 @@ class KDNAForms {
 	 * @uses   GFSystemStatus::system_status_page()
 	 */
 	public static function system_status() {
-
-		require_once( KDNACommon::get_base_path() . '/includes/system-status/class-kdna-system-status.php' );
-		require_once( KDNACommon::get_base_path() . '/includes/system-status/class-kdna-system-report.php' );
-		require_once( KDNACommon::get_base_path() . '/includes/system-status/class-kdna-update.php' );
-		KDNA_System_Status::system_status_page();
+		// System status module removed.
+		echo '<div class="wrap"><h2>' . esc_html__( 'System Status', 'kdnaforms' ) . '</h2><p>' . esc_html__( 'System status module has been removed.', 'kdnaforms' ) . '</p></div>';
 	}
 
 	/**
@@ -3756,8 +3747,8 @@ class KDNAForms {
 			$percent_complete = 100;
 		} else {
 			$status = 'in_progress';
-			require_once( KDNACommon::get_base_path() . '/includes/system-status/class-kdna-system-report.php' );
-			$percent_complete = KDNA_System_Report::get_upgrade_percent_complete();
+			// System report removed - estimate percent complete.
+			$percent_complete = 50;
 		}
 
 		$response = json_encode(
@@ -3772,8 +3763,8 @@ class KDNAForms {
 
 		ob_end_flush();
 
-		// Simuate the healthcheck cron.
-		KDNAForms::$background_upgrader->handle_cron_healthcheck();
+		// Background upgrader removed.
+		// KDNAForms::$background_upgrader->handle_cron_healthcheck();
 
 		// The healthcheck task will terminate anyway but exit just in case.
 		exit;
@@ -6493,14 +6484,17 @@ class KDNAForms {
 
 		self::do_self_healing();
 
-		if ( ! get_option( 'kdnaform_enable_logging' ) ) {
-			gf_logging()->delete_log_files();
-		}
+		// Logging module removed.
+		// if ( ! get_option( 'kdnaform_enable_logging' ) ) {
+		// 	gf_logging()->delete_log_files();
+		// }
 
-		require_once( 'includes/class-personal-data.php' );
-		KDNA_Personal_Data::cron_task();
+		// Personal data module removed.
+		// require_once( 'includes/class-personal-data.php' );
+		// KDNA_Personal_Data::cron_task();
 
-		do_action( \KDNA_Forms\KDNA_Forms\Telemetry\KDNA_Telemetry_Service_Provider::TELEMETRY_SCHEDULED_TASK );
+		// Telemetry removed.
+		// do_action( \KDNA_Forms\KDNA_Forms\Telemetry\KDNA_Telemetry_Service_Provider::TELEMETRY_SCHEDULED_TASK );
 
 		KDNACommon::log_debug( __METHOD__ . '(): Done.' );
 	}
@@ -6809,10 +6803,7 @@ class KDNAForms {
 	 * @since 2.3
 	 */
 	public static function init_background_upgrader() {
-		if ( empty( self::$background_upgrader ) ) {
-			require_once KDNA_PLUGIN_DIR_PATH . 'includes/class-kdna-background-upgrader.php';
-			self::$background_upgrader = new KDNA_Background_Upgrader();
-		}
+		// Background upgrader removed.
 	}
 
 	/**
@@ -6871,10 +6862,11 @@ class KDNAForms {
 	 * @return array
 	 */
 	public static function data_exporter( $email_address, $page = 1 ) {
-
-		require_once( 'includes/class-personal-data.php' );
-
-		return KDNA_Personal_Data::data_exporter( $email_address, $page );
+		// Personal data module removed.
+		return array(
+			'data' => array(),
+			'done' => true,
+		);
 	}
 
 	/**
@@ -6888,10 +6880,13 @@ class KDNAForms {
 	 * @return array
 	 */
 	public static function data_eraser( $email_address, $page = 1 ) {
-
-		require_once( 'includes/class-personal-data.php' );
-
-		return KDNA_Personal_Data::data_eraser( $email_address, $page );
+		// Personal data module removed.
+		return array(
+			'items_removed'  => false,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
 	}
 
 	/**

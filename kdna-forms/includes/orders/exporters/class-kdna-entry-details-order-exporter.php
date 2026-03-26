@@ -6,7 +6,7 @@ use \KDNA_Forms\KDNA_Forms\Orders\KDNA_Order;
 use \KDNA_Forms\KDNA_Forms\Orders\Exporters\KDNA_Order_Exporter;
 use \KDNACommon;
 
-class GF_Entry_Details_Order_Exporter extends KDNA_Order_Exporter {
+class KDNA_Entry_Details_Order_Exporter extends KDNA_Order_Exporter {
 
 	/**
 	 * GF_Entry_Details_Order_Formatter constructor.

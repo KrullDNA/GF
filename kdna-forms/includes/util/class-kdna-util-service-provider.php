@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Util;
 
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
-use KDNA_Forms\KDNA_Forms\Transients\GF_WP_Transient_Strategy;
+use KDNA_Forms\KDNA_Forms\Transients\KDNA_WP_Transient_Strategy;
 use KDNA_Forms\KDNA_Forms\Util\Colors\Color_Modifier;
 
 class KDNA_Util_Service_Provider extends KDNA_Service_Provider {
@@ -33,7 +33,7 @@ class KDNA_Util_Service_Provider extends KDNA_Service_Provider {
 		$container->add(
 			self::TRANSIENT_STRAT,
 			function () {
-				return new GF_WP_Transient_Strategy();
+				return new KDNA_WP_Transient_Strategy();
 			}
 		);
 

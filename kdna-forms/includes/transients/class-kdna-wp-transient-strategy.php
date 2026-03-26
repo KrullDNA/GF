@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Transients;
 
-class GF_WP_Transient_Strategy implements GF_Transient_Strategy {
+class KDNA_WP_Transient_Strategy implements GF_Transient_Strategy {
 
 	/**
 	 * @param $key

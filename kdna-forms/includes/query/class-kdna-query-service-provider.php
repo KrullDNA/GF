@@ -5,7 +5,7 @@ namespace KDNA_Forms\KDNA_Forms\Query;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
 
-use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\GF_String_JSON_Handler;
+use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\KDNA_String_JSON_Handler;
 use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\KDNA_Query_JSON_Handler;
 
 /**
@@ -32,7 +32,7 @@ class KDNA_Query_Service_Provider extends KDNA_Service_Provider {
 		require_once( plugin_dir_path( __FILE__ ) . '/json-handlers/class-kdna-string-json-handler.php' );
 
 		$container->add( self::JSON_STRING_HANDLER, function() {
-			return new GF_String_JSON_Handler();
+			return new KDNA_String_JSON_Handler();
 		});
 
 		$container->add( self::JSON_QUERY_HANDLER, function() {

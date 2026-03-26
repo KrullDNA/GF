@@ -11,7 +11,7 @@ use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
 use KDNA_Forms\KDNA_Forms\Query\KDNA_Query_Service_Provider;
 use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\KDNA_Query_JSON_Handler;
-use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\GF_String_JSON_Handler;
+use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\KDNA_String_JSON_Handler;
 use \KDNACommon;
 use \KDNAForms;
 use \KDNAFormDisplay;

@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Query\Batch_Processing;
 
-class GF_Entry_Meta_Batch_Processor {
+class KDNA_Entry_Meta_Batch_Processor {
 
 	/**
 	 * Stores the entry meta information for batch processing.

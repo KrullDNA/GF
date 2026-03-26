@@ -8,7 +8,7 @@ namespace KDNA_Forms\KDNA_Forms\Query\JSON_Handlers;
  *
  * @since 2.7
  */
-class GF_String_JSON_Handler extends GF_JSON_Handler {
+class KDNA_String_JSON_Handler extends GF_JSON_Handler {
 
 	public function query( $slug ) {
 		global $wpdb;

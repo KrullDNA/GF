@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Orders\Summaries;
 
 use \KDNA_Forms\KDNA_Forms\Orders\KDNA_Order;
 use \KDNA_Forms\KDNA_Forms\Orders\Factories\KDNA_Order_Factory;
-use \KDNA_Forms\KDNA_Forms\Orders\Exporters\GF_Entry_Details_Order_Exporter;
+use \KDNA_Forms\KDNA_Forms\Orders\Exporters\KDNA_Entry_Details_Order_Exporter;
 
 final class KDNA_Order_Summary {
 
@@ -35,7 +35,7 @@ final class KDNA_Order_Summary {
 		KDNA_Order_Factory::load_dependencies();
 
 		$order         = KDNA_Order_Factory::create_from_entry( $form, $entry, $use_choice_text, $use_admin_labels, rgar( self::$configurations, 'receipt' ) );
-		$order_summary = ( new GF_Entry_Details_Order_Exporter( $order ) )->export();
+		$order_summary = ( new KDNA_Entry_Details_Order_Exporter( $order ) )->export();
 		if ( empty( $order_summary['rows'] ) ) {
 			return '';
 		}

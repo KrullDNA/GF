@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Orders\Exporters;
 
 use \KDNA_Forms\KDNA_Forms\Orders\KDNA_Order;
 use \KDNA_Forms\KDNA_Forms\Orders\Items\KDNA_Order_Item;
-use \KDNA_Forms\KDNA_Forms\Orders\Items\GF_Form_Product_Item;
+use \KDNA_Forms\KDNA_Forms\Orders\Items\KDNA_Form_Product_Item;
 
 use \KDNACommon;
 
@@ -35,7 +35,7 @@ class KDNA_Save_Entry_Order_Exporter extends KDNA_Order_Exporter {
 
 			if ( $item->is_line_item ) {
 				// If form product item, we don't need to store pricing info, name and options as they are already stored.
-				$exclude_properties                        = is_a( $item, GF_Form_Product_Item::class ) ? array( 'name', 'price', 'quantity', 'sub_total', 'options' ) : array();
+				$exclude_properties                        = is_a( $item, KDNA_Form_Product_Item::class ) ? array( 'name', 'price', 'quantity', 'sub_total', 'options' ) : array();
 				$this->data['rows'][ $item->belongs_to ][] = $this->filter_item_data( $item, $exclude_properties );
 			}
 		}

@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Theme_Layers\API\JSON\Rules;
 
-class GF_Theme_Layer_Rule {
+class KDNA_Theme_Layer_Rule {
 
 	private $setting;
 	private $operator;

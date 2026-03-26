@@ -6,8 +6,9 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 use \KDNA_Forms\KDNA_Forms\Messages\Dismissable_Messages;
 use \KDNA_Forms\KDNA_Forms\Orders\Factories\KDNA_Order_Factory;
 use \KDNA_Forms\KDNA_Forms\Orders\Summaries\KDNA_Order_Summary;
-use \KDNA_Forms\KDNA_Forms\Setup_Wizard\KDNA_Setup_Wizard_Service_Provider;
-use \KDNA_Forms\KDNA_Forms\Setup_Wizard\Endpoints\KDNA_Setup_Wizard_Endpoint_Save_Prefs;
+// Setup wizard removed.
+// use \KDNA_Forms\KDNA_Forms\Setup_Wizard\KDNA_Setup_Wizard_Service_Provider;
+// use \KDNA_Forms\KDNA_Forms\Setup_Wizard\Endpoints\KDNA_Setup_Wizard_Endpoint_Save_Prefs;
 
 
 /**
@@ -3210,24 +3211,9 @@ Content-Type: text/html;
 			'lang'    => $lang,
 		);
 
-		$installation_telemetry = array(
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_AUTO_UPDATE,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_CURRENCY,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_DATA_COLLECTION,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_EMAIL,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_FORM_TYPES,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_FORM_TYPES_OTHER,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_HIDE_LICENSE,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_ORGANIZATION,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_ORGANIZATION_OTHER,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_SERVICES,
-			KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_SERVICES_OTHER,
-		);
-
-		$wizard_endpoint = KDNAForms::get_service_container()->get( KDNA_Setup_Wizard_Service_Provider::SAVE_PREFS_ENDPOINT );
-		foreach ( $installation_telemetry as $telem ) {
-			$post[ $telem ] = $wizard_endpoint->get_value( $telem );
-		}
+		// Setup wizard / telemetry removed.
+		// $installation_telemetry = array( ... );
+		// $wizard_endpoint = KDNAForms::get_service_container()->get( ... );
 
 		return $post;
 	}
