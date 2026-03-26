@@ -943,7 +943,10 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'submit_bg_color', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( $btn => 'background-color: {{VALUE}} !important; background-image: none !important;' ),
+			'selectors' => array(
+				$btn => 'background-color: {{VALUE}} !important; background-image: none !important;',
+				'{{WRAPPER}} .gform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-primary: {{VALUE}}; --gf-color-primary: {{VALUE}};',
+			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
@@ -976,7 +979,10 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'submit_hover_bg_color', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( $btn_hover => 'background-color: {{VALUE}} !important; background-image: none !important;' ),
+			'selectors' => array(
+				$btn_hover => 'background-color: {{VALUE}} !important; background-image: none !important;',
+				'{{WRAPPER}} .gform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-hover-primary: {{VALUE}};',
+			),
 		) );
 
 		$this->add_control( 'submit_hover_border_color', array(
