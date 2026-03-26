@@ -2,7 +2,7 @@
 var GformShortcodeUI;
 
 ( function (gfShortCodeUI, $) {
-    var i18n = window.kdnaform_admin_config.i18n;
+    var i18n = window.gform_admin_config.i18n;
     var sui = window.GformShortcodeUI = {
         models: {},
         collections: {},
@@ -220,7 +220,7 @@ var GformShortcodeUI;
         },
 
         afterRender: function () {
-            kdnaform_initialize_tooltips();
+            gform_initialize_tooltips();
 
             $('#gform-insert-shortcode').toggle(this.options.viewMode == 'insert');
             $('#gform-update-shortcode').toggle(this.options.viewMode != 'insert');
@@ -748,7 +748,7 @@ var GformShortcodeUI;
             wp.mce.views.register( 'gravityform', $.extend(true, {}, sui.utils.shortcodeViewConstructor) );
         }
 
-        $(document).on('click', '.kdnaform_media_link', function () {
+        $(document).on('click', '.gform_media_link', function () {
             sui.shortcodes = new sui.collections.Shortcodes(gfShortcodeUIData.shortcodes);
             var shortcode = sui.shortcodes.findWhere({shortcode_tag: 'gravityform', action_tag: ''});
             GformShortcodeUI = new sui.views.editShortcodeForm({model: shortcode, viewMode: 'insert'});

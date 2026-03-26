@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
 	}
 
 	$(document).ready(function(){
-		$(".kdnaform_currency").bind("change", function(){
+		$(".gform_currency").bind("change", function(){
 			FormatCurrency(this);
 		}).each(function(){
 			FormatCurrency(this);
@@ -43,8 +43,8 @@ function initMergeTagSupport() {
 }
 
 function FormatCurrency(element){
-	if(kdna_vars.gf_currency_config){
-		var currency = new gform.Currency(kdna_vars.gf_currency_config);
+	if(gf_vars.gf_currency_config){
+		var currency = new gform.Currency(gf_vars.gf_currency_config);
 		var price = currency.toMoney(jQuery(element).val());
 		jQuery(element).val(price);
 	}
@@ -102,7 +102,7 @@ function GetConditionalObject(objectType){
 		break;
 	}
 
-	object = gform.applyFilters( 'kdnaform_conditional_object', object, objectType );
+	object = gform.applyFilters( 'gform_conditional_object', object, objectType );
 
 	return object;
 }
@@ -118,39 +118,39 @@ function CreateConditionalLogic(objectType, obj){
 
 	var objText;
 	if (obj['type'] == "section")
-		objText = kdna_vars.thisSectionIf;
+		objText = gf_vars.thisSectionIf;
 	else if(objectType == "field")
-		objText = kdna_vars.thisFieldIf;
+		objText = gf_vars.thisFieldIf;
 	else if(objectType == "page")
-		objText = kdna_vars.thisPage;
+		objText = gf_vars.thisPage;
 	else if(objectType == "confirmation")
-		objText = kdna_vars.thisConfirmation;
+		objText = gf_vars.thisConfirmation;
 	else if(objectType == "notification")
-		objText = kdna_vars.thisNotification;
+		objText = gf_vars.thisNotification;
 	else
-		objText = kdna_vars.thisFormButton;
+		objText = gf_vars.thisFormButton;
 
 	// Some elements are shown/hidden, and some elements are enabled/disabled.
 	var showText;
 	var hideText;
 	if( objectType == "next_button" ) {
-		showText = kdna_vars.enable;
-		hideText = kdna_vars.disable;
+		showText = gf_vars.enable;
+		hideText = gf_vars.disable;
 	} else {
-		showText = kdna_vars.show;
-		hideText = kdna_vars.hide;
+		showText = gf_vars.show;
+		hideText = gf_vars.hide;
 	}
 
 	var descPieces = {};
 	descPieces.actionType = "<select id='" + objectType + "_action_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"actionType\", jQuery(this).val());'><option value='show' " + showSelected + ">" + showText + "</option><option value='hide' " + hideSelected + ">" + hideText + "</option></select>";
 	descPieces.objectDescription = objText;
-	descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + kdna_vars.all + "</option><option value='any' " + anySelected + ">" + kdna_vars.any + "</option></select>";
-	descPieces.ofTheFollowingMatch = kdna_vars.ofTheFollowingMatch;
+	descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + gf_vars.all + "</option><option value='any' " + anySelected + ">" + gf_vars.any + "</option></select>";
+	descPieces.ofTheFollowingMatch = gf_vars.ofTheFollowingMatch;
 
 	var descPiecesArr = makeArray( descPieces );
 
 	var str = descPiecesArr.join(' ');
-	str = gform.applyFilters( 'kdnaform_conditional_logic_description', str, descPieces, objectType, obj );
+	str = gform.applyFilters( 'gform_conditional_logic_description', str, descPieces, objectType, obj );
 	var i, rule;
 	for(i=0; i < obj.conditionalLogic.rules.length; i++){
 		rule = obj.conditionalLogic.rules[i];
@@ -194,12 +194,12 @@ function GetRuleOperators( objectType, i, fieldId, selectedOperator ) {
 	str = "<select id='" + objectType + "_rule_operator_" + i + "' class='gfield_rule_select' onchange='SetRuleProperty(\"" + objectType + "\", " + i + ", \"operator\", jQuery(this).val());var valueSelector=\"#" + objectType + "_rule_value_" + i + "\"; jQuery(valueSelector).replaceWith(GetRuleValues(\"" + objectType + "\", " + i + ",\"" + fieldId + "\", \"\"));jQuery(valueSelector).change();'>";
 	operators = IsEntryMeta(fieldId) ? GetOperatorsForMeta(supportedOperators, fieldId) : supportedOperators;
 
-	operators = gform.applyFilters( 'kdnaform_conditional_logic_operators', operators, objectType, fieldId );
+	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, objectType, fieldId );
 
 	jQuery.each(operators,function(operator, stringKey){
-		var operatorText = kdna_vars[stringKey];
+		var operatorText = gf_vars[stringKey];
 		if ( undefined === operatorText ) {
-			// If the operator text has been filtered, it may not be in the kdna_vars array.
+			// If the operator text has been filtered, it may not be in the gf_vars array.
 			operatorText = stringKey;
 		}
 		selected = selectedOperator == operator ? "selected='selected'" : "";
@@ -258,7 +258,7 @@ function GetRuleFields( objectType, ruleIndex, selectedFieldId ) {
 	// get entry meta fields and append to existing fields
 	jQuery.merge(options, GetEntryMetaFields( selectedFieldId ) );
 
-	options = gform.applyFilters( 'kdnaform_conditional_logic_fields', options, form, selectedFieldId );
+	options = gform.applyFilters( 'gform_conditional_logic_fields', options, form, selectedFieldId );
 
 	str += GetRuleFieldsOptions( options, selectedFieldId );
 
@@ -313,7 +313,7 @@ function IsConditionalLogicField(field){
 
 	var index = jQuery.inArray(inputType, supported_fields);
 	var isConditionalLogicField = index >= 0 ? true : false;
-	isConditionalLogicField = gform.applyFilters( 'kdnaform_is_conditional_logic_field', isConditionalLogicField, field );
+	isConditionalLogicField = gform.applyFilters( 'gform_is_conditional_logic_field', isConditionalLogicField, field );
 	return isConditionalLogicField;
 }
 
@@ -373,7 +373,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 						);
 
 			//will be replaced by real drop down during the ajax callback
-			str = "<select id='" + placeholderName + "' class='gfield_rule_select'><option>" + kdna_vars["loading"] + "</option></select>";
+			str = "<select id='" + placeholderName + "' class='gfield_rule_select'><option>" + gf_vars["loading"] + "</option></select>";
 		}
 	}
 	else if(field && field.choices && jQuery.inArray(operator, ["is", "isnot"]) > -1){
@@ -381,7 +381,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 			ruleChoices;
 
 		if (GetInputType(field) === 'multiselect') {
-			emptyChoice = kdna_vars.emptyChoice;
+			emptyChoice = gf_vars.emptyChoice;
 		} else if (field.placeholder) {
 			emptyChoice = field.placeholder;
 		}
@@ -397,7 +397,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		//loading categories via AJAX
 		jQuery.post( ajaxurl, {
 			action:       'gf_get_address_rule_values_select',
-			address_type: field.addressType ? field.addressType : kdna_vars.defaultAddressType,
+			address_type: field.addressType ? field.addressType : gf_vars.defaultAddressType,
 			value:        selectedValue,
 			id:           dropdownId,
 			form_id:      field.formId
@@ -411,7 +411,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		} );
 
 		// will be replaced by real drop down during the ajax callback
-		str = "<select id='" + dropdownId + "' class='gfield_rule_select'><option>" + kdna_vars['loading'] + "</option></select>";
+		str = "<select id='" + dropdownId + "' class='gfield_rule_select'><option>" + gf_vars['loading'] + "</option></select>";
 
 	}
 	else if (isEntryMeta && entry_meta && entry_meta[selectedFieldId] &&  entry_meta[selectedFieldId].filter && typeof entry_meta[selectedFieldId].filter.choices != 'undefined') {
@@ -421,10 +421,10 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		selectedValue = selectedValue ? selectedValue.replace(/'/g, "&#039;") : "";
 
 		//create a text field for fields that don't have choices (i.e text, textarea, number, email, etc...)
-		str = "<input type='text' placeholder='" + kdna_vars["enterValue"] + "' class='gfield_rule_select gfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
+		str = "<input type='text' placeholder='" + gf_vars["enterValue"] + "' class='gfield_rule_select gfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
 	}
 
-	str = gform.applyFilters( 'kdnaform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
+	str = gform.applyFilters( 'gform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
 
 	return str;
 }
@@ -441,13 +441,13 @@ function IsAddressSelect( inputId, field ) {
 		return false;
 	}
 
-	var addressType = field.addressType ? field.addressType : kdna_vars.defaultAddressType;
+	var addressType = field.addressType ? field.addressType : gf_vars.defaultAddressType;
 
-	if( ! kdna_vars.addressTypes[ addressType ] ) {
+	if( ! gf_vars.addressTypes[ addressType ] ) {
 		return false;
 	}
 
-	var addressTypeObj = kdna_vars.addressTypes[ addressType ],
+	var addressTypeObj = gf_vars.addressTypes[ addressType ],
 		isCountryInput = inputId == field.id + '.6',
 		isStateInput   = inputId == field.id + '.4';
 
@@ -569,7 +569,7 @@ function TruncateRuleText(text){
 
 function gfAjaxSpinner(elem, imageSrc, inlineStyles) {
 
-	imageSrc     = typeof imageSrc == 'undefined' || ! imageSrc ? kdna_vars.baseUrl + '/images/spinner.svg': imageSrc;
+	imageSrc     = typeof imageSrc == 'undefined' || ! imageSrc ? gf_vars.baseUrl + '/images/spinner.svg': imageSrc;
 	inlineStyles = typeof inlineStyles != 'undefined' ? inlineStyles : '';
 
 	this.elem = elem;
@@ -841,9 +841,9 @@ function StashConditionalLogic() {
 
 function ConfirmationObj() {
 	this.id = false;
-	this.name = kdna_vars.confirmationDefaultName;
+	this.name = gf_vars.confirmationDefaultName;
 	this.type = 'message';
-	this.message = kdna_vars.confirmationDefaultMessage;
+	this.message = gf_vars.confirmationDefaultMessage;
 	this.isDefault = 0;
 }
 
@@ -862,7 +862,7 @@ function ConfirmationObj() {
 	};
 
 	gaddon.toggleFeedSwitch = function( btn, is_active ) {
-		var i18n = window.kdnaform_admin_config.i18n;
+		var i18n = window.gform_admin_config.i18n;
 		if ( is_active ) {
 			jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_inactive );
 		} else {
@@ -974,7 +974,7 @@ var gfMergeTagsObj = function( form, element ) {
 
 		self.addMergeTagIcon();
 
-		self.mergeTagIcon.find( '.open-list' ).on( 'click.kdnaforms', function(e) {
+		self.mergeTagIcon.find( '.open-list' ).on( 'click.gravityforms', function(e) {
 
 			e.preventDefault();
 
@@ -1018,7 +1018,7 @@ var gfMergeTagsObj = function( form, element ) {
 		element = self.elem ? self.elem : element;
 
 		element.next( '.all-merge-tags' ).remove();
-		element.off( 'keydown.kdnaforms' );
+		element.off( 'keydown.gravityforms' );
 		element.autocomplete( 'destroy' );
 		element.data( 'mergeTags', null );
 
@@ -1035,7 +1035,7 @@ var gfMergeTagsObj = function( form, element ) {
 	*/
 	self.bindKeyDown = function() {
 
-		self.elem.on( 'keydown.kdnaforms', function( event ) {
+		self.elem.on( 'keydown.gravityforms', function( event ) {
 			var menuActive = self.elem.data( 'autocomplete' ) && self.elem.data( 'autocomplete' ).menu ? self.elem.data( 'autocomplete' ).menu.active : false;
 
 			if ( event.keyCode === jQuery.ui.keyCode.TAB && menuActive ) {
@@ -1104,7 +1104,7 @@ var gfMergeTagsObj = function( form, element ) {
 		var inputType     = self.elem.is( 'input' ) ? 'input' : 'textarea',
 			positionClass = self.getClassProperty( self.elem, 'position' );
 
-		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag gform-button gform-button--unstyled" title="' + kdna_vars.mergeTagsText + '"><i class="gform-icon gform-icon--merge-tag gform-button__icon" aria-hidden="true"></i>' + kdna_vars.mergeTagsText + '</button></span>' );
+		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag gform-button gform-button--unstyled" title="' + gf_vars.mergeTagsText + '"><i class="gform-icon gform-icon--merge-tag gform-button__icon" aria-hidden="true"></i>' + gf_vars.mergeTagsText + '</button></span>' );
 
 		// Add the target element to the merge tag icon data for reference later when determining where the selected merge tag should be inserted.
 		self.mergeTagIcon.data( 'targetElement', self.elem.attr( 'id' ) );
@@ -1342,19 +1342,19 @@ var gfMergeTagsObj = function( form, element ) {
 			}
 		};
 
-		mergeTags = gform.applyFilters('kdnaform_merge_tags', mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option, this );
+		mergeTags = gform.applyFilters('gform_merge_tags', mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option, this );
 
 		return mergeTags;
 	};
 
 	this.getMergeTagLabel = function(tag) {
 
-		for(groupName in kdna_vars.mergeTags) {
+		for(groupName in gf_vars.mergeTags) {
 
-			if(!kdna_vars.mergeTags.hasOwnProperty(groupName))
+			if(!gf_vars.mergeTags.hasOwnProperty(groupName))
 				continue;
 
-			var tags = kdna_vars.mergeTags[groupName].tags;
+			var tags = gf_vars.mergeTags[groupName].tags;
 			for(i in tags) {
 
 				if(!tags.hasOwnProperty(i))
@@ -1369,7 +1369,7 @@ var gfMergeTagsObj = function( form, element ) {
 	};
 
 	this.getMergeGroupLabel = function(group) {
-		return kdna_vars.mergeTags[group].label;
+		return gf_vars.mergeTags[group].label;
 	};
 
 	this.getFieldMergeTags = function(field, option) {
@@ -1422,14 +1422,14 @@ var gfMergeTagsObj = function( form, element ) {
 	*/
 	self.getCustomMergeTags = function() {
 
-		for ( groupName in kdna_vars.mergeTags ) {
+		for ( groupName in gf_vars.mergeTags ) {
 
-			if ( ! kdna_vars.mergeTags.hasOwnProperty( groupName ) ) {
+			if ( ! gf_vars.mergeTags.hasOwnProperty( groupName ) ) {
 				continue;
 			}
 
 			if ( groupName == 'custom' ) {
-				return kdna_vars.mergeTags[ groupName ];
+				return gf_vars.mergeTags[ groupName ];
 			}
 
 		}
@@ -1512,7 +1512,7 @@ var gfMergeTagsObj = function( form, element ) {
 				var label = gform.tools.stripSlashes( tag.label );
 
 				var tagHTML = jQuery( '<a class="" data-value="' + escapeAttr( tag.tag ) + '">' + escapeHtml( label ) + '</a>' );
-				tagHTML.on( 'click.kdnaforms', self.bindMergeTagListClick );
+				tagHTML.on( 'click.gravityforms', self.bindMergeTagListClick );
 
 				optionsHTML.push( jQuery( '<li></li>' ).html( tagHTML ) );
 
@@ -1676,8 +1676,8 @@ var FeedConditionObj = function( args ) {
 
 		var fcobj = this;
 
-		gform.addFilter( 'kdnaform_conditional_object', 'FeedConditionConditionalObject' );
-		gform.addFilter( 'kdnaform_conditional_logic_description', 'FeedConditionConditionalDescription' );
+		gform.addFilter( 'gform_conditional_object', 'FeedConditionConditionalObject' );
+		gform.addFilter( 'gform_conditional_logic_description', 'FeedConditionConditionalDescription' );
 
 		jQuery(document).ready(function(){
 			ToggleConditionalLogic( true,"feed_condition" );
@@ -2046,7 +2046,7 @@ gform.components.dropdown.prototype.bindEvents = function() {
  * the dismiss button (plus data-gform-alert-cookie="cookieName" on the el if you want a 24 hour cookie based
  * dismissal vs. only a display none dismissal).
  * 2) Calling gform.components.alert.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
- * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'kdnaform_init_alerts' ) making
+ * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'gform_init_alerts' ) making
  * sure to add the various data attributes as outlined in the component documentation and in #1 above to the
  * injected HTML'S container.
  *
@@ -2143,7 +2143,7 @@ gform.components.alert = {
 	 * @since 2.5.8
 	 */
 	bindEvents: function() {
-		document.addEventListener( 'kdnaform_init_alerts', gform.components.alert.initializeInstances );
+		document.addEventListener( 'gform_init_alerts', gform.components.alert.initializeInstances );
 		gform.tools.delegate( 'body', 'click', '[data-js="gform-alert-dismiss-trigger"]', gform.components.alert.dismissAlert );
 	},
 
@@ -2159,7 +2159,7 @@ gform.components.alert = {
 	}
 };
 
-document.addEventListener( 'kdnaform_main_scripts_loaded', gform.components.alert.init );
+document.addEventListener( 'gform_main_scripts_loaded', gform.components.alert.init );
 
 //------------------------------------------------
 //---------- SIMPLEBAR ---------------------------
@@ -2169,13 +2169,13 @@ document.addEventListener( 'kdnaform_main_scripts_loaded', gform.components.aler
  * Inits any gform specific SimpleBar instances that can't be initialized by the data attribute, either on init,
  * by method call or by custom event. Stores instances with reference dom id for later manipulation if needed.
  *
- * Make sure to enqueue 'kdnaform_simplebar' before using the techniques below.
+ * Make sure to enqueue 'gform_simplebar' before using the techniques below.
  *
  * You have 3 ways to trigger a render on your element:
  *
  * 1) Place an attribute of data-simplebar (plus data-simplebar-direction="rtl" if in rtl) on the el.
  * 2) Calling gform.simplebar.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
- * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'kdnaform_render_simplebars' ) making
+ * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'gform_render_simplebars' ) making
  * sure to add data-js="gform-simplebar" to the injected HTML'S container.
  *
  * You will find your instances on the object gform.simplebar.instances. Each instance has an id which relates to the dom
@@ -2290,7 +2290,7 @@ gform.simplebar = {
 	 * @since 2.5.6
 	 */
 	bindEvents: function() {
-		document.addEventListener( 'kdnaform_render_simplebars', gform.simplebar.initializeInstances );
+		document.addEventListener( 'gform_render_simplebars', gform.simplebar.initializeInstances );
 	},
 
 	/**
@@ -2308,4 +2308,4 @@ gform.simplebar = {
 	}
 };
 
-document.addEventListener( 'kdnaform_main_scripts_loaded', gform.simplebar.init );
+document.addEventListener( 'gform_main_scripts_loaded', gform.simplebar.init );

@@ -4,7 +4,7 @@
 //----------------------------------------------------------
 
 if ( ! gform ) {
-	document.addEventListener( 'kdnaform_main_scripts_loaded', function() { gform.scriptsLoaded = true; } );
+	document.addEventListener( 'gform_main_scripts_loaded', function() { gform.scriptsLoaded = true; } );
 	document.addEventListener( 'gform/theme/scripts_loaded', function() { gform.themeScriptsLoaded = true; } );
 	window.addEventListener( 'DOMContentLoaded', function() { gform.domLoaded = true; } );
 
@@ -21,7 +21,7 @@ if ( ! gform ) {
 		callIfLoaded: function ( fn ) {
 			if ( gform.domLoaded && gform.scriptsLoaded && ( gform.themeScriptsLoaded || gform.isFormEditor() ) ) {
 				if ( gform.isFormEditor() ) {
-					console.warn( 'The use of gform.initializeOnLoaded() is deprecated in the form editor context and will be removed in KDNA Forms 3.1.' );
+					console.warn( 'The use of gform.initializeOnLoaded() is deprecated in the form editor context and will be removed in Gravity Forms 3.1.' );
 				}
 				fn();
 				return true;
@@ -38,7 +38,7 @@ if ( ! gform ) {
 		 */
 		initializeOnLoaded: function( fn ) {
 			if ( ! gform.callIfLoaded( fn ) ) {
-				document.addEventListener( 'kdnaform_main_scripts_loaded', () => { gform.scriptsLoaded = true; gform.callIfLoaded( fn ); } );
+				document.addEventListener( 'gform_main_scripts_loaded', () => { gform.scriptsLoaded = true; gform.callIfLoaded( fn ); } );
 				document.addEventListener( 'gform/theme/scripts_loaded', () => { gform.themeScriptsLoaded = true; gform.callIfLoaded( fn ); } );
 				window.addEventListener( 'DOMContentLoaded', () => { gform.domLoaded = true; gform.callIfLoaded( fn ); } );
 			}

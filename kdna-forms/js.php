@@ -1,5 +1,5 @@
 <?php
-if ( ! class_exists( 'KDNAForms' ) ) {
+if ( ! class_exists( 'GFForms' ) ) {
 	die();
 }
 ?>
@@ -16,11 +16,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
             if (!confirmed) return;
 
             //Sending AJAX request
-            jQuery.post( ajaxurl, {action: "gf_delete_custom_choice", name: kdnaform_selected_custom_choice, gf_delete_custom_choice: "<?php echo wp_create_nonce( 'kdna_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+            jQuery.post( ajaxurl, {action: "gf_delete_custom_choice", name: gform_selected_custom_choice, gf_delete_custom_choice: "<?php echo wp_create_nonce( 'gf_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
             //Updating UI
-            delete kdnaform_custom_choices[kdnaform_selected_custom_choice];
-            kdnaform_selected_custom_choice = '';
+            delete gform_custom_choices[gform_selected_custom_choice];
+            gform_selected_custom_choice = '';
 
             CloseCustomChoicesPanel();
             jQuery("#gfield_bulk_add_input").val('');
@@ -38,7 +38,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
             		gform.instances.dialogAlert( gf_vars.MissingNameCustomChoicesTitle, gf_vars.MissingNameCustomChoices );
 			return;
 		}
-		else if (kdnaform_custom_choices[name] && name != kdnaform_selected_custom_choice) {
+		else if (gform_custom_choices[name] && name != gform_selected_custom_choice) {
                     gform.instances.moveBulkChoicesBehind();
             		gform.instances.dialogAlert( gf_vars.DuplicateNameCustomChoicesTitle, gf_vars.DuplicateNameCustomChoices );
 			return;
@@ -47,14 +47,14 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var choices = jQuery('#gfield_bulk_add_input').val().split('\n');
 
 		//Sending AJAX request
-		jQuery.post(ajaxurl, {action: "gf_save_custom_choice", previous_name: kdnaform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), gf_save_custom_choice: "<?php echo wp_create_nonce( 'kdna_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+		jQuery.post(ajaxurl, {action: "gf_save_custom_choice", previous_name: gform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), gf_save_custom_choice: "<?php echo wp_create_nonce( 'gf_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
 		//deleting existing custom choice
-		if (kdnaform_selected_custom_choice.length > 0)
-			delete kdnaform_custom_choices[kdnaform_selected_custom_choice];
+		if (gform_selected_custom_choice.length > 0)
+			delete gform_custom_choices[gform_selected_custom_choice];
 
 		//saving new custom choice
-		kdnaform_custom_choices[name] = choices;
+		gform_custom_choices[name] = choices;
 
 		InitBulkCustomPanel();
 		LoadCustomChoices();
@@ -78,23 +78,23 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		var pages = GetFieldsByType(["page"]);
 		pages.push(new Array());
-		var str = "<ul class='kdnaform_page_names'>";
+		var str = "<ul class='gform_page_names'>";
 
-		var pageNameFields = jQuery(".kdnaform_page_names input");
+		var pageNameFields = jQuery(".gform_page_names input");
 		for (var i = 0; i < pages.length; i++) {
 			var pageName = form["pagination"] && form["pagination"]["pages"] && form["pagination"]["pages"][i] ? form["pagination"]["pages"][i] : "";
 			if (pageNameFields.length > i && pageNameFields[i].value) {
 				pageName = pageNameFields[i].value;
 			}
 
-			str += "<li><label class='inline' for='kdnaform_pagename_" + i + "' >" + <?php echo json_encode( esc_html__( 'Page', 'kdnaforms' ) ); ?> + " " + (i + 1) + "</label> <input type='text' class='fieldwidth-4' id='kdnaform_pagename_" + i + "' value='" + pageName.replace("'", "&#39;") + "' /></li>";
+			str += "<li><label class='inline' for='gform_pagename_" + i + "' >" + <?php echo json_encode( esc_html__( 'Page', 'kdnaforms' ) ); ?> + " " + (i + 1) + "</label> <input type='text' class='fieldwidth-4' id='gform_pagename_" + i + "' value='" + pageName.replace("'", "&#39;") + "' /></li>";
 		}
 		str += "</ul>";
 
 		jQuery("#page_names_container").html(str);
 
 		if (jQuery("#pagination_type_none").is(":checked")) {
-			jQuery(".kdnaform_page_names input").val("");
+			jQuery(".gform_page_names input").val("");
 			jQuery("#percentage_confirmation_page_name").val("");
 			jQuery("#percentage_confirmation_display").prop("checked", false);
 
@@ -251,11 +251,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			const autoCompleteAttribute = field?.autocompleteAttribute || ''
 			field_str = "<label for='field_autocomplete_attribute' class='inline'>" + <?php echo json_encode( esc_html__( 'Autocomplete Attribute:', 'kdnaforms' ) ); ?> + "&nbsp;</label>";
 			field_str += "<input type='text' value='" + autoCompleteAttribute + "' id='field_autocomplete_attribute' class='field_autocomplete_attribute' aria-describedby='autocomplete_attributes_list'/>";
-			field_str += "<a href='https://docs.kdnaforms.com/accessibility-for-developers/#h-autocomplete' target='_blank' id='autocomplete_attributes_list' style='display: inline-block; margin-top: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a><br>';
+			field_str += "<a href='https://docs.gravityforms.com/accessibility-for-developers/#h-autocomplete' target='_blank' id='autocomplete_attributes_list' style='display: inline-block; margin-top: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a><br>';
 
 			SetFieldProperty( 'autocompleteAttribute', autoCompleteAttribute );
 		} else {
-			field_str = "<a href='https://docs.kdnaforms.com/accessibility-for-developers/#h-autocomplete' target='_blank' style='display: inline-block; margin-bottom: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
+			field_str = "<a href='https://docs.gravityforms.com/accessibility-for-developers/#h-autocomplete' target='_blank' style='display: inline-block; margin-bottom: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
 			field_str += "<fieldset class='input_autocomplete'><legend class='screen-reader-text'>" + <?php echo json_encode( esc_html__( 'Autocomplete Attributes', 'kdnaforms' ) ); ?> + "</legend><div class='gform-sidebar-setting-grid-wrapper gform-sidebar-setting-grid-wrapper__two-column'><div class='gform-sidebar-setting-grid-header'><span>" + <?php echo json_encode( esc_html__( 'Field', 'kdnaforms' ) ); ?> + "</span><span>" + <?php echo json_encode( esc_html__( 'Attribute', 'kdnaforms' ) ); ?> + "</span></div>";
 			for ( var i = 0; i < field["inputs"].length; i++ ) {
 				if ( field["inputs"][i]["isHidden"] ) {
@@ -470,7 +470,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var message = '<div id="gfield-warning-deprecated" class="gform-alert gform-alert--notice gform-alert--inline" role="alert">';
 			message += '<span class="gform-alert__icon gform-icon gform-icon--circle-notice-fine" aria-hidden="true"></span>';
 			message += '<div class="gform-alert__message-wrap">';
-			message += '<p class="gform-alert__message">' + deprecatedClass + ' ' + <?php echo json_encode( esc_html__( 'is no longer necessary.', 'kdnaforms' ) ); ?> + ' <a href="https://docs.kdnaforms.com/migrating-your-forms-from-ready-classes/" target="_blank" title="' + <?php echo json_encode( esc_attr__( 'Deprecation of Ready Classes in KDNA Forms 4.0', 'kdnaforms' ) ); ?> + '">' + <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a></p>';
+			message += '<p class="gform-alert__message">' + deprecatedClass + ' ' + <?php echo json_encode( esc_html__( 'is no longer necessary.', 'kdnaforms' ) ); ?> + ' <a href="https://docs.gravityforms.com/migrating-your-forms-from-ready-classes/" target="_blank" title="' + <?php echo json_encode( esc_attr__( 'Deprecation of Ready Classes in Gravity Forms 4.0', 'kdnaforms' ) ); ?> + '">' + <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a></p>';
 			message += '</div>';
 			message += '</div>';
 
@@ -504,9 +504,9 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				productFields.push(form["fields"][i]);
 		}
 
-		jQuery("#kdnaform_no_product_field_message").remove();
+		jQuery("#gform_no_product_field_message").remove();
 		if (productFields.length < 1) {
-			jQuery("#product_field").hide().after('<div id="kdnaform_no_product_field_message" class="gform-alert gform-alert--error gform-alert--inline"><span class="gform-alert__icon gform-icon gform-icon--circle-error-fine" aria-hidden="true"></span><div class="gform-alert__message-wrap"><p class="gform-alert__message">' + <?php echo json_encode( esc_html__( 'This field is not associated with a product. Please add a Product Field to the form.', 'kdnaforms' ) ); ?> + '</p></div></div>');
+			jQuery("#product_field").hide().after('<div id="gform_no_product_field_message" class="gform-alert gform-alert--error gform-alert--inline"><span class="gform-alert__icon gform-icon gform-icon--circle-error-fine" aria-hidden="true"></span><div class="gform-alert__message-wrap"><p class="gform-alert__message">' + <?php echo json_encode( esc_html__( 'This field is not associated with a product. Please add a Product Field to the form.', 'kdnaforms' ) ); ?> + '</p></div></div>');
 		}
 		else {
 			var product_field = jQuery("#product_field");
@@ -623,7 +623,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			 * @param bool   has_product Indicates if the current form has a product field.
 			 * @param bool   has_option  Indicates if the current form has a option field.
 			 */
-			error = gform.applyFilters('kdnaform_validation_error_form_editor', error, form, has_product, has_option);
+			error = gform.applyFilters('gform_validation_error_form_editor', error, form, has_product, has_option);
 		}
 		if ( error ) {
 			jQuery("#please_wait_container").hide();
@@ -652,8 +652,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var form_json = jQuery.toJSON(form);
 		gforms_original_json = form_json;
 
-		jQuery("#kdnaform_meta").val(form_json);
-		jQuery("#kdnaform_update").submit();
+		jQuery("#gform_meta").val(form_json);
+		jQuery("#gform_update").submit();
 
 		return true;
 	}
@@ -665,7 +665,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	 *
 	 */
 	function DeleteForm() {
-		if ( confirm( <?php echo wp_json_encode( __( "You are about to move this form to the trash. 'Cancel' to stop, 'OK' to move to trash.", "kdnaforms" ) ); ?> ) ) {
+		if ( confirm( <?php echo wp_json_encode( __( "You are about to move this form to the trash. 'Cancel' to stop, 'OK' to move to trash.", "gravityforms" ) ); ?> ) ) {
 			gf_vars.isFormTrash = true; jQuery('#form_trash')[0].submit();
 		}
 	}
@@ -837,36 +837,36 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 				if (!field.label)
 					field.label = <?php echo json_encode( esc_html__( 'Address', 'kdnaforms' ) ); ?>;
-				field.addressType = <?php echo json_encode( KDNA_Fields::get( 'address' )->get_default_address_type( rgget( 'id' ) ) ) ?>;
+				field.addressType = <?php echo json_encode( GF_Fields::get( 'address' )->get_default_address_type( rgget( 'id' ) ) ) ?>;
 				field.inputs = [
 					new Input(
 						field.id + 0.1,
-						<?php echo json_encode( gf_apply_filters( array( 'kdnaform_address_street', rgget( 'id' ) ), esc_html__( 'Street Address', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( gf_apply_filters( array( 'gform_address_street', rgget( 'id' ) ), esc_html__( 'Street Address', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-line1"
 					),
 					new Input(
 						field.id + 0.2,
-						<?php echo json_encode( gf_apply_filters( array( 'kdnaform_address_street2', rgget( 'id' ) ), esc_html__( 'Address Line 2', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( gf_apply_filters( array( 'gform_address_street2', rgget( 'id' ) ), esc_html__( 'Address Line 2', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-line2"
 					),
 					new Input(
 						field.id + 0.3,
-						<?php echo json_encode( gf_apply_filters( array( 'kdnaform_address_city', rgget( 'id' ) ), esc_html__( 'City', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( gf_apply_filters( array( 'gform_address_city', rgget( 'id' ) ), esc_html__( 'City', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-level2"
 					),
 					new Input(
 						field.id + 0.4,
-						<?php echo json_encode( gf_apply_filters( array( 'kdnaform_address_state', rgget( 'id' ) ), __( 'State / Province', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( gf_apply_filters( array( 'gform_address_state', rgget( 'id' ) ), __( 'State / Province', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-level1"
 					),
 					new Input(
 						field.id + 0.5,
-						<?php echo json_encode( gf_apply_filters( array( 'kdnaform_address_zip', rgget( 'id' ) ), esc_html__( 'ZIP / Postal Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( gf_apply_filters( array( 'gform_address_zip', rgget( 'id' ) ), esc_html__( 'ZIP / Postal Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"postal-code"
 					),
 					new Input(
 						field.id + 0.6,
-						<?php echo json_encode( gf_apply_filters( array( 'kdnaform_address_country', rgget( 'id' ) ), esc_html__( 'Country', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( gf_apply_filters( array( 'gform_address_country', rgget( 'id' ) ), esc_html__( 'Country', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"country-name"
 					)
 				];
@@ -877,13 +877,13 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 					field.label = <?php echo json_encode( esc_html__( 'Credit Card', 'kdnaforms' ) ); ?>;
 				var ccNumber, ccExpirationMonth, ccExpirationYear, ccSecruityCode, ccCardType, ccName;
 
-				ccNumber = new Input(field.id + ".1", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_number', rgget( 'id' ) ), esc_html__( 'Card Number', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccExpirationMonth = new Input(field.id + ".2_month", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccNumber = new Input(field.id + ".1", <?php echo json_encode( gf_apply_filters( array( 'gform_card_number', rgget( 'id' ) ), esc_html__( 'Card Number', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccExpirationMonth = new Input(field.id + ".2_month", <?php echo json_encode( gf_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
 				ccExpirationMonth.defaultLabel = <?php echo json_encode( esc_html__( 'Expiration Date', 'kdnaforms' ) ); ?>;
-				ccExpirationYear = new Input(field.id + ".2_year", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Year', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccSecruityCode = new Input(field.id + ".3", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_security_code', rgget( 'id' ) ), esc_html__( 'Security Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccCardType = new Input(field.id + ".4", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_type', rgget( 'id' ) ), __( 'Card Type', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccName = new Input(field.id + ".5", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_name', rgget( 'id' ) ), esc_html__( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccExpirationYear = new Input(field.id + ".2_year", <?php echo json_encode( gf_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Year', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccSecruityCode = new Input(field.id + ".3", <?php echo json_encode( gf_apply_filters( array( 'gform_card_security_code', rgget( 'id' ) ), esc_html__( 'Security Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccCardType = new Input(field.id + ".4", <?php echo json_encode( gf_apply_filters( array( 'gform_card_type', rgget( 'id' ) ), __( 'Card Type', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccName = new Input(field.id + ".5", <?php echo json_encode( gf_apply_filters( array( 'gform_card_name', rgget( 'id' ) ), esc_html__( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
 				field.inputs = [ccNumber, ccExpirationMonth, ccExpirationYear, ccSecruityCode, ccCardType, ccName];
 				break;
 			case "email" :
@@ -1100,7 +1100,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 					field.choices = new Array(new Choice(<?php echo json_encode( esc_html__( 'Checked', 'kdnaforms' ) ); ?>, '1'));
 				break;
 
-			<?php do_action( 'kdnaform_editor_js_set_default_values' ); ?>
+			<?php do_action( 'gform_editor_js_set_default_values' ); ?>
 
 			default :
 				field.inputs = null;
@@ -1121,7 +1121,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	function GetAdvancedNameFieldInputs(field, prefixHidden, middleHidden, suffixHidden) {
 		var prefixInput = new Input(
 			field.id + '.2',
-			<?php echo json_encode( gf_apply_filters( array( 'kdnaform_name_prefix', rgget( 'id' ) ), esc_html__( 'Prefix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( gf_apply_filters( array( 'gform_name_prefix', rgget( 'id' ) ), esc_html__( 'Prefix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'honorific-prefix'
 		);
 		prefixInput.choices = GetDefaultPrefixChoices();
@@ -1129,7 +1129,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		var firstInput = new Input(
 			field.id + '.3',
-			<?php echo json_encode( gf_apply_filters( array( 'kdnaform_name_first', rgget( 'id' ) ), esc_html__( 'First', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( gf_apply_filters( array( 'gform_name_first', rgget( 'id' ) ), esc_html__( 'First', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'given-name'
 		);
 
@@ -1141,19 +1141,19 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		 */
 		var middleInput = new Input(
 			field.id + '.4',
-			<?php echo json_encode( gf_apply_filters( array( 'kdnaform_name_middle', rgget( 'id' ) ), esc_html__( 'Middle', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( gf_apply_filters( array( 'gform_name_middle', rgget( 'id' ) ), esc_html__( 'Middle', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'additional-name'
 		);
 		middleInput.isHidden = middleHidden;
 
 		var lastInput = new Input(
 			field.id + '.6',
-			<?php echo json_encode( gf_apply_filters( array( 'kdnaform_name_last', rgget( 'id' ) ), esc_html__( 'Last', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( gf_apply_filters( array( 'gform_name_last', rgget( 'id' ) ), esc_html__( 'Last', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'family-name'
 		);
 		var suffixInput = new Input(
 			field.id + '.8',
-			<?php echo json_encode( gf_apply_filters( array( 'kdnaform_name_suffix', rgget( 'id' ) ), esc_html__( 'Suffix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( gf_apply_filters( array( 'gform_name_suffix', rgget( 'id' ) ), esc_html__( 'Suffix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'honorific-suffix'
 		);
 		suffixInput.isHidden = suffixHidden;
@@ -1238,12 +1238,12 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var legacyExpirationInput = GetInput(field, field.id + ".2");
 
 		if (legacyExpirationInput) {
-			var monthInput = new Input(field.id + ".2_month", <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+			var monthInput = new Input(field.id + ".2_month", <?php echo json_encode( gf_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
 			monthInput.defaultLabel = <?php echo json_encode( esc_html__( 'Expiration Date', 'kdnaforms' ) ); ?>;
 			var yearInput = new Input(field.id + ".2_year", <?php echo json_encode( esc_html__( 'Expiration Year', 'kdnaforms' ) ); ?>);
 			field.inputs.splice(1, 1, monthInput, yearInput);
 			var nameInput = GetInput(field, field.id + ".5");
-			nameInput.label = <?php echo json_encode( gf_apply_filters( array( 'kdnaform_card_name', rgget( 'id' ) ), __( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>;
+			nameInput.label = <?php echo json_encode( gf_apply_filters( array( 'gform_card_name', rgget( 'id' ) ), __( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>;
 		}
 
 		return field;
@@ -1261,8 +1261,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			<?php
 			$publickey = get_option( 'rg_gforms_captcha_public_key' );
 			$privatekey = get_option( 'rg_gforms_captcha_private_key' );
-			$site_key = get_option( 'kdna_forms_captcha_site_key' );
-			$secret_key = get_option( 'kdna_forms_captcha_secret_key' );
+			$site_key = get_option( 'rg_gforms_captcha_site_key' );
+			$secret_key = get_option( 'rg_gforms_captcha_secret_key' );
 			if ( class_exists( 'ReallySimpleCaptcha' ) && ( ( empty( $publickey ) || empty( $privatekey ) ) && ( empty( $site_key ) || empty( $secret_key ) ) ) ){
 				?>
 			field.captchaType = "simple_captcha";
@@ -1334,7 +1334,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				}
 				break;
 			default :
-				return gform.applyFilters('kdnaform_form_editor_can_field_be_added', true, type);
+				return gform.applyFilters('gform_form_editor_can_field_be_added', true, type);
 		}
 
 		return true;
@@ -1343,7 +1343,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	function StartAddField(type, index) {
 
 		if (!CanFieldBeAdded(type)) {
-			jQuery('#kdnaform_adding_field_spinner').remove();
+			jQuery('#gform_adding_field_spinner').remove();
 			return;
 		}
 
@@ -1378,7 +1378,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			 * @param {object} field The field for which the preview was refreshed.
 			 * @param {string} index The index of the affected field.
 			 */
-			gform.doAction( 'kdnaform_after_get_field_markup', form, field, index );
+			gform.doAction( 'gform_after_get_field_markup', form, field, index );
 		};
 
 		/**
@@ -1390,7 +1390,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		 * @param {object} field The field for which the preview was refreshed.
 		 * @param {string} index The index of the affected field.
 		 */
-		gform.doAction( 'kdnaform_before_get_field_markup', form, field, index );
+		gform.doAction( 'gform_before_get_field_markup', form, field, index );
 
 		mysack.runAJAX();
 
@@ -1451,7 +1451,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		 *
 		 * @param {string} The field ID for which the preview was refreshed.
 		 */
-		gform.doAction( 'kdnaform_before_refresh_field_preview', field.id );
+		gform.doAction( 'gform_before_refresh_field_preview', field.id );
 
 		jQuery.post(ajaxurl, data,
 			function (data) {
@@ -1481,7 +1481,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				 *
 				 * @param object field The field for which the preview was refreshed.
 				 */
-				gform.doAction( 'kdnaform_after_refresh_field_preview', data.fieldId );
+				gform.doAction( 'gform_after_refresh_field_preview', data.fieldId );
 				if (field["type"] == "address") {
 					SetAddressType( false );
 				}
@@ -1560,7 +1560,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			 * @param string type  The choice selected input type. Defaults to checkbox for checkbox type fields or radio for other field types.
 			 * @param object field The current field.
 			 */
-			type = gform.applyFilters('kdnaform_field_choice_selected_type_form_editor', type, field);
+			type = gform.applyFilters('gform_field_choice_selected_type_form_editor', type, field);
 
 			var text = String(field.choices[i].text),
 				value = field.enableChoiceValue ? String(field.choices[i].value) : text,
@@ -1586,16 +1586,16 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			str += "<input type='text' id='" + elementNames.valueInput + "' value=\"" + value.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-value field-choice-value--" + inputType + " gform-choice__input gform-choice__input--value gform-input gform-input--text' />";
 			str += "<input type='text' id='" + elementNames.priceInput + "' value=\"" + price.replace(/"/g, "&quot;") + "\" class='field-choice-input field-choice-price field-choice-price--" + inputType + " gform-choice__input gform-choice__input--price gform-input gform-input--text' />";
 
-			if (window["kdnaform_append_field_choice_option_" + field.type])
-				str += window["kdnaform_append_field_choice_option_" + field.type](field, i);
+			if (window["gform_append_field_choice_option_" + field.type])
+				str += window["gform_append_field_choice_option_" + field.type](field, i);
 
 			if ( field.type == 'image_choice' ) {
 				str += "<div class='gform-choice__image-choice-file-upload' data-js='gform-image-choice-upload' data-js-props='" + JSON.stringify( {
 					allowedFileTypes: [ 'gif', 'jpg', 'jpeg', 'png' ],
-					id:               'choices_ui_image_choice_enabled_kdnaform_setting_' + i,
+					id:               'choices_ui_image_choice_enabled_gform_setting_' + i,
 					maxHeight:        '500',
 					maxWidth:         '500',
-					name:             'choices_ui_image_choice_enabled_kdnaform_setting_' + i,
+					name:             'choices_ui_image_choice_enabled_gform_setting_' + i,
 					fileURL:         field.choices[i].file_url,
 					fileID:	  field.choices[i].attachment_id,
 					externalManager:  true,
@@ -1612,7 +1612,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				} ) + "'></div>";
 			}
 
-			str += gform.applyFilters('kdnaform_append_field_choice_option', '', field, i);
+			str += gform.applyFilters('gform_append_field_choice_option', '', field, i);
 
 			str += "<button class='field-choice-button field-choice-button--insert gf_insert_field_choice gform-choice__button gform-choice__button--add gform-st-icon gform-st-icon--circle-plus' onclick=\"InsertFieldChoice(" + (i + 1) + ");\" aria-label='<?php esc_attr_e( 'Add choice', 'kdnaforms' ); ?>'></button>";
 
@@ -1723,11 +1723,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		if ( message === undefined ) {
 			if ( predefinedMessages.hasOwnProperty( fieldSetting ) ) {
 				message = '<p class="gform-alert__message">' + predefinedMessages[ fieldSetting ] + '</p>';
-				message += '<a class="gform-alert__cta gform-button gform-button--white gform-button--size-xs" href="https://docs.kdnaforms.com/field-accessibility-warning" target="_blank">';
+				message += '<a class="gform-alert__cta gform-button gform-button--white gform-button--size-xs" href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
 				message += <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?>;
 				message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
 			} else {
-				message = '<p class="gform-alert__message"><a href="https://docs.kdnaforms.com/field-accessibility-warning" target="_blank">';
+				message = '<p class="gform-alert__message"><a href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
 				message += <?php echo json_encode( esc_html__( 'This field has accessibility issues.', 'kdnaforms' ) ); ?>;
 				message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a></p>';
 			}
@@ -1772,11 +1772,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		if ( predefinedMessages.hasOwnProperty( fieldSetting ) ) {
 			message += '<p class="gform-alert__message">' + predefinedMessages[ fieldSetting ] + '</p>';
-			message += '<a class="gform-alert__cta gform-button gform-button--white gform-button--size-xs" href="https://docs.kdnaforms.com/field-accessibility-warning" target="_blank">';
+			message += '<a class="gform-alert__cta gform-button gform-button--white gform-button--size-xs" href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
 			message += <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?>;
 			message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
 		} else {
-			message += '<a href="https://docs.kdnaforms.com/field-accessibility-warning" target="_blank">';
+			message += '<a href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
 			message += <?php echo json_encode( esc_html__( 'This field has errors.', 'kdnaforms' ) ); ?>;
 			message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
 		}
@@ -1823,8 +1823,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 	</script>
 
-<?php wp_print_scripts( array( 'kdnaform_form_editor' ) ); ?>
+<?php wp_print_scripts( array( 'gform_form_editor' ) ); ?>
 
-<span id="kdnaform_editor_js_action_output_wrapper">
-	<?php do_action( 'kdnaform_editor_js' ); ?>
+<span id="gform_editor_js_action_output_wrapper">
+	<?php do_action( 'gform_editor_js' ); ?>
 </span>

@@ -13,10 +13,10 @@ jQuery( document ).ready(function() {
 
   jQuery('#showme').on( 'click', function(){
     if(jQuery(this).is(":checked")) {
-      jQuery('.kdnaform_wrapper form').addClass("gf_showme");
+      jQuery('.gform_wrapper form').addClass("gf_showme");
       jQuery('#helper_legend_container').css("display", "inline-block");
     } else {
-      jQuery('.kdnaform_wrapper form').removeClass("gf_showme");
+      jQuery('.gform_wrapper form').removeClass("gf_showme");
       jQuery('#helper_legend_container').css("display", "none");
     }
   });

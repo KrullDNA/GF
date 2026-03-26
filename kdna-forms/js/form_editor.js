@@ -90,11 +90,11 @@ function InitializeEditor() {
 		},
 	} );
 
-	if ( typeof kdna_global[ 'view' ] == 'undefined' || kdna_global[ 'view' ] != 'settings' )
+	if ( typeof gf_global[ 'view' ] == 'undefined' || gf_global[ 'view' ] != 'settings' )
 		InitializeForm( form );
 
 	//for backwards compatibility <1.7
-	jQuery( document ).trigger( 'kdnaform_load_form_settings', [ form ] );
+	jQuery( document ).trigger( 'gform_load_form_settings', [ form ] );
 
 	SetupUnsavedChangesWarning();
 
@@ -103,10 +103,10 @@ function InitializeEditor() {
 		var doc = jQuery( document )[ 0 ];
 		var data = jQuery.hasData( doc ) && jQuery._data( doc );
 		if ( data ){
-			var deprecatedEvents = new Array( 'kdnaform_load_form_settings' );
+			var deprecatedEvents = new Array( 'gform_load_form_settings' );
 			for ( var e in data.events ) {
 				if ( jQuery.inArray( e, deprecatedEvents ) !== -1 ) {
-					console.log( 'KDNA Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
+					console.log( 'Gravity Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
 				}
 			}
 		}
@@ -166,13 +166,13 @@ function InitializeEditor() {
 		}
 	} );
 
-	// Prior to kdnaformsppcp 2.3, the PayPal buttons show up in the editor instead of in the sidebar.
-	jQuery( '#field_submit #kdnaform_ppcp_smart_payment_buttons' ).remove();
+	// Prior to gravityformsppcp 2.3, the PayPal buttons show up in the editor instead of in the sidebar.
+	jQuery( '#field_submit #gform_ppcp_smart_payment_buttons' ).remove();
 }
 
 function InitializeFieldSettings(){
 
-	gform.addFilter( 'kdnaform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
+	gform.addFilter( 'gform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
 
 	jQuery('#field_max_file_size').on('input propertychange', function(){
 		var $this = jQuery(this),
@@ -358,7 +358,7 @@ function InitializeFieldSettings(){
 		} );
 
 	jQuery('#submit_text').on('input propertychange', function(){
-		jQuery('#kdnaform_submit_button_' + form.id ).val( this.value );
+		jQuery('#gform_submit_button_' + form.id ).val( this.value );
 	});
 
 	jQuery('#submit_image').on('input propertychange', function(){
@@ -527,8 +527,8 @@ async function conditionalLogicWarningDependency( field ) {
 
 	if (hasDependency) {
 		const confirmed = await gform.instances.dialogConfirmAsync(
-			kdna_vars.conditionalLogicWarningTitle,
-			kdna_vars.conditionalLogicRichTextEditorWarning
+			gf_vars.conditionalLogicWarningTitle,
+			gf_vars.conditionalLogicRichTextEditorWarning
 		)
 		if ( ! confirmed ) {
 			jQuery( '#field_rich_text_editor' ).prop( 'checked', false );
@@ -594,7 +594,7 @@ function InitializeForm(form){
 	else if(!form.lastPageButton || form.lastPageButton.type !== 'image')
 		jQuery('#last_page_button_text').prop('checked', true);
 
-	jQuery('#last_page_button_text_input').val(form.lastPageButton ? form.lastPageButton.text : kdna_vars['previousLabel']);
+	jQuery('#last_page_button_text_input').val(form.lastPageButton ? form.lastPageButton.text : gf_vars['previousLabel']);
 	jQuery('#last_page_button_image_url').val(form.lastPageButton ? form.lastPageButton.imageUrl : '');
 	TogglePageButton('last_page', true);
 
@@ -636,12 +636,12 @@ function InitializeForm(form){
 	}
 	TogglePostTitleTemplate(true);
 
-	jQuery('#kdnaform_pagination, #kdnaform_last_page_settings').on('click', function ( event ) {
+	jQuery('#gform_pagination, #gform_last_page_settings').on('click', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
 
-	jQuery('#kdnaform_fields').on('click', '.gfield', function ( event ) {
+	jQuery('#gform_fields').on('click', '.gfield', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
@@ -781,7 +781,7 @@ function LoadFieldSettings() {
 	//Creating blank item for number format to existing number fields so that user is not force into a format (for backwards compatibility)
 	if (!field.numberFormat) {
 		if (jQuery("#field_number_format #field_number_format_blank").length == 0) {
-			jQuery("#field_number_format").prepend("<option id='field_number_format_blank' value=''>" + kdna_vars["selectFormat"] + "</option>");
+			jQuery("#field_number_format").prepend("<option id='field_number_format_blank' value=''>" + gf_vars["selectFormat"] + "</option>");
 		}
 	} else
 		jQuery("#field_number_format_blank").remove();
@@ -1283,9 +1283,9 @@ function LoadFieldSettings() {
 
 	ToggleSubmitType( true );
 
-	jQuery(document).trigger('kdnaform_load_field_settings', [field, form]);
+	jQuery(document).trigger('gform_load_field_settings', [field, form]);
 
-	gform.doAction('kdnaform_post_load_field_settings', [field, form]);
+	gform.doAction('gform_post_load_field_settings', [field, form]);
 
 	if (field.choiceAlignment == "horizontal") {
 		jQuery( "#choice_alignment_horizontal" ).prop( "checked", true );
@@ -1336,7 +1336,7 @@ function getAllFieldSettings(field) {
 	}
 
 	/**
-	 * kdnaform_editor_field_settings
+	 * gform_editor_field_settings
 	 *
 	 * Modify the editor settings that are used for the current field, including those inherited from the inputType.
 	 *
@@ -1347,7 +1347,7 @@ function getAllFieldSettings(field) {
 	 *
 	 * @return {array} The modified array of settings values.
 	 */
-	settingsArray = gform.applyFilters( 'kdnaform_editor_field_settings', settingsArray, field );
+	settingsArray = gform.applyFilters( 'gform_editor_field_settings', settingsArray, field );
 
 	return settingsArray.join( ', ' );
 }
@@ -1422,13 +1422,13 @@ function ToggleNamePrefixUI(isActive){
 
 function TogglePageBreakSettings(){
 	if(HasPageBreak()){
-		jQuery("#kdnaform_last_page_settings").show();
-		jQuery("#kdnaform_pagination").show();
+		jQuery("#gform_last_page_settings").show();
+		jQuery("#gform_pagination").show();
 	}
 	else
 	{
-		jQuery("#kdnaform_last_page_settings").hide();
-		jQuery("#kdnaform_pagination").hide();
+		jQuery("#gform_last_page_settings").hide();
+		jQuery("#gform_pagination").hide();
 	}
 }
 
@@ -1867,7 +1867,7 @@ function ToggleCustomField( isInit ){
 function ToggleInputMask(isInit){
 
 	if(jQuery("#field_input_mask").is(":checked")){
-		jQuery("#kdnaform_input_mask").show();
+		jQuery("#gform_input_mask").show();
 		jQuery(".maxlen_setting").hide();
 
 		SetFieldProperty('inputMask', true);
@@ -1877,7 +1877,7 @@ function ToggleInputMask(isInit){
 		SetFieldProperty('maxLength', "");
 	}
 	else{
-		jQuery("#kdnaform_input_mask").hide();
+		jQuery("#gform_input_mask").hide();
 		jQuery(".maxlen_setting").show();
 		SetFieldProperty('inputMask', false);
 		SetFieldProperty('inputMaskValue', '');
@@ -1910,16 +1910,16 @@ function ToggleAutoresponder(){
 function ToggleMultiFile(isInit){
 
 	if(jQuery("#field_multiple_files").prop("checked")) {
-		jQuery("#kdnaform_multiple_files_options").show();
-		var $uploadField = jQuery('.kdnaform_fileupload_multifile');
+		jQuery("#gform_multiple_files_options").show();
+		var $uploadField = jQuery('.gform_fileupload_multifile');
 		var pluploadSettings = $uploadField.data('settings');
 		if ( pluploadSettings && typeof pluploadSettings.chunk_size != 'undefined' ) {
-			jQuery('#kdnaform_server_max_file_size_notice').hide();
+			jQuery('#gform_server_max_file_size_notice').hide();
 		}
 		SetFieldProperty('multipleFiles', true);
 	}
 	else {
-		jQuery("#kdnaform_multiple_files_options").hide();
+		jQuery("#gform_multiple_files_options").hide();
 		SetFieldProperty('multipleFiles', false);
 		jQuery("#field_max_files").val("");
 		SetFieldProperty('maxFiles', "");
@@ -2061,7 +2061,7 @@ function UpdateFormObject(){
 		form.postTitleTemplate = jQuery("#field_post_title_template").val();
 	}
 
-	if(jQuery("#kdnaform_last_page_settings").is(":visible")){
+	if(jQuery("#gform_last_page_settings").is(":visible")){
 		form.lastPageButton = new Button();
 		form.lastPageButton.type = jQuery("#last_page_button_text").is(":checked") ? "text" : "image";
 		if(form.lastPageButton.type == "image"){
@@ -2077,12 +2077,12 @@ function UpdateFormObject(){
 		form.lastPageButton = null;
 	}
 
-	if(jQuery("#kdnaform_pagination").is(":visible")){
+	if(jQuery("#gform_pagination").is(":visible")){
 		form["pagination"] = new Object();
 		var type = jQuery("input[name=\"pagination_type\"]:checked").val();
 		form["pagination"]["type"] = type;
 
-		var pageNames = jQuery(".kdnaform_page_names input");
+		var pageNames = jQuery(".gform_page_names input");
 		form["pagination"]["pages"] = new Array();
 		for(var i=0; i<pageNames.length; i++){
 			form["pagination"]["pages"].push(jQuery(pageNames[i]).val());
@@ -2112,14 +2112,14 @@ function UpdateFormObject(){
 	SortFields();
 
 	// allow users to update form with custom function before save
-	if(window["kdnaform_before_update"]){
-		form = window["kdnaform_before_update"](form);
+	if(window["gform_before_update"]){
+		form = window["gform_before_update"](form);
 		if(window.console)
-			console.log('"kdnaform_before_update" is deprecated since version 1.7! Use the "kdnaform_pre_form_editor_save" filter instead.');
+			console.log('"gform_before_update" is deprecated since version 1.7! Use the "gform_pre_form_editor_save" filter instead.');
 	}
 
 	// new method for filtering the form object before save
-	form = gform.applyFilters('kdnaform_pre_form_editor_save', form);
+	form = gform.applyFilters('gform_pre_form_editor_save', form);
 	return form;
 
 }
@@ -2127,7 +2127,7 @@ function UpdateFormObject(){
 function SortFields(){
 	var fields = new Array();
 	jQuery(".gfield").each(function(){
-		if( jQuery(this).hasClass('spacer') || 'kdnaform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
+		if( jQuery(this).hasClass('spacer') || 'gform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
 			return;
 		}
 		id = this.id.substr(6);
@@ -2169,19 +2169,19 @@ async function DeleteField( element ) {
 	// Get field ID from element.
 	var fieldId = jQuery( element )[0].id.split( '_' )[2];
 	var field = GetFieldById( fieldId );
-	var confirmDeleteMessage = field.displayOnly ? kdna_vars.confirmationDeleteDisplayField : kdna_vars.confirmationDeleteField;
+	var confirmDeleteMessage = field.displayOnly ? gf_vars.confirmationDeleteDisplayField : gf_vars.confirmationDeleteField;
 
 	var conditionalLogicDependency = await HasConditionalLogicDependency(fieldId);
 	if (!conditionalLogicDependency) {
-		gform.instances.dialogConfirmAsync( kdna_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
+		gform.instances.dialogConfirmAsync( gf_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
 			proceedWithDeletion(fieldId);
 		});
 	} else {
-		var message = kdna_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
-		gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
+		var message = gf_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
+		gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
@@ -2237,7 +2237,7 @@ function proceedWithDeletion(fieldId) {
 				 * @param object form    The current form object.
 				 * @param int    fieldId The ID of the current field.
 				 */
-				gform.doAction( 'kdnaform_after_field_removed', form, fieldId );
+				gform.doAction( 'gform_after_field_removed', form, fieldId );
 
 			} );
 
@@ -2255,7 +2255,7 @@ function proceedWithDeletion(fieldId) {
 	TogglePageBreakSettings();
 
 	// Run field deleted action.
-	jQuery( document ).trigger( 'kdnaform_field_deleted', [ form, fieldId ] );
+	jQuery( document ).trigger( 'gform_field_deleted', [ form, fieldId ] );
 }
 
 /**
@@ -2281,7 +2281,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 
 	// check form button conditional logic
 	if(completeForm.button && ObjectHasConditionalLogicDependency(completeForm.button, fieldId, value) ) {
-		return kdna_vars.conditionalLogicTypeButton;
+		return gf_vars.conditionalLogicTypeButton;
 	}
 
 
@@ -2292,7 +2292,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.confirmations[i], fieldId, value) ) {
-			return kdna_vars.conditionalLogicTypeConfirmation;
+			return gf_vars.conditionalLogicTypeConfirmation;
 		}
 
 	}
@@ -2304,11 +2304,11 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.notifications[i], fieldId, value) ) {
-			return kdna_vars.conditionalLogicTypeNotification;
+			return gf_vars.conditionalLogicTypeNotification;
 		}
 
 		if( ObjectHasRoutingDependency(completeForm.notifications[i], fieldId, value) ) {
-			return kdna_vars.conditionalLogicTypeNoficationRouting;
+			return gf_vars.conditionalLogicTypeNoficationRouting;
 		}
 	}
 
@@ -2321,12 +2321,12 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 		var field = completeForm.fields[i];
 
 		if( ObjectHasConditionalLogicDependency(field, fieldId, value) ) {
-			return kdna_vars.conditionalLogicTypeField;
+			return gf_vars.conditionalLogicTypeField;
 		}
 
 		// if this is a page field, check the next button conditional logic as well
 		if( GetInputType(field) == 'page' && ObjectHasConditionalLogicDependency(field.nextButton, fieldId, value) ) {
-			return kdna_vars.conditionalLogicTypeField;
+			return gf_vars.conditionalLogicTypeField;
 		}
 
 	}
@@ -2338,7 +2338,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.feeds_conditions[i], fieldId, value) ) {
-			return kdna_vars.conditionalLogicTypeFeed;
+			return gf_vars.conditionalLogicTypeFeed;
 		}
 
 	}
@@ -2358,7 +2358,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 */
 async function HasConditionalLogicDependency(fieldId, value) {
 	var result = await HasConditionalLogicDependencyLegwork(fieldId, value);
-	return gform.applyFilters('kdnaform_has_conditional_logic_dependency', result, fieldId, value);
+	return gform.applyFilters('gform_has_conditional_logic_dependency', result, fieldId, value);
 }
 
 /**
@@ -2498,11 +2498,11 @@ async function CheckChoiceConditionalLogicDependency(input) {
 			return;
 		}
 
-		var message = kdna_vars.conditionalLogicDependencyChoiceEdit.replace('{type}', hasDependency);
+		var message = gf_vars.conditionalLogicDependencyChoiceEdit.replace('{type}', hasDependency);
 
 		// confirm that the user wants to make the modification.
 		setTimeout( ()=>
-			gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
+			gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
 				if ( ! confirmed ) {
 					// if user does not want to make modification, replace with original value.
 					jQuery( input ).val( previousValue ).trigger( 'blur' );
@@ -2519,7 +2519,7 @@ function StartDuplicateField(element) {
 
 	var sourcefieldId = jQuery(element)[0].id.split("_")[2];
 
-	gform.doAction( 'kdnaform_before_field_duplicated', sourcefieldId );
+	gform.doAction( 'gform_before_field_duplicated', sourcefieldId );
 
 	for(fieldIndex in form.fields){
 
@@ -2555,8 +2555,8 @@ function StartDuplicateField(element) {
 			 *
 			 * @since @todo
 			 */
-			field = gform.applyFilters( 'kdnaform_duplicate_field', field, form );
-			field = gform.applyFilters( 'kdnaform_duplicate_field_{0}'.gformFormat( GetInputType( field ) ), field, form );
+			field = gform.applyFilters( 'gform_duplicate_field', field, form );
+			field = gform.applyFilters( 'gform_duplicate_field_{0}'.gformFormat( GetInputType( field ) ), field, form );
 
 			form.fields.splice(fieldIndex, 0, field);
 
@@ -2568,7 +2568,7 @@ function StartDuplicateField(element) {
 
 function EndDuplicateField(field, fieldString, sourceFieldId) {
 
-	gform.doAction( 'kdnaform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
+	gform.doAction( 'gform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
 
 	var nativeEvent = new Event('gform/form_editor/field-duplicated-native');
 	document.dispatchEvent(nativeEvent);
@@ -2616,26 +2616,26 @@ function GetFirstField() {
 }
 
 function EndAddField(field, fieldString, index){
-	kdna_vars['currentlyAddingField'] = false;
+	gf_vars['currentlyAddingField'] = false;
 
 	// We just added a field. Let's hide the No Fields placeholder.
 	jQuery( '#no-fields' ).hide();
 
-	jQuery('#kdnaform_adding_field_spinner').remove();
+	jQuery('#gform_adding_field_spinner').remove();
 
 	//sets up DOM for new field
 	if(typeof index != 'undefined'){
 		form.fields.splice(index, 0, field);
 		if (index === 0) {
-			jQuery('#kdnaform_fields').prepend(fieldString);
+			jQuery('#gform_fields').prepend(fieldString);
 		} else {
-			jQuery('#kdnaform_fields').children().eq(index - 1).after(fieldString);
+			jQuery('#gform_fields').children().eq(index - 1).after(fieldString);
 		}
 	} else {
 		if ( jQuery( '#field_submit' ).length ) {
 			jQuery( fieldString ).insertBefore ( jQuery( '#field_submit' ) );
 		} else {
-			jQuery('#kdnaform_fields').append(fieldString);
+			jQuery('#gform_fields').append(fieldString);
 		}
 		//creates new javascript field
 		form.fields.push(field);
@@ -2670,10 +2670,10 @@ function EndAddField(field, fieldString, index){
 	var focusedElement = document.activeElement;
 	if ( focusedElement.tagName === 'BUTTON' ) {
 		var fieldType = focusedElement.value;
-		wp.a11y.speak( fieldType + kdna_vars.FieldAdded );
+		wp.a11y.speak( fieldType + gf_vars.FieldAdded );
 	}
 
-	jQuery(document).trigger('kdnaform_field_added', [form, field]);
+	jQuery(document).trigger('gform_field_added', [form, field]);
 }
 
 function StartChangeNameFormat(format) {
@@ -2792,7 +2792,7 @@ function EndChangeInputType(params){
 	 *
 	 * @param int fieldId The ID of the field for which the input type changed.
 	 */
-	gform.doAction( 'kdnaform_after_change_input_type', fieldId );
+	gform.doAction( 'gform_after_change_input_type', fieldId );
 }
 
 function InitializeFields(){
@@ -2853,7 +2853,7 @@ function FieldClick( field ) {
 	}
 
 	// force focus to ensure onblur events fire for field setting inputs
-	jQuery( 'input#kdnaform_force_focus' ).focus();
+	jQuery( 'input#gform_force_focus' ).focus();
 
 	//unselects all fields
 	jQuery( '.selectable' ).removeClass( 'field_selected' );
@@ -2878,7 +2878,7 @@ function FieldClick( field ) {
 }
 
 function ShowSettings( element ) {
-	if ( element.id === 'kdnaform_last_page_settings' ) {
+	if ( element.id === 'gform_last_page_settings' ) {
 		//hide field and form pagination setting fields
 		jQuery( '.field_setting' ).hide();
 		jQuery( '.pagination_setting' ).hide();
@@ -2887,10 +2887,10 @@ function ShowSettings( element ) {
 		// Show last pagination setting fields
 		fieldObject = GetSelectedField();
 		jQuery( '.last_pagination_setting' ).show();
-		var label = jQuery( '#kdnaform_last_page_settings' ).data( 'title' );
-		var description = jQuery( '#kdnaform_last_page_settings' ).data( 'description' );
+		var label = jQuery( '#gform_last_page_settings' ).data( 'title' );
+		var description = jQuery( '#gform_last_page_settings' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
-	} else if ( element.id === 'kdnaform_pagination' ) {
+	} else if ( element.id === 'gform_pagination' ) {
 		//hide field and last pagination setting fields
 		fieldObject = typeof fieldObject !== 'undefined' ? fieldObject : GetFirstField();
 		jQuery( '.field_setting' ).hide();
@@ -2900,8 +2900,8 @@ function ShowSettings( element ) {
 		jQuery("#gfield_post_category_initial_item_container").hide();
 		jQuery("#gfield_min_strength_container").hide();
 		InitPaginationOptions();
-		var label = jQuery( '#kdnaform_pagination' ).data( 'title' );
-		var description = jQuery( '#kdnaform_pagination' ).data( 'description' );
+		var label = jQuery( '#gform_pagination' ).data( 'title' );
+		var description = jQuery( '#gform_pagination' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
 	} else if ( element.id === 'field_submit' ) {
 		// Hide form pagination and last pagination setting fields
@@ -2910,8 +2910,8 @@ function ShowSettings( element ) {
 		// Load and show field setting fields
 		LoadFieldSettings();
 		fieldObject = GetSubmitField();
-		var label = kdna_vars.button;
-		var description = kdna_vars.buttonDescription;
+		var label = gf_vars.button;
+		var description = gf_vars.buttonDescription;
 		var icon_classes = 'gform-icon gform-icon--smart-button';
 	} else {
 		// Hide form pagination and last pagination setting fields
@@ -2934,7 +2934,7 @@ function ShowSettings( element ) {
 	jQuery( '#sidebar_field_label' )
 		.removeClass( 'no-id' )
 		.text( label )
-		.attr( 'data-fieldId-label', kdna_vars.idString )
+		.attr( 'data-fieldId-label', gf_vars.idString )
 		.attr( 'data-fieldId', fieldObject.id );
 	if( 'submit' === fieldObject.type ) {
 		jQuery( '#sidebar_field_label' ).addClass( 'no-id' );
@@ -3027,9 +3027,9 @@ function LoadFieldChoices(field){
 	//loading bulk input
 	LoadBulkChoices(field);
 	ToggleClearDefaultChoicesButton();
-	jQuery(document).trigger('kdnaform_load_field_choices', [field]);
+	jQuery(document).trigger('gform_load_field_choices', [field]);
 
-	gform.doAction('kdnaform_load_field_choices', [field]);
+	gform.doAction('gform_load_field_choices', [field]);
 }
 
 function LoadInputChoices($ul, input){
@@ -3060,7 +3060,7 @@ function LoadBulkChoices(field){
 		/**
 		 * Filter each individual choice as it is loaded.
 		 *
-		 * This filter is generally used in combination with kdnaform_insert_bulk_choices_choice, and is useful
+		 * This filter is generally used in combination with gform_insert_bulk_choices_choice, and is useful
 		 * for generating unique text patterns for adding arbitrary data to a choice.
 		 *
 		 * @since 2.5
@@ -3071,7 +3071,7 @@ function LoadBulkChoices(field){
 		 *
 		 * @return {string} The updated text pattern, e.g. Label|Value|Meta|Other
 		 */
-		choice = gform.applyFilters( 'kdnaform_load_bulk_choices_choice', choice, field.choices[i], field );
+		choice = gform.applyFilters( 'gform_load_bulk_choices_choice', choice, field.choices[i], field );
 
 		choices.push(choice);
 	}
@@ -3086,7 +3086,7 @@ function LoadBulkChoices(field){
 	 * @param array bulkChoices The formatted choices.
 	 * @param array choices     The choice objects from the current field.
 	 */
-	choices = gform.applyFilters( 'kdnaform_choices_post_bulk_load', choices, field.choices );
+	choices = gform.applyFilters( 'gform_choices_post_bulk_load', choices, field.choices );
 
 	jQuery("#gfield_bulk_add_input").val(choices.join("\n"));
 }
@@ -3232,37 +3232,37 @@ function LoadCustomChoices(){
 
 	jQuery(".choice_section_header, .bulk_custom_choice").remove();
 
-	if(!IsEmpty(kdnaform_custom_choices)){
-		var str = "<li class='choice_section_header'>" + kdna_vars.customChoices + "</li>";
-		for(key in kdnaform_custom_choices){
+	if(!IsEmpty(gform_custom_choices)){
+		var str = "<li class='choice_section_header'>" + gf_vars.customChoices + "</li>";
+		for(key in gform_custom_choices){
 
-			if(!kdnaform_custom_choices.hasOwnProperty(key))
+			if(!gform_custom_choices.hasOwnProperty(key))
 				continue;
 
 			var selectChoiceAction = 'SelectCustomChoice( jQuery(this).data("key") );';
 
 			str += "<li class='bulk_custom_choice'><a href='javascript:void(0);' data-key='" + escapeAttr( key ) + "' onclick='" + selectChoiceAction + "' onkeypress='" + selectChoiceAction + "' class='bulk-choice bulk_custom_choice'>" + escapeHtml( key ) + "</a></li>";
 		}
-		str += "<li class='choice_section_header'>" + kdna_vars.predefinedChoices + "</li>";
+		str += "<li class='choice_section_header'>" + gf_vars.predefinedChoices + "</li>";
 		jQuery("#bulk_items").prepend(str);
 	}
 }
 
 function SelectCustomChoice( name ){
 
-	jQuery("#gfield_bulk_add_input").val(kdnaform_custom_choices[name].join("\n"));
-	kdnaform_selected_custom_choice = name;
+	jQuery("#gfield_bulk_add_input").val(gform_custom_choices[name].join("\n"));
+	gform_selected_custom_choice = name;
 	InitBulkCustomPanel();
 }
 
 function SelectPredefinedChoice(name){
-	var list = kdnaform_predefined_choices[name];
-	// Countries can also be an object if the kdnaform_countries filter is used, so convert to array with just the values.
+	var list = gform_predefined_choices[name];
+	// Countries can also be an object if the gform_countries filter is used, so convert to array with just the values.
 	if( name == "Countries" && Array.isArray( list ) !== true ) {
 		list = Object.values( list );
 	}
 	jQuery('#gfield_bulk_add_input').val(list.join('\n'));
-	kdnaform_selected_custom_choice = "";
+	gform_selected_custom_choice = "";
 	InitBulkCustomPanel();
 }
 
@@ -3291,7 +3291,7 @@ function InsertBulkChoices(choices){
 		/**
 		 * Filter each individual Choice object as it is inserted into the UI.
 		 *
-		 * This filter is generally used in combination with kdnaform_load_bulk_choices_choice, and is useful
+		 * This filter is generally used in combination with gform_load_bulk_choices_choice, and is useful
 		 * for parsing a unique text pattern (e.g., Label|Value|Other) and adding the additional data to
 		 * the resulting Choice object.
 		 *
@@ -3303,7 +3303,7 @@ function InsertBulkChoices(choices){
 		 *
 		 * @return {Choice} The updated Choice object containing any additional data needed.
 		 */
-		choice = gform.applyFilters( 'kdnaform_insert_bulk_choices_choice', choice, choices[i], field );
+		choice = gform.applyFilters( 'gform_insert_bulk_choices_choice', choice, choices[i], field );
 
 		if ( FieldIsChoiceType( field ) ) {
 			InsertFieldForChoice( choice, field );
@@ -3321,7 +3321,7 @@ function InsertBulkChoices(choices){
 	 *
 	 * @param array field The currently selected field object.
 	 */
-	gform.doAction( 'kdnaform_bulk_insert_choices', field );
+	gform.doAction( 'gform_bulk_insert_choices', field );
 
 	if(enableValue){
 		field["enableChoiceValue"] = true;
@@ -3334,7 +3334,7 @@ function InsertBulkChoices(choices){
 }
 
 function InitBulkCustomPanel(){
-	if(kdnaform_selected_custom_choice.length == 0){
+	if(gform_selected_custom_choice.length == 0){
 		CloseCustomChoicesPanel();
 	}
 	else{
@@ -3345,13 +3345,13 @@ function InitBulkCustomPanel(){
 function LoadCustomChoicesPanel(isNew, speed){
 	if(isNew){
 		jQuery("#custom_choice_name").val("");
-		jQuery("#bulk_save_button").html(kdna_vars.save);
+		jQuery("#bulk_save_button").html(gf_vars.save);
 		jQuery("#bulk_cancel_link").show();
 		jQuery("#bulk_delete_link").hide();
 	}
 	else{
-		jQuery("#custom_choice_name").val(kdnaform_selected_custom_choice);
-		jQuery("#bulk_save_button").html(kdna_vars.update);
+		jQuery("#custom_choice_name").val(gform_selected_custom_choice);
+		jQuery("#bulk_save_button").html(gf_vars.update);
 		jQuery("#bulk_cancel_link").hide();
 		jQuery("#bulk_delete_link").show();
 	}
@@ -3457,10 +3457,10 @@ function SetInputChoice(inputId, index, value, text){
  * Deprecated in 2.9.0
  */
 function UpdateFieldChoices(fieldType){
-	console.log( 'UpdateFieldChoices is deprecated as of KDNA Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
+	console.log( 'UpdateFieldChoices is deprecated as of Gravity Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
 	var choices = '';
 	var selector = '';
-	var inputContainer = ( "1" === kdna_legacy.is_legacy ) ? 'li' : 'div';
+	var inputContainer = ( "1" === gf_legacy.is_legacy ) ? 'li' : 'div';
 	var inputContainerClass;
 
 	if(field.inputType == "checkbox")
@@ -3505,10 +3505,10 @@ function UpdateFieldChoices(fieldType){
 
 			}
 			if(field.choices.length > 5)
-				choices += "<" + inputContainer + " class='gchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 
 			if ( field.enableSelectAll ) {
-				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + kdna_vars["selectAll"] + '</button>';
+				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + gf_vars["selectAll"] + '</button>';
 			}
 			break;
 
@@ -3524,10 +3524,10 @@ function UpdateFieldChoices(fieldType){
 
 			}
 
-			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + kdna_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
+			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + gf_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
 
 			if(field.choices.length > 5) {
-				choices += "<" + inputContainer + " class='gchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 			}
 
 			break;
@@ -3565,14 +3565,14 @@ function InsertFieldChoice( index ) {
 	var file_url = "";
 
 	if ( inputType === 'list' ) {
-		text = window.kdna_vars.column + " " + (index + 1);
-		value = window.kdna_vars.column + " " + (index + 1);
+		text = window.gf_vars.column + " " + (index + 1);
+		value = window.gf_vars.column + " " + (index + 1);
 	}
 
 	var newChoice = new Choice( text, value, price );
 
-	if ( window[ "kdnaform_new_choice_" + field.type ] ) {
-		newChoice = window[ "kdnaform_new_choice_" + field.type ]( field, newChoice );
+	if ( window[ "gform_new_choice_" + field.type ] ) {
+		newChoice = window[ "gform_new_choice_" + field.type ]( field, newChoice );
 	}
 
 	if ( typeof field.choices !== 'object' ) {
@@ -3669,8 +3669,8 @@ async function DeleteFieldChoice(index){
 
 	var hasDependency = await HasConditionalLogicDependency(field.id, value);
 	if( hasDependency ) {
-		var message = kdna_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
+		var message = gf_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
+		gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
 			if ( ! confirmed ) {
 				return;
 			}
@@ -3810,7 +3810,7 @@ function LoadTimeInputs(){
 		jQuery(".field_selected .gfield_time_ampm").show();
 	}
 	jQuery('#input_placeholder_row_input_' + field.id +'_3').hide(); // No support for placeholder.
-	// AM/PM Sub label is hidden in the time field class after `kdnaform_post_load_field_settings` is fired.
+	// AM/PM Sub label is hidden in the time field class after `gform_post_load_field_settings` is fired.
 }
 
 /**
@@ -4027,7 +4027,7 @@ function SetFieldProperty(name, value){
 	 * @param {(string|number|boolean|array)} value         The current value of the specified property.
 	 * @param {(string|number|boolean|array)} previousValue The previous value of the specified property.
 	 */
-	window.gform.doAction( 'kdnaform_post_set_field_property', name, field, value, previousValue );
+	window.gform.doAction( 'gform_post_set_field_property', name, field, value, previousValue );
 }
 
 function SetInputName(value, inputId){
@@ -4232,7 +4232,7 @@ function SetFieldLabel(label){
 function SetAriaLabel(label){
 	var fieldId   = jQuery( ".field_selected" )[0].id.split( '_' )[1];
 	var field     = GetFieldById( fieldId );
-	var ariaLabel = window.kdna_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
+	var ariaLabel = window.gf_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
 	jQuery( ".field_selected .gfield-edit" ).attr( 'aria-label', ariaLabel );
 }
 
@@ -4328,8 +4328,8 @@ function SetFieldSubLabelPlacement( subLabelPlacement ) {
 async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 	var hasDependency = await HasConditionalLogicDependency(field.id);
 	if (!isInit && visibility === 'administrative' && hasDependency) {
-		var message =  kdna_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync(kdna_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
+		var message =  gf_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
+		gform.instances.dialogConfirmAsync(gf_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
 			if (confirmed) {
 				proceedWithVisibilityChange(visibility, handleInputs);
 			} else {
@@ -4342,7 +4342,7 @@ async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 }
 
 function proceedWithVisibilityChange( visibility, handleInputs ) {
-	const isWhitelisted = kdna_vars.visibilityOptions.some(option => option.value === visibility);
+	const isWhitelisted = gf_vars.visibilityOptions.some(option => option.value === visibility);
 
 	if( ! isWhitelisted ) {
 		visibility = 'visible';
@@ -4481,7 +4481,7 @@ function SetCardType(elem, value) {
 	if(jQuery(elem).is(':checked')) {
 
 		if(jQuery.inArray(value, cards) == -1) {
-			jQuery('.kdnaform_card_icon_' + value).fadeIn();
+			jQuery('.gform_card_icon_' + value).fadeIn();
 			cards[cards.length] = value;
 		}
 
@@ -4490,7 +4490,7 @@ function SetCardType(elem, value) {
 		var index = jQuery.inArray(value, cards);
 
 		if(index != -1) {
-			jQuery('.kdnaform_card_icon_' + value).fadeOut();
+			jQuery('.gform_card_icon_' + value).fadeOut();
 			cards.splice(index, 1);
 		}
 
@@ -4500,7 +4500,7 @@ function SetCardType(elem, value) {
 }
 
 function SetFieldRequired( isRequired ) {
-	var required = kdnaform_form_strings.requiredIndicator;
+	var required = gform_form_strings.requiredIndicator;
 	var requiredSelector = '.field_selected .gfield_required';
 	var appendRequired = false;
 
@@ -4615,7 +4615,7 @@ function FormulaContentCallback() {
 
 function SetupUnsavedChangesWarning() {
 	// check if form is in legacy mode
-	var legacyHtml = window.kdna_legacy && window.kdna_legacy.is_legacy === '1';
+	var legacyHtml = window.gf_legacy && window.gf_legacy.is_legacy === '1';
 	// apply system changes to the form, unsaved notification should only apply for user-made changes
 	UpdateFormObject();
 
@@ -4634,7 +4634,7 @@ function SetupUnsavedChangesWarning() {
 				delete current.fields[ i ].layoutGroupId;
 			} );
 		}
-		if ( JSON.stringify( original ) !== JSON.stringify( current ) && ! kdna_vars.isFormTrash ) {
+		if ( JSON.stringify( original ) !== JSON.stringify( current ) && ! gf_vars.isFormTrash ) {
 			return "You have unsaved changes.";
 		}
 	}
@@ -4680,7 +4680,7 @@ function SetSubmitLocation( location ) {
 		jQuery( '#field_submit' ).next( '.spacer' ).remove();
 
 		// Assign the correct position property.
-		jQuery( '*[data-field-class="kdnaform_editor_submit_container"]' ).attr( 'data-field-position', 'inline' );
+		jQuery( '*[data-field-class="gform_editor_submit_container"]' ).attr( 'data-field-position', 'inline' );
 	} else {
 		// Move the submit button out of the group and make it full-width.
 		var groupID = jQuery( '#field_submit' ).attr( 'data-groupid' );
@@ -4691,7 +4691,7 @@ function SetSubmitLocation( location ) {
 			.resizeGroup( groupID );
 
 		// Assign the correct position property.
-		jQuery( '*[data-field-class="kdnaform_editor_submit_container"]' ).attr( 'data-field-position', 'bottom' );
+		jQuery( '*[data-field-class="gform_editor_submit_container"]' ).attr( 'data-field-position', 'bottom' );
 	}
 
 }
@@ -4715,7 +4715,7 @@ function ToggleSubmitType( isInit ) {
 		form.button.type = type;
 	}
 
-	var $formSubmitButton        = jQuery( '#kdnaform_submit_button_' + form.id );
+	var $formSubmitButton        = jQuery( '#gform_submit_button_' + form.id );
 	var $submitImageSetting      = jQuery( '#submit_image' );
 	var $submitImageSettingValue = $submitImageSetting.val();
 	var $submitTextSetting       = jQuery( '#submit_text' );
@@ -4739,15 +4739,15 @@ function ToggleSubmitType( isInit ) {
 	}
 
 	if( 'text' === type || ( 'image' === type && ! $submitImageSettingValue ) ) {
-		var text = $submitTextSettingValue ? $submitTextSettingValue : kdnaform_form_strings.defaultSubmit;
-		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'kdnaform_image_button' );
+		var text = $submitTextSettingValue ? $submitTextSettingValue : gform_form_strings.defaultSubmit;
+		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'gform_image_button' );
 		$submitTextSetting.val( text );
 	}
 
 	if( 'image' === type && $submitImageSettingValue ) {
 		ResetFieldNotice( 'submit_image_setting' );
 		var src = $submitImageSettingValue ? $submitImageSettingValue : '';
-		$formSubmitButton.attr( 'type', 'image' ).attr( 'src', src ).removeAttr( 'value' ).addClass( 'kdnaform_image_button' );
+		$formSubmitButton.attr( 'type', 'image' ).attr( 'src', src ).removeAttr( 'value' ).addClass( 'gform_image_button' );
 		$submitImageSetting.val( src );
 	}
 }
@@ -4983,7 +4983,7 @@ jQuery.fn.gfSlide = function(direction) {
  * Form Editor conditional logic should not allow adminOnly fields to be selectable. Also exclude the current field from being
  * set in conditional logic for itself.
  */
-gform.addFilter( 'kdnaform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
+gform.addFilter( 'gform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
 
 	if( field.visibility == 'administrative' ) {
 		isConditionalLogicField = false;
@@ -5036,7 +5036,7 @@ function IsValidFormula(formula) {
 	 * @param result The validation result.
 	 * @param formula The calculation formula being validated.
 	 */
-	return gform.applyFilters( 'kdnaform_is_valid_formula_form_editor', result, formula );
+	return gform.applyFilters( 'gform_is_valid_formula_form_editor', result, formula );
 }
 
 /**
@@ -5109,13 +5109,13 @@ function setSidebarFieldMessage() {
 	 *
 	 * @param Object types The types of sidebar messages, each with a type and iconClasses property.
 	 */
-	types = gform.applyFilters( 'kdnaform_field_sidebar_messages_types', types );
+	types = gform.applyFilters( 'gform_field_sidebar_messages_types', types );
 
 	let showSidebarMessage = false;
 	types.forEach(
 		( { type, iconClasses } ) => {
 			$container = jQuery( '.field_selected .field-sidebar-message-content--type-' + type );
-			messageMarkup = $container && $container.length ? kdnaform_strip_scripts( $container.html() ) : '';
+			messageMarkup = $container && $container.length ? gform_strip_scripts( $container.html() ) : '';
 			if ( messageMarkup ) {
 				jQuery( '#sidebar_field_message_container' ).html( '<div class="gform-alert gform-alert--theme-cosmos"><span class="gform-icon gform-icon--preset-active gform-alert__icon" aria-hidden="true"></span><div class="gform-alert__message-wrap"><div class="gform-alert__message"></div></div></div>' );
 				jQuery( '#sidebar_field_message_container .gform-alert__message' ).html( messageMarkup );

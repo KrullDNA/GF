@@ -1,13 +1,13 @@
 /**
  * Apply legacy options to DatePickers within Legacy Forms.
  */
-gform.addFilter( 'kdnaform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
-	var kdna_legacy = window.kdna_legacy_multi;
+gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
+	var gf_legacy = window.gf_legacy_multi;
 
-	if ( ! kdna_legacy ) {
+	if ( ! gf_legacy ) {
 		return optionsObj;
 	}
-	if ( !kdna_legacy[ formId ] || kdna_legacy[ formId ] !== '1' ) {
+	if ( !gf_legacy[ formId ] || gf_legacy[ formId ] !== '1' ) {
 		return optionsObj;
 	}
 
