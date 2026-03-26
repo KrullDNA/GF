@@ -253,10 +253,7 @@ class KDNAFormDetail {
 			#form_editor_fields_container .simplebar-content-wrapper { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
-			/* Move field panel from right to left */
-			.editor-sidebar { right: unset !important; left: 0 !important; }
-			#form_editor_fields_container { margin-left: 280px !important; margin-right: 0 !important; }
-			.gforms_edit_form .gform-form-toolbar { margin-left: 270px !important; margin-right: 0 !important; }
+			/* Field panel stays on the right (default position) */
 		</style>
 		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
 		<?php
