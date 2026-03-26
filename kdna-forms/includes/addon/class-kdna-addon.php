@@ -188,9 +188,7 @@ abstract class KDNAAddOn {
 		$this->bootstrap();
 
 		if ( $this->_enable_rg_autoupgrade ) {
-			require_once( 'class-kdna-auto-upgrade.php' );
-			$is_kdnaforms_supported = $this->is_kdnaforms_supported( $this->_min_kdnaforms_version );
-			new KDNAAutoUpgrade( $this->get_slug(), $this->_version, $this->_min_kdnaforms_version, $this->_title, $this->_full_path, $this->get_path(), $this->_url, $is_kdnaforms_supported );
+			// Auto-upgrade removed - KDNA Forms is a free plugin.
 		}
 
 		$this->pre_init();

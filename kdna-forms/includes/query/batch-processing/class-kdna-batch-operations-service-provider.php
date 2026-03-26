@@ -22,7 +22,7 @@ class KDNA_Batch_Operations_Service_Provider extends KDNA_Service_Provider {
 		$container->add(
 			self::ENTRY_META_BATCH_PROCESSOR,
 			function() {
-				return new GF_Entry_Meta_Batch_Processor();
+				return new KDNA_Entry_Meta_Batch_Processor();
 			}
 		);
 	}

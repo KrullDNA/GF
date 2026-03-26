@@ -4,10 +4,10 @@ namespace KDNA_Forms\KDNA_Forms\Orders\Items;
 
 use \KDNACommon;
 
-final class GF_Form_Product_Item extends KDNA_Order_Item {
+final class KDNA_Form_Product_Item extends KDNA_Order_Item {
 
 	/**
-	 * GF_Form_Product_Item constructor.
+	 * KDNA_Form_Product_Item constructor.
 	 *
 	 * @since 2.6
 	 *

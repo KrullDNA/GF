@@ -3,7 +3,7 @@
 namespace KDNA_Forms\KDNA_Forms\Orders;
 
 use  KDNA_Forms\KDNA_Forms\Orders\Items\KDNA_Order_Item;
-use  KDNA_Forms\KDNA_Forms\Orders\Items\GF_Form_Product_Item;
+use  KDNA_Forms\KDNA_Forms\Orders\Items\KDNA_Form_Product_Item;
 
 final class KDNA_Order {
 
@@ -130,7 +130,7 @@ final class KDNA_Order {
 	/**
 	 * Returns a collection of items by item class type.
 	 *
-	 * Item types can be represented by a string, for example a collection of GF_Form_Product_Item added to a type called "recurring".
+	 * Item types can be represented by a string, for example a collection of KDNA_Form_Product_Item added to a type called "recurring".
 	 *
 	 * @since 2.6
 	 *

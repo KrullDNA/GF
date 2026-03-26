@@ -78,7 +78,7 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 		$container->add(
 			self::GF_FORM_CRUD_HANDLER,
 			function () use ( $container ) {
-				return new GF_Form_CRUD_handler(
+				return new KDNA_Form_CRUD_Handler(
 					array(
 						KDNA_Util_Service_Provider::GF_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::GF_FORMS_MODEL ),
 						KDNA_Util_Service_Provider::RG_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::RG_FORMS_MODEL ),

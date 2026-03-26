@@ -41,18 +41,8 @@ class KDNA_Upgrade {
 	 * @return bool Returns true if a wizard is displayed, false otherwise?
 	 */
 	public function maybe_display_wizard() {
-
-		$result = false;
-
-		if ( $this->requires_upgrade_wizard() ) {
-
-			require_once( KDNACommon::get_base_path() . '/includes/wizard/class-kdna-upgrade-wizard.php' );
-			$wizard = new KDNA_Upgrade_Wizard;
-			$result = $wizard->display();
-
-		}
-
-		return $result;
+		// Wizard module removed.
+		return false;
 	}
 
 	/**
@@ -73,7 +63,8 @@ class KDNA_Upgrade {
 			}
 		} elseif ( $this->is_downgrading() ) {
 
-			KDNAForms::$background_upgrader->clear_queue( true );
+			// Background upgrader removed.
+			// KDNAForms::$background_upgrader->clear_queue( true );
 			$this->clear_previous_upgrade();
 
 			$this->update_db_version();
@@ -782,13 +773,9 @@ class KDNA_Upgrade {
 			$this->post_upgrade_schema_2047();
 		}
 
+		// Background upgrader removed - run upgrades inline if needed.
 		if ( version_compare( $current_db_version, '2.3-dev-1', '<' ) ) {
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'kdna_upgrade_block_submissions' ) );
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'kdna_upgrade_230_migrate_forms' ) );
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'kdna_upgrade_230_migrate_leads' ) );
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'kdna_upgrade_230_migrate_incomplete_submissions' ) );
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'kdna_upgrade_230_migrate_lead_notes' ) );
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'kdna_upgrade_release_submissions_block' ) );
+			// KDNAForms::$background_upgrader->push_to_queue( ... ) calls removed.
 		}
 
 		/*
@@ -810,15 +797,9 @@ class KDNA_Upgrade {
 			update_option( 'kdna_form_original_version', $versions['previous_db_version'], false );
 		}
 
-		if ( KDNAForms::$background_upgrader->get_data() ) {
-			KDNAForms::$background_upgrader->push_to_queue( array( $this, 'post_background_upgrade' ) );
-			KDNAForms::$background_upgrader->save();
-			if ( $force_upgrade ) {
-				// Simulate triggering the cron task
-				KDNAForms::$background_upgrader->handle_cron_healthcheck();
-			} else {
-				KDNAForms::$background_upgrader->dispatch();
-			}
+		// Background upgrader removed - always complete inline.
+		if ( false ) {
+			// Previously used KDNAForms::$background_upgrader.
 		} else {
 			KDNACommon::log_debug( __METHOD__ . '(): Background upgrade not necessary. Setting new version.' );
 			$this->update_db_version();
@@ -2059,8 +2040,8 @@ HAVING count(*) > 1;" );
 	 */
 	public function clear_previous_upgrade() {
 
-		// Clear the queue for this blog.
-		KDNAForms::$background_upgrader->clear_queue();
+		// Background upgrader removed.
+		// KDNAForms::$background_upgrader->clear_queue();
 
 		// Remove the status update
 		update_option( 'kdnaform_upgrade_status', false );

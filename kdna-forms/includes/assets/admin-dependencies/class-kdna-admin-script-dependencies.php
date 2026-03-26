@@ -7,13 +7,13 @@ use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
 
 /**
- * Class GF_Admin_Script_Dependencies
+ * Class KDNA_Admin_Script_Dependencies
  *
  * @since 2.6
  *
  * @package KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies;
  */
-class GF_Admin_Script_Dependencies extends GF_Dependencies {
+class KDNA_Admin_Script_Dependencies extends GF_Dependencies {
 
 	/**
 	 * Items to enqueue globally in admin.

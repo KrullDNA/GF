@@ -679,8 +679,7 @@ class KDNAEntryDetail {
 			<div class="wrap kdna_entry_wrap">
 
 					<?php
-					$kdna_entry_locking = new KDNAEntryLocking();
-					$kdna_entry_locking->lock_info( $lead_id ); ?>
+					// Locking removed for lean plugin. ?>
 
 
 				<?php if ( isset( $_GET['pos'] ) ) { ?>

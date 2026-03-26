@@ -2,12 +2,12 @@
 
 namespace KDNA_Forms\KDNA_Forms\Assets;
 
-use KDNA_Forms\KDNA_Forms\Assets\Theme_Dependencies\GF_Theme_Script_Dependencies;
+use KDNA_Forms\KDNA_Forms\Assets\Theme_Dependencies\KDNA_Theme_Script_Dependencies;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
 
-use KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies\GF_Admin_Script_Dependencies;
-use KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies\GF_Admin_Style_Dependencies;
+use KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies\KDNA_Admin_Script_Dependencies;
+use KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies\KDNA_Admin_Style_Dependencies;
 
 /**
  * Class KDNA_Asset_Service_Provider
@@ -63,15 +63,15 @@ class KDNA_Asset_Service_Provider extends KDNA_Service_Provider {
 		} );
 
 		$container->add( self::STYLE_DEPS, function () {
-			return new GF_Admin_Style_Dependencies();
+			return new KDNA_Admin_Style_Dependencies();
 		} );
 
 		$container->add( self::SCRIPT_DEPS, function () {
-			return new GF_Admin_Script_Dependencies();
+			return new KDNA_Admin_Script_Dependencies();
 		} );
 
 		$container->add( self::SCRIPT_DEPS_THEME, function () {
-			return new GF_Theme_Script_Dependencies();
+			return new KDNA_Theme_Script_Dependencies();
 		} );
 
 		$this->svg_delivery( $container );

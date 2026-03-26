@@ -170,7 +170,7 @@ class KDNAFormList {
 		</script>
         <?php
                 KDNAForms::admin_header( array(), false );
-                $table = new GF_Form_List_Table();
+                $table = new KDNA_Form_List_Table();
                 $table->process_action();
 		?>
 
@@ -517,7 +517,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class GF_Form_List_Table extends WP_List_Table {
+class KDNA_Form_List_Table extends WP_List_Table {
 
 	public $filter = '';
 
@@ -529,7 +529,7 @@ class GF_Form_List_Table extends WP_List_Table {
 		$hidden                = array();
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = array( $columns, $hidden, $sortable, 'title' );
-		$this->locking_info    = new KDNAFormLocking();
+		$this->locking_info    = null; // Locking removed for lean plugin.
 		$this->filter          = rgget( 'filter' );
 	}
 

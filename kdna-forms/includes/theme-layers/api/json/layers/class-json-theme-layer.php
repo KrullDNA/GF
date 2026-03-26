@@ -3,7 +3,7 @@
 namespace KDNA_Forms\KDNA_Forms\Theme_Layers\API\JSON\Layers;
 
 use KDNA_Forms\KDNA_Forms\Theme_Layers\API\GF_All_Access_Theme_Layer;
-use KDNA_Forms\KDNA_Forms\Theme_Layers\API\JSON\Rules\GF_Theme_Layer_Rule;
+use KDNA_Forms\KDNA_Forms\Theme_Layers\API\JSON\Rules\KDNA_Theme_Layer_Rule;
 
 class Json_Theme_Layer extends GF_All_Access_Theme_Layer {
 
@@ -66,7 +66,7 @@ class Json_Theme_Layer extends GF_All_Access_Theme_Layer {
 			$rule = $this->_rules[ $rule ];
 		}
 
-		$rule_object = new GF_Theme_Layer_Rule( $rule );
+		$rule_object = new KDNA_Theme_Layer_Rule( $rule );
 
 		return $rule_object->validate( array( 'form' => $settings, 'blocks' => $block_settings ) );
 	}

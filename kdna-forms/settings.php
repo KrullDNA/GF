@@ -2,7 +2,8 @@
 
 use KDNA_Forms\KDNA_Forms\Settings\Settings;
 // use \KDNA_Forms\KDNA_Forms\License; // Removed - license functionality removed.
-use \KDNA_Forms\KDNA_Forms\Setup_Wizard\Endpoints\KDNA_Setup_Wizard_Endpoint_Save_Prefs;
+// Setup wizard removed.
+// use \KDNA_Forms\KDNA_Forms\Setup_Wizard\Endpoints\KDNA_Setup_Wizard_Endpoint_Save_Prefs;
 // use KDNA_Forms\KDNA_Forms\TranslationsPress_Updater; // Removed - license functionality removed.
 
 class_exists( 'KDNAForms' ) || die();
@@ -225,17 +226,17 @@ class KDNASettings {
 			delete_option( 'kdnaformsaddon_kdnaformswebapi_version' );
 			delete_option( 'kdnaformsaddon_kdnaformswebapi_settings' );
 
-			// Remove setup wizard data.
-			KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Setup_Wizard\KDNA_Setup_Wizard_Service_Provider::SAVE_PREFS_ENDPOINT )->remove_setup_data();
+			// Setup wizard removed.
+			// KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Setup_Wizard\KDNA_Setup_Wizard_Service_Provider::SAVE_PREFS_ENDPOINT )->remove_setup_data();
 
 			// License key removal skipped - license functionality removed.
 
 			// Removing kdna forms upload folder
 			KDNACommon::delete_directory( KDNAFormsModel::get_upload_root() );
 
-			// Delete Logging settings and logging files
-			gf_logging()->delete_settings();
-			gf_logging()->delete_log_files();
+			// Logging module removed.
+			// gf_logging()->delete_settings();
+			// gf_logging()->delete_log_files();
 
 			delete_option( 'widget_kdnaform_widget' );
 			delete_option( 'kdna_forms_default_theme' );
@@ -663,8 +664,8 @@ class KDNASettings {
 			);
 		}
 
-		// Check if user has hidden license details in the installation wizard.
-		$hide_license_option = get_option( 'kdna_forms_' . KDNA_Setup_Wizard_Endpoint_Save_Prefs::PARAM_HIDE_LICENSE, false );
+		// Setup wizard removed - default to not hiding license.
+		$hide_license_option = get_option( 'kdna_forms_hide_license', false );
 
 		// Cast license option to bool.
 		if ( $hide_license_option === 'true' ) {

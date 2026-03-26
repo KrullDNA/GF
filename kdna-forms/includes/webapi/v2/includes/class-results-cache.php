@@ -7,18 +7,18 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 /**
  * Manages the entry results cache expiry and rebuild.
  *
- * GF_Results_Cache::get_results() will attempt to calculate the results inside the time_limit arg.
+ * KDNA_Results_Cache::get_results() will attempt to calculate the results inside the time_limit arg.
  * If incomplete then a WP Cron task is kicked off.
  * If the cron task is unable to finish within time_limit_cron then another task is scheduled until the results are complete.
  *
  * @package    KDNA Forms
- * @subpackage GF_Results_Cache
+ * @subpackage KDNA_Results_Cache
  * @access     public
  */
-class GF_Results_Cache {
+class KDNA_Results_Cache {
 
 	/**
-	 * GF_Results_Cache constructor.
+	 * KDNA_Results_Cache constructor.
 	 *
 	 * @since 2.4-beta-1
 	 */
@@ -39,7 +39,7 @@ class GF_Results_Cache {
 	 *
 	 * @since 2.4-beta-1
 	 *
-	 * @var GF_Results_Cache $_instance If available, contains an instance of this class.
+	 * @var KDNA_Results_Cache $_instance If available, contains an instance of this class.
 	 */
 	private static $_instance = null;
 
@@ -48,11 +48,11 @@ class GF_Results_Cache {
 	 *
 	 * @since 2.4-beta-1
 	 *
-	 * @return GF_Results_Cache $_instance
+	 * @return KDNA_Results_Cache $_instance
 	 */
 	public static function get_instance() {
 		if ( self::$_instance == null ) {
-			self::$_instance = new GF_Results_Cache();
+			self::$_instance = new KDNA_Results_Cache();
 		}
 
 		return self::$_instance;
@@ -871,10 +871,10 @@ class GF_Results_Cache {
 }
 
 /**
- * @return GF_Results_Cache
+ * @return KDNA_Results_Cache
  */
 function gf_results_cache() {
-	return GF_Results_Cache::get_instance();
+	return KDNA_Results_Cache::get_instance();
 }
 
 gf_results_cache();
