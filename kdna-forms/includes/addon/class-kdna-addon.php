@@ -1028,7 +1028,7 @@ abstract class KDNAAddOn {
 	 *
 	 *                // query - Specifies a set of query string ($_GET) values.
 	 *                // If all specified query string values match the current requested page, the script will be enqueued
-	 *                array( 'query' => 'page=gf_edit_forms&view=settings&id=_notempty_' )
+	 *                array( 'query' => 'page=kdna_edit_forms&view=settings&id=_notempty_' )
 	 *
 	 *                // post - Specifies a set of post ($_POST) values.
 	 *                // If all specified posted values match the current request, the script will be enqueued
@@ -4344,7 +4344,7 @@ abstract class KDNAAddOn {
 		$subview = rgget( 'subview' );
 		add_filter( 'kdnaform_form_settings_menu', array( $this, 'add_form_settings_menu' ), 10, 2 );
 
-		if ( KDNAForms::get_page_query_arg() == 'gf_edit_forms' && $view == 'settings' && $subview == $this->get_slug() && $this->current_user_can_any( $this->get_form_settings_capabilities() ) ) {
+		if ( KDNAForms::get_page_query_arg() == 'kdna_edit_forms' && $view == 'settings' && $subview == $this->get_slug() && $this->current_user_can_any( $this->get_form_settings_capabilities() ) ) {
 			require_once( KDNACommon::get_base_path() . '/tooltips.php' );
 			add_action( 'kdnaform_form_settings_page_' . $this->get_slug(), array( $this, 'form_settings_page' ) );
 
@@ -4901,7 +4901,7 @@ abstract class KDNAAddOn {
 		);
 
 		// Load Tooltips functions.
-		if ( KDNAForms::get_page_query_arg() == 'gf_settings' && $subview == $this->get_slug() && $this->current_user_can_any( $this->_capabilities_settings_page ) ) {
+		if ( KDNAForms::get_page_query_arg() == 'kdna_settings' && $subview == $this->get_slug() && $this->current_user_can_any( $this->_capabilities_settings_page ) ) {
 			require_once( KDNACommon::get_base_path() . '/tooltips.php' );
 		}
 
@@ -4947,7 +4947,7 @@ abstract class KDNAAddOn {
 			return $links;
 		}
 
-		array_unshift( $links, '<a href="' . admin_url( 'admin.php' ) . '?page=gf_settings&subview=' . $this->get_slug() . '">' . esc_html__( 'Settings', 'kdnaforms' ) . '</a>' );
+		array_unshift( $links, '<a href="' . admin_url( 'admin.php' ) . '?page=kdna_settings&subview=' . $this->get_slug() . '">' . esc_html__( 'Settings', 'kdnaforms' ) . '</a>' );
 
 		return $links;
 
@@ -5558,7 +5558,7 @@ abstract class KDNAAddOn {
 			'icon_namespace' => $this->get_icon_namespace(),
 		);
 		$icon_markup = KDNACommon::get_icon_markup( $icon, 'dashicon-admin-generic' );
-		$url         = add_query_arg( array( 'subview' => $this->get_slug() ), admin_url( 'admin.php?page=gf_settings' ) );
+		$url         = add_query_arg( array( 'subview' => $this->get_slug() ), admin_url( 'admin.php?page=kdna_settings' ) );
 		?>
 		<form action="" method="post" class="kdnaform-settings-panel kdnaform-settings-panel__addon-uninstall">
 			<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
@@ -6390,7 +6390,7 @@ abstract class KDNAAddOn {
 	 *
 	 */
 	public function get_plugin_settings_url() {
-		return add_query_arg( array( 'page' => 'gf_settings', 'subview' => $this->get_slug() ), admin_url( 'admin.php' ) );
+		return add_query_arg( array( 'page' => 'kdna_settings', 'subview' => $this->get_slug() ), admin_url( 'admin.php' ) );
 	}
 
 	/**
@@ -6426,7 +6426,7 @@ abstract class KDNAAddOn {
 		*/
 		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
 		if (
-				KDNAForms::get_page_query_arg() == 'gf_edit_forms' && ! rgempty( 'id', $_GET ) && rgempty( 'view', $_GET )  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				KDNAForms::get_page_query_arg() == 'kdna_edit_forms' && ! rgempty( 'id', $_GET ) && rgempty( 'view', $_GET )  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				|| $save_form_helper->is_ajax_save_action()
 		) {
 			return true;
@@ -6440,7 +6440,7 @@ abstract class KDNAAddOn {
 	 */
 	public function is_form_list() {
 
-		if ( KDNAForms::get_page_query_arg() == 'gf_edit_forms' && rgempty( 'id', $_GET ) && rgempty( 'view', $_GET ) ) {  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( KDNAForms::get_page_query_arg() == 'kdna_edit_forms' && rgempty( 'id', $_GET ) && rgempty( 'view', $_GET ) ) {  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return true;
 		}
 
@@ -6456,7 +6456,7 @@ abstract class KDNAAddOn {
 	 */
 	public function is_form_settings( $tab = null ) {
 
-		$is_form_settings = KDNAForms::get_page_query_arg() == 'gf_edit_forms' && rgget( 'view' ) == 'settings';
+		$is_form_settings = KDNAForms::get_page_query_arg() == 'kdna_edit_forms' && rgget( 'view' ) == 'settings';
 		$is_tab           = $this->_tab_matches( $tab );
 
 		if ( $is_form_settings && $is_tab ) {
@@ -6493,7 +6493,7 @@ abstract class KDNAAddOn {
 	 */
 	public function is_plugin_settings( $tab = '' ) {
 
-		$is_plugin_settings = KDNAForms::get_page_query_arg() == 'gf_settings';
+		$is_plugin_settings = KDNAForms::get_page_query_arg() == 'kdna_settings';
 		$is_tab             = $this->_tab_matches( $tab );
 
 		if ( $is_plugin_settings && $is_tab ) {
@@ -6536,7 +6536,7 @@ abstract class KDNAAddOn {
 	 * @return bool
 	 */
 	public function is_entry_view() {
-		if ( KDNAForms::get_page_query_arg() == 'gf_entries' && rgget( 'view' ) == 'entry' && ( ! isset( $_POST['screen_mode'] ) || rgpost( 'screen_mode' ) == 'view' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'entry' && ( ! isset( $_POST['screen_mode'] ) || rgpost( 'screen_mode' ) == 'view' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return true;
 		}
 
@@ -6548,7 +6548,7 @@ abstract class KDNAAddOn {
 	 * @return bool
 	 */
 	public function is_entry_edit() {
-		if ( KDNAForms::get_page_query_arg() == 'gf_entries' && rgget( 'view' ) == 'entry' && rgpost( 'screen_mode' ) == 'edit' ) {
+		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'entry' && rgpost( 'screen_mode' ) == 'edit' ) {
 			return true;
 		}
 
@@ -6556,7 +6556,7 @@ abstract class KDNAAddOn {
 	}
 
 	public function is_entry_list() {
-		if ( KDNAForms::get_page_query_arg() == 'gf_entries' && ( rgget( 'view' ) == 'entries' || rgempty( 'view', $_GET ) ) ) {  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && ( rgget( 'view' ) == 'entries' || rgempty( 'view', $_GET ) ) ) {  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return true;
 		}
 
@@ -6567,7 +6567,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the current page is the results page. Otherwise, returns FALSE
 	 */
 	public function is_results() {
-		if ( KDNAForms::get_page_query_arg() == 'gf_entries' && rgget( 'view' ) == 'gf_results_' . $this->get_slug() ) {
+		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'gf_results_' . $this->get_slug() ) {
 			return true;
 		}
 
@@ -6578,7 +6578,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the current page is the print page. Otherwise, returns FALSE
 	 */
 	public function is_print() {
-		if ( rgget( 'gf_page' ) == 'print-entry' ) {
+		if ( rgget( 'kdna_page' ) == 'print-entry' ) {
 			return true;
 		}
 
@@ -6589,7 +6589,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the current page is the preview page. Otherwise, returns FALSE
 	 */
 	public function is_preview() {
-		if ( rgget( 'gf_page' ) == 'preview' ) {
+		if ( rgget( 'kdna_page' ) == 'preview' ) {
 			return true;
 		}
 

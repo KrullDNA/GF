@@ -24,7 +24,7 @@ class KDNAEntryList {
 
 		// Restore entry.
 		KDNAFormsModel::update_entry_property( rgget( 'restore' ), 'status', 'active' );
-		$admin_url = admin_url( 'admin.php?page=gf_entries&view=entries&id=' . absint( $form_id ) . '&restored=' . absint( rgget( 'restore' ) ) );
+		$admin_url = admin_url( 'admin.php?page=kdna_entries&view=entries&id=' . absint( $form_id ) . '&restored=' . absint( rgget( 'restore' ) ) );
 		wp_safe_redirect( $admin_url );
 		exit();
 	}
@@ -88,7 +88,7 @@ class KDNAEntryList {
 		if ( sizeof( $forms ) == 0 ) {
 			?>
 			<div style="margin:50px 0 0 10px;">
-				<?php echo sprintf( esc_html__( "You don't have any active forms. Let's go %screate one%s", 'kdnaforms' ), '<a href="?page=gf_new_form">', '</a>' ); ?>
+				<?php echo sprintf( esc_html__( "You don't have any active forms. Let's go %screate one%s", 'kdnaforms' ), '<a href="?page=kdna_new_form">', '</a>' ); ?>
 			</div>
 			<?php
 		} else {
@@ -584,7 +584,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 		}
 
 		$args = wp_parse_args( $args, array(
-			'plural' => 'gf_entries',
+			'plural' => 'kdna_entries',
 			'singular' => 'kdna_entry',
 			'ajax' => false,
 			'screen' => null,
@@ -662,7 +662,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 			} else {
 				$selected = ( $filter == $filter_link['id'] ) ? 'current' : '';
 			}
-			$link = '<a class="' . $selected . '" href="?page=gf_entries&view=entries&id=' . $form_id . esc_attr( $filter_arg ) . '">' . esc_html( $filter_link['label'] ) .
+			$link = '<a class="' . $selected . '" href="?page=kdna_entries&view=entries&id=' . $form_id . esc_attr( $filter_arg ) . '">' . esc_html( $filter_link['label'] ) .
 			        '<span class="count"> (<span	id="' . esc_attr( $filter_link['id'] ) . '_count">' . absint( rgar( $filter_link, 'count' ) ) . '</span>)</span></a>';
 			$views[ $filter_link['id'] ] = $link;
 		}
@@ -871,7 +871,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 		}
 
 		$column_selector_url = add_query_arg( array(
-			'gf_page'   => 'select_columns',
+			'kdna_page'   => 'select_columns',
 			'id'        => absint( $form_id ),
 			'TB_iframe' => 'true',
 			'height'    => 465,
@@ -1103,7 +1103,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 		$position = ( $page_size * $page_index ) + $this->row_index;
 
-		$edit_url = 'page=gf_entries&view=entry&id=' . absint( $form_id ) . '&lid=' . esc_attr( $entry['id'] ) . $search_qs . $orderby_qs . $order_qs . $filter_qs . '&paged=' . $page_num .'&pos=' . $position .'&field_id=' . esc_attr( $search_field_id ) .  '&operator=' .  esc_attr( $search_operator );
+		$edit_url = 'page=kdna_entries&view=entry&id=' . absint( $form_id ) . '&lid=' . esc_attr( $entry['id'] ) . $search_qs . $orderby_qs . $order_qs . $filter_qs . '&paged=' . $page_num .'&pos=' . $position .'&field_id=' . esc_attr( $search_field_id ) .  '&operator=' .  esc_attr( $search_operator );
 		return $edit_url;
 	}
 
@@ -1204,9 +1204,9 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				if ( KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					$actions['restore'] = array(
 						'class' => 'edit',
-						'link'  => "<a data-wp-lists='delete:the-list:entry_row_" . esc_attr( $entry['id'] ) . '::status=restore&entry=' . esc_attr( $entry['id'] ) . "' href=\"" . wp_nonce_url( '?page=gf_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Restore', 'kdnaforms' ) . '</a>',
+						'link'  => "<a data-wp-lists='delete:the-list:entry_row_" . esc_attr( $entry['id'] ) . '::status=restore&entry=' . esc_attr( $entry['id'] ) . "' href=\"" . wp_nonce_url( '?page=kdna_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Restore', 'kdnaforms' ) . '</a>',
 					);
-					$delete_link        = '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=delete&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=gf_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Delete Permanently', 'kdnaforms' ) . '</a>';
+					$delete_link        = '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=delete&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=kdna_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Delete Permanently', 'kdnaforms' ) . '</a>';
 
 					/**
 					 * Allows for modification of a Form entry "delete" link
@@ -1227,11 +1227,11 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				if ( KDNACommon::current_user_can_any( 'kdnaforms_edit_entries' ) ) {
 					$actions['unspam'] = array(
 						'class' => 'edit',
-						'link' => "<a data-wp-lists='delete:the-list:entry_row_" . esc_attr($entry['id']) . "::status=unspam&entry=" . esc_attr($entry['id']) . "' aria-label=\"" . esc_attr__('Mark this entry as not spam', 'kdnaforms') . "\" href=\"" . wp_nonce_url('?page=gf_entries', 'gf_delete_entry') . "\">" . esc_html__('Not Spam', 'kdnaforms') . '</a>',
+						'link' => "<a data-wp-lists='delete:the-list:entry_row_" . esc_attr($entry['id']) . "::status=unspam&entry=" . esc_attr($entry['id']) . "' aria-label=\"" . esc_attr__('Mark this entry as not spam', 'kdnaforms') . "\" href=\"" . wp_nonce_url('?page=kdna_entries', 'gf_delete_entry') . "\">" . esc_html__('Not Spam', 'kdnaforms') . '</a>',
 					);
 				}
 				if ( KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
-					$delete_link = '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=delete&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=gf_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Delete Permanently', 'kdnaforms' ) . '</a>';
+					$delete_link = '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=delete&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=kdna_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Delete Permanently', 'kdnaforms' ) . '</a>';
 
 					/**
 					 * Allows for modification of a Form entry "delete" link
@@ -1258,13 +1258,13 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				if ( KDNACommon::spam_enabled( $form_id ) && KDNACommon::current_user_can_any( 'kdnaforms_edit_entries' ) ) {
 					$actions['spam'] = array(
 						'class' => 'spam',
-						'link'  => '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=spam&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=gf_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Mark as Spam', 'kdnaforms' ) . '</a>',
+						'link'  => '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=spam&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=kdna_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Mark as Spam', 'kdnaforms' ) . '</a>',
 					);
 				}
 				if ( KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					$actions['delete'] = array(
 						'class' => 'delete',
-						'link'  => '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=trash&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=gf_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Trash', 'kdnaforms' ) . '</a>',
+						'link'  => '<a data-wp-lists="delete:the-list:entry_row_' . esc_attr( $entry['id'] ) . '::status=trash&entry=' . esc_attr( $entry['id'] ) . '" href="' . wp_nonce_url( '?page=kdna_entries', 'gf_delete_entry' ) . '">' . esc_html__( 'Trash', 'kdnaforms' ) . '</a>',
 					);
 				}
 				break;
@@ -1631,7 +1631,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				var field_id_qs = field_id == "" ? "" : "&field_id=" + field_id;
 				var operator_qs = operator == "" ? "" : "&operator=" + operator;
 
-				var location = "?page=gf_entries&view=entries&id=" + form_id + "&orderby=" + sort_field_id + "&order=" + sort_direction + search_qs + filter_qs + field_id_qs + operator_qs;
+				var location = "?page=kdna_entries&view=entries&id=" + form_id + "&orderby=" + sort_field_id + "&order=" + sort_direction + search_qs + filter_qs + field_id_qs + operator_qs;
 				document.location = location;
 			}
 
@@ -1799,7 +1799,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 				jQuery.post(ajaxurl, {
 						action                 : "gf_resend_notifications",
-						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'gf_resend_notifications' ) ); ?>',
+						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
 						notifications          : jQuery.toJSON(selectedNotifications),
 						sendTo                 : sendTo,
 						leadIds                : leadIds,
@@ -1846,7 +1846,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 				// Build query string parameters.
 				var queryParams = {
-					'gf_page':    'print-entry',
+					'kdna_page':    'print-entry',
 					'fid':        <?php echo json_encode( $form['id'] ); ?>,
 					'lid':        entryIDs,
 					'notes':      jQuery( '#kdnaform_print_notes' ).is( ':checked' ) ? '1' : '',
@@ -2146,7 +2146,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 							?>
 							<p class="description"><?php esc_html_e( 'You cannot resend notifications for these entries because this form does not currently have any notifications configured.', 'kdnaforms' ); ?></p>
 
-							<a href="<?php echo esc_url( admin_url( "admin.php?page=gf_edit_forms&view=settings&subview=notification&id={$form['id']}" ) ); ?>" class="button"><?php esc_html_e( 'Configure Notifications', 'kdnaforms' ) ?></a>
+							<a href="<?php echo esc_url( admin_url( "admin.php?page=kdna_edit_forms&view=settings&subview=notification&id={$form['id']}" ) ); ?>" class="button"><?php esc_html_e( 'Configure Notifications', 'kdnaforms' ) ?></a>
 							<?php
 						} else {
 							?>

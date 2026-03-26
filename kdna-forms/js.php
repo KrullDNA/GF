@@ -16,7 +16,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
             if (!confirmed) return;
 
             //Sending AJAX request
-            jQuery.post( ajaxurl, {action: "gf_delete_custom_choice", name: kdnaform_selected_custom_choice, gf_delete_custom_choice: "<?php echo wp_create_nonce( 'gf_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+            jQuery.post( ajaxurl, {action: "gf_delete_custom_choice", name: kdnaform_selected_custom_choice, gf_delete_custom_choice: "<?php echo wp_create_nonce( 'kdna_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
             //Updating UI
             delete kdnaform_custom_choices[kdnaform_selected_custom_choice];
@@ -47,7 +47,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var choices = jQuery('#kdnafield_bulk_add_input').val().split('\n');
 
 		//Sending AJAX request
-		jQuery.post(ajaxurl, {action: "gf_save_custom_choice", previous_name: kdnaform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), gf_save_custom_choice: "<?php echo wp_create_nonce( 'gf_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+		jQuery.post(ajaxurl, {action: "gf_save_custom_choice", previous_name: kdnaform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), gf_save_custom_choice: "<?php echo wp_create_nonce( 'kdna_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
 		//deleting existing custom choice
 		if (kdnaform_selected_custom_choice.length > 0)

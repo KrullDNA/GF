@@ -15,7 +15,7 @@ use KDNA_Forms\KDNA_Forms_Conversational_Forms\Style_Layers\GFCF_Style_Layers_Pr
  */
 class KDNA_Theme_Layers extends \KDNAAddOn {
 
-	protected $_slug        = 'gf_theme_layers';
+	protected $_slug        = 'kdna_theme_layers';
 	protected $_full_path   = __FILE__;
 	protected $_title       = 'KDNA Forms Theme Layers';
 	protected $_short_title = 'Theme Layers';

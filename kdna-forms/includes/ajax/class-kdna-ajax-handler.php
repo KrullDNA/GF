@@ -292,7 +292,7 @@ class KDNA_Ajax_Handler {
 		}
 
 		parse_str( $query_string, $query );
-		unset( $query['gf_page'] ); // Removing so it doesn't conflict with gf_ajax_page=preview.
+		unset( $query['kdna_page'] ); // Removing so it doesn't conflict with gf_ajax_page=preview.
 		$_GET = array_merge( $_GET, $query ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 

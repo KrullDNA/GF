@@ -32,7 +32,7 @@ class KDNAFormDetail {
 			<script type="text/javascript">
 				jQuery(document).ready(
 					function () {
-						document.location.href = '?page=gf_edit_forms';
+						document.location.href = '?page=kdna_edit_forms';
 					}
 				);
 			</script>
@@ -213,7 +213,7 @@ class KDNAFormDetail {
 
 		<div id="kdnaform-form-toolbar" class="kdnaform-form-toolbar">
 			<div class="kdnaform-form-toolbar__logo">
-				<a href="?page=gf_edit_forms" style="text-decoration: none; color: #1d2327; font-weight: 600; font-size: 14px;">
+				<a href="?page=kdna_edit_forms" style="text-decoration: none; color: #1d2327; font-weight: 600; font-size: 14px;">
 					<span class="screen-reader-text"><?php esc_html_e( 'Return to form list', 'kdnaforms' ); ?></span>
 					<span class="dashicons dashicons-feedback" style="font-size: 24px; width: 24px; height: 24px; vertical-align: middle; margin-right: 4px;"></span>
 				</a>
@@ -391,7 +391,7 @@ class KDNAFormDetail {
 					</div>
 
 					<div class="new-form-option">
-						<a href="?page=gf_edit_forms"><?php esc_html_e( 'Return to Form List', 'kdnaforms' ); ?></a>
+						<a href="?page=kdna_edit_forms"><?php esc_html_e( 'Return to Form List', 'kdnaforms' ); ?></a>
 					</div>
 
 				</div>
@@ -3268,13 +3268,13 @@ class KDNAFormDetail {
 	}
 
 	public static function delete_custom_choice() {
-		check_ajax_referer( 'gf_delete_custom_choice', 'gf_delete_custom_choice' );
+		check_ajax_referer( 'kdna_delete_custom_choice', 'kdna_delete_custom_choice' );
 		KDNAFormsModel::delete_custom_choice( rgpost( 'name' ) );
 		exit();
 	}
 
 	public static function save_custom_choice() {
-		check_ajax_referer( 'gf_save_custom_choice', 'gf_save_custom_choice' );
+		check_ajax_referer( 'kdna_save_custom_choice', 'kdna_save_custom_choice' );
 		KDNAFormsModel::save_custom_choice( rgpost( 'previous_name' ), rgpost( 'new_name' ), KDNACommon::json_decode( rgpost( 'choices' ) ) );
 		exit();
 	}
@@ -3442,7 +3442,7 @@ class KDNAFormDetail {
 						echo sprintf(
 							// Translators: 1. Opening <a> tag with link to the form export page, 2. closing <a> tag, 3. Opening <a> tag for documentation link, 4. Closing <a> tag.
 							esc_html__( 'If you continue to encounter this error, you can %1$sexport your form%2$s to include in your support request. You can also disable AJAX saving for this form. %3$sLearn more%4$s.', 'kdnaforms' ),
-							'<a target="_blank" href="' . esc_url( admin_url( 'admin.php?page=gf_export&subview=export_form&export_form_ids=' . rgget( 'id' ) ) ) . '" rel="noopener noreferrer" class="kdnaform-export-form">',
+							'<a target="_blank" href="' . esc_url( admin_url( 'admin.php?page=kdna_export&subview=export_form&export_form_ids=' . rgget( 'id' ) ) ) . '" rel="noopener noreferrer" class="kdnaform-export-form">',
 							'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>',
 							'<a target="_blank" href="https://docs.kdnaforms.com/kdnaform_disable_ajax_save/" rel="noopener noreferrer">',
 							'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'

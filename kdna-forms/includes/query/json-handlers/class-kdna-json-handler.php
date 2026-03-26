@@ -10,7 +10,7 @@ namespace KDNA_Forms\KDNA_Forms\Query\JSON_Handlers;
 abstract class GF_JSON_Handler {
 
 	const SETTING_NAME = 'form_full_screen_slug';
-	const SECTION_NAME = 'gf_theme_layers';
+	const SECTION_NAME = 'kdna_theme_layers';
 
 	/**
 	 * Get the correct setting name to check to enable full screen for a slug.
