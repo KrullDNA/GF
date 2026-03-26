@@ -3348,7 +3348,7 @@ class KDNAForms {
 				'requiredIndicator' => KDNAFormsModel::get_required_indicator( $form_id ),
 				'defaultSubmit'     => __( 'Submit', 'kdnaforms' ),
 			);
-			wp_localize_script( 'kdnaform_form_editor', 'kdnaform_form_strings', $form_strings );
+			wp_localize_script( 'kdnaform_form_editor', 'gform_form_strings', $form_strings );
 			wp_enqueue_media();
 		}
 
