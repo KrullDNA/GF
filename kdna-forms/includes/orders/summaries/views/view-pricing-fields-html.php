@@ -1,4 +1,4 @@
-<tr style="background-color:#EAF2FA">
+<tr style="background-color:#e9e9e9">
 	<td colspan="2">
 		<strong style="font-family: sans-serif; font-size:12px;"><?php echo esc_html( $order_summary['labels']['order_label'] ); ?></strong>
 	</td>

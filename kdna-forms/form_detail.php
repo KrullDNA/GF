@@ -253,6 +253,13 @@ class KDNAFormDetail {
 			#form_editor_fields_container .simplebar-content-wrapper { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
+			/* Move field panel from right to left */
+			.gforms_edit_form { display: flex; flex-wrap: wrap; }
+			.gforms_edit_form > #gform-form-toolbar { width: 100%; order: 0; }
+			.gforms_edit_form > .editor-sidebar { order: 1; }
+			.gforms_edit_form > #form_editor_fields_container { order: 2; }
+			.gforms_edit_form > h1,
+			.gforms_edit_form > h2 { width: 100%; order: 0; }
 		</style>
 		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
 		<?php
