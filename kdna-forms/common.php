@@ -6113,7 +6113,7 @@ Content-Type: text/html;
 		?>
 		<header class="kdnaform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
 			<div class="kdnaform-settings__wrapper">
-				<img src="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/images/logos/kdna-logo-dark.svg" alt="KDNA Forms" width="220" />
+				<h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #1d2327; line-height: 1.4;">KDNA Forms</h2>
 
 				<?php
 				if ( !empty ( $header_buttons ) ) { ?>

@@ -8,7 +8,10 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 use KDNA_Forms\KDNA_Forms\Query\Batch_Processing\KDNA_Entry_Meta_Batch_Processor;
 use KDNA_Forms\KDNA_Forms\Query\Batch_Processing\KDNA_Batch_Operations_Service_Provider;
 
-require_once KDNA_PLUGIN_DIR_PATH . 'includes/legacy/forms_model_legacy.php';
+// Legacy module removed.
+if ( file_exists( KDNA_PLUGIN_DIR_PATH . 'includes/legacy/forms_model_legacy.php' ) ) {
+	require_once KDNA_PLUGIN_DIR_PATH . 'includes/legacy/forms_model_legacy.php';
+}
 
 /**
  * Class KDNAFormsModel
