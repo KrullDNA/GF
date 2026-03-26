@@ -427,13 +427,6 @@ class KDNAForms {
 			add_action( 'admin_head', array( 'KDNAForms', 'preload_webfonts' ), 0, 0 );
 		}
 
-		// Force gf_db_version to modern value to prevent legacy rg_lead/rg_form table fallback.
-		$current_db_ver = get_option( 'gf_db_version' );
-		if ( empty( $current_db_ver ) || version_compare( $current_db_ver, '2.3-dev-1', '<' ) ) {
-			update_option( 'gf_db_version', '2.9.30', false );
-			// Clear the static cache in KDNAFormsModel
-			KDNAFormsModel::flush_current_forms();
-		}
 
 		self::register_scripts();
 
