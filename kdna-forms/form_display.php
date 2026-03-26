@@ -1242,7 +1242,7 @@ class KDNAFormDisplay {
 			$form_string .= $anchor['tag'];
 			$action      .= $anchor['id'];
 
-			$target = $ajax ? "target='kdnaform_ajax_frame_{$form_id}'" : '';
+			$target = $ajax ? "target='gform_ajax_frame_{$form_id}'" : '';
 
 			$form_css_class = ! empty( $form['cssClass'] ) ? "class='{$form_css_class}'" : '';
 
@@ -1791,7 +1791,7 @@ class KDNAFormDisplay {
 		if ( rgar( $form['button'], 'location' ) && 'inline' == $form['button']['location'] ) {
 			$button_input = '';
 		} else {
-			$button_input = self::get_form_button( $form['id'], "kdnaform_submit_button_{$form['id']}", $button, __( 'Submit', 'kdnaforms' ), 'gform_button', __( 'Submit', 'kdnaforms' ), 0 );
+			$button_input = self::get_form_button( $form['id'], "gform_submit_button_{$form['id']}", $button, __( 'Submit', 'kdnaforms' ), 'gform_button', __( 'Submit', 'kdnaforms' ), 0 );
 			$button_input = gf_apply_filters( array( 'kdnaform_submit_button', $form_id ), $button_input, $form );
 		}
 
@@ -2351,7 +2351,7 @@ class KDNAFormDisplay {
 
 		$message = KDNACommon::replace_variables( $confirmation['message'], $form, $entry, false, true, $nl2br, 'html', $aux_data );
 		$message = self::maybe_sanitize_confirmation_message( $message );
-		$message = empty( $confirmation['message'] ) ? "{$anchor} " : "{$anchor}<div id='gform_confirmation_wrapper_{$form['id']}' class='kdnaform_confirmation_wrapper {$css_class}'><div id='gform_confirmation_message_{$form['id']}' class='gform_confirmation_message_{$form['id']} gform_confirmation_message'>" . $message . '</div></div>';
+		$message = empty( $confirmation['message'] ) ? "{$anchor} " : "{$anchor}<div id='gform_confirmation_wrapper_{$form['id']}' class='gform_confirmation_wrapper {$css_class}'><div id='gform_confirmation_message_{$form['id']}' class='gform_confirmation_message_{$form['id']} gform_confirmation_message'>" . $message . '</div></div>';
 
 		return $message;
 	}
@@ -4982,7 +4982,7 @@ class KDNAFormDisplay {
 			$nonce_input = wp_nonce_field( 'kdnaform_send_resume_link', '_kdnaform_send_resume_link_nonce', true, false );
 		}
 
-		$target = $is_iframe_ajax ? "target='kdnaform_ajax_frame_{$form_id}'" : '';
+		$target = $is_iframe_ajax ? "target='gform_ajax_frame_{$form_id}'" : '';
 
 		$iframe_ajax_fields = '';
 		if ( $is_iframe_ajax ) {
@@ -5082,7 +5082,7 @@ class KDNAFormDisplay {
 
 		$confirmation_message = rgar( $form['confirmation'], 'message' );
 
-		$confirmation            = "<div id='gform_confirmation_wrapper_{$form['id']}' class='form_saved_message_sent kdnaform_confirmation_wrapper {$css_class} gform_wrapper' role='alert' {$form_theme}>{$confirmation_message}</div>";
+		$confirmation            = "<div id='gform_confirmation_wrapper_{$form['id']}' class='form_saved_message_sent gform_confirmation_wrapper {$css_class} gform_wrapper' role='alert' {$form_theme}>{$confirmation_message}</div>";
 		$nl2br                   = rgar( $form['confirmation'], 'disableAutoformat' ) ? false : true;
 		$save_email_confirmation = self::replace_save_variables( $confirmation, $form, $resume_token, $resume_email );
 		$save_email_confirmation = KDNACommon::replace_variables( $save_email_confirmation, $form, $entry, false, true, $nl2br );
