@@ -201,16 +201,16 @@ add_filter( 'plugin_auto_update_setting_html', array( 'KDNAForms', 'auto_update_
 add_filter( 'plugin_auto_update_debug_string', array( 'KDNAForms', 'auto_update_debug_message' ), 10, 4 );
 add_filter( 'intermediate_image_sizes_advanced', array( 'KDNAForms', 'remove_image_sizes' ), 10, 2 );
 
-// Hooks for no-conflict functionality
-if ( is_admin() && ( KDNAForms::is_kdna_page() || KDNAForms::is_kdna_ajax_action() ) ) {
-	add_action( 'wp_print_scripts', array( 'KDNAForms', 'no_conflict_mode_script' ), 1000 );
-	add_action( 'admin_print_footer_scripts', array( 'KDNAForms', 'no_conflict_mode_script' ), 9 );
-
-	add_action( 'wp_print_styles', array( 'KDNAForms', 'no_conflict_mode_style' ), 1000 );
-	add_action( 'admin_print_styles', array( 'KDNAForms', 'no_conflict_mode_style' ), 1 );
-	add_action( 'admin_print_footer_scripts', array( 'KDNAForms', 'no_conflict_mode_style' ), 1 );
-	add_action( 'admin_footer', array( 'KDNAForms', 'no_conflict_mode_style' ), 1 );
-}
+// No-conflict mode disabled for KDNA Forms - was stripping required scripts.
+// if ( is_admin() && ( KDNAForms::is_kdna_page() || KDNAForms::is_kdna_ajax_action() ) ) {
+// 	add_action( 'wp_print_scripts', array( 'KDNAForms', 'no_conflict_mode_script' ), 1000 );
+// 	add_action( 'admin_print_footer_scripts', array( 'KDNAForms', 'no_conflict_mode_script' ), 9 );
+//
+// 	add_action( 'wp_print_styles', array( 'KDNAForms', 'no_conflict_mode_style' ), 1000 );
+// 	add_action( 'admin_print_styles', array( 'KDNAForms', 'no_conflict_mode_style' ), 1 );
+// 	add_action( 'admin_print_footer_scripts', array( 'KDNAForms', 'no_conflict_mode_style' ), 1 );
+// 	add_action( 'admin_footer', array( 'KDNAForms', 'no_conflict_mode_style' ), 1 );
+// }
 
 add_action( 'plugins_loaded', array( 'KDNAForms', 'loaded' ) );
 
@@ -425,6 +425,11 @@ class KDNAForms {
 
 		if ( self::get_page() === 'form_editor' ) {
 			add_action( 'admin_head', array( 'KDNAForms', 'preload_webfonts' ), 0, 0 );
+		}
+
+		// Ensure gf_db_version is set so legacy table fallback is never triggered.
+		if ( ! get_option( 'gf_db_version' ) ) {
+			update_option( 'gf_db_version', '2.9.30', false );
 		}
 
 		self::register_scripts();
