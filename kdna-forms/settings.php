@@ -127,9 +127,7 @@ class KDNASettings {
 			case 'settings':
 				self::kdnaforms_settings_page();
 				break;
-			case 'recaptcha':
-				self::recaptcha_page();
-				break;
+			// Old reCAPTCHA settings removed - use the reCAPTCHA add-on settings instead.
 			case 'uninstall':
 				self::settings_uninstall_page();
 				break;
@@ -1133,7 +1131,6 @@ class KDNASettings {
 		// Build left side options, always have GF Settings first and Uninstall last, put add-ons in the middle.
 		$setting_tabs = array(
 			'10' => array( 'name' => 'settings', 'label' => __( 'Settings', 'kdnaforms' ), 'icon' => 'kdnaform-icon--cog' ),
-			'11' => array( 'name' => 'recaptcha', 'label' => __( 'reCAPTCHA', 'kdnaforms' ), 'icon' => 'kdnaform-icon--recaptcha' ),
 		);
 
 		// Remove an addon from the sidebar if it is uninstalled from the main uninstall page.
