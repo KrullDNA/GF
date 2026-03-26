@@ -104,6 +104,11 @@ class KDNAFormsModel {
 		$blog_id = get_current_blog_id();
 		if ( empty( $db_version[ $blog_id ] ) ) {
 			$db_version[ $blog_id ] = get_option( 'gf_db_version' );
+			// KDNA Forms: if no db version is set, assume modern tables (gf_ prefix).
+			// This prevents fallback to legacy rg_form/rg_lead tables.
+			if ( empty( $db_version[ $blog_id ] ) ) {
+				$db_version[ $blog_id ] = KDNAForms::$version;
+			}
 		}
 
 		return $db_version[ $blog_id ];
@@ -178,10 +183,7 @@ class KDNAFormsModel {
 	public static function get_form_table_name() {
 		global $wpdb;
 
-		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return $wpdb->prefix . 'rg_form';
-		}
-
+		// KDNA Forms always uses the modern gf_ table prefix.
 		return $wpdb->prefix . 'gf_form';
 	}
 
