@@ -364,6 +364,11 @@ class KDNASettings {
 			return;
 		}
 
+		// Save email logo on settings form submit.
+		if ( ! empty( $_POST ) && isset( $_POST['kdna_email_logo_url'] ) ) {
+			update_option( 'kdna_email_logo_url', sanitize_url( wp_unslash( $_POST['kdna_email_logo_url'] ) ) );
+		}
+
 		self::page_header();
 
 		wp_enqueue_style( 'kdnaform_admin' );
@@ -630,20 +635,15 @@ class KDNASettings {
 		$fields['email_logo'] = array(
 			'id'          => 'section_email_logo',
 			'title'       => esc_html__( 'Email Logo', 'kdnaforms' ),
-			'description' => esc_html__( 'Upload a logo to display at the top of email notifications. Recommended max size: 300x100px.', 'kdnaforms' ),
+			'description' => esc_html__( 'Upload a logo to display at the top of email notifications.', 'kdnaforms' ),
 			'class'       => 'gform-settings-panel--half',
 			'fields'      => array(
 				array(
 					'name'          => 'kdna_email_logo_url',
-					'label'         => esc_html__( 'Email Logo URL', 'kdnaforms' ),
-					'type'          => 'text',
-					'class'         => 'large',
-					'default_value' => get_option( 'kdna_email_logo_url', '' ),
-					'description'   => esc_html__( 'Enter the URL of the logo image, or use the button below to select from the media library.', 'kdnaforms' ),
-					'after_input'   => '<button type="button" class="button kdna-email-logo-upload" onclick="var mediaUploader=wp.media({title:\'Select Logo\',button:{text:\'Use as Logo\'},multiple:false});mediaUploader.on(\'select\',function(){var attachment=mediaUploader.state().get(\'selection\').first().toJSON();document.getElementById(\'kdna_email_logo_url\').value=attachment.url;});mediaUploader.open();">' . esc_html__( 'Select Image', 'kdnaforms' ) . '</button>',
+					'label'         => esc_html__( 'Email Logo', 'kdnaforms' ),
+					'type'          => 'html',
+					'html'          => array( 'KDNASettings', 'render_email_logo_field' ),
 					'save_callback' => function( $field, $value ) {
-						update_option( 'kdna_email_logo_url', sanitize_url( $value ) );
-
 						return $value;
 					},
 				),
@@ -1054,6 +1054,69 @@ class KDNASettings {
 	 *
 	 * @return string
 	 */
+	/**
+	 * Renders the email logo upload field with WordPress media library integration.
+	 */
+	public static function render_email_logo_field() {
+		wp_enqueue_media();
+		$logo_url = get_option( 'kdna_email_logo_url', '' );
+		?>
+		<div class="kdna-email-logo-setting">
+			<input type="text" id="kdna_email_logo_url" name="kdna_email_logo_url"
+				   value="<?php echo esc_attr( $logo_url ); ?>"
+				   class="regular-text" style="width:100%;max-width:500px;" />
+			<p>
+				<button type="button" class="button" id="kdna_email_logo_select">
+					<?php esc_html_e( 'Select Image', 'kdnaforms' ); ?>
+				</button>
+				<button type="button" class="button" id="kdna_email_logo_remove" style="<?php echo empty( $logo_url ) ? 'display:none;' : ''; ?>">
+					<?php esc_html_e( 'Remove', 'kdnaforms' ); ?>
+				</button>
+			</p>
+			<div id="kdna_email_logo_preview" style="margin-top:10px;">
+				<?php if ( ! empty( $logo_url ) ) : ?>
+					<img src="<?php echo esc_url( $logo_url ); ?>" style="max-width:300px;max-height:100px;height:auto;" />
+				<?php endif; ?>
+			</div>
+			<p class="description"><?php esc_html_e( 'Select a logo image. It will display at max 300px wide by 100px tall in emails, centered with 20px bottom margin.', 'kdnaforms' ); ?></p>
+		</div>
+		<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			var mediaUploader;
+			$('#kdna_email_logo_select').on('click', function(e) {
+				e.preventDefault();
+				if (mediaUploader) {
+					mediaUploader.open();
+					return;
+				}
+				mediaUploader = wp.media({
+					title: '<?php echo esc_js( __( 'Select Email Logo', 'kdnaforms' ) ); ?>',
+					button: { text: '<?php echo esc_js( __( 'Use as Logo', 'kdnaforms' ) ); ?>' },
+					multiple: false
+				});
+				mediaUploader.on('select', function() {
+					var attachment = mediaUploader.state().get('selection').first().toJSON();
+					$('#kdna_email_logo_url').val(attachment.url);
+					$('#kdna_email_logo_preview').html('<img src="' + attachment.url + '" style="max-width:300px;max-height:100px;height:auto;" />');
+					$('#kdna_email_logo_remove').show();
+				});
+				mediaUploader.open();
+			});
+			$('#kdna_email_logo_remove').on('click', function(e) {
+				e.preventDefault();
+				$('#kdna_email_logo_url').val('');
+				$('#kdna_email_logo_preview').html('');
+				$(this).hide();
+			});
+		});
+		</script>
+		<?php
+		// Save on form submit
+		if ( isset( $_POST['kdna_email_logo_url'] ) && check_admin_referer( 'kdnaform_settings', 'kdnaform_settings' ) ) {
+			update_option( 'kdna_email_logo_url', sanitize_url( wp_unslash( $_POST['kdna_email_logo_url'] ) ) );
+		}
+	}
+
 	public static function settings_field_recaptcha_reset( $props = array(), $echo = true ) {
 
 		// Add setup message.
