@@ -21,7 +21,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 		$choices_markup = $this->get_checkbox_choices( $value, $disabled_text, $form, $field_id );
 
 		return sprintf(
-			"<div class='kdnainput_container kdnainput_container_checkbox kdnainput_container_image_choice %s'>%s%s</div>",
+			"<div class='ginput_container ginput_container_checkbox ginput_container_image_choice %s'>%s%s</div>",
 			$image_style_classes,
 			$limit_message,
 			$choices_markup
@@ -55,7 +55,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 			 */
 			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
 
-			$choices .= sprintf( '<div class="kdnafield_checkbox" id="%s">', esc_attr( $field_id ) );
+			$choices .= sprintf( '<div class="gfield_checkbox" id="%s">', esc_attr( $field_id ) );
 
 			foreach ( $this->field->choices as $choice ) {
 				// Hack to skip numbers ending in 0, so that 5.1 doesn't conflict with 5.10.
@@ -72,7 +72,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 
 				// Handling of input/image aria-describedby
 				$image                  = $this->get_image_markup( $choice, $id, $choice_number, $form );
-				$image_aria_describedby = 'kdnachoice_image_' . $id;
+				$image_aria_describedby = 'gchoice_image_' . $id;
 				$aria_describedby       = '';
 
 				if ( $choice_number === 1 ) {
@@ -96,12 +96,12 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<div class='kdnachoice kdnachoice_{$id}'>
-					<span class='kdnafield-image-choice-wrapper-outer'>
+				$choice_markup = "<div class='kdnachoice gchoice_{$id}'>
+					<span class='gfield-image-choice-wrapper-outer'>
 						{$image}
-						<span class='kdnafield-image-choice-wrapper-inner'>
-							<input class='kdnafield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
-							<label for='choice_{$id}' id='label_{$id}' class='kdnaform-field-label kdnaform-field-label--type-inline'>
+						<span class='gfield-image-choice-wrapper-inner'>
+							<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
+							<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>
 								{$choice['text']}
 							</label>
 						</span>
@@ -138,7 +138,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 			$total = sizeof( $this->field->choices );
 
 			if ( $count < $total ) {
-				$choices .= "<div class='kdnachoice_total'><span>"
+				$choices .= "<div class='gchoice_total'><span>"
 	                . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) .
 	            "</span></div>";
 			}

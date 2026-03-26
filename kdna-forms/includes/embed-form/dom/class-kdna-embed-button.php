@@ -16,8 +16,8 @@ class KDNA_Embed_Button {
 	 */
 	public function output_button() {
 		?>
-		<button data-js="embed-flyout-trigger" class="kdnaform-button kdnaform-button--white kdnaform-button--icon-leading">
-			<i class="kdnaform-button__icon kdnaform-icon kdnaform-icon--embed-alt" aria-hidden="true"></i>
+		<button data-js="embed-flyout-trigger" class="gform-button gform-button--white gform-button--icon-leading">
+			<i class="gform-button__icon gform-icon gform-icon--embed-alt" aria-hidden="true"></i>
 			<?php esc_html_e( 'Embed', 'kdnaforms' ); ?>
 		</button>
 		<?php

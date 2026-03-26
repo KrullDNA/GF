@@ -56,7 +56,7 @@ class Form_CSS_Properties_Output_Engine extends Output_Engine {
 		// Confirmations get processed too early to inject the script tag; inject via regex after render instead.
 		add_filter( 'kdnaform_get_form_confirmation_filter', function ( $markup, $form ) use ( $self ) {
 			$form_id         = (int) rgar( $form, 'id' );
-			$custom_selector = sprintf( '<style>#kdnaform_confirmation_wrapper_%d.kdnaform-theme{', $form_id );
+			$custom_selector = sprintf( '<style>#kdnaform_confirmation_wrapper_%d.gform-theme{', $form_id );
 			$props_block     = $self->generate_props_block( $form_id, $form, $custom_selector );
 
 			$processed_hash = md5( json_encode( $form ) );
@@ -66,7 +66,7 @@ class Form_CSS_Properties_Output_Engine extends Output_Engine {
 				self::$processed_tracker[] = $processed_hash;
 			}
 
-			$target = sprintf( "<div id='kdnaform_confirmation_message_%d", $form_id );
+			$target = sprintf( "<div id='gform_confirmation_message_%d", $form_id );
 
 			return str_replace( $target, $props_block . $target, $markup );
 		}, 999, 2 );
@@ -120,7 +120,7 @@ class Form_CSS_Properties_Output_Engine extends Output_Engine {
 		if ( $custom_selector ) {
 			$props_block = $custom_selector;
 		} else {
-			$props_block = sprintf( '<style>#kdnaform_wrapper_%d[data-form-index="%d"].kdnaform-theme,[data-parent-form="%d_%d"]{', $form_id, $page_instance, $form_id, $page_instance );
+			$props_block = sprintf( '<style>#gform_wrapper_%d[data-form-index="%d"].gform-theme,[data-parent-form="%d_%d"]{', $form_id, $page_instance, $form_id, $page_instance );
 		}
 
 		foreach ( $properties as $rule => $property ) {

@@ -1586,7 +1586,7 @@ function gformAddRepeaterItem( addButton, max ) {
 	} );
 	$clone.find( ':checkbox, :radio' ).prop( 'checked', false );
 	$clone.find('.validation_message').remove();
-	$clone.find('.kdnaform-datepicker.initialized').removeClass('initialized');
+	$clone.find('.gform-datepicker.initialized').removeClass('initialized');
 
 	$clone = gform.applyFilters( 'kdnaform_repeater_item_pre_add', $clone, $item );
 
@@ -2283,7 +2283,7 @@ gform.recaptcha = {
 	 * @see GF_Field_CAPTCHA::get_field_input() in /includes/fields/class-gf-field-catpcha.php
 	 */
 	renderRecaptcha: function() {
-		jQuery( '.ginput_recaptcha:not(.kdnaform-initialized)' ).each( function() {
+		jQuery( '.ginput_recaptcha:not(.gform-initialized)' ).each( function() {
 			let $elem      = jQuery( this ),
 				parameters = {
 					'sitekey':        $elem.data( 'sitekey' ),
@@ -2321,7 +2321,7 @@ gform.recaptcha = {
 				$elem.find( 'iframe' ).attr( 'tabindex', parameters.tabindex );
 			}
 
-			$elem.addClass( 'kdnaform-initialized' );
+			$elem.addClass( 'gform-initialized' );
 
 			gform.doAction( 'kdnaform_post_recaptcha_render', $elem );
 		} );
@@ -2495,7 +2495,7 @@ gform.recaptcha = {
 	 * @since 2.5.6
 	 */
 	needsRender: function() {
-		return document.querySelectorAll( '.ginput_recaptcha:not(.kdnaform-initialized)' )[ 0 ];
+		return document.querySelectorAll( '.ginput_recaptcha:not(.gform-initialized)' )[ 0 ];
 	},
 
 	/**
@@ -2756,7 +2756,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
                 var size         = typeof file.size !== 'undefined' ? plupload.formatSize(file.size) : strings.in_progress,
                     removeFileJs = '$this=jQuery(this); var uploader = gfMultiFileUploader.uploaders.' + up.settings.container.id + ';uploader.stop();uploader.removeFile(uploader.getFile(\'' + file.id +'\'));$this.after(\'' + strings.cancelled + '\'); uploader.start();$this.remove();',
-                    statusMarkup = '<div id="{0}" class="ginput_preview"><span class="gfield_fileupload_filename">{1}</span><span class="gfield_fileupload_filesize">{2}</span><span class="gfield_fileupload_progress"><span class="gfield_fileupload_progressbar"><span class="gfield_fileupload_progressbar_progress"></span></span><span class="gfield_fileupload_percent"></span></span><a class="gfield_fileupload_cancel kdnaform-theme-button kdnaform-theme-button--simple" href="javascript:void(0)" title="{3}" onclick="{4}" onkeypress="{4}">{5}</a>';
+                    statusMarkup = '<div id="{0}" class="ginput_preview"><span class="gfield_fileupload_filename">{1}</span><span class="gfield_fileupload_filesize">{2}</span><span class="gfield_fileupload_progress"><span class="gfield_fileupload_progressbar"><span class="gfield_fileupload_progressbar_progress"></span></span><span class="gfield_fileupload_percent"></span></span><a class="gfield_fileupload_cancel gform-theme-button gform-theme-button--simple" href="javascript:void(0)" title="{3}" onclick="{4}" onkeypress="{4}">{5}</a>';
 
                 /**
                  *  Filer the file upload markup as it is being uploaded.
@@ -2873,7 +2873,7 @@ function gformValidateFileSize( field, max_file_size ) {
 					+ "' /> "
 					+ html;
 			} else {
-				html = html + "<button class='kdnaform_delete_file kdnaform-theme-button kdnaform-theme-button--simple' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + htmlEncode(uploadedName) + "</span></button>";
+				html = html + "<button class='kdnaform_delete_file gform-theme-button gform-theme-button--simple' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + htmlEncode(uploadedName) + "</span></button>";
 			}
 
 			/**
@@ -3046,9 +3046,9 @@ function gformShowSpinner( formId, spinnerUrl ) {
  *
  * @return void
  */
-function gformInitializeSpinner( formId, target, uniqId = 'kdnaform-ajax-spinner' ) {
+function gformInitializeSpinner( formId, target, uniqId = 'gform-ajax-spinner' ) {
 	if (jQuery('#kdnaform_ajax_spinner_' + formId).length == 0) {
-		var loaderHTML = '<span data-js-spinner-id="' + uniqId + '" id="kdnaform_ajax_spinner_' + formId + '" class="kdnaform-loader"></span>';
+		var loaderHTML = '<span data-js-spinner-id="' + uniqId + '" id="kdnaform_ajax_spinner_' + formId + '" class="gform-loader"></span>';
 		var $spinnerTarget = target instanceof jQuery ? target : jQuery( target );
 		$spinnerTarget.after( loaderHTML );
 	}
@@ -3063,7 +3063,7 @@ function gformInitializeSpinner( formId, target, uniqId = 'kdnaform-ajax-spinner
  *
  * @return void
  */
-function gformRemoveSpinner( uniqId = 'kdnaform-ajax-spinner' ) {
+function gformRemoveSpinner( uniqId = 'gform-ajax-spinner' ) {
 	var spinners = document.querySelectorAll( '[data-js-spinner-id="' + uniqId + '"]' );
 
 	if ( ! spinners ) {
@@ -3302,17 +3302,17 @@ if ( ! String.prototype.gformFormat ) {
  * @since 2.5
  */
 jQuery( document ).ready( function() {
-	jQuery( '#kdnaform-form-toolbar__menu' )
+	jQuery( '#gform-form-toolbar__menu' )
 	.on( 'mouseenter focus', '> li',function() {
-			jQuery( this ).find( '.kdnaform-form-toolbar__submenu' ).toggleClass( 'open' );
+			jQuery( this ).find( '.gform-form-toolbar__submenu' ).toggleClass( 'open' );
 			jQuery( this ).find( '.has_submenu' ).toggleClass( 'submenu-open' );
 		} );
-	jQuery( '#kdnaform-form-toolbar__menu' )
+	jQuery( '#gform-form-toolbar__menu' )
 		.on( 'mouseleave blur', '> li',function() {
-			jQuery( '.kdnaform-form-toolbar__submenu.open' ).removeClass( 'open' );
+			jQuery( '.gform-form-toolbar__submenu.open' ).removeClass( 'open' );
 			jQuery( '.has_submenu.submenu-open' ).removeClass( 'submenu-open' );
 		} );
-	jQuery( '#kdnaform-form-toolbar__menu .has_submenu' )
+	jQuery( '#gform-form-toolbar__menu .has_submenu' )
 		.on( 'click', function( e ) {
 			e.preventDefault();
 		} );
@@ -3324,10 +3324,10 @@ jQuery( document ).ready( function() {
  * @since 2.5
  */
 jQuery( document ).ready( function() {
-	var settingsFields = jQuery( '.kdnaform-settings-field' );
+	var settingsFields = jQuery( '.gform-settings-field' );
 	settingsFields.each( function() {
-		if ( jQuery( this ).find( '> .kdnaform-settings-input__container' ).length > 1 ) {
-			jQuery( this ).addClass( 'kdnaform-settings-field--multiple-inputs' );
+		if ( jQuery( this ).find( '> .gform-settings-input__container' ).length > 1 ) {
+			jQuery( this ).addClass( 'gform-settings-field--multiple-inputs' );
 		}
 	} );
 } );

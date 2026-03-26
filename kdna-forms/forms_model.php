@@ -5213,8 +5213,8 @@ class KDNAFormsModel {
 		$lead['post_id'] = $post_id;
 
 		//adding form id and entry id hidden custom fields
-		add_post_meta( $post_id, '_kdnaform-form-id', $form['id'] );
-		add_post_meta( $post_id, '_kdnaform-entry-id', $lead['id'] );
+		add_post_meta( $post_id, '_gform-form-id', $form['id'] );
+		add_post_meta( $post_id, '_gform-entry-id', $lead['id'] );
 
 		$post_images = array();
 		if ( ! empty( $post_data['images'] ) ) {
@@ -5477,7 +5477,7 @@ class KDNAFormsModel {
 			return false;
 		}
 
-		$form_id = get_post_meta( $post_id, '_kdnaform-form-id', true );
+		$form_id = get_post_meta( $post_id, '_gform-form-id', true );
 
 		/**
 		 * Filter the media upload location.
@@ -7034,24 +7034,24 @@ class KDNAFormsModel {
 		switch( $required_indicator ) {
 			case 'text':
 				$indicator       = esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = 'kdnafield_required_text';
+				$indicator_class = 'gfield_required_text';
 				break;
 			case 'asterisk':
 				$indicator       = '*';
-				$indicator_class = 'kdnafield_required_asterisk';
+				$indicator_class = 'gfield_required_asterisk';
 				break;
 			case 'custom':
 				$indicator       = rgar( $meta, 'customRequiredIndicator' ) ? $meta['customRequiredIndicator'] : esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = 'kdnafield_required_custom';
+				$indicator_class = 'gfield_required_custom';
 				break;
 			default:
 				$legacy_markup   = KDNACommon::is_legacy_markup_enabled( $meta );
 				$indicator       = $legacy_markup ? '*' : esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = $legacy_markup ? 'kdnafield_required_asterisk' : 'kdnafield_required_text';
+				$indicator_class = $legacy_markup ? 'gfield_required_asterisk' : 'gfield_required_text';
 				break;
 		}
 
-		return '<span class="kdnafield_required ' . $indicator_class . '">' . $indicator . '</span>';
+		return '<span class="gfield_required ' . $indicator_class . '">' . $indicator . '</span>';
 	}
 
 	/**

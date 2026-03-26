@@ -98,14 +98,14 @@ class Notification_Routing extends Base {
 
 			// Prepare email input.
 			$email_input = sprintf(
-				'<input type="text" id="routing_email_%d" value="%s" class="kdnafield_routing_email" />',
+				'<input type="text" id="routing_email_%d" value="%s" class="gfield_routing_email" />',
 				$i,
 				esc_attr( rgar( $route, 'email' ) )
 			);
 
 			// Prepare routing field input.
 			$field_input = sprintf(
-				'<select id="routing_field_id_%1$d" class="kdnafield_routing_select" onchange="jQuery( \'#routing_value_%1$d\' ).replaceWith( GetRoutingValues( %1$d, jQuery( this ).val() ) ); SetRouting( %1$d );">%2$s</select>',
+				'<select id="routing_field_id_%1$d" class="gfield_routing_select" onchange="jQuery( \'#routing_value_%1$d\' ).replaceWith( GetRoutingValues( %1$d, jQuery( this ).val() ) ); SetRouting( %1$d );">%2$s</select>',
 				$i,
 				self::get_routing_fields( $form, rgar( $route, 'fieldId' ) )
 			);
@@ -126,7 +126,7 @@ class Notification_Routing extends Base {
 
 			// Prepare add button.
 			$add_button = sprintf(
-				'<button class="kdnaform-settings-field__notification-routing-button kdnaform-settings-field__notification-routing-button--add kdnaform-st-icon kdnaform-st-icon--circle-plus" onclick="SetRouting(%2$d); InsertRouting(%3$d);">
+				'<button class="gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--add gform-st-icon gform-st-icon--circle-plus" onclick="SetRouting(%2$d); InsertRouting(%3$d);">
 					<span class="screen-reader-text">%1$s</span>
 				</button>',
 				esc_attr__( 'Add Another Rule', 'kdnaforms' ),
@@ -143,7 +143,7 @@ class Notification_Routing extends Base {
 					KDNACommon::get_base_url()
 				);
 				$delete_button = sprintf(
-					'<button class="kdnaform-settings-field__notification-routing-button kdnaform-settings-field__notification-routing-button--delete kdnaform-st-icon kdnaform-st-icon--circle-minus" onclick="DeleteRouting(%2$d);">
+					'<button class="gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--delete gform-st-icon gform-st-icon--circle-minus" onclick="DeleteRouting(%2$d);">
 						<span class="screen-reader-text">%1$s</span>
 					</button>',
 					esc_attr__( 'Remove This Rule', 'kdnaforms' ),
@@ -157,7 +157,7 @@ class Notification_Routing extends Base {
 			// Display input.
 			$html .= sprintf(
 				'<div%s>%s%s%s%s%s%s%s%s</div>',
-				$valid_rule ? '' : ' class="kdnaform-settings-field__notification-routing-route--invalid"',
+				$valid_rule ? '' : ' class="gform-settings-field__notification-routing-route--invalid"',
 				esc_html__( 'Send to', 'kdnaforms' ),
 				$email_input,
 				esc_html__( 'if', 'kdnaforms' ),
@@ -176,7 +176,7 @@ class Notification_Routing extends Base {
 		// Display validation error.
 		if ( $has_invalid_rule ) {
 			$html .= sprintf(
-				'<span class="kdnaform-settings-validation__error">%s</span>',
+				'<span class="gform-settings-validation__error">%s</span>',
 				esc_html__( 'Please enter a valid email address for all highlighted routing rules above.', 'kdnaforms' )
 			);
 		}
@@ -188,10 +188,10 @@ class Notification_Routing extends Base {
 		<script type="text/javascript">
 
 			jQuery( document ).ready( function () {
-				jQuery( document ).on( 'input propertychange', '.kdnafield_routing_email', function () {
+				jQuery( document ).on( 'input propertychange', '.gfield_routing_email', function () {
 					SetRoutingEmail( jQuery( this ) );
 				} );
-				jQuery( document ).on( 'change', '.kdnafield_routing_value_dropdown', function () {
+				jQuery( document ).on( 'change', '.gfield_routing_value_dropdown', function () {
 					SetRoutingValueDropDown( jQuery( this ) );
 				} );
 			} );
@@ -221,7 +221,7 @@ class Notification_Routing extends Base {
 					var endsWithSelected = routings[ i ].operator == 'ends_with' ? "selected='selected'" : '';
 					var email = routings[ i ][ "email" ] ? routings[ i ][ "email" ] : '';
 
-					str += "<div>" + <?php echo json_encode( esc_html__( 'Send to', 'kdnaforms' ) ); ?> + " <input type='text' id='routing_email_" + i + "' value='" + email + "' class='kdnafield_routing_email' />";
+					str += "<div>" + <?php echo json_encode( esc_html__( 'Send to', 'kdnaforms' ) ); ?> + " <input type='text' id='routing_email_" + i + "' value='" + email + "' class='gfield_routing_email' />";
 					str += " " + <?php echo json_encode( esc_html__( 'if', 'kdnaforms' ) ); ?> + " " + GetRoutingFields( i, routings[ i ].fieldId ) + "&nbsp;";
 					str += "<select id='routing_operator_" + i + "' onchange='SetRouting(" + i + ");' class='kdnaform_routing_operator'>";
 					str += "<option value='is' " + isSelected + ">" + <?php echo json_encode( esc_html__( 'is', 'kdnaforms' ) ); ?> + "</option>";
@@ -234,12 +234,12 @@ class Notification_Routing extends Base {
 					str += "</select>&nbsp;";
 					str += GetRoutingValues( i, routings[ i ].fieldId, routings[ i ].value ) + "&nbsp;";
 
-					str += "<button class='kdnaform-settings-field__notification-routing-button kdnaform-settings-field__notification-routing-button--add kdnaform-st-icon kdnaform-st-icon--circle-plus' onclick='InsertRouting(" + ( i + 1 ) + ");'>";
+					str += "<button class='gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--add gform-st-icon gform-st-icon--circle-plus' onclick='InsertRouting(" + ( i + 1 ) + ");'>";
 					str += "<span class='screen-reader-text'><?php esc_attr_e( 'Add Another Rule', 'kdnaforms' ); ?></span>";
 					str += "</button>";
 
 					if ( routings.length > 1 ) {
-						str += "<button class='kdnaform-settings-field__notification-routing-button kdnaform-settings-field__notification-routing-button--delete kdnaform-st-icon kdnaform-st-icon--circle-minus' onclick='DeleteRouting(" + ( i ) + ");'>";
+						str += "<button class='gform-settings-field__notification-routing-button gform-settings-field__notification-routing-button--delete gform-st-icon gform-st-icon--circle-minus' onclick='DeleteRouting(" + ( i ) + ");'>";
 						str += "<span class='screen-reader-text'><?php esc_attr_e( 'Remove This Rule', 'kdnaforms' ); ?></span>";
 						str += "</button>";
 					}
@@ -257,7 +257,7 @@ class Notification_Routing extends Base {
 			}
 
 			function GetRoutingFields( index, selectedItem ) {
-				var str = "<select id='routing_field_id_" + index + "' class='kdnafield_routing_select' onchange='jQuery(\"#routing_value_" + index + "\").replaceWith(GetRoutingValues(" + index + ", jQuery(this).val())); SetRouting(" + index + "); '>";
+				var str = "<select id='routing_field_id_" + index + "' class='gfield_routing_select' onchange='jQuery(\"#routing_value_" + index + "\").replaceWith(GetRoutingValues(" + index + ", jQuery(this).val())); SetRouting(" + index + "); '>";
 				str += GetSelectableFields( selectedItem, 16 );
 				str += "</select>";
 				return str;
@@ -325,14 +325,14 @@ class Notification_Routing extends Base {
 
 				if (field["type"] == 'post_category' && field["displayAllCategories"]) {
 					var dropdown_id = 'routing_value_' + index;
-					var dropdown = jQuery('#' + dropdown_id + ".kdnafield_category_dropdown");
+					var dropdown = jQuery('#' + dropdown_id + ".gfield_category_dropdown");
 
 					// Don't load category drop down if it already exists (to avoid unecessary ajax requests).
 					if (dropdown.length > 0) {
 
 						var options = dropdown.html();
 						options = options.replace("value=\"" + selectedValue + "\"", "value=\"" + selectedValue + "\" selected=\"selected\"");
-						str = "<select id='" + dropdown_id + "' class='kdnafield_routing_select kdnafield_category_dropdown kdnafield_routing_value_dropdown'>" + options + "</select>";
+						str = "<select id='" + dropdown_id + "' class='gfield_routing_select gfield_category_dropdown gfield_routing_value_dropdown'>" + options + "</select>";
 					}
 					else {
 						// Loading categories via AJAX.
@@ -341,18 +341,18 @@ class Notification_Routing extends Base {
 								selectedValue          : selectedValue},
 							function (dropdown_string) {
 								if (dropdown_string) {
-									jQuery('#kdnafield_ajax_placeholder_' + index).replaceWith(dropdown_string.trim());
+									jQuery('#gfield_ajax_placeholder_' + index).replaceWith(dropdown_string.trim());
 								}
 							}
 						);
 
 						// Will be replaced by real drop down during the ajax callback.
-						str = "<select id='kdnafield_ajax_placeholder_" + index + "' class='kdnafield_routing_select'><option>" + <?php json_encode( esc_html__( 'Loading...', 'kdnaforms' ) ); ?> + "</option></select>";
+						str = "<select id='gfield_ajax_placeholder_" + index + "' class='gfield_routing_select'><option>" + <?php json_encode( esc_html__( 'Loading...', 'kdnaforms' ) ); ?> + "</option></select>";
 					}
 				}
 				else if (field.choices) {
 					// Create a drop down for fields that have choices (i.e. drop down, radio, checkboxes, etc...).
-					str = "<select class='kdnafield_routing_select kdnafield_routing_value_dropdown' id='routing_value_" + index + "'>";
+					str = "<select class='gfield_routing_select gfield_routing_value_dropdown' id='routing_value_" + index + "'>";
 
 					if (field.placeholder) {
 						str += "<option value=''>" + field.placeholder + "</option>";
@@ -376,7 +376,7 @@ class Notification_Routing extends Base {
 				else {
 					selectedValue = selectedValue ? selectedValue.replace(/'/g, "&#039;") : "";
 					// Create a text field for fields that don't have choices (i.e text, textarea, number, email, etc...).
-					str = "<input type='text' placeholder='" + <?php echo json_encode( esc_html__( 'Enter value', 'kdnaforms' ) ); ?> +"' class='kdnafield_routing_select' id='routing_value_" + index + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRouting(" + index + ");' onkeyup='SetRouting(" + index + ");'>";
+					str = "<input type='text' placeholder='" + <?php echo json_encode( esc_html__( 'Enter value', 'kdnaforms' ) ); ?> +"' class='gfield_routing_select' id='routing_value_" + index + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRouting(" + index + ");' onkeyup='SetRouting(" + index + ");'>";
 				}
 				return str;
 			}
@@ -535,7 +535,7 @@ class Notification_Routing extends Base {
 
 			return wp_dropdown_categories(
 				array(
-					'class'        => 'kdnafield_routing_select kdnafield_category_dropdown kdnafield_routing_value_dropdown',
+					'class'        => 'gfield_routing_select gfield_category_dropdown gfield_routing_value_dropdown',
 					'orderby'      => 'name',
 					'id'           => 'routing_value_' . $i,
 					'selected'     => $selected_value,
@@ -549,7 +549,7 @@ class Notification_Routing extends Base {
 
 			$is_any_selected = false;
 
-			$html = sprintf( '<select id="routing_value_%d" class="kdnafield_routing_select kdnafield_routing_value_dropdown">', $i );
+			$html = sprintf( '<select id="routing_value_%d" class="gfield_routing_select gfield_routing_value_dropdown">', $i );
 			$html .= $field->placeholder ? sprintf( '<option value="">%s</option>', esc_html( $field->placeholder ) ) : null;
 
 			foreach ( $field->choices as $choice ) {
@@ -582,7 +582,7 @@ class Notification_Routing extends Base {
 		} else {
 
 			return sprintf(
-				'<input type="text" placeholder="%1$s" class="kdnafield_routing_select" id="routing_value_%3$d" value="%2$s" onchange="SetRouting( %3$d );" onkeyup="SetRouting( %3$d );" />',
+				'<input type="text" placeholder="%1$s" class="gfield_routing_select" id="routing_value_%3$d" value="%2$s" onchange="SetRouting( %3$d );" onkeyup="SetRouting( %3$d );" />',
 				esc_html__( 'Enter value', 'kdnaforms' ),
 				esc_attr( $selected_value ),
 				$i

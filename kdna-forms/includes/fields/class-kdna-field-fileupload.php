@@ -123,14 +123,14 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--upload';
+		return 'gform-icon--upload';
 	}
 
 	/**
@@ -483,7 +483,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 		$rules_messages = implode( ', ', $upload_rules_messages ) . '.';
 
-		$rules_messages_id = empty( $rules_messages ) ? '' : "kdnafield_upload_rules_{$this->formId}_{$this->id}";
+		$rules_messages_id = empty( $rules_messages ) ? '' : "gfield_upload_rules_{$this->formId}_{$this->id}";
 		$describedby       = $this->get_aria_describedby( array( $rules_messages_id ) );
 
 		if ( $multiple_files ) {
@@ -541,24 +541,24 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 			$plupload_init_json = htmlspecialchars( json_encode( $plupload_init ), ENT_QUOTES, 'UTF-8' );
 			$upload             = "<div id='{$container_id}' data-settings='{$plupload_init_json}' class='kdnaform_fileupload_multifile'>
-										<div id='{$drag_drop_id}' class='kdnaform_drop_area kdnaform-theme-field-control'>
+										<div id='{$drag_drop_id}' class='gform_drop_area gform-theme-field-control'>
 											<span class='kdnaform_drop_instructions'>{$drop_files_here_text} </span>
-											<button type='button' id='{$browse_button_id}' class='button kdnaform_button_select_files kdnaform-theme-button kdnaform-theme-button--control' {$describedby} {$tabindex} {$disabled_text}>{$select_files_text}</button>
+											<button type='button' id='{$browse_button_id}' class='button gform_button_select_files gform-theme-button gform-theme-button--control' {$describedby} {$tabindex} {$disabled_text}>{$select_files_text}</button>
 										</div>
 									</div>";
 
-			$upload .= $rules_messages ? "<span class='kdnafield_description kdnaform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
+			$upload .= $rules_messages ? "<span class='gfield_description gform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
 
 			$messages       = '';
 			$messages_array = $this->get_context_property( 'multifile_messages' );
 			if ( is_array( $messages_array ) ) {
 				foreach ( $messages_array as $message_array ) {
-					$messages .= sprintf( "<li id='error_%s' class='kdnafield_description kdnafield_validation_message'>%s</li>", esc_attr( rgar( $message_array, 'id' ) ), esc_html( rgar( $message_array, 'message' ) ) );
+					$messages .= sprintf( "<li id='error_%s' class='gfield_description gfield_validation_message'>%s</li>", esc_attr( rgar( $message_array, 'id' ) ), esc_html( rgar( $message_array, 'message' ) ) );
 				}
 			}
 
 			// The JS will also populate this.
-			$upload .= "<ul class='validation_message--hidden-on-empty kdnaform-ul-reset' id='{$messages_id}'>{$messages}</ul>";
+			$upload .= "<ul class='validation_message--hidden-on-empty gform-ul-reset' id='{$messages_id}'>{$messages}</ul>";
 
 			if ( $is_entry_detail ) {
 				$upload .= sprintf( '<input type="hidden" name="input_%d" value=\'%s\' />', $id, esc_attr( $value ) );
@@ -574,8 +574,8 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 			$upload .= sprintf( "<input name='input_%d' id='%s' type='file' class='%s' %s onchange='javascript:gformValidateFileSize( this, %s );' {$tabindex} %s/>", $id, $field_id, esc_attr( $class ), $describedby, esc_attr( $max_upload_size ), $disabled_text );
 
-			$upload .= $rules_messages ? "<span class='kdnafield_description kdnaform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
-			$upload .= "<div class='kdnafield_description validation_message kdnafield_validation_message validation_message--hidden-on-empty' id='{$live_validation_message_id}'></div>";
+			$upload .= $rules_messages ? "<span class='gfield_description gform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
+			$upload .= "<div class='gfield_description validation_message gfield_validation_message validation_message--hidden-on-empty' id='{$live_validation_message_id}'></div>";
 		}
 
 		if ( $is_entry_detail && ! empty( $value ) ) { // edit entry
@@ -590,7 +590,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 			$upload_display = $multiple_files ? '' : "style='display:none'";
 			$preview        = "<div id='upload_$id' {$upload_display}>$upload</div>";
-			$preview .= sprintf( "<div id='%s' class='kdnainput_preview_list'></div>", $file_list_id );
+			$preview .= sprintf( "<div id='%s' class='ginput_preview_list'></div>", $file_list_id );
 			$preview .= sprintf( "<div id='preview_existing_files_%d'>", $id );
 
 			foreach ( $file_urls as $file_index => $file_url ) {
@@ -622,10 +622,10 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 				$display_file_url   = KDNACommon::truncate_url( $file_url );
 				$file_url           = $this->get_download_url( $file_url, false, $lead_id );
 
-				$preview .= "<div id='preview_file_{$file_index}' class='kdnainput_preview'>
+				$preview .= "<div id='preview_file_{$file_index}' class='ginput_preview'>
 								<a href='{$file_url}' target='_blank' aria-label='{$view_file_text}'>{$display_file_url}</a>
-								<a href='{$file_url}' target='_blank' aria-label='{$download_file_text}' class='kdnainput_preview_control kdnaform-icon kdnaform-icon--circle-arrow-down'></a>
-								<a href='javascript:void(0);' aria-label='{$delete_file_text}' onclick='DeleteFile({$lead_id},{$id},this);' onkeypress='DeleteFile({$lead_id},{$id},this);' class='kdnainput_preview_control kdnaform-icon kdnaform-icon--circle-delete'></a>
+								<a href='{$file_url}' target='_blank' aria-label='{$download_file_text}' class='ginput_preview_control gform-icon gform-icon--circle-arrow-down'></a>
+								<a href='javascript:void(0);' aria-label='{$delete_file_text}' onclick='DeleteFile({$lead_id},{$id},this);' onkeypress='DeleteFile({$lead_id},{$id},this);' class='ginput_preview_control gform-icon gform-icon--circle-delete'></a>
 							</div>";
 			}
 
@@ -636,17 +636,17 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 			$files = $this->get_submission_files_for_preview();
 
 			if ( ! empty( $files ) ) {
-				$preview   = sprintf( "<div id='%s' class='kdnainput_preview_list'>", $file_list_id );
+				$preview   = sprintf( "<div id='%s' class='ginput_preview_list'>", $file_list_id );
 				foreach ( $files as $file_info ) {
 
 					if ( KDNACommon::is_legacy_markup_enabled( $form ) ) {
 						$file_upload_markup = "<img alt='" . esc_attr__( 'Delete file', 'kdnaforms' ) . "' class='kdnaform_delete' src='" . KDNACommon::get_base_url() . "/images/delete.png' onclick='gformDeleteUploadedFile({$form_id}, {$id}, this);' onkeypress='gformDeleteUploadedFile({$form_id}, {$id}, this);' /> <strong>" . esc_html( $file_info['uploaded_filename'] ) . '</strong>';
 					} else {
-						$file_upload_markup = sprintf( '<span class="kdnafield_fileupload_filename">%s</span>', esc_html( $file_info['uploaded_filename'] ) );
-						// TODO: get file size $file_upload_markup .= sprintf( '<span class="kdnafield_fileupload_filesize">%s</span>', esc_html( $file_info['uploaded_filesize'] ) );
-						$file_upload_markup .= '<span class="kdnafield_fileupload_progress kdnafield_fileupload_progress_complete"><span class="kdnafield_fileupload_progressbar"><span class="kdnafield_fileupload_progressbar_progress" style="width: 100%;"></span></span><span class="kdnafield_fileupload_percent">100%</span></span>';
+						$file_upload_markup = sprintf( '<span class="gfield_fileupload_filename">%s</span>', esc_html( $file_info['uploaded_filename'] ) );
+						// TODO: get file size $file_upload_markup .= sprintf( '<span class="gfield_fileupload_filesize">%s</span>', esc_html( $file_info['uploaded_filesize'] ) );
+						$file_upload_markup .= '<span class="gfield_fileupload_progress gfield_fileupload_progress_complete"><span class="gfield_fileupload_progressbar"><span class="gfield_fileupload_progressbar_progress" style="width: 100%;"></span></span><span class="gfield_fileupload_percent">100%</span></span>';
 						$file_upload_markup .= sprintf(
-							'<button class="kdnaform_delete_file kdnaform-theme-button kdnaform-theme-button--simple" onclick="gformDeleteUploadedFile( %d, %d, this );"><span class="dashicons dashicons-trash" aria-hidden="true"></span><span class="screen-reader-text">%s: %s</span></button>',
+							'<button class="kdnaform_delete_file gform-theme-button gform-theme-button--simple" onclick="gformDeleteUploadedFile( %d, %d, this );"><span class="dashicons dashicons-trash" aria-hidden="true"></span><span class="screen-reader-text">%s: %s</span></button>',
 							$form_id,
 							$id,
 							esc_html__( 'Delete this file', 'kdnaforms' ),
@@ -665,16 +665,16 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 					 * @param int    $id                 The current Field ID.
 					 */
 					$file_upload_markup = apply_filters( 'kdnaform_file_upload_markup', $file_upload_markup, $file_info, $form_id, $id );
-					$preview           .= sprintf( "<div id='%s' class='kdnainput_preview'>%s</div>", esc_attr( rgar( $file_info, 'id' ) ), $file_upload_markup );
+					$preview           .= sprintf( "<div id='%s' class='ginput_preview'>%s</div>", esc_attr( rgar( $file_info, 'id' ) ), $file_upload_markup );
 				}
 				$preview .= '</div>';
 
-				return "<div class='kdnainput_container kdnainput_container_fileupload'>" . $upload . " {$preview}</div>";
+				return "<div class='ginput_container ginput_container_fileupload'>" . $upload . " {$preview}</div>";
 			} else {
 
-				$preview = $multiple_files ? sprintf( "<div id='%s' class='kdnainput_preview_list'></div>", $file_list_id ) : '';
+				$preview = $multiple_files ? sprintf( "<div id='%s' class='ginput_preview_list'></div>", $file_list_id ) : '';
 
-				return "<div class='kdnainput_container kdnainput_container_fileupload'>$upload $preview</div>";
+				return "<div class='ginput_container ginput_container_fileupload'>$upload $preview</div>";
 			}
 		}
 	}

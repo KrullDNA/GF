@@ -27,14 +27,14 @@ class KDNA_Field_Text extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--single-line-text';
+		return 'gform-icon--single-line-text';
 	}
 
 	function get_form_editor_field_settings() {
@@ -119,7 +119,7 @@ class KDNA_Field_Text extends KDNA_Field {
 		// For Post Tags, Use the WordPress built-in class "howto" in the form editor.
 		$text_hint = '';
 		if ( $this->type === 'post_tags' ) {
-			$text_hint = '<p class="kdnafield_post_tags_hint kdnafield_description" id="' . $field_id . '_desc">' . gf_apply_filters( array(
+			$text_hint = '<p class="gfield_post_tags_hint gfield_description" id="' . $field_id . '_desc">' . gf_apply_filters( array(
 					'kdnaform_post_tags_hint',
 					$form_id,
 					$this->id,
@@ -128,7 +128,7 @@ class KDNA_Field_Text extends KDNA_Field {
 
 		$input = "<input name='input_{$id}' id='{$field_id}' type='{$html_input_type}' value='{$value}' class='{$class}' {$max_length} {$aria_describedby} {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text} {$autocomplete} />{$text_hint}";
 
-		return sprintf( "<div class='kdnainput_container kdnainput_container_text'>%s</div>", $input );
+		return sprintf( "<div class='ginput_container ginput_container_text'>%s</div>", $input );
 	}
 
 	public function allow_html() {
@@ -283,7 +283,7 @@ class KDNA_Field_Text extends KDNA_Field {
 		}
 
 		if ( ! empty( $this->description ) ) {
-			$describedby .= " kdnafield_description_{$form_id}_{$id}";
+			$describedby .= " gfield_description_{$form_id}_{$id}";
 		}
 
 		if ( $this->failed_validation ) {

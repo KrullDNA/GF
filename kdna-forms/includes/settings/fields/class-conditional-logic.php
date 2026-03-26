@@ -105,7 +105,7 @@ class Conditional_Logic extends Base {
 		$html .= '</span>';
 
 		$html .= sprintf(
-			'<div id="%s_conditional_logic_container" class="kdnaform-settings-field__conditional-logic">
+			'<div id="%s_conditional_logic_container" class="gform-settings-field__conditional-logic">
 					<!-- content dynamically created from form_admin.js -->
 				</div>',
 			$this->object_type

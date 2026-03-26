@@ -8,7 +8,7 @@ jQuery(document).ready(function($){
 
 	gaddon.init();
 
-	gform.adminUtils.handleUnsavedChanges( '#kdnaform-settings' );
+	gform.adminUtils.handleUnsavedChanges( '#gform-settings' );
 
 	$(document).on('change', '.gfield_rule_value_dropdown', function(){
 		SetRuleValueDropDown($(this));
@@ -160,7 +160,7 @@ function CreateConditionalLogic(objectType, obj){
 		str += GetRuleValues(objectType, i, obj.conditionalLogic.rules[i].fieldId, rule.value);
 		str += "<button " +
 			"type='button' " +
-			"class='add_field_choice kdnaform-st-icon kdnaform-st-icon--circle-plus' " +
+			"class='add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
 			"title='add another rule' " +
 			"onclick=\"InsertRule('" + objectType + "', " + (i+1) + ");\" " +
 			"onkeypress=\"InsertRule('" + objectType + "', " + (i+1) + ");\"" +
@@ -168,7 +168,7 @@ function CreateConditionalLogic(objectType, obj){
 		if(obj.conditionalLogic.rules.length > 1 )
 			str += "<button " +
 				"type='button' " +
-				"class='delete_field_choice kdnaform-st-icon kdnaform-st-icon--circle-minus' " +
+				"class='delete_field_choice gform-st-icon gform-st-icon--circle-minus' " +
 				"title='remove this rule' " +
 				"onclick=\"DeleteRule('" + objectType + "', " + i + ");\" " +
 				"onkeypress=\"DeleteRule('" + objectType + "', " + i + ");\"" +
@@ -864,14 +864,14 @@ function ConfirmationObj() {
 	gaddon.toggleFeedSwitch = function( btn, is_active ) {
 		var i18n = window.kdnaform_admin_config.i18n;
 		if ( is_active ) {
-			jQuery( btn ).removeClass( 'kdnaform-status--active' ).addClass( 'kdnaform-status--inactive' ).find( '.kdnaform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_inactive );
+			jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_inactive );
 		} else {
-			jQuery( btn ).removeClass( 'kdnaform-status--inactive' ).addClass( 'kdnaform-status--active' ).find( '.kdnaform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_active );
+			jQuery( btn ).removeClass( 'gform-status--inactive' ).addClass( 'gform-status--active' ).find( '.gform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_active );
 		}
 	};
 
 	gaddon.toggleFeedActive = function( btn, addon_slug, feed_id ) {
-		var is_active = jQuery( btn ).hasClass( 'kdnaform-status--active' );
+		var is_active = jQuery( btn ).hasClass( 'gform-status--active' );
 
 		jQuery.post( ajaxurl, {
 			action: "gf_feed_is_active_" + addon_slug,
@@ -898,13 +898,13 @@ function ConfirmationObj() {
 	gaddon.deleteFeed = function (id) {
 		$("#single_action").val("delete");
 		$("#single_action_argument").val(id);
-		$("#kdnaform-settings").submit();
+		$("#gform-settings").submit();
 	};
 
 	gaddon.duplicateFeed = function (id) {
 		$("#single_action").val("duplicate");
 		$("#single_action_argument").val(id);
-		$("#kdnaform-settings").submit();
+		$("#gform-settings").submit();
 	};
 
 	function isValidJson(str) {
@@ -1104,7 +1104,7 @@ var gfMergeTagsObj = function( form, element ) {
 		var inputType     = self.elem.is( 'input' ) ? 'input' : 'textarea',
 			positionClass = self.getClassProperty( self.elem, 'position' );
 
-		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag kdnaform-button kdnaform-button--unstyled" title="' + kdna_vars.mergeTagsText + '"><i class="kdnaform-icon kdnaform-icon--merge-tag kdnaform-button__icon" aria-hidden="true"></i>' + kdna_vars.mergeTagsText + '</button></span>' );
+		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag gform-button gform-button--unstyled" title="' + kdna_vars.mergeTagsText + '"><i class="gform-icon gform-icon--merge-tag gform-button__icon" aria-hidden="true"></i>' + kdna_vars.mergeTagsText + '</button></span>' );
 
 		// Add the target element to the merge tag icon data for reference later when determining where the selected merge tag should be inserted.
 		self.mergeTagIcon.data( 'targetElement', self.elem.attr( 'id' ) );
@@ -1114,7 +1114,7 @@ var gfMergeTagsObj = function( form, element ) {
 
 			// Make sure we only do this on the mergetag button for this field.
 			var id = self.elem.attr( 'id' ).substring( 1, self.elem.attr( 'id' ).length );
-			jQuery( '#' + id ).find( '.kdnaform-tinymce-mergetag-button' ).append( self.mergeTagIcon );
+			jQuery( '#' + id ).find( '.gform-tinymce-mergetag-button' ).append( self.mergeTagIcon );
 
 		} else {
 
@@ -1736,7 +1736,7 @@ function isSet( $var ) {
  */
 jQuery( document ).ready( function() {
 
-	var $formTitle = jQuery( '.kdnaform-form-toolbar__form-title span:not(.kdnaform-dropdown__trigger-text):not(.kdnaform-dropdown__control-text):not(.kdnaform-visually-hidden)' );
+	var $formTitle = jQuery( '.gform-form-toolbar__form-title span:not(.gform-dropdown__trigger-text):not(.gform-dropdown__control-text):not(.gform-visually-hidden)' );
 
 	// If form title is not present, exit.
 	if ( ! $formTitle ) {
@@ -1748,7 +1748,7 @@ jQuery( document ).ready( function() {
 
 	// If cloned title is wider, initialize tooltip.
 	if ( $clone.width() > $formTitle.width() ) {
-		jQuery( '.kdnaform-form-toolbar__form-title span' ).tooltip( {
+		jQuery( '.gform-form-toolbar__form-title span' ).tooltip( {
 			position:     {
 				my: 'left center',
 				at: 'right+6 center'
@@ -1867,18 +1867,18 @@ gform.components.dropdown = function( options ) {
 		gform.console.error( 'Gform dropdown couldn\'t find [data-js="' + this.options.selector + '"] to instantiate on.');
 		return;
 	}
-	this.titleEl = gform.tools.getNodes( 'kdnaform-dropdown-control-text', false, this.el )[ 0 ];
+	this.titleEl = gform.tools.getNodes( 'gform-dropdown-control-text', false, this.el )[ 0 ];
 
 	this.storeTriggers();
 	this.bindEvents();
 	this.setupUI();
 
 	this.hideSpinner = function() {
-		this.el.classList.remove( 'kdnaform-dropdown--show-spinner' );
+		this.el.classList.remove( 'gform-dropdown--show-spinner' );
 	}
 
 	this.showSpinner = function() {
-		this.el.classList.add( 'kdnaform-dropdown--show-spinner' );
+		this.el.classList.add( 'gform-dropdown--show-spinner' );
 	}
 }
 
@@ -1907,24 +1907,24 @@ gform.components.dropdown.prototype.openDropdown = function() {
 	if ( this.state.open ) {
 		return;
 	}
-	this.el.classList.add( 'kdnaform-dropdown--reveal' );
+	this.el.classList.add( 'gform-dropdown--reveal' );
 	setTimeout( function() {
-		this.el.classList.add( 'kdnaform-dropdown--open' );
+		this.el.classList.add( 'gform-dropdown--open' );
 		this.control.setAttribute( 'aria-expanded', 'true' );
 		this.state.open = true;
 	}.bind( this ), 25 );
 	setTimeout( function() {
-		this.el.classList.remove( 'kdnaform-dropdown--reveal' );
+		this.el.classList.remove( 'gform-dropdown--reveal' );
 	}.bind( this ), 200 );
 };
 
 gform.components.dropdown.prototype.closeDropdown = function() {
 	this.state.open = false;
-	this.el.classList.remove( 'kdnaform-dropdown--open' );
-	this.el.classList.add( 'kdnaform-dropdown--hide' );
+	this.el.classList.remove( 'gform-dropdown--open' );
+	this.el.classList.add( 'gform-dropdown--hide' );
 	this.control.setAttribute( 'aria-expanded', 'false' );
 	setTimeout( function() {
-		this.el.classList.remove( 'kdnaform-dropdown--hide' );
+		this.el.classList.remove( 'gform-dropdown--hide' );
 	}.bind( this ), 150 );
 };
 
@@ -1969,7 +1969,7 @@ gform.components.dropdown.prototype.handleSearch = function( e ) {
 
 gform.components.dropdown.prototype.setupUI = function() {
 	if ( this.options.reveal === 'hover' ) {
-		this.el.classList.add( 'kdnaform-dropdown--hover' );
+		this.el.classList.add( 'gform-dropdown--hover' );
 	}
 	if ( this.options.detectTitleLength ) {
 		// add a class to the container of the dropdown if displayed title is long.
@@ -1977,42 +1977,42 @@ gform.components.dropdown.prototype.setupUI = function() {
 		// dropdown is just always full width of its container
 		var title = this.titleEl ? this.titleEl.innerText : '';
 		if ( title.length > this.options.titleLengthThresholdMedium && title.length <= this.options.titleLengthThresholdLong ) {
-			this.el.parentNode.classList.add( 'kdnaform-dropdown--medium-title' );
+			this.el.parentNode.classList.add( 'gform-dropdown--medium-title' );
 		} else if ( title.length > this.options.titleLengthThresholdLong ) {
-			this.el.parentNode.classList.add( 'kdnaform-dropdown--long-title' );
+			this.el.parentNode.classList.add( 'gform-dropdown--long-title' );
 		}
 	}
 };
 
 gform.components.dropdown.prototype.storeTriggers = function() {
-	this.control = gform.tools.getNodes( 'kdnaform-dropdown-control', false, this.el )[ 0 ];
-	this.controlText = gform.tools.getNodes( 'kdnaform-dropdown-control-text', false, this.control )[ 0 ];
-	this.triggers = gform.tools.getNodes( 'kdnaform-dropdown-trigger', true, this.el );
+	this.control = gform.tools.getNodes( 'gform-dropdown-control', false, this.el )[ 0 ];
+	this.controlText = gform.tools.getNodes( 'gform-dropdown-control-text', false, this.control )[ 0 ];
+	this.triggers = gform.tools.getNodes( 'gform-dropdown-trigger', true, this.el );
 };
 
 gform.components.dropdown.prototype.bindEvents = function() {
 	gform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'click',
-		'[data-js="kdnaform-dropdown-trigger"], [data-js="kdnaform-dropdown-trigger"] > span',
+		'[data-js="gform-dropdown-trigger"], [data-js="gform-dropdown-trigger"] > span',
 		this.handleChange.bind( this )
 	);
 	gform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'click',
-		'[data-js="kdnaform-dropdown-trigger"]',
+		'[data-js="gform-dropdown-trigger"]',
 		this.handleChange.bind( this )
 	);
 	gform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'click',
-		'[data-js="kdnaform-dropdown-control"], [data-js="kdnaform-dropdown-control"] *',
+		'[data-js="gform-dropdown-control"], [data-js="gform-dropdown-control"] *',
 		this.handleControl.bind( this )
 	);
 	gform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'keyup',
-		'[data-js="kdnaform-dropdown-search"]',
+		'[data-js="gform-dropdown-search"]',
 		this.handleSearch.bind( this )
 	);
 
@@ -2042,8 +2042,8 @@ gform.components.dropdown.prototype.bindEvents = function() {
  *
  * You have 3 ways to trigger an init on your Alert component element:
  *
- * 1) Place an attribute of data-js="kdnaform-alert" on the el, data-js="kdnaform-alert-dismiss-trigger" on
- * the dismiss button (plus data-kdnaform-alert-cookie="cookieName" on the el if you want a 24 hour cookie based
+ * 1) Place an attribute of data-js="gform-alert" on the el, data-js="gform-alert-dismiss-trigger" on
+ * the dismiss button (plus data-gform-alert-cookie="cookieName" on the el if you want a 24 hour cookie based
  * dismissal vs. only a display none dismissal).
  * 2) Calling gform.components.alert.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
  * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'kdnaform_init_alerts' ) making
@@ -2051,7 +2051,7 @@ gform.components.dropdown.prototype.bindEvents = function() {
  * injected HTML'S container.
  *
  * You will find your instances on the object gform.components.alert.instances. Each instance has an id which
- * relates to the dom node it was initialized on and its attribute of data-kdnaform-alert-instance. We provide a
+ * relates to the dom node it was initialized on and its attribute of data-gform-alert-instance. We provide a
  * getInstance method. Say you want to get an instance only knowing your element you initialized it on:
  *
  * var myInstance = gform.components.alert.getInstance( HTMLElement );
@@ -2077,7 +2077,7 @@ gform.components.alert = {
 	 */
 	getInstance: function( element ) {
 		return gform.components.alert.instances.filter( function( instance ) {
-			return instance.id === element.getAttribute( 'data-kdnaform-alert-instance' ); }
+			return instance.id === element.getAttribute( 'data-gform-alert-instance' ); }
 		)[ 0 ];
 	},
 
@@ -2090,15 +2090,15 @@ gform.components.alert = {
 	 * @param {HTMLElement} element
 	 */
 	initializeInstance: function( element ) {
-		if ( element.hasAttribute( 'data-kdnaform-alert-instance' ) ) {
+		if ( element.hasAttribute( 'data-gform-alert-instance' ) ) {
 			return;
 		}
 
-		var uid = gform.tools.uniqueId( 'kdnaform-alert' );
-		var cookie = element.hasAttribute( 'data-kdnaform-alert-cookie' ) ? element.getAttribute( 'data-kdnaform-alert-cookie' ) : '';
+		var uid = gform.tools.uniqueId( 'gform-alert' );
+		var cookie = element.hasAttribute( 'data-gform-alert-cookie' ) ? element.getAttribute( 'data-gform-alert-cookie' ) : '';
 
-		element.setAttribute( 'data-kdnaform-alert-instance', uid );
-		element.classList.add( 'kdnaform-initialized' );
+		element.setAttribute( 'data-gform-alert-instance', uid );
+		element.classList.add( 'gform-initialized' );
 
 		gform.components.alert.instances.push( {
 			id: uid,
@@ -2116,19 +2116,19 @@ gform.components.alert = {
 	 */
 	initializeInstances: function() {
 		gform.tools
-			.getNodes( '[data-js="kdnaform-alert"]:not(.kdnaform-initialized)', true, document, true )
+			.getNodes( '[data-js="gform-alert"]:not(.gform-initialized)', true, document, true )
 			.forEach( gform.components.alert.initializeInstance );
 	},
 
 	/**
 	 * @function gform.components.alert.dismissAlert
 	 * @description Implements hiding of an alert and sets up cookie if it has been configured via
-	 * the data-kdnaform-alert-cookie attribute on the parent el.
+	 * the data-gform-alert-cookie attribute on the parent el.
 	 *
 	 * @since 2.5.8
 	 */
 	dismissAlert: function( e ) {
-		var parentEl = gform.tools.getClosest( e.target, '[data-js="kdnaform-alert"]' );
+		var parentEl = gform.tools.getClosest( e.target, '[data-js="gform-alert"]' );
 		var instance = gform.components.alert.getInstance( parentEl );
 		parentEl.style.display = 'none';
 		if ( instance.cookie ) {
@@ -2144,7 +2144,7 @@ gform.components.alert = {
 	 */
 	bindEvents: function() {
 		document.addEventListener( 'kdnaform_init_alerts', gform.components.alert.initializeInstances );
-		gform.tools.delegate( 'body', 'click', '[data-js="kdnaform-alert-dismiss-trigger"]', gform.components.alert.dismissAlert );
+		gform.tools.delegate( 'body', 'click', '[data-js="gform-alert-dismiss-trigger"]', gform.components.alert.dismissAlert );
 	},
 
 	/**
@@ -2176,7 +2176,7 @@ document.addEventListener( 'kdnaform_main_scripts_loaded', gform.components.aler
  * 1) Place an attribute of data-simplebar (plus data-simplebar-direction="rtl" if in rtl) on the el.
  * 2) Calling gform.simplebar.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
  * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'kdnaform_render_simplebars' ) making
- * sure to add data-js="kdnaform-simplebar" to the injected HTML'S container.
+ * sure to add data-js="gform-simplebar" to the injected HTML'S container.
  *
  * You will find your instances on the object gform.simplebar.instances. Each instance has an id which relates to the dom
  * node it was initialized on and its attribute of data-simplebar-instance. We provide a getInstance method. Say you
@@ -2254,7 +2254,7 @@ gform.simplebar = {
 				element.setAttribute( 'data-simplebar-direction', 'rtl' );
 			}
 			element.setAttribute( 'data-simplebar-instance', uid );
-			element.classList.add( 'kdnaform-initialized' );
+			element.classList.add( 'gform-initialized' );
 
 			var simplebar = new SimpleBar( element, {
 				direction: direction,
@@ -2279,7 +2279,7 @@ gform.simplebar = {
 	initializeInstances: function() {
 		gform.simplebar.cleanInstances();
 		gform.tools
-			.getNodes( '[data-js="kdnaform-simplebar"]:not(.kdnaform-initialized)', true, document, true )
+			.getNodes( '[data-js="gform-simplebar"]:not(.gform-initialized)', true, document, true )
 			.forEach( gform.simplebar.initializeInstance );
 	},
 

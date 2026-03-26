@@ -37,14 +37,14 @@ class KDNA_Field_Radio extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--radio-button';
+		return 'gform-icon--radio-button';
 	}
 
 	function get_form_editor_field_settings() {
@@ -133,7 +133,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 		$tag           = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 
-		return sprintf( "<div class='kdnainput_container kdnainput_container_radio'><{$tag} class='kdnafield_radio' id='%s'>%s</{$tag}></div>", $field_id, $this->get_radio_choices( $value, $disabled_text, $form_id ) );
+		return sprintf( "<div class='ginput_container ginput_container_radio'><{$tag} class='gfield_radio' id='%s'>%s</{$tag}></div>", $field_id, $this->get_radio_choices( $value, $disabled_text, $form_id ) );
 
 	}
 
@@ -202,7 +202,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 
 			$total = sizeof( $field_choices );
 			if ( $is_form_editor && ( $count < $total ) ) {
-				$choices .= "<{$tag} class='kdnachoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
+				$choices .= "<{$tag} class='gchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
 			}
 		}
 
@@ -246,7 +246,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 	 * Returns the choice HTML.
 	 *
 	 * @since 2.4.17
-	 * @since 2.7 Added `kdnachoice_other_control` class to Other choice text input.
+	 * @since 2.7 Added `gchoice_other_control` class to Other choice text input.
 	 *
 	 * @param array  $choice        The choice properties.
 	 * @param int    &$choice_id    The choice number.
@@ -285,7 +285,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		$aria_describedby = $this->add_aria_description( $checked, $choice_id ) ? $this->get_aria_describedby() : '';
 
 		$tabindex = $this->get_tabindex();
-		$label    = sprintf( "<label for='choice_%s' id='label_%s' class='kdnaform-field-label kdnaform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
+		$label    = sprintf( "<label for='choice_%s' id='label_%s' class='gform-field-label gform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
 
 		// Handle 'other' choice.
 		if ( $this->enableOtherChoice && rgar( $choice, 'isOtherChoice' ) ) {
@@ -304,12 +304,12 @@ class KDNA_Field_Radio extends KDNA_Field {
 				$other_value = empty( $choice['text'] ) ? KDNACommon::get_other_choice_value( $this ) : $choice['text'];
 			}
 
-			$label .= "<br /><input id='input_{$this->formId}_{$this->id}_other' class='kdnachoice_other_control' name='input_{$this->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
+			$label .= "<br /><input id='input_{$this->formId}_{$this->id}_other' class='gchoice_other_control' name='input_{$this->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
 		}
 
 		$choice_markup = sprintf( "
-			<div class='kdnachoice kdnachoice_$id'>
-					<input class='kdnafield-choice-input' name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='gformToggleRadioOther( this )' %s $tabindex %s />
+			<div class='kdnachoice gchoice_$id'>
+					<input class='gfield-choice-input' name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='gformToggleRadioOther( this )' %s $tabindex %s />
 					%s
 			</div>",
 			$this->id, esc_attr( $field_value ), $checked, $id, $aria_describedby, $disabled_text, $label
@@ -366,7 +366,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		}
 
 		$tabindex    = $this->get_tabindex();
-		$label       = sprintf( "<label for='choice_%s' id='label_%s' class='kdnaform-field-label kdnaform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
+		$label       = sprintf( "<label for='choice_%s' id='label_%s' class='gform-field-label gform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
 		$input_focus = '';
 
 		// Handle 'other' choice.
@@ -393,7 +393,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		}
 
 		$choice_markup = sprintf( "
-			<li class='kdnachoice kdnachoice_$id'>
+			<li class='kdnachoice gchoice_$id'>
 				<input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s %s />
 				%s
 			</li>",

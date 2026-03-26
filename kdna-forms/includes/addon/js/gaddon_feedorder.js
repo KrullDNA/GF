@@ -12,7 +12,7 @@ var KDNAFeedOrder = function( args ) {
 		self.options = args;
 
 		// Prepare sorting handle.
-		var sortHandleMarkup = '<td class="sort-column"><i class="kdnaform-icon kdnaform-icon--drag-indicator feed-sort-handle"></i></td>';
+		var sortHandleMarkup = '<td class="sort-column"><i class="gform-icon gform-icon--drag-indicator feed-sort-handle"></i></td>';
 
 		// Add sorting handle to table.
 		$( '.wp-list-table thead tr, .wp-list-table tfoot tr' ).append( '<th class="sort-column"></th>' );

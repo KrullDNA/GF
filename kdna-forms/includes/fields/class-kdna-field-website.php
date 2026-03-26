@@ -27,14 +27,14 @@ class KDNA_Field_Website extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--link';
+		return 'gform-icon--link';
 	}
 
 	function get_form_editor_field_settings() {
@@ -101,7 +101,7 @@ class KDNA_Field_Website extends KDNA_Field {
 		$value    = esc_attr( $value );
 		$class    = esc_attr( $class );
 
-		return "<div class='kdnainput_container kdnainput_container_website'>
+		return "<div class='ginput_container ginput_container_website'>
                     <input name='input_{$id}' id='{$field_id}' type='$html_input_type' value='{$value}' class='{$class}' {$tabindex} {$aria_describedby} {$disabled_text} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$autocomplete}/>
                 </div>";
 	}

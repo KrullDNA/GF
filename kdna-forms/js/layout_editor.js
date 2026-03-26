@@ -176,7 +176,7 @@ function initLayoutEditor( $ ) {
 	} );
 	$editorContainer.on( 'click', function ( event ) {
 		// Don't clear if mousedown originated inside any flyout
-		if ( mousedownTarget && $( mousedownTarget ).closest( '.kdnaform-flyout, [id$="_flyout_container"]' ).length ) {
+		if ( mousedownTarget && $( mousedownTarget ).closest( '.gform-flyout, [id$="_flyout_container"]' ).length ) {
 			mousedownTarget = null;
 			return;
 		}
@@ -243,7 +243,7 @@ function initLayoutEditor( $ ) {
 		deletedFieldGroupId = getGroupId( $( '#field_' + fieldId ) );
 		if ( ! HasPageField() ) {
 			jQuery('input[name="submit_location"][value="inline"]').prop( 'disabled', false );
-			jQuery( '.submit_location_setting' ).prev( '.kdnaform-alert--notice' ).remove();
+			jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
 		}
 
 		var nativeEvent = new Event('gform/layout_editor/kdnaform_field_deleted');
@@ -671,7 +671,7 @@ function initLayoutEditor( $ ) {
 						return false;
 					}
 
-					ui.helper.addClass( 'kdnaform-theme__disable' );
+					ui.helper.addClass( 'gform-theme__disable' );
 
 					// Match the helper to the current elements size.
 					ui.helper
@@ -702,7 +702,7 @@ function initLayoutEditor( $ ) {
 					$( this ).removeClass( 'fieldPlaceholder' );
 					$editorContainer.removeClass( 'droppable' );
 					$container.removeClass( 'dragging' );
-					ui.helper.removeClass( 'kdnaform-theme__disable' );
+					ui.helper.removeClass( 'gform-theme__disable' );
 
 					var isAddingField = false;
 
@@ -741,7 +741,7 @@ function initLayoutEditor( $ ) {
 
 		$elements().removeClass( 'hovering' );
 
-		var isCompactView = $( '.kdnaform-compact-view' ).length > 0;
+		var isCompactView = $( '.gform-compact-view' ).length > 0;
 
 		if ( ! isInEditorArea( helperLeft, helperTop, isCompactView ) ) {
 			$indicator( false ).remove();

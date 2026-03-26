@@ -35,8 +35,8 @@ class User_Select extends Select {
 		$html .= '<span class="' . esc_attr( $this->get_container_classes() ) . '">';
 
 		$html .= sprintf(
-			'<article class="kdnaform-dropdown" data-js="kdnaform-settings-field-user-select">
-			    <span class="kdnaform-visually-hidden" id="kdnaform-%1$s-label">
+			'<article class="gform-dropdown" data-js="gform-settings-field-user-select">
+			    <span class="gform-visually-hidden" id="gform-%1$s-label">
 					%2$s
 			    </span>
 			
@@ -44,43 +44,43 @@ class User_Select extends Select {
 					type="button"
 					aria-expanded="false"
 					aria-haspopup="listbox"
-					aria-labelledby="kdnaform-%1$s-label kdnaform-%1$s-control"
-					class="kdnaform-dropdown__control %1$s"
-					data-js="kdnaform-dropdown-control"
-					id="kdnaform-%1$s-control"
+					aria-labelledby="gform-%1$s-label gform-%1$s-control"
+					class="gform-dropdown__control %1$s"
+					data-js="gform-dropdown-control"
+					id="gform-%1$s-control"
 			    >
 					<span
-						class="kdnaform-dropdown__control-text"
-						data-js="kdnaform-dropdown-control-text"
+						class="gform-dropdown__control-text"
+						data-js="gform-dropdown-control-text"
 					>
 			            %2$s
 			        </span>
-					<span class="kdnaform-spinner kdnaform-dropdown__spinner"></span>
-					<span class="kdnaform-icon kdnaform-icon--chevron kdnaform-dropdown__chevron"></span>
+					<span class="gform-spinner gform-dropdown__spinner"></span>
+					<span class="gform-icon gform-icon--chevron gform-dropdown__chevron"></span>
 			    </button>
 			    <div
-					aria-labelledby="kdnaform-%1$s-label"
-					class="kdnaform-dropdown__container"
+					aria-labelledby="gform-%1$s-label"
+					class="gform-dropdown__container"
 					role="listbox"
-					data-js="kdnaform-dropdown-container"
+					data-js="gform-dropdown-container"
 					tabindex="-1"
 			    >
-					<div class="kdnaform-dropdown__search">
-						<label for="kdnaform-settings-field__%1$s-search" class="kdnaform-visually-hidden">
+					<div class="gform-dropdown__search">
+						<label for="gform-settings-field__%1$s-search" class="gform-visually-hidden">
 							%3$s
 						</label>
 						<input
-							id="kdnaform-settings-field__%1$s-search"
+							id="gform-settings-field__%1$s-search"
 							type="text"
-							class="kdnaform-input kdnaform-dropdown__search-input"
+							class="gform-input gform-dropdown__search-input"
 							placeholder="%2$s"
-							data-js="kdnaform-dropdown-search"
+							data-js="gform-dropdown-search"
 						/>
-						<span class="kdnaform-icon kdnaform-icon--search kdnaform-dropdown__search-icon"></span>
+						<span class="gform-icon gform-icon--search gform-dropdown__search-icon"></span>
 					</div>
 			
-			      <div class="kdnaform-dropdown__list-container">
-			        <ul class="kdnaform-dropdown__list" data-js="kdnaform-dropdown-list"></ul>
+			      <div class="gform-dropdown__list-container">
+			        <ul class="gform-dropdown__list" data-js="gform-dropdown-list"></ul>
 			      </div>
 			    </div>
 			    <input type="hidden" data-js="gf-user-select-input" name="_kdnaform_setting_%1$s" id="%1$s" value="%4$s"/>

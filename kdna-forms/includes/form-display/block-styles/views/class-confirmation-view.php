@@ -23,14 +23,14 @@ class Confirmation_View extends Form_View {
 
 		switch ( $theme_slug ) {
 			case 'orbital':
-				$classes = 'kdnaform_confirmation_wrapper kdnaform_wrapper kdnaform-theme kdnaform-theme--foundation kdnaform-theme--framework kdnaform-theme--' . $theme_slug;
+				$classes = 'kdnaform_confirmation_wrapper gform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--' . $theme_slug;
 				break;
 			case 'gravity-theme':
 			default:
-				$classes = 'kdnaform_confirmation_wrapper gravity-theme kdnaform-theme--no-framework';
+				$classes = 'kdnaform_confirmation_wrapper gravity-theme gform-theme--no-framework';
 				break;
 			case 'legacy':
-				$classes = 'kdnaform_confirmation_wrapper kdnaform_legacy_markup_wrapper kdnaform_legacy_confirmation_markup_wrapper kdnaform-theme--no-framework';
+				$classes = 'kdnaform_confirmation_wrapper kdnaform_legacy_markup_wrapper kdnaform_legacy_confirmation_markup_wrapper gform-theme--no-framework';
 				break;
 		}
 		$classes = sprintf( "class='%s", $classes );

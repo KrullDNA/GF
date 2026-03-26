@@ -52,14 +52,14 @@ class KDNA_Field_Phone extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--phone';
+		return 'gform-icon--phone';
 	}
 
 	/**
@@ -177,7 +177,7 @@ class KDNA_Field_Phone extends KDNA_Field {
 		if ( $this->failed_validation ) {
 			$phone_format = $this->get_phone_format();
 			if ( rgar( $phone_format, 'instruction' ) ) {
-				$instruction_div = sprintf( "<div class='kdnafield_description instruction validation_message'>%s %s</div>", esc_html__( 'Phone format:', 'kdnaforms' ), $phone_format['instruction'] );
+				$instruction_div = sprintf( "<div class='gfield_description instruction validation_message'>%s %s</div>", esc_html__( 'Phone format:', 'kdnaforms' ), $phone_format['instruction'] );
 			}
 		}
 
@@ -190,7 +190,7 @@ class KDNA_Field_Phone extends KDNA_Field {
 
 		$tabindex = $this->get_tabindex();
 
-		return sprintf( "<div class='kdnainput_container kdnainput_container_phone'><input name='input_%d' id='%s' type='{$html_input_type}' value='%s' class='%s' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$autocomplete_attribute} %s/>{$instruction_div}</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text );
+		return sprintf( "<div class='ginput_container ginput_container_phone'><input name='input_%d' id='%s' type='{$html_input_type}' value='%s' class='%s' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$autocomplete_attribute} %s/>{$instruction_div}</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text );
 
 	}
 

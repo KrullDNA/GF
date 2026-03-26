@@ -36,14 +36,14 @@ class KDNA_Field_Select extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--dropdown';
+		return 'gform-icon--dropdown';
 	}
 
 
@@ -84,7 +84,7 @@ class KDNA_Field_Select extends KDNA_Field {
 		$size                   = $this->size;
 		$class_suffix           = $is_entry_detail ? '_admin' : '';
 		$class                  = $size . $class_suffix;
-		$css_class              = trim( esc_attr( $class ) . ' kdnafield_select' );
+		$css_class              = trim( esc_attr( $class ) . ' gfield_select' );
 		$tabindex               = $this->get_tabindex();
 		$disabled_text          = $is_form_editor ? 'disabled="disabled"' : '';
 		$required_attribute     = $this->isRequired ? 'aria-required="true"' : '';
@@ -92,7 +92,7 @@ class KDNA_Field_Select extends KDNA_Field {
 		$describedby_attribute = $this->get_aria_describedby();
 		$autocomplete_attribute = $this->enableAutocomplete ? $this->get_field_autocomplete_attribute() : '';
 
-		return sprintf( "<div class='kdnainput_container kdnainput_container_select'><select name='input_%d' id='%s' class='%s' $tabindex $describedby_attribute %s %s %s %s>%s</select></div>", $id, $field_id, $css_class, $disabled_text, $required_attribute, $invalid_attribute, $autocomplete_attribute, $this->get_choices( $value ) );
+		return sprintf( "<div class='ginput_container ginput_container_select'><select name='input_%d' id='%s' class='%s' $tabindex $describedby_attribute %s %s %s %s>%s</select></div>", $id, $field_id, $css_class, $disabled_text, $required_attribute, $invalid_attribute, $autocomplete_attribute, $this->get_choices( $value ) );
 
 	}
 

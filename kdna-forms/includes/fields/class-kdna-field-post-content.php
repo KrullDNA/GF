@@ -28,14 +28,14 @@ class KDNA_Field_Post_Content extends KDNA_Field_Textarea {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--body';
+		return 'gform-icon--body';
 	}
 
 	function get_form_editor_field_settings() {

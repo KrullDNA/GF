@@ -44,14 +44,14 @@ class KDNA_Field_MultiSelect extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--multi-select';
+		return 'gform-icon--multi-select';
 	}
 
 	/**
@@ -129,7 +129,7 @@ class KDNA_Field_MultiSelect extends KDNA_Field {
 		$class_suffix  = $is_entry_detail ? '_admin' : '';
 		$class         = $size . $class_suffix;
 		$class         = esc_attr( $class );
-		$css_class     = trim( $class . ' kdnafield_select' );
+		$css_class     = trim( $class . ' gfield_select' );
 		$tabindex      = $this->get_tabindex();
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 		$required_attribute = $this->isRequired ? 'aria-required="true"' : '';
@@ -159,7 +159,7 @@ class KDNA_Field_MultiSelect extends KDNA_Field {
 		}
 		$size = esc_attr( $size );
 
-		return sprintf( "<div class='kdnainput_container kdnainput_container_multiselect'><select multiple='multiple' {$placeholder} size='{$size}' name='input_%d[]' id='%s' class='%s' $tabindex %s %s %s %s>%s</select></div>", $id, esc_attr( $field_id ), $css_class, $disabled_text, $invalid_attribute, $required_attribute, $describedby_attribute, $this->get_choices( $value ) );
+		return sprintf( "<div class='ginput_container ginput_container_multiselect'><select multiple='multiple' {$placeholder} size='{$size}' name='input_%d[]' id='%s' class='%s' $tabindex %s %s %s %s>%s</select></div>", $id, esc_attr( $field_id ), $css_class, $disabled_text, $invalid_attribute, $required_attribute, $describedby_attribute, $this->get_choices( $value ) );
 	}
 
 	/**

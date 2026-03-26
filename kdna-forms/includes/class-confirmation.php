@@ -91,12 +91,12 @@ class KDNA_Confirmation {
 
 		?>
 
-		<div class="kdnaform-settings-panel">
-			<header class="kdnaform-settings-panel__header">
-				<h4 class="kdnaform-settings-panel__title"><?php esc_html_e( 'Confirmations', 'kdnaforms' ); ?></h4>
+		<div class="gform-settings-panel">
+			<header class="gform-settings-panel__header">
+				<h4 class="gform-settings-panel__title"><?php esc_html_e( 'Confirmations', 'kdnaforms' ); ?></h4>
 			</header>
 
-			<div class="kdnaform-settings-panel__content">
+			<div class="gform-settings-panel__content">
 
 				<form id="confirmation_list_form" method="post">
 
@@ -115,7 +115,7 @@ class KDNA_Confirmation {
 				var form = <?php echo json_encode( $form ); ?>;
 
 				function ToggleActive( btn, confirmation_id ) {
-					var is_active = jQuery( btn ).hasClass( 'kdnaform-status--active' );
+					var is_active = jQuery( btn ).hasClass( 'gform-status--active' );
 
 					jQuery.ajax(
 						{
@@ -149,11 +149,11 @@ class KDNA_Confirmation {
 					);
 
 					function setToggleInactive() {
-						jQuery( btn ).removeClass( 'kdnaform-status--active' ).addClass( 'kdnaform-status--inactive' ).find( '.kdnaform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Inactive', 'kdnaforms' ) ); ?> );
+						jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Inactive', 'kdnaforms' ) ); ?> );
 					}
 
 					function setToggleActive() {
-						jQuery( btn ).removeClass( 'kdnaform-status--inactive' ).addClass( 'kdnaform-status--active' ).find( '.kdnaform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Active', 'kdnaforms' ) ); ?> );
+						jQuery( btn ).removeClass( 'gform-status--inactive' ).addClass( 'gform-status--active' ).find( '.gform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Active', 'kdnaforms' ) ); ?> );
 					}
 
 				}
@@ -383,7 +383,7 @@ class KDNA_Confirmation {
 			// Add section.
 			$fields[] = array(
 				'title'  => esc_html__( 'Legacy Settings', 'kdnaforms' ),
-				'class'  => 'kdnaform-settings-panel--full',
+				'class'  => 'gform-settings-panel--full',
 				'fields' => array(
 					array(
 						'name' => 'legacy',
@@ -518,7 +518,7 @@ class KDNA_Confirmation {
 			$dismissible_message = sprintf(
 				$dismissible_message,
 				'<a href="https://docs.kdnaforms.com/security-warning-merge-tags-html-attribute-values/" target="_blank">',
-				'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
+				'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
 			);
 			KDNACommon::add_dismissible_message( $dismissible_message, 'confirmation_unsafe_' . $form_id );
 		}
@@ -819,10 +819,10 @@ class KDNA_Confirmation {
 	 * @since  2.6
 	 */
 	public static function output_duplicate_confirmation_notice() {
-		echo '<div class="kdnaform-alert kdnaform-alert--notice" data-js="kdnaform-alert">
-				<span class="kdnaform-alert__icon kdnaform-icon kdnaform-icon--circle-notice" aria-hidden="true"></span>
-  				<div class="kdnaform-alert__message-wrap">
-    				<p class="kdnaform-alert__message">In order to avoid conflicts with other confirmations on this form, please ensure these conditional logic rules are unique.</p>
+		echo '<div class="gform-alert gform-alert--notice" data-js="gform-alert">
+				<span class="gform-alert__icon gform-icon gform-icon--circle-notice" aria-hidden="true"></span>
+  				<div class="gform-alert__message-wrap">
+    				<p class="gform-alert__message">In order to avoid conflicts with other confirmations on this form, please ensure these conditional logic rules are unique.</p>
   				</div>
 			</div>';
 	}
@@ -1054,20 +1054,20 @@ class KDNAConfirmationTable extends WP_List_Table {
 		$active = rgar( $item, 'isActive' ) !== false;
 
 		if ( $active ) {
-			$class = 'kdnaform-status--active';
+			$class = 'gform-status--active';
 			$text  = esc_html__( 'Active', 'kdnaforms' );
 		} else {
-			$class = 'kdnaform-status--inactive';
+			$class = 'gform-status--inactive';
 			$text  = esc_html__( 'Inactive', 'kdnaforms' );
 		}
 		?>
 		<button
 			type="button"
-			class="kdnaform-status-indicator kdnaform-status-indicator--size-sm kdnaform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
+			class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
 			onclick="ToggleActive( this, '<?php echo esc_js( $item['id'] ); ?>' );"
 			onkeypress="ToggleActive( this, '<?php echo esc_js( $item['id'] ); ?>' );"
 		>
-			<span class="kdnaform-status-indicator-status kdnaform-typography--weight-medium kdnaform-typography--size-text-xs">
+			<span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs">
 				<?php echo esc_html( $text ); ?>
 			</span>
 		</button>

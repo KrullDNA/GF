@@ -14,8 +14,8 @@
 		<div id="gf-edit-shortcode-form-advanced-attrs" class="gf-edit-shortcode-form-advanced-attrs" style="display:none;">
 		</div>
 
-		<input id="kdnaform-update-shortcode" type="button" class="button-primary" value="<?php esc_attr_e( 'Update Form', 'kdnaforms' ); ?>" />
-		<input id="kdnaform-insert-shortcode" type="button" class="button-primary" value="<?php esc_attr_e( 'Insert Form', 'kdnaforms' ); ?>" />&nbsp;&nbsp;&nbsp;
+		<input id="gform-update-shortcode" type="button" class="button-primary" value="<?php esc_attr_e( 'Update Form', 'kdnaforms' ); ?>" />
+		<input id="gform-insert-shortcode" type="button" class="button-primary" value="<?php esc_attr_e( 'Insert Form', 'kdnaforms' ); ?>" />&nbsp;&nbsp;&nbsp;
 
 	</form>
 

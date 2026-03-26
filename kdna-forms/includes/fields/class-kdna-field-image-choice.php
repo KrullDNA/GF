@@ -42,14 +42,14 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--image_choice';
+		return 'gform-icon--image_choice';
 	}
 
 	function get_form_editor_field_settings() {
@@ -93,7 +93,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 						// get the image to check if it has already been resized or not
 						$image = wp_get_attachment_image_src(
 							$choice['attachment_id'],
-							'kdnaform-' .  key( $image_sizes )
+							'gform-' .  key( $image_sizes )
 						);
 
 						if ( is_array( $image ) && $image[3] === false ) {

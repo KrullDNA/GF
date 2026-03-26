@@ -875,7 +875,7 @@ class KDNAFormDisplay {
 	        if (event && event.defaultPrevented) {
             	    return;
         	}
-	        const gformWrapperDiv = document.getElementById( "kdnaform_wrapper_' . $form_id . '" );
+	        const gformWrapperDiv = document.getElementById( "gform_wrapper_' . $form_id . '" );
 	        if ( gformWrapperDiv ) {
 	            const visibilitySpan = document.createElement( "span" );
 	            visibilitySpan.id = "kdnaform_visibility_test_' . $form_id . '";
@@ -1190,7 +1190,7 @@ class KDNAFormDisplay {
 		$should_render_hidden = self::has_conditional_logic( $form ) && rgar( rgget( 'attributes' ), 'formPreview' ) !== 'true';
 
 		if ( empty( $confirmation_message ) ) {
-			$wrapper_css_class = KDNACommon::get_browser_class() . ' kdnaform_wrapper';
+			$wrapper_css_class = KDNACommon::get_browser_class() . ' gform_wrapper';
 
 			if ( ! $is_valid ) {
 				$wrapper_css_class .= ' kdnaform_validation_error';
@@ -1224,7 +1224,7 @@ class KDNAFormDisplay {
 			$form_theme    = KDNAFormDisplay::get_form_theme_slug( $form );
 
 			$form_string .= "
-                <div class='{$wrapper_css_class}{$custom_wrapper_css_class}' data-form-theme='{$form_theme}' {$page_instance} id='kdnaform_wrapper_$form_id' " . $style . '>';
+                <div class='{$wrapper_css_class}{$custom_wrapper_css_class}' data-form-theme='{$form_theme}' {$page_instance} id='gform_wrapper_$form_id' " . $style . '>';
 
 			/**
 			 * Allows markup to be added directly after the opening form wrapper.
@@ -1256,18 +1256,18 @@ class KDNAFormDisplay {
 			$display_required_legend = KDNACommon::has_required_field( $form ) && ! KDNACommon::is_legacy_markup_enabled( $form ) && 'text' !== $required_indicator_type;
 
 			if ( ( $display_title || $display_description ) || $display_required_legend ) {
-				$kdnaform_title_open  = KDNACommon::is_legacy_markup_enabled( $form ) ? '<h3 class="kdnaform_title">' : '<h2 class="kdnaform_title">';
-				$kdnaform_title_close = KDNACommon::is_legacy_markup_enabled( $form ) ? '</h3>' : '</h2>';
+				$gform_title_open  = KDNACommon::is_legacy_markup_enabled( $form ) ? '<h3 class="gform_title">' : '<h2 class="gform_title">';
+				$gform_title_close = KDNACommon::is_legacy_markup_enabled( $form ) ? '</h3>' : '</h2>';
 
 				$form_string .= "
-                        <div class='kdnaform_heading'>";
+                        <div class='gform_heading'>";
 				if ( $display_title ) {
 					$form_string .= "
-                            {$kdnaform_title_open}" . rgar( $form, 'title' ) . $kdnaform_title_close;
+                            {$gform_title_open}" . rgar( $form, 'title' ) . $gform_title_close;
 				}
 				if ( $display_description ) {
 					$form_string .= "
-                            <p class='kdnaform_description'>" . rgar( $form, 'description' ) . '</p>';
+                            <p class='gform_description'>" . rgar( $form, 'description' ) . '</p>';
 				}
 
 				if ( $display_required_legend ) {
@@ -1340,7 +1340,7 @@ class KDNAFormDisplay {
 
 
 			$form_string .= "
-                        <div class='kdnaform-body kdnaform_body'>";
+                        <div class='gform-body gform_body'>";
 
 			//add first page if this form has any page fields
 			if ( $has_pages ) {
@@ -1348,7 +1348,7 @@ class KDNAFormDisplay {
 			}
 
 			$tag = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
-			$form_string .= "<{$tag} id='kdnaform_fields_{$form_id}' class='" . KDNACommon::get_ul_classes( $form ) . "'>";
+			$form_string .= "<{$tag} id='gform_fields_{$form_id}' class='" . KDNACommon::get_ul_classes( $form ) . "'>";
 
 			if ( is_array( $form['fields'] ) ) {
 				$form_string .= self::get_fields( $form, $field_values, $submitted_values );
@@ -1361,11 +1361,11 @@ class KDNAFormDisplay {
 				$form_string .= self::get_last_page_footer( $form, $label_placement, $ajax, $field_values, $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method );
 			}
 
-			$form_string .= '</div>'; //closes kdnaform_body
+			$form_string .= '</div>'; //closes gform_body
 
 			//suppress form footer for multi-page forms (footer will be included on the last page
 			if ( ! $has_pages ) {
-				$form_string .= self::kdnaform_footer( $form, 'kdnaform-footer kdnaform_footer ' . $label_placement, $ajax, $field_values, '', $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method );
+				$form_string .= self::gform_footer( $form, 'gform-footer gform_footer ' . $label_placement, $ajax, $field_values, '', $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method );
 			}
 
 			$form_string .= '
@@ -1394,14 +1394,14 @@ class KDNAFormDisplay {
 
 			if ( $should_show_spinner ) {
 				$default_spinner = KDNACommon::get_base_url() . '/images/spinner.svg';
-				$spinner_url     = gf_apply_filters( array( 'kdnaform_ajax_spinner_url', $form_id ), $default_spinner, $form );
+				$spinner_url     = gf_apply_filters( array( 'gform_ajax_spinner_url', $form_id ), $default_spinner, $form );
 				$theme_slug      = self::get_form_theme_slug( $form );
 				$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'gravity-theme', 'legacy' ) );
 
 				$scroll_position = array( 'default' => '', 'confirmation' => '' );
 
 				if ( $anchor['scroll'] !== false ) {
-					$scroll_position['default']      = is_numeric( $anchor['scroll'] ) ? 'jQuery(document).scrollTop(' . intval( $anchor['scroll'] ) . ');' : "jQuery(document).scrollTop(jQuery('#kdnaform_wrapper_{$form_id}').offset().top - mt);";
+					$scroll_position['default']      = is_numeric( $anchor['scroll'] ) ? 'jQuery(document).scrollTop(' . intval( $anchor['scroll'] ) . ');' : "jQuery(document).scrollTop(jQuery('#gform_wrapper_{$form_id}').offset().top - mt);";
 					$scroll_position['confirmation'] = is_numeric( $anchor['scroll'] ) ? 'jQuery(document).scrollTop(' . intval( $anchor['scroll'] ) . ');' : "jQuery(document).scrollTop(jQuery('{$anchor['id']}').offset().top - mt);";
 				}
 
@@ -1425,15 +1425,15 @@ class KDNAFormDisplay {
 						"var contents = jQuery(this).contents().find('*').html();" .
 						"var is_postback = contents.indexOf('KDNA_AJAX_POSTBACK') >= 0;" .
 						'if(!is_postback){return;}' .
-						"var form_content = jQuery(this).contents().find('#kdnaform_wrapper_{$form_id}');" .
+						"var form_content = jQuery(this).contents().find('#gform_wrapper_{$form_id}');" .
 						"var is_confirmation = jQuery(this).contents().find('#kdnaform_confirmation_wrapper_{$form_id}').length > 0;" .
 						"var is_redirect = contents.indexOf('gformRedirect(){') >= 0;" .
 						'var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;' .
 						"var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;" .
 						'if(is_form){' .
 						( $should_render_hidden ? "form_content.find('form').css('opacity', 0);" : "" ) .
-						"jQuery('#kdnaform_wrapper_{$form_id}').html(form_content.html());" .
-						"if(form_content.hasClass('kdnaform_validation_error')){jQuery('#kdnaform_wrapper_{$form_id}').addClass('kdnaform_validation_error');} else {jQuery('#kdnaform_wrapper_{$form_id}').removeClass('kdnaform_validation_error');}" .
+						"jQuery('#gform_wrapper_{$form_id}').html(form_content.html());" .
+						"if(form_content.hasClass('kdnaform_validation_error')){jQuery('#gform_wrapper_{$form_id}').addClass('kdnaform_validation_error');} else {jQuery('#gform_wrapper_{$form_id}').removeClass('kdnaform_validation_error');}" .
 						"setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ {$scroll_position['default']} }, 50 );" .
 						"if(window['gformInitDatepicker']) {gformInitDatepicker();}" .
 						"if(window['gformInitPriceFields']) {gformInitPriceFields();}" .
@@ -1447,11 +1447,11 @@ class KDNAFormDisplay {
 						'if(!confirmation_content){' .
 						'confirmation_content = contents;' .
 						'}' .
-						"jQuery('#kdnaform_wrapper_{$form_id}').replaceWith(confirmation_content);" .
+						"jQuery('#gform_wrapper_{$form_id}').replaceWith(confirmation_content);" .
 						"{$scroll_position['confirmation']}" .
 						"jQuery(document).trigger('kdnaform_confirmation_loaded', [{$form_id}]);" .
 						"window['gf_submitting_{$form_id}'] = false;" .
-						"wp.a11y.speak(jQuery('#kdnaform_confirmation_message_{$form_id}').text());" .
+						"wp.a11y.speak(jQuery('#gform_confirmation_message_{$form_id}').text());" .
 						'}' .
 						'else{' .
 						"jQuery('#kdnaform_{$form_id}').append(contents);" .
@@ -1557,7 +1557,7 @@ class KDNAFormDisplay {
 			$markup .= self::get_first_page_header( $form );
 
 			// Getting the field container header if this is the first page of the form.
-			$markup .= "<{$tag} id='kdnaform_fields_{$form_id}' class='" . KDNACommon::get_ul_classes( $form ) . "'>"; // Opening field container for first page.
+			$markup .= "<{$tag} id='gform_fields_{$form_id}' class='" . KDNACommon::get_ul_classes( $form ) . "'>"; // Opening field container for first page.
 		}
 
 		// Adding the fields for the target page.
@@ -1689,7 +1689,7 @@ class KDNAFormDisplay {
 		 * @param array $form The Form object to filter through
 		 * @param int $current_page The Current form page ID (If paging is enabled)
 		 */
-		$form_string = gf_apply_filters( array( 'kdnaform_footer_init_scripts_filter', $form_id ), $form_string, $form, $current_page );
+		$form_string = gf_apply_filters( array( 'gform_footer_init_scripts_filter', $form_id ), $form_string, $form, $current_page );
 
 		if ( ! isset( $_init_forms[ $form_id ] ) ) {
 			echo $form_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1771,7 +1771,7 @@ class KDNAFormDisplay {
 	 */
 	public static function get_submit_button_class( $button, $form_id ) {
 		$class  = ' button';
-		$class .= rgar( $button, 'width' ) && 'full' == $button['width'] ? ' kdnaform-button--width-full' : '';
+		$class .= rgar( $button, 'width' ) && 'full' == $button['width'] ? ' gform-button--width-full' : '';
 
 		// if the button is at the bottom, and if it has width, add a width class.
 		if ( rgar( $button, 'location' ) && 'bottom' == $button['location'] && rgar( $button, 'layoutGridColumnSpan' ) && 12 !== $button['layoutGridColumnSpan'] ) {
@@ -1783,7 +1783,7 @@ class KDNAFormDisplay {
 		return $class;
 	}
 
-	public static function kdnaform_footer( $form, $class, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex = 1, $theme = null, $style_settings = null, $submission_method = self::SUBMISSION_METHOD_POSTBACK ) {
+	public static function gform_footer( $form, $class, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex = 1, $theme = null, $style_settings = null, $submission_method = self::SUBMISSION_METHOD_POSTBACK ) {
 		$form_id      = absint( $form['id'] );
 		$footer       = "
         <div class='" . esc_attr( $class ) . "'>";
@@ -1791,11 +1791,11 @@ class KDNAFormDisplay {
 		if ( rgar( $form['button'], 'location' ) && 'inline' == $form['button']['location'] ) {
 			$button_input = '';
 		} else {
-			$button_input = self::get_form_button( $form['id'], "kdnaform_submit_button_{$form['id']}", $button, __( 'Submit', 'kdnaforms' ), 'kdnaform_button', __( 'Submit', 'kdnaforms' ), 0 );
+			$button_input = self::get_form_button( $form['id'], "kdnaform_submit_button_{$form['id']}", $button, __( 'Submit', 'kdnaforms' ), 'gform_button', __( 'Submit', 'kdnaforms' ), 0 );
 			$button_input = gf_apply_filters( array( 'kdnaform_submit_button', $form_id ), $button_input, $form );
 		}
 
-		$save_button = rgars( $form, 'save/enabled' ) ? self::get_form_button( $form_id, "kdnaform_save_{$form_id}_footer", $form['save']['button'], rgars( $form, 'save/button/text' ), 'kdnaform_save_link kdnaform-theme-button kdnaform-theme-button--secondary', rgars( $form, 'save/button/text' ), 0, "jQuery(\"#kdnaform_save_{$form_id}\").val(1);" ) : '';
+		$save_button = rgars( $form, 'save/enabled' ) ? self::get_form_button( $form_id, "kdnaform_save_{$form_id}_footer", $form['save']['button'], rgars( $form, 'save/button/text' ), 'kdnaform_save_link gform-theme-button gform-theme-button--secondary', rgars( $form, 'save/button/text' ), 0, "jQuery(\"#kdnaform_save_{$form_id}\").val(1);" ) : '';
 
 		/**
 		 * Filters the save and continue link allowing the tag to be customized
@@ -1835,8 +1835,8 @@ class KDNAFormDisplay {
 		if ( rgars( $form, 'save/enabled' ) ) {
 			$resume_token = isset( $_POST['kdnaform_resume_token'] ) ? wp_unslash( $_POST['kdnaform_resume_token'] ) : rgget( 'gf_token' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$resume_token = sanitize_key( $resume_token );
-			$save_inputs  = "<input type='hidden' class='kdnaform_hidden' name='kdnaform_save' id='kdnaform_save_{$form_id}' value='' />
-                             <input type='hidden' class='kdnaform_hidden' name='kdnaform_resume_token' id='kdnaform_resume_token_{$form_id}' value='{$resume_token}' />";
+			$save_inputs  = "<input type='hidden' class='gform_hidden' name='kdnaform_save' id='kdnaform_save_{$form_id}' value='' />
+                             <input type='hidden' class='gform_hidden' name='kdnaform_resume_token' id='kdnaform_resume_token_{$form_id}' value='{$resume_token}' />";
 		}
 
 		if ( KDNACommon::form_requires_login( $form ) ) {
@@ -1850,24 +1850,24 @@ class KDNAFormDisplay {
 		$honeypot_handler = KDNAForms::get_service_container()->get( Honeypot\KDNA_Honeypot_Service_Provider::KDNA_HONEYPOT_HANDLER );
 
 		if ( $honeypot_handler->is_speed_check_enabled( $form ) ) {
-			$footer .= "<input type='hidden' class='kdnaform_hidden' name='kdnaform_submission_speeds' value='" . esc_attr( $honeypot_handler->get_submission_speeds_json( $form_id ) ) . "' />";
+			$footer .= "<input type='hidden' class='gform_hidden' name='kdnaform_submission_speeds' value='" . esc_attr( $honeypot_handler->get_submission_speeds_json( $form_id ) ) . "' />";
 		}
 
 		$currency_code      = KDNACommon::get_currency();
 		$encrypted_currency = KDNACommon::openssl_encrypt( $currency_code );
 
 		$footer .= "
-            <input type='hidden' class='kdnaform_hidden' name='kdnaform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='" . self::get_submission_method( $submission_method ) . "' />
-            <input type='hidden' class='kdnaform_hidden' name='kdnaform_theme' data-js='kdnaform_theme_{$form_id}' id='kdnaform_theme_{$form_id}' value='" . esc_attr( $theme ) . "' />
-            <input type='hidden' class='kdnaform_hidden' name='kdnaform_style_settings' data-js='kdnaform_style_settings_{$form_id}' id='kdnaform_style_settings_{$form_id}' value='" . $style_settings . "' />
-            <input type='hidden' class='kdnaform_hidden' name='is_submit_{$form_id}' value='1' />
-            <input type='hidden' class='kdnaform_hidden' name='kdnaform_submit' value='{$form_id}' />
+            <input type='hidden' class='gform_hidden' name='kdnaform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='" . self::get_submission_method( $submission_method ) . "' />
+            <input type='hidden' class='gform_hidden' name='kdnaform_theme' data-js='kdnaform_theme_{$form_id}' id='kdnaform_theme_{$form_id}' value='" . esc_attr( $theme ) . "' />
+            <input type='hidden' class='gform_hidden' name='kdnaform_style_settings' data-js='kdnaform_style_settings_{$form_id}' id='kdnaform_style_settings_{$form_id}' value='" . $style_settings . "' />
+            <input type='hidden' class='gform_hidden' name='is_submit_{$form_id}' value='1' />
+            <input type='hidden' class='gform_hidden' name='kdnaform_submit' value='{$form_id}' />
             {$save_inputs}
-            <input type='hidden' class='kdnaform_hidden' name='kdnaform_currency' data-currency='{$currency_code}' value='{$encrypted_currency}' />
-            <input type='hidden' class='kdnaform_hidden' name='kdnaform_unique_id' value='" . esc_attr( $unique_id ) . "' />
-            <input type='hidden' class='kdnaform_hidden' name='state_{$form_id}' value='" . self::get_state( $form, $field_values ) . "' />
-            <input type='hidden' autocomplete='off' class='kdnaform_hidden' name='kdnaform_target_page_number_{$form_id}' id='kdnaform_target_page_number_{$form_id}' value='" . esc_attr( $next_page ) . "' />
-            <input type='hidden' autocomplete='off' class='kdnaform_hidden' name='kdnaform_source_page_number_{$form_id}' id='kdnaform_source_page_number_{$form_id}' value='" . esc_attr( $current_page ) . "' />
+            <input type='hidden' class='gform_hidden' name='kdnaform_currency' data-currency='{$currency_code}' value='{$encrypted_currency}' />
+            <input type='hidden' class='gform_hidden' name='kdnaform_unique_id' value='" . esc_attr( $unique_id ) . "' />
+            <input type='hidden' class='gform_hidden' name='state_{$form_id}' value='" . self::get_state( $form, $field_values ) . "' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='kdnaform_target_page_number_{$form_id}' id='kdnaform_target_page_number_{$form_id}' value='" . esc_attr( $next_page ) . "' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='kdnaform_source_page_number_{$form_id}' id='kdnaform_source_page_number_{$form_id}' value='" . esc_attr( $current_page ) . "' />
             <input type='hidden' name='kdnaform_field_values' value='" . esc_attr( $field_values_str ) . "' />
             {$files_input}
         </div>";
@@ -2351,7 +2351,7 @@ class KDNAFormDisplay {
 
 		$message = KDNACommon::replace_variables( $confirmation['message'], $form, $entry, false, true, $nl2br, 'html', $aux_data );
 		$message = self::maybe_sanitize_confirmation_message( $message );
-		$message = empty( $confirmation['message'] ) ? "{$anchor} " : "{$anchor}<div id='kdnaform_confirmation_wrapper_{$form['id']}' class='kdnaform_confirmation_wrapper {$css_class}'><div id='kdnaform_confirmation_message_{$form['id']}' class='kdnaform_confirmation_message_{$form['id']} kdnaform_confirmation_message'>" . $message . '</div></div>';
+		$message = empty( $confirmation['message'] ) ? "{$anchor} " : "{$anchor}<div id='kdnaform_confirmation_wrapper_{$form['id']}' class='kdnaform_confirmation_wrapper {$css_class}'><div id='gform_confirmation_message_{$form['id']}' class='gform_confirmation_message_{$form['id']} gform_confirmation_message'>" . $message . '</div></div>';
 
 		return $message;
 	}
@@ -3672,8 +3672,8 @@ class KDNAFormDisplay {
 			"gform.utils.trigger({ event: 'gform/conditionalLogic/init/start', native: false, data: { formId: {$form['id']}, fields: null, isInit: true } });" .
             "window['gformInitPriceFields']();" .
 	        "gf_apply_rules({$form['id']}, " . json_encode( $fields_with_logic ) . ', true);' .
-			"jQuery('#kdnaform_wrapper_{$form['id']}').show();" .
-			"jQuery('#kdnaform_wrapper_{$form['id']} form').css('opacity', '');" .
+			"jQuery('#gform_wrapper_{$form['id']}').show();" .
+			"jQuery('#gform_wrapper_{$form['id']} form').css('opacity', '');" .
 			"jQuery(document).trigger('kdnaform_post_conditional_logic', [{$form['id']}, null, true]);" .
 			"gform.utils.trigger({ event: 'gform/conditionalLogic/init/end', native: false, data: { formId: {$form['id']}, fields: null, isInit: true } });" .
 
@@ -3902,17 +3902,17 @@ class KDNAFormDisplay {
 			if ( ! empty( $max_length ) && ! $field->is_administrative() ) {
 				$rte_enabled   = $field instanceof KDNA_Field_Textarea && $field->is_rich_edit_enabled();
 				$truncate      = $rte_enabled ? 'false' : 'true';
-				$tinymce_style = $rte_enabled ? ' kdnainput_counter_tinymce' : '';
-				$error_style   = $rte_enabled ? ' kdnainput_counter_error' : '';
+				$tinymce_style = $rte_enabled ? ' ginput_counter_tinymce' : '';
+				$error_style   = $rte_enabled ? ' ginput_counter_error' : '';
 
 				$field_script =
-					"if(!jQuery('#{$input_id}+.kdnainput_counter').length){jQuery('#{$input_id}').textareaCount(" .
+					"if(!jQuery('#{$input_id}+.ginput_counter').length){jQuery('#{$input_id}').textareaCount(" .
 					"    {'maxCharacterSize': {$max_length}," .
-					"    'originalStyle': 'kdnainput_counter kdnafield_description{$tinymce_style}'," .
+					"    'originalStyle': 'ginput_counter gfield_description{$tinymce_style}'," .
 					"	 'truncate': {$truncate}," .
 					"	 'errorStyle' : '{$error_style}'," .
 					"    'displayFormat' : '#input " . esc_js( __( 'of', 'kdnaforms' ) ) . ' #max ' . esc_js( __( 'max characters', 'kdnaforms' ) ) . "'" .
-					"    });" . "jQuery('#{$input_id}').next('.kdnainput_counter').attr('aria-live','polite');}";
+					"    });" . "jQuery('#{$input_id}').next('.ginput_counter').attr('aria-live','polite');}";
 
 				$script .= gf_apply_filters( array( 'kdnaform_counter_script', $form['id'] ), $field_script, $form['id'], $input_id, $max_length, $field );
 			}
@@ -4344,16 +4344,16 @@ class KDNAFormDisplay {
 			} else if ( ! $is_form_editor ) {
 
 				$previous_button_alt = rgempty( 'imageAlt', $field->previousButton ) ? __( 'Previous Page', 'kdnaforms' ) : $field->previousButton['imageAlt'];
-				$previous_button = $field->pageNumber == 2 ? '' : self::get_form_button( $form_id, "kdnaform_previous_button_{$form_id}_{$field->id}", $field->previousButton, __( 'Previous', 'kdnaforms' ), 'kdnaform_previous_button kdnaform-theme-button kdnaform-theme-button--secondary', $previous_button_alt, $field->pageNumber - 2 );
+				$previous_button = $field->pageNumber == 2 ? '' : self::get_form_button( $form_id, "gform_previous_button_{$form_id}_{$field->id}", $field->previousButton, __( 'Previous', 'kdnaforms' ), 'gform_previous_button gform-theme-button gform-theme-button--secondary', $previous_button_alt, $field->pageNumber - 2 );
 				if ( ! empty( $previous_button ) ) {
-					$previous_button = gf_apply_filters( array( 'kdnaform_previous_button', $form_id ), $previous_button, $form );
+					$previous_button = gf_apply_filters( array( 'gform_previous_button', $form_id ), $previous_button, $form );
 				}
 
 				$next_button_alt = rgempty( 'imageAlt', $field->nextButton ) ? __( 'Next Page', 'kdnaforms' ) : $field->nextButton['imageAlt'];
-				$next_button     = self::get_form_button( $form_id, "kdnaform_next_button_{$form_id}_{$field->id}", $field->nextButton, __( 'Next', 'kdnaforms' ), 'kdnaform_next_button kdnaform-theme-button', $next_button_alt, $field->pageNumber );
-				$next_button     = gf_apply_filters( array( 'kdnaform_next_button', $form_id ), $next_button, $form );
+				$next_button     = self::get_form_button( $form_id, "gform_next_button_{$form_id}_{$field->id}", $field->nextButton, __( 'Next', 'kdnaforms' ), 'gform_next_button gform-theme-button', $next_button_alt, $field->pageNumber );
+				$next_button     = gf_apply_filters( array( 'gform_next_button', $form_id ), $next_button, $form );
 
-				$save_button = rgars( $form, 'save/enabled' ) ? self::get_form_button( $form_id, "kdnaform_save_{$form_id}_{$field->pageNumber}", $form['save']['button'], rgars( $form, 'save/button/text' ), 'kdnaform_save_link kdnaform-theme-button kdnaform-theme-button--secondary', rgars( $form, 'save/button/text' ), 0, "jQuery(\"#kdnaform_save_{$form_id}\").val(1);" ) : '';
+				$save_button = rgars( $form, 'save/enabled' ) ? self::get_form_button( $form_id, "kdnaform_save_{$form_id}_{$field->pageNumber}", $form['save']['button'], rgars( $form, 'save/button/text' ), 'kdnaform_save_link gform-theme-button gform-theme-button--secondary', rgars( $form, 'save/button/text' ), 0, "jQuery(\"#kdnaform_save_{$form_id}\").val(1);" ) : '';
 
 				/**
 				 * Filters the save and continue link allowing the tag to be customized
@@ -4372,7 +4372,7 @@ class KDNAFormDisplay {
 				$tag              = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 				$page_footer_html = "</{$tag}>
                     </div>
-                    <div class='kdnaform-page-footer kdnaform_page_footer {$label_placement}'>
+                    <div class='gform-page-footer kdnaform_page_footer {$label_placement}'>
                         {$previous_button} {$next_button} {$save_button}
                     </div>
                 </div>";
@@ -4380,7 +4380,7 @@ class KDNAFormDisplay {
                 $page_header_html = "
                 <div id='kdnaform_page_{$form['id']}_{$field->pageNumber}' class='kdnaform_page{$custom_class}' data-js='page-field-id-{$field->id}' {$style}>
                     <div class='kdnaform_page_fields'>
-                        <{$tag} id='kdnaform_fields_{$form['id']}_{$field->pageNumber}' class='" . KDNACommon::get_ul_classes( $form ) . "'>";
+                        <{$tag} id='gform_fields_{$form['id']}_{$field->pageNumber}' class='" . KDNACommon::get_ul_classes( $form ) . "'>";
 
 				// When displaying a specific page, the footer for the current page will be displayed by the next page field.
 				$display_footer = $page_number == 0 || $field->pageNumber == $page_number + 1;
@@ -4407,45 +4407,45 @@ class KDNAFormDisplay {
 
 		$input_type = KDNAFormsModel::get_input_type( $field );
 
-		$error_class        = $field->failed_validation ? 'kdnafield_error' : '';
+		$error_class        = $field->failed_validation ? 'gfield_error' : '';
 		$admin_only_class   = $field->visibility == 'administrative' ? 'field_admin_only' : ''; // maintain for backwards compat
 		$admin_hidden_class = ( $is_admin && $field->visibility == 'hidden' ) ? 'admin-hidden' : '';
-		$visibility_class   = $is_admin ? 'kdnafield_visibility_visible' : sprintf( 'kdnafield_visibility_%s', ( $field->visibility ? $field->visibility : 'visible' ) );
+		$visibility_class   = $is_admin ? 'gfield_visibility_visible' : sprintf( 'gfield_visibility_%s', ( $field->visibility ? $field->visibility : 'visible' ) );
 		$selectable_class   = $is_admin ? 'selectable' : '';
-		$hidden_class       = in_array( $input_type, array( 'hidden', 'hiddenproduct' ) ) ? 'kdnaform_hidden' : '';
+		$hidden_class       = in_array( $input_type, array( 'hidden', 'hiddenproduct' ) ) ? 'gform_hidden' : '';
 
 		$choice_fields                  = array( 'checkbox', 'radio', 'consent' );
-		$choice_input_type_class        = in_array( $field->type, $choice_fields ) || ( isset( $field->inputType ) && in_array( $field->inputType, $choice_fields ) ) ? 'kdnafield--type-choice' : '';
-		$choice_alignment_class         = $field->type === 'multi_choice' ? 'kdnafield--choice-align-' . KDNA_Field_Multiple_Choice::get_field_choice_alignment( $field ) : '';
+		$choice_input_type_class        = in_array( $field->type, $choice_fields ) || ( isset( $field->inputType ) && in_array( $field->inputType, $choice_fields ) ) ? 'gfield--type-choice' : '';
+		$choice_alignment_class         = $field->type === 'multi_choice' ? 'gfield--choice-align-' . KDNA_Field_Multiple_Choice::get_field_choice_alignment( $field ) : '';
 		$choice_input_image_shape_class = '';
 		$choice_input_image_style_class = '';
 		if ( $field->type === 'image_choice' ) {
-			$choice_input_image_shape_class = isset( $form['styles'] ) && rgar( $form['styles'], 'inputImageChoiceAppearance' ) ? 'kdnafield--image-choice-appearance-' . $form['styles']['inputImageChoiceAppearance'] : 'kdnafield--image-choice-appearance-card';
-			$choice_input_image_style_class = isset( $form['styles'] ) && rgar( $form['styles'], 'inputImageChoiceStyle' ) ? 'kdnafield--image-choice-style-' . $form['styles']['inputImageChoiceStyle'] : 'kdnafield--image-choice-style-square';
+			$choice_input_image_shape_class = isset( $form['styles'] ) && rgar( $form['styles'], 'inputImageChoiceAppearance' ) ? 'gfield--image-choice-appearance-' . $form['styles']['inputImageChoiceAppearance'] : 'gfield--image-choice-appearance-card';
+			$choice_input_image_style_class = isset( $form['styles'] ) && rgar( $form['styles'], 'inputImageChoiceStyle' ) ? 'gfield--image-choice-style-' . $form['styles']['inputImageChoiceStyle'] : 'gfield--image-choice-style-square';
 		}
 
-		$field_input_type_class  = isset( $field->inputType ) && ! empty( $field->inputType ) ? sprintf( 'kdnafield--input-type-%s', $field->inputType ) : '';
+		$field_input_type_class  = isset( $field->inputType ) && ! empty( $field->inputType ) ? sprintf( 'gfield--input-type-%s', $field->inputType ) : '';
 
 		$field_specific_class = $field->get_field_css_class();
 
 		$section_class              = $field->type == 'section' ? 'gsection' : '';
-		$page_class                 = $field->type == 'page' ? 'gpage kdnaform-theme__disable' : '';
-		$html_block_class           = $field->type == 'html' ? 'kdnafield_html' : '';
-		$html_formatted_class       = $field->type == 'html' && ! $field->disableMargins ? 'kdnafield_html_formatted' : '';
-		$html_no_follows_desc_class = $field->type == 'html' && ! $is_admin && ! self::prev_field_has_description( $form, $field->id ) ? 'kdnafield_no_follows_desc' : '';
+		$page_class                 = $field->type == 'page' ? 'gpage gform-theme__disable' : '';
+		$html_block_class           = $field->type == 'html' ? 'gfield_html' : '';
+		$html_formatted_class       = $field->type == 'html' && ! $field->disableMargins ? 'gfield_html_formatted' : '';
+		$html_no_follows_desc_class = $field->type == 'html' && ! $is_admin && ! self::prev_field_has_description( $form, $field->id ) ? 'gfield_no_follows_desc' : '';
 
-		$calculation_class = $input_type == 'calculation' || ( $input_type == 'number' && $field->has_calculation() )  ? 'kdnafield_calculation' : '';
+		$calculation_class = $input_type == 'calculation' || ( $input_type == 'number' && $field->has_calculation() )  ? 'gfield_calculation' : '';
 
 		$product_suffix            = "_{$form_id}_" . $field->productField;
-		$option_class             = $field->type == 'option' ? "kdnafield_price kdnafield_price{$product_suffix} kdnafield_option{$product_suffix}" : '';
-		$quantity_class           = $field->type == 'quantity' ? "kdnafield_price kdnafield_price{$product_suffix} kdnafield_quantity kdnafield_quantity{$product_suffix}" : '';
-        $total_class              = $field->type == 'total' ? "kdnafield_price kdnafield_price{$product_suffix} kdnafield_total kdnafield_total{$product_suffix}" : '';
-		$shipping_class           = $field->type == 'shipping' ? "kdnafield_price kdnafield_shipping kdnafield_shipping_{$form_id}" : '';
-		$product_class            = $field->type == 'product' ? "kdnafield_price kdnafield_price_{$form_id}_{$field->id} kdnafield_product_{$form_id}_{$field->id}" : '';
-		$hidden_product_class     = $input_type == 'hiddenproduct' ? 'kdnafield_hidden_product' : '';
-		$donation_class           = $field->type == 'donation' ? "kdnafield_price kdnafield_price_{$form_id}_{$field->id} kdnafield_donation_{$form_id}_{$field->id}" : '';
-		$required_class           = $field->isRequired ? 'kdnafield_contains_required' : '';
-		$creditcard_warning_class = $input_type == 'creditcard' && ! KDNACommon::is_ssl() ? 'kdnafield_creditcard_warning' : '';
+		$option_class             = $field->type == 'option' ? "gfield_price gfield_price{$product_suffix} gfield_option{$product_suffix}" : '';
+		$quantity_class           = $field->type == 'quantity' ? "gfield_price gfield_price{$product_suffix} gfield_quantity gfield_quantity{$product_suffix}" : '';
+        $total_class              = $field->type == 'total' ? "gfield_price gfield_price{$product_suffix} gfield_total gfield_total{$product_suffix}" : '';
+		$shipping_class           = $field->type == 'shipping' ? "gfield_price gfield_shipping gfield_shipping_{$form_id}" : '';
+		$product_class            = $field->type == 'product' ? "gfield_price gfield_price_{$form_id}_{$field->id} gfield_product_{$form_id}_{$field->id}" : '';
+		$hidden_product_class     = $input_type == 'hiddenproduct' ? 'gfield_hidden_product' : '';
+		$donation_class           = $field->type == 'donation' ? "gfield_price gfield_price_{$form_id}_{$field->id} gfield_donation_{$form_id}_{$field->id}" : '';
+		$required_class           = $field->isRequired ? 'gfield_contains_required' : '';
+		$creditcard_warning_class = $input_type == 'creditcard' && ! KDNACommon::is_ssl() ? 'gfield_creditcard_warning' : '';
 
 		$submit_width_class = $field->type == 'submit' && $field->submitWidth == 'full' ? 'width-full' : '';
 
@@ -4453,7 +4453,7 @@ class KDNAFormDisplay {
 		$sublabel_setting	   = ! isset( $field->subLabelPlacement ) || empty( $field->subLabelPlacement ) ? $form_sublabel_setting : $field->subLabelPlacement;
 		$sublabel_class        = "field_sublabel_{$sublabel_setting}";
 
-		$has_description_class    = ! empty( $field->description ) ? 'kdnafield--has-description' : 'kdnafield--no-description';
+		$has_description_class    = ! empty( $field->description ) ? 'gfield--has-description' : 'gfield--no-description';
 		$description_setting      = $field->is_description_above( $form ) ? 'above' : 'below';
 		$description_class        = "field_description_{$description_setting}";
 
@@ -4467,7 +4467,7 @@ class KDNAFormDisplay {
 		$span_class           = $field->get_css_grid_class( $form );
 		$column_display_class = self::get_field_column_display( $field );
 
-		$css_class = "kdnafield kdnafield--type-{$field->type} $choice_input_type_class $choice_input_image_shape_class $choice_input_image_style_class $field_input_type_class $column_display_class $field_specific_class $selectable_class $span_class $error_class $section_class $admin_only_class $custom_class $hidden_class $html_block_class $html_formatted_class $html_no_follows_desc_class $option_class $quantity_class $product_class $total_class $donation_class $shipping_class $page_class $required_class $hidden_product_class $creditcard_warning_class $submit_width_class $calculation_class $sublabel_class $has_description_class $description_class $label_placement $validation_class $visibility_class $admin_hidden_class $choice_alignment_class";
+		$css_class = "gfield gfield--type-{$field->type} $choice_input_type_class $choice_input_image_shape_class $choice_input_image_style_class $field_input_type_class $column_display_class $field_specific_class $selectable_class $span_class $error_class $section_class $admin_only_class $custom_class $hidden_class $html_block_class $html_formatted_class $html_no_follows_desc_class $option_class $quantity_class $product_class $total_class $donation_class $shipping_class $page_class $required_class $hidden_product_class $creditcard_warning_class $submit_width_class $calculation_class $sublabel_class $has_description_class $description_class $label_placement $validation_class $visibility_class $admin_hidden_class $choice_alignment_class";
 		$css_class = preg_replace( '/\s+/', ' ', $css_class ); // removing extra spaces
 
 		/*
@@ -4590,7 +4590,7 @@ class KDNAFormDisplay {
 		$is_admin        = $is_form_editor || $is_entry_detail;
 
 		if ( $input_type == 'adminonly_hidden' ) {
-			$field_content = ! $is_admin ? '{FIELD}' : sprintf( "%s<label class='kdnafield_label kdnaform-field-label' >%s</label>{FIELD}", $admin_buttons, esc_html( $field_label ) );
+			$field_content = ! $is_admin ? '{FIELD}' : sprintf( "%s<label class='gfield_label gform-field-label' >%s</label>{FIELD}", $admin_buttons, esc_html( $field_label ) );
 		} else {
 			$field_content = $field->get_field_content( $value, $force_frontend_label, $form );
 		}
@@ -4601,10 +4601,10 @@ class KDNAFormDisplay {
 
 		$field_content = gf_apply_filters( array( 'kdnaform_field_content', $form_id, $field->id ), $field_content, $field, $value, 0, $form_id );
 
-		$admin_compact_view_menu = $is_form_editor ? sprintf( "<div id='dropdown_field_%s' data-js='kdnaform-compact-view-overflow-menu' class='kdnaform-compact-view-overflow-menu kdnaform-theme__disable'></div>", $field->id ) : '';
+		$admin_compact_view_menu = $is_form_editor ? sprintf( "<div id='dropdown_field_%s' data-js='gform-compact-view-overflow-menu' class='gform-compact-view-overflow-menu gform-theme__disable'></div>", $field->id ) : '';
 
 		if( $is_form_editor ) {
-			$field_content = '<div class="kdnafield-admin-wrapper">' . $field_content . '</div>' . ( $field->type !== 'submit' ? $admin_compact_view_menu : '' );
+			$field_content = '<div class="gfield-admin-wrapper">' . $field_content . '</div>' . ( $field->type !== 'submit' ? $admin_compact_view_menu : '' );
 		}
 		return $field_content;
 	}
@@ -4634,10 +4634,10 @@ class KDNAFormDisplay {
 		$percent_number         = ! $progress_complete ? floor( ( ( $progressbar_page_count ) / $page_count ) * 100 ) . '' : '100';
 
 		if ( $progress_complete ) {
-			$wrapper_css_class = KDNACommon::get_browser_class() . ' kdnaform_wrapper';
+			$wrapper_css_class = KDNACommon::get_browser_class() . ' gform_wrapper';
 
 			//add on surrounding wrapper class when confirmation page
-			$progress_bar = "<div class='{$wrapper_css_class}' id='kdnaform_wrapper_$form_id' >";
+			$progress_bar = "<div class='{$wrapper_css_class}' id='gform_wrapper_$form_id' >";
 			$page_name    = ! empty( $form['pagination']['progressbar_completion_text'] ) ? $form['pagination']['progressbar_completion_text'] : '';
 		}
 
@@ -4974,7 +4974,7 @@ class KDNAFormDisplay {
 
 		$form_is_invalid = ! is_null( $email ) && ! KDNACommon::is_valid_email( $email );
 
-		$validation_output = $form_is_invalid ? sprintf( '<div class="kdnafield_description kdnafield_validation_message" id="email-validation-error" aria-live="assertive">%s</div>', $resume_email_validation_message ) : '';
+		$validation_output = $form_is_invalid ? sprintf( '<div class="gfield_description gfield_validation_message" id="email-validation-error" aria-live="assertive">%s</div>', $resume_email_validation_message ) : '';
 
 		$nonce_input = '';
 
@@ -4991,9 +4991,9 @@ class KDNAFormDisplay {
 			$iframe_ajax_fields .= "<input type='hidden' name='kdnaform_field_values' value='' />";
 		}
 
-		$form_submission_inputs = "<input type='hidden' class='kdnaform_hidden' name='kdnaform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='{$submission_method}' />
-								   <input type='hidden' class='kdnaform_hidden' name='is_submit_{$form_id}' value='1' />
-								   <input type='hidden' class='kdnaform_hidden' name='kdnaform_submit' value='{$form_id}' />";
+		$form_submission_inputs = "<input type='hidden' class='gform_hidden' name='kdnaform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='{$submission_method}' />
+								   <input type='hidden' class='gform_hidden' name='is_submit_{$form_id}' value='1' />
+								   <input type='hidden' class='gform_hidden' name='kdnaform_submit' value='{$form_id}' />";
 
 		$ajax_submit = $is_iframe_ajax ? "onclick='jQuery(\"#kdnaform_{$form_id}\").trigger(\"submit\",[true]);'" : '';
 
@@ -5001,7 +5001,7 @@ class KDNAFormDisplay {
 			$resume_form = "<div class='form_saved_message_emailform'>
 							<form action='{$action}' method='POST' id='kdnaform_{$form_id}' data-formid='{$form_id}' {$target}>
 								{$iframe_ajax_fields}
-								<label for='kdnaform_resume_email' class='kdnaform_resume_email_label kdnafield_label' aria-describedby='email-validation-error'>{$email_input_label}</label>
+								<label for='kdnaform_resume_email' class='kdnaform_resume_email_label gfield_label' aria-describedby='email-validation-error'>{$email_input_label}</label>
 								<input type='email' name='kdnaform_resume_email' value='{$email_esc}' id='kdnaform_resume_email' placeholder='{$email_input_label}' aria-describedby='email-validation-error'/>
 								<input type='hidden' name='kdnaform_resume_token' value='{$resume_token}' />
 								<input type='hidden' name='kdnaform_send_resume_link' value='{$form_id}' />
@@ -5014,19 +5014,19 @@ class KDNAFormDisplay {
 		} else {
 			$resume_form = "<div class='form_saved_message_emailform'>
 						<form action='{$action}' method='POST' id='kdnaform_{$form_id}' data-formid='{$form_id}' {$target}>
-							<div class='kdnaform-body kdnaform_body'>
-								<div id='kdnaform_fields_{$form_id}' class='kdnaform_fields top_label form_sublabel_below description_below'>
+							<div class='gform-body gform_body'>
+								<div id='gform_fields_{$form_id}' class='gform_fields top_label form_sublabel_below description_below'>
 									{$iframe_ajax_fields}
-									<div class='kdnafield kdnafield--type-email kdnafield--width-full field_sublabel_below field_description_below kdnafield_visibility_visible'>
-										<label for='kdnaform_resume_email' class='kdnaform_resume_email_label kdnafield_label kdnaform-field-label'>{$email_input_label}{$email_input_label_required}</label>
-										<div class='kdnainput_container kdnainput_container_text'>
+									<div class='gfield gfield--type-email gfield--width-full field_sublabel_below field_description_below gfield_visibility_visible'>
+										<label for='kdnaform_resume_email' class='kdnaform_resume_email_label gfield_label gform-field-label'>{$email_input_label}{$email_input_label_required}</label>
+										<div class='ginput_container ginput_container_text'>
 											<input type='email' name='kdnaform_resume_email' class='large' id='kdnaform_resume_email' value='{$email_esc}' aria-describedby='email-validation-error' />
 											{$validation_output}
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class='kdnaform-footer kdnaform_footer top_label'>
+							<div class='gform-footer gform_footer top_label'>
 								<input type='hidden' name='kdnaform_resume_token' value='{$resume_token}' />
 								<input type='hidden' name='kdnaform_send_resume_link' value='{$form_id}' />
 								{$form_submission_inputs}
@@ -5049,7 +5049,7 @@ class KDNAFormDisplay {
 		$always_show_spinner = gf_apply_filters( array( 'kdnaform_always_show_spinner', $form_id ), true );
 		if ( ! $is_iframe_ajax && $always_show_spinner ) {
 			$default_spinner = KDNACommon::get_base_url() . '/images/spinner.svg';
-			$spinner_url     = gf_apply_filters( array( 'kdnaform_ajax_spinner_url', $form_id ), $default_spinner, $form );
+			$spinner_url     = gf_apply_filters( array( 'gform_ajax_spinner_url', $form_id ), $default_spinner, $form );
 			$theme_slug      = self::get_form_theme_slug( $form );
 			$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'gravity-theme', 'legacy' ) );
 
@@ -5082,7 +5082,7 @@ class KDNAFormDisplay {
 
 		$confirmation_message = rgar( $form['confirmation'], 'message' );
 
-		$confirmation            = "<div id='kdnaform_confirmation_wrapper_{$form['id']}' class='form_saved_message_sent kdnaform_confirmation_wrapper {$css_class} kdnaform_wrapper' role='alert' {$form_theme}>{$confirmation_message}</div>";
+		$confirmation            = "<div id='kdnaform_confirmation_wrapper_{$form['id']}' class='form_saved_message_sent kdnaform_confirmation_wrapper {$css_class} gform_wrapper' role='alert' {$form_theme}>{$confirmation_message}</div>";
 		$nl2br                   = rgar( $form['confirmation'], 'disableAutoformat' ) ? false : true;
 		$save_email_confirmation = self::replace_save_variables( $confirmation, $form, $resume_token, $resume_email );
 		$save_email_confirmation = KDNACommon::replace_variables( $save_email_confirmation, $form, $entry, false, true, $nl2br );
@@ -5123,11 +5123,11 @@ class KDNAFormDisplay {
 		$confirmation_message = $anchor['tag'] . $confirmation_message;
 
 		$form_id           = absint( $form['id'] );
-		$wrapper_css_class = KDNACommon::get_browser_class() . ' kdnaform_wrapper';
+		$wrapper_css_class = KDNACommon::get_browser_class() . ' gform_wrapper';
 		$page_instance     = isset( $form['page_instance'] ) ? "data-form-index='{$form['page_instance']}'" : null;
 		$form_theme        = "data-form-theme='" . KDNAFormDisplay::get_form_theme_slug( $form ) . "'";
 
-		$wrapper_open = "<div class='{$wrapper_css_class}' {$page_instance} {$form_theme} id='kdnaform_wrapper_{$form_id}'>";
+		$wrapper_open = "<div class='{$wrapper_css_class}' {$page_instance} {$form_theme} id='gform_wrapper_{$form_id}'>";
 
 		/**
 		 * Allows markup to be added directly after the opening form wrapper.
@@ -5469,11 +5469,11 @@ class KDNAFormDisplay {
 
 		$button_logic_error = rgars( self::$submission, sprintf( '%d/button_logic_error', rgar( $form, 'id' ) ) );
 		if ( $button_logic_error ) {
-			$validation_message_markup = "<h2 class='kdnaform_submission_error{$hide_summary_class}'><span class='kdnaform-icon kdnaform-icon--circle-error'></span>" . esc_html__( 'There was a problem with your submission.', 'kdnaforms' ) . ' ' . esc_html( $button_logic_error ) . '</h2>';
+			$validation_message_markup = "<h2 class='kdnaform_submission_error{$hide_summary_class}'><span class='gform-icon gform-icon--circle-error'></span>" . esc_html__( 'There was a problem with your submission.', 'kdnaforms' ) . ' ' . esc_html( $button_logic_error ) . '</h2>';
 		} elseif ( kdna_upgrade()->get_submissions_block() ) {
 			$validation_message_markup = "<h2 class='gf_submission_limit_message'>" . esc_html__( 'Your form was not submitted. Please try again in a few minutes.', 'kdnaforms' ) . '</h2>';
 		} else {
-			$validation_message_markup = "<h2 class='kdnaform_submission_error{$hide_summary_class}'><span class='kdnaform-icon kdnaform-icon--circle-error'></span>" . esc_html__( 'There was a problem with your submission.', 'kdnaforms' ) . ' ' . esc_html__( 'Please review the fields below.', 'kdnaforms' ) . '</h2>';
+			$validation_message_markup = "<h2 class='kdnaform_submission_error{$hide_summary_class}'><span class='gform-icon gform-icon--circle-error'></span>" . esc_html__( 'There was a problem with your submission.', 'kdnaforms' ) . ' ' . esc_html__( 'Please review the fields below.', 'kdnaforms' ) . '</h2>';
 			// Generate validation errors summary if required.
 			if ( $show_summary ) {
 				$errors = self::get_validation_errors( $form, $values );
@@ -5494,10 +5494,10 @@ class KDNAFormDisplay {
 			$error_messages_list = '';
 		}
 
-		$wrapper_class = KDNACommon::is_legacy_markup_enabled( $form ) ? 'kdnaform_validation_errors validation_error' : 'kdnaform_validation_errors';
+		$wrapper_class = KDNACommon::is_legacy_markup_enabled( $form ) ? 'gform_validation_errors validation_error' : 'gform_validation_errors';
 
 		$validation_errors_markup = sprintf(
-			'<div class="%s" id="%s" data-js="kdnaform-focus-validation-error" autofocus>%s%s</div>',
+			'<div class="%s" id="%s" data-js="gform-focus-validation-error" autofocus>%s%s</div>',
 			$wrapper_class,
 			$validation_container_id,
 			$validation_message_markup,
@@ -5576,15 +5576,15 @@ class KDNAFormDisplay {
 		}
 
 		$upgraded_classes = array(
-			'gf_left_half'      => 'kdnafield--width-half',
-			'gf_right_half'     => 'kdnafield--width-half',
-			'gf_left_third'     => 'kdnafield--width-third',
-			'gf_middle_third'   => 'kdnafield--width-third',
-			'gf_right_third'    => 'kdnafield--width-third',
-			'gf_first_quarter'  => 'kdnafield--width-quarter',
-			'gf_second_quarter' => 'kdnafield--width-quarter',
-			'gf_third_quarter'  => 'kdnafield--width-quarter',
-			'gf_fourth_quarter' => 'kdnafield--width-quarter',
+			'gf_left_half'      => 'gfield--width-half',
+			'gf_right_half'     => 'gfield--width-half',
+			'gf_left_third'     => 'gfield--width-third',
+			'gf_middle_third'   => 'gfield--width-third',
+			'gf_right_third'    => 'gfield--width-third',
+			'gf_first_quarter'  => 'gfield--width-quarter',
+			'gf_second_quarter' => 'gfield--width-quarter',
+			'gf_third_quarter'  => 'gfield--width-quarter',
+			'gf_fourth_quarter' => 'gfield--width-quarter',
 		);
 
 		$class_list = explode( ' ', $classes );
@@ -5736,7 +5736,7 @@ class KDNAFormDisplay {
 			}
 
 			if ( $span < 12 ) {
-				$spacer = sprintf( '<div data-fieldId="%s" class="spacer kdnafield" style="grid-column: span %d;" data-groupId="%s"></div>', $field->id, $field->layoutSpacerGridColumnSpan, $field->layoutGroupId );
+				$spacer = sprintf( '<div data-fieldId="%s" class="spacer gfield" style="grid-column: span %d;" data-groupId="%s"></div>', $field->id, $field->layoutSpacerGridColumnSpan, $field->layoutGroupId );
 			}
 		}
 
@@ -5888,7 +5888,7 @@ class KDNAFormDisplay {
 	public static function get_last_page_footer( $form, $label_placement, $ajax, $field_values, $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method ) {
 		$last_page_button = rgar($form, 'lastPageButton', array());
 		$previous_button_alt = rgar($last_page_button, 'imageAlt', __('Previous Page', 'kdnaforms'));
-		$previous_button = self::get_form_button( $form['id'], "kdnaform_previous_button_{$form['id']}", $last_page_button, __('Previous', 'kdnaforms'), 'kdnaform_previous_button kdnaform-theme-button kdnaform-theme-button--secondary', $previous_button_alt, self::get_current_page( $form['id'] ) - 1);
+		$previous_button = self::get_form_button( $form['id'], "gform_previous_button_{$form['id']}", $last_page_button, __('Previous', 'kdnaforms'), 'gform_previous_button gform-theme-button gform-theme-button--secondary', $previous_button_alt, self::get_current_page( $form['id'] ) - 1);
 
 		/**
 		 * Filter through the form previous button when paged
@@ -5897,8 +5897,8 @@ class KDNAFormDisplay {
 		 * @param string $previous_button The HTML rendered button (rendered with the form ID and the function get_form_button)
 		 * @param array $form The Form object to filter through
 		 */
-		$previous_button = gf_apply_filters( array( 'kdnaform_previous_button', $form['id'] ), $previous_button, $form );
-		return '</div>' . self::kdnaform_footer( $form, 'kdnaform-page-footer kdnaform_page_footer ' . $label_placement, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method ) . '
+		$previous_button = gf_apply_filters( array( 'gform_previous_button', $form['id'] ), $previous_button, $form );
+		return '</div>' . self::gform_footer( $form, 'gform-page-footer kdnaform_page_footer ' . $label_placement, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method ) . '
              </div>'; //closes kdnaform_page
 	}
 

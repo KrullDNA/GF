@@ -2448,9 +2448,9 @@ class KDNAForms {
 
 		<div id="select_gravity_form" style="display:none;">
 
-			<div id="kdnaform-shortcode-ui-wrap" class="wrap <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
+			<div id="gform-shortcode-ui-wrap" class="wrap <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
 
-				<div id="kdnaform-shortcode-ui-container"></div>
+				<div id="gform-shortcode-ui-container"></div>
 
 			</div>
 
@@ -3977,7 +3977,7 @@ class KDNAForms {
 				$items = $type_obj['states'];
 		}
 
-		$markup = sprintf( '<select id="%1$s" name="%1$s" class="kdnafield_rule_select kdnafield_rule_value_dropdown">%2$s</select>', esc_attr( $id ), $address_field->get_state_dropdown( $items, $value ) );
+		$markup = sprintf( '<select id="%1$s" name="%1$s" class="gfield_rule_select gfield_rule_value_dropdown">%2$s</select>', esc_attr( $id ), $address_field->get_state_dropdown( $items, $value ) );
 
 		echo $markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -4938,54 +4938,54 @@ class KDNAForms {
 
 		?>
 
-		<article class="kdnaform-dropdown" data-js="kdnaform-form-switcher">
+		<article class="gform-dropdown" data-js="gform-form-switcher">
 			<span
-				class="kdnaform-visually-hidden"
-				id="kdnaform-form-switcher-label"
+				class="gform-visually-hidden"
+				id="gform-form-switcher-label"
 			><?php esc_attr_e( 'Select a different form', 'kdnaforms' ); ?></span>
 			<button
 			    type="button"
 				aria-expanded="false"
 				aria-haspopup="listbox"
-				aria-labelledby="kdnaform-form-switcher-label kdnaform-form-switcher-control"
-				class="kdnaform-dropdown__control"
-				data-js="kdnaform-dropdown-control"
-				id="kdnaform-form-switcher-control"
+				aria-labelledby="gform-form-switcher-label gform-form-switcher-control"
+				class="gform-dropdown__control"
+				data-js="gform-dropdown-control"
+				id="gform-form-switcher-control"
 				data-value="<?php esc_attr_e( $form_id ); ?>"
 				title="<?php echo esc_attr( $title ); ?>"
 			>
-				<span class="kdnaform-dropdown__control-text" data-js="kdnaform-dropdown-control-text">
+				<span class="gform-dropdown__control-text" data-js="gform-dropdown-control-text">
 				    <?php echo esc_html( $title ); ?>
 				</span>
-				<i class="kdnaform-spinner kdnaform-dropdown__spinner"></i>
-				<i class="kdnaform-icon kdnaform-icon--chevron kdnaform-dropdown__chevron" aria-hidden="true"></i>
+				<i class="gform-spinner gform-dropdown__spinner"></i>
+				<i class="gform-icon gform-icon--chevron gform-dropdown__chevron" aria-hidden="true"></i>
 			</button>
 			<div
-				aria-labelledby="kdnaform-form-switcher-label"
-				class="kdnaform-dropdown__container"
+				aria-labelledby="gform-form-switcher-label"
+				class="gform-dropdown__container"
 				role="listbox"
-				data-js="kdnaform-dropdown-container"
+				data-js="gform-dropdown-container"
 				tabindex="-1"
 			>
-				<div class="kdnaform-dropdown__search">
-					<label for="kdnaform-form-switcher-search" class="kdnaform-visually-hidden"><?php esc_attr_e( 'Search forms', 'kdnaforms' ); ?></label>
+				<div class="gform-dropdown__search">
+					<label for="gform-form-switcher-search" class="gform-visually-hidden"><?php esc_attr_e( 'Search forms', 'kdnaforms' ); ?></label>
 					<input
-						id="kdnaform-form-switcher-search"
-						type="text" class="kdnaform-input kdnaform-dropdown__search-input"
+						id="gform-form-switcher-search"
+						type="text" class="gform-input gform-dropdown__search-input"
 						placeholder="<?php esc_attr_e( 'Search for form', 'kdnaforms' ); ?>"
-						data-js="kdnaform-dropdown-search"
+						data-js="gform-dropdown-search"
 					/>
-					<i class="kdnaform-icon kdnaform-icon--search kdnaform-dropdown__search-icon"></i>
+					<i class="gform-icon gform-icon--search gform-dropdown__search-icon"></i>
 				</div>
-				<div class="kdnaform-dropdown__list-container" data-simplebar<?php echo is_rtl() ? ' data-simplebar-direction="rtl"' : ''; ?>>
-					<ul class="kdnaform-dropdown__list" data-js="kdnaform-dropdown-list">
+				<div class="gform-dropdown__list-container" data-simplebar<?php echo is_rtl() ? ' data-simplebar-direction="rtl"' : ''; ?>>
+					<ul class="gform-dropdown__list" data-js="gform-dropdown-list">
 					<?php
 						foreach ( $forms as $form_info ) {
 							printf(
 								'
-									<li class="kdnaform-dropdown__item">
-										<button type="button" class="kdnaform-dropdown__trigger" data-js="kdnaform-dropdown-trigger" data-value="%1$d" %2$s %3$s title="%4$s">
-											<span class="kdnaform-dropdown__trigger-text" data-value="%1$d">%4$s</span>
+									<li class="gform-dropdown__item">
+										<button type="button" class="gform-dropdown__trigger" data-js="gform-dropdown-trigger" data-value="%1$d" %2$s %3$s title="%4$s">
+											<span class="gform-dropdown__trigger-text" data-value="%1$d">%4$s</span>
 										</button>
 									</li>
 									',
@@ -5005,7 +5005,7 @@ class KDNAForms {
 		<script type="text/javascript">
 
 			function ToggleFormSettings() {
-				FieldClick(jQuery('#kdnaform_heading')[0]);
+				FieldClick(jQuery('#gform_heading')[0]);
 			}
 
 			jQuery(document).ready(function () {
@@ -5140,7 +5140,7 @@ class KDNAForms {
 				KDNAForms::top_toolbar();
 			}
 
-			$wrapper_classes = ! empty( $tabs ) ? 'kdnaform-settings__wrapper' : 'kdnaform-settings__wrapper kdnaform-settings__wrapper--full';
+			$wrapper_classes = ! empty( $tabs ) ? 'gform-settings__wrapper' : 'gform-settings__wrapper gform-settings__wrapper--full';
 		?>
 
 			<?php echo KDNACommon::get_remote_message(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -5153,7 +5153,7 @@ class KDNAForms {
 				KDNACommon::display_admin_message();
 			?>
 				<?php if ( ! empty( $tabs ) ) { ?>
-				<nav class="kdnaform-settings__navigation">
+				<nav class="gform-settings__navigation">
 					<?php
 						$current_tab = rgempty( 'subview', $_GET ) ? '' : rgget( 'subview' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 						$active_class = null;
@@ -5172,7 +5172,7 @@ class KDNAForms {
 							$url = add_query_arg( $query );
 
 							// Get tab icon.
-							$icon_markup = KDNACommon::get_icon_markup( $tab, 'kdnaform-icon--cog' );
+							$icon_markup = KDNACommon::get_icon_markup( $tab, 'gform-icon--cog' );
 
 							if ( $current_tab === $tab['name'] || ( empty( $current_tab ) && is_null( $active_class ) ) ) {
 								$active_class = 'class="active"';
@@ -5192,7 +5192,7 @@ class KDNAForms {
 				</nav>
 				<?php } ?>
 
-				<div class="kdnaform-settings__content" <?php echo isset( $current_tab ) ? 'id="tab_' . esc_attr( $current_tab ) . '"' : ''; ?>>
+				<div class="gform-settings__content" <?php echo isset( $current_tab ) ? 'id="tab_' . esc_attr( $current_tab ) . '"' : ''; ?>>
 		<?php
 	}
 
@@ -5220,14 +5220,14 @@ class KDNAForms {
 	 */
 	public static function add_admin_body_class( $body_classes ) {
 		$classes = explode( ' ', $body_classes );
-		$classes = array_merge( $classes, array( 'kdnaform-admin' ) );
+		$classes = array_merge( $classes, array( 'gform-admin' ) );
 
 		if ( KDNACommon::is_form_editor() && wp_style_is( 'jetpack-admin-menu' ) && ! is_rtl() ) {
-			$classes[] = 'kdnaform-jetpack-admin-menu';
+			$classes[] = 'gform-jetpack-admin-menu';
 		}
 
 		if ( self::is_kdna_page() ) {
-			$classes[] = 'kdnaform-admin-screen';
+			$classes[] = 'gform-admin-screen';
 		}
 
 		return implode( ' ', $classes );
@@ -5258,15 +5258,15 @@ class KDNAForms {
 		}
 
 		?>
-		<div id="kdnaform-form-toolbar" class="kdnaform-form-toolbar">
+		<div id="gform-form-toolbar" class="gform-form-toolbar">
 
-			<div class="kdnaform-form-toolbar__container">
+			<div class="gform-form-toolbar__container">
 
-				<div class="kdnaform-form-toolbar__form-title">
+				<div class="gform-form-toolbar__form-title">
 					<?php self::form_switcher( $form['title'], $id ); ?>
 				</div>
 
-				<ul id="kdnaform-form-toolbar__menu" class="kdnaform-form-toolbar__menu">
+				<ul id="gform-form-toolbar__menu" class="gform-form-toolbar__menu">
 					<?php
 					$menu_items = apply_filters( 'kdnaform_toolbar_menu', self::get_toolbar_menu_items( $id ), $id );
 					foreach ( $menu_items as $key => $item ) {
@@ -5280,12 +5280,12 @@ class KDNAForms {
 						echo self::format_toolbar_menu_items( $fixed_menu_items ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					if ( ! empty( $dynamic_menu_items ) ) {
-						echo '<span class="kdnaform-form-toolbar__divider"></span>';
+						echo '<span class="gform-form-toolbar__divider"></span>';
 						echo KDNAForms::format_toolbar_menu_items( $dynamic_menu_items ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					?>
 				</ul>
-				<div id="gf_toolbar_buttons_container" class="kdnaform-form-toolbar__buttons gf_toolbar_buttons_container">
+				<div id="gf_toolbar_buttons_container" class="gform-form-toolbar__buttons gf_toolbar_buttons_container">
 					<?php
 					$preview_args = array(
 						'form_id' => $id,
@@ -5391,7 +5391,7 @@ class KDNAForms {
 						}
 						$divider = $key == $last_key ? '' : ' | ';
 						if ( $count_sub_menu_items > 0 ) {
-							$menu_class .= ' kdna_form_action_has_submenu';
+							$menu_class .= ' gf_form_action_has_submenu';
 						}
 						$output .= '<span class="' . $menu_class . '">' . $link . $divider . '</span>';
 					} else {
@@ -5516,13 +5516,13 @@ class KDNAForms {
 				$label      = esc_html( rgar( $menu_item, 'label' ) );
 				$target     = esc_attr( rgar( $menu_item, 'target' ) );
 				$icon       = rgar( $menu_item, 'icon' );
-				$sub_menu_items_string .= "<li class='{$menu_class}'><a href='{$url}' class='{$link_class}' target='{$target}'><span class='kdnaform-form-toolbar__icon'>{$icon}</span> {$label}</a></li>";
+				$sub_menu_items_string .= "<li class='{$menu_class}'><a href='{$url}' class='{$link_class}' target='{$target}'><span class='gform-form-toolbar__icon'>{$icon}</span> {$label}</a></li>";
 			}
 		}
 
 		$simplebar_rtl_attr = is_rtl() ? ' data-simplebar-direction="rtl"' : '';
 		$sub_menu_items_string = sprintf(
-			'<div class="kdnaform-form-toolbar__submenu"><div data-simplebar%s><ul>' . $sub_menu_items_string . '</ul></div></div>',
+			'<div class="gform-form-toolbar__submenu"><div data-simplebar%s><ul>' . $sub_menu_items_string . '</ul></div></div>',
 			$simplebar_rtl_attr
 		);
 
@@ -5676,7 +5676,7 @@ class KDNAForms {
 		}
 
 		$args = array(
-			'id'    => 'kdnaform-forms',
+			'id'    => 'gform-forms',
 			'title' => '<span class="ab-icon dashicons dashicons-feedback"></span><span class="ab-label">' . esc_html__( 'Forms', 'kdnaforms' ) . '</span>',
 			'href'  => admin_url( 'admin.php?page=kdna_edit_forms' ),
 		);
@@ -5690,8 +5690,8 @@ class KDNAForms {
 
 			$wp_admin_bar->add_node(
 				array(
-					'id'     => 'kdnaform-form-recent-forms',
-					'parent' => 'kdnaform-forms',
+					'id'     => 'gform-form-recent-forms',
+					'parent' => 'gform-forms',
 					'title'  => esc_html__( 'Recent', 'kdnaforms' ),
 					'group'  => true,
 				)
@@ -5703,8 +5703,8 @@ class KDNAForms {
 					if ( $form['id'] == $recent_form_id ) {
 						$wp_admin_bar->add_node(
 							array(
-								'id'     => 'kdnaform-form-' . $recent_form_id,
-								'parent' => 'kdnaform-form-recent-forms',
+								'id'     => 'gform-form-' . $recent_form_id,
+								'parent' => 'gform-form-recent-forms',
 								'title'  => esc_html( $form['title'] ),
 								'href'   => KDNACommon::current_user_can_any( 'kdnaforms_edit_forms' ) ? admin_url( 'admin.php?page=kdna_edit_forms&id=' . $recent_form_id ) : '',
 							)
@@ -5713,8 +5713,8 @@ class KDNAForms {
 						if ( KDNACommon::current_user_can_any( 'kdnaforms_edit_forms' ) ) {
 							$wp_admin_bar->add_node(
 								array(
-									'id'     => 'kdnaform-form-' . $recent_form_id . '-edit',
-									'parent' => 'kdnaform-form-' . $recent_form_id,
+									'id'     => 'gform-form-' . $recent_form_id . '-edit',
+									'parent' => 'gform-form-' . $recent_form_id,
 									'title'  => esc_html__( 'Edit', 'kdnaforms' ),
 									'href'   => admin_url( 'admin.php?page=kdna_edit_forms&id=' . $recent_form_id ),
 								)
@@ -5724,8 +5724,8 @@ class KDNAForms {
 						if ( KDNACommon::current_user_can_any( 'kdnaforms_view_entries' ) ) {
 							$wp_admin_bar->add_node(
 								array(
-									'id'     => 'kdnaform-form-' . $recent_form_id . '-entries',
-									'parent' => 'kdnaform-form-' . $recent_form_id,
+									'id'     => 'gform-form-' . $recent_form_id . '-entries',
+									'parent' => 'gform-form-' . $recent_form_id,
 									'title'  => esc_html__( 'Entries', 'kdnaforms' ),
 									'href'   => admin_url( 'admin.php?page=kdna_entries&id=' . $recent_form_id ),
 								)
@@ -5735,8 +5735,8 @@ class KDNAForms {
 						if ( KDNACommon::current_user_can_any( 'kdnaforms_edit_forms' ) ) {
 							$wp_admin_bar->add_node(
 								array(
-									'id'     => 'kdnaform-form-' . $recent_form_id . '-settings',
-									'parent' => 'kdnaform-form-' . $recent_form_id,
+									'id'     => 'gform-form-' . $recent_form_id . '-settings',
+									'parent' => 'gform-form-' . $recent_form_id,
 									'title'  => esc_html__( 'Settings', 'kdnaforms' ),
 									'href'   => admin_url( 'admin.php?page=kdna_edit_forms&view=settings&subview=settings&id=' . $recent_form_id ),
 								)
@@ -5751,8 +5751,8 @@ class KDNAForms {
 						) {
 							$wp_admin_bar->add_node(
 								array(
-									'id'     => 'kdnaform-form-' . $recent_form_id . '-preview',
-									'parent' => 'kdnaform-form-' . $recent_form_id,
+									'id'     => 'gform-form-' . $recent_form_id . '-preview',
+									'parent' => 'gform-form-' . $recent_form_id,
 									'title'  => esc_html__( 'Preview', 'kdnaforms' ),
 									'href'   => trailingslashit( site_url() ) . '?gf_page=preview&id=' . $recent_form_id,
 								)
@@ -5766,8 +5766,8 @@ class KDNAForms {
 		if ( KDNACommon::current_user_can_any( 'kdnaforms_edit_forms' ) ) {
 			$wp_admin_bar->add_node(
 				array(
-					'id'     => 'kdnaform-forms-view-all',
-					'parent' => 'kdnaform-forms',
+					'id'     => 'gform-forms-view-all',
+					'parent' => 'gform-forms',
 					'title'  => esc_attr__( 'All Forms', 'kdnaforms' ),
 					'href'   => admin_url( 'admin.php?page=kdna_edit_forms' ),
 				)
@@ -5777,8 +5777,8 @@ class KDNAForms {
 		if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) {
 			$wp_admin_bar->add_node(
 				array(
-					'id'     => 'kdnaform-forms-new-form',
-					'parent' => 'kdnaform-forms',
+					'id'     => 'gform-forms-new-form',
+					'parent' => 'gform-forms',
 					'title'  => esc_attr__( 'New Form', 'kdnaforms' ),
 					'href'   => admin_url( 'admin.php?page=kdna_new_form' ),
 				)
@@ -6040,7 +6040,7 @@ class KDNAForms {
 		// Disable the elements on the form
 		?>
 		<script type="text/javascript">
-			jQuery('.kdnaform_wrapper input, .kdnaform_wrapper select, .kdnaform_wrapper textarea').prop('disabled', true);
+			jQuery('.gform_wrapper input, .gform_wrapper select, .gform_wrapper textarea').prop('disabled', true);
 			jQuery('a img').each(function () {
 				var image = this.src;
 				var img = jQuery('<img>', {src: image});
@@ -6615,7 +6615,7 @@ class KDNAForms {
 			}
 
 			@media screen and ( max-width: 782px ) {
-				#wpadminbar #wp-admin-bar-kdnaform-forms .ab-item {
+				#wpadminbar #wp-admin-bar-gform-forms .ab-item {
 					line-height: 53px;
 					height: 46px !important;
 					width: 52px !important;
@@ -6624,7 +6624,7 @@ class KDNAForms {
 					background-position: 7px 6px;
 				}
 
-				#wpadminbar li#wp-admin-bar-kdnaform-forms {
+				#wpadminbar li#wp-admin-bar-gform-forms {
 					display: block;
 				}
 
@@ -6681,7 +6681,7 @@ class KDNAForms {
 		$image_sizes = self::get_image_sizes();
 
 		foreach ( $image_sizes as $size => $attributes ) {
-			add_image_size( 'kdnaform-' . $size, $attributes['width'], $attributes['height'], $attributes['crop'] );
+			add_image_size( 'gform-' . $size, $attributes['width'], $attributes['height'], $attributes['crop'] );
 		}
 	}
 
@@ -6700,7 +6700,7 @@ class KDNAForms {
 		$gf_sizes = self::get_image_sizes();
 
 		foreach( $gf_sizes as $size => $attributes ) {
-			unset( $sizes[ 'kdnaform-' . $size ] );
+			unset( $sizes[ 'gform-' . $size ] );
 		}
 
 		return $sizes;

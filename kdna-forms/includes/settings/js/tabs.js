@@ -1,5 +1,5 @@
 window.addEventListener( 'load', function() {
-	document.querySelectorAll( '.kdnaform-settings-tabs__navigation a' ).forEach( function( tab ) {
+	document.querySelectorAll( '.gform-settings-tabs__navigation a' ).forEach( function( tab ) {
 		tab.addEventListener( 'click', function ( e ) {
 
 			e.preventDefault();
@@ -8,7 +8,7 @@ window.addEventListener( 'load', function() {
 			var selectedTab = e.target.dataset.tab;
 
 			// Hide active tab.
-			document.querySelectorAll( '.kdnaform-settings-tabs__navigation .active, .kdnaform-settings-tabs__container.active' ).forEach( function( item ) {
+			document.querySelectorAll( '.gform-settings-tabs__navigation .active, .gform-settings-tabs__container.active' ).forEach( function( item ) {
 				item.classList.remove( 'active' );
 			} );
 
@@ -17,7 +17,7 @@ window.addEventListener( 'load', function() {
 
 			// Show selected tab.
 			e.target.classList.add( 'active' );
-			document.querySelector( '.kdnaform-settings-tabs__container[data-tab="' + selectedTab + '"]' ).classList.add( 'active' );
+			document.querySelector( '.gform-settings-tabs__container[data-tab="' + selectedTab + '"]' ).classList.add( 'active' );
 
 		} );
 	} );

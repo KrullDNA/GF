@@ -379,8 +379,8 @@ function isValidFlyoutClick( e ) {
 		'jsConditonalToggle' in e.target.dataset ||
 		'jsAddRule' in e.target.dataset ||
 		'jsDeleteRule' in e.target.dataset ||
-		e.target.classList.contains( 'kdnaform-field__toggle-input' ) ||
-		e.target.closest( '.kdnaform-dialog__mask' ) !== null
+		e.target.classList.contains( 'gform-field__toggle-input' ) ||
+		e.target.closest( '.gform-dialog__mask' ) !== null
 	);
 	return gform.applyFilters( 'kdnaform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
 }
@@ -436,7 +436,7 @@ GFConditionalLogic.prototype.renderSidebar = function() {
 	var config = {
 		title: this.getAccordionTitle(),
 		toggleText: kdna_vars.configure + ' ' + kdna_vars.conditional_logic_text,
-		active_class: this.isEnabled() ? 'kdnaform-status--active' : '',
+		active_class: this.isEnabled() ? 'gform-status--active' : '',
 		active_text: this.isEnabled() ? 'Active' : 'Inactive',
 		desc_class: GetFirstRuleField() <= 0 ? 'active' : '',
 		toggle_class: GetFirstRuleField() <= 0 ? '' : 'active',

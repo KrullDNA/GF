@@ -67,14 +67,14 @@ class Toggle extends Base {
 		);
 
 		// Insert toggle UI.
-		$html .= sprintf( '<label class="kdnaform-field__toggle-container" for="%s">', $input_id );
+		$html .= sprintf( '<label class="gform-field__toggle-container" for="%s">', $input_id );
 
 		$screen_reader_text = $this->toggle_label ?: $this->label;
 		if ( $screen_reader_text ) {
 			$html .= sprintf( '<span class="screen-reader-text">%s</span>', esc_html( $screen_reader_text ) );
 		}
 
-		$html .= '<span class="kdnaform-field__toggle-switch"></span>';
+		$html .= '<span class="gform-field__toggle-switch"></span>';
 		$html .= '</label>';
 
 		// Insert after input markup.

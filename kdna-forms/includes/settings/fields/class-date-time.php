@@ -116,7 +116,7 @@ class Date_Time extends Base {
 
 		// Display Date input, Time drop downs.
 		$html .= sprintf(
-			'%s %s<span class="kdnaform-settings-input__separator">:</span>%s %s',
+			'%s %s<span class="gform-settings-input__separator">:</span>%s %s',
 			$this->inputs['date']->markup(),
 			$this->inputs['hour']->markup(),
 			$this->inputs['minute']->markup(),

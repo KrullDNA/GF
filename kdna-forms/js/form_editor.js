@@ -274,14 +274,14 @@ function InitializeFieldSettings(){
 		});
 
 	jQuery( '.custom_inputs_setting, .custom_inputs_sub_setting, .sub_labels_setting' )
-		.on( 'change', '.kdnaform-field__toggle-input', function() {
-			var inputId = jQuery( this ).closest( '.kdnaform-field__toggle' ).data( 'input_id' );
+		.on( 'change', '.gform-field__toggle-input', function() {
+			var inputId = jQuery( this ).closest( '.gform-field__toggle' ).data( 'input_id' );
 			ToggleInputHidden( jQuery( this ), inputId );
 		} )
-		.on( 'click', '#field_password_fields_container .kdnaform-field__toggle', function() {
+		.on( 'click', '#field_password_fields_container .gform-field__toggle', function() {
 			// special handling for the password field checkboxes
 			var inputId = jQuery( this ).data( 'input_id' );
-			var toggleInput = jQuery( this ).find( '.kdnaform-field__toggle-input' );
+			var toggleInput = jQuery( this ).find( '.gform-field__toggle-input' );
 			toggleInput[ 0 ].focus();
 			toggleInput[ 0 ].checked = ! toggleInput[ 0 ].checked;
 			ToggleInputHidden( toggleInput, inputId );
@@ -384,7 +384,7 @@ function InitializeFieldSettings(){
 	jQuery( 'input[ name="field_visibility" ]' ).on( 'DOMSubTreeModified change', function() {
 		var field = GetSelectedField();
 		SetFieldProperty( 'visibility', this.value );
-		var hidden_markup = '<div class="admin-hidden-markup"><i class="kdnaform-icon kdnaform-icon--hidden" aria-hidden="true" title="This field is hidden when viewing the form"></i><span>This field is hidden when viewing the form</span></div>';
+		var hidden_markup = '<div class="admin-hidden-markup"><i class="gform-icon gform-icon--hidden" aria-hidden="true" title="This field is hidden when viewing the form"></i><span>This field is hidden when viewing the form</span></div>';
 		if ( field[ 'visibility' ] === 'hidden' ) {
 			jQuery( '#field_' + field.id + ' .gfield_label' ).before( hidden_markup );
 			jQuery( '#field_' + field.id + ' .gsection_title' ).before( hidden_markup );
@@ -1207,7 +1207,7 @@ function LoadFieldSettings() {
 		var passwordFields = GetCustomizeInputsUI(field);
 		jQuery('#field_password_fields_container').html(passwordFields);
 		// remove the toggle from the "Enter Password" field
-		jQuery('#field_password_fields_container .field_custom_input_row').first().find('.kdnaform-field__toggle').remove();
+		jQuery('#field_password_fields_container .field_custom_input_row').first().find('.gform-field__toggle').remove();
 
 		// Show/Hide Size setting.
 		var confirmEnabled = field.inputs[1].isHidden == 'undefined' ? true : !field.inputs[1].isHidden;
@@ -1216,7 +1216,7 @@ function LoadFieldSettings() {
 		}
 
 		// Hide Password sub-label.
-		jQuery('.password_setting .custom_inputs_setting ').on('click keypress', '.kdnaform-field__toggle', function () {
+		jQuery('.password_setting .custom_inputs_setting ').on('click keypress', '.gform-field__toggle', function () {
 			var field = GetSelectedField(),
 				confirmEnabled = !field.inputs[1].isHidden,
 				passwordSubLabel = jQuery('label[for="input_' + field.id + '"]');
@@ -1380,10 +1380,10 @@ function SetUpAdvancedNameField(){
 
 	ToggleNamePrefixUI(!prefixInput.isHidden);
 
-	jQuery( '.name_setting .custom_inputs_setting' ).on( 'click', '.kdnaform-field__toggle', function() {
+	jQuery( '.name_setting .custom_inputs_setting' ).on( 'click', '.gform-field__toggle', function() {
 		var inputId = jQuery( this ).data( 'input_id' );
 		if ( inputId.toString().indexOf( ".2" ) >= 0 ) {
-			var isActive = jQuery( this ).find( '.kdnaform-field__toggle-input' ).is( ':checked' );
+			var isActive = jQuery( this ).find( '.gform-field__toggle-input' ).is( ':checked' );
 			ToggleNamePrefixUI( isActive );
 		}
 	} );
@@ -1856,8 +1856,8 @@ function ToggleCustomField( isInit ){
     jQuery("#field_custom_existing").prop("checked", true);
   }
 
-  show_element = isExisting ? "#kdnaform-post-custom-select-container" : "#field_custom_field_name_text"
-	hide_element = isExisting ? "#field_custom_field_name_text"  : "#kdnaform-post-custom-select-container";
+  show_element = isExisting ? "#gform-post-custom-select-container" : "#field_custom_field_name_text"
+	hide_element = isExisting ? "#field_custom_field_name_text"  : "#gform-post-custom-select-container";
 
 	jQuery(hide_element).hide();
 	jQuery(show_element).show();
@@ -2040,7 +2040,7 @@ function UpdateFormObject(){
 		jQuery('#field_submit').attr( 'data-field-position', 'bottom' );
 		jQuery('input[name="submit_location"][value="bottom"]').prop( 'checked', true );
 	} else {
-		jQuery( '.submit_location_setting' ).prev( '.kdnaform-alert--notice' ).remove();
+		jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
 	}
 
 	if(HasPostField()){
@@ -2912,7 +2912,7 @@ function ShowSettings( element ) {
 		fieldObject = GetSubmitField();
 		var label = kdna_vars.button;
 		var description = kdna_vars.buttonDescription;
-		var icon_classes = 'kdnaform-icon kdnaform-icon--smart-button';
+		var icon_classes = 'gform-icon gform-icon--smart-button';
 	} else {
 		// Hide form pagination and last pagination setting fields
 		jQuery( '.pagination_setting' ).hide();
@@ -4698,9 +4698,9 @@ function SetSubmitLocation( location ) {
 
 function SetSubmitWidth( width ) {
 	if( 'full' === width ) {
-		jQuery( '#field_submit .kdnaform-button' ).addClass( 'kdnaform-button--width-full' );
+		jQuery( '#field_submit .gform-button' ).addClass( 'gform-button--width-full' );
 	} else {
-		jQuery( '#field_submit .kdnaform-button' ).removeClass( 'kdnaform-button--width-full' );
+		jQuery( '#field_submit .gform-button' ).removeClass( 'gform-button--width-full' );
 	}
 }
 
@@ -5049,8 +5049,8 @@ function IsValidFormula(formula) {
 function ResetFieldNotice( fieldSetting ) {
 	if ( typeof fieldSetting !== 'undefined' ) {
 		jQuery( '.' + fieldSetting )
-			.nextAll( '.kdnaform-alert--notice' ).remove()
-			.prevAll( '.kdnaform-alert--notice' ).remove();
+			.nextAll( '.gform-alert--notice' ).remove()
+			.prevAll( '.gform-alert--notice' ).remove();
 	}
 }
 
@@ -5060,8 +5060,8 @@ function ResetFieldNotice( fieldSetting ) {
  * @since 2.6
  */
 function resetAllFieldNotices() {
-	if ( jQuery('.editor-sidebar').find('.kdnaform-alert--notice').length ) {
-		jQuery('.editor-sidebar').find('.kdnaform-alert--notice:not(.kdnaform-visible-notice)').remove();
+	if ( jQuery('.editor-sidebar').find('.gform-alert--notice').length ) {
+		jQuery('.editor-sidebar').find('.gform-alert--notice:not(.gform-visible-notice)').remove();
 	}
 }
 
@@ -5072,7 +5072,7 @@ function resetAllFieldNotices() {
  */
 function ResetFieldAccessibilityWarning( fieldSetting ) {
 	if ( typeof fieldSetting !== 'undefined' ) {
-		jQuery( '.kdnaform-alert--accessibility[data-field-setting="' + fieldSetting + '"]' ).remove()
+		jQuery( '.gform-alert--accessibility[data-field-setting="' + fieldSetting + '"]' ).remove()
 	}
 }
 
@@ -5082,8 +5082,8 @@ function ResetFieldAccessibilityWarning( fieldSetting ) {
  * @since 2.5.8
  */
 function resetAllFieldAccessibilityWarnings() {
-	if ( jQuery('.editor-sidebar').find('.kdnaform-alert--accessibility').length ) {
-		jQuery('.editor-sidebar').find('.kdnaform-alert--accessibility').remove();
+	if ( jQuery('.editor-sidebar').find('.gform-alert--accessibility').length ) {
+		jQuery('.editor-sidebar').find('.gform-alert--accessibility').remove();
 	}
 }
 
@@ -5095,11 +5095,11 @@ function resetAllFieldAccessibilityWarnings() {
 function setSidebarFieldMessage() {
 
 	let types = [
-		{ type: 'warning', iconClasses: ['kdnaform-icon--exclamation-simple', 'kdnaform-icon-preset--status-error'] },
-		{ type: 'error', iconClasses: ['kdnaform-icon--exclamation-simple', 'kdnaform-icon-preset--status-error'] },
-		{ type: 'info', iconClasses: ['kdnaform-icon--information-simple', 'kdnaform-icon-preset--status-info'] },
-		{ type: 'notice', iconClasses: ['kdnaform-icon--information-simple', 'kdnaform-icon-preset--status-info'] },
-		{ type: 'success', iconClasses: ['kdnaform-icon--checkmark-simple', 'kdnaform-icon-preset--status-correct'] },
+		{ type: 'warning', iconClasses: ['gform-icon--exclamation-simple', 'gform-icon-preset--status-error'] },
+		{ type: 'error', iconClasses: ['gform-icon--exclamation-simple', 'gform-icon-preset--status-error'] },
+		{ type: 'info', iconClasses: ['gform-icon--information-simple', 'gform-icon-preset--status-info'] },
+		{ type: 'notice', iconClasses: ['gform-icon--information-simple', 'gform-icon-preset--status-info'] },
+		{ type: 'success', iconClasses: ['gform-icon--checkmark-simple', 'gform-icon-preset--status-correct'] },
 	];
 
 	/**
@@ -5117,17 +5117,17 @@ function setSidebarFieldMessage() {
 			$container = jQuery( '.field_selected .field-sidebar-message-content--type-' + type );
 			messageMarkup = $container && $container.length ? kdnaform_strip_scripts( $container.html() ) : '';
 			if ( messageMarkup ) {
-				jQuery( '#sidebar_field_message_container' ).html( '<div class="kdnaform-alert kdnaform-alert--theme-cosmos"><span class="kdnaform-icon kdnaform-icon--preset-active kdnaform-alert__icon" aria-hidden="true"></span><div class="kdnaform-alert__message-wrap"><div class="kdnaform-alert__message"></div></div></div>' );
-				jQuery( '#sidebar_field_message_container .kdnaform-alert__message' ).html( messageMarkup );
-				jQuery( '#sidebar_field_message_container .kdnaform-alert' ).addClass( 'kdnaform-alert--' + ( type === 'warning' ? 'error' : type ) );
+				jQuery( '#sidebar_field_message_container' ).html( '<div class="gform-alert gform-alert--theme-cosmos"><span class="gform-icon gform-icon--preset-active gform-alert__icon" aria-hidden="true"></span><div class="gform-alert__message-wrap"><div class="gform-alert__message"></div></div></div>' );
+				jQuery( '#sidebar_field_message_container .gform-alert__message' ).html( messageMarkup );
+				jQuery( '#sidebar_field_message_container .gform-alert' ).addClass( 'gform-alert--' + ( type === 'warning' ? 'error' : type ) );
 				iconClasses.forEach(
 					( className ) => {
-						jQuery( '#sidebar_field_message_container .kdnaform-alert__icon' ).addClass( className );
+						jQuery( '#sidebar_field_message_container .gform-alert__icon' ).addClass( className );
 					}
 				);
 				// Add class to force this notice visible, as all field notices are reset when a field is selected.
 				if ( type === 'notice' ) {
-					jQuery( '#sidebar_field_message_container .kdnaform-alert' ).addClass( 'kdnaform-visible-notice' );
+					jQuery( '#sidebar_field_message_container .gform-alert' ).addClass( 'gform-visible-notice' );
 				}
 				showSidebarMessage = true;
 				wp.a11y.speak( messageMarkup );
@@ -5139,7 +5139,7 @@ function setSidebarFieldMessage() {
 
 	if ( showSidebarMessage ) {
 		jQuery( '#sidebar_field_message_container' ).show();
-		jQuery( '#sidebar_field_message_container .kdnaform-alert' ).show();
+		jQuery( '#sidebar_field_message_container .gform-alert' ).show();
 	}
 }
 
@@ -5194,15 +5194,15 @@ function setFieldError( fieldSetting, position, message ) {
 		message = getFieldErrorMessage( fieldSetting );
 	}
 
-	var errorDiv = '<div class="kdnaform-alert kdnaform-alert--error kdnaform-alert--inline" data-field-setting="' + fieldSetting + '">';
-		errorDiv += '<span class="kdnaform-alert__icon kdnaform-icon kdnaform-icon--circle-error-fine" aria-hidden="true"></span>';
-		errorDiv += '<div class="kdnaform-alert__message-wrap">' + message + '</div>';
+	var errorDiv = '<div class="gform-alert gform-alert--error gform-alert--inline" data-field-setting="' + fieldSetting + '">';
+		errorDiv += '<span class="gform-alert__icon gform-icon gform-icon--circle-error-fine" aria-hidden="true"></span>';
+		errorDiv += '<div class="gform-alert__message-wrap">' + message + '</div>';
 		errorDiv += '</div>';
 
 	// Display the error message.
 	var fieldSettingContainer = jQuery( '.' + fieldSetting );
 	fieldSettingContainer.addClass( 'error' );
-	jQuery( '.kdnaform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove();
+	jQuery( '.gform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove();
 	if ( position === 'above' ) {
 		fieldSettingContainer.before( errorDiv );
 	} else {
@@ -5223,7 +5223,7 @@ function resetFieldError( fieldSetting ) {
 
 	if ( typeof fieldSetting !== 'undefined' ) {
 
-		jQuery( '.kdnaform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove()
+		jQuery( '.gform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove()
 		jQuery( '.' + fieldSetting ).removeClass( 'error' );
 
 		var index = errorProperties.indexOf( fieldSetting );
@@ -5250,7 +5250,7 @@ function resetAllFieldErrors() {
 		return;
 	}
 
-	jQuery('.editor-sidebar .kdnaform-alert--error').remove();
+	jQuery('.editor-sidebar .gform-alert--error').remove();
 	jQuery('.field_setting').filter('.error').removeClass( 'error' );
 
 	if ( form.fields.length > 0 ) {

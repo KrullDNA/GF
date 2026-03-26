@@ -121,7 +121,7 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 			</tbody>
 
 		</table>
-        <button type="button" class="kdnaform-button kdnaform-button--white" id="rest-api-add-key" data-js="rest-api-add-key" style="margin-top: 10px"><?php echo esc_html__( 'Add Key', 'kdnaforms' ) ?></button>
+        <button type="button" class="gform-button gform-button--white" id="rest-api-add-key" data-js="rest-api-add-key" style="margin-top: 10px"><?php echo esc_html__( 'Add Key', 'kdnaforms' ) ?></button>
 		<?php
 
 	}
