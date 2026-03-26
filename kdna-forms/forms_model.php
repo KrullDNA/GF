@@ -7765,8 +7765,8 @@ class KDNAFormsModel {
 			KDNAFormsModel::get_lead_meta_table_name(),
 			KDNAFormsModel::get_incomplete_submissions_table_name(),
 			self::get_addon_feed_table_name(),
-			"{$wpdb->prefix}kdna_addon_payment_transaction",
-			"{$wpdb->prefix}kdna_addon_payment_callback",
+			"{$wpdb->prefix}gf_addon_payment_transaction",
+			"{$wpdb->prefix}gf_addon_payment_callback",
 
 			KDNAFormsModel::get_entry_table_name(),
 			KDNAFormsModel::get_entry_notes_table_name(),
@@ -8597,7 +8597,7 @@ class KDNAFormsModel {
 	}
 
 	/**
-	 * Returns an array of column names used by the kdna_addon_feed table.
+	 * Returns an array of column names used by the gf_addon_feed table.
 	 *
 	 * @since 2.4.24
 	 *

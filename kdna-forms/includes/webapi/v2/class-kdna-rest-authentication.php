@@ -717,7 +717,7 @@ class KDNA_REST_Authentication {
 			$wpdb->prepare(
 				"
 			SELECT key_id, user_id, permissions, consumer_key, consumer_secret, nonces
-			FROM {$wpdb->prefix}kdna_rest_api_keys
+			FROM {$wpdb->prefix}gf_rest_api_keys
 			WHERE consumer_key = %s
 		", $consumer_key
 			)
