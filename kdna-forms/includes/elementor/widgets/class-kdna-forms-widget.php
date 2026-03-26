@@ -1431,25 +1431,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		echo '</div>';
 	}
 
-	protected function content_template() {
-		?>
-		<#
-		if ( ! settings.form_id ) {
-		#>
-			<div class="kdna-elementor-form-placeholder" style="padding:40px;text-align:center;background:#f5f5f5;border:2px dashed #ccc;border-radius:8px;">
-				<p style="font-size:16px;color:#666;"><?php echo esc_html__( 'Please select a KDNA Form from the widget settings.', 'kdnaforms' ); ?></p>
-			</div>
-		<#
-		} else {
-		#>
-			<div class="kdna-elementor-form-wrapper {{ settings.custom_class }}">
-				<div class="kdna-elementor-form-loading" style="padding:30px;text-align:center;">
-					<p><?php echo esc_html__( 'Loading KDNA Form...', 'kdnaforms' ); ?></p>
-				</div>
-			</div>
-		<#
-		}
-		#>
-		<?php
-	}
+	// No content_template() - forces Elementor to always use server-side render()
+	// which properly executes the shortcode and renders the actual form.
+	protected function content_template() {}
 }
