@@ -427,9 +427,12 @@ class KDNAForms {
 			add_action( 'admin_head', array( 'KDNAForms', 'preload_webfonts' ), 0, 0 );
 		}
 
-		// Ensure gf_db_version is set so legacy table fallback is never triggered.
-		if ( ! get_option( 'gf_db_version' ) ) {
+		// Force gf_db_version to modern value to prevent legacy rg_lead/rg_form table fallback.
+		$current_db_ver = get_option( 'gf_db_version' );
+		if ( empty( $current_db_ver ) || version_compare( $current_db_ver, '2.3-dev-1', '<' ) ) {
 			update_option( 'gf_db_version', '2.9.30', false );
+			// Clear the static cache in KDNAFormsModel
+			KDNAFormsModel::flush_current_forms();
 		}
 
 		self::register_scripts();
@@ -3379,40 +3382,35 @@ class KDNAForms {
 			error_log( "[KDNA Debug] Script '{$handle}': registered=" . ( $registered ? 'yes' : 'NO' ) . " enqueued=" . ( $enqueued ? 'yes' : 'NO' ) );
 		}
 
-		// Fallback: force-print critical form editor scripts if page is form_editor.
-		// WordPress enqueue says yes but browser doesn't receive them.
+		// Force-print critical form editor scripts in the page head.
+		// WordPress enqueue system marks them as done but never outputs them.
 		if ( $page === 'form_editor' ) {
-			add_action( 'admin_footer', function() {
+			add_action( 'admin_head', function() {
 				$base_url = KDNACommon::get_base_url();
 				$version  = KDNAForms::$version;
-				$scripts_to_force = array(
-					'jquery-ui-core'      => includes_url( 'js/jquery/ui/core.min.js' ),
-					'jquery-ui-mouse'     => includes_url( 'js/jquery/ui/mouse.min.js' ),
-					'jquery-ui-widget'    => includes_url( 'js/jquery/ui/widget.min.js' ),
-					'jquery-ui-draggable' => includes_url( 'js/jquery/ui/draggable.min.js' ),
-					'jquery-ui-droppable' => includes_url( 'js/jquery/ui/droppable.min.js' ),
-					'jquery-ui-sortable'  => includes_url( 'js/jquery/ui/sortable.min.js' ),
-					'jquery-ui-resizable' => includes_url( 'js/jquery/ui/resizable.min.js' ),
-					'jquery-touch-punch'  => includes_url( 'js/jquery/jquery.ui.touch-punch.js' ),
-				);
-				foreach ( $scripts_to_force as $handle => $url ) {
-					if ( ! wp_script_is( $handle, 'done' ) ) {
-						echo '<script src="' . esc_url( $url ) . '?ver=' . esc_attr( $version ) . '"></script>' . "\n";
-						error_log( "[KDNA Debug] Force-loaded: {$handle}" );
-					}
-				}
-				// Now force-load our scripts
 				$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-				$our_scripts = array(
-					'layout_editor' => $base_url . "/js/layout_editor{$min}.js",
-					'form_editor'   => $base_url . "/js/form_editor{$min}.js",
+				// jQuery UI scripts - load in correct dependency order
+				$jquery_ui = array(
+					includes_url( 'js/jquery/ui/core.min.js' ),
+					includes_url( 'js/jquery/ui/widget.min.js' ),
+					includes_url( 'js/jquery/ui/mouse.min.js' ),
+					includes_url( 'js/jquery/ui/sortable.min.js' ),
+					includes_url( 'js/jquery/ui/draggable.min.js' ),
+					includes_url( 'js/jquery/ui/droppable.min.js' ),
+					includes_url( 'js/jquery/ui/resizable.min.js' ),
+					includes_url( 'js/jquery/ui/tabs.min.js' ),
+					includes_url( 'js/jquery/ui/accordion.min.js' ),
+					includes_url( 'js/jquery/ui/autocomplete.min.js' ),
+					includes_url( 'js/jquery/ui/menu.min.js' ),
+					includes_url( 'js/jquery/jquery.ui.touch-punch.js' ),
 				);
-				foreach ( $our_scripts as $name => $url ) {
-					if ( ! wp_script_is( 'kdnaform_' . $name, 'done' ) ) {
-						echo '<script src="' . esc_url( $url ) . '?ver=' . esc_attr( $version ) . '"></script>' . "\n";
-						error_log( "[KDNA Debug] Force-loaded: kdnaform_{$name}" );
-					}
+				echo "<!-- KDNA Forms: Force-loading jQuery UI for form editor -->\n";
+				foreach ( $jquery_ui as $url ) {
+					echo '<script src="' . esc_url( $url ) . '"></script>' . "\n";
 				}
+				// Our form editor scripts
+				echo '<script src="' . esc_url( $base_url . "/js/layout_editor{$min}.js?ver={$version}" ) . '"></script>' . "\n";
+				echo '<script src="' . esc_url( $base_url . "/js/form_editor{$min}.js?ver={$version}" ) . '"></script>' . "\n";
 			}, 999 );
 		}
 

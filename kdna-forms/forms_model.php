@@ -100,18 +100,10 @@ class KDNAFormsModel {
 	 * @return string
 	 */
 	public static function get_database_version() {
-		static $db_version = array();
-		$blog_id = get_current_blog_id();
-		if ( empty( $db_version[ $blog_id ] ) ) {
-			$db_version[ $blog_id ] = get_option( 'gf_db_version' );
-			// KDNA Forms: if no db version is set, assume modern tables (gf_ prefix).
-			// Must be >= 2.3-dev-1 to avoid legacy rg_form/rg_lead table fallback.
-			if ( empty( $db_version[ $blog_id ] ) ) {
-				$db_version[ $blog_id ] = '2.9.30';
-			}
-		}
-
-		return $db_version[ $blog_id ];
+		// KDNA Forms: Always return modern version to prevent legacy table fallback.
+		// The legacy tables (rg_form, rg_lead, etc.) are from Gravity Forms < 2.3
+		// and do not exist in KDNA Forms installations.
+		return '2.9.30';
 	}
 
 	/**
