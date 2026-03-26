@@ -3187,6 +3187,8 @@ class KDNAForms {
 					'kdnaform_forms',
 					'kdnaform_json',
 					'kdnaform_form_admin',
+					'kdnaform_form_editor',
+					'kdnaform_layout_editor',
 					'kdnaform_placeholder',
 					'jquery-ui-autocomplete',
 					'sack',
