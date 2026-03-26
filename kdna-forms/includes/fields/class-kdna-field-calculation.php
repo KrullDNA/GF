@@ -79,35 +79,35 @@ class KDNA_Field_Calculation extends KDNA_Field {
 
 		if ( $is_entry_detail || $is_form_editor  ) {
 			$style          = $this->disableQuantity ? "style='display:none;'" : '';
-			$quantity_field = " <label for='kdnainput_quantity_{$form_id}_{$this->id}' class='kdnainput_quantity_label kdnaform-field-label' {$style}>{$product_quantity_sub_label}</label> <input type='number' name='input_{$id}.3' value='{$quantity}' id='kdnainput_quantity_{$form_id}_{$this->id}' class='kdnainput_quantity' size='10' min='0' {$disabled_text} {$style} />";
+			$quantity_field = " <label for='ginput_quantity_{$form_id}_{$this->id}' class='ginput_quantity_label gform-field-label' {$style}>{$product_quantity_sub_label}</label> <input type='number' name='input_{$id}.3' value='{$quantity}' id='ginput_quantity_{$form_id}_{$this->id}' class='ginput_quantity' size='10' min='0' {$disabled_text} {$style} />";
 		} elseif ( ! $this->disableQuantity ) {
 			$tabindex                  = $this->get_tabindex();
 			$describedby_extra_id = array();
 			if ( ! $is_legacy_markup ) {
-				$describedby_extra_id = array( "kdnainput_product_price_{$this->formId}_{$this->id}" );
+				$describedby_extra_id = array( "ginput_product_price_{$this->formId}_{$this->id}" );
 			}
 			$quantity_aria_describedby = $this->get_aria_describedby( $describedby_extra_id );
-			$quantity_field            .= " <label for='input_{$form_id}_{$this->id}_1' class='kdnainput_quantity_label kdnaform-field-label' aria-hidden='true'>" . $product_quantity_sub_label . "</label> <input type='number' name='input_{$id}.3' value='{$quantity}' id='input_{$form_id}_{$this->id}_1' class='kdnainput_quantity' size='10' min='0' {$tabindex} {$disabled_text} {$quantity_aria_describedby} />";
+			$quantity_field            .= " <label for='input_{$form_id}_{$this->id}_1' class='ginput_quantity_label gform-field-label' aria-hidden='true'>" . $product_quantity_sub_label . "</label> <input type='number' name='input_{$id}.3' value='{$quantity}' id='input_{$form_id}_{$this->id}_1' class='ginput_quantity' size='10' min='0' {$tabindex} {$disabled_text} {$quantity_aria_describedby} />";
 		} else {
 			if ( ! is_numeric( $quantity ) ) {
 				$quantity = 1;
 			}
 
 			if ( ! $has_quantity ) {
-				$quantity_field .= "<input type='hidden' name='input_{$id}.3' value='{$quantity}' class='kdnainput_quantity_{$form_id}_{$this->id} kdnaform_hidden' />";
+				$quantity_field .= "<input type='hidden' name='input_{$id}.3' value='{$quantity}' class='ginput_quantity_{$form_id}_{$this->id} gform_hidden' />";
 			}
 		}
 
-		$wrapper_open  = $is_legacy_markup ? '' : "<div id='kdnainput_product_price_{$form_id}_{$this->id}' class='kdnainput_product_price_wrapper'>";
+		$wrapper_open  = $is_legacy_markup ? '' : "<div id='ginput_product_price_{$form_id}_{$this->id}' class='ginput_product_price_wrapper'>";
 		$wrapper_close = $is_legacy_markup ? '' : '</div>';
 
-		return "<div class='kdnainput_container kdnainput_container_product_calculation'>
-					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='kdnaform_hidden' />
+		return "<div class='ginput_container ginput_container_product_calculation'>
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
 					$wrapper_open
-						<span class='kdnaform-field-label kdnaform-field-label--type-sub-large kdnainput_product_price_label'>" . gf_apply_filters( array( 'kdnaform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'kdnaforms' ), $form_id ) . ":</span>
-						<span class='kdnaform-field-label kdnaform-field-label--type-sub-large kdnainput_product_price' id='{$field_id}'>" . esc_html( KDNACommon::to_money( $price, $currency ) ) . "</span>
+						<span class='gform-field-label gform-field-label--type-sub-large ginput_product_price_label'>" . gf_apply_filters( array( 'kdnaform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'kdnaforms' ), $form_id ) . ":</span>
+						<span class='gform-field-label gform-field-label--type-sub-large ginput_product_price' id='{$field_id}'>" . esc_html( KDNACommon::to_money( $price, $currency ) ) . "</span>
 					$wrapper_close
-					<input type='hidden' name='input_{$id}.2' id='kdnainput_base_price_{$form_id}_{$this->id}' class='kdnaform_hidden kdnainput_calculated_price' value='" . esc_attr( $price ) . "'/>
+					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='gform_hidden ginput_calculated_price' value='" . esc_attr( $price ) . "'/>
 					{$quantity_field}
 				</div>";
 	}
@@ -134,7 +134,7 @@ class KDNA_Field_Calculation extends KDNA_Field {
 			$label = esc_html( $field_label );
 		} else {
 			$product_quantity_sub_label = $this->get_product_quantity_label( $this->formId );
-			$label                      = '<span class="kdnafield_label_product kdnaform-field-label">' . esc_html( $field_label ) . '</span>' . ' <span class="screen-reader-text">' . $product_quantity_sub_label . '</span>';
+			$label                      = '<span class="gfield_label_product gform-field-label">' . esc_html( $field_label ) . '</span>' . ' <span class="screen-reader-text">' . $product_quantity_sub_label . '</span>';
 		}
 
 		return $label;

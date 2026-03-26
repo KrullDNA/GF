@@ -12,14 +12,14 @@ class KDNA_Field_Price extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.8
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--product';
+		return 'gform-icon--product';
 	}
 
 	function get_form_editor_field_settings() {
@@ -71,8 +71,8 @@ class KDNA_Field_Price extends KDNA_Field {
 
 		$tabindex = $this->get_tabindex();
 
-		return "<div class='kdnainput_container kdnainput_container_product_price'>
-					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class} kdnainput_amount' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$describedby_attribute} {$disabled_text}/>
+		return "<div class='ginput_container ginput_container_product_price'>
+					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class} ginput_amount' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$describedby_attribute} {$disabled_text}/>
 				</div>";
 
 

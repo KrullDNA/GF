@@ -28,14 +28,14 @@ class KDNA_Field_Total extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--total';
+		return 'gform-icon--total';
 	}
 
 	/**
@@ -67,18 +67,18 @@ class KDNA_Field_Total extends KDNA_Field {
 		$field_id    = $is_entry_detail || $is_form_editor || $form_id == 0 ? "input_$id" : 'input_' . $form_id . "_$id";
 
 		if ( $is_entry_detail ) {
-			return "<div class='kdnainput_container kdnainput_container_total'>
+			return "<div class='ginput_container ginput_container_total'>
 						<input type='text' name='input_{$id}' value='{$value}' />
 					</div>";
 		} else {
 			if ( KDNACommon::is_legacy_markup_enabled( $form ) ) {
-				return "<div class='kdnainput_container kdnainput_container_total'>
-							<span class='kdnainput_total kdnainput_total_{$form_id}'>" . KDNACommon::to_money( '0' ) . "</span>
-							<input type='hidden' name='input_{$id}' id='{$field_id}' class='kdnaform_hidden'/>
+				return "<div class='ginput_container ginput_container_total'>
+							<span class='ginput_total ginput_total_{$form_id}'>" . KDNACommon::to_money( '0' ) . "</span>
+							<input type='hidden' name='input_{$id}' id='{$field_id}' class='gform_hidden'/>
 						</div>";
 			} else {
-				return "<div class='kdnainput_container kdnainput_container_total'>
-							<input type='text' readonly name='input_{$id}' id='{$field_id}' value='" . KDNACommon::to_money( '0' ) . "' class='kdnaform-text-input-reset kdnainput_total kdnainput_total_{$form_id}' />
+				return "<div class='ginput_container ginput_container_total'>
+							<input type='text' readonly name='input_{$id}' id='{$field_id}' value='" . KDNACommon::to_money( '0' ) . "' class='gform-text-input-reset ginput_total ginput_total_{$form_id}' />
 						</div>";
 			}
 		}

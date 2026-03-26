@@ -210,7 +210,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			$charset_collate .= " COLLATE $wpdb->collate";
 		}
 
-		$sql = "CREATE TABLE {$wpdb->prefix}kdna_addon_feed (
+		$sql = "CREATE TABLE {$wpdb->prefix}gf_addon_feed (
                   id mediumint(8) unsigned not null auto_increment,
                   form_id mediumint(8) unsigned not null,
                   is_active tinyint(1) not null default 1,
@@ -317,7 +317,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	 */
 	public function uninstall() {
 		global $wpdb;
-		$sql = $wpdb->prepare( "DELETE FROM {$wpdb->prefix}kdna_addon_feed WHERE addon_slug=%s", $this->get_slug() );
+		$sql = $wpdb->prepare( "DELETE FROM {$wpdb->prefix}gf_addon_feed WHERE addon_slug=%s", $this->get_slug() );
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.NotPrepared
 
 		if ( ! $this instanceof KDNAPaymentAddOn ) {
@@ -921,7 +921,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$sql = $wpdb->prepare(
-			"SELECT * FROM {$wpdb->prefix}kdna_addon_feed
+			"SELECT * FROM {$wpdb->prefix}gf_addon_feed
                                WHERE addon_slug=%s {$form_filter} ORDER BY `feed_order`, `id` ASC", $this->get_slug()
 		);
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -951,7 +951,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$sql = $wpdb->prepare(
-			"SELECT * FROM {$wpdb->prefix}kdna_addon_feed
+			"SELECT * FROM {$wpdb->prefix}gf_addon_feed
                                WHERE addon_slug=%s AND is_active=1 {$form_filter} ORDER BY `feed_order`, `id` ASC", $this->get_slug()
 		);
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -986,7 +986,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$form_filter = is_numeric( $form_id ) ? $wpdb->prepare( 'AND form_id=%d', absint( $form_id ) ) : '';
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}kdna_addon_feed
+		$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}gf_addon_feed
                                WHERE addon_slug=%s {$form_filter} ORDER BY `feed_order`, `id` ASC", $slug );
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$results = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -1031,7 +1031,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			return false;
 		}
 
-		$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}kdna_addon_feed WHERE id=%d", $id );
+		$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}gf_addon_feed WHERE id=%d", $id );
 
 		$row = $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		if ( ! $row ) {
@@ -1274,7 +1274,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$meta = $this->get_encryptor()->encrypt_feed_meta( $meta, $this->get_fields_to_encrypt() );
 
 		$meta = json_encode( $meta );
-		$wpdb->update( "{$wpdb->prefix}kdna_addon_feed", array( 'meta' => $meta ), array( 'id' => $id ), array( '%s' ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( "{$wpdb->prefix}gf_addon_feed", array( 'meta' => $meta ), array( 'id' => $id ), array( '%s' ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		return $wpdb->rows_affected > 0;
 	}
@@ -1283,7 +1283,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		global $wpdb;
 		$is_active = $is_active ? '1' : '0';
 
-		$wpdb->update( "{$wpdb->prefix}kdna_addon_feed", array( 'is_active' => $is_active ), array( 'id' => $id ), array( '%d' ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( "{$wpdb->prefix}gf_addon_feed", array( 'is_active' => $is_active ), array( 'id' => $id ), array( '%d' ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		$success = $wpdb->rows_affected > 0;
 
@@ -1325,7 +1325,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$meta = $this->get_encryptor()->encrypt_feed_meta( $meta, $this->get_fields_to_encrypt() );
 
 		$meta = json_encode( $meta );
-		$wpdb->insert( "{$wpdb->prefix}kdna_addon_feed", array( 'addon_slug' => $this->get_slug(), 'form_id' => $form_id, 'is_active' => $is_active, 'meta' => $meta ), array( '%s', '%d', '%d', '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->insert( "{$wpdb->prefix}gf_addon_feed", array( 'addon_slug' => $this->get_slug(), 'form_id' => $form_id, 'is_active' => $is_active, 'meta' => $meta ), array( '%s', '%d', '%d', '%s' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		return $wpdb->insert_id;
 	}
@@ -1377,7 +1377,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		do_action( 'kdnaform_pre_delete_feed', $id, $this );
 		do_action( "kdnaform_{$this->get_short_slug()}_pre_delete_feed", $id, $this );
 
-		$wpdb->delete( "{$wpdb->prefix}kdna_addon_feed", array( 'id' => $id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->delete( "{$wpdb->prefix}gf_addon_feed", array( 'id' => $id ), array( '%d' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	}
 
 	public function delete_feeds( $form_id = null ) {
@@ -1387,7 +1387,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$sql = $wpdb->prepare(
-			"SELECT id FROM {$wpdb->prefix}kdna_addon_feed
+			"SELECT id FROM {$wpdb->prefix}gf_addon_feed
                                WHERE addon_slug=%s {$form_filter} ORDER BY `feed_order`, `id` ASC", $this->get_slug()
 		);
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -1478,7 +1478,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			esc_html__( 'The table `%1$s` does not exist. Please visit the %2$sForms > System Status%3$s page and click the "Re-run database upgrade" link (under the Database section) to create the missing table.', 'kdnaforms' ),
 			esc_html( $table ),
 			'<a href="' . esc_attr( $status_page_url ) . '" target="_blank" rel="noopener">',
-			'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
+			'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
 		);
 	}
 
@@ -1971,13 +1971,13 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		?>
 
-		<div class="kdnaform-settings-panel">
-			<header class="kdnaform-settings-panel__header">
-				<h4 class="kdnaform-settings-panel__title"><span><?php echo $this->feed_list_title(); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></h4>
+		<div class="gform-settings-panel">
+			<header class="gform-settings-panel__header">
+				<h4 class="gform-settings-panel__title"><span><?php echo $this->feed_list_title(); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></h4>
 			</header>
 
-			<div class="kdnaform-settings-panel__content">
-				<form id="kdnaform-settings" action="" method="post">
+			<div class="gform-settings-panel__content">
+				<form id="gform-settings" action="" method="post">
 					<?php
 					$feed_list = $this->get_feed_table( $form );
 					$feed_list->prepare_items();
@@ -2041,7 +2041,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 	public function maybe_save_feed_settings( $feed_id, $form_id ) {
 
-		if ( ! rgpost( 'kdnaform-settings-save' ) ) {
+		if ( ! rgpost( 'gform-settings-save' ) ) {
 			return $feed_id;
 		}
 
@@ -2332,7 +2332,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	public function get_default_feed_id( $form_id ) {
 		global $wpdb;
 
-		$sql = $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}kdna_addon_feed WHERE addon_slug=%s AND form_id = %d LIMIT 0,1", $this->get_slug(), $form_id );
+		$sql = $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}gf_addon_feed WHERE addon_slug=%s AND form_id = %d LIMIT 0,1", $this->get_slug(), $form_id );
 
 		$feed_id = $wpdb->get_var( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		if ( ! $feed_id ) {
@@ -3017,20 +3017,20 @@ class KDNAAddOnFeedsTable extends WP_List_Table {
 
 		// Display the active/inactive toggle button.
 		if ( rgar( $item, 'is_active' ) ) {
-			$class = 'kdnaform-status--active';
+			$class = 'gform-status--active';
 			$text  = esc_html__( 'Active', 'kdnaforms' );
 		} else {
-			$class = 'kdnaform-status--inactive';
+			$class = 'gform-status--inactive';
 			$text  = esc_html__( 'Inactive', 'kdnaforms' );
 		}
 		?>
 		<button
 			type="button"
-			class="kdnaform-status-indicator kdnaform-status-indicator--size-sm kdnaform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
+			class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
 			onclick="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
 			onkeypress="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
 		>
-			<span class="kdnaform-status-indicator-status kdnaform-typography--weight-medium kdnaform-typography--size-text-xs">
+			<span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs">
 				<?php echo esc_html( $text ); ?>
 			</span>
 		</button>

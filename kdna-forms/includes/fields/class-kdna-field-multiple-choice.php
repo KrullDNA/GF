@@ -25,12 +25,12 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--choice';
+		return 'gform-icon--choice';
 	}
 
 	function get_form_editor_field_settings() {
@@ -83,9 +83,9 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		$aria_describedby = $checkbox->get_choice_aria_describedby( $this->formId );
 
 		// Prepare choice markup.
-		$choice_markup = "<div class='kdnachoice kdnachoice_select_all'>
-						<input class='kdnafield-choice-input kdnafield_choice_all_toggle' type='checkbox' id='{$id}' {$tabindex} {$aria_describedby} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} {$disabled_text} />
-						<label for='{$id}' id='label_" . $this->id . "_select_all' class='kdnaform-field-label kdnaform-field-label--type-inline' data-label-select='{$select_label}''>{$select_label}</label>
+		$choice_markup = "<div class='kdnachoice gchoice_select_all'>
+						<input class='gfield-choice-input gfield_choice_all_toggle' type='checkbox' id='{$id}' {$tabindex} {$aria_describedby} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} {$disabled_text} />
+						<label for='{$id}' id='label_" . $this->id . "_select_all' class='gform-field-label gform-field-label--type-inline' data-label-select='{$select_label}''>{$select_label}</label>
 					</div>";
 
 		/**

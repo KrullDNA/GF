@@ -21,14 +21,14 @@ class KDNA_Field_HiddenProduct extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.8
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--hidden';
+		return 'gform-icon--hidden';
 	}
 
 	function get_form_editor_field_settings() {
@@ -94,14 +94,14 @@ class KDNA_Field_HiddenProduct extends KDNA_Field {
 			$this->disableQuantity = true;
 		}
 
-		$quantity_field     = $has_quantity_field ? '' : "<input type='hidden' name='input_{$id}.3' value='" . esc_attr( $quantity ) . "' id='kdnainput_quantity_{$form_id}_{$this->id}' class='kdnaform_hidden' />";
-		$product_name_field = "<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='kdnaform_hidden' />";
+		$quantity_field     = $has_quantity_field ? '' : "<input type='hidden' name='input_{$id}.3' value='" . esc_attr( $quantity ) . "' id='ginput_quantity_{$form_id}_{$this->id}' class='gform_hidden' />";
+		$product_name_field = "<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />";
 
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 
 		$field_type = $is_entry_detail || $is_form_editor ? 'text' : 'hidden';
 
-		return "<div class='kdnainput_container kdnainput_container_product_price_hidden'>" . $quantity_field . $product_name_field . "<input name='input_{$id}.2' id='kdnainput_base_price_{$form_id}_{$this->id}' type='{$field_type}' value='{$price}' class='kdnaform_hidden kdnainput_amount' {$disabled_text}/></div>";
+		return "<div class='ginput_container ginput_container_product_price_hidden'>" . $quantity_field . $product_name_field . "<input name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' type='{$field_type}' value='{$price}' class='gform_hidden ginput_amount' {$disabled_text}/></div>";
 	}
 
 	/**

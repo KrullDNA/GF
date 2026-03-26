@@ -1,7 +1,7 @@
 ( function ( $ ) {
 
 	$(document).ready(function() {
-		gform.adminUtils.handleUnsavedChanges( '#kdnaform-settings' );
+		gform.adminUtils.handleUnsavedChanges( '#gform-settings' );
 	});
 
 	var $container  = $( 'div[id="kdnaform_setting_reset"]' ),
@@ -12,7 +12,7 @@
 	window.loadRecaptcha = function () {
 
 		var $recaptcha = $( '#recaptcha' ),
-			$save      = $( '#kdnaform-settings-save' ),
+			$save      = $( '#gform-settings-save' ),
 			type       = $( 'input[name="_kdnaform_setting_type"]:checked' ).val();
 
 		// Flush existing state.
@@ -22,7 +22,7 @@
 		$reset.val( 1 );
 
 		// Reset key status.
-		$( '#recpatcha .kdnaform-settings-field__feedback' ).remove();
+		$( '#recpatcha .gform-settings-field__feedback' ).remove();
 
 		// If no public or private key is provided, exit.
 		if ( ! $publicKey.val() || ! $privateKey.val() ) {

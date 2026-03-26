@@ -26,14 +26,14 @@ class KDNA_Field_Page extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--page';
+		return 'gform-icon--page';
 	}
 
 	function get_form_editor_field_settings() {
@@ -48,7 +48,7 @@ class KDNA_Field_Page extends KDNA_Field {
 
 	public function get_field_content( $value, $force_frontend_label, $form ) {
 		$admin_buttons = $this->get_admin_buttons();
-		$field_content = "{$admin_buttons} <label class='kdnafield_label'>&nbsp;</label><div class='gf-pagebreak-inline gf-pagebreak'>" . esc_html__( 'Page Break', 'kdnaforms' ) . '</div>';
+		$field_content = "{$admin_buttons} <label class='gfield_label'>&nbsp;</label><div class='gf-pagebreak-inline gf-pagebreak'>" . esc_html__( 'Page Break', 'kdnaforms' ) . '</div>';
 		return $field_content;
 	}
 

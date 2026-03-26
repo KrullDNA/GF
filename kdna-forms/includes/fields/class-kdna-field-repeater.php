@@ -277,13 +277,13 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 		$max_items = intval( $this->maxItems );
 
-		return sprintf( "<div class='kdnafield_repeater_wrapper' data-max_items='{$max_items}'>%s</div>", $html );
+		return sprintf( "<div class='gfield_repeater_wrapper' data-max_items='{$max_items}'>%s</div>", $html );
 	}
 
 	/**
 	 * Returns the markup for the top of the repeater container.
 	 *
-	 * This method must return the opening tag for the container and this tag must have the class 'kdnafield_repeater_container'
+	 * This method must return the opening tag for the container and this tag must have the class 'gfield_repeater_container'
 	 *
 	 * @since 2.4
 	 *
@@ -292,17 +292,17 @@ class KDNA_Field_Repeater extends KDNA_Field {
 	 * @return string
 	 */
 	public function get_input_top( $values ) {
-		$html = "<fieldset class='kdnafield_repeater kdnafield_repeater_container'>\n";
+		$html = "<fieldset class='gfield_repeater gfield_repeater_container'>\n";
 		$label = esc_html( $this->label );
-		$html .= "<legend class='kdnafield_label kdnaform-field-label'>{$label}</legend>";
+		$html .= "<legend class='gfield_label gform-field-label'>{$label}</legend>";
 		return $html;
 	}
 
 	/**
 	 * Returns the markup for the items.
 	 *
-	 * This method must return a single HTML element with the class 'kdnafield_repeater_items'. This elemment must contain
-	 * all the items as direct children and each item must have the class 'kdnafield_repeater_item'.
+	 * This method must return a single HTML element with the class 'gfield_repeater_items'. This elemment must contain
+	 * all the items as direct children and each item must have the class 'gfield_repeater_item'.
 	 *
 	 * @since 2.4
 	 *
@@ -318,11 +318,11 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 		$form = KDNAAPI::get_form( $this->formId );
 
-		$rows = '<div class="kdnafield_repeater_items">';
+		$rows = '<div class="gfield_repeater_items">';
 
 		$i = 0;
 		foreach ( $values as $value ) {
-			$row = "<div class='kdnafield_repeater_item'>";
+			$row = "<div class='gfield_repeater_item'>";
 			foreach ( $fields as $field ) {
 
 				$field_value = $this->get_field_value( $field, $value );
@@ -331,12 +331,12 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 				$field_input = $this->get_sub_field_input( $field, $form, $field_value, $entry, $i );
 
-				$row .= "<div class='kdnafield_repeater_cell'>" . $field_input . '</div>';
+				$row .= "<div class='gfield_repeater_cell'>" . $field_input . '</div>';
 
 				$field->set_context_property( 'itemIndex', null );
 			}
 			$buttons = $this->get_buttons( $values );
-			$row .= "<div class='kdnafield_repeater_buttons'>{$buttons}</div>";
+			$row .= "<div class='gfield_repeater_buttons'>{$buttons}</div>";
 			$row .= '</div>';
 			$rows .= $row;
 			$i++;
@@ -364,7 +364,7 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 		$admin_buttons = $this->get_admin_buttons();
 
-		$description = $this->get_description( $this->description, 'kdnafield_description' );
+		$description = $this->get_description( $this->description, 'gfield_description' );
 		if ( $this->is_description_above( $form ) ) {
 			$clear         = $is_admin ? "<div class='gf_clear'></div>" : '';
 			$field_content = sprintf( "%s%s{FIELD}$clear", $admin_buttons, $description );
@@ -390,15 +390,15 @@ class KDNA_Field_Repeater extends KDNA_Field {
 		$add_events    = $is_form_editor ? '' : "onclick='gformAddRepeaterItem(this)' onkeypress='gformAddRepeaterItem(this)'";
 		$delete_events = $is_form_editor ? '' : sprintf( "onclick='if(confirm(\"%s\")){gformDeleteRepeaterItem(this)};' onkeypress='gformDeleteRepeaterItem(this)'", esc_js( __( 'Are you sure you want to remove this item?', 'kdnaforms' ) ) );
 
-		$disabled_icon_class = ! empty( $this->maxItems ) && count( $values ) >= intval( $this->maxItems ) ? 'kdnafield_icon_disabled' : '';
+		$disabled_icon_class = ! empty( $this->maxItems ) && count( $values ) >= intval( $this->maxItems ) ? 'gfield_icon_disabled' : '';
 
 		$add_button_text    = $this->addButtonText ? $this->addButtonText : '&#43;';
 		$remove_button_text = $this->removeButtonText ? $this->removeButtonText : '&#45;' ;
 
 		$add_button_class = $this->addButtonText ? 'add_repeater_item_text' : 'add_repeater_item_plus';
 		$remove_button_class = $this->removeButtonText ? 'remove_repeater_item_text' : 'remove_repeater_item_minus';
-		$html = "<button type='button' class='add_repeater_item kdnaform-theme-button kdnaform-theme-button--secondary kdnaform-theme-button--size-sm {$disabled_icon_class} {$add_button_class}' {$add_events}>" . $add_button_text . "</button>" .
-		        "<button type='button' class='remove_repeater_item kdnaform-theme-button kdnaform-theme-button--secondary kdnaform-theme-button--size-sm {$remove_button_class}' {$delete_events} style='{$delete_display}'>" . $remove_button_text . "</button>";
+		$html = "<button type='button' class='add_repeater_item gform-theme-button gform-theme-button--secondary gform-theme-button--size-sm {$disabled_icon_class} {$add_button_class}' {$add_events}>" . $add_button_text . "</button>" .
+		        "<button type='button' class='remove_repeater_item gform-theme-button gform-theme-button--secondary gform-theme-button--size-sm {$remove_button_class}' {$delete_events} style='{$delete_display}'>" . $remove_button_text . "</button>";
 
 		return $html;
 	}
@@ -483,12 +483,12 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 		/* @var KDNA_Field[] $fields */
 		$fields = $this->fields;
-		$html   = "<div class='kdnafield_repeater' {$repeater_style}>";
+		$html   = "<div class='gfield_repeater' {$repeater_style}>";
 		$repeater_label = $this->nestingLevel === 0 ? '' : $this->label;
-		$html   .= "<div class='kdnafield_label kdnaform-field-label' {$label_style}>{$repeater_label}</div>";
-		$html   .= '<div class="kdnafield_repeater_items">';
+		$html   .= "<div class='gfield_label gform-field-label' {$label_style}>{$repeater_label}</div>";
+		$html   .= '<div class="gfield_repeater_items">';
 		foreach ( $item_values as $item_value ) {
-			$html .= '<div class="kdnafield_repeater_item">';
+			$html .= '<div class="gfield_repeater_item">';
 			foreach ( $fields as $sub_field ) {
 				if ( $sub_field->fields ) {
 					$sub_field_value = $item_value[ $sub_field->id ];
@@ -496,10 +496,10 @@ class KDNA_Field_Repeater extends KDNA_Field {
 					$sub_field_value = $this->get_field_value( $sub_field, $item_value );
 				}
 				$label = $sub_field->get_field_label( true, $item_values );
-				$label = empty( $sub_field->fields ) ? "<div class='kdnafield_repeater_label' {$sub_field_label_style}>{$label}</div>" : '';
+				$label = empty( $sub_field->fields ) ? "<div class='gfield_repeater_label' {$sub_field_label_style}>{$label}</div>" : '';
 				$value = $sub_field->get_value_entry_detail( $sub_field_value, $entry, $use_text, 'html', $media );
-				$value = "<div class='kdnafield_repeater_value' style='color:rgba(117, 117, 117, 1);font-size: 14px'>{$value}</div>";
-				$html .= '<div class="kdnafield_repeater_cell">' . $label . $value . '</div>';
+				$value = "<div class='gfield_repeater_value' style='color:rgba(117, 117, 117, 1);font-size: 14px'>{$value}</div>";
+				$html .= '<div class="gfield_repeater_cell">' . $label . $value . '</div>';
 			}
 			$html .= '</div>';
 		}
@@ -633,8 +633,8 @@ class KDNA_Field_Repeater extends KDNA_Field {
 				}
 			}
 		} else {
-			// we need to add a kdnafield_valid class to the field wrapper so we can over-ride styles
-			$field_content = str_replace( 'kdnafield ', 'kdnafield kdnafield_valid ', $field_content );
+			// we need to add a gfield_valid class to the field wrapper so we can over-ride styles
+			$field_content = str_replace( 'gfield ', 'gfield gfield_valid ', $field_content );
 		}
 
 		return $field_content;

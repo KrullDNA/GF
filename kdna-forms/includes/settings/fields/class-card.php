@@ -43,7 +43,7 @@ class Card extends Radio {
 	public function __construct( $props, $settings ) {
 
 		// Prepare class.
-		$class = array( 'kdnaform-settings-field__radio--visual' );
+		$class = array( 'gform-settings-field__radio--visual' );
 
 		// Convert defined classes.
 		if ( rgar( $props, 'class' ) ) {
@@ -78,7 +78,7 @@ class Card extends Radio {
 		$selected_value = $this->get_value();
 		$has_icons      = self::has_icons( $choices );
 		$has_tag        = self::has_tag( $choices );
-		$icon_class     = ' kdnaform-settings-choice--visual';
+		$icon_class     = ' gform-settings-choice--visual';
 
 		// If no choices exist, return.
 		if ( $choices === false || empty( $choices ) ) {
@@ -119,11 +119,11 @@ class Card extends Radio {
 			// Get tag markup.
 			if ( $has_tag ) {
 				$color      = rgar( $choice, 'color' ) ? $choice['color'] : 'port';
-				$tag_markup = '<span class="kdnaform-settings-card-tag kdnaform-c-' . $color . '"><i class="kdnaform-icon kdnaform-icon--circle-star"></i>' . esc_html( $choice['tag'] ) . '</span>';
+				$tag_markup = '<span class="gform-settings-card-tag gform-c-' . $color . '"><i class="gform-icon gform-icon--circle-star"></i>' . esc_html( $choice['tag'] ) . '</span>';
 			}
 
 			// Get description markup.
-			$description_markup = '<div class="kdnaform-settings-card--description"><div class="kdnaform-settings-card--description-content">';
+			$description_markup = '<div class="gform-settings-card--description"><div class="gform-settings-card--description-content">';
 			if ( rgar( $choice, 'title' ) ) {
 				$description_markup .= '<strong>' . esc_html( $choice['title'] ) . '</strong>';
 			}
@@ -133,7 +133,7 @@ class Card extends Radio {
 			$description_markup .= '</div></div>';
 
 			$html .= sprintf(
-				'<div id="kdnaform-settings-radio-choice-%1$s" class="kdnaform-settings-choice%2$s">
+				'<div id="gform-settings-radio-choice-%1$s" class="gform-settings-choice%2$s">
 					%3$s
 					<label for="%1$s">
 						<span>%4$s %5$s %6$s %7$s</span>
@@ -155,7 +155,7 @@ class Card extends Radio {
 		// Wrap visual choices with container.
 		if ( ! empty( $icon_class ) ) {
 			$html = sprintf(
-				'<div class="kdnaform-settings-choices--visual">%s</div>',
+				'<div class="gform-settings-choices--visual">%s</div>',
 				$html
 			);
 		}

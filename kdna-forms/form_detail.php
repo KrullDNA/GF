@@ -203,7 +203,7 @@ class KDNAFormDetail {
 			</div>
 		</div>
 		<!-- End legacy container -->
-		<h1 class="kdnaform-visually-hidden"><?php esc_html_e( 'Edit Form', 'kdnaforms' ); ?></h1>
+		<h1 class="gform-visually-hidden"><?php esc_html_e( 'Edit Form', 'kdnaforms' ); ?></h1>
 		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
 		<?php
 		$forms         = KDNAFormsModel::get_forms( null, 'title' );
@@ -211,19 +211,19 @@ class KDNAFormDetail {
 		$browser_icons = array( 'ie', 'opera', 'chrome', 'firefox', 'safari', 'edge' );
 		?>
 
-		<div id="kdnaform-form-toolbar" class="kdnaform-form-toolbar">
-			<div class="kdnaform-form-toolbar__logo">
+		<div id="gform-form-toolbar" class="gform-form-toolbar">
+			<div class="gform-form-toolbar__logo">
 				<a href="?page=kdna_edit_forms" style="text-decoration: none; color: #1d2327; font-weight: 600; font-size: 14px;">
 					<span class="screen-reader-text"><?php esc_html_e( 'Return to form list', 'kdnaforms' ); ?></span>
 					<span class="dashicons dashicons-feedback" style="font-size: 24px; width: 24px; height: 24px; vertical-align: middle; margin-right: 4px;"></span>
 				</a>
 			</div>
 
-			<div class="kdnaform-form-toolbar__form-title kdnaform-form-toolbar__form-title--form-editor">
+			<div class="gform-form-toolbar__form-title gform-form-toolbar__form-title--form-editor">
 				<?php KDNAForms::form_switcher( $form['title'], $id ); ?>
 			</div>
 
-			<ul id="kdnaform-form-toolbar__menu" class="kdnaform-form-toolbar__menu">
+			<ul id="gform-form-toolbar__menu" class="gform-form-toolbar__menu">
 				<?php
 				$menu_items = apply_filters( 'kdnaform_toolbar_menu', KDNAForms::get_toolbar_menu_items( $id ), $id );
 				foreach ( $menu_items as $key => $item ) {
@@ -237,7 +237,7 @@ class KDNAFormDetail {
 					echo KDNAForms::format_toolbar_menu_items( $fixed_menu_items ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 				if ( ! empty( $dynamic_menu_items ) ) {
-					echo '<span class="kdnaform-form-toolbar__divider"></span>';
+					echo '<span class="gform-form-toolbar__divider"></span>';
 					echo KDNAForms::format_toolbar_menu_items( $dynamic_menu_items ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 				?>
@@ -263,20 +263,20 @@ class KDNAFormDetail {
 
 				$ajax_save_disabled = $save_form_helper->is_ajax_save_disabled( $form_id );
 				if ( $ajax_save_disabled ) {
-					$save_button = '<button aria-disabled="false" aria-expanded="false" class="update-form kdnaform-button kdnaform-button--primary-new kdnaform-button--icon-leading " onclick="SaveForm();" onkeypress="SaveForm();"> <i class="kdnaform-button__icon kdnaform-icon kdnaform-icon--floppy-disk" aria-hidden="true"></i>' . esc_html__( 'Save Form', 'kdnaforms' ) . '</button>';
+					$save_button = '<button aria-disabled="false" aria-expanded="false" class="update-form gform-button gform-button--primary-new gform-button--icon-leading " onclick="SaveForm();" onkeypress="SaveForm();"> <i class="gform-button__icon gform-icon gform-icon--floppy-disk" aria-hidden="true"></i>' . esc_html__( 'Save Form', 'kdnaforms' ) . '</button>';
 				} else {
 					$save_button = '<button
 						id="ajax-save-form-menu-bar"
 						data-js="ajax-save-form"
 						aria-disabled="false"
 						aria-expanded="false"
-						class="update-form update-form-ajax kdnaform-button kdnaform-button--primary-new kdnaform-button--interactive kdnaform-button--active-type-loader kdnaform-button--icon-leading"
+						class="update-form update-form-ajax gform-button gform-button--primary-new gform-button--interactive gform-button--active-type-loader gform-button--icon-leading"
 					>
-						<i class="kdnaform-button__icon kdnaform-button__icon--inactive kdnaform-icon kdnaform-icon--floppy-disk" data-js="button-icon" aria-hidden="true"></i>
-						<span class="kdnaform-button__text kdnaform-button__text--inactive" data-js="button-inactive-text">
+						<i class="gform-button__icon gform-button__icon--inactive gform-icon gform-icon--floppy-disk" data-js="button-icon" aria-hidden="true"></i>
+						<span class="gform-button__text gform-button__text--inactive" data-js="button-inactive-text">
 							' . esc_html__( 'Save Form', 'kdnaforms' ) . '
 						</span>
-						<span class="kdnaform-button__text kdnaform-button__text--active" data-js="button-active-text">
+						<span class="gform-button__text gform-button__text--active" data-js="button-active-text">
 							' . esc_html__( 'Saving', 'kdnaforms' ) . '
 						</span>
 					</button>';
@@ -313,8 +313,8 @@ class KDNAFormDetail {
 			$no_conflict_mode  = get_option( 'kdnaform_enable_noconflict' );
 			$no_conflict_class = $no_conflict_mode ? ' form_editor_no_conflict' : '';
 			$no_fields_class   = empty( $form['fields'] ) ? ' form_editor_fields_no_fields' : '';
-			$compact_view_class = KDNA_Editor_Service_Provider::is_compact_view_enabled( get_current_user_id(), $form_id ) ? ' kdnaform-compact-view' : '';
-			$compact_view_class .= KDNA_Editor_Service_Provider::is_field_id_enabled( get_current_user_id(), $form_id ) ? ' kdnaform-compact-view--show-id' : '';
+			$compact_view_class = KDNA_Editor_Service_Provider::is_compact_view_enabled( get_current_user_id(), $form_id ) ? ' gform-compact-view' : '';
+			$compact_view_class .= KDNA_Editor_Service_Provider::is_field_id_enabled( get_current_user_id(), $form_id ) ? ' gform-compact-view--show-id' : '';
 			$form_editor_class = sprintf( 'form_editor_fields_container%s%s%s', $no_fields_class, $no_conflict_class, $compact_view_class );
 		?>
 
@@ -325,23 +325,23 @@ class KDNAFormDetail {
 			<?php echo ! empty( $form['fields'] ) ? 'data-simplebar' : ''; ?>
 			<?php echo ! empty( $form['fields'] ) && is_rtl() ? 'data-simplebar-direction="rtl"' : ''; ?>
 		>
-		<h2 class="kdnaform-visually-hidden"><?php esc_html_e( 'The Form', 'kdnaforms' ); ?></h2>
+		<h2 class="gform-visually-hidden"><?php esc_html_e( 'The Form', 'kdnaforms' ); ?></h2>
 		<?php
 		$has_pages                          = KDNACommon::has_pages( $form );
 		$wrapper_el                         = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 		$form_wrapper_legacy_class          = KDNACommon::is_legacy_markup_enabled_og( $form ) ? ' kdnaform_legacy_markup' : '';
-		$form_wrapper_compact_view_class    = KDNA_Editor_Service_Provider::is_compact_view_enabled( get_current_user_id(), $form_id ) ? ' kdnaform-editor--compact' : '';
-		$form_wrapper_compact_view_id_class = KDNA_Editor_Service_Provider::is_field_id_enabled( get_current_user_id(), $form_id ) ? ' kdnaform-editor--compact-show-id' : '';
+		$form_wrapper_compact_view_class    = KDNA_Editor_Service_Provider::is_compact_view_enabled( get_current_user_id(), $form_id ) ? ' gform-editor--compact' : '';
+		$form_wrapper_compact_view_id_class = KDNA_Editor_Service_Provider::is_field_id_enabled( get_current_user_id(), $form_id ) ? ' gform-editor--compact-show-id' : '';
 		?>
 		<?php KDNAFormDetail::editor_notices( $form ); ?>
 
-			<div class="kdnaform_editor kdnaform_wrapper kdnaform-theme kdnaform-theme--foundation kdnaform-theme--framework kdnaform-theme--orbital<?php echo esc_attr( $form_wrapper_compact_view_class . $form_wrapper_compact_view_id_class . $form_wrapper_legacy_class ); ?>">
+			<div class="kdnaform_editor gform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--orbital<?php echo esc_attr( $form_wrapper_compact_view_class . $form_wrapper_compact_view_id_class . $form_wrapper_legacy_class ); ?>">
 
-				<div id="kdnaform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'kdnaforms');?>" class="selectable kdnaform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
+				<div id="kdnaform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
 					<div class="gf-pagebreak-first gf-pagebreak"><?php esc_html_e( 'Start Paging', 'kdnaforms' ) ?></div>
 				</div>
 
-				<<?php echo $wrapper_el; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?> id="kdnaform_fields" class="<?php echo esc_attr( KDNACommon::get_ul_classes( $form ) ) ?>">
+				<<?php echo $wrapper_el; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?> id="gform_fields" class="<?php echo esc_attr( KDNACommon::get_ul_classes( $form ) ) ?>">
 					<?php
 					if ( is_array( rgar( $form, 'fields' ) ) ) {
 						require_once( KDNACommon::get_base_path() . '/form_display.php' );
@@ -353,13 +353,13 @@ class KDNAFormDetail {
 					?>
 				</<?php echo $wrapper_el;  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 
-				<div id="no-fields-drop" class="dropzone__target kdnaform-theme__disable" style="<?php echo empty( $form['fields'] ) ? '' : 'display:none;'; ?>"></div>
-				<div id="no-fields" class="dropzone__placeholder kdnaform-theme__disable" style="<?php echo empty( $form['fields'] ) ? '' : 'display:none;'; ?>">
-					<img class="kdnaform-editor__no-fields-graphic" src="<?php echo esc_url( KDNACommon::get_base_url() . '/images/no-fields.svg' ); ?>" alt="" />
+				<div id="no-fields-drop" class="dropzone__target gform-theme__disable" style="<?php echo empty( $form['fields'] ) ? '' : 'display:none;'; ?>"></div>
+				<div id="no-fields" class="dropzone__placeholder gform-theme__disable" style="<?php echo empty( $form['fields'] ) ? '' : 'display:none;'; ?>">
+					<img class="gform-editor__no-fields-graphic" src="<?php echo esc_url( KDNACommon::get_base_url() . '/images/no-fields.svg' ); ?>" alt="" />
 					<p><?php esc_html_e( 'Simply drag and drop the fields or elements you want in this form.', 'kdnaforms' ); ?></p>
 				</div>
 
-				<div id="kdnaform_last_page_settings" data-title="<?php esc_attr_e('Last page options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage last page options', 'kdnaforms');?>" class="selectable kdnaform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
+				<div id="kdnaform_last_page_settings" data-title="<?php esc_attr_e('Last page options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage last page options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
 					<div class="gf-pagebreak-end gf-pagebreak"><?php esc_html_e( 'End Paging', 'kdnaforms' ) ?></div>
 				</div>
 
@@ -376,7 +376,7 @@ class KDNAFormDetail {
 						<a id="preview_form_link" href="<?php echo esc_url_raw( trailingslashit( site_url() ) ); ?>?gf_page=preview&id={formid}" target="_blank">
 						<?php esc_html_e( 'Preview this Form', 'kdnaforms' ); ?>
 						<span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;
-						<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+						<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
 						</a>
 					</div>
 
@@ -416,10 +416,10 @@ class KDNAFormDetail {
 			?>
 
 			<aside class="sidebar ui-tabs" role="region" >
-				<h2 class="kdnaform-visually-hidden"><?php esc_html_e( 'Form Options and Settings', 'kdnaforms' ); ?></h2>
+				<h2 class="gform-visually-hidden"><?php esc_html_e( 'Form Options and Settings', 'kdnaforms' ); ?></h2>
 				<div class="sidebar__nav-wrapper">
 					<div class="search-button">
-						<label for="form_editor_search_input" class="kdnaform-visually-hidden"><?php echo esc_attr__( 'Search a form field by name', 'kdnaforms' ); ?></label>
+						<label for="form_editor_search_input" class="gform-visually-hidden"><?php echo esc_attr__( 'Search a form field by name', 'kdnaforms' ); ?></label>
 						<input id="form_editor_search_input" type="text" class="search-button__input" placeholder="<?php echo esc_attr__( 'Search for a field', 'kdnaforms' ); ?>">
 						<span class="clear-button"></span>
 					</div>
@@ -458,7 +458,7 @@ class KDNAFormDetail {
 									<?php echo esc_html( $group['label'] ); ?>
 								</button>
 								<div class="panel-block-tabs__body panel-block-tabs__body--nopadding gf-field-group" id="add_<?php echo esc_attr( $group['name'] ); ?>">
-									<h3 class="kdnaform-visually-hidden"><?php echo esc_html( $group['label'] ); ?></h3>
+									<h3 class="gform-visually-hidden"><?php echo esc_html( $group['label'] ); ?></h3>
 									<div class="gf-field-group__no-results" style="display: none;">
 										<span><?php esc_html_e( 'No Matching Fields', 'kdnaforms' ); ?></span>
 									</div>
@@ -495,16 +495,16 @@ class KDNAFormDetail {
 
 					<!-- Sidebar field message -->
 					<div class="panel-block panel-block--hidden" id="sidebar_field_message_container">
-						<div class="kdnaform-alert kdnaform-alert--theme-cosmos">
-							<span class="kdnaform-icon kdnaform-icon--preset-active kdnaform-alert__icon" aria-hidden="true"></span>
-							<div class="kdnaform-alert__message-wrap">
-								<div class="kdnaform-alert__message"></div>
+						<div class="gform-alert gform-alert--theme-cosmos">
+							<span class="gform-icon gform-icon--preset-active gform-alert__icon" aria-hidden="true"></span>
+							<div class="gform-alert__message-wrap">
+								<div class="gform-alert__message"></div>
 							</div>
 						</div>
 					</div>
 					<!-- End sidebar field message -->
 
-					<div class="panel-block panel-block-tabs panel-block--hidden field_settings" data-js="kdnaform-simplebar" <?php echo is_rtl() ? ' data-simplebar-direction="rtl"' : ''; ?> data-simplebar-delay="1000">
+					<div class="panel-block panel-block-tabs panel-block--hidden field_settings" data-js="gform-simplebar" <?php echo is_rtl() ? ' data-simplebar-direction="rtl"' : ''; ?> data-simplebar-delay="1000">
 						<button tabindex="0" id="general_tab_toggle" class="panel-block-tabs__toggle">
 							<?php esc_html_e( 'General', 'kdnaforms' ); ?>
 						</button>
@@ -1024,7 +1024,7 @@ class KDNAFormDetail {
 									</fieldset>
 
 									<input type="text" id="field_custom_field_name_text" autocomplete="off"/>
-									<div id="kdnaform-post-custom-select-container" style="margin-bottom: 10px;">
+									<div id="gform-post-custom-select-container" style="margin-bottom: 10px;">
 									<!-- populated dynamically in assets/js/admin/form-editor/post-custom-field-select/dropdown.js -->
 									</div>
 								</li>
@@ -1057,7 +1057,7 @@ class KDNAFormDetail {
 									<?php esc_html_e( 'Default Post Author', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_post_author' ); ?>
 								</label>
-								<div id="kdnaform-author-select-container" style="margin-bottom: 10px;">
+								<div id="gform-author-select-container" style="margin-bottom: 10px;">
 									<!-- Default author dropdown is populated dynamically in js/src/admin.form/editor/author-select -->
 								</div>
 								<input type="hidden"
@@ -1066,8 +1066,8 @@ class KDNAFormDetail {
 									value="<?php echo esc_attr( rgar( $form, 'postAuthor' ) ); ?>"
 								/>
 								<div>
-									<input type="checkbox" id="kdnafield_current_user_as_author"/>
-									<label for="kdnafield_current_user_as_author" class="inline"><?php esc_html_e( 'Use logged in user as author', 'kdnaforms' ); ?><?php kdnaform_tooltip( 'form_field_current_user_as_author' ); ?></label>
+									<input type="checkbox" id="gfield_current_user_as_author"/>
+									<label for="gfield_current_user_as_author" class="inline"><?php esc_html_e( 'Use logged in user as author', 'kdnaforms' ); ?><?php kdnaform_tooltip( 'form_field_current_user_as_author' ); ?></label>
 								</div>
 							</li>
 
@@ -1140,14 +1140,14 @@ class KDNAFormDetail {
 									<?php kdnaform_tooltip( 'form_field_post_category_selection' ); ?>
 								</legend>
 
-								<input type="radio" id="kdnafield_category_all" name="kdnafield_category" value="all" onclick="ToggleCategory();" onkeypress="ToggleCategory();"/>
-								<label for="kdnafield_category_all" class="inline"><?php esc_html_e( 'All Categories', 'kdnaforms' ); ?></label>
+								<input type="radio" id="gfield_category_all" name="gfield_category" value="all" onclick="ToggleCategory();" onkeypress="ToggleCategory();"/>
+								<label for="gfield_category_all" class="inline"><?php esc_html_e( 'All Categories', 'kdnaforms' ); ?></label>
 								&nbsp;&nbsp;
-								<input type="radio" id="kdnafield_category_select" name="kdnafield_category" value="select" onclick="ToggleCategory();" onkeypress="ToggleCategory();"/>
-								<label for="kdnafield_category_select" class="inline"><?php esc_html_e( 'Select Categories', 'kdnaforms' ); ?></label>
+								<input type="radio" id="gfield_category_select" name="gfield_category" value="select" onclick="ToggleCategory();" onkeypress="ToggleCategory();"/>
+								<label for="gfield_category_select" class="inline"><?php esc_html_e( 'Select Categories', 'kdnaforms' ); ?></label>
 							</fieldset>
 
-								<div id="kdnafield_settings_category_container">
+								<div id="gfield_settings_category_container">
 									<fieldset>
 										<legend class="screen-reader-text">
 											<?php esc_html_e( 'Select Categories', 'kdnaforms' ); ?>
@@ -1169,13 +1169,13 @@ class KDNAFormDetail {
 							do_action( 'kdnaform_field_standard_settings', 875, $form_id );
 							?>
 							<li class="post_category_initial_item_setting field_setting">
-								<input type="checkbox" id="kdnafield_post_category_initial_item_enabled" onclick="TogglePostCategoryInitialItem(); SetCategoryInitialItem();" onkeypress="TogglePostCategoryInitialItem(); SetCategoryInitialItem();"/>
-								<label for="kdnafield_post_category_initial_item_enabled" class="inline">
+								<input type="checkbox" id="gfield_post_category_initial_item_enabled" onclick="TogglePostCategoryInitialItem(); SetCategoryInitialItem();" onkeypress="TogglePostCategoryInitialItem(); SetCategoryInitialItem();"/>
+								<label for="gfield_post_category_initial_item_enabled" class="inline">
 									<?php esc_html_e( 'Display placeholder', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_post_category_initial_item' ); ?>
 								</label>
 							</li>
-							<li id="kdnafield_post_category_initial_item_container">
+							<li id="gfield_post_category_initial_item_container">
 								<label for="field_post_category_initial_item">
 									<?php esc_html_e( 'Placeholder Label', 'kdnaforms' ); ?>
 								</label>
@@ -1186,13 +1186,13 @@ class KDNAFormDetail {
 							?>
 							<li class="post_content_template_setting field_setting">
 								<label class="section_label"><?php esc_html_e( 'Content Template', 'kdnaforms' ) ?></label>
-								<input type="checkbox" id="kdnafield_post_content_enabled" onclick="TogglePostContentTemplate();" onkeypress="TogglePostContentTemplate();"/>
-								<label for="kdnafield_post_content_enabled" class="inline">
+								<input type="checkbox" id="gfield_post_content_enabled" onclick="TogglePostContentTemplate();" onkeypress="TogglePostContentTemplate();"/>
+								<label for="gfield_post_content_enabled" class="inline">
 									<?php esc_html_e( 'Create content template', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_post_content_template_enable' ); ?>
 								</label>
 
-								<div id="kdnafield_post_content_container">
+								<div id="gfield_post_content_container">
 									<div>
 										<?php KDNACommon::insert_post_content_variables( $form['fields'], 'field_post_content_template', '', 25 ); ?>
 									</div>
@@ -1204,13 +1204,13 @@ class KDNAFormDetail {
 							?>
 							<li class="post_title_template_setting field_setting">
 								<label class="section_label"><?php esc_html_e( 'Content Template', 'kdnaforms' ) ?></label>
-								<input type="checkbox" id="kdnafield_post_title_enabled" onclick="TogglePostTitleTemplate();" onkeypress="TogglePostTitleTemplate();"/>
-								<label for="kdnafield_post_title_enabled" class="inline">
+								<input type="checkbox" id="gfield_post_title_enabled" onclick="TogglePostTitleTemplate();" onkeypress="TogglePostTitleTemplate();"/>
+								<label for="gfield_post_title_enabled" class="inline">
 									<?php esc_html_e( 'Create content template', 'kdnaforms' ); ?>
 									 <?php kdnaform_tooltip( 'form_field_post_title_template_enable' ); ?>
 								</label>
 
-								<div id="kdnafield_post_title_container">
+								<div id="gfield_post_title_container">
 									<input type="text" id="field_post_title_template" class="merge-tag-support mt-position-right mt-hide_all_fields mt-exclude-post_image-fileupload" autocomplete="off"
 									/>
 								</div>
@@ -1219,13 +1219,13 @@ class KDNAFormDetail {
 							do_action( 'kdnaform_field_standard_settings', 975, $form_id );
 							?>
 							<li class="customfield_content_template_setting field_setting">
-								<input type="checkbox" id="kdnafield_customfield_content_enabled" onclick="ToggleCustomFieldTemplate(); SetCustomFieldTemplate();" onkeypress="ToggleCustomFieldTemplate(); SetCustomFieldTemplate();"/>
-								<label for="kdnafield_customfield_content_enabled" class="inline">
+								<input type="checkbox" id="gfield_customfield_content_enabled" onclick="ToggleCustomFieldTemplate(); SetCustomFieldTemplate();" onkeypress="ToggleCustomFieldTemplate(); SetCustomFieldTemplate();"/>
+								<label for="gfield_customfield_content_enabled" class="inline">
 									<?php esc_html_e( 'Create content template', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_customfield_content_template_enable' ); ?>
 								</label>
 
-								<div id="kdnafield_customfield_content_container">
+								<div id="gfield_customfield_content_container">
 									<div>
 										<?php KDNACommon::insert_post_content_variables( $form['fields'], 'field_customfield_content_template', 'SetCustomFieldTemplate', 25 ); ?>
 									</div>
@@ -1237,17 +1237,17 @@ class KDNAFormDetail {
 							?>
 							<li class="post_image_setting field_setting">
 								<label class="section_label"><?php esc_html_e( 'Image Metadata', 'kdnaforms' ); ?> <?php kdnaform_tooltip( 'form_field_image_meta' ); ?></label>
-								<input type="checkbox" id="kdnafield_display_alt" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
-								<label for="kdnafield_display_alt" class="inline"><?php esc_html_e( 'Alternative Text', 'kdnaforms' ); ?></label>
+								<input type="checkbox" id="gfield_display_alt" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
+								<label for="gfield_display_alt" class="inline"><?php esc_html_e( 'Alternative Text', 'kdnaforms' ); ?></label>
 								<br/>
-								<input type="checkbox" id="kdnafield_display_title" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
-								<label for="kdnafield_display_title" class="inline"><?php esc_html_e( 'Title', 'kdnaforms' ); ?></label>
+								<input type="checkbox" id="gfield_display_title" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
+								<label for="gfield_display_title" class="inline"><?php esc_html_e( 'Title', 'kdnaforms' ); ?></label>
 								<br/>
-								<input type="checkbox" id="kdnafield_display_caption" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
-								<label for="kdnafield_display_caption" class="inline"><?php esc_html_e( 'Caption', 'kdnaforms' ); ?></label>
+								<input type="checkbox" id="gfield_display_caption" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
+								<label for="gfield_display_caption" class="inline"><?php esc_html_e( 'Caption', 'kdnaforms' ); ?></label>
 								<br/>
-								<input type="checkbox" id="kdnafield_display_description" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
-								<label for="kdnafield_display_description" class="inline"><?php esc_html_e( 'Description', 'kdnaforms' ); ?></label>
+								<input type="checkbox" id="gfield_display_description" onclick="SetPostImageMeta();" onkeypress="SetPostImageMeta();"/>
+								<label for="gfield_display_description" class="inline"><?php esc_html_e( 'Description', 'kdnaforms' ); ?></label>
 							</li>
 
 							<?php
@@ -1256,8 +1256,8 @@ class KDNAFormDetail {
 
 							<li class="post_image_featured_image field_setting">
 								<label class="section_label"><?php esc_html_e( 'Featured Image', 'kdnaforms' ) ?></label>
-								<input type="checkbox" id="kdnafield_featured_image" onclick="SetFeaturedImage();" onkeypress="SetFeaturedImage();"/>
-								<label for="kdnafield_featured_image" class="inline"><?php esc_html_e( 'Set as Featured Image', 'kdnaforms' ); ?><?php kdnaform_tooltip( 'form_field_featured_image' ); ?></label>
+								<input type="checkbox" id="gfield_featured_image" onclick="SetFeaturedImage();" onkeypress="SetFeaturedImage();"/>
+								<label for="gfield_featured_image" class="inline"><?php esc_html_e( 'Set as Featured Image', 'kdnaforms' ); ?><?php kdnaform_tooltip( 'form_field_featured_image' ); ?></label>
 							</li>
 
 							<?php
@@ -1282,7 +1282,7 @@ class KDNAFormDetail {
 									?>
 								</select>
 
-								<div class="custom_inputs_sub_setting kdnafield_sub_setting">
+								<div class="custom_inputs_sub_setting gfield_sub_setting">
 									<fieldset>
 										<legend>
 											<?php esc_html_e( 'Address Fields', 'kdnaforms' ); ?>
@@ -1298,7 +1298,7 @@ class KDNAFormDetail {
 								foreach ( $addressTypes as $key => $addressType ) {
 									$state_label = isset( $addressType['state_label'] ) ? esc_attr( $addressType['state_label'] ) : __( 'State', 'kdnaforms' );
 								?>
-								<div id="address_type_container_<?php echo esc_attr( $key ); ?>" class="kdnafield_sub_setting kdnafield_address_type_container">
+								<div id="address_type_container_<?php echo esc_attr( $key ); ?>" class="gfield_sub_setting gfield_address_type_container">
 									<input type="hidden" id="field_address_country_<?php echo esc_attr( $key ); ?>" value="<?php echo isset( $addressType['country'] ) ? esc_attr( $addressType['country'] ) : ''; ?>"/>
 									<input type="hidden" id="field_address_zip_label_<?php echo esc_attr( $key ); ?>" value="<?php echo isset( $addressType['zip_label'] ) ? esc_attr( $addressType['zip_label'] ) : esc_attr__( 'Postal Code', 'kdnaforms' ); ?>"/>
 									<input type="hidden" id="field_address_state_label_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $state_label ); ?>"/>
@@ -1351,7 +1351,7 @@ class KDNAFormDetail {
 							do_action( 'kdnaform_field_standard_settings', 1125, $form_id );
 							?>
 							<li class="name_setting field_setting">
-								<div class="custom_inputs_setting kdnafield_sub_setting">
+								<div class="custom_inputs_setting gfield_sub_setting">
 									<fieldset>
 										<legend class="section_label inline">
 											<?php esc_html_e( 'Name Fields', 'kdnaforms' ); ?><?php kdnaform_tooltip( 'form_field_name_fields' ); ?>
@@ -1389,11 +1389,11 @@ class KDNAFormDetail {
 										<label for="gsetting_icon_custom" class="inline"><?php esc_html_e( 'Custom Icon', 'kdnaforms' ); ?></label>
 									</fieldset>
 
-									<div id="kdnafield_icon_url_container">
-										<label for="kdnafield_calendar_icon_url" class="inline">
+									<div id="gfield_icon_url_container">
+										<label for="gfield_calendar_icon_url" class="inline">
 											<?php esc_html_e( 'Image Path: ', 'kdnaforms' ); ?>
 										</label>
-										<input type="text" id="kdnafield_calendar_icon_url" autocomplete="off"/>
+										<input type="text" id="gfield_calendar_icon_url" autocomplete="off"/>
 
 										<div class="instruction"><?php esc_html_e( 'Preview this form to see your custom icon.', 'kdnaforms' ) ?></div>
 									</div>
@@ -1510,7 +1510,7 @@ class KDNAFormDetail {
 								<label for="field_columns_enabled" class="inline"><?php esc_html_e( 'Enable multiple columns', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_field_columns' ); ?></label>
 								<br/>
 
-								<div id="kdnafield_settings_columns_container">
+								<div id="gfield_settings_columns_container">
 									<ul id="field_columns"></ul>
 								</div>
 							</li>
@@ -1568,22 +1568,22 @@ class KDNAFormDetail {
 							<li class="choices-ui__trigger-section">
 								<span class="section_label" data-js="choices-ui-trigger-label"><?php esc_html_e( 'Choices', 'kdnaforms' ); ?></span>
 								<button
-									class="choices-ui__trigger kdnaform-button kdnaform-button--size-r kdnaform-button--white kdnaform-button--icon-leading"
+									class="choices-ui__trigger gform-button gform-button--size-r gform-button--white gform-button--icon-leading"
 									data-js="choices-ui-trigger"
 									style="display:none;"
 								>
-									<span class="kdnaform-button__icon kdnaform-icon kdnaform-icon--cog choices-ui__trigger-icon" aria-hidden="true"></span>
+									<span class="gform-button__icon gform-icon gform-icon--cog choices-ui__trigger-icon" aria-hidden="true"></span>
 									<?php esc_html_e( 'Edit Choices', 'kdnaforms' ); ?>
 								</button>
 							</li>
 							<li class="choices_setting field_setting" data-js="choices-ui-setting" data-type="main">
-								<div id="kdnafield_settings_choices_container">
-									<label class="kdnafield_choice_header_label" data-js="choices-ui-label"><?php esc_html_e( 'Label', 'kdnaforms' ) ?></label>
-									<label class="kdnafield_choice_header_value" data-js="choices-ui-label"><?php esc_html_e( 'Value', 'kdnaforms' ) ?></label>
-									<label class="kdnafield_choice_header_price" data-js="choices-ui-label"><?php esc_html_e( 'Price', 'kdnaforms' ) ?></label>
+								<div id="gfield_settings_choices_container">
+									<label class="gfield_choice_header_label" data-js="choices-ui-label"><?php esc_html_e( 'Label', 'kdnaforms' ) ?></label>
+									<label class="gfield_choice_header_value" data-js="choices-ui-label"><?php esc_html_e( 'Value', 'kdnaforms' ) ?></label>
+									<label class="gfield_choice_header_price" data-js="choices-ui-label"><?php esc_html_e( 'Price', 'kdnaforms' ) ?></label>
 									<ul id="field_choices"></ul>
-									<button class='field-choice-clear-default kdnaform-button kdnaform-button--size-r kdnaform-button--white kdnaform-button--icon-leading' onclick="ResetDefaultChoices();" style="display: none;">
-										<i class="kdnaform-button__icon kdnaform-icon kdnaform-icon--circle-close" aria-hidden="true"></i>
+									<button class='field-choice-clear-default gform-button gform-button--size-r gform-button--white gform-button--icon-leading' onclick="ResetDefaultChoices();" style="display: none;">
+										<i class="gform-button__icon gform-icon gform-icon--circle-close" aria-hidden="true"></i>
 										<?php esc_attr_e( 'Clear Default Choices', 'kdnaforms' ); ?>
 									</button>
 								</div>
@@ -1600,7 +1600,7 @@ class KDNAFormDetail {
 											/>
 											<label
 												for="field_choice_values_enabled"
-												class="inline kdnafield_value_label"
+												class="inline gfield_value_label"
 											><?php esc_html_e( 'Show Values', 'kdnaforms' ) ?></label>
 										</li>
 									</ul>
@@ -1615,13 +1615,13 @@ class KDNAFormDetail {
 									<input
 										type='button'
 										value='<?php echo esc_attr( $window_title ) ?>'
-										onclick="tb_show(<?php echo esc_attr( esc_js( $modal ) ); ?>, '#TB_inline?height=460&amp;width=600&amp;inlineId=kdnafield_bulk_add', '');"
-										onkeypress="tb_show(<?php echo esc_attr( esc_js( $modal ) ); ?>, '#TB_inline?height=460&amp;width=600&amp;inlineId=kdnafield_bulk_add', '');"
-										class="kdnaform-button kdnaform-button--white kdnaform-button--size-sm"
+										onclick="tb_show(<?php echo esc_attr( esc_js( $modal ) ); ?>, '#TB_inline?height=460&amp;width=600&amp;inlineId=gfield_bulk_add', '');"
+										onkeypress="tb_show(<?php echo esc_attr( esc_js( $modal ) ); ?>, '#TB_inline?height=460&amp;width=600&amp;inlineId=gfield_bulk_add', '');"
+										class="gform-button gform-button--white gform-button--size-sm"
 									/>
 								</div>
 
-								<div id="kdnafield_bulk_add" style="display:none;">
+								<div id="gfield_bulk_add" style="display:none;">
 									<div class="kdnaform_column_wrapper">
 										<?php
 
@@ -1687,13 +1687,13 @@ class KDNAFormDetail {
 											</svg>
 										</div>
 										<div class="bulk-right-panel panel">
-											<textarea id="kdnafield_bulk_add_input"></textarea>
+											<textarea id="gfield_bulk_add_input"></textarea>
 										</div>
 									</div>
 									<div class="modal_footer">
 
 										<div class="panel-buttons" style="">
-											<input type="button" onclick="InsertBulkChoices(jQuery('#kdnafield_bulk_add_input').val().split('\n')); tb_remove();" onkeypress="InsertBulkChoices(jQuery('#kdnafield_bulk_add_input').val().split('\n')); tb_remove();" class="button-primary" value="<?php esc_attr_e( 'Insert Choices', 'kdnaforms' ) ?>"/>&nbsp;
+											<input type="button" onclick="InsertBulkChoices(jQuery('#gfield_bulk_add_input').val().split('\n')); tb_remove();" onkeypress="InsertBulkChoices(jQuery('#gfield_bulk_add_input').val().split('\n')); tb_remove();" class="button-primary" value="<?php esc_attr_e( 'Insert Choices', 'kdnaforms' ) ?>"/>&nbsp;
 											<input type="button" onclick="tb_remove();" onkeypress="tb_remove();" class="button" value="<?php esc_attr_e( 'Cancel', 'kdnaforms' ) ?>"/>
 										</div>
 
@@ -1802,8 +1802,8 @@ class KDNAFormDetail {
 							?>
 
 							<li class="email_confirm_setting field_setting">
-								<input type="checkbox" id="kdnafield_email_confirm_enabled" onclick="SetEmailConfirmation(this.checked);" onkeypress="SetEmailConfirmation(this.checked);"/>
-								<label for="kdnafield_email_confirm_enabled" class="inline">
+								<input type="checkbox" id="gfield_email_confirm_enabled" onclick="SetEmailConfirmation(this.checked);" onkeypress="SetEmailConfirmation(this.checked);"/>
+								<label for="gfield_email_confirm_enabled" class="inline">
 									<?php esc_html_e( 'Enable Email Confirmation', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_email_confirm_enable' ); ?>
 								</label>
@@ -1814,7 +1814,7 @@ class KDNAFormDetail {
 							?>
 
 							<li class="password_setting field_setting">
-								<div class="custom_inputs_setting kdnafield_sub_setting">
+								<div class="custom_inputs_setting gfield_sub_setting">
 									<fieldset>
 										<legend class="section_label inline">
 											<?php esc_html_e( 'Password Fields', 'kdnaforms' ); ?>
@@ -1828,15 +1828,15 @@ class KDNAFormDetail {
 								</div>
 							</li>
 							<li class="password_visibility_setting field_setting">
-								<input type="checkbox" id="kdnafield_password_visibility_enabled" onclick="TogglePasswordVisibility(); SetFieldProperty('passwordVisibilityEnabled', this.checked);" onkeypress="TogglePasswordVisibility(); SetFieldProperty('passwordVisibilityEnabled', this.checked);"/>
-								<label for="kdnafield_password_visibility_enabled" class="inline">
+								<input type="checkbox" id="gfield_password_visibility_enabled" onclick="TogglePasswordVisibility(); SetFieldProperty('passwordVisibilityEnabled', this.checked);" onkeypress="TogglePasswordVisibility(); SetFieldProperty('passwordVisibilityEnabled', this.checked);"/>
+								<label for="gfield_password_visibility_enabled" class="inline">
 									<?php esc_html_e( 'Enable Password Visibility Toggle', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_password_visibility_enable' ); ?>
 								</label>
 							</li>
 							<li class="password_strength_setting field_setting">
-								<input type="checkbox" id="kdnafield_password_strength_enabled" onclick="TogglePasswordStrength(); SetPasswordStrength(this.checked);" onkeypress="TogglePasswordStrength(); SetPasswordStrength(this.checked);"/>
-								<label for="kdnafield_password_strength_enabled" class="inline">
+								<input type="checkbox" id="gfield_password_strength_enabled" onclick="TogglePasswordStrength(); SetPasswordStrength(this.checked);" onkeypress="TogglePasswordStrength(); SetPasswordStrength(this.checked);"/>
+								<label for="gfield_password_strength_enabled" class="inline">
 									<?php esc_html_e( 'Enable Password Strength', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_password_strength_enable' ); ?>
 								</label>
@@ -1846,12 +1846,12 @@ class KDNAFormDetail {
 							do_action( 'kdnaform_field_standard_settings', 1387, $form_id );
 							?>
 
-							<li id="kdnafield_min_strength_container">
-								<label for="kdnafield_min_strength">
+							<li id="gfield_min_strength_container">
+								<label for="gfield_min_strength">
 									<?php esc_html_e( 'Minimum Strength', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_password_strength_enable' ); ?>
 								</label>
-								<select id="kdnafield_min_strength" onchange="SetFieldProperty('minPasswordStrength', jQuery(this).val());">
+								<select id="gfield_min_strength" onchange="SetFieldProperty('minPasswordStrength', jQuery(this).val());">
 									<option value=""><?php esc_html_e( 'None', 'kdnaforms' ) ?></option>
 									<option value="short"><?php esc_html_e( 'Short', 'kdnaforms' ) ?></option>
 									<option value="bad"><?php esc_html_e( 'Bad', 'kdnaforms' ) ?></option>
@@ -2360,8 +2360,8 @@ class KDNAFormDetail {
 							?>
 
 							<li class="enable_enhanced_ui_setting field_setting">
-								<input type="checkbox" id="kdnafield_enable_enhanced_ui" onclick="SetFieldEnhancedUI(jQuery(this).is(':checked'));" onkeypress="SetFieldEnhancedUI(jQuery(this).is(':checked'));"/>
-								<label for="kdnafield_enable_enhanced_ui" class="inline">
+								<input type="checkbox" id="gfield_enable_enhanced_ui" onclick="SetFieldEnhancedUI(jQuery(this).is(':checked'));" onkeypress="SetFieldEnhancedUI(jQuery(this).is(':checked'));"/>
+								<label for="gfield_enable_enhanced_ui" class="inline">
 									<?php esc_html_e( 'Enable enhanced user interface', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_enable_enhanced_ui' ); ?>
 								</label>
@@ -2474,13 +2474,13 @@ class KDNAFormDetail {
 							do_action( 'kdnaform_field_advanced_settings', 155, $form_id );
 							?>
 							<li class="name_prefix_choices_setting field_setting" style="display:none;">
-								<label for="kdnafield_settings_prefix_input_choices_container" class="section_label">
+								<label for="gfield_settings_prefix_input_choices_container" class="section_label">
 									<?php esc_html_e( 'Prefix Choices', 'kdnaforms' ); ?>
 									<?php kdnaform_tooltip( 'form_field_name_prefix_choices' ); ?>
 								</label>
 
-								<div id="kdnafield_settings_prefix_input_choices_container" class="kdnafield_settings_input_choices_container">
-									<label class="kdnafield_choice_header_label"><?php esc_html_e( 'Label', 'kdnaforms' ) ?></label><label class="kdnafield_choice_header_value"><?php esc_html_e( 'Value', 'kdnaforms' ) ?></label>
+								<div id="gfield_settings_prefix_input_choices_container" class="gfield_settings_input_choices_container">
+									<label class="gfield_choice_header_label"><?php esc_html_e( 'Label', 'kdnaforms' ) ?></label><label class="gfield_choice_header_value"><?php esc_html_e( 'Value', 'kdnaforms' ) ?></label>
 									<ul id="field_prefix_choices" class="field_input_choices">
 										<!-- content dynamically created from js.php -->
 									</ul>
@@ -2530,7 +2530,7 @@ class KDNAFormDetail {
 										<?php kdnaform_tooltip( 'form_field_enable_copy_values_disabled' ); ?>
 									</span>
 								</div>
-								<div id="field_copy_values_container" style="display:none;" class="kdnafield_sub_setting">
+								<div id="field_copy_values_container" style="display:none;" class="gfield_sub_setting">
 									<label for="field_copy_values_option_label">
 										<?php esc_html_e( 'Option Label', 'kdnaforms' ); ?>
 										<?php kdnaform_tooltip( 'form_field_copy_values_option_label' ); ?>
@@ -3015,7 +3015,7 @@ class KDNAFormDetail {
 	 */
 	private static function display_buttons( $buttons ) {
 		foreach ( $buttons as $button ) {
-			$button['data-icon']        = empty( $button['data-icon'] ) ? 'kdnaform-icon--cog' : $button['data-icon'];
+			$button['data-icon']        = empty( $button['data-icon'] ) ? 'gform-icon--cog' : $button['data-icon'];
 			$button['data-description'] = empty( $button['data-description'] ) ? sprintf( esc_attr__( 'Add a %s field to your form.', 'kdnaforms' ), $button['value'] ) : $button['data-description'];
 			?>
 			<li>
@@ -3100,7 +3100,7 @@ class KDNAFormDetail {
 
 		$cat->count = number_format_i18n( $cat->count );
 
-		$output .= "<li><input id='" . esc_attr( $cat->name ) . "' type='checkbox' class='kdnafield_category_checkbox' value='" . esc_attr( $cat->term_id ) . "' name='" . esc_attr( $cat->name ) . "' onclick='SetSelectedCategories();' onkeypress='SetSelectedCategories();' /><label for='" . esc_attr( $cat->name ) . "'>$name</label></li>";
+		$output .= "<li><input id='" . esc_attr( $cat->name ) . "' type='checkbox' class='gfield_category_checkbox' value='" . esc_attr( $cat->term_id ) . "' name='" . esc_attr( $cat->name ) . "' onclick='SetSelectedCategories();' onkeypress='SetSelectedCategories();' /><label for='" . esc_attr( $cat->name ) . "'>$name</label></li>";
 	}
 
 	private static function _get_term_hierarchy( $taxonomy ) {
@@ -3355,7 +3355,7 @@ class KDNAFormDetail {
 		$id       = ! $has_input_name ? rgpost( 'objectType' ) . '_rule_value_' . rgpost( 'ruleIndex' ) : rgpost( 'inputName' );
 		$selected = rgempty( 'selectedValue' ) ? 0 : rgpost( 'selectedValue' );
 
-		$dropdown = wp_dropdown_categories( array( 'class' => 'kdnafield_rule_select kdnafield_rule_value_dropdown kdnafield_category_dropdown', 'orderby' => 'name', 'id' => $id, 'name' => $id, 'selected' => $selected, 'hierarchical' => true, 'hide_empty' => 0, 'echo' => false ) );
+		$dropdown = wp_dropdown_categories( array( 'class' => 'gfield_rule_select gfield_rule_value_dropdown gfield_category_dropdown', 'orderby' => 'name', 'id' => $id, 'name' => $id, 'selected' => $selected, 'hierarchical' => true, 'hide_empty' => 0, 'echo' => false ) );
 		die( $dropdown ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
@@ -3434,29 +3434,29 @@ class KDNAFormDetail {
 		}
 
 		?>
-		<div class="kdnaform-alert" data-js="kdnaform-alert" data-kdnaform-alert-cookie="kdnaform-alert-editor-deprecated-classes">
-			<span class="kdnaform-alert__icon kdnaform-icon kdnaform-icon--campaign" aria-hidden="true"></span>
-			<div class="kdnaform-alert__message-wrap">
-				<p class="kdnaform-alert__message" tabindex="0">
+		<div class="gform-alert" data-js="gform-alert" data-gform-alert-cookie="gform-alert-editor-deprecated-classes">
+			<span class="gform-alert__icon gform-icon gform-icon--campaign" aria-hidden="true"></span>
+			<div class="gform-alert__message-wrap">
+				<p class="gform-alert__message" tabindex="0">
 					<?php
 						echo sprintf(
 							// Translators: 1. Opening <a> tag with link to the form export page, 2. closing <a> tag, 3. Opening <a> tag for documentation link, 4. Closing <a> tag.
 							esc_html__( 'If you continue to encounter this error, you can %1$sexport your form%2$s to include in your support request. You can also disable AJAX saving for this form. %3$sLearn more%4$s.', 'kdnaforms' ),
-							'<a target="_blank" href="' . esc_url( admin_url( 'admin.php?page=kdna_export&subview=export_form&export_form_ids=' . rgget( 'id' ) ) ) . '" rel="noopener noreferrer" class="kdnaform-export-form">',
-							'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>',
+							'<a target="_blank" href="' . esc_url( admin_url( 'admin.php?page=kdna_export&subview=export_form&export_form_ids=' . rgget( 'id' ) ) ) . '" rel="noopener noreferrer" class="gform-export-form">',
+							'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>',
 							'<a target="_blank" href="https://docs.kdnaforms.com/kdnaform_disable_ajax_save/" rel="noopener noreferrer">',
-							'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
+							'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
 						);
 					?>
 				</p>
 			</div>
 			<button
-				class="kdnaform-alert__dismiss"
+				class="gform-alert__dismiss"
 				aria-label="<?php esc_attr_e( 'Dismiss notification', 'kdnaforms' ); ?>"
 				title="<?php esc_attr_e( 'Dismiss notification', 'kdnaforms' ); ?>"
-				data-js="kdnaform-alert-dismiss-trigger"
+				data-js="gform-alert-dismiss-trigger"
 			>
-				<span class="kdnaform-icon kdnaform-icon--delete"></span>
+				<span class="gform-icon gform-icon--delete"></span>
 			</button>
 		</div>
 		<?php
@@ -3549,21 +3549,21 @@ class KDNAFormDetail {
 		}
 
 		?>
-		<div class="kdnaform-alert" data-js="kdnaform-alert">
-			<span class="kdnaform-alert__icon kdnaform-icon kdnaform-icon--campaign" aria-hidden="true"></span>
-			<div class="kdnaform-alert__message-wrap">
-				<p class="kdnaform-alert__message" tabindex="0">
+		<div class="gform-alert" data-js="gform-alert">
+			<span class="gform-alert__icon gform-icon gform-icon--campaign" aria-hidden="true"></span>
+			<div class="gform-alert__message-wrap">
+				<p class="gform-alert__message" tabindex="0">
 					<?php echo esc_html_e( 'This form uses Ready Classes, which will be removed in KDNA Forms 4.0. You can now use settings or code snippets to achieve the same results.', 'kdnaforms' ); ?>
 				</p>
 				<a
-					class="kdnaform-alert__cta kdnaform-button kdnaform-button--white kdnaform-button--size-xs"
+					class="gform-alert__cta gform-button gform-button--white gform-button--size-xs"
 					href="https://docs.kdnaforms.com/migrating-your-forms-from-ready-classes/"
 					target="_blank"
 					title="<?php esc_attr_e( 'Deprecation of Ready Classes in KDNA Forms 4.0', 'kdnaforms' ); ?>"
 				>
 					<?php esc_html_e( 'Learn More', 'kdnaforms' ); ?>
 					<span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;
-					<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+					<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
 				</a>
 			</div>
 		</div>

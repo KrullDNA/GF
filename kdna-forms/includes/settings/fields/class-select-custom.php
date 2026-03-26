@@ -143,11 +143,11 @@ class Select_Custom extends Base {
 		$html = $this->get_description();
 
 		$html .= sprintf(
-			'<span class="%s">%s<div class="kdnaform-settings-select-custom__custom" %s>%s%s</div>%s</span>',
+			'<span class="%s">%s<div class="gform-settings-select-custom__custom" %s>%s%s</div>%s</span>',
 			esc_attr( $this->get_container_classes() ),
 			$this->inputs['select']->markup(),
 			$custom_input_display,
-			count( $this->inputs['select']->choices ) > 1 ? '<button type="button" class="kdnaform-settings-select-custom__reset"><span class="screen-reader-text">' . esc_html__( 'Reset', 'kdnaforms' ) . '</span></button>' : '',
+			count( $this->inputs['select']->choices ) > 1 ? '<button type="button" class="gform-settings-select-custom__reset"><span class="screen-reader-text">' . esc_html__( 'Reset', 'kdnaforms' ) . '</span></button>' : '',
 			$this->inputs['custom']->markup(),
 			$this->get_error_icon()
 		);

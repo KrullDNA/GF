@@ -1333,7 +1333,7 @@ class KDNACommon {
 			 * @param array $form The current Form object.
 			 * @param array $lead The current Entry object.
 			 */
-			$entry_url = esc_url( apply_filters( 'kdnaform_entry_detail_url', $entry_url, $form, $lead ) );
+			$entry_url = esc_url( apply_filters( 'gform_entry_detail_url', $entry_url, $form, $lead ) );
 			$text      = str_replace( '{entry_url}', $url_encode ? urlencode( $entry_url ) : $entry_url, $text );
 		}
 
@@ -1439,7 +1439,7 @@ class KDNACommon {
 		$validation_class  = rgar( $form, 'validationPlacement' ) == 'above' ? 'validation_above' : 'validation_below';
 		$sublabel_class    = rgar( $form, 'subLabelPlacement' ) == 'above' ? 'form_sublabel_above' : 'form_sublabel_below';
 
-		$css_class = preg_replace( '/\s+/', ' ', "kdnaform_fields {$label_class} {$sublabel_class} {$description_class} {$validation_class}" ); //removing extra spaces
+		$css_class = preg_replace( '/\s+/', ' ', "gform_fields {$label_class} {$sublabel_class} {$description_class} {$validation_class}" ); //removing extra spaces
 
 		return $css_class;
 	}
@@ -3943,7 +3943,7 @@ Content-Type: text/html;
 		// Pricing fields are not editable.
 		if ( rgget('view') == 'entry' && self::is_pricing_field( $field->type ) ) {
 
-			return "<div class='kdnainput_container'>" . esc_html__( 'Pricing fields are not editable' , 'kdnaforms' ) . '</div>';
+			return "<div class='ginput_container'>" . esc_html__( 'Pricing fields are not editable' , 'kdnaforms' ) . '</div>';
 
 		}
 
@@ -3962,13 +3962,13 @@ Content-Type: text/html;
 						$value = json_encode( $value );
 					}
 
-					return sprintf( "<input name='input_%d' id='%s' class='kdnaform_hidden' type='hidden' value='%s'/>", $id, esc_attr( $field_id ), esc_attr( $value ) );
+					return sprintf( "<input name='input_%d' id='%s' class='gform_hidden' type='hidden' value='%s'/>", $id, esc_attr( $field_id ), esc_attr( $value ) );
 				}
 
 
 				$fields = '';
 				foreach ( $inputs as $input ) {
-					$fields .= sprintf( "<input name='input_%s' class='kdnaform_hidden' type='hidden' value='%s'/>", $input['id'], esc_attr( rgar( $value, strval( $input['id'] ) ) ) );
+					$fields .= sprintf( "<input name='input_%s' class='gform_hidden' type='hidden' value='%s'/>", $input['id'], esc_attr( rgar( $value, strval( $input['id'] ) ) ) );
 				}
 
 				return $fields;
@@ -4047,7 +4047,7 @@ Content-Type: text/html;
 			),
 			'form_id'      => 0,
 			'label'        => __( 'Preview', 'kdnaforms' ),
-			'link_class'   => 'preview-form kdnaform-button kdnaform-button--white',
+			'link_class'   => 'preview-form gform-button gform-button--white',
 			'menu_class'   => 'kdna_form_toolbar_preview',
 			'priority'     => 700,
 			'target'       => '_blank',
@@ -4089,10 +4089,10 @@ Content-Type: text/html;
 
 		$preview_link = sprintf(
 			'
-			<a href="%s" class="%s kdnaform-button--icon-leading" target="%s" rel="noopener">
+			<a href="%s" class="%s gform-button--icon-leading" target="%s" rel="noopener">
 				<span class="screen-reader-text">%s</span>
 				<span class="screen-reader-text">%s</span>
-				<i class="kdnaform-button__icon kdnaform-common-icon kdnaform-common-icon--eye" aria-hidden="true"></i>%s
+				<i class="gform-button__icon gform-common-icon gform-common-icon--eye" aria-hidden="true"></i>%s
 			</a>
 				',
 			esc_url( $options['url'] ),
@@ -5716,7 +5716,7 @@ Content-Type: text/html;
 		 */
 		$logic_a11y_warn                   = esc_html__( 'Adding conditional logic to the form submit button could cause usability problems for some users and negatively impact the accessibility of your form. Learn more about button conditional logic in our %1$sdocumentation%2$s.', 'kdnaforms' );
 		$logic_a11y_warn_link1             = '<a href="https://docs.kdnaforms.com/field-accessibility-warning/" target="_blank" rel="noopener">';
-		$logic_a11y_warn_link2             = '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>';
+		$logic_a11y_warn_link2             = '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
 		$gf_vars['conditional_logic_a11y'] = sprintf( $logic_a11y_warn, $logic_a11y_warn_link1, $logic_a11y_warn_link2 );
 		$gf_vars['page']                   = esc_html__( 'Page', 'kdnaforms' );
 		$gf_vars['next_button']            = esc_html__( 'Next Button', 'kdnaforms' );
@@ -6106,18 +6106,18 @@ Content-Type: text/html;
 	public static function gf_header() {
 		$header_buttons = apply_filters( 'kdnaform_settings_header_buttons', '' );
 		if ( !empty( $header_buttons ) ) {
-			$header_button_class = 'kdnaform-settings-header--has_buttons';
+			$header_button_class = 'gform-settings-header--has_buttons';
 		} else {
 			$header_button_class = '';
 		}
 		?>
-		<header class="kdnaform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
-			<div class="kdnaform-settings__wrapper">
+		<header class="gform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
+			<div class="gform-settings__wrapper">
 				<h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #1d2327; line-height: 1.4;">KDNA Forms</h2>
 
 				<?php
 				if ( !empty ( $header_buttons ) ) { ?>
-					<div class="kdnaform-settings-header_buttons">
+					<div class="gform-settings-header_buttons">
 						<?php echo $header_buttons; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 				<?php } ?>
@@ -6439,7 +6439,7 @@ Content-Type: text/html;
 				'text'        => esc_html__( 'Entry Date', 'kdnaforms' ),
 				'operators'   => array( 'is', '>', '<' ),
 				'placeholder' => __( 'yyyy-mm-dd', 'kdnaforms' ),
-				'cssClass'    => 'datepicker kdnaform-datepicker ymd_dash',
+				'cssClass'    => 'datepicker gform-datepicker ymd_dash',
 			),
 			'is_starred'     => array(
 				'text'      => esc_html__( 'Starred', 'kdnaforms' ),
@@ -6472,7 +6472,7 @@ Content-Type: text/html;
 				'text'        => esc_html__( 'Payment Date', 'kdnaforms' ),
 				'operators'   => array( 'is', 'isnot', '>', '<' ),
 				'placeholder' => __( 'yyyy-mm-dd', 'kdnaforms' ),
-				'cssClass'    => 'datepicker kdnaform-datepicker ymd_dash',
+				'cssClass'    => 'datepicker gform-datepicker ymd_dash',
 			),
 			'payment_amount' => array(
 				'text'      => esc_html__( 'Payment Amount', 'kdnaforms' ),
@@ -7599,8 +7599,8 @@ Content-Type: text/html;
 			}
 		} else if ( strpos( $icon, 'dashicons' ) === 0 ) {
 			return sprintf( '<i class="dashicons %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
-		} else if ( strpos( $icon, 'kdnaform-icon' ) === 0 ) {
-			return sprintf( '<i class="kdnaform-icon %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
+		} else if ( strpos( $icon, 'gform-icon' ) === 0 ) {
+			return sprintf( '<i class="gform-icon %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
 		}
 
 		return null;

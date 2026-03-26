@@ -12,7 +12,7 @@
         $container = $(c);
         $container
             .css('position' , 'relative')
-            .html('<div id="kdnaform-field-filters"></div>');
+            .html('<div id="gform-field-filters"></div>');
         height = h;
         isResizable = typeof height != 'undefined' && height > 0;
         operatorStrings = {"is":"is","isnot":"isNot", ">":"greaterThan", "<":"lessThan", "contains":"contains", "starts_with":"startsWith", "ends_with":"endsWith"};
@@ -29,27 +29,27 @@
     function setUpFilters(filters) {
         var i;
 
-        $container.on('change', '.kdnaform-filter-field', function(){
+        $container.on('change', '.gform-filter-field', function(){
             changeField(this);
         });
 
-		$container.on( 'click', '#kdnaform-no-filters', function() {
-			if ( $( '.kdnaform-field-filter' ).length == 0 ) {
+		$container.on( 'click', '#gform-no-filters', function() {
+			if ( $( '.gform-field-filter' ).length == 0 ) {
 				addNewFieldFilter( this );
 			}
 			$( this ).remove();
 		});
 
-		$container.on( 'click', '.kdnaform-add', function( e ) {
+		$container.on( 'click', '.gform-add', function( e ) {
 			addNewFieldFilter( this );
 			e.preventDefault();
 		});
 
-        $container.on('click', '.kdnaform-remove', function(){
+        $container.on('click', '.gform-remove', function(){
             removeFieldFilter(this);
         });
 
-        $container.on('change', '.kdnaform-filter-operator', function(){
+        $container.on('change', '.gform-filter-operator', function(){
             changeOperator(this, this.value);
         });
 
@@ -59,26 +59,26 @@
         }
 
         if(mode != "off"){
-            $("#kdnaform-field-filters").append(getFilterMode(mode));
+            $("#gform-field-filters").append(getFilterMode(mode));
         }
 
         for (i = 0; i < filters.length; i++) {
-            $("#kdnaform-field-filters").append(getNewFilterRow());
+            $("#gform-field-filters").append(getNewFilterRow());
         }
 
 
-        $(".kdnaform-filter-field").each(function (i) {
+        $(".gform-filter-field").each(function (i) {
             var fieldId = filters[i].field;
             jQuery(this).val(fieldId);
             changeField(this);
         });
-        $(".kdnaform-filter-operator").each(function (i) {
+        $(".gform-filter-operator").each(function (i) {
             var operator = filters[i].operator;
             jQuery(this).val(operator);
             changeOperator(this, this.value);
         });
 
-        $(".kdnaform-filter-value").each(function (i) {
+        $(".gform-filter-value").each(function (i) {
             var value = filters[i].value;
             jQuery(this).val(value);
             jQuery(this).change();
@@ -89,7 +89,7 @@
 
     function getNewFilterRow() {
         var str;
-        str = "<div class='kdnaform-field-filter'>";
+        str = "<div class='gform-field-filter'>";
         str += getFilterFields() + getFilterOperators() + getFilterValues() + getAddRemoveButtons();
         str += "</div>";
         return str;
@@ -97,14 +97,14 @@
 
     function getFilterFields() {
         var i, select = [], optionsHTML;
-        select.push("<select class='kdnaform-filter-field' name='f[]' >");
+        select.push("<select class='gform-filter-field' name='f[]' >");
         for (i = 0; i < settings.length; i++) {
 			optionsHTML = getOptions( settings[i] );
             select.push( optionsHTML );
 
         }
         select.push("</select>");
-        select.push("<input type='hidden' class='kdnaform-filter-type' name='t[]' value='' >");
+        select.push("<input type='hidden' class='gform-filter-type' name='t[]' value='' >");
         return select.join('');
     }
 
@@ -151,10 +151,10 @@
 
     function changeOperator (operatorSelect) {
         var $select = $(operatorSelect);
-        var $fieldSelect = $select.siblings('.kdnaform-filter-field');
+        var $fieldSelect = $select.siblings('.gform-filter-field');
         var filter = getFilter($fieldSelect.val());
         if (filter) {
-            $select.siblings(".kdnaform-filter-value").replaceWith(getFilterValues(filter, operatorSelect.value));
+            $select.siblings(".gform-filter-value").replaceWith(getFilterValues(filter, operatorSelect.value));
         }
         setDisabledFields();
         if(window['gformInitDatepicker']) {gformInitDatepicker();}
@@ -164,10 +164,10 @@
         var filter = getFilter(fieldSelect.value);
         if (filter) {
             var $select = $(fieldSelect);
-            $select.siblings(".kdnaform-filter-value").replaceWith(getFilterValues(filter));
-            $select.siblings(".kdnaform-filter-type").val(filter.type);
-            $select.siblings(".kdnaform-filter-operator").replaceWith(getFilterOperators(filter));
-            $select.siblings(".kdnaform-filter-operator").change();
+            $select.siblings(".gform-filter-value").replaceWith(getFilterValues(filter));
+            $select.siblings(".gform-filter-type").val(filter.type);
+            $select.siblings(".gform-filter-operator").replaceWith(getFilterOperators(filter));
+            $select.siblings(".gform-filter-operator").change();
         }
         setDisabledFields();
     }
@@ -175,7 +175,7 @@
     function isFieldSelected (fieldId) {
         fieldId = fieldId.toString();
         var selectedFields = [];
-        $('.kdnaform-filter-field :selected').each(function (i, selected) {
+        $('.gform-filter-field :selected').each(function (i, selected) {
             selectedFields[i] = $(selected).val();
         });
         return $.inArray(fieldId, selectedFields) > -1 ? true : false;
@@ -183,7 +183,7 @@
 
     function getFilterOperators (filter) {
         var i, operator,
-            str = "<select name='o[]' class='kdnaform-filter-operator'>";
+            str = "<select name='o[]' class='gform-filter-operator'>";
         if (filter) {
             for (i = 0; i < filter.operators.length; i++) {
                 operator = filter.operators[i];
@@ -196,7 +196,7 @@
 
     function getFilterValues (filter, selectedOperator) {
         var i, val, text, str, options = "", placeholder, cssClass, supporterOperators;
-        cssClass = 'kdnaform-filter-value';
+        cssClass = 'gform-filter-value';
 
         if ( filter && typeof filter.cssClass != 'undefined' ) {
             cssClass += ' ' + filter.cssClass;
@@ -256,11 +256,11 @@
             return str;
 
         str += "<button " +
-	        "class='kdnaform-add add_field_choice kdnaform-st-icon kdnaform-st-icon--circle-plus' " +
+	        "class='gform-add add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
 	        "title='{0}'" +
 	        "></button>".gformFormat(kdna_vars.addFieldFilter);
         str += "<button " +
-	        "class='kdnaform-remove delete_field_choice kdnaform-st-icon kdnaform-st-icon--circle-minus' " +
+	        "class='gform-remove delete_field_choice gform-st-icon gform-st-icon--circle-minus' " +
 	        "title='" + kdna_vars.removeFieldFilter + "'" +
 	        "></button>";
         return str;
@@ -270,9 +270,9 @@
         if(!isResizable)
             return;
 
-        var $filterBox = $("#kdnaform-field-filters");
+        var $filterBox = $("#gform-field-filters");
 
-        var $filters = $(".kdnaform-field-filter");
+        var $filters = $(".gform-field-filter");
 
         if ($filters.length <= 1) {
             if ($($container).hasClass('ui-resizable'))
@@ -296,26 +296,26 @@
 
     function displayNoFiltersMessage () {
         var str = "";
-        str += "<div id='kdnaform-no-filters' >" + kdna_vars.addFieldFilter;
+        str += "<div id='gform-no-filters' >" + kdna_vars.addFieldFilter;
         str += "<button " +
-	        "class='kdnaform-add add_field_choice kdnaform-st-icon kdnaform-st-icon--circle-plus' " +
+	        "class='gform-add add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
 	        "title='{0}'" +
 	        "></div>".gformFormat(kdna_vars.addFieldFilter);
-        $("#kdnaform-field-filters").html(str);
+        $("#gform-field-filters").html(str);
         if(isResizable){
             $container.css({'min-height': '', 'border-bottom': ''});
             $container.height(80);
-            $("#kdnaform-field-filters").css("min-height", '');
+            $("#gform-field-filters").css("min-height", '');
         }
 
     }
 
     function setDisabledFields () {
-        $("select.kdnaform-filter-field option").removeAttr("disabled");
-        $("select.kdnaform-filter-field").each(function (i) {
+        $("select.gform-filter-field option").removeAttr("disabled");
+        $("select.gform-filter-field").each(function (i) {
             var filter = getFilter(this.value);
             if (typeof(filter) != 'undefined' && filter.preventMultiple && isFieldSelected(this.value)) {
-                $("select.kdnaform-filter-field option[value='" + this.value + "']:not(:selected)").attr('disabled', 'disabled');
+                $("select.gform-filter-field option[value='" + this.value + "']:not(:selected)").attr('disabled', 'disabled');
             }
         });
 
@@ -348,9 +348,9 @@
 
 		$filterRow.after( getNewFilterRow() );
 		$filterRow.next( "div" )
-			.find( ".kdnaform-filter-field" ).change()
-			.find( ".kdnaform-filter-operator" ).change();
-		if ($( ".kdnaform-field-filter" ).length == 1 ) {
+			.find( ".gform-filter-field" ).change()
+			.find( ".gform-filter-operator" ).change();
+		if ($( ".gform-field-filter" ).length == 1 ) {
 			addFilterMode( $filterRow );
 		}
 
@@ -359,7 +359,7 @@
 
     function removeFieldFilter (img) {
         $(img).parent().remove();
-        if ($(".kdnaform-field-filter").length == 0)
+        if ($(".gform-field-filter").length == 0)
             displayNoFiltersMessage();
         setDisabledFields();
         maybeMakeResizable();

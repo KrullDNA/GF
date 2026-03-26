@@ -113,7 +113,7 @@ class Checkbox_And_Select extends Base {
 		$this->inputs['select']->disabled = ! $this->inputs['checkbox']->get_value();
 
 		$html .= sprintf(
-			'<span class="%s">%s <span id="%s" class="kdnaform-settings-input__target">%s %s</span></span>',
+			'<span class="%s">%s <span id="%s" class="gform-settings-input__target">%s %s</span></span>',
 			esc_attr( $this->get_container_classes() ),
 			$this->inputs['checkbox']->markup(),
 			$this->inputs['select']->name . 'Span',

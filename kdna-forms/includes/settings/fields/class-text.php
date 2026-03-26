@@ -72,7 +72,7 @@ class Text extends Base {
 			! rgblank( $value ) ? esc_attr( htmlspecialchars( $value, ENT_QUOTES ) ) : '',
 			$this->get_describer() ? sprintf( 'aria-describedby="%s"', $this->get_describer() ) : '',
 			implode( ' ', $this->get_attributes() ),
-			isset( $this->append ) ? sprintf( '<span class="kdnaform-settings-field__text-append">%s</span>', esc_html( $this->append ) ) : '',
+			isset( $this->append ) ? sprintf( '<span class="gform-settings-field__text-append">%s</span>', esc_html( $this->append ) ) : '',
 			$this->get_error_icon()
 		);
 

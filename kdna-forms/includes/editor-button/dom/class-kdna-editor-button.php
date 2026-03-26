@@ -18,11 +18,11 @@ class KDNA_Editor_Button {
 		?>
 		<button
             data-js="editor-flyout-trigger"
-            class="kdnaform-button kdnaform-button--icon-white kdnaform-button--icon-editor"
+            class="gform-button gform-button--icon-white gform-button--icon-editor"
             aria-label="<?php esc_attr_e( 'Open editor preferences', 'kdnaforms' ); ?>"
             title="<?php esc_attr_e( 'Open editor preferences', 'kdnaforms' ); ?>"
         >
-			<i class="kdnaform-icon kdnaform-icon--cog kdnaform-button__icon" aria-hidden="true"></i>
+			<i class="gform-icon gform-icon--cog gform-button__icon" aria-hidden="true"></i>
 		</button>
 		<?php
 	}

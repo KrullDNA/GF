@@ -124,13 +124,13 @@ class Select extends Base {
 				$input_id = preg_replace( "/id='(.*)'/m", '${1}', $attributes['id'] );
 
 				// Wrap select input.
-				$html .= sprintf( '<span class="kdnaform-settings-field__select--enhanced">%s</span>', $select_input );
+				$html .= sprintf( '<span class="gform-settings-field__select--enhanced">%s</span>', $select_input );
 
 				$html .= '<script type="text/javascript">
 					jQuery( document ).ready( function () {
 						jQuery( "#' . esc_attr( $input_id ) . '" ).select2( {
 							minimumResultsForSearch: Infinity,
-							dropdownCssClass: "kdnaform-settings-field__select-enhanced-container",
+							dropdownCssClass: "gform-settings-field__select-enhanced-container",
 							dropdownParent: jQuery( "#' . esc_attr( $input_id ) . '" ).parent(),
 						} );
 					} );

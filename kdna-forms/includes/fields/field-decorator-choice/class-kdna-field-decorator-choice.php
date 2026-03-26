@@ -32,12 +32,12 @@ class ChoiceDecorator {
 	public function get_field_classes( $form_id, $field ) {
 		// Choice label visibility class
 		$choice_label_visibility = KDNA_Field_Image_Choice::get_image_choice_label_visibility_setting( $field );
-		$label_visibility_class  = "kdnainput_container_image_choice--label-{$choice_label_visibility}";
+		$label_visibility_class  = "ginput_container_image_choice--label-{$choice_label_visibility}";
 
 		// Choice input visibility class
 		$choice_input_visibility = KDNA_Field_Image_Choice::get_image_choice_input_visibility_setting( $field );
 		$input_visibility        = ( $choice_input_visibility === 'show' ) && ( $choice_label_visibility === 'show' ) ? 'show' : 'hide';
-		$input_visibility_class  = "kdnainput_container_image_choice--input-{$input_visibility}";
+		$input_visibility_class  = "ginput_container_image_choice--input-{$input_visibility}";
 
 		return $label_visibility_class . ' ' . $input_visibility_class;
 	}
@@ -55,7 +55,7 @@ class ChoiceDecorator {
 	 * @return string
 	 */
 	public function get_image_markup( $choice, $choice_id, $choice_number, $form ) {
-		$image_aria_describedby = 'kdnachoice_image_' . $choice_id;
+		$image_aria_describedby = 'gchoice_image_' . $choice_id;
 
 		if ( ! empty( $choice['attachment_id'] ) ) {
 			$image_alt  = get_post_meta( $choice['attachment_id'], '_wp_attachment_image_alt', true );
@@ -64,10 +64,10 @@ class ChoiceDecorator {
 
 			$image = wp_get_attachment_image(
 				$choice['attachment_id'],
-				'kdnaform-image-choice-' . $image_size,
+				'gform-image-choice-' . $image_size,
 				false,
 				array(
-					'class'   => 'kdnafield-choice-image',
+					'class'   => 'gfield-choice-image',
 					'alt'     => $image_alt,
 					'id'      => $image_aria_describedby,
 					'loading' => 'false',
@@ -75,7 +75,7 @@ class ChoiceDecorator {
 			);
 		} else {
 			$image = sprintf(
-				'<span class="kdnafield-choice-image-no-image" id="%s"><span>%s</span></span>',
+				'<span class="gfield-choice-image-no-image" id="%s"><span>%s</span></span>',
 				$image_aria_describedby,
 				sprintf(
 					'%s %d %s',
@@ -86,7 +86,7 @@ class ChoiceDecorator {
 			);
 		}
 
-		return sprintf( '<div class="kdnafield-choice-image-wrapper">%s</div>', $image );
+		return sprintf( '<div class="gfield-choice-image-wrapper">%s</div>', $image );
 	}
 }
 

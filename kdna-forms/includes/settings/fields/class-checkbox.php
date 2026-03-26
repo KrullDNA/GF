@@ -64,7 +64,7 @@ class Checkbox extends Base {
 		// Get choices, determine if choices have icon, display direction, default choice attributes.
 		$choices                   = $this->get_choices();
 		$have_icon                 = self::has_icons( $choices );
-		$horizontal_class          = rgobj( $this, 'horizontal' ) || $have_icon ? ' kdnaform-settings-choice--inline' : '';
+		$horizontal_class          = rgobj( $this, 'horizontal' ) || $have_icon ? ' gform-settings-choice--inline' : '';
 		$default_choice_attributes = array(
 			'onclick'    => 'event.target.previousSibling.value = ( this.checked ? 1 : 0 ); event.target.previousSibling.dispatchEvent( new Event( "change" ) );',
 			'onkeypress' => 'event.target.previousSibling.value = ( this.checked ? 1 : 0 ); event.target.previousSibling.dispatchEvent( new Event( "change" ) );',
@@ -96,10 +96,10 @@ class Checkbox extends Base {
 
 			// Open choice container.
 			$html .= sprintf(
-				'<div id="kdnaform-settings-checkbox-choice-%s" class="kdnaform-settings-choice%s%s">',
+				'<div id="gform-settings-checkbox-choice-%s" class="gform-settings-choice%s%s">',
 				esc_attr( $choice['id'] ),
 				$horizontal_class,
-				rgar( $choice, 'icon' ) ? ' kdnaform-settings-choice--visual' : ''
+				rgar( $choice, 'icon' ) ? ' gform-settings-choice--visual' : ''
 			);
 
 			// Insert hidden input.
@@ -130,7 +130,7 @@ class Checkbox extends Base {
 		// Wrap visual choices with container.
 		if ( $have_icon ) {
 			$html = sprintf(
-				'<div class="kdnaform-settings-choices--visual">%s</div>',
+				'<div class="gform-settings-choices--visual">%s</div>',
 				$html
 			);
 		}
@@ -153,7 +153,7 @@ class Checkbox extends Base {
 		// Get choices, determine if choices have icon, display direction, default choice attributes.
 		$choices                   = $this->get_choices();
 		$have_icon                 = self::has_icons( $choices );
-		$horizontal_class          = rgobj( $this, 'horizontal' ) || $have_icon ? ' kdnaform-settings-choice--inline' : '';
+		$horizontal_class          = rgobj( $this, 'horizontal' ) || $have_icon ? ' gform-settings-choice--inline' : '';
 		$default_choice_attributes = '';
 
 		// If no choices exist, return.
@@ -186,10 +186,10 @@ class Checkbox extends Base {
 
 			// Open choice container.
 			$html .= sprintf(
-				'<div id="kdnaform-settings-checkbox-choice-%s" class="kdnaform-settings-choice%s%s">',
+				'<div id="gform-settings-checkbox-choice-%s" class="gform-settings-choice%s%s">',
 				esc_attr( $choice['id'] ),
 				$horizontal_class,
-				rgar( $choice, 'icon' ) ? ' kdnaform-settings-choice--visual' : ''
+				rgar( $choice, 'icon' ) ? ' gform-settings-choice--visual' : ''
 			);
 
 			// Prepare choice markup.
@@ -212,7 +212,7 @@ class Checkbox extends Base {
 		// Wrap visual choices with container.
 		if ( $have_icon ) {
 			$html = sprintf(
-				'<div class="kdnaform-settings-choices--visual">%s</div>',
+				'<div class="gform-settings-choices--visual">%s</div>',
 				$html
 			);
 		}

@@ -358,7 +358,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		 */
 		public function get_menu_icon() {
 
-			return 'kdnaform-icon--api';
+			return 'gform-icon--api';
 
 		}
 
@@ -375,28 +375,28 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 			?>
 
-			<div id="kdnaform-webapi-edit-container" style="display: none;" role="dialog" aria-modal="true">
-				<form id="kdnaform-webapi-edit" class="kdnaform-settings__wrapper">
-					<fieldset class="kdnaform-settings-panel__content">
+			<div id="gform-webapi-edit-container" style="display: none;" role="dialog" aria-modal="true">
+				<form id="gform-webapi-edit" class="gform-settings__wrapper">
+					<fieldset class="gform-settings-panel__content">
                         <legend class="screen-reader-text"><?php esc_html__( 'Add New Key', 'kdnaforms' ); ?></legend>
 
 						<!-- Nonce -->
 						<?php wp_nonce_field( 'gf_restapi_edit_key' ); ?>
 
 						<!-- Key ID -->
-						<input id="kdnaform-webapi-key" type="hidden" />
+						<input id="gform-webapi-key" type="hidden" />
 
 						<!-- Description -->
-						<div class="kdnaform-settings-field kdnaform-settings-field__text" role="group">
-							<label class="kdnaform-settings-label" for="kdnaform-webapi-description"><?php esc_html_e( 'Description', 'kdnaforms' ); ?></label>
-							<input id="kdnaform-webapi-description" type="text" value="" aria-describedby="kdnaform-webapi-description-help"/>
-                            <span id="kdnaform-webapi-description-help" class="screen-reader-text"><?php esc_html_e( 'Enter a description for this API key.', 'kdnaforms' ); ?></span>
+						<div class="gform-settings-field gform-settings-field__text" role="group">
+							<label class="gform-settings-label" for="gform-webapi-description"><?php esc_html_e( 'Description', 'kdnaforms' ); ?></label>
+							<input id="gform-webapi-description" type="text" value="" aria-describedby="gform-webapi-description-help"/>
+                            <span id="gform-webapi-description-help" class="screen-reader-text"><?php esc_html_e( 'Enter a description for this API key.', 'kdnaforms' ); ?></span>
                         </div>
 
 						<!-- User -->
-						<div class="kdnaform-settings-field kdnaform-settings-field__select">
-							<label id="label-user" class="kdnaform-settings-label" for="kdnaform-webapi-user"><?php esc_html_e( 'User', 'kdnaforms' ); ?></label>
-							<select id="kdnaform-webapi-user" aria-labelledby="label-user">
+						<div class="gform-settings-field gform-settings-field__select">
+							<label id="label-user" class="gform-settings-label" for="gform-webapi-user"><?php esc_html_e( 'User', 'kdnaforms' ); ?></label>
+							<select id="gform-webapi-user" aria-labelledby="label-user">
 								<?php
 								$users = $this->get_users();
 								foreach ( $users as $user ) {
@@ -411,9 +411,9 @@ if ( class_exists( 'KDNAForms' ) ) {
 						</div>
 
 						<!-- Permissions -->
-						<div class="kdnaform-settings-field kdnaform-settings-field__select">
-							<label id="label-permissions" class="kdnaform-settings-label" for="kdnaform-webapi-permissions"><?php esc_html_e( 'Permissions', 'kdnaforms' ); ?></label>
-							<select id="kdnaform-webapi-permissions" aria-labelledby="label-permissions">
+						<div class="gform-settings-field gform-settings-field__select">
+							<label id="label-permissions" class="gform-settings-label" for="gform-webapi-permissions"><?php esc_html_e( 'Permissions', 'kdnaforms' ); ?></label>
+							<select id="gform-webapi-permissions" aria-labelledby="label-permissions">
 								<option value="read"><?php esc_html_e( 'Read', 'kdnaforms' ); ?></option>
 								<option value="write"><?php esc_html_e( 'Write', 'kdnaforms' ); ?></option>
 								<option value="read_write"><?php esc_html_e( 'Read/Write', 'kdnaforms' ); ?></option>
@@ -421,48 +421,48 @@ if ( class_exists( 'KDNAForms' ) ) {
 						</div>
 
 						<!-- Last Updated -->
-						<div class="kdnaform-settings-field kdnaform-settings-field__html">
-							<label class="kdnaform-settings-label"><?php esc_html_e( 'Last Access:', 'kdnaforms' ); ?></label>
-							<span class="kdnaform-status-indicator kdnaform-status-indicator--size-sm kdnaform-status-indicator--theme-cosmos kdnaform-status--active kdnaform-status--no-icon kdnaform-status--no-hover" id="kdnaform-webapi-last-access">
-                                <span class="kdnaform-status-indicator-status kdnaform-typography--weight-medium kdnaform-typography--size-text-xs"></span>
+						<div class="gform-settings-field gform-settings-field__html">
+							<label class="gform-settings-label"><?php esc_html_e( 'Last Access:', 'kdnaforms' ); ?></label>
+							<span class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos gform-status--active gform-status--no-icon gform-status--no-hover" id="gform-webapi-last-access">
+                                <span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs"></span>
                             </span>
 						</div>
 
 						<!-- Consumer Key -->
-                        <div class="kdnaform-input-wrapper kdnaform-input-wrapper--theme-cosmos kdnaform-input-wrapper--input kdnaform-input-wrapper--with-action kdnaform-input-wrapper--border-default kdnaform-input-wrapper--with-icon" style="margin-bottom: 10px" >
-                            <label for="kdnaform-webapi-consumer-key" class="kdnaform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Key', 'kdnaforms' ); ?></label>
-                            <div class="kdnaform-input__action-wrapper">
-                                <div class="kdnaform-input__wrapper">
-                                    <input class="kdnaform-input kdnaform-typography--size-text-sm kdnaform-input--size-r kdnaform-input--text"
-                                           id="kdnaform-webapi-consumer-key"
+                        <div class="gform-input-wrapper gform-input-wrapper--theme-cosmos gform-input-wrapper--input gform-input-wrapper--with-action gform-input-wrapper--border-default gform-input-wrapper--with-icon" style="margin-bottom: 10px" >
+                            <label for="gform-webapi-consumer-key" class="gform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Key', 'kdnaforms' ); ?></label>
+                            <div class="gform-input__action-wrapper">
+                                <div class="gform-input__wrapper">
+                                    <input class="gform-input gform-typography--size-text-sm gform-input--size-r gform-input--text"
+                                           id="gform-webapi-consumer-key"
                                            type="text"
                                            value=""
                                            aria-describedby="consumer-key-description"
                                     />
                                 </div>
-                                <button class="kdnaform-button kdnaform-button--size-r kdnaform-button--white kdnaform-button--width-auto kdnaform-button--icon-leading kdnaform-input__action-button">
-                                    <span class="kdnaform-icon kdnaform-icon--copy kdnaform-button__icon"></span>
-                                    <span class="kdnaform-button__text kdnaform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
+                                <button class="gform-button gform-button--size-r gform-button--white gform-button--width-auto gform-button--icon-leading gform-input__action-button">
+                                    <span class="gform-icon gform-icon--copy gform-button__icon"></span>
+                                    <span class="gform-button__text gform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
                                 </button>
                                 <span id="consumer-key-description" class="screen-reader-text"><?php esc_html_e( 'This is your generated consumer key. Click "Copy" to copy it to the clipboard.', 'kdnaforms' ); ?></span>
                             </div>
                         </div>
 
 						<!-- Consumer Secret -->
-                        <div class="kdnaform-input-wrapper kdnaform-input-wrapper--theme-cosmos kdnaform-input-wrapper--input kdnaform-input-wrapper--with-action kdnaform-input-wrapper--border-default kdnaform-input-wrapper--with-icon" style="margin-bottom: 10px" >
-                            <label for="kdnaform-webapi-consumer-secret" class="kdnaform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Secret', 'kdnaforms' ); ?></label>
-                            <div class="kdnaform-input__action-wrapper">
-                                <div class="kdnaform-input__wrapper">
-                                    <input class="kdnaform-input kdnaform-typography--size-text-sm kdnaform-input--size-r kdnaform-input--text"
-                                           id="kdnaform-webapi-consumer-secret"
+                        <div class="gform-input-wrapper gform-input-wrapper--theme-cosmos gform-input-wrapper--input gform-input-wrapper--with-action gform-input-wrapper--border-default gform-input-wrapper--with-icon" style="margin-bottom: 10px" >
+                            <label for="gform-webapi-consumer-secret" class="gform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Secret', 'kdnaforms' ); ?></label>
+                            <div class="gform-input__action-wrapper">
+                                <div class="gform-input__wrapper">
+                                    <input class="gform-input gform-typography--size-text-sm gform-input--size-r gform-input--text"
+                                           id="gform-webapi-consumer-secret"
                                            type="text"
                                            value=""
                                            aria-describedby="consumer-secret-description"
                                     />
                                 </div>
-                                <button class="kdnaform-button kdnaform-button--size-r kdnaform-button--white kdnaform-button--width-auto kdnaform-button--icon-leading kdnaform-input__action-button">
-                                    <span class="kdnaform-icon kdnaform-icon--copy kdnaform-button__icon"></span>
-                                    <span class="kdnaform-button__text kdnaform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
+                                <button class="gform-button gform-button--size-r gform-button--white gform-button--width-auto gform-button--icon-leading gform-input__action-button">
+                                    <span class="gform-icon gform-icon--copy gform-button__icon"></span>
+                                    <span class="gform-button__text gform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
                                 </button>
                                 <span id="consumer-secret-description" class="screen-reader-text"><?php esc_html_e( 'This is your generated consumer secret. Click "Copy" to copy it to the clipboard.', 'kdnaforms' ); ?></span>
                             </div>
@@ -470,7 +470,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 					</fieldset>
 
-					<button type="submit" class="kdnaform-button kdnaform-button--white" data-add="<?php esc_html_e( 'Add', 'kdnaforms' ); ?>" data-edit="<?php esc_html_e( 'Update', 'kdnaforms' ); ?>" style=" align-self: flex-start; margin-top: 0.3rem;"><?php esc_html_e( 'Update', 'kdnaforms' ); ?></button>
+					<button type="submit" class="gform-button gform-button--white" data-add="<?php esc_html_e( 'Add', 'kdnaforms' ); ?>" data-edit="<?php esc_html_e( 'Update', 'kdnaforms' ); ?>" style=" align-self: flex-start; margin-top: 0.3rem;"><?php esc_html_e( 'Update', 'kdnaforms' ); ?></button>
 
 				</form>
 			</div>
@@ -594,7 +594,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 					'description' => sprintf(
 						esc_html__( 'Create an API Key below to use the REST API version 2. Alternatively, you can use cookie authentication which is supported for logged in users. %1$sVisit our documentation pages%2$s for more information.', 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/rest-api-v2/" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
 					),
 					'dependency'  => array( $this, 'is_v2_enabled' ),
 					'fields'      => array(
@@ -611,7 +611,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 					'description' => sprintf(
 						esc_html__( 'Configure your API Key below to use the REST API version 1. Alternatively, you can use cookie authentication which is supported for logged in users. %1$sVisit our documentation pages%2$s for more information.', 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/web-api/" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
 					),
 					'dependency'  => array( $this, 'is_v1_enabled' ),
 					'fields'      => array(
@@ -729,7 +729,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 		public function settings_qrcode() {
 			?>
-			<button type="button" class="kdnaform-button kdnaform-button--white" id="gfwebapi-qrbutton"><?php esc_html_e( 'Show/hide QR Code', 'kdnaforms' ); ?></button>
+			<button type="button" class="gform-button gform-button--white" id="gfwebapi-qrbutton"><?php esc_html_e( 'Show/hide QR Code', 'kdnaforms' ); ?></button>
 			<div id="gfwebapi-qrcode-container" style="display:none; padding-left: unset">
 				<img id="gfwebapi-qrcode" alt="API QR code" src="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/images/spinner.svg"/>
 			</div>

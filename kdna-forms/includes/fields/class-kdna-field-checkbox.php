@@ -52,14 +52,14 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--check-box';
+		return 'gform-icon--check-box';
 	}
 
 	/**
@@ -134,7 +134,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 	 *
 	 * @since Unknown
 	 * @since 2.5 Implement Select All directly.
-	 * @since 2.7 Added `kdnafield_choice_all_toggle` class to Select All button.
+	 * @since 2.7 Added `gfield_choice_all_toggle` class to Select All button.
 	 *
 	 * @param array        $form  The Form Object currently being processed.
 	 * @param string|array $value The field value. From default/dynamic population, $_POST, or a resumed incomplete submission.
@@ -168,13 +168,13 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		// Get button markup.
 		$button_markup = $this->get_button_markup( $value, $entry );
 
-		$select_all_enabled_class = $this->enableSelectAll ? 'kdnafield_choice--select_all_enabled' : '';
+		$select_all_enabled_class = $this->enableSelectAll ? 'gfield_choice--select_all_enabled' : '';
 
 		$limit_message = $this->get_limit_message();
 
 		if ( 'multi_choice' == $this->type || ! $this->enableSelectAll ) {
 			return sprintf(
-				"<div class='kdnainput_container kdnainput_container_checkbox'>%s<div class='kdnafield_checkbox %s' id='%s'>%s</div></div>",
+				"<div class='ginput_container ginput_container_checkbox'>%s<div class='gfield_checkbox %s' id='%s'>%s</div></div>",
 				$limit_message,
 				$select_all_enabled_class,
 				esc_attr( $field_id ),
@@ -183,7 +183,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		}
 
 		return sprintf(
-			"<div class='kdnainput_container kdnainput_container_checkbox'>%s<div class='kdnafield_checkbox %s' id='%s'>%s%s</div></div>",
+			"<div class='ginput_container ginput_container_checkbox'>%s<div class='gfield_checkbox %s' id='%s'>%s%s</div></div>",
 			$limit_message,
 			$select_all_enabled_class,
 			esc_attr( $field_id ),
@@ -221,7 +221,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 
 		// Prepare button markup.
 		$button_markup = sprintf(
-			'<div class="kdnafield-choice-toggle-all"><button type="button" id="button_%1$d_select_all" class="kdnafield_choice_all_toggle kdnaform-theme-button--size-sm" onclick="gformToggleCheckboxes( this )" data-checked="%4$d" data-label-select="%2$s" data-label-deselect="%3$s"%6$s>%5$s</button></div>',
+			'<div class="gfield-choice-toggle-all"><button type="button" id="button_%1$d_select_all" class="gfield_choice_all_toggle gform-theme-button--size-sm" onclick="gformToggleCheckboxes( this )" data-checked="%4$d" data-label-select="%2$s" data-label-deselect="%3$s"%6$s>%5$s</button></div>',
 			$this->id,
 			$select_label,
 			$deselect_label,
@@ -256,7 +256,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 
 		$id = $this->id;
 
-		return "<span class='kdnafield_choice_limit_message kdnafield_description' id='kdnafield_choice_limit_message_{$form_id}_{$id}'>{$text}</span>";
+		return "<span class='gfield_choice_limit_message gfield_description' id='gfield_choice_limit_message_{$form_id}_{$id}'>{$text}</span>";
 	}
 
 	/**
@@ -385,7 +385,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		$tag           = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 
 		return sprintf(
-			"<div class='kdnainput_container kdnainput_container_checkbox'><{$tag} class='kdnafield_checkbox' id='%s'>%s</{$tag}></div>",
+			"<div class='ginput_container ginput_container_checkbox'><{$tag} class='gfield_checkbox' id='%s'>%s</{$tag}></div>",
 			esc_attr( $field_id ),
 			$this->get_checkbox_choices( $value, $disabled_text, $form_id )
 		);
@@ -963,9 +963,9 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				// Prepare choice markup.
-				$choice_markup = "<{$tag} class='kdnachoice kdnachoice_select_all'>
-						<input class='kdnafield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
-						<label for='{$id}' id='label_" . $this->id . "_select_all' class='kdnaform-field-label  kdnaform-field-label--type-inline' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
+				$choice_markup = "<{$tag} class='kdnachoice gchoice_select_all'>
+						<input class='gfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
+						<label for='{$id}' id='label_" . $this->id . "_select_all' class='gform-field-label  gform-field-label--type-inline' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
 					</{$tag}>";
 
 				/**
@@ -1029,9 +1029,9 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<{$tag} class='kdnachoice kdnachoice_{$id}'>
-								<input class='kdnafield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
-								<label for='choice_{$id}' id='label_{$id}' class='kdnaform-field-label kdnaform-field-label--type-inline'>{$choice['text']}</label>
+				$choice_markup = "<{$tag} class='kdnachoice gchoice_{$id}'>
+								<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
+								<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>{$choice['text']}</label>
 							</{$tag}>";
 
 				/**
@@ -1059,7 +1059,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 			$total = sizeof( $this->choices );
 
 			if ( $count < $total ) {
-				$choices .= "<{$tag} class='kdnachoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
+				$choices .= "<{$tag} class='gchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
 			}
 
 		}
@@ -1111,7 +1111,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		}
 
 		if ( $this->get_limit_message_text() ) {
-			$limit_describedby[] = 'kdnafield_choice_limit_message_' . $form_id . '_' . $this->id;
+			$limit_describedby[] = 'gfield_choice_limit_message_' . $form_id . '_' . $this->id;
 		}
 
 		return $this->get_aria_describedby( $limit_describedby );

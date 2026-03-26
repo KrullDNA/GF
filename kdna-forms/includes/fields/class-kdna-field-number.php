@@ -27,14 +27,14 @@ class KDNA_Field_Number extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--numbers-alt';
+		return 'gform-icon--numbers-alt';
 	}
 
 	function get_form_editor_field_settings() {
@@ -219,7 +219,7 @@ class KDNA_Field_Number extends KDNA_Field {
 		$size            = $this->size;
 		$disabled_text   = $is_form_editor ? "disabled='disabled'" : '';
 		$class_suffix    = $is_entry_detail ? '_admin' : '';
-		$class_read_only = ( ! $is_entry_detail && ! $is_form_editor ) && $this->has_calculation() ? ' kdnaform-text-input-reset' : '';
+		$class_read_only = ( ! $is_entry_detail && ! $is_form_editor ) && $this->has_calculation() ? ' gform-text-input-reset' : '';
 		$class           = esc_attr( $size . $class_suffix . $class_read_only );
 
 		$instruction = '';
@@ -237,7 +237,7 @@ class KDNA_Field_Number extends KDNA_Field {
 				$validation_class = $this->failed_validation ? 'validation_message' : '';
 
 				if ( ! $this->failed_validation && ! empty( $message ) && empty( $this->errorMessage ) ) {
-					$instruction = "<div class='kdnafield_description instruction $validation_class' id='kdnafield_instruction_{$this->formId}_{$this->id}'>" . $message . '</div>';
+					$instruction = "<div class='gfield_description instruction $validation_class' id='gfield_instruction_{$this->formId}_{$this->id}'>" . $message . '</div>';
 				}
 			}
 		} elseif ( rgget( 'view' ) == 'entry' ) {
@@ -260,14 +260,14 @@ class KDNA_Field_Number extends KDNA_Field {
 		$required_attribute    = $this->isRequired ? 'aria-required="true"' : '';
 		$invalid_attribute     = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 		
-		$describedby_extra_id = '' == $instruction ? array() : array( "kdnafield_instruction_{$this->formId}_{$this->id}" );
+		$describedby_extra_id = '' == $instruction ? array() : array( "gfield_instruction_{$this->formId}_{$this->id}" );
 		$aria_describedby     = $this->get_aria_describedby( $describedby_extra_id );
 
 		$autocomplete_attribute = $this->enableAutocomplete ? $this->get_field_autocomplete_attribute() : '';
 
 		$tabindex = $this->get_tabindex();
 
-		$input = sprintf( "<div class='kdnainput_container kdnainput_container_number'><input name='input_%d' id='%s' type='{$html_input_type}' {$step_attr} {$min_attr} {$max_attr} value='%s' class='%s' {$tabindex} {$read_only} %s %s %s %s %s %s/>%s</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text, $placeholder_attribute, $required_attribute, $invalid_attribute, $aria_describedby, $autocomplete_attribute, $instruction );
+		$input = sprintf( "<div class='ginput_container ginput_container_number'><input name='input_%d' id='%s' type='{$html_input_type}' {$step_attr} {$min_attr} {$max_attr} value='%s' class='%s' {$tabindex} {$read_only} %s %s %s %s %s %s/>%s</div>", $id, $field_id, esc_attr( $value ), esc_attr( $class ), $disabled_text, $placeholder_attribute, $required_attribute, $invalid_attribute, $aria_describedby, $autocomplete_attribute, $instruction );
 		return $input;
 	}
 

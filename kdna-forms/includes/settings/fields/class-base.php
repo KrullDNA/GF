@@ -375,7 +375,7 @@ class Base implements ArrayAccess {
 
 		// If field has nested fields, display.
 		if ( ! empty( $this->fields ) ) {
-			$html .= '<fieldset class="kdnaform-settings-nested-fields">';
+			$html .= '<fieldset class="gform-settings-nested-fields">';
 			foreach ( $this->fields as $field ) {
 				ob_start();
 				$this->settings->render_field( $field );
@@ -567,7 +567,7 @@ class Base implements ArrayAccess {
 	 */
 	public function get_description() {
 
-		return isset( $this->description ) ? sprintf( '<span class="kdnaform-settings-description" id="description-%s">%s</span>', $this->name, $this->description ) : '';
+		return isset( $this->description ) ? sprintf( '<span class="gform-settings-description" id="description-%s">%s</span>', $this->name, $this->description ) : '';
 
 	}
 
@@ -592,19 +592,19 @@ class Base implements ArrayAccess {
 			$is_feedback_valid = call_user_func_array( $feedback_callback, array( $value, $this ) );
 		}
 
-		$container_classes = array( 'kdnaform-settings-input__container' );
+		$container_classes = array( 'gform-settings-input__container' );
 
 		if ( is_bool( $is_feedback_valid ) ) {
-			$container_classes[] = $is_feedback_valid ? 'kdnaform-settings-input__container--feedback-success' : 'kdnaform-settings-input__container--feedback-error';
+			$container_classes[] = $is_feedback_valid ? 'gform-settings-input__container--feedback-success' : 'gform-settings-input__container--feedback-error';
 		}
 
 		if ( is_string( $is_feedback_valid ) ) {
-			$container_classes[] = sprintf( 'kdnaform-settings-input__container--feedback-%s', $is_feedback_valid );
+			$container_classes[] = sprintf( 'gform-settings-input__container--feedback-%s', $is_feedback_valid );
 		}
 
-		if ( $is_invalid ) { $container_classes[] = 'kdnaform-settings-input__container--invalid'; }
-		if ( isset( $this->append ) ) { $container_classes[] = 'kdnaform-settings-input__container--with-append'; }
-		if ( $this->class && strpos( $this->class, 'merge-tag-support' ) !== false ) { $container_classes[] = 'kdnaform-settings-input__container--with-merge-tag'; }
+		if ( $is_invalid ) { $container_classes[] = 'gform-settings-input__container--invalid'; }
+		if ( isset( $this->append ) ) { $container_classes[] = 'gform-settings-input__container--with-append'; }
+		if ( $this->class && strpos( $this->class, 'merge-tag-support' ) !== false ) { $container_classes[] = 'gform-settings-input__container--with-merge-tag'; }
 
 		return implode( ' ', $container_classes );
 
@@ -775,7 +775,7 @@ class Base implements ArrayAccess {
 		// Get field error.
 		$error = $this->get_error();
 
-		return $error ? sprintf( '<div class="kdnaform-settings-validation__error" id="error-%s">%s</div>', $this->name, $error ) : '';
+		return $error ? sprintf( '<div class="gform-settings-validation__error" id="error-%s">%s</div>', $this->name, $error ) : '';
 
 	}
 

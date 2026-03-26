@@ -263,7 +263,7 @@ class Generic_Map extends Base {
 
 		$html .= sprintf(
 			'<span class="%1$s"><input type="hidden" name="%2$s" id="%2$s" value=\'%3$s\' />
-				<div id="%4$s" class="kdnaform-settings-field-map__container"></div>%5$s</span>
+				<div id="%4$s" class="gform-settings-field-map__container"></div>%5$s</span>
 				<script type="text/javascript">document.addEventListener( "gform/admin/scripts_loaded", function() { window.gform.initializeFieldMap( \'%4$s\', %6$s ); } );</script></span>',
 			esc_attr( $this->get_container_classes() ),
 			$input_name, // Input name
@@ -291,7 +291,7 @@ class Generic_Map extends Base {
 		$classes = explode( ' ', $classes );
 
 		// Search for and remove invalid class.
-		$invalid_key = array_search( 'kdnaform-settings-input__container--invalid', $classes );
+		$invalid_key = array_search( 'gform-settings-input__container--invalid', $classes );
 		if ( $invalid_key ) {
 			unset( $classes[ $invalid_key ] );
 		}

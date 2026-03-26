@@ -17,14 +17,14 @@ gform.addFilter( 'kdnaform_datepicker_options_pre_init', function( optionsObj, f
 	var overrides = {
 		showOtherMonths: false,
 		beforeShow: function( input, inst ) {
-			inst.dpDiv[0].classList.remove( 'kdnaform-theme-datepicker' );
+			inst.dpDiv[0].classList.remove( 'gform-theme-datepicker' );
 			inst.dpDiv[0].classList.remove( 'gravity-theme' );
-			inst.dpDiv[0].classList.remove( 'kdnaform-theme' );
-			inst.dpDiv[0].classList.remove( 'kdnaform-legacy-datepicker' );
-			inst.dpDiv[0].classList.remove( 'kdnaform-theme--framework' );
-			inst.dpDiv[0].classList.remove( 'kdnaform-theme--foundation' );
-			inst.dpDiv[0].classList.remove( 'kdnaform-theme--orbital' );
-			inst.dpDiv[0].classList.add( 'kdnaform-legacy-datepicker' );
+			inst.dpDiv[0].classList.remove( 'gform-theme' );
+			inst.dpDiv[0].classList.remove( 'gform-legacy-datepicker' );
+			inst.dpDiv[0].classList.remove( 'gform-theme--framework' );
+			inst.dpDiv[0].classList.remove( 'gform-theme--foundation' );
+			inst.dpDiv[0].classList.remove( 'gform-theme--orbital' );
+			inst.dpDiv[0].classList.add( 'gform-legacy-datepicker' );
 
 			if ( isRTL && isPreview ) {
 				var $inputContainer = $( input ).closest( '.gfield' );
@@ -33,7 +33,7 @@ gform.addFilter( 'kdnaform_datepicker_options_pre_init', function( optionsObj, f
 			}
 
 			if ( isPreview ) {
-				inst.dpDiv[0].classList.add( 'kdnaform-preview-datepicker' );
+				inst.dpDiv[0].classList.add( 'gform-preview-datepicker' );
 			}
 			return ! this.suppressDatePicker;
 		}

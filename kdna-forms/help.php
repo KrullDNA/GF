@@ -37,9 +37,9 @@ class KDNAHelp {
 					<?php printf(
 						esc_html__( "Please review the %sdocumentation%s first. If you still can't find the answer %sopen a support ticket%s and we will be happy to answer your questions and assist you with any problems.", 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>',
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>',
 						'<a href="' . esc_attr( KDNACommon::get_support_url() ) . '" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
 					); ?>
 				</p>
             </div>
@@ -48,10 +48,10 @@ class KDNAHelp {
                 <div class="search_box">
                     <label for="gf_help_search" class="screen-reader-text"><?php esc_html_e( 'Search Our Documentation', 'kdnaforms' ) ?></label>
                     <input type="text" id="gf_help_search" name="s" placeholder="<?php esc_attr_e( 'Search Our Documentation', 'kdnaforms' ) ?>"/>
-                    <button class="kdnaform-button kdnaform-button--size-r kdnaform-button--white kdnaform-button--width-auto kdnaform-button--active-type-loader kdnaform-button--loader-after kdnaform-button--icon-trailing button_focus">
-                        <span class="kdnaform-button__text kdnaform-button__text--inactive"><?php esc_html_e( 'Search', 'kdnaforms' ) ?></span>
+                    <button class="gform-button gform-button--size-r gform-button--white gform-button--width-auto gform-button--active-type-loader gform-button--loader-after gform-button--icon-trailing button_focus">
+                        <span class="gform-button__text gform-button__text--inactive"><?php esc_html_e( 'Search', 'kdnaforms' ) ?></span>
                         <span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'kdnaforms' ) ?></span>
-                        <span class="kdnaform-icon kdnaform-icon--external-link kdnaform-button__icon" aria-hidden="true"></span>
+                        <span class="gform-icon gform-icon--external-link gform-button__icon" aria-hidden="true"></span>
                     </button>
                 </div>
             </form>
@@ -66,35 +66,35 @@ class KDNAHelp {
                                 <a target="_blank" href="https://docs.kdnaforms.com/create-a-new-form/">
 									<?php esc_html_e( 'Creating a Form', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/category/user-guides/getting-started/add-form-to-site/">
 									<?php esc_html_e( 'Embedding a Form', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/reviewing-form-submissions/">
 									<?php esc_html_e( 'Reviewing Form Submissions', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/configuring-confirmations/">
 									<?php esc_html_e( 'Configuring Confirmations', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/configuring-notifications-in-kdna-forms/">
 									<?php esc_html_e( 'Configuring Notifications', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                         </ul>
@@ -110,35 +110,35 @@ class KDNAHelp {
                                 <a target="_blank" href="https://docs.kdnaforms.com/getting-started-kdna-forms-api-gfapi/">
 									<?php esc_html_e( 'Discover the KDNA Forms API', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/api-functions/">
 									<?php esc_html_e( 'API Functions', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/category/developers/rest-api/">
 									<?php esc_html_e( 'REST API', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/category/developers/php-api/add-on-framework/">
 									<?php esc_html_e( 'Add-On Framework', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/gfaddon/">
 									<?php esc_html_e( 'KDNAAddOn', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                         </ul>
@@ -154,35 +154,35 @@ class KDNAHelp {
                                 <a target="_blank" href="https://docs.kdnaforms.com/category/user-guides/design-and-layout/css-selectors/">
 									<?php esc_html_e( 'CSS Selectors', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/css-targeting-examples/">
 									<?php esc_html_e( 'CSS Targeting Examples', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/css-ready-classes/">
 									<?php esc_html_e( 'CSS Ready Classes', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/kdnaform_field_css_class/">
 									<?php esc_html_e( 'kdnaform_field_css_class', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                             <li>
                                 <a target="_blank" href="https://docs.kdnaforms.com/kdnaform_noconflict_styles/">
 									<?php esc_html_e( 'kdnaform_noconflict_styles', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
-									<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span>
+									<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
                                 </a>
                             </li>
                         </ul>

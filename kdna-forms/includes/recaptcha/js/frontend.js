@@ -14,7 +14,7 @@
     var connectionType = kdna_recaptcha_strings.connection_type;
 
     function getRecaptchaToken(formElement) {
-        var responseInput = $(formElement).find('.kdnafield_recaptcha_response');
+        var responseInput = $(formElement).find('.gfield_recaptcha_response');
         if (!responseInput.length) {
             return;
         }
@@ -60,7 +60,7 @@
     $(document).on('elementor/popup/show', function(event, id, instance) {
         var popup = instance ? instance.$element : null;
         if (popup) {
-            popup.find('.kdnafield_recaptcha_response').each(function() {
+            popup.find('.gfield_recaptcha_response').each(function() {
                 getRecaptchaToken($(this).closest('form'));
             });
         }

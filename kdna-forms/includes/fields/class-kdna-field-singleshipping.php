@@ -21,14 +21,14 @@ class KDNA_Field_SingleShipping extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.8
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--shipping';
+		return 'gform-icon--shipping';
 	}
 
 	function get_form_editor_field_settings() {
@@ -57,8 +57,8 @@ class KDNA_Field_SingleShipping extends KDNA_Field {
 		}
 		$price = esc_attr( KDNACommon::to_money( $price ) );
 
-		return "<div class='kdnainput_container kdnainput_container_singleshipping'>
-					<input type='text' readonly class='kdnainput_shipping_price kdnaform-text-input-reset' id='{$field_id}' name='input_{$id}' value='{$price}' />
+		return "<div class='ginput_container ginput_container_singleshipping'>
+					<input type='text' readonly class='ginput_shipping_price gform-text-input-reset' id='{$field_id}' name='input_{$id}' value='{$price}' />
 				</div>";
 	}
 

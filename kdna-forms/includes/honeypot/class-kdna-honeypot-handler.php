@@ -683,7 +683,7 @@ class KDNA_Honeypot_Handler {
 	/**
 	 * Displays the submission speeds on the entry detail page.
 	 *
-	 * Callback for the kdnaform_entry_detail_meta_boxes filter added via KDNA_Honeypot_Service_Provider::init().
+	 * Callback for the gform_entry_detail_meta_boxes filter added via KDNA_Honeypot_Service_Provider::init().
 	 *
 	 * @since 2.9.21
 	 *

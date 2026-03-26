@@ -50,14 +50,14 @@ class KDNA_Field_List extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--list';
+		return 'gform-icon--list';
 	}
 
 	/**
@@ -160,22 +160,22 @@ class KDNA_Field_List extends KDNA_Field {
 
 		$has_columns       = is_array( $this->choices );
 		$columns           = $has_columns ? $this->choices : array( array() );
-		$class_has_columns = $has_columns ? 'kdnainput_container_list--columns' : '';
+		$class_has_columns = $has_columns ? 'ginput_container_list--columns' : '';
 
 		$list = '';
 
-		$list .= "<div class='kdnainput_container kdnainput_container_list kdnainput_list {$class_has_columns}'>" .
-			"<div class='kdnafield_list kdnafield_list_container'>";
+		$list .= "<div class='ginput_container ginput_container_list ginput_list {$class_has_columns}'>" .
+			"<div class='gfield_list gfield_list_container'>";
 
 		if ( $has_columns ) {
 
-			$list .= '<div class="kdnafield_list_header kdnaform-grid-row">';
+			$list .= '<div class="gfield_list_header gform-grid-row">';
 			foreach ( $columns as $column ) {
-				$list .= '<div class="kdnaform-field-label kdnafield_header_item kdnaform-grid-col">' . esc_html( $column['text'] ) . '</div>';
+				$list .= '<div class="gform-field-label gfield_header_item gform-grid-col">' . esc_html( $column['text'] ) . '</div>';
 			}
 
 			if ( $this->maxRows != 1 ) {
-				$list .= '<div class="kdnafield_header_item kdnafield_header_item--icons kdnaform-grid-col">&nbsp;</div>';
+				$list .= '<div class="gfield_header_item gfield_header_item--icons gform-grid-col">&nbsp;</div>';
 			}
 
 			$list .= '</div>';
@@ -183,18 +183,18 @@ class KDNA_Field_List extends KDNA_Field {
 
 		$delete_display      = count( $value ) == 1 ? 'style="visibility:hidden;"' : '';
 		$maxRow              = intval( $this->maxRows );
-		$disabled_icon_class = ! empty( $maxRow ) && count( $value ) >= $maxRow ? 'kdnafield_icon_disabled' : '';
+		$disabled_icon_class = ! empty( $maxRow ) && count( $value ) >= $maxRow ? 'gfield_icon_disabled' : '';
 		
 		$add_events    = $is_form_editor ? '' : "onclick='gformAddListItem(this, {$maxRow})'";
 		$delete_events = $is_form_editor ? '' : "onclick='gformDeleteListItem(this, {$maxRow})'";
 
-		$list .= '<div class="kdnafield_list_groups">';
+		$list .= '<div class="gfield_list_groups">';
 		$rownum = 1;
 		foreach ( $value as $item ) {
 
 			$odd_even = ( $rownum % 2 ) == 0 ? 'even' : 'odd';
 
-			$list .= "<div class='kdnafield_list_row_{$odd_even} kdnafield_list_group kdnaform-grid-row'>";
+			$list .= "<div class='gfield_list_row_{$odd_even} gfield_list_group gform-grid-row'>";
 			$colnum = 1;
 			foreach ( $columns as $column ) {
 				$data_label = '';
@@ -212,7 +212,7 @@ class KDNA_Field_List extends KDNA_Field {
 					$val = $colnum == 1 ? $item : '';
 				}
 
-				$list .= "<div class='kdnafield_list_group_item kdnafield_list_cell kdnafield_list_{$this->id}_cell{$colnum} kdnaform-grid-col' {$data_label}>" . $this->get_list_input( $has_columns, $column, $val, $form_id, $rownum ) . '</div>';
+				$list .= "<div class='gfield_list_group_item gfield_list_cell gfield_list_{$this->id}_cell{$colnum} gform-grid-col' {$data_label}>" . $this->get_list_input( $has_columns, $column, $val, $form_id, $rownum ) . '</div>';
 				$colnum ++;
 			}
 
@@ -221,9 +221,9 @@ class KDNA_Field_List extends KDNA_Field {
 				$aria_label_template = __( 'Remove row {0}', 'kdnaforms' );
 
 				$disabled          = $is_form_editor ? 'disabled=\'disabled\'' : '';
-				$icon_url_disabled = $is_form_editor ? 'kdnafield_url_icon_disabled' : '';
+				$icon_url_disabled = $is_form_editor ? 'gfield_url_icon_disabled' : '';
 				
-				$list .= "<div class='kdnafield_list_icons kdnaform-grid-col'>";
+				$list .= "<div class='gfield_list_icons gform-grid-col'>";
 				
 				if ( $this->addIconUrl ) {
 					$list .= " <a href='javascript:void(0);' role='button' class='add_list_item {$icon_url_disabled} {$disabled_icon_class}' aria-label='" . esc_attr__( 'Add another row', 'kdnaforms' ) . "' {$add_events}><img src='{$this->addIconUrl}' title='" . esc_attr__( 'Add a new row', 'kdnaforms' ) . "' /></a>";
@@ -283,41 +283,41 @@ class KDNA_Field_List extends KDNA_Field {
 		if ( ! self::$_style_block_printed ){
 			// This style block needs to be inline so that the list field continues to work even if the option to turn off CSS output is activated.
 			$list_entry_edit = KDNAForms::get_page() === 'entry_detail_edit' ? '
-				body .kdnainput_container_list table.kdnafield_list {
+				body .ginput_container_list table.gfield_list {
 					border-spacing: 10px 0 !important;
 				    margin-left: -10px !important;
 				    margin-right: -10px !important;
 				    width: auto !important;
 				}
 
-				body .kdnainput_container_list table.kdnafield_list tbody tr {
+				body .ginput_container_list table.gfield_list tbody tr {
 					display: table-row !important;
 				}
 
-				body .kdnainput_container_list table.kdnafield_list tbody td.kdnafield_list_cell {
+				body .ginput_container_list table.gfield_list tbody td.gfield_list_cell {
 					vertical-align: top !important;
 				}
 
-				body .kdnainput_container_list table.kdnafield_list tbody td.kdnafield_list_cell > *:not([type="checkbox"]):not([type="radio"]) {
+				body .ginput_container_list table.gfield_list tbody td.gfield_list_cell > *:not([type="checkbox"]):not([type="radio"]) {
 					width: 100% !important;
 				}
 				
-				body .kdnainput_container_list table.kdnafield_list thead tr td {
+				body .ginput_container_list table.gfield_list thead tr td {
 					padding: 0;
 				}
 				
-				body .kdnainput_container_list table.kdnafield_list tbody tr td.kdnafield_list_icons {
+				body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons {
 					display: table-cell !important;
 					padding: 0;
 				}
 			' : '';
 			$list .= '<style type="text/css">'. $list_entry_edit .'
 
-						body .kdnainput_container_list table.kdnafield_list tbody tr td.kdnafield_list_icons {
+						body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons {
 							vertical-align: middle !important;
 						}
 
-						body .kdnainput_container_list table.kdnafield_list tbody tr td.kdnafield_list_icons img {
+						body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons img {
 							background-color: transparent !important;
 							background-position: 0 0;
 							background-size: 16px 16px !important;
@@ -332,7 +332,7 @@ class KDNA_Field_List extends KDNA_Field {
 						    -o-transition: opacity .5s ease-out;
 						}
 
-						body .kdnainput_container_list table.kdnafield_list tbody tr td.kdnafield_list_icons a:hover img {
+						body .ginput_container_list table.gfield_list tbody tr td.gfield_list_icons a:hover img {
 							opacity: 1.0;
 						}
 
@@ -341,15 +341,15 @@ class KDNA_Field_List extends KDNA_Field {
 			self::$_style_block_printed = true;
 		}
 
-		$list .= "<div class='kdnainput_container kdnainput_container_list kdnainput_list'>" .
-			"<table class='kdnafield_list kdnafield_list_container'>";
+		$list .= "<div class='ginput_container ginput_container_list ginput_list'>" .
+			"<table class='gfield_list gfield_list_container'>";
 
 		if ( $has_columns ) {
 
 			$list .= '<colgroup>';
 			for ( $colnum = 1; $colnum <= count( $columns ) + 1; $colnum++ ) {
 				$odd_even = ( $colnum % 2 ) == 0 ? 'even' : 'odd';
-				$list .= sprintf( "<col id='kdnafield_list_%d_col_%d' class='kdnafield_list_col_%s' />", $this->id, $colnum, $odd_even );
+				$list .= sprintf( "<col id='gfield_list_%d_col_%d' class='gfield_list_col_%s' />", $this->id, $colnum, $odd_even );
 			}
 			$list .= '</colgroup>';
 
@@ -368,14 +368,14 @@ class KDNA_Field_List extends KDNA_Field {
 		} else {
 			$list .=
 				'<colgroup>' .
-				"<col id='kdnafield_list_{$this->id}_col1' class='kdnafield_list_col_odd' />" .
-				"<col id='kdnafield_list_{$this->id}_col2' class='kdnafield_list_col_even' />" .
+				"<col id='gfield_list_{$this->id}_col1' class='gfield_list_col_odd' />" .
+				"<col id='gfield_list_{$this->id}_col2' class='gfield_list_col_even' />" .
 				'</colgroup>';
 		}
 
 		$delete_display      = count( $value ) == 1 ? 'style="visibility:hidden;"' : '';
 		$maxRow              = intval( $this->maxRows );
-		$disabled_icon_class = ! empty( $maxRow ) && count( $value ) >= $maxRow ? 'kdnafield_icon_disabled' : '';
+		$disabled_icon_class = ! empty( $maxRow ) && count( $value ) >= $maxRow ? 'gfield_icon_disabled' : '';
 
 		$add_icon    = ! empty( $this->addIconUrl ) ? $this->addIconUrl : KDNACommon::get_base_url() . '/images/list-add.svg';
 		$delete_icon = ! empty( $this->deleteIconUrl ) ? $this->deleteIconUrl : KDNACommon::get_base_url() . '/images/list-remove.svg';
@@ -389,7 +389,7 @@ class KDNA_Field_List extends KDNA_Field {
 
 			$odd_even = ( $rownum % 2 ) == 0 ? 'even' : 'odd';
 
-			$list .= "<tr class='kdnafield_list_row_{$odd_even} kdnafield_list_group'>";
+			$list .= "<tr class='gfield_list_row_{$odd_even} gfield_list_group'>";
 			$colnum = 1;
 			foreach ( $columns as $column ) {
 				$data_label = '';
@@ -407,7 +407,7 @@ class KDNA_Field_List extends KDNA_Field {
 					$val = $colnum == 1 ? $item : '';
 				}
 
-				$list .= "<td class='kdnafield_list_cell kdnafield_list_{$this->id}_cell{$colnum}' {$data_label}>" . $this->get_list_input( $has_columns, $column, $val, $form_id, $rownum ) . '</td>';
+				$list .= "<td class='gfield_list_cell gfield_list_{$this->id}_cell{$colnum}' {$data_label}>" . $this->get_list_input( $has_columns, $column, $val, $form_id, $rownum ) . '</td>';
 				$colnum ++;
 			}
 
@@ -415,7 +415,7 @@ class KDNA_Field_List extends KDNA_Field {
 
 				// Can't replace these icons with the webfont versions since they appear on the front end.
 
-				$list .= "<td class='kdnafield_list_icons'>";
+				$list .= "<td class='gfield_list_icons'>";
 				$list .= "   <a href='javascript:void(0);' class='add_list_item {$disabled_icon_class}' aria-label='" . esc_attr__( 'Add another row', 'kdnaforms' ) . "' {$add_events}><img src='{$add_icon}' alt='' title='" . esc_attr__( 'Add a new row', 'kdnaforms' ) . "' /></a>" .
 					"   <a href='javascript:void(0);' class='delete_list_item' aria-label='" . esc_attr__( 'Remove this row', 'kdnaforms' ) . "' {$delete_events} {$delete_display}><img src='{$delete_icon}' alt='' title='" . esc_attr__( 'Remove this row', 'kdnaforms' ) . "' /></a>";
 				$list .= '</td>';
@@ -549,20 +549,20 @@ class KDNA_Field_List extends KDNA_Field {
 	 * Get field label class.
 	 *
 	 * @since unknown
-	 * @since 2.5     Added `screen-reader-text` if the label hasn't been set; added `kdnafield_label_before_complex` if it has choices.
-	 * @since 2.7     Added `kdnaform-field-label` for the theme framework.
+	 * @since 2.5     Added `screen-reader-text` if the label hasn't been set; added `gfield_label_before_complex` if it has choices.
+	 * @since 2.7     Added `gform-field-label` for the theme framework.
 	 *
 	 * @return string
 	 */
 	public function get_field_label_class() {
-		$class = 'kdnafield_label';
-		$class .= ' kdnaform-field-label';
+		$class = 'gfield_label';
+		$class .= ' gform-field-label';
 
 		// Added `screen-reader-text` if the label hasn't been set.
 		$class .= ( rgblank( $this->label ) ) ? ' screen-reader-text' : '';
 
-		// Added `kdnafield_label_before_complex` if it has choices.
-		$class .= is_array( $this->choices ) ? ' kdnafield_label_before_complex' : '';
+		// Added `gfield_label_before_complex` if it has choices.
+		$class .= is_array( $this->choices ) ? ' gfield_label_before_complex' : '';
 
 		return $class;
 	}
@@ -736,7 +736,7 @@ class KDNA_Field_List extends KDNA_Field {
 
 				default :
 					if ( $media == 'email' ) {
-						$list = "<table class='kdnafield_list' style='border-top: 1px solid #DFDFDF; border-left: 1px solid #DFDFDF; border-spacing: 0; padding: 0; margin: 2px 0 6px; width: 100%'><thead><tr>\n";
+						$list = "<table class='gfield_list' style='border-top: 1px solid #DFDFDF; border-left: 1px solid #DFDFDF; border-spacing: 0; padding: 0; margin: 2px 0 6px; width: 100%'><thead><tr>\n";
 
 						//reading columns from entry data
 						foreach ( $columns as $column ) {
@@ -758,7 +758,7 @@ class KDNA_Field_List extends KDNA_Field {
 
 						$list .= '<tbody></table>' . "\n";
 					} else {
-						$list = "<table class='kdnafield_list'><thead><tr>";
+						$list = "<table class='gfield_list'><thead><tr>";
 
 						// Reading columns from entry data.
 						foreach ( $columns as $column ) {

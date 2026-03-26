@@ -26,14 +26,14 @@ class KDNA_Field_Post_Excerpt extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a kdnaform-icon class.
+	 * This could be an icon url or a gform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'kdnaform-icon--excerpt';
+		return 'gform-icon--excerpt';
 	}
 
 	function get_form_editor_field_settings() {
@@ -86,7 +86,7 @@ class KDNA_Field_Post_Excerpt extends KDNA_Field {
 		$invalid_attribute     = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 		$aria_describedby      = $this->get_aria_describedby();
 
-		return "<div class='kdnainput_container kdnainput_container_post_excerpt'>
+		return "<div class='ginput_container ginput_container_post_excerpt'>
 					<textarea name='input_{$id}' id='{$field_id}' class='textarea {$class}' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$disabled_text} rows='10' cols='50'>{$value}</textarea>
 				</div>";
 	}

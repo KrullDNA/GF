@@ -162,16 +162,16 @@ var GformShortcodeUI;
      */
     sui.views.editShortcodeForm = wp.Backbone.View.extend({
 
-        el: '#kdnaform-shortcode-ui-container',
+        el: '#gform-shortcode-ui-container',
 
         template: wp.template('gf-shortcode-default-edit-form'),
 
         hasAdvancedValue: false,
 
         events: {
-            'click #kdnaform-update-shortcode': 'insertShortcode',
-            'click #kdnaform-insert-shortcode': 'insertShortcode',
-            'click #kdnaform-cancel-shortcode': 'cancelShortcode'
+            'click #gform-update-shortcode': 'insertShortcode',
+            'click #gform-insert-shortcode': 'insertShortcode',
+            'click #gform-cancel-shortcode': 'cancelShortcode'
         },
 
         initialize: function () {
@@ -222,8 +222,8 @@ var GformShortcodeUI;
         afterRender: function () {
             kdnaform_initialize_tooltips();
 
-            $('#kdnaform-insert-shortcode').toggle(this.options.viewMode == 'insert');
-            $('#kdnaform-update-shortcode').toggle(this.options.viewMode != 'insert');
+            $('#gform-insert-shortcode').toggle(this.options.viewMode == 'insert');
+            $('#gform-update-shortcode').toggle(this.options.viewMode != 'insert');
             $('#gf-edit-shortcode-form-advanced-attrs').toggle(this.hasAdvancedVal);
         },
 
@@ -251,7 +251,7 @@ var GformShortcodeUI;
         },
         dispose: function () {
             this.remove();
-            $('#kdnaform-shortcode-ui-wrap').append('<div id="kdnaform-shortcode-ui-container"></div>');
+            $('#gform-shortcode-ui-wrap').append('<div id="gform-shortcode-ui-container"></div>');
         }
     });
 
@@ -730,8 +730,8 @@ var GformShortcodeUI;
                 GformShortcodeUI = new sui.views.editShortcodeForm({model: currentShortcodeModel, viewMode: 'update'});
                 GformShortcodeUI.render();
 
-                $('#kdnaform-insert-shortcode').hide();
-                $('#kdnaform-update-shortcode').show();
+                $('#gform-insert-shortcode').hide();
+                $('#gform-update-shortcode').show();
                 tb_show( i18n.shortcode_ui.edit_form, "#TB_inline?inlineId=select_gravity_form&width=753&height=686", "");
 
             }

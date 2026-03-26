@@ -88,7 +88,7 @@ class KDNAEntryDetail {
 		 * @param array $entry      The entry currently being viewed/edited.
 		 * @param array $form       The form object used to process the current entry.
 		 */
-		$meta_boxes = apply_filters( 'kdnaform_entry_detail_meta_boxes', $meta_boxes, $entry, $form );
+		$meta_boxes = apply_filters( 'gform_entry_detail_meta_boxes', $meta_boxes, $entry, $form );
 
 		foreach ( $meta_boxes as $id => $meta_box ) {
 			$screen = get_current_screen();
@@ -538,7 +538,7 @@ class KDNAEntryDetail {
 			}
 
 			function EndDeleteFile(fieldId, fileIndex) {
-				var previewFileSelector = "#preview_existing_files_" + fieldId + " .kdnainput_preview";
+				var previewFileSelector = "#preview_existing_files_" + fieldId + " .ginput_preview";
 				var $previewFiles = jQuery(previewFileSelector);
 				var rr = $previewFiles.eq(fileIndex);
 				$previewFiles.eq(fileIndex).remove();
@@ -676,7 +676,7 @@ class KDNAEntryDetail {
 
 			<input type="hidden" name="entry_id" id="entry_id" value="<?php echo absint( $lead['id'] ) ?>" />
 
-			<div class="wrap kdna_entry_wrap">
+			<div class="wrap gf_entry_wrap">
 
 					<?php
 					// Locking removed for lean plugin. ?>
@@ -696,7 +696,7 @@ class KDNAEntryDetail {
 					<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 
 
-					<div id="post-body" class="metabox-holder columns-2 kdnaform-settings-panel__content">
+					<div id="post-body" class="metabox-holder columns-2 gform-settings-panel__content">
 						<div id="post-body-content" >
 							<?php
 							/**
@@ -705,7 +705,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'kdnaform_entry_detail_content_before', $form, $lead );
+							do_action( 'gform_entry_detail_content_before', $form, $lead );
 
 							if ( 'edit' === $mode && KDNACommon::current_user_can_any( 'kdnaforms_edit_entries' ) ) {
 								self::lead_detail_edit( $form, $lead );
@@ -719,7 +719,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'kdnaform_entry_detail', $form, $lead );
+							do_action( 'gform_entry_detail', $form, $lead );
 							?>
 						</div>
 
@@ -732,7 +732,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'kdnaform_entry_detail_sidebar_before', $form, $lead );
+							do_action( 'gform_entry_detail_sidebar_before', $form, $lead );
 							?>
 							<?php
 
@@ -746,7 +746,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'kdnaform_entry_detail_sidebar_middle', $form, $lead );
+							do_action( 'gform_entry_detail_sidebar_middle', $form, $lead );
 
 							/**
 							 * Fires after the entry detail sidebar information.
@@ -754,7 +754,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'kdnaform_entry_detail_sidebar_after', $form, $lead );
+							do_action( 'gform_entry_detail_sidebar_after', $form, $lead );
 							?>
 						</div>
 
@@ -768,7 +768,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'kdnaform_entry_detail_content_after', $form, $lead );
+							do_action( 'gform_entry_detail_content_after', $form, $lead );
 							?>
 						</div>
 					</div>
@@ -790,7 +790,7 @@ class KDNAEntryDetail {
 				<label for="name"><?php esc_html_e( 'Details', 'kdnaforms' ); ?></label>
 			</h3>
 
-			<div class="inside kdnaform_wrapper gravity-theme kdnaform_wrapper_edit_form_entry">
+			<div class="inside gform_wrapper gravity-theme gform_wrapper_edit_form_entry">
 				<table class="form-table entry-details">
 					<tbody>
 					<?php
@@ -859,7 +859,7 @@ class KDNAEntryDetail {
 				</table>
 				<br />
 
-				<div class="kdnaform_footer">
+				<div class="gform_footer">
 					<input type="hidden" name="kdnaform_unique_id" value="" />
 					<input type="hidden" name="kdnaform_uploaded_files" id='kdnaform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
 				</div>
@@ -1028,7 +1028,7 @@ class KDNAEntryDetail {
 					 * @param array  $form  The Form Object.
 					 * @param array  $entry The Entry Object.
 					 */
-					echo apply_filters( 'kdnaform_entry_detail_title', $title, $form, $lead ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo apply_filters( 'gform_entry_detail_title', $title, $form, $lead ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 				</th>
 				<th style="width:auto; font-size:10px; text-align: right;">
@@ -1384,7 +1384,7 @@ class KDNAEntryDetail {
 				}
 
 				esc_html_e( 'Embed Url', 'kdnaforms' ); ?>:
-				<a href="<?php echo esc_url( $entry['source_url'] ) ?>" target="_blank">.../<?php echo esc_html( KDNACommon::truncate_url( $entry['source_url'] ) ) ?><span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;<span class="kdnaform-icon kdnaform-icon--external-link" aria-hidden="true"></span></a>
+				<a href="<?php echo esc_url( $entry['source_url'] ) ?>" target="_blank">.../<?php echo esc_html( KDNACommon::truncate_url( $entry['source_url'] ) ) ?><span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>
 				<br /><br />
 				<?php
 				if ( ! empty( $entry['post_id'] ) ) {
@@ -1560,7 +1560,7 @@ class KDNAEntryDetail {
 		 * @param array $form The Form object to filter
 		 * @param array $lead The Entry object to filter
 		 */
-		return apply_filters( 'kdnaform_entry_detail_grid_display_empty_fields', $display_empty_fields, $form, $lead );
+		return apply_filters( 'gform_entry_detail_grid_display_empty_fields', $display_empty_fields, $form, $lead );
 	}
 
 }
