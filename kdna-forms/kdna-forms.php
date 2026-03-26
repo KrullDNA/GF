@@ -7022,8 +7022,7 @@ class KDNAForms {
  * Exists only for backwards compatibility. Used KDNAForms instead.
  * @remove-in 3.0
  */
-class KDNAForms extends KDNAForms {
-}
+// Legacy alias removed - KDNAForms is the canonical class.
 
 /**
  * Main KDNA Forms function call.

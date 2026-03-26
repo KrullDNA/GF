@@ -8676,8 +8676,7 @@ class KDNAFormsModel {
 
 }
 
-class KDNAFormsModel extends KDNAFormsModel {
-}
+// Legacy alias removed - KDNAFormsModel is the canonical class.
 
 /**
  * In-memory cache of entry meta using "{blog_id}_{entry_id}_{meta_key}" as the key.
