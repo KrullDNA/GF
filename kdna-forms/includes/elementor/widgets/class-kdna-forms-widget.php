@@ -947,6 +947,22 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_control( 'image_choice_selected_tick_bg_color', array(
+			'label'     => esc_html__( 'Selected Tick Background Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
+			),
+		) );
+
+		$this->add_control( 'image_choice_selected_tick_color', array(
+			'label'     => esc_html__( 'Selected Tick Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'color: {{VALUE}} !important;',
+			),
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1103,7 +1119,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important; --gf-form-footer-margin-top: {{SIZE}}{{UNIT}};',
 			),
 			'separator' => 'after',
 		) );
