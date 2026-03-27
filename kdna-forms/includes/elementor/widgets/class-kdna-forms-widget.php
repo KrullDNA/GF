@@ -870,8 +870,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 40 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield_radio, {{WRAPPER}} .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gfield_radio .gchoice, {{WRAPPER}} .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gfield_radio, {{WRAPPER}} .gform_wrapper .gfield_checkbox, {{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .gform_wrapper .gfield_radio .gchoice, {{WRAPPER}} .gform_wrapper .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
 			),
 		) );
 
@@ -1693,12 +1693,12 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			$inline_css .= "{$widget_selector} .gform_wrapper input[type='checkbox']::before { color: {$checked_color} !important; }";
 		}
 
-		// Spacing between options
+		// Spacing between options - applies to radio, checkbox, AND image choice
 		$spacing = $settings['checkbox_spacing']['size'] ?? '';
 		if ( $spacing !== '' ) {
 			$unit = $settings['checkbox_spacing']['unit'] ?? 'px';
-			$inline_css .= "{$widget_selector} .gfield_radio, {$widget_selector} .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
-			$inline_css .= "{$widget_selector} .gfield_radio .gchoice, {$widget_selector} .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gfield_radio, {$widget_selector} .gform_wrapper .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gfield_radio .gchoice, {$widget_selector} .gform_wrapper .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
 		}
 
 		// Focus color
