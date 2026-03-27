@@ -208,24 +208,29 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
-		$this->add_control( 'global_accent_heading', array(
-			'label'     => esc_html__( 'Global Accent / Focus Color', 'kdnaforms' ),
+		$this->add_control( 'global_colors_heading', array(
+			'label'     => esc_html__( 'Global Colors', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::HEADING,
 			'separator' => 'before',
+		) );
+
+		$this->add_control( 'global_focus_color', array(
+			'label'       => esc_html__( 'Focus Color', 'kdnaforms' ),
+			'type'        => \Elementor\Controls_Manager::COLOR,
+			'description' => esc_html__( 'Border and outline color when inputs, textareas, and selects are focused.', 'kdnaforms' ),
+			'selectors'   => array(
+				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3);',
+				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important; box-shadow: 0 0 0 3px rgba({{VALUE}}, 0.15) !important;',
+			),
 		) );
 
 		$this->add_control( 'global_accent_color', array(
 			'label'       => esc_html__( 'Accent Color', 'kdnaforms' ),
 			'type'        => \Elementor\Controls_Manager::COLOR,
-			'description' => esc_html__( 'Sets the focus/selected color for all inputs, selects, checkboxes, radio buttons, and image choices.', 'kdnaforms' ),
+			'description' => esc_html__( 'Color for checked checkboxes, radio buttons, and selected image choices.', 'kdnaforms' ),
 			'selectors'   => array(
-				// Override the theme CSS variables for primary/focus colors
-				'{{WRAPPER}} .gform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-color-primary-rgb: {{VALUE}}; --gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3); --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
-				// Direct selectors for focus states
-				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important; box-shadow: 0 0 0 3px rgba({{VALUE}}, 0.15) !important;',
-				// Checkbox/radio accent
+				'{{WRAPPER}} .gform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
 				'{{WRAPPER}} .gform_wrapper input[type="checkbox"]:checked, {{WRAPPER}} .gform_wrapper input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
-				// Image choice selected indicator
 				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
 			),
 		) );
@@ -853,7 +858,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 40 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body .gchoice, {{WRAPPER}} .gform_body .kdnachoice' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gfield_radio, {{WRAPPER}} .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .gfield_radio .gchoice, {{WRAPPER}} .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
 			),
 		) );
 
@@ -935,14 +941,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		) );
 
 		$this->add_responsive_control( 'image_choice_spacing', array(
-			'label'      => esc_html__( 'Image Spacing', 'kdnaforms' ),
+			'label'      => esc_html__( 'Spacing Between Image Choices', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'size_units' => array( 'px' ),
 			'range'      => array(
 				'px' => array( 'min' => 0, 'max' => 50 ),
 			),
 			'selectors'  => array(
-				'{{WRAPPER}} .gchoice' => 'gap: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .gfield_radio--image-choice' => 'gap: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
