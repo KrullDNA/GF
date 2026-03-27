@@ -208,6 +208,28 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_control( 'global_accent_heading', array(
+			'label'     => esc_html__( 'Global Accent / Focus Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::HEADING,
+			'separator' => 'before',
+		) );
+
+		$this->add_control( 'global_accent_color', array(
+			'label'       => esc_html__( 'Accent Color', 'kdnaforms' ),
+			'type'        => \Elementor\Controls_Manager::COLOR,
+			'description' => esc_html__( 'Sets the focus/selected color for all inputs, selects, checkboxes, radio buttons, and image choices.', 'kdnaforms' ),
+			'selectors'   => array(
+				// Override the theme CSS variables for primary/focus colors
+				'{{WRAPPER}} .gform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-color-primary-rgb: {{VALUE}}; --gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3); --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
+				// Direct selectors for focus states
+				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important; box-shadow: 0 0 0 3px rgba({{VALUE}}, 0.15) !important;',
+				// Checkbox/radio accent
+				'{{WRAPPER}} .gform_wrapper input[type="checkbox"]:checked, {{WRAPPER}} .gform_wrapper input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
+				// Image choice selected indicator
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
+			),
+		) );
+
 		$this->end_controls_section();
 	}
 
