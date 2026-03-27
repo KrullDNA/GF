@@ -701,6 +701,27 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 		) );
 
+		$this->add_control( 'choice_layout', array(
+			'label'   => esc_html__( 'Choice Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => array(
+				''          => esc_html__( 'Vertical (Default)', 'kdnaforms' ),
+				'inline'    => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
+				'2-columns' => esc_html__( '2 Columns', 'kdnaforms' ),
+				'3-columns' => esc_html__( '3 Columns', 'kdnaforms' ),
+				'4-columns' => esc_html__( '4 Columns', 'kdnaforms' ),
+			),
+			'default' => '',
+			'prefix_class' => 'kdna-choice-layout-',
+		) );
+
+		$this->add_control( 'choice_inline_display', array(
+			'label'       => esc_html__( 'Choice Item Display', 'kdnaforms' ),
+			'type'        => \Elementor\Controls_Manager::HEADING,
+			'description' => esc_html__( 'Fix radio/checkbox input and label alignment.', 'kdnaforms' ),
+			'separator'   => 'before',
+		) );
+
 		$this->add_responsive_control( 'checkbox_size', array(
 			'label'      => esc_html__( 'Size', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::SLIDER,

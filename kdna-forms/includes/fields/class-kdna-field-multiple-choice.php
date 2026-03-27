@@ -83,7 +83,7 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		$aria_describedby = $checkbox->get_choice_aria_describedby( $this->formId );
 
 		// Prepare choice markup.
-		$choice_markup = "<div class='kdnachoice gchoice_select_all'>
+		$choice_markup = "<div class='gchoice gchoice_select_all'>
 						<input class='gfield-choice-input gfield_choice_all_toggle' type='checkbox' id='{$id}' {$tabindex} {$aria_describedby} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} {$disabled_text} />
 						<label for='{$id}' id='label_" . $this->id . "_select_all' class='gform-field-label gform-field-label--type-inline' data-label-select='{$select_label}''>{$select_label}</label>
 					</div>";

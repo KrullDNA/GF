@@ -161,7 +161,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 		$choice_value = esc_attr( $field_value );
 
-		$choice_markup = "<div class='kdnachoice gchoice_{$id}'>
+		$choice_markup = "<div class='gchoice gchoice_{$id}'>
 			<span class='gfield-image-choice-wrapper-outer'>
 				{$image}
 				<span class='gfield-image-choice-wrapper-inner'>

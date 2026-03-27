@@ -178,8 +178,15 @@ class KDNA_Elementor_Loader {
 	 * @return void
 	 */
 	public function enqueue_frontend_styles() {
-		// KDNA Forms core styles are loaded by the form render function.
-		// Additional scoped styles are inlined by the widget render method.
+		$css_file = __DIR__ . '/assets/css/kdna-elementor-editor.css';
+		$css_url  = plugins_url( 'assets/css/kdna-elementor-editor.css', __FILE__ );
+
+		wp_enqueue_style(
+			'kdna-elementor-frontend',
+			$css_url,
+			array(),
+			file_exists( $css_file ) ? filemtime( $css_file ) : '1.0.0'
+		);
 	}
 
 	/**
