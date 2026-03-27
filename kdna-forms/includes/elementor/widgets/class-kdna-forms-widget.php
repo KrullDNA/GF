@@ -1757,7 +1757,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		foreach ( $layout_map as $setting_key => $target ) {
 			$layout_val = $settings[ $setting_key ] ?? '';
 			if ( $layout_val === 'inline' ) {
-				$inline_css .= "{$widget_selector} {$target} { display: flex !important; flex-wrap: wrap !important; gap: 12px 20px !important; }";
+				$inline_css .= "{$widget_selector} {$target} { display: flex !important; flex-wrap: wrap !important; flex-direction: row !important; gap: 12px 20px !important; }";
 			} elseif ( $layout_val === '2col' ) {
 				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important; }";
 			} elseif ( $layout_val === '3col' ) {
