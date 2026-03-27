@@ -256,7 +256,7 @@ class KDNAFormDetail {
 			/* Two-column layout: panel on left, form canvas on right */
 			.gforms_edit_form {
 				display: grid !important;
-				grid-template-columns: 270px 1fr !important;
+				grid-template-columns: 370px 1fr !important;
 				grid-template-rows: auto 1fr !important;
 			}
 			.gforms_edit_form > .gform-form-toolbar,
@@ -270,11 +270,19 @@ class KDNAFormDetail {
 				top: 32px !important;
 				right: unset !important;
 				left: unset !important;
+				width: 370px !important;
 				height: calc(100vh - 32px) !important;
 				overflow-y: auto !important;
 				grid-column: 1 !important;
 				grid-row: 2 !important;
 				z-index: 1 !important;
+			}
+			.editor-sidebar .sidebar {
+				width: 100% !important;
+			}
+			.editor-sidebar .sidebar .sidebar__nav-wrapper {
+				width: 100% !important;
+				position: relative !important;
 			}
 			#form_editor_fields_container {
 				grid-column: 2 !important;
