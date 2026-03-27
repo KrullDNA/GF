@@ -50,6 +50,56 @@
 	margin-bottom: 0 !important;
 }
 
+/* ===== RADIO BUTTON LAYOUTS ===== */
+.kdna-radio-layout-inline .gfield_radio:not(.gfield_radio--image-choice) {
+	display: flex !important; flex-wrap: wrap !important; gap: 12px 20px !important;
+}
+.kdna-radio-layout-2col .gfield_radio:not(.gfield_radio--image-choice) {
+	display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important;
+}
+.kdna-radio-layout-3col .gfield_radio:not(.gfield_radio--image-choice) {
+	display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important;
+}
+.kdna-radio-layout-4col .gfield_radio:not(.gfield_radio--image-choice) {
+	display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important;
+}
+
+/* ===== CHECKBOX LAYOUTS ===== */
+.kdna-checkbox-layout-inline .gfield_checkbox {
+	display: flex !important; flex-wrap: wrap !important; gap: 12px 20px !important;
+}
+.kdna-checkbox-layout-2col .gfield_checkbox {
+	display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important;
+}
+.kdna-checkbox-layout-3col .gfield_checkbox {
+	display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important;
+}
+.kdna-checkbox-layout-4col .gfield_checkbox {
+	display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important;
+}
+
+/* ===== IMAGE CHOICE LAYOUTS ===== */
+.kdna-imgchoice-layout-inline .gfield--type-image_choice .gfield_radio,
+.kdna-imgchoice-layout-inline .gfield--type-image_choice .gfield_checkbox,
+.kdna-imgchoice-layout-inline .gfield_radio--image-choice {
+	display: flex !important; flex-wrap: wrap !important; gap: 12px 20px !important;
+}
+.kdna-imgchoice-layout-2col .gfield--type-image_choice .gfield_radio,
+.kdna-imgchoice-layout-2col .gfield--type-image_choice .gfield_checkbox,
+.kdna-imgchoice-layout-2col .gfield_radio--image-choice {
+	display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important;
+}
+.kdna-imgchoice-layout-3col .gfield--type-image_choice .gfield_radio,
+.kdna-imgchoice-layout-3col .gfield--type-image_choice .gfield_checkbox,
+.kdna-imgchoice-layout-3col .gfield_radio--image-choice {
+	display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important;
+}
+.kdna-imgchoice-layout-4col .gfield--type-image_choice .gfield_radio,
+.kdna-imgchoice-layout-4col .gfield--type-image_choice .gfield_checkbox,
+.kdna-imgchoice-layout-4col .gfield_radio--image-choice {
+	display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important;
+}
+
 /* Image choice - make images clickable and styled */
 .kdna-elementor-form-wrapper .gchoice .gfield-choice-image-label {
 	cursor: pointer;

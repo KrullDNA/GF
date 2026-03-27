@@ -731,67 +731,60 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$layout_options = array(
 			''          => esc_html__( 'Vertical (Default)', 'kdnaforms' ),
-			'flex'      => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
-			'grid-2'    => esc_html__( '2 Columns', 'kdnaforms' ),
-			'grid-3'    => esc_html__( '3 Columns', 'kdnaforms' ),
-			'grid-4'    => esc_html__( '4 Columns', 'kdnaforms' ),
+			'inline'    => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
+			'2col'      => esc_html__( '2 Columns', 'kdnaforms' ),
+			'3col'      => esc_html__( '3 Columns', 'kdnaforms' ),
+			'4col'      => esc_html__( '4 Columns', 'kdnaforms' ),
 		);
 
 		$this->add_control( 'radio_layout', array(
-			'label'   => esc_html__( 'Radio Button Layout', 'kdnaforms' ),
-			'type'    => \Elementor\Controls_Manager::SELECT,
-			'options' => $layout_options,
-			'default' => '',
-			'selectors_dictionary' => array(
-				''       => '',
-				'flex'   => 'display: flex; flex-wrap: wrap; gap: 12px 20px;',
-				'grid-2' => 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px;',
-				'grid-3' => 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px;',
-				'grid-4' => 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px;',
-			),
-			'selectors' => array(
-				'{{WRAPPER}} .gfield_radio:not(.gfield_radio--image-choice)' => '{{VALUE}}',
-			),
+			'label'        => esc_html__( 'Radio Button Layout', 'kdnaforms' ),
+			'type'         => \Elementor\Controls_Manager::SELECT,
+			'options'      => $layout_options,
+			'default'      => '',
+			'prefix_class' => 'kdna-radio-layout-',
 		) );
 
 		$this->add_control( 'checkbox_layout', array(
-			'label'   => esc_html__( 'Checkbox Layout', 'kdnaforms' ),
-			'type'    => \Elementor\Controls_Manager::SELECT,
-			'options' => $layout_options,
-			'default' => '',
-			'selectors_dictionary' => array(
-				''       => '',
-				'flex'   => 'display: flex; flex-wrap: wrap; gap: 12px 20px;',
-				'grid-2' => 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px;',
-				'grid-3' => 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px;',
-				'grid-4' => 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px;',
-			),
-			'selectors' => array(
-				'{{WRAPPER}} .gfield_checkbox' => '{{VALUE}}',
-			),
+			'label'        => esc_html__( 'Checkbox Layout', 'kdnaforms' ),
+			'type'         => \Elementor\Controls_Manager::SELECT,
+			'options'      => $layout_options,
+			'default'      => '',
+			'prefix_class' => 'kdna-checkbox-layout-',
 		) );
 
 		$this->add_control( 'image_choice_layout', array(
-			'label'   => esc_html__( 'Image Choice Layout', 'kdnaforms' ),
-			'type'    => \Elementor\Controls_Manager::SELECT,
-			'options' => $layout_options,
-			'default' => '',
-			'selectors_dictionary' => array(
-				''       => '',
-				'flex'   => 'display: flex; flex-wrap: wrap; gap: 12px 20px;',
-				'grid-2' => 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px;',
-				'grid-3' => 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px;',
-				'grid-4' => 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px;',
-			),
-			'selectors' => array(
-				'{{WRAPPER}} .gfield_radio.gfield_radio--image-choice, {{WRAPPER}} .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gfield--type-image_choice .gfield_checkbox' => '{{VALUE}}',
+			'label'        => esc_html__( 'Image Choice Layout', 'kdnaforms' ),
+			'type'         => \Elementor\Controls_Manager::SELECT,
+			'options'      => $layout_options,
+			'default'      => '',
+			'prefix_class' => 'kdna-imgchoice-layout-',
+		) );
+
+		$this->add_control( 'choice_styling_heading', array(
+			'label'     => esc_html__( 'Choice Styling', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::HEADING,
+			'separator' => 'before',
+		) );
+
+		$this->add_responsive_control( 'radio_input_label_gap', array(
+			'label'      => esc_html__( 'Radio Input-Label Gap', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
+			'selectors'  => array(
+				'{{WRAPPER}} .gfield_radio .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
-		$this->add_control( 'choice_inline_display', array(
-			'label'       => esc_html__( 'Choice Styling', 'kdnaforms' ),
-			'type'        => \Elementor\Controls_Manager::HEADING,
-			'separator'   => 'before',
+		$this->add_responsive_control( 'checkbox_input_label_gap', array(
+			'label'      => esc_html__( 'Checkbox Input-Label Gap', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
+			'selectors'  => array(
+				'{{WRAPPER}} .gfield_checkbox .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+			),
 		) );
 
 		$this->add_responsive_control( 'checkbox_size', array(
@@ -816,7 +809,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Checked Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input[type="checkbox"]:checked, {{WRAPPER}} .gform_body input[type="radio"]:checked' => 'accent-color: {{VALUE}};',
+				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
+				'{{WRAPPER}} .gform_body input[type="checkbox"]:checked, {{WRAPPER}} .gform_body input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -949,6 +943,16 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 			'selectors'  => array(
 				'{{WRAPPER}} .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .gfield_radio--image-choice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+			),
+		) );
+
+		$this->add_responsive_control( 'image_choice_input_label_gap', array(
+			'label'      => esc_html__( 'Radio/Label Gap (Image Choice)', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
+			'selectors'  => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice, {{WRAPPER}} .gfield_radio--image-choice .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
