@@ -3360,23 +3360,8 @@ class KDNAForms {
 			return;
 		}
 
-		// Debug: log what we're trying to enqueue
-		error_log( '[KDNA Debug] enqueue_admin_scripts page=' . $page . ' scripts=' . implode( ',', $scripts ) );
-
 		foreach ( $scripts as $script ) {
 			wp_enqueue_script( $script );
-			// Debug: check if it actually got queued
-			if ( ! wp_script_is( $script, 'enqueued' ) && ! wp_script_is( $script, 'registered' ) ) {
-				error_log( '[KDNA Debug] FAILED to enqueue: ' . $script . ' (not registered)' );
-			}
-		}
-
-		// Debug: specifically check critical scripts
-		$critical = array( 'kdnaform_form_editor', 'kdnaform_layout_editor', 'jquery-ui-draggable', 'jquery-ui-sortable', 'jquery-ui-droppable', 'jquery-touch-punch' );
-		foreach ( $critical as $handle ) {
-			$registered = wp_script_is( $handle, 'registered' );
-			$enqueued = wp_script_is( $handle, 'enqueued' );
-			error_log( "[KDNA Debug] Script '{$handle}': registered=" . ( $registered ? 'yes' : 'NO' ) . " enqueued=" . ( $enqueued ? 'yes' : 'NO' ) );
 		}
 
 		// Force-print critical form editor scripts in the page head.

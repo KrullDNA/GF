@@ -870,8 +870,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 40 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield_radio, {{WRAPPER}} .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gfield_radio .gchoice, {{WRAPPER}} .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gfield_radio, {{WRAPPER}} .gform_wrapper .gfield_checkbox, {{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .gform_wrapper .gfield_radio .gchoice, {{WRAPPER}} .gform_wrapper .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
 			),
 		) );
 
@@ -1658,30 +1658,6 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$form_id  = absint( $settings['form_id'] );
 
-		// === KDNA DEBUG: Output widget debug info as HTML comment ===
-		$debug_keys = array(
-			'checkbox_checked_color', 'checkbox_color', 'checkbox_border_color',
-			'radio_layout', 'checkbox_layout', 'image_choice_layout',
-			'checkbox_spacing', 'radio_input_label_gap', 'checkbox_input_label_gap',
-			'submit_bg_color', 'submit_hover_bg_color', 'submit_gap_above',
-			'global_focus_color', 'global_accent_color',
-		);
-		echo "\n<!-- KDNA ELEMENTOR DEBUG START -->\n";
-		echo "<!-- Widget ID: " . esc_html( $this->get_id() ) . " -->\n";
-		echo "<!-- Widget Classes: " . esc_html( implode( ' ', $this->get_render_attributes()['_wrapper']['class'] ?? array() ) ) . " -->\n";
-		foreach ( $debug_keys as $key ) {
-			$val = isset( $settings[ $key ] ) ? $settings[ $key ] : 'NOT SET';
-			if ( is_array( $val ) ) {
-				$val = json_encode( $val );
-			}
-			echo "<!-- Setting [{$key}]: " . esc_html( $val ) . " -->\n";
-		}
-		// Check what CSS classes are on the wrapper element
-		$wrapper_el = $this->get_unique_selector();
-		echo "<!-- Unique Selector: " . esc_html( $wrapper_el ) . " -->\n";
-		echo "<!-- KDNA ELEMENTOR DEBUG END -->\n\n";
-		// === END DEBUG ===
-
 		if ( empty( $form_id ) ) {
 			if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 				echo '<div class="kdna-elementor-form-placeholder" style="padding:40px;text-align:center;background:#f5f5f5;border:2px dashed #ccc;border-radius:8px;">';
@@ -1704,35 +1680,6 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		echo '<div class="' . esc_attr( implode( ' ', $wrapper_classes ) ) . '">';
 
-		// === KDNA VISIBLE DEBUG ===
-		if ( current_user_can( 'manage_options' ) ) {
-			$checked_color = $settings['checkbox_checked_color'] ?? 'NOT SET';
-			$radio_layout = $settings['radio_layout'] ?? 'NOT SET';
-			$checkbox_layout = $settings['checkbox_layout'] ?? 'NOT SET';
-			$accent_color = $settings['global_accent_color'] ?? 'NOT SET';
-			$spacing = $settings['checkbox_spacing']['size'] ?? 'NOT SET';
-
-			echo '<div style="background:#ffe0e0;padding:10px;margin-bottom:10px;font-size:12px;font-family:monospace;border:1px solid #f00;">';
-			echo '<strong>KDNA Debug (admin only):</strong><br>';
-			echo 'Checked Color: ' . esc_html( $checked_color ) . '<br>';
-			echo 'Radio Layout: ' . esc_html( $radio_layout ) . '<br>';
-			echo 'Checkbox Layout: ' . esc_html( $checkbox_layout ) . '<br>';
-			echo 'Accent Color: ' . esc_html( $accent_color ) . '<br>';
-			echo 'Spacing: ' . esc_html( $spacing ) . '<br>';
-			echo 'Widget wrapper classes: ' . esc_html( $this->get_raw_data()['settings']['_css_classes'] ?? 'none' ) . '<br>';
-			// Show what Elementor adds to the wrapper
-			$el_settings = $this->get_settings();
-			$prefix_classes = '';
-			foreach ( array( 'radio_layout', 'checkbox_layout', 'image_choice_layout' ) as $pc ) {
-				if ( ! empty( $el_settings[ $pc ] ) ) {
-					$prefix_classes .= ' [' . $pc . '=' . $el_settings[ $pc ] . ']';
-				}
-			}
-			echo 'Layout settings: ' . esc_html( $prefix_classes ) . '<br>';
-			echo '</div>';
-		}
-		// === END VISIBLE DEBUG ===
-
 		// Force critical styles inline since the CSS file may not load
 		$widget_selector = '.elementor-element-' . $this->get_id();
 		$inline_css = '';
@@ -1746,12 +1693,12 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			$inline_css .= "{$widget_selector} .gform_wrapper input[type='checkbox']::before { color: {$checked_color} !important; }";
 		}
 
-		// Spacing between options
+		// Spacing between options - applies to radio, checkbox, AND image choice
 		$spacing = $settings['checkbox_spacing']['size'] ?? '';
 		if ( $spacing !== '' ) {
 			$unit = $settings['checkbox_spacing']['unit'] ?? 'px';
-			$inline_css .= "{$widget_selector} .gfield_radio, {$widget_selector} .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
-			$inline_css .= "{$widget_selector} .gfield_radio .gchoice, {$widget_selector} .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gfield_radio, {$widget_selector} .gform_wrapper .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gfield_radio .gchoice, {$widget_selector} .gform_wrapper .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
 		}
 
 		// Focus color
