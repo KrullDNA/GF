@@ -1639,6 +1639,30 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$settings = $this->get_settings_for_display();
 		$form_id  = absint( $settings['form_id'] );
 
+		// === KDNA DEBUG: Output widget debug info as HTML comment ===
+		$debug_keys = array(
+			'checkbox_checked_color', 'checkbox_color', 'checkbox_border_color',
+			'radio_layout', 'checkbox_layout', 'image_choice_layout',
+			'checkbox_spacing', 'radio_input_label_gap', 'checkbox_input_label_gap',
+			'submit_bg_color', 'submit_hover_bg_color', 'submit_gap_above',
+			'global_focus_color', 'global_accent_color',
+		);
+		echo "\n<!-- KDNA ELEMENTOR DEBUG START -->\n";
+		echo "<!-- Widget ID: " . esc_html( $this->get_id() ) . " -->\n";
+		echo "<!-- Widget Classes: " . esc_html( implode( ' ', $this->get_render_attributes()['_wrapper']['class'] ?? array() ) ) . " -->\n";
+		foreach ( $debug_keys as $key ) {
+			$val = isset( $settings[ $key ] ) ? $settings[ $key ] : 'NOT SET';
+			if ( is_array( $val ) ) {
+				$val = json_encode( $val );
+			}
+			echo "<!-- Setting [{$key}]: " . esc_html( $val ) . " -->\n";
+		}
+		// Check what CSS classes are on the wrapper element
+		$wrapper_el = $this->get_unique_selector();
+		echo "<!-- Unique Selector: " . esc_html( $wrapper_el ) . " -->\n";
+		echo "<!-- KDNA ELEMENTOR DEBUG END -->\n\n";
+		// === END DEBUG ===
+
 		if ( empty( $form_id ) ) {
 			if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) {
 				echo '<div class="kdna-elementor-form-placeholder" style="padding:40px;text-align:center;background:#f5f5f5;border:2px dashed #ccc;border-radius:8px;">';
@@ -1660,6 +1684,35 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		}
 
 		echo '<div class="' . esc_attr( implode( ' ', $wrapper_classes ) ) . '">';
+
+		// === KDNA VISIBLE DEBUG ===
+		if ( current_user_can( 'manage_options' ) ) {
+			$checked_color = $settings['checkbox_checked_color'] ?? 'NOT SET';
+			$radio_layout = $settings['radio_layout'] ?? 'NOT SET';
+			$checkbox_layout = $settings['checkbox_layout'] ?? 'NOT SET';
+			$accent_color = $settings['global_accent_color'] ?? 'NOT SET';
+			$spacing = $settings['checkbox_spacing']['size'] ?? 'NOT SET';
+
+			echo '<div style="background:#ffe0e0;padding:10px;margin-bottom:10px;font-size:12px;font-family:monospace;border:1px solid #f00;">';
+			echo '<strong>KDNA Debug (admin only):</strong><br>';
+			echo 'Checked Color: ' . esc_html( $checked_color ) . '<br>';
+			echo 'Radio Layout: ' . esc_html( $radio_layout ) . '<br>';
+			echo 'Checkbox Layout: ' . esc_html( $checkbox_layout ) . '<br>';
+			echo 'Accent Color: ' . esc_html( $accent_color ) . '<br>';
+			echo 'Spacing: ' . esc_html( $spacing ) . '<br>';
+			echo 'Widget wrapper classes: ' . esc_html( $this->get_raw_data()['settings']['_css_classes'] ?? 'none' ) . '<br>';
+			// Show what Elementor adds to the wrapper
+			$el_settings = $this->get_settings();
+			$prefix_classes = '';
+			foreach ( array( 'radio_layout', 'checkbox_layout', 'image_choice_layout' ) as $pc ) {
+				if ( ! empty( $el_settings[ $pc ] ) ) {
+					$prefix_classes .= ' [' . $pc . '=' . $el_settings[ $pc ] . ']';
+				}
+			}
+			echo 'Layout settings: ' . esc_html( $prefix_classes ) . '<br>';
+			echo '</div>';
+		}
+		// === END VISIBLE DEBUG ===
 
 		// Build shortcode attributes
 		$shortcode_atts = array(
