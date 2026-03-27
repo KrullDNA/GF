@@ -121,6 +121,11 @@
     --gf-local-border-color: transparent !important;
     --gf-field-img-choice-card-space: 0px !important;
     --gf-local-bg-color: transparent !important;
+    --gf-field-img-choice-aspect-ratio: auto !important;
+    --gf-field-img-choice-size: auto !important;
+    max-inline-size: none !important;
+    min-inline-size: 0 !important;
+    inline-size: auto !important;
 }
 
 .kdna-elementor-form-wrapper .gfield--type-image_choice .gchoice::before,
@@ -129,11 +134,21 @@
     display: none !important;
 }
 
-/* Also strip padding from inner wrappers */
+/* Also strip padding from inner wrappers and override aspect ratio */
 .kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-image-choice-wrapper-inner,
 .kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-choice-image-wrapper {
     padding: 0 !important;
     margin: 0 !important;
+}
+
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-choice-image-wrapper,
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-choice-image-wrapper img {
+    aspect-ratio: auto !important;
+}
+
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-choice-image-label,
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-choice-image-label img {
+    aspect-ratio: auto !important;
 }
 
 /* Remove left padding/margin so radio aligns with image left edge */
