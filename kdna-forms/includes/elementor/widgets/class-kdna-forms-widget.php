@@ -966,14 +966,25 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_responsive_control( 'image_choice_img_to_radio_gap', array(
+			'label'      => esc_html__( 'Image to Radio/Label Gap', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array( 'px' => array( 'min' => 0, 'max' => 30 ) ),
+			'default'    => array( 'size' => 10, 'unit' => 'px' ),
+			'selectors'  => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gfield-image-choice-wrapper-inner' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+			),
+		) );
+
 		$this->add_responsive_control( 'image_choice_input_label_gap', array(
-			'label'      => esc_html__( 'Radio/Label Gap (Image Choice)', 'kdnaforms' ),
+			'label'      => esc_html__( 'Radio/Label Text Gap', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
 			'default'    => array( 'size' => 6, 'unit' => 'px' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gchoice label, {{WRAPPER}} .gfield_radio--image-choice .gchoice label' => 'margin-left: {{SIZE}}{{UNIT}} !important; padding-left: 0 !important;',
+				'{{WRAPPER}} .gfield--type-image_choice .gfield-image-choice-wrapper-inner .gform-field-label' => 'margin-left: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
