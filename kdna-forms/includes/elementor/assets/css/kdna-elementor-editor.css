@@ -24,14 +24,78 @@
 	width: 100%;
 }
 
+/* Fix radio/checkbox input + label alignment */
+.kdna-elementor-form-wrapper .gfield_radio .gchoice,
+.kdna-elementor-form-wrapper .gfield_checkbox .gchoice {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.kdna-elementor-form-wrapper .gfield_radio .gchoice input[type="radio"],
+.kdna-elementor-form-wrapper .gfield_checkbox .gchoice input[type="checkbox"] {
+	margin: 0;
+	flex-shrink: 0;
+}
+
+.kdna-elementor-form-wrapper .gfield_radio .gchoice label,
+.kdna-elementor-form-wrapper .gfield_checkbox .gchoice label {
+	margin: 0;
+	cursor: pointer;
+}
+
+/* Choice layout: Inline (wrap) */
+.kdna-choice-layout-inline .gfield_radio,
+.kdna-choice-layout-inline .gfield_checkbox {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	gap: 12px 20px !important;
+}
+
+.kdna-choice-layout-inline .gfield_radio .gchoice,
+.kdna-choice-layout-inline .gfield_checkbox .gchoice {
+	margin-bottom: 0 !important;
+}
+
+/* Choice layout: 2 Columns */
+.kdna-choice-layout-2-columns .gfield_radio,
+.kdna-choice-layout-2-columns .gfield_checkbox {
+	display: grid !important;
+	grid-template-columns: repeat(2, 1fr) !important;
+	gap: 8px 16px !important;
+}
+
+/* Choice layout: 3 Columns */
+.kdna-choice-layout-3-columns .gfield_radio,
+.kdna-choice-layout-3-columns .gfield_checkbox {
+	display: grid !important;
+	grid-template-columns: repeat(3, 1fr) !important;
+	gap: 8px 16px !important;
+}
+
+/* Choice layout: 4 Columns */
+.kdna-choice-layout-4-columns .gfield_radio,
+.kdna-choice-layout-4-columns .gfield_checkbox {
+	display: grid !important;
+	grid-template-columns: repeat(4, 1fr) !important;
+	gap: 8px 16px !important;
+}
+
+/* Column layouts also need the flex alignment fix on each choice */
+.kdna-choice-layout-2-columns .gchoice,
+.kdna-choice-layout-3-columns .gchoice,
+.kdna-choice-layout-4-columns .gchoice {
+	margin-bottom: 0 !important;
+}
+
 /* Editor-only overrides for better preview */
-.elementor-editor-active .kdna-elementor-form-wrapper .kdnaform_wrapper {
+.elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper {
 	pointer-events: none;
 }
 
-.elementor-editor-active .kdna-elementor-form-wrapper .kdnaform_wrapper input,
-.elementor-editor-active .kdna-elementor-form-wrapper .kdnaform_wrapper textarea,
-.elementor-editor-active .kdna-elementor-form-wrapper .kdnaform_wrapper select,
-.elementor-editor-active .kdna-elementor-form-wrapper .kdnaform_wrapper button {
+.elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper input,
+.elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper textarea,
+.elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper select,
+.elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper button {
 	pointer-events: none;
 }

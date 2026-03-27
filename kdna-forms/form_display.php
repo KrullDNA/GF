@@ -3164,6 +3164,10 @@ class KDNAFormDisplay {
 
 			} else {
 				// Theme related styles will be enqueued by the theme layer process initiated by form-display/block-styles/block-styles-handler.php
+
+				if ( self::has_datepicker_field( $form ) ) {
+					$assets[] = new KDNA_Style_Asset( 'gforms_datepicker_css' );
+				}
 			}
 
 			if ( self::has_password_visibility( $form ) ) {

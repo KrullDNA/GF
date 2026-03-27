@@ -963,7 +963,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				// Prepare choice markup.
-				$choice_markup = "<{$tag} class='kdnachoice gchoice_select_all'>
+				$choice_markup = "<{$tag} class='gchoice gchoice_select_all'>
 						<input class='gfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
 						<label for='{$id}' id='label_" . $this->id . "_select_all' class='gform-field-label  gform-field-label--type-inline' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
 					</{$tag}>";
@@ -1029,7 +1029,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<{$tag} class='kdnachoice gchoice_{$id}'>
+				$choice_markup = "<{$tag} class='gchoice gchoice_{$id}'>
 								<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
 								<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>{$choice['text']}</label>
 							</{$tag}>";

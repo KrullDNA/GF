@@ -67,6 +67,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->register_style_textarea();
 		$this->register_style_select();
 		$this->register_style_checkbox_radio();
+		$this->register_style_image_choice();
 		$this->register_style_file_upload();
 		$this->register_style_section_break();
 		$this->register_style_submit_button();
@@ -701,6 +702,27 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 		) );
 
+		$this->add_control( 'choice_layout', array(
+			'label'   => esc_html__( 'Choice Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => array(
+				''          => esc_html__( 'Vertical (Default)', 'kdnaforms' ),
+				'inline'    => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
+				'2-columns' => esc_html__( '2 Columns', 'kdnaforms' ),
+				'3-columns' => esc_html__( '3 Columns', 'kdnaforms' ),
+				'4-columns' => esc_html__( '4 Columns', 'kdnaforms' ),
+			),
+			'default' => '',
+			'prefix_class' => 'kdna-choice-layout-',
+		) );
+
+		$this->add_control( 'choice_inline_display', array(
+			'label'       => esc_html__( 'Choice Item Display', 'kdnaforms' ),
+			'type'        => \Elementor\Controls_Manager::HEADING,
+			'description' => esc_html__( 'Fix radio/checkbox input and label alignment.', 'kdnaforms' ),
+			'separator'   => 'before',
+		) );
+
 		$this->add_responsive_control( 'checkbox_size', array(
 			'label'      => esc_html__( 'Size', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::SLIDER,
@@ -766,6 +788,118 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 40 ) ),
 			'selectors'  => array(
 				'{{WRAPPER}} .gform_body .gchoice, {{WRAPPER}} .gform_body .kdnachoice' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+			),
+		) );
+
+		$this->end_controls_section();
+	}
+
+	// ==========================================
+	// STYLE TAB - IMAGE CHOICE
+	// ==========================================
+
+	private function register_style_image_choice() {
+		$this->start_controls_section( 'section_style_image_choice', array(
+			'label' => esc_html__( 'Image Choice', 'kdnaforms' ),
+			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+		) );
+
+		$image_selector = '{{WRAPPER}} .gfield_radio .gchoice img, {{WRAPPER}} .gfield_checkbox .gchoice img, {{WRAPPER}} .gchoice .gfield-choice-image-wrapper img';
+
+		$this->add_responsive_control( 'image_choice_width', array(
+			'label'      => esc_html__( 'Image Width', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px', '%' ),
+			'range'      => array(
+				'px' => array( 'min' => 50, 'max' => 500 ),
+				'%'  => array( 'min' => 10, 'max' => 100 ),
+			),
+			'selectors'  => array(
+				$image_selector => 'width: {{SIZE}}{{UNIT}};',
+			),
+		) );
+
+		$this->add_responsive_control( 'image_choice_height', array(
+			'label'      => esc_html__( 'Image Height', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array(
+				'px' => array( 'min' => 50, 'max' => 500 ),
+			),
+			'selectors'  => array(
+				$image_selector => 'height: {{SIZE}}{{UNIT}};',
+			),
+		) );
+
+		$this->add_control( 'image_choice_object_fit', array(
+			'label'   => esc_html__( 'Image Object Fit', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => array(
+				''        => esc_html__( 'Default', 'kdnaforms' ),
+				'cover'   => esc_html__( 'Cover', 'kdnaforms' ),
+				'contain' => esc_html__( 'Contain', 'kdnaforms' ),
+				'fill'    => esc_html__( 'Fill', 'kdnaforms' ),
+				'none'    => esc_html__( 'None', 'kdnaforms' ),
+			),
+			'default'   => '',
+			'selectors' => array(
+				$image_selector => 'object-fit: {{VALUE}};',
+			),
+		) );
+
+		$this->add_responsive_control( 'image_choice_border_radius', array(
+			'label'      => esc_html__( 'Image Border Radius', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
+			'size_units' => array( 'px', '%' ),
+			'selectors'  => array(
+				$image_selector => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+			),
+		) );
+
+		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
+			'name'     => 'image_choice_border',
+			'label'    => esc_html__( 'Image Border', 'kdnaforms' ),
+			'selector' => $image_selector,
+		) );
+
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'image_choice_box_shadow',
+			'label'    => esc_html__( 'Image Box Shadow', 'kdnaforms' ),
+			'selector' => $image_selector,
+		) );
+
+		$this->add_responsive_control( 'image_choice_spacing', array(
+			'label'      => esc_html__( 'Image Spacing', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array(
+				'px' => array( 'min' => 0, 'max' => 50 ),
+			),
+			'selectors'  => array(
+				'{{WRAPPER}} .gchoice' => 'gap: {{SIZE}}{{UNIT}};',
+			),
+		) );
+
+		$selected_image_selector = '{{WRAPPER}} .gchoice input:checked + label img, {{WRAPPER}} .gchoice input:checked ~ .gfield-choice-image-wrapper img';
+
+		$this->add_control( 'image_choice_selected_border_color', array(
+			'label'     => esc_html__( 'Selected Image Border Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array(
+				$selected_image_selector => 'border-color: {{VALUE}} !important;',
+			),
+			'separator' => 'before',
+		) );
+
+		$this->add_responsive_control( 'image_choice_selected_opacity', array(
+			'label'      => esc_html__( 'Selected Image Opacity', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array(
+				'px' => array( 'min' => 0, 'max' => 1, 'step' => 0.05 ),
+			),
+			'selectors'  => array(
+				$selected_image_selector => 'opacity: {{SIZE}};',
 			),
 		) );
 
@@ -914,6 +1048,20 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->start_controls_section( 'section_style_submit', array(
 			'label' => esc_html__( 'Submit Button', 'kdnaforms' ),
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
+		) );
+
+		$this->add_responsive_control( 'submit_gap_above', array(
+			'label'      => esc_html__( 'Gap Above Button', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px', 'em' ),
+			'range'      => array(
+				'px' => array( 'min' => 0, 'max' => 100 ),
+				'em' => array( 'min' => 0, 'max' => 6 ),
+			),
+			'selectors' => array(
+				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important;',
+			),
+			'separator' => 'after',
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
