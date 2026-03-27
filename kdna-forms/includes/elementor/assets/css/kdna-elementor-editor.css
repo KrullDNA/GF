@@ -119,11 +119,21 @@
     padding: 0 !important;
     --gf-local-shadow: none !important;
     --gf-local-border-color: transparent !important;
+    --gf-field-img-choice-card-space: 0px !important;
+    --gf-local-bg-color: transparent !important;
 }
 
 .kdna-elementor-form-wrapper .gfield--type-image_choice .gchoice::before,
 .kdna-elementor-form-wrapper .gfield_radio--image-choice .gchoice::before {
     border: none !important;
+    display: none !important;
+}
+
+/* Also strip padding from inner wrappers */
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-image-choice-wrapper-inner,
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-choice-image-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 /* Editor-only overrides for better preview */
