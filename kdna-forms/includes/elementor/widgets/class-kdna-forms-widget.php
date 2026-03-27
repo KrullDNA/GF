@@ -208,6 +208,28 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_control( 'global_accent_heading', array(
+			'label'     => esc_html__( 'Global Accent / Focus Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::HEADING,
+			'separator' => 'before',
+		) );
+
+		$this->add_control( 'global_accent_color', array(
+			'label'       => esc_html__( 'Accent Color', 'kdnaforms' ),
+			'type'        => \Elementor\Controls_Manager::COLOR,
+			'description' => esc_html__( 'Sets the focus/selected color for all inputs, selects, checkboxes, radio buttons, and image choices.', 'kdnaforms' ),
+			'selectors'   => array(
+				// Override the theme CSS variables for primary/focus colors
+				'{{WRAPPER}} .gform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-color-primary-rgb: {{VALUE}}; --gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3); --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
+				// Direct selectors for focus states
+				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important; box-shadow: 0 0 0 3px rgba({{VALUE}}, 0.15) !important;',
+				// Checkbox/radio accent
+				'{{WRAPPER}} .gform_wrapper input[type="checkbox"]:checked, {{WRAPPER}} .gform_wrapper input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
+				// Image choice selected indicator
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
+			),
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -702,24 +724,68 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 		) );
 
-		$this->add_control( 'choice_layout', array(
-			'label'   => esc_html__( 'Choice Layout', 'kdnaforms' ),
+		$layout_options = array(
+			''          => esc_html__( 'Vertical (Default)', 'kdnaforms' ),
+			'flex'      => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
+			'grid-2'    => esc_html__( '2 Columns', 'kdnaforms' ),
+			'grid-3'    => esc_html__( '3 Columns', 'kdnaforms' ),
+			'grid-4'    => esc_html__( '4 Columns', 'kdnaforms' ),
+		);
+
+		$this->add_control( 'radio_layout', array(
+			'label'   => esc_html__( 'Radio Button Layout', 'kdnaforms' ),
 			'type'    => \Elementor\Controls_Manager::SELECT,
-			'options' => array(
-				''          => esc_html__( 'Vertical (Default)', 'kdnaforms' ),
-				'inline'    => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
-				'2-columns' => esc_html__( '2 Columns', 'kdnaforms' ),
-				'3-columns' => esc_html__( '3 Columns', 'kdnaforms' ),
-				'4-columns' => esc_html__( '4 Columns', 'kdnaforms' ),
-			),
+			'options' => $layout_options,
 			'default' => '',
-			'prefix_class' => 'kdna-choice-layout-',
+			'selectors_dictionary' => array(
+				''       => '',
+				'flex'   => 'display: flex; flex-wrap: wrap; gap: 12px 20px;',
+				'grid-2' => 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px;',
+				'grid-3' => 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px;',
+				'grid-4' => 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px;',
+			),
+			'selectors' => array(
+				'{{WRAPPER}} .gfield_radio:not(.gfield_radio--image-choice)' => '{{VALUE}}',
+			),
+		) );
+
+		$this->add_control( 'checkbox_layout', array(
+			'label'   => esc_html__( 'Checkbox Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => $layout_options,
+			'default' => '',
+			'selectors_dictionary' => array(
+				''       => '',
+				'flex'   => 'display: flex; flex-wrap: wrap; gap: 12px 20px;',
+				'grid-2' => 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px;',
+				'grid-3' => 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px;',
+				'grid-4' => 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px;',
+			),
+			'selectors' => array(
+				'{{WRAPPER}} .gfield_checkbox' => '{{VALUE}}',
+			),
+		) );
+
+		$this->add_control( 'image_choice_layout', array(
+			'label'   => esc_html__( 'Image Choice Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => $layout_options,
+			'default' => '',
+			'selectors_dictionary' => array(
+				''       => '',
+				'flex'   => 'display: flex; flex-wrap: wrap; gap: 12px 20px;',
+				'grid-2' => 'display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 16px;',
+				'grid-3' => 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px;',
+				'grid-4' => 'display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px;',
+			),
+			'selectors' => array(
+				'{{WRAPPER}} .gfield_radio.gfield_radio--image-choice, {{WRAPPER}} .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gfield--type-image_choice .gfield_checkbox' => '{{VALUE}}',
+			),
 		) );
 
 		$this->add_control( 'choice_inline_display', array(
-			'label'       => esc_html__( 'Choice Item Display', 'kdnaforms' ),
+			'label'       => esc_html__( 'Choice Styling', 'kdnaforms' ),
 			'type'        => \Elementor\Controls_Manager::HEADING,
-			'description' => esc_html__( 'Fix radio/checkbox input and label alignment.', 'kdnaforms' ),
 			'separator'   => 'before',
 		) );
 
@@ -903,6 +969,22 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_control( 'image_choice_selected_tick_bg_color', array(
+			'label'     => esc_html__( 'Selected Tick Background Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
+			),
+		) );
+
+		$this->add_control( 'image_choice_selected_tick_color', array(
+			'label'     => esc_html__( 'Selected Tick Color', 'kdnaforms' ),
+			'type'      => \Elementor\Controls_Manager::COLOR,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'color: {{VALUE}} !important;',
+			),
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1059,7 +1141,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important; --gf-form-footer-margin-top: {{SIZE}}{{UNIT}};',
 			),
 			'separator' => 'after',
 		) );
