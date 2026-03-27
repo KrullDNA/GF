@@ -809,7 +809,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Checked Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input[type="checkbox"]:checked, {{WRAPPER}} .gform_body input[type="radio"]:checked' => 'accent-color: {{VALUE}};',
+				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
+				'{{WRAPPER}} .gform_body input[type="checkbox"]:checked, {{WRAPPER}} .gform_body input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
 			),
 		) );
 
