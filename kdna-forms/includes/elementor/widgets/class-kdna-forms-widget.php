@@ -1050,6 +1050,20 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 		) );
 
+		$this->add_responsive_control( 'submit_gap_above', array(
+			'label'      => esc_html__( 'Gap Above Button', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px', 'em' ),
+			'range'      => array(
+				'px' => array( 'min' => 0, 'max' => 100 ),
+				'em' => array( 'min' => 0, 'max' => 6 ),
+			),
+			'selectors' => array(
+				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important;',
+			),
+			'separator' => 'after',
+		) );
+
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'submit_typography',
 			'selector' => $btn,

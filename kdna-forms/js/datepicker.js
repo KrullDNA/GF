@@ -1,4 +1,4 @@
-(function ($, gform, gform_i18n) {
+(function ($, gform, kdnaform_i18n) {
 
 	/**
 	 * @function getDatepickerI18n
@@ -12,7 +12,7 @@
 	 */
 
 	function getDatepickerI18n() {
-		var i18n = gform_i18n.datepicker;
+		var i18n = kdnaform_i18n.datepicker;
 		return {
 			dayNamesMin: [
 				i18n.days.sunday,
@@ -206,4 +206,4 @@
 	window.gformInitDatepicker = initDatepickers;
 	window.gformInitSingleDatepicker = initSingleDatepicker;
 
-})(jQuery, gform, gform_i18n);
+})(jQuery, gform, kdnaform_i18n);
