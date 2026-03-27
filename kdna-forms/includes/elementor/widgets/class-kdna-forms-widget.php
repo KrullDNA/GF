@@ -952,8 +952,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
+			'default'    => array( 'size' => 6, 'unit' => 'px' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gchoice, {{WRAPPER}} .gfield_radio--image-choice .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .gfield--type-image_choice .gchoice label, {{WRAPPER}} .gfield_radio--image-choice .gchoice label' => 'margin-left: {{SIZE}}{{UNIT}} !important; padding-left: 0 !important;',
 			),
 		) );
 
