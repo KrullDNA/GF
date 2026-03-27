@@ -1,5 +1,5 @@
 /**
- * KDNA Forms Elementor Editor Styles
+ * KDNA Forms Elementor Editor & Frontend Styles
  */
 
 .elementor-widget-kdna-forms .elementor-widget-container {
@@ -44,48 +44,20 @@
 	cursor: pointer;
 }
 
-/* Choice layout: Inline (wrap) */
-.kdna-choice-layout-inline .gfield_radio,
-.kdna-choice-layout-inline .gfield_checkbox {
-	display: flex !important;
-	flex-wrap: wrap !important;
-	gap: 12px 20px !important;
-}
-
-.kdna-choice-layout-inline .gfield_radio .gchoice,
-.kdna-choice-layout-inline .gfield_checkbox .gchoice {
+/* When using grid/flex layouts, reset choice margins */
+.kdna-elementor-form-wrapper .gfield_radio .gchoice,
+.kdna-elementor-form-wrapper .gfield_checkbox .gchoice {
 	margin-bottom: 0 !important;
 }
 
-/* Choice layout: 2 Columns */
-.kdna-choice-layout-2-columns .gfield_radio,
-.kdna-choice-layout-2-columns .gfield_checkbox {
-	display: grid !important;
-	grid-template-columns: repeat(2, 1fr) !important;
-	gap: 8px 16px !important;
+/* Image choice - make images clickable and styled */
+.kdna-elementor-form-wrapper .gchoice .gfield-choice-image-label {
+	cursor: pointer;
+	display: block;
 }
 
-/* Choice layout: 3 Columns */
-.kdna-choice-layout-3-columns .gfield_radio,
-.kdna-choice-layout-3-columns .gfield_checkbox {
-	display: grid !important;
-	grid-template-columns: repeat(3, 1fr) !important;
-	gap: 8px 16px !important;
-}
-
-/* Choice layout: 4 Columns */
-.kdna-choice-layout-4-columns .gfield_radio,
-.kdna-choice-layout-4-columns .gfield_checkbox {
-	display: grid !important;
-	grid-template-columns: repeat(4, 1fr) !important;
-	gap: 8px 16px !important;
-}
-
-/* Column layouts also need the flex alignment fix on each choice */
-.kdna-choice-layout-2-columns .gchoice,
-.kdna-choice-layout-3-columns .gchoice,
-.kdna-choice-layout-4-columns .gchoice {
-	margin-bottom: 0 !important;
+.kdna-elementor-form-wrapper .gchoice .gfield-choice-image-label img {
+	display: block;
 }
 
 /* Editor-only overrides for better preview */
