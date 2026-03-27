@@ -809,8 +809,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Checked Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
-				'{{WRAPPER}} .gform_body input[type="checkbox"]:checked, {{WRAPPER}} .gform_body input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}}; --gf-ctrl-choice-check-color: {{VALUE}}; --gf-color-primary: {{VALUE}};',
+				'{{WRAPPER}} .gform_wrapper input[type="checkbox"], {{WRAPPER}} .gform_wrapper input[type="radio"]' => 'accent-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .gform_wrapper input[type="radio"]::before' => 'background-color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -1713,6 +1714,62 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			echo '</div>';
 		}
 		// === END VISIBLE DEBUG ===
+
+		// Force critical styles inline since the CSS file may not load
+		$widget_selector = '.elementor-element-' . $this->get_id();
+		$inline_css = '';
+
+		// Checked color - override ALL theme CSS variables for radio/checkbox
+		$checked_color = $settings['checkbox_checked_color'] ?? '';
+		if ( ! empty( $checked_color ) ) {
+			$inline_css .= "{$widget_selector} .gform_wrapper { --gf-ctrl-accent-color: {$checked_color}; --gf-color-in-ctrl-primary: {$checked_color}; --gf-ctrl-choice-check-color: {$checked_color}; --gf-color-primary: {$checked_color}; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper input[type='checkbox'], {$widget_selector} .gform_wrapper input[type='radio'] { accent-color: {$checked_color} !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper input[type='radio']::before { background-color: {$checked_color} !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper input[type='checkbox']::before { color: {$checked_color} !important; }";
+		}
+
+		// Spacing between options
+		$spacing = $settings['checkbox_spacing']['size'] ?? '';
+		if ( $spacing !== '' ) {
+			$unit = $settings['checkbox_spacing']['unit'] ?? 'px';
+			$inline_css .= "{$widget_selector} .gfield_radio, {$widget_selector} .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
+			$inline_css .= "{$widget_selector} .gfield_radio .gchoice, {$widget_selector} .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
+		}
+
+		// Focus color
+		$focus_color = $settings['global_focus_color'] ?? '';
+		if ( ! empty( $focus_color ) ) {
+			$inline_css .= "{$widget_selector} .gform_wrapper input:focus, {$widget_selector} .gform_wrapper textarea:focus, {$widget_selector} .gform_wrapper select:focus { border-color: {$focus_color} !important; box-shadow: 0 0 0 3px rgba(0,0,0,0.1) !important; }";
+		}
+
+		// Accent color
+		$accent_color = $settings['global_accent_color'] ?? '';
+		if ( ! empty( $accent_color ) ) {
+			$inline_css .= "{$widget_selector} .gform_wrapper { --gf-color-primary: {$accent_color}; }";
+		}
+
+		// Layouts - output CSS directly
+		$layout_map = array(
+			'radio_layout' => '.gfield_radio:not(.gfield_radio--image-choice)',
+			'checkbox_layout' => '.gfield_checkbox',
+			'image_choice_layout' => '.gfield--type-image_choice .gfield_radio, ' . $widget_selector . ' .gfield--type-image_choice .gfield_checkbox',
+		);
+		foreach ( $layout_map as $setting_key => $target ) {
+			$layout_val = $settings[ $setting_key ] ?? '';
+			if ( $layout_val === 'inline' ) {
+				$inline_css .= "{$widget_selector} {$target} { display: flex !important; flex-wrap: wrap !important; gap: 12px 20px !important; }";
+			} elseif ( $layout_val === '2col' ) {
+				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important; }";
+			} elseif ( $layout_val === '3col' ) {
+				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important; }";
+			} elseif ( $layout_val === '4col' ) {
+				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important; }";
+			}
+		}
+
+		if ( ! empty( $inline_css ) ) {
+			echo '<style>' . $inline_css . '</style>';
+		}
 
 		// Build shortcode attributes
 		$shortcode_atts = array(
