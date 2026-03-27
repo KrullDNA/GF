@@ -110,12 +110,20 @@
 	display: block;
 }
 
-/* Image choice - remove default bounding box styles */
+/* Image choice - remove default bounding box styles and padding */
 .kdna-elementor-form-wrapper .gfield--type-image_choice .gchoice,
 .kdna-elementor-form-wrapper .gfield_radio--image-choice .gchoice {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
+    padding: 0 !important;
+    --gf-local-shadow: none !important;
+    --gf-local-border-color: transparent !important;
+}
+
+.kdna-elementor-form-wrapper .gfield--type-image_choice .gchoice::before,
+.kdna-elementor-form-wrapper .gfield_radio--image-choice .gchoice::before {
+    border: none !important;
 }
 
 /* Editor-only overrides for better preview */
