@@ -253,18 +253,32 @@ class KDNAFormDetail {
 			#form_editor_fields_container .simplebar-content-wrapper { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
-			/* Put field panel inside normal document flow on the left */
+			/* Two-column layout: panel on left, form canvas on right */
+			.gforms_edit_form {
+				display: grid !important;
+				grid-template-columns: 270px 1fr !important;
+				grid-template-rows: auto 1fr !important;
+			}
+			.gforms_edit_form > .gform-form-toolbar,
+			.gforms_edit_form > h1,
+			.gforms_edit_form > h2,
+			.gforms_edit_form > .gform-visually-hidden {
+				grid-column: 1 / -1 !important;
+			}
 			.editor-sidebar {
-				position: relative !important;
+				position: sticky !important;
+				top: 32px !important;
 				right: unset !important;
 				left: unset !important;
-				top: unset !important;
-				float: left !important;
-				height: auto !important;
-				max-height: calc(100vh - 120px);
-				overflow-y: auto;
+				height: calc(100vh - 32px) !important;
+				overflow-y: auto !important;
+				grid-column: 1 !important;
+				grid-row: 2 !important;
+				z-index: 1 !important;
 			}
 			#form_editor_fields_container {
+				grid-column: 2 !important;
+				grid-row: 2 !important;
 				margin-right: 0 !important;
 				overflow: visible !important;
 			}
