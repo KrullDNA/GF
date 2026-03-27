@@ -142,11 +142,6 @@
     padding-left: 0 !important;
 }
 
-/* Add space between image and radio/label row */
-.kdna-elementor-form-wrapper .gfield--type-image_choice .gfield-image-choice-wrapper-outer {
-    margin-bottom: 10px !important;
-}
-
 /* Editor-only overrides for better preview */
 .elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper {
 	pointer-events: none;
