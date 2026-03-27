@@ -65,48 +65,6 @@ class KDNAFormDetail {
 			<?php KDNACommon::gf_vars(); ?>
 		</script>
 
-		<!-- KDNA Debug Script -->
-		<script type="text/javascript">
-			// Log any JS errors immediately
-			window.addEventListener('error', function(e) {
-				console.error('[KDNA Debug] JS Error:', e.message, 'at', e.filename + ':' + e.lineno);
-			});
-			// Run debug checks AFTER all scripts have loaded
-			window.addEventListener('load', function() {
-				console.log('[KDNA Debug] ============ FORM EDITOR DEBUG (after page load) ============');
-				console.log('[KDNA Debug] gf_vars defined:', typeof gf_vars !== 'undefined');
-				console.log('[KDNA Debug] gf_global defined:', typeof gf_global !== 'undefined');
-				console.log('[KDNA Debug] gform defined:', typeof gform !== 'undefined');
-				console.log('[KDNA Debug] jQuery.ui.draggable:', typeof jQuery.fn.draggable !== 'undefined');
-				console.log('[KDNA Debug] jQuery.ui.sortable:', typeof jQuery.fn.sortable !== 'undefined');
-				console.log('[KDNA Debug] jQuery.ui.droppable:', typeof jQuery.fn.droppable !== 'undefined');
-				console.log('[KDNA Debug] StartAddField:', typeof StartAddField !== 'undefined');
-				console.log('[KDNA Debug] InitializeForm:', typeof InitializeForm !== 'undefined');
-				console.log('[KDNA Debug] form (global):', typeof form !== 'undefined');
-
-				// List ALL loaded scripts to see what actually loaded
-				var scripts = document.querySelectorAll('script[src]');
-				var scriptList = [];
-				scripts.forEach(function(s) {
-					var src = s.src.split('/').pop().split('?')[0];
-					scriptList.push(src);
-				});
-				console.log('[KDNA Debug] Loaded scripts (' + scripts.length + '):', scriptList.join(', '));
-
-				// Check if form_editor.js loaded
-				var hasFormEditor = scriptList.some(function(s) { return s.indexOf('form_editor') !== -1; });
-				var hasLayoutEditor = scriptList.some(function(s) { return s.indexOf('layout_editor') !== -1; });
-				var hasFormAdmin = scriptList.some(function(s) { return s.indexOf('form_admin') !== -1; });
-				var hasJQueryUISortable = scriptList.some(function(s) { return s.indexOf('sortable') !== -1; });
-				console.log('[KDNA Debug] form_editor.js loaded:', hasFormEditor);
-				console.log('[KDNA Debug] layout_editor.js loaded:', hasLayoutEditor);
-				console.log('[KDNA Debug] form_admin.js loaded:', hasFormAdmin);
-				console.log('[KDNA Debug] jquery-ui-sortable loaded:', hasJQueryUISortable);
-
-				// Check PHP-reported page type
-				console.log('[KDNA Debug] PHP page type: <?php echo esc_js( KDNAForms::get_page() ); ?>');
-			});
-		</script>
 
 		<script type="text/javascript">
 

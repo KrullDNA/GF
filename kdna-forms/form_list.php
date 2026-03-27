@@ -209,64 +209,35 @@ class KDNAFormList {
 
 	public static function save_new_form() {
 
-		error_log( '[KDNA Debug] save_new_form() called' );
-		error_log( '[KDNA Debug] POST data: ' . print_r( $_POST, true ) );
-
 		if ( ! check_admin_referer( 'kdna_save_new_form', 'kdna_save_new_form' ) ) {
-			error_log( '[KDNA Debug] Nonce check FAILED' );
-			die( json_encode( array( 'error' => __( 'There was an issue creating your form (nonce failed).', 'kdnaforms' ) ) ) );
+			die( json_encode( array( 'error' => __( 'There was an issue creating your form.', 'kdnaforms' ) ) ) );
 		}
 
-		error_log( '[KDNA Debug] Nonce check passed' );
-
 		KDNAFormsModel::ensure_tables_exist();
-
-		error_log( '[KDNA Debug] Tables exist check done. Last DB error: ' . $GLOBALS['wpdb']->last_error );
 
 		require_once( KDNACommon::get_base_path() . '/form_detail.php' );
 
 		$form_json = rgpost( 'form', false );
-
-		error_log( '[KDNA Debug] Form JSON received: ' . substr( $form_json, 0, 500 ) );
-
 		$form = json_decode( stripslashes( $form_json ), true );
 
-		error_log( '[KDNA Debug] Decoded form: ' . print_r( $form, true ) );
-
 		if ( empty( $form['title'] ) ) {
-			error_log( '[KDNA Debug] Title is empty!' );
 			$result = array( 'error' => __( 'Please enter a form title.', 'kdnaforms' ) );
 			die( json_encode( $result ) );
 		}
 
-		error_log( '[KDNA Debug] About to call save_form_info(0, ...)' );
-
-		try {
-			$result = KDNAFormDetail::save_form_info( 0, $form_json );
-		} catch ( \Exception $e ) {
-			error_log( '[KDNA Debug] Exception in save_form_info: ' . $e->getMessage() );
-			die( json_encode( array( 'error' => 'Exception: ' . $e->getMessage() ) ) );
-		} catch ( \Error $e ) {
-			error_log( '[KDNA Debug] Error in save_form_info: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() );
-			die( json_encode( array( 'error' => 'Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine() ) ) );
-		}
-
-		error_log( '[KDNA Debug] save_form_info result: ' . print_r( $result, true ) );
+		$result = KDNAFormDetail::save_form_info( 0, $form_json );
 
 		switch ( rgar( $result, 'status' ) ) {
 			case 'invalid_json':
 				$result['error'] = __( 'There was an issue creating your form.', 'kdnaforms' );
-				error_log( '[KDNA Debug] Result: invalid_json' );
 				die( json_encode( $result ) );
 
 			case 'duplicate_title':
 				$result['error'] = __( 'Please enter a unique form title.', 'kdnaforms' );
-				error_log( '[KDNA Debug] Result: duplicate_title' );
 				die( json_encode( $result ) );
 
 			default:
 				$form_id = absint( $result['status'] );
-				error_log( '[KDNA Debug] Result: form_id = ' . $form_id . ' (raw status: ' . $result['status'] . ')' );
 				die( json_encode( array( 'redirect' => admin_url( "admin.php?page=kdna_edit_forms&id={$form_id}&isnew=1" ) ) ) );
 		}
 	}
