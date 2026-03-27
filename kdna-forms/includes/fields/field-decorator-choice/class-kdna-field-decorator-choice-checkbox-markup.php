@@ -98,7 +98,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 				$choice_value  = esc_attr( $choice_value );
 				$choice_markup = "<div class='gchoice gchoice_{$id}'>
 					<span class='gfield-image-choice-wrapper-outer'>
-						{$image}
+						<label for='choice_{$id}' class='gfield-choice-image-label'>{$image}</label>
 						<span class='gfield-image-choice-wrapper-inner'>
 							<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
 							<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>
