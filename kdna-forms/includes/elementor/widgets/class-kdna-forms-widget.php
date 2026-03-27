@@ -737,28 +737,45 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'4col'      => esc_html__( '4 Columns', 'kdnaforms' ),
 		);
 
-		$this->add_control( 'radio_layout', array(
-			'label'        => esc_html__( 'Radio Button Layout', 'kdnaforms' ),
-			'type'         => \Elementor\Controls_Manager::SELECT,
-			'options'      => $layout_options,
-			'default'      => '',
-			'prefix_class' => 'kdna-radio-layout-',
+		$layout_dict = array(
+			''       => 'display: flex; flex-direction: column; flex-wrap: nowrap;',
+			'inline' => 'display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 12px 20px !important;',
+			'2col'   => 'display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important;',
+			'3col'   => 'display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important;',
+			'4col'   => 'display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important;',
+		);
+
+		$this->add_responsive_control( 'radio_layout', array(
+			'label'   => esc_html__( 'Radio Button Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => $layout_options,
+			'default' => '',
+			'selectors_dictionary' => $layout_dict,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield_radio:not(.gfield_radio--image-choice)' => '{{VALUE}}',
+			),
 		) );
 
-		$this->add_control( 'checkbox_layout', array(
-			'label'        => esc_html__( 'Checkbox Layout', 'kdnaforms' ),
-			'type'         => \Elementor\Controls_Manager::SELECT,
-			'options'      => $layout_options,
-			'default'      => '',
-			'prefix_class' => 'kdna-checkbox-layout-',
+		$this->add_responsive_control( 'checkbox_layout', array(
+			'label'   => esc_html__( 'Checkbox Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => $layout_options,
+			'default' => '',
+			'selectors_dictionary' => $layout_dict,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield_checkbox' => '{{VALUE}}',
+			),
 		) );
 
-		$this->add_control( 'image_choice_layout', array(
-			'label'        => esc_html__( 'Image Choice Layout', 'kdnaforms' ),
-			'type'         => \Elementor\Controls_Manager::SELECT,
-			'options'      => $layout_options,
-			'default'      => '',
-			'prefix_class' => 'kdna-imgchoice-layout-',
+		$this->add_responsive_control( 'image_choice_layout', array(
+			'label'   => esc_html__( 'Image Choice Layout', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::SELECT,
+			'options' => $layout_options,
+			'default' => '',
+			'selectors_dictionary' => $layout_dict,
+			'selectors' => array(
+				'{{WRAPPER}} .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .gfield_radio--image-choice' => '{{VALUE}}',
+			),
 		) );
 
 		$this->add_control( 'choice_styling_heading', array(
@@ -1749,23 +1766,60 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			$inline_css .= "{$widget_selector} .gform_wrapper { --gf-color-primary: {$accent_color}; }";
 		}
 
-		// Layouts - output CSS directly
+		// Layouts - output CSS with responsive media queries
 		$layout_map = array(
 			'radio_layout' => '.gfield_radio:not(.gfield_radio--image-choice)',
 			'checkbox_layout' => '.gfield_checkbox',
 			'image_choice_layout' => '.gfield--type-image_choice .gfield_radio, ' . $widget_selector . ' .gfield--type-image_choice .gfield_checkbox',
 		);
-		foreach ( $layout_map as $setting_key => $target ) {
-			$layout_val = $settings[ $setting_key ] ?? '';
-			if ( $layout_val === 'inline' ) {
-				$inline_css .= "{$widget_selector} {$target} { display: flex !important; flex-wrap: wrap !important; flex-direction: row !important; gap: 12px 20px !important; }";
-			} elseif ( $layout_val === '2col' ) {
-				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important; }";
-			} elseif ( $layout_val === '3col' ) {
-				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important; }";
-			} elseif ( $layout_val === '4col' ) {
-				$inline_css .= "{$widget_selector} {$target} { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important; }";
+
+		// Get Elementor breakpoints
+		$breakpoints = \Elementor\Plugin::$instance->breakpoints->get_breakpoints_config();
+		$tablet_max = isset( $breakpoints['md'] ) ? $breakpoints['md']['value'] : 1024;
+		$mobile_max = isset( $breakpoints['sm'] ) ? $breakpoints['sm']['value'] : 767;
+
+		// Helper to generate layout CSS for a value
+		$get_layout_css = function( $selector, $val ) {
+			if ( $val === 'inline' ) {
+				return "{$selector} { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 12px 20px !important; }";
+			} elseif ( $val === '2col' ) {
+				return "{$selector} { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important; }";
+			} elseif ( $val === '3col' ) {
+				return "{$selector} { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important; }";
+			} elseif ( $val === '4col' ) {
+				return "{$selector} { display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important; }";
 			}
+			return '';
+		};
+
+		$tablet_css = '';
+		$mobile_css = '';
+
+		foreach ( $layout_map as $setting_key => $target ) {
+			$full_selector = "{$widget_selector} {$target}";
+
+			// Desktop
+			$desktop_val = $settings[ $setting_key ] ?? '';
+			$inline_css .= $get_layout_css( $full_selector, $desktop_val );
+
+			// Tablet
+			$tablet_val = $settings[ $setting_key . '_tablet' ] ?? '';
+			if ( ! empty( $tablet_val ) ) {
+				$tablet_css .= $get_layout_css( $full_selector, $tablet_val );
+			}
+
+			// Mobile
+			$mobile_val = $settings[ $setting_key . '_mobile' ] ?? '';
+			if ( ! empty( $mobile_val ) ) {
+				$mobile_css .= $get_layout_css( $full_selector, $mobile_val );
+			}
+		}
+
+		if ( ! empty( $tablet_css ) ) {
+			$inline_css .= "@media (max-width: {$tablet_max}px) { {$tablet_css} }";
+		}
+		if ( ! empty( $mobile_css ) ) {
+			$inline_css .= "@media (max-width: {$mobile_max}px) { {$mobile_css} }";
 		}
 
 		if ( ! empty( $inline_css ) ) {
