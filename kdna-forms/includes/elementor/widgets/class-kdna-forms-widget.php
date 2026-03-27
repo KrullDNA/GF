@@ -730,7 +730,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		) );
 
 		$layout_options = array(
-			''          => esc_html__( 'Vertical (Default)', 'kdnaforms' ),
+			'vertical'  => esc_html__( 'Vertical', 'kdnaforms' ),
 			'inline'    => esc_html__( 'Inline (Wrap)', 'kdnaforms' ),
 			'2col'      => esc_html__( '2 Columns', 'kdnaforms' ),
 			'3col'      => esc_html__( '3 Columns', 'kdnaforms' ),
@@ -738,11 +738,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		);
 
 		$layout_dict = array(
-			''       => 'display: flex; flex-direction: column; flex-wrap: nowrap;',
-			'inline' => 'display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 12px 20px !important;',
-			'2col'   => 'display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important;',
-			'3col'   => 'display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important;',
-			'4col'   => 'display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important;',
+			'vertical' => 'display: flex !important; flex-direction: column !important; flex-wrap: nowrap !important;',
+			'inline'   => 'display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 12px 20px !important;',
+			'2col'     => 'display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important;',
+			'3col'     => 'display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 8px 16px !important;',
+			'4col'     => 'display: grid !important; grid-template-columns: repeat(4, 1fr) !important; gap: 8px 16px !important;',
 		);
 
 		$this->add_responsive_control( 'radio_layout', array(
@@ -1780,7 +1780,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		// Helper to generate layout CSS for a value
 		$get_layout_css = function( $selector, $val ) {
-			if ( $val === 'inline' ) {
+			if ( $val === 'vertical' ) {
+				return "{$selector} { display: flex !important; flex-direction: column !important; flex-wrap: nowrap !important; }";
+			} elseif ( $val === 'inline' ) {
 				return "{$selector} { display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 12px 20px !important; }";
 			} elseif ( $val === '2col' ) {
 				return "{$selector} { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px 16px !important; }";
