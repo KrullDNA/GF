@@ -1183,8 +1183,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important; padding-bottom: 0 !important;',
-				'{{WRAPPER}} .gform_wrapper .gform_fields > .gfield:last-child' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform-footer, {{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform_body .gform_fields > .gfield:last-child' => 'margin-bottom: 0 !important;',
 			),
 			'separator' => 'after',
 		) );
@@ -1783,6 +1783,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		}
 		if ( ! empty( $mobile_css ) ) {
 			$inline_css .= "@media (max-width: {$mobile_max}px) { {$mobile_css} }";
+		}
+
+		// Submit button gap above - inline CSS fallback
+		$submit_gap = $settings['submit_gap_above']['size'] ?? '';
+		if ( $submit_gap !== '' ) {
+			$submit_gap_unit = $settings['submit_gap_above']['unit'] ?? 'px';
+			$inline_css .= "{$widget_selector} .gform_wrapper .gform_footer, {$widget_selector} .gform_wrapper.gravity-theme .gform_footer { margin-top: {$submit_gap}{$submit_gap_unit} !important; padding: 0 !important; margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gform_body .gform_fields > .gfield:last-child { margin-bottom: 0 !important; }";
 		}
 
 		if ( ! empty( $inline_css ) ) {
