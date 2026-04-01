@@ -217,10 +217,22 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'global_focus_color', array(
 			'label'       => esc_html__( 'Focus Color', 'kdnaforms' ),
 			'type'        => \Elementor\Controls_Manager::COLOR,
-			'description' => esc_html__( 'Border and outline color when inputs, textareas, and selects are focused.', 'kdnaforms' ),
+			'description' => esc_html__( 'Border and outline color when inputs are focused. Important for keyboard accessibility.', 'kdnaforms' ),
 			'selectors'   => array(
 				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3);',
-				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important; box-shadow: 0 0 0 3px rgba({{VALUE}}, 0.15) !important;',
+				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important;',
+			),
+		) );
+
+		$this->add_responsive_control( 'global_focus_width', array(
+			'label'       => esc_html__( 'Focus Border Width', 'kdnaforms' ),
+			'type'        => \Elementor\Controls_Manager::SLIDER,
+			'size_units'  => array( 'px' ),
+			'range'       => array( 'px' => array( 'min' => 0, 'max' => 10 ) ),
+			'description' => esc_html__( 'Width of the outline when fields are focused. Default is 3px. Set to 0 to remove (not recommended for accessibility).', 'kdnaforms' ),
+			'selectors'   => array(
+				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-outline-width-focus: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'outline-width: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
