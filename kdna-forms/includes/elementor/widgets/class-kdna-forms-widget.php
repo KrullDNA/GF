@@ -228,8 +228,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'       => esc_html__( 'Focus Border Width', 'kdnaforms' ),
 			'type'        => \Elementor\Controls_Manager::SLIDER,
 			'size_units'  => array( 'px' ),
-			'range'       => array( 'px' => array( 'min' => 0, 'max' => 10 ) ),
-			'description' => esc_html__( 'Width of the outline when fields are focused. Default is 3px. Set to 0 to remove (not recommended for accessibility).', 'kdnaforms' ),
+			'range'       => array( 'px' => array( 'min' => 2, 'max' => 10 ) ),
+			'default'     => array( 'size' => 2, 'unit' => 'px' ),
+			'description' => esc_html__( 'Width of the focus outline. Minimum 2px for WCAG accessibility compliance.', 'kdnaforms' ),
 			'selectors'   => array(
 				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-outline-width-focus: {{SIZE}}{{UNIT}};',
 				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'outline-width: {{SIZE}}{{UNIT}} !important;',
