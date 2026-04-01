@@ -1183,7 +1183,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important; --gf-form-footer-margin-top: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important; padding-bottom: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform_fields > .gfield:last-child' => 'margin-bottom: 0 !important;',
 			),
 			'separator' => 'after',
 		) );
