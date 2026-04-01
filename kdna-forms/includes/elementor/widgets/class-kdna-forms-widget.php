@@ -716,6 +716,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'selectors' => array( '{{WRAPPER}} .gform_body select:focus' => 'border-color: {{VALUE}};' ),
 		) );
 
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'select_box_shadow',
+			'selector' => '{{WRAPPER}} .gform_body select',
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1156,6 +1161,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'selectors'  => array( '{{WRAPPER}} .gform_body .gsection' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'section_break_box_shadow',
+			'selector' => '{{WRAPPER}} .gform_body .gsection',
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1488,6 +1498,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'validation_box_shadow',
+			'selector' => '{{WRAPPER}} .gform_body .gform_validation_errors',
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1602,6 +1617,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+		) );
+
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'confirmation_box_shadow',
+			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message',
 		) );
 
 		$this->end_controls_section();
