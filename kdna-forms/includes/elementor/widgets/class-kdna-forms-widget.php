@@ -1193,8 +1193,12 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
+				// The submit button area: both the inline #field_submit AND the .gform_footer
 				'{{WRAPPER}} .gform_wrapper .gform-footer, {{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
-				'{{WRAPPER}} .gform_wrapper .gform_body .gform_fields > .gfield:last-child' => 'margin-bottom: 0 !important;',
+				// The hidden #field_submit gfield inside the grid - collapse it
+				'{{WRAPPER}} .gform_wrapper .gfield--type-submit, {{WRAPPER}} .gform_wrapper #field_submit' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important;',
+				// Remove margin from the last visible field
+				'{{WRAPPER}} .gform_wrapper .gform_body .gform_fields > .gfield:nth-last-child(2)' => 'margin-bottom: 0 !important;',
 			),
 			'separator' => 'after',
 		) );
@@ -1810,7 +1814,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		if ( $submit_gap !== '' ) {
 			$submit_gap_unit = $settings['submit_gap_above']['unit'] ?? 'px';
 			$inline_css .= "{$widget_selector} .gform_wrapper .gform_footer, {$widget_selector} .gform_wrapper.gravity-theme .gform_footer { margin-top: {$submit_gap}{$submit_gap_unit} !important; padding: 0 !important; margin-bottom: 0 !important; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper .gform_body .gform_fields > .gfield:last-child { margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gfield--type-submit, {$widget_selector} .gform_wrapper #field_submit { margin-top: {$submit_gap}{$submit_gap_unit} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gform_body .gform_fields > .gfield:nth-last-child(2) { margin-bottom: 0 !important; }";
 		}
 
 		if ( ! empty( $inline_css ) ) {
