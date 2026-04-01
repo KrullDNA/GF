@@ -716,6 +716,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'selectors' => array( '{{WRAPPER}} .gform_body select:focus' => 'border-color: {{VALUE}};' ),
 		) );
 
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'select_box_shadow',
+			'selector' => '{{WRAPPER}} .gform_body select',
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1156,6 +1161,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'selectors'  => array( '{{WRAPPER}} .gform_body .gsection' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'section_break_box_shadow',
+			'selector' => '{{WRAPPER}} .gform_body .gsection',
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1183,8 +1193,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; padding-top: 0 !important; padding-bottom: 0 !important;',
-				'{{WRAPPER}} .gform_wrapper .gform_fields > .gfield:last-child' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform-footer, {{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform_body .gform_fields > .gfield:last-child' => 'margin-bottom: 0 !important;',
 			),
 			'separator' => 'after',
 		) );
@@ -1488,6 +1498,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 		) );
 
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'validation_box_shadow',
+			'selector' => '{{WRAPPER}} .gform_body .gform_validation_errors',
+		) );
+
 		$this->end_controls_section();
 	}
 
@@ -1602,6 +1617,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+		) );
+
+		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
+			'name'     => 'confirmation_box_shadow',
+			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message',
 		) );
 
 		$this->end_controls_section();
@@ -1783,6 +1803,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		}
 		if ( ! empty( $mobile_css ) ) {
 			$inline_css .= "@media (max-width: {$mobile_max}px) { {$mobile_css} }";
+		}
+
+		// Submit button gap above - inline CSS fallback
+		$submit_gap = $settings['submit_gap_above']['size'] ?? '';
+		if ( $submit_gap !== '' ) {
+			$submit_gap_unit = $settings['submit_gap_above']['unit'] ?? 'px';
+			$inline_css .= "{$widget_selector} .gform_wrapper .gform_footer, {$widget_selector} .gform_wrapper.gravity-theme .gform_footer { margin-top: {$submit_gap}{$submit_gap_unit} !important; padding: 0 !important; margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .gform_wrapper .gform_body .gform_fields > .gfield:last-child { margin-bottom: 0 !important; }";
 		}
 
 		if ( ! empty( $inline_css ) ) {
