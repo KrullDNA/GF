@@ -1189,8 +1189,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 	private function register_style_submit_button() {
 
 		// Use a short variable for the high-specificity button selector
-		$btn = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]';
-		$btn_hover = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover';
+		// Selectors for submit button - covers BOTH "End of form" (.gform_footer) and "End of last row" (#field_submit)
+		$btn = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .gform_wrapper #field_submit .gform_button, {{WRAPPER}} .gform_wrapper .gfield--type-submit input[type="submit"], {{WRAPPER}} .gform_wrapper .gfield--type-submit .gform_button';
+		$btn_hover = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper #field_submit input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper #field_submit .gform_button:hover, {{WRAPPER}} .gform_wrapper .gfield--type-submit input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper .gfield--type-submit .gform_button:hover';
 
 		$this->start_controls_section( 'section_style_submit', array(
 			'label' => esc_html__( 'Submit Button', 'kdnaforms' ),
@@ -1317,7 +1318,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'center' => array( 'title' => esc_html__( 'Center', 'kdnaforms' ), 'icon' => 'eicon-text-align-center' ),
 				'right'  => array( 'title' => esc_html__( 'Right', 'kdnaforms' ), 'icon' => 'eicon-text-align-right' ),
 			),
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'text-align: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper #field_submit, {{WRAPPER}} .gform_wrapper .gfield--type-submit' => 'text-align: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'submit_transition', array(
