@@ -1328,11 +1328,33 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'selectors' => array( $btn => 'transition: all {{SIZE}}ms ease !important;' ),
 		) );
 
+		$this->add_responsive_control( 'submit_vertical_align', array(
+			'label'   => esc_html__( 'Vertical Alignment', 'kdnaforms' ),
+			'type'    => \Elementor\Controls_Manager::CHOOSE,
+			'options' => array(
+				'flex-start' => array( 'title' => esc_html__( 'Top', 'kdnaforms' ), 'icon' => 'eicon-v-align-top' ),
+				'center'     => array( 'title' => esc_html__( 'Middle', 'kdnaforms' ), 'icon' => 'eicon-v-align-middle' ),
+				'flex-end'   => array( 'title' => esc_html__( 'Bottom', 'kdnaforms' ), 'icon' => 'eicon-v-align-bottom' ),
+			),
+			'selectors' => array(
+				'{{WRAPPER}} .gform_wrapper #field_submit, {{WRAPPER}} .gform_wrapper .gfield--type-submit' => 'display: flex !important; align-items: {{VALUE}} !important;',
+			),
+			'description' => esc_html__( 'Align the inline submit button vertically within its grid cell. Use "Bottom" to align with input fields.', 'kdnaforms' ),
+		) );
+
+		$this->add_responsive_control( 'submit_margin_top', array(
+			'label'      => esc_html__( 'Top Offset', 'kdnaforms' ),
+			'type'       => \Elementor\Controls_Manager::SLIDER,
+			'size_units' => array( 'px' ),
+			'range'      => array( 'px' => array( 'min' => -50, 'max' => 50 ) ),
+			'selectors'  => array(
+				'{{WRAPPER}} .gform_wrapper #field_submit .gform_button, {{WRAPPER}} .gform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .gform_wrapper .gfield--type-submit .gform_button, {{WRAPPER}} .gform_wrapper .gfield--type-submit input[type="submit"]' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+			),
+			'description' => esc_html__( 'Fine-tune the button position. Use negative values to move up.', 'kdnaforms' ),
+		) );
+
 		$this->end_controls_section();
 	}
-
-	// ==========================================
-	// STYLE TAB - PREVIOUS / NEXT BUTTONS
 	// ==========================================
 
 	private function register_style_prev_next_buttons() {
