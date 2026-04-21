@@ -6942,8 +6942,10 @@ class KDNAFormsModel {
 				case 'created_by' :
 					$columns[ $field_id ] = array( 'label' => esc_html__( 'User', 'kdnaforms' ), 'type' => 'created_by' );
 					break;
-				case ( ( is_string( $field_id ) || is_int( $field_id ) ) && array_key_exists( $field_id, $entry_meta ) ) :
-					$columns[ $field_id ] = array( 'label' => $entry_meta[ $field_id ]['label'], 'type' => $field_id );
+				case ( ( is_string( $field_id ) || is_int( $field_id ) ) && is_array( $entry_meta ) && array_key_exists( $field_id, $entry_meta ) ) :
+					if ( isset( $entry_meta[ $field_id ]['label'] ) ) {
+						$columns[ $field_id ] = array( 'label' => $entry_meta[ $field_id ]['label'], 'type' => $field_id );
+					}
 					break;
 				default :
 					$field = self::get_field( $form, $field_id );
