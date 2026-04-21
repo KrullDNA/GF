@@ -32,6 +32,9 @@ function kdna_cm_addon_load() {
         return;
     }
 
+    // Load the feed addon framework so KDNAFeedAddOn is available.
+    KDNAForms::include_feed_addon_framework();
+
     // Load required files.
     require_once KDNA_CM_ADDON_PATH . 'class-kdna-cm-api.php';
     require_once KDNA_CM_ADDON_PATH . 'class-kdna-cm-addon.php';
