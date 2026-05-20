@@ -1858,6 +1858,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			echo '<style>' . $inline_css . '</style>';
 		}
 
+		// Always-on: collapse the empty sublabel span on the inline submit field so it doesn't reserve trailing space.
+		echo '<style>' . $widget_selector . ' .gform_wrapper #field_submit .gfield_label, ' . $widget_selector . ' .gform_wrapper #field_submit .field_sublabel_below, ' . $widget_selector . ' .gform_wrapper #field_submit .field_sublabel_above, ' . $widget_selector . ' .gform_wrapper #field_submit .gfield_description, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .gfield_label, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .field_sublabel_below, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .field_sublabel_above, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .gfield_description { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }</style>';
+
 		// Build shortcode attributes
 		$shortcode_atts = array(
 			'id'          => $form_id,
