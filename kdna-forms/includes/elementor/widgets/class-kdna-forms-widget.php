@@ -1353,6 +1353,17 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'description' => esc_html__( 'Fine-tune the button position. Use negative values to move up.', 'kdnaforms' ),
 		) );
 
+		$this->add_control( 'submit_shrink_to_fit', array(
+			'label'        => esc_html__( 'Shrink Submit to Fit Button', 'kdnaforms' ),
+			'type'         => \Elementor\Controls_Manager::SWITCHER,
+			'label_on'     => esc_html__( 'Yes', 'kdnaforms' ),
+			'label_off'    => esc_html__( 'No', 'kdnaforms' ),
+			'return_value' => 'yes',
+			'default'      => '',
+			'prefix_class' => 'kdna-shrink-submit-',
+			'description'  => esc_html__( 'Switch the field row to flex layout so the submit cell sizes to the button and other fields fill remaining space.', 'kdnaforms' ),
+		) );
+
 		$this->end_controls_section();
 	}
 	// ==========================================
@@ -1857,6 +1868,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		if ( ! empty( $inline_css ) ) {
 			echo '<style>' . $inline_css . '</style>';
 		}
+
+		// Always-on: collapse the empty sublabel span on the inline submit field so it doesn't reserve trailing space.
+		echo '<style>' . $widget_selector . ' .gform_wrapper #field_submit .gfield_label, ' . $widget_selector . ' .gform_wrapper #field_submit .field_sublabel_below, ' . $widget_selector . ' .gform_wrapper #field_submit .field_sublabel_above, ' . $widget_selector . ' .gform_wrapper #field_submit .gfield_description, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .gfield_label, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .field_sublabel_below, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .field_sublabel_above, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .gfield_description { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }</style>';
 
 		// Build shortcode attributes
 		$shortcode_atts = array(
