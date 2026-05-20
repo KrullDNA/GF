@@ -48,6 +48,7 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_recaptcha_script' ) );
 		add_filter( 'kdnaform_validation', array( $this, 'validate_recaptcha' ), 19 );
 		add_filter( 'kdnaform_entry_meta', array( $this, 'entry_meta' ), 10, 2 );
+		add_action( 'wp_ajax_kdna_recaptcha_verify_keys', array( $this, 'ajax_verify_keys' ) );
 		add_filter( 'gform_entry_detail_meta_boxes', array( $this, 'register_meta_box' ), 10, 3 );
 	}
 
@@ -78,6 +79,12 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 						'label' => esc_html__( 'Secret Key', 'kdnaforms' ),
 						'type'  => 'text',
 						'class' => 'medium',
+					),
+					array(
+						'name'     => 'verify_keys',
+						'label'    => '',
+						'type'     => 'html',
+						'html'     => $this->render_verify_keys_field(),
 					),
 					array(
 						'name'          => 'score_threshold_v3',
@@ -319,5 +326,110 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 			$this->token_verifier = new Token_Verifier( $this );
 		}
 		return $this->token_verifier;
+	}
+
+	public function render_verify_keys_field() {
+		$nonce = wp_create_nonce( 'kdna_recaptcha_verify_keys' );
+		$verify_label = esc_html__( 'Verify Keys with Google', 'kdnaforms' );
+		$ok_label     = esc_html__( 'Verified', 'kdnaforms' );
+		$bad_label    = esc_html__( 'Invalid', 'kdnaforms' );
+		$err_label    = esc_html__( 'Could not reach Google', 'kdnaforms' );
+		$missing      = esc_html__( 'Enter both Site Key and Secret Key first.', 'kdnaforms' );
+		ob_start();
+		?>
+		<div class="kdna-recaptcha-verify" style="margin-top:8px;">
+			<button type="button" class="button button-secondary" id="kdna-recaptcha-verify-btn"><?php echo $verify_label; ?></button>
+			<span id="kdna-recaptcha-verify-status" style="margin-left:10px;font-weight:600;vertical-align:middle;"></span>
+		</div>
+		<script>
+		(function($){
+			$(document).on('click', '#kdna-recaptcha-verify-btn', function(e){
+				e.preventDefault();
+				var $btn = $(this), $status = $('#kdna-recaptcha-verify-status');
+				var connType = $('select[name="_kdna_setting_connection_type"]').val() || 'classic';
+				var siteName = (connType === 'enterprise') ? '_kdna_setting_site_key_v3_enterprise' : '_kdna_setting_site_key_v3';
+				var siteKey = $('input[name="' + siteName + '"]').val();
+				var secretKey = $('input[name="_kdna_setting_secret_key_v3"]').val();
+				if (!siteKey || (connType !== 'enterprise' && !secretKey)) {
+					$status.css('color','#b32d2e').text('✖ <?php echo esc_js( $missing ); ?>');
+					return;
+				}
+				$status.css('color','#666').text('…');
+				$btn.prop('disabled', true);
+				$.post(ajaxurl, {
+					action: 'kdna_recaptcha_verify_keys',
+					_ajax_nonce: '<?php echo esc_js( $nonce ); ?>',
+					site_key: siteKey,
+					secret_key: secretKey,
+					connection_type: connType
+				}).done(function(resp){
+					if (resp && resp.success) {
+						$status.css('color','#46b450').text('✔ <?php echo esc_js( $ok_label ); ?>');
+					} else {
+						var msg = (resp && resp.data && resp.data.message) ? resp.data.message : '<?php echo esc_js( $bad_label ); ?>';
+						$status.css('color','#b32d2e').text('✖ ' + msg);
+					}
+				}).fail(function(){
+					$status.css('color','#b32d2e').text('✖ <?php echo esc_js( $err_label ); ?>');
+				}).always(function(){ $btn.prop('disabled', false); });
+			});
+		})(jQuery);
+		</script>
+		<?php
+		return ob_get_clean();
+	}
+
+	public function ajax_verify_keys() {
+		check_ajax_referer( 'kdna_recaptcha_verify_keys' );
+		if ( ! current_user_can( $this->_capabilities_settings_page ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'kdnaforms' ) ) );
+		}
+		$site_key   = isset( $_POST['site_key'] ) ? sanitize_text_field( wp_unslash( $_POST['site_key'] ) ) : '';
+		$secret_key = isset( $_POST['secret_key'] ) ? sanitize_text_field( wp_unslash( $_POST['secret_key'] ) ) : '';
+		$conn_type  = isset( $_POST['connection_type'] ) ? sanitize_text_field( wp_unslash( $_POST['connection_type'] ) ) : 'classic';
+
+		if ( empty( $site_key ) ) {
+			wp_send_json_error( array( 'message' => __( 'Site key missing', 'kdnaforms' ) ) );
+		}
+
+		if ( 'enterprise' === $conn_type ) {
+			// Enterprise uses API keys + project IDs; we can only sanity-check the site key script loads.
+			$resp = wp_remote_get( 'https://www.google.com/recaptcha/enterprise.js?render=' . rawurlencode( $site_key ), array( 'timeout' => 10 ) );
+			if ( is_wp_error( $resp ) ) {
+				wp_send_json_error( array( 'message' => __( 'Network error', 'kdnaforms' ) ) );
+			}
+			$code = wp_remote_retrieve_response_code( $resp );
+			if ( 200 === (int) $code ) {
+				wp_send_json_success( array( 'message' => 'OK' ) );
+			}
+			wp_send_json_error( array( 'message' => __( 'Site key script failed to load', 'kdnaforms' ) ) );
+		}
+
+		if ( empty( $secret_key ) ) {
+			wp_send_json_error( array( 'message' => __( 'Secret key missing', 'kdnaforms' ) ) );
+		}
+
+		$resp = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', array(
+			'timeout' => 10,
+			'body'    => array( 'secret' => $secret_key, 'response' => '' ),
+		) );
+		if ( is_wp_error( $resp ) ) {
+			wp_send_json_error( array( 'message' => __( 'Network error', 'kdnaforms' ) ) );
+		}
+		$body = json_decode( wp_remote_retrieve_body( $resp ), true );
+		$errors = isset( $body['error-codes'] ) ? (array) $body['error-codes'] : array();
+		// A valid secret returns "missing-input-response" only. Invalid secret returns "invalid-input-secret".
+		if ( in_array( 'invalid-input-secret', $errors, true ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid secret key', 'kdnaforms' ) ) );
+		}
+		if ( in_array( 'missing-input-secret', $errors, true ) ) {
+			wp_send_json_error( array( 'message' => __( 'Secret key missing', 'kdnaforms' ) ) );
+		}
+		// Site key sanity-check: fetch the api.js for the site key
+		$site_resp = wp_remote_get( 'https://www.google.com/recaptcha/api.js?render=' . rawurlencode( $site_key ), array( 'timeout' => 10 ) );
+		if ( ! is_wp_error( $site_resp ) && 200 === (int) wp_remote_retrieve_response_code( $site_resp ) ) {
+			wp_send_json_success( array( 'message' => 'OK' ) );
+		}
+		wp_send_json_error( array( 'message' => __( 'Site key check failed', 'kdnaforms' ) ) );
 	}
 }
