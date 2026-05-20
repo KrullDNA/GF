@@ -346,10 +346,10 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 			$(document).on('click', '#kdna-recaptcha-verify-btn', function(e){
 				e.preventDefault();
 				var $btn = $(this), $status = $('#kdna-recaptcha-verify-status');
-				var connType = $('select[name="_kdna_setting_connection_type"]').val() || 'classic';
-				var siteName = (connType === 'enterprise') ? '_kdna_setting_site_key_v3_enterprise' : '_kdna_setting_site_key_v3';
+				var connType = $('select[name="_kdnaform_setting_connection_type"]').val() || 'classic';
+				var siteName = (connType === 'enterprise') ? '_kdnaform_setting_site_key_v3_enterprise' : '_kdnaform_setting_site_key_v3';
 				var siteKey = $('input[name="' + siteName + '"]').val();
-				var secretKey = $('input[name="_kdna_setting_secret_key_v3"]').val();
+				var secretKey = $('input[name="_kdnaform_setting_secret_key_v3"]').val();
 				if (!siteKey || (connType !== 'enterprise' && !secretKey)) {
 					$status.css('color','#b32d2e').text('✖ <?php echo esc_js( $missing ); ?>');
 					return;
