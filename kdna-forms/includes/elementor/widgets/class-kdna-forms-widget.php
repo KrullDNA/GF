@@ -1353,6 +1353,17 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'description' => esc_html__( 'Fine-tune the button position. Use negative values to move up.', 'kdnaforms' ),
 		) );
 
+		$this->add_control( 'submit_shrink_to_fit', array(
+			'label'        => esc_html__( 'Shrink Submit to Fit Button', 'kdnaforms' ),
+			'type'         => \Elementor\Controls_Manager::SWITCHER,
+			'label_on'     => esc_html__( 'Yes', 'kdnaforms' ),
+			'label_off'    => esc_html__( 'No', 'kdnaforms' ),
+			'return_value' => 'yes',
+			'default'      => '',
+			'prefix_class' => 'kdna-shrink-submit-',
+			'description'  => esc_html__( 'Switch the field row to flex layout so the submit cell sizes to the button and other fields fill remaining space.', 'kdnaforms' ),
+		) );
+
 		$this->end_controls_section();
 	}
 	// ==========================================

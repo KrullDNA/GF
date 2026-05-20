@@ -157,6 +157,23 @@
     padding-left: 0 !important;
 }
 
+/* ===== SHRINK SUBMIT CELL TO FIT BUTTON ===== */
+.kdna-shrink-submit-yes .gform_wrapper .gform_body .gform_fields {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	align-items: end !important;
+	column-gap: 16px !important;
+}
+.kdna-shrink-submit-yes .gform_wrapper .gform_body .gform_fields > .gfield {
+	flex: 1 1 200px !important;
+	min-width: 0 !important;
+}
+.kdna-shrink-submit-yes .gform_wrapper .gform_body .gform_fields > #field_submit,
+.kdna-shrink-submit-yes .gform_wrapper .gform_body .gform_fields > .gfield--type-submit {
+	flex: 0 0 auto !important;
+	width: max-content !important;
+}
+
 /* Editor-only overrides for better preview */
 .elementor-editor-active .kdna-elementor-form-wrapper .gform_wrapper {
 	pointer-events: none;
