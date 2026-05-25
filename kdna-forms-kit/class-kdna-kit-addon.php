@@ -105,7 +105,14 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             echo esc_html__( 'Unable to connect to Kit. Please check your API Key.', 'kdna-forms-kit' );
             echo '</div>';
         } else {
-            $name = isset( $account['name'] ) ? $account['name'] : '';
+            $name = '';
+            if ( isset( $account['user']['name'] ) ) {
+                $name = $account['user']['name'];
+            } elseif ( isset( $account['name'] ) ) {
+                $name = $account['name'];
+            } elseif ( isset( $account['primary_email_address'] ) ) {
+                $name = $account['primary_email_address'];
+            }
             echo '<div class="alert_green" style="padding: 10px;">';
             printf(
                 esc_html__( 'Connected to Kit successfully. Account: %s', 'kdna-forms-kit' ),
@@ -268,7 +275,13 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             return $entry;
         }
 
-        $subscriber_id = isset( $result['subscriber']['id'] ) ? $result['subscriber']['id'] : null;
+        $this->log_debug( __METHOD__ . '(): Kit API response: ' . print_r( $result, true ) );
+        $subscriber_id = null;
+        if ( isset( $result['subscriber']['id'] ) ) {
+            $subscriber_id = $result['subscriber']['id'];
+        } elseif ( isset( $result['id'] ) ) {
+            $subscriber_id = $result['id'];
+        }
 
         // Apply tags — comma-separated names, auto-created if they don't exist.
         $tags_string = rgars( $feed, 'meta/tags' );
@@ -288,8 +301,12 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
                 $tag_id = isset( $tag_map[ strtolower( $tag_name ) ] ) ? $tag_map[ strtolower( $tag_name ) ] : null;
                 if ( ! $tag_id ) {
                     $created = $api->create_tag( $tag_name );
-                    if ( ! is_wp_error( $created ) && isset( $created['tag']['id'] ) ) {
-                        $tag_id = $created['tag']['id'];
+                    if ( ! is_wp_error( $created ) ) {
+                        if ( isset( $created['tag']['id'] ) ) {
+                            $tag_id = $created['tag']['id'];
+                        } elseif ( isset( $created['id'] ) ) {
+                            $tag_id = $created['id'];
+                        }
                     }
                 }
                 if ( $tag_id ) {
