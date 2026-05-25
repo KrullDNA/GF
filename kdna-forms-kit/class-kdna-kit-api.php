@@ -110,7 +110,16 @@ class KDNA_Kit_API {
         $decoded_body = json_decode( wp_remote_retrieve_body( $response ), true );
 
         if ( $code >= 400 ) {
-            $message = isset( $decoded_body['errors'][0] ) ? $decoded_body['errors'][0] : 'Unknown API error';
+            $message = 'Unknown API error';
+            if ( isset( $decoded_body['errors'][0]['message'] ) ) {
+                $message = $decoded_body['errors'][0]['message'];
+            } elseif ( isset( $decoded_body['errors'][0] ) && is_string( $decoded_body['errors'][0] ) ) {
+                $message = $decoded_body['errors'][0];
+            } elseif ( isset( $decoded_body['message'] ) ) {
+                $message = $decoded_body['message'];
+            } elseif ( isset( $decoded_body['error'] ) ) {
+                $message = $decoded_body['error'];
+            }
             return new WP_Error( 'kit_api_error', $message, array( 'status' => $code ) );
         }
 
