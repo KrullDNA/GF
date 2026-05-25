@@ -353,7 +353,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			return $entry;
 		}
 
-		$this->log_debug( __METHOD__ . "(): Checking for feeds to process for entry #{$entry_id}." );
+		$this->log_debug( __METHOD__ . "(): [{$this->get_slug()}] Checking for feeds to process for entry #{$entry_id}." );
 
 		$form_id = (int) rgar( $form, 'id' );
 		$feeds   = false;
@@ -373,7 +373,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		// If there are no feeds to process, return.
 		if ( empty( $feeds ) ) {
-			$this->log_debug( __METHOD__ . "(): No feeds to process for entry #{$entry_id}." );
+			$this->log_debug( __METHOD__ . "(): [{$this->get_slug()}] No feeds to process for entry #{$entry_id}." );
 
 			return $entry;
 		}
@@ -1154,7 +1154,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	public function pre_process_feeds( $feeds, $entry, $form ) {
 		$count   = is_array( $feeds ) ? count( $feeds ) : 0;
 		$form_id = (int) rgar( $form, 'id' );
-		$this->log_debug( __METHOD__ . "(): Found {$count} feeds for form #{$form_id}." );
+		$this->log_debug( __METHOD__ . "(): [{$this->get_slug()}] Found {$count} feeds for form #{$form_id}." );
 
 		/**
 		 * Modify feeds before they are processed.
