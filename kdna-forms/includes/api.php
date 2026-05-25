@@ -2726,7 +2726,7 @@ class KDNAAPI {
 	public static function log_error( $message ) {
 		if ( class_exists( 'KDNALogging' ) ) {
 			KDNALogging::include_logger();
-			KDNALogging::log_message( 'kdnaformsapi', $message, KLogger::ERROR );
+			KDNALogging::log_message( 'kdnaformsapi', $message, 'error' );
 		}
 	}
 
@@ -2740,7 +2740,7 @@ class KDNAAPI {
 	public static function log_debug( $message ) {
 		if ( class_exists( 'KDNALogging' ) ) {
 			KDNALogging::include_logger();
-			KDNALogging::log_message( 'kdnaformsapi', $message, KLogger::DEBUG );
+			KDNALogging::log_message( 'kdnaformsapi', $message, 'debug' );
 		}
 	}
 

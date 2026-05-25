@@ -5609,14 +5609,14 @@ Content-Type: text/html;
 	public static function log_error( $message ) {
 		if ( class_exists( 'KDNALogging' ) ) {
 			KDNALogging::include_logger();
-			KDNALogging::log_message( 'kdnaforms', $message, KLogger::ERROR );
+			KDNALogging::log_message( 'kdnaforms', $message, 'error' );
 		}
 	}
 
 	public static function log_debug( $message ) {
 		if ( class_exists( 'KDNALogging' ) ) {
 			KDNALogging::include_logger();
-			KDNALogging::log_message( 'kdnaforms', $message, KLogger::DEBUG );
+			KDNALogging::log_message( 'kdnaforms', $message, 'debug' );
 		}
 	}
 
