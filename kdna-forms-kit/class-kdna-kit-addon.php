@@ -155,11 +155,11 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
                         'tooltip' => esc_html__( 'Map form fields to Kit custom fields.', 'kdna-forms-kit' ),
                     ),
                     array(
-                        'name'    => 'tags',
-                        'label'   => esc_html__( 'Tags', 'kdna-forms-kit' ),
-                        'type'    => 'checkbox',
-                        'choices' => $this->get_kit_tags(),
-                        'tooltip' => esc_html__( 'Select tags to apply to the subscriber.', 'kdna-forms-kit' ),
+                        'name'        => 'tags',
+                        'label'       => esc_html__( 'Tags', 'kdna-forms-kit' ),
+                        'type'        => 'text',
+                        'class'       => 'medium',
+                        'tooltip'     => esc_html__( 'Enter comma-separated tag names. Tags will be created automatically in Kit if they don\'t exist.', 'kdna-forms-kit' ),
                     ),
                     array(
                         'name'    => 'feed_condition',
@@ -270,15 +270,32 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
 
         $subscriber_id = isset( $result['subscriber']['id'] ) ? $result['subscriber']['id'] : null;
 
-        // Apply tags — checkbox names are tag_{id}, values are '1' when checked.
-        $meta = rgar( $feed, 'meta' );
-        if ( is_array( $meta ) && ! empty( $subscriber_id ) ) {
-            foreach ( $meta as $key => $value ) {
-                if ( strpos( $key, 'tag_' ) === 0 && '1' === (string) $value ) {
-                    $tag_id = str_replace( 'tag_', '', $key );
+        // Apply tags — comma-separated names, auto-created if they don't exist.
+        $tags_string = rgars( $feed, 'meta/tags' );
+        if ( ! empty( $tags_string ) && ! empty( $subscriber_id ) ) {
+            $tag_names = array_map( 'trim', explode( ',', $tags_string ) );
+            $existing_tags = $api->get_tags();
+            $tag_map = array();
+            if ( ! is_wp_error( $existing_tags ) && is_array( $existing_tags ) ) {
+                foreach ( $existing_tags as $t ) {
+                    $tag_map[ strtolower( $t['name'] ) ] = $t['id'];
+                }
+            }
+            foreach ( $tag_names as $tag_name ) {
+                if ( empty( $tag_name ) ) {
+                    continue;
+                }
+                $tag_id = isset( $tag_map[ strtolower( $tag_name ) ] ) ? $tag_map[ strtolower( $tag_name ) ] : null;
+                if ( ! $tag_id ) {
+                    $created = $api->create_tag( $tag_name );
+                    if ( ! is_wp_error( $created ) && isset( $created['tag']['id'] ) ) {
+                        $tag_id = $created['tag']['id'];
+                    }
+                }
+                if ( $tag_id ) {
                     $tag_result = $api->add_tag_to_subscriber( $subscriber_id, $tag_id );
                     if ( is_wp_error( $tag_result ) ) {
-                        $this->log_error( __METHOD__ . "(): Failed to add tag {$tag_id}. Error: " . $tag_result->get_error_message() );
+                        $this->log_error( __METHOD__ . "(): Failed to add tag '{$tag_name}'. Error: " . $tag_result->get_error_message() );
                     }
                 }
             }
@@ -316,30 +333,6 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             $choices[] = array(
                 'label' => esc_html( $form['name'] ),
                 'value' => $form['id'],
-            );
-        }
-
-        return $choices;
-    }
-
-    private function get_kit_tags() {
-        $choices = array();
-
-        $api = $this->get_api();
-        if ( null === $api ) {
-            return $choices;
-        }
-
-        $tags = $api->get_tags();
-        if ( is_wp_error( $tags ) || ! is_array( $tags ) ) {
-            $this->log_error( __METHOD__ . '(): Unable to retrieve tags from Kit.' );
-            return $choices;
-        }
-
-        foreach ( $tags as $tag ) {
-            $choices[] = array(
-                'label' => esc_html( $tag['name'] ),
-                'name'  => 'tag_' . $tag['id'],
             );
         }
 

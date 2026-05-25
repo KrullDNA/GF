@@ -44,6 +44,10 @@ class KDNA_Kit_API {
         return $this->request( 'subscribers', 'POST', $data );
     }
 
+    public function create_tag( $name ) {
+        return $this->request( 'tags', 'POST', array( 'name' => $name ) );
+    }
+
     public function add_tag_to_subscriber( $subscriber_id, $tag_id ) {
         return $this->request( "tags/{$tag_id}/subscribers", 'POST', array(
             'id' => $subscriber_id,
