@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class KDNA_Kit_API {
 
-    private $api_secret;
+    private $api_key;
 
     private $api_base = 'https://api.kit.com/v4/';
 
-    public function __construct( $api_secret ) {
-        $this->api_secret = $api_secret;
+    public function __construct( $api_key ) {
+        $this->api_key = $api_key;
     }
 
     public function validate() {
@@ -86,7 +86,7 @@ class KDNA_Kit_API {
             'method'  => $method,
             'timeout' => 30,
             'headers' => array(
-                'Authorization' => 'Bearer ' . $this->api_secret,
+                'X-Kit-Api-Key' => $this->api_key,
                 'Content-Type'  => 'application/json',
                 'Accept'        => 'application/json',
             ),

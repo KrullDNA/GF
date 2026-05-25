@@ -57,15 +57,15 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
         return array(
             array(
                 'title'       => esc_html__( 'Kit API Settings', 'kdna-forms-kit' ),
-                'description' => esc_html__( 'Connect your Kit account by entering your API secret below.', 'kdna-forms-kit' ),
+                'description' => esc_html__( 'Connect your Kit account by entering your V4 API key below.', 'kdna-forms-kit' ),
                 'fields'      => array(
                     array(
-                        'name'              => 'api_secret',
-                        'label'             => esc_html__( 'API Secret', 'kdna-forms-kit' ),
+                        'name'              => 'api_key',
+                        'label'             => esc_html__( 'API Key', 'kdna-forms-kit' ),
                         'type'              => 'text',
                         'class'             => 'medium',
-                        'tooltip'           => esc_html__( 'Enter your Kit API secret. You can find this in your Kit account under Settings > Developer.', 'kdna-forms-kit' ),
-                        'feedback_callback' => array( $this, 'validate_api_secret' ),
+                        'tooltip'           => esc_html__( 'Enter your Kit V4 API key. You can find this in your Kit account under Settings > Developer.', 'kdna-forms-kit' ),
+                        'feedback_callback' => array( $this, 'validate_api_key' ),
                     ),
                     array(
                         'name'     => 'api_status',
@@ -78,7 +78,7 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
         );
     }
 
-    public function validate_api_secret( $value ) {
+    public function validate_api_key( $value ) {
         if ( empty( $value ) ) {
             return false;
         }
@@ -88,21 +88,21 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
     }
 
     public function render_api_status( $field ) {
-        $api_secret = $this->get_plugin_setting( 'api_secret' );
+        $api_key = $this->get_plugin_setting( 'api_key' );
 
-        if ( empty( $api_secret ) ) {
+        if ( empty( $api_key ) ) {
             echo '<div class="alert_red" style="padding: 10px;">';
-            echo esc_html__( 'Not connected. Please enter your API Secret.', 'kdna-forms-kit' );
+            echo esc_html__( 'Not connected. Please enter your API Key.', 'kdna-forms-kit' );
             echo '</div>';
             return;
         }
 
-        $api     = new KDNA_Kit_API( $api_secret );
+        $api     = new KDNA_Kit_API( $api_key );
         $account = $api->get_account();
 
         if ( is_wp_error( $account ) ) {
             echo '<div class="alert_red" style="padding: 10px;">';
-            echo esc_html__( 'Unable to connect to Kit. Please check your API Secret.', 'kdna-forms-kit' );
+            echo esc_html__( 'Unable to connect to Kit. Please check your API Key.', 'kdna-forms-kit' );
             echo '</div>';
         } else {
             $name = isset( $account['name'] ) ? $account['name'] : '';
@@ -393,19 +393,19 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             return $this->_api;
         }
 
-        $api_secret = $this->get_plugin_setting( 'api_secret' );
-        if ( empty( $api_secret ) ) {
-            $this->log_debug( __METHOD__ . '(): API secret not configured.' );
+        $api_key = $this->get_plugin_setting( 'api_key' );
+        if ( empty( $api_key ) ) {
+            $this->log_debug( __METHOD__ . '(): V4 API key not configured.' );
             return null;
         }
 
-        $this->_api = new KDNA_Kit_API( $api_secret );
+        $this->_api = new KDNA_Kit_API( $api_key );
         return $this->_api;
     }
 
     public function can_create_feed() {
-        $api_secret = $this->get_plugin_setting( 'api_secret' );
-        return ! empty( $api_secret );
+        $api_key = $this->get_plugin_setting( 'api_key' );
+        return ! empty( $api_key );
     }
 
     public function configure_addon_message() {
