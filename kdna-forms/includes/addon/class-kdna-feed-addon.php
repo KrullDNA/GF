@@ -927,6 +927,13 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		// phpcs:enable WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 		$results = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+
+		if ( empty( $results ) && is_numeric( $form_id ) ) {
+			$all_sql = $wpdb->prepare( "SELECT id, form_id, is_active FROM {$wpdb->prefix}gf_addon_feed WHERE addon_slug=%s", $this->get_slug() );
+			$all = $wpdb->get_results( $all_sql, ARRAY_A );
+			$this->log_debug( __METHOD__ . "(): [{$this->get_slug()}] 0 feeds for form_id={$form_id}. All feeds in DB for this slug: " . wp_json_encode( $all ) );
+		}
+
 		foreach ( $results as &$result ) {
 			$result['meta'] = $this->decrypt_feed_meta( json_decode( $result['meta'], true ) );
 		}
