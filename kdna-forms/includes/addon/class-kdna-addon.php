@@ -5796,13 +5796,12 @@ abstract class KDNAAddOn {
 	 */
 	public function log_error( $message ) {
 		if ( class_exists( 'KDNALogging' ) ) {
-			KDNALogging::include_logger();
-			KDNALogging::log_message( $this->get_slug(), $message, KLogger::ERROR );
+			KDNALogging::log_message( $this->get_slug(), $message, 'error' );
 		}
 	}
 
 	/**
-	 * Writes an error message to the KDNA Forms log. Requires the KDNA Forms logging Add-On.
+	 * Writes a debug message to the KDNA Forms log.
 	 *
 	 * Not intended to be overridden by Add-Ons.
 	 *
@@ -5810,8 +5809,7 @@ abstract class KDNAAddOn {
 	 */
 	public function log_debug( $message ) {
 		if ( class_exists( 'KDNALogging' ) ) {
-			KDNALogging::include_logger();
-			KDNALogging::log_message( $this->get_slug(), $message, KLogger::DEBUG );
+			KDNALogging::log_message( $this->get_slug(), $message, 'debug' );
 		}
 	}
 

@@ -1416,33 +1416,66 @@ class KDNASettings {
 	 * @return bool
 	 */
 	public static function enable_logging() {
-
-		// Update option.
 		$enabled = update_option( 'kdnaform_enable_logging', true );
+		self::register_logging_page();
+		return $enabled;
+	}
 
-		// Prepare settings page, enable logging.
-		if ( function_exists( 'gf_logging' ) ) {
+	public static function register_logging_page() {
+		self::add_settings_page(
+			array(
+				'name'      => 'kdna-logging',
+				'tab_label' => esc_html__( 'Logging', 'kdnaforms' ),
+				'title'     => esc_html__( 'Logging', 'kdnaforms' ),
+				'handler'   => array( __CLASS__, 'logging_settings_page' ),
+			),
+			null,
+			null
+		);
+	}
 
-			// Add settings page.
-			self::add_settings_page(
-				array(
-					'name'      => gf_logging()->get_slug(),
-					'tab_label' => gf_logging()->get_short_title(),
-					'title'     => gf_logging()->plugin_settings_title(),
-					'handler'   => array( gf_logging(), 'plugin_settings_page' ),
-					'icon'      => gf_logging()->get_menu_icon(),
-				),
-				null,
-				null
-			);
-
-			// Enabling all loggers by default.
-			gf_logging()->enable_all_loggers();
-
+	public static function logging_settings_page() {
+		if ( ! class_exists( 'KDNALogging' ) ) {
+			echo '<p>' . esc_html__( 'Logging class not available.', 'kdnaforms' ) . '</p>';
+			return;
 		}
 
-		return $enabled;
+		if ( isset( $_POST['kdna_clear_logs'] ) && check_admin_referer( 'kdna_clear_logs' ) ) {
+			KDNALogging::delete_log_files();
+			echo '<div class="notice notice-success"><p>' . esc_html__( 'Log files cleared.', 'kdnaforms' ) . '</p></div>';
+		}
 
+		$files = KDNALogging::get_log_files();
+		$selected = isset( $_GET['log'] ) ? sanitize_file_name( wp_unslash( $_GET['log'] ) ) : '';
+
+		echo '<h3>' . esc_html__( 'Log Files', 'kdnaforms' ) . '</h3>';
+
+		if ( empty( $files ) ) {
+			echo '<p>' . esc_html__( 'No log files found. Logs are written when forms are submitted with add-on feeds active.', 'kdnaforms' ) . '</p>';
+			return;
+		}
+
+		echo '<ul style="margin-left:20px;">';
+		foreach ( $files as $file ) {
+			$slug = basename( $file, '.log' );
+			$size = size_format( filesize( $file ) );
+			$active = ( $slug === $selected ) ? ' <strong>(viewing)</strong>' : '';
+			$url = add_query_arg( array( 'page' => 'kdna_settings', 'subview' => 'kdna-logging', 'log' => $slug ), admin_url( 'admin.php' ) );
+			echo '<li><a href="' . esc_url( $url ) . '">' . esc_html( $slug ) . '</a> (' . esc_html( $size ) . ')' . $active . '</li>';
+		}
+		echo '</ul>';
+
+		if ( ! empty( $selected ) ) {
+			$content = KDNALogging::get_log_content( $selected, 500 );
+			echo '<h3>' . sprintf( esc_html__( 'Log: %s', 'kdnaforms' ), esc_html( $selected ) ) . '</h3>';
+			echo '<textarea readonly style="width:100%;height:400px;font-family:monospace;font-size:12px;">' . esc_textarea( $content ) . '</textarea>';
+		}
+
+		echo '<form method="post" style="margin-top:15px;">';
+		wp_nonce_field( 'kdna_clear_logs' );
+		echo '<input type="hidden" name="kdna_clear_logs" value="1" />';
+		echo '<button type="submit" class="button button-secondary" onclick="return confirm(\'' . esc_js( __( 'Delete all log files?', 'kdnaforms' ) ) . '\');">' . esc_html__( 'Clear All Logs', 'kdnaforms' ) . '</button>';
+		echo '</form>';
 	}
 
 	/**
@@ -1453,18 +1486,12 @@ class KDNASettings {
 	 * @return bool
 	 */
 	public static function disable_logging() {
-
-		// Update option.
 		$disabled = update_option( 'kdnaform_enable_logging', false );
-
-		// Remove settings page, log files.
-		if ( function_exists( 'gf_logging' ) ) {
-			unset( self::$addon_pages[ gf_logging()->get_slug() ] );
-			gf_logging()->delete_log_files();
+		unset( self::$addon_pages['kdna-logging'] );
+		if ( class_exists( 'KDNALogging' ) ) {
+			KDNALogging::delete_log_files();
 		}
-
 		return $disabled;
-
 	}
 
 }

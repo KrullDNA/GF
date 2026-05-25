@@ -148,6 +148,7 @@ require_once KDNA_PLUGIN_DIR_PATH . 'includes/external-api/class-kdna-api-respon
 
 require_once KDNA_PLUGIN_DIR_PATH . 'currency.php';
 require_once KDNA_PLUGIN_DIR_PATH . 'common.php';
+require_once KDNA_PLUGIN_DIR_PATH . 'includes/logging/class-kdna-logging.php';
 require_once KDNA_PLUGIN_DIR_PATH . 'forms_model.php';
 require_once KDNA_PLUGIN_DIR_PATH . 'form_detail.php';
 require_once KDNA_PLUGIN_DIR_PATH . 'widget.php';
@@ -182,6 +183,7 @@ add_action( 'init', array( 'KDNAForms', 'init' ) );
 add_action( 'init', array( 'KDNAForms', 'screen_options_filters' ) );
 add_action( 'admin_init', array( 'KDNAForms', 'add_entry_list_filter' ) );
 add_action( 'admin_init', array( 'KDNAForms', 'initialize_admin_settings' ) );
+add_action( 'admin_init', array( 'KDNAForms', 'maybe_register_logging_page' ) );
 add_action( 'kdnaform_preview_init', array( 'KDNAForms', 'init_preview' ) );
 add_action( 'wp', array( 'KDNAForms', 'maybe_process_form' ), 9 );
 add_action( 'admin_init', array( 'KDNAForms', 'maybe_process_form' ), 9 );
@@ -829,6 +831,12 @@ class KDNAForms {
 	 *
 	 * @return array $plugins Supported plugins.
 	 */
+	public static function maybe_register_logging_page() {
+		if ( get_option( 'kdnaform_enable_logging', false ) ) {
+			KDNASettings::register_logging_page();
+		}
+	}
+
 	public static function set_logging_supported( $plugins ) {
 		$plugins['kdnaformsapi']      = 'KDNA Forms API';
 		$plugins['kdnaforms']         = 'KDNA Forms Core';
