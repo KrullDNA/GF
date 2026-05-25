@@ -2102,7 +2102,7 @@ class KDNAFormDisplay {
 		}
 
 		KDNALogging::include_logger();
-		KDNALogging::log_message( 'kdnaforms-browser', "------ Form #{$form_id}, Entry #{$entry_id} -------\n" . $data . "\n", KLogger::DEBUG );
+		KDNALogging::log_message( 'kdnaforms-browser', "------ Form #{$form_id}, Entry #{$entry_id} -------\n" . $data . "\n", 'debug' );
 	}
 
 	/**
