@@ -157,8 +157,7 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
                     array(
                         'name'    => 'tags',
                         'label'   => esc_html__( 'Tags', 'kdna-forms-kit' ),
-                        'type'    => 'select',
-                        'multiple' => true,
+                        'type'    => 'checkbox',
                         'choices' => $this->get_kit_tags(),
                         'tooltip' => esc_html__( 'Select tags to apply to the subscriber.', 'kdna-forms-kit' ),
                     ),
@@ -271,17 +270,15 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
 
         $subscriber_id = isset( $result['subscriber']['id'] ) ? $result['subscriber']['id'] : null;
 
-        // Apply tags.
-        $tags = rgars( $feed, 'meta/tags' );
-        if ( ! empty( $tags ) && ! empty( $subscriber_id ) ) {
-            if ( ! is_array( $tags ) ) {
-                $tags = array( $tags );
-            }
-            foreach ( $tags as $tag_id ) {
-                if ( ! empty( $tag_id ) ) {
+        // Apply tags — checkbox names are tag_{id}, values are '1' when checked.
+        $meta = rgar( $feed, 'meta' );
+        if ( is_array( $meta ) && ! empty( $subscriber_id ) ) {
+            foreach ( $meta as $key => $value ) {
+                if ( strpos( $key, 'tag_' ) === 0 && '1' === (string) $value ) {
+                    $tag_id = str_replace( 'tag_', '', $key );
                     $tag_result = $api->add_tag_to_subscriber( $subscriber_id, $tag_id );
                     if ( is_wp_error( $tag_result ) ) {
-                        $this->log_error( __METHOD__ . "(): Failed to add tag {$tag_id} to subscriber. Error: " . $tag_result->get_error_message() );
+                        $this->log_error( __METHOD__ . "(): Failed to add tag {$tag_id}. Error: " . $tag_result->get_error_message() );
                     }
                 }
             }
@@ -342,7 +339,7 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
         foreach ( $tags as $tag ) {
             $choices[] = array(
                 'label' => esc_html( $tag['name'] ),
-                'value' => $tag['id'],
+                'name'  => 'tag_' . $tag['id'],
             );
         }
 
