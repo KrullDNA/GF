@@ -49,9 +49,7 @@ class KDNA_Kit_API {
     }
 
     public function add_tag_to_subscriber( $subscriber_id, $tag_id ) {
-        return $this->request( "tags/{$tag_id}/subscribers", 'POST', array(
-            'id' => $subscriber_id,
-        ) );
+        return $this->request( "tags/{$tag_id}/subscribers/{$subscriber_id}", 'POST' );
     }
 
     public function add_subscriber_to_form( $form_id, $data ) {
