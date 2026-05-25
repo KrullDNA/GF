@@ -105,21 +105,46 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             echo esc_html__( 'Unable to connect to Kit. Please check your API Key.', 'kdna-forms-kit' );
             echo '</div>';
         } else {
-            $name = '';
-            if ( isset( $account['user']['name'] ) ) {
-                $name = $account['user']['name'];
-            } elseif ( isset( $account['name'] ) ) {
-                $name = $account['name'];
-            } elseif ( isset( $account['primary_email_address'] ) ) {
-                $name = $account['primary_email_address'];
-            }
+            $name = $this->extract_account_name( $account );
             echo '<div class="alert_green" style="padding: 10px;">';
             printf(
                 esc_html__( 'Connected to Kit successfully. Account: %s', 'kdna-forms-kit' ),
                 esc_html( $name )
             );
+            if ( empty( $name ) ) {
+                echo '<br><small style="color:#666;">Debug: ' . esc_html( wp_json_encode( $account ) ) . '</small>';
+            }
             echo '</div>';
         }
+    }
+
+    private function extract_account_name( $data ) {
+        $paths = array(
+            array( 'user', 'name' ),
+            array( 'account', 'name' ),
+            array( 'data', 'name' ),
+            array( 'data', 'attributes', 'name' ),
+            array( 'name' ),
+            array( 'user', 'email_address' ),
+            array( 'primary_email_address' ),
+            array( 'email_address' ),
+            array( 'data', 'email_address' ),
+        );
+        foreach ( $paths as $path ) {
+            $val = $data;
+            foreach ( $path as $key ) {
+                if ( is_array( $val ) && isset( $val[ $key ] ) ) {
+                    $val = $val[ $key ];
+                } else {
+                    $val = null;
+                    break;
+                }
+            }
+            if ( ! empty( $val ) && is_string( $val ) ) {
+                return $val;
+            }
+        }
+        return '';
     }
 
     // -------------------------------------------------------------------------
