@@ -112,7 +112,7 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
                 esc_html( $name )
             );
             if ( empty( $name ) ) {
-                echo '<br><small style="color:#666;">Debug: ' . esc_html( wp_json_encode( $account ) ) . '</small>';
+                echo '<br><small style="color:#666;">Response: ' . esc_html( wp_json_encode( $account ) ) . '</small>';
             }
             echo '</div>';
         }
@@ -281,11 +281,14 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
         $subscriber_data = array(
             'email_address' => $email,
             'first_name'    => $first_name,
+            'state'         => 'active',
         );
 
         if ( ! empty( $custom_fields ) ) {
             $subscriber_data['fields'] = $custom_fields;
         }
+
+        error_log( 'KDNA Kit: Sending subscriber data: ' . wp_json_encode( $subscriber_data ) );
 
         $kit_form_id = rgars( $feed, 'meta/kit_form' );
 
@@ -295,12 +298,12 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             $result = $api->add_subscriber( $subscriber_data );
         }
 
+        error_log( 'KDNA Kit: API response: ' . wp_json_encode( $result ) );
+
         if ( is_wp_error( $result ) ) {
-            $this->log_error( __METHOD__ . '(): Failed to add subscriber to Kit. Error: ' . $result->get_error_message() );
+            error_log( 'KDNA Kit: Error - ' . $result->get_error_message() );
             return $entry;
         }
-
-        $this->log_debug( __METHOD__ . '(): Kit API response: ' . print_r( $result, true ) );
         $subscriber_id = null;
         if ( isset( $result['subscriber']['id'] ) ) {
             $subscriber_id = $result['subscriber']['id'];
