@@ -242,6 +242,9 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
     // -------------------------------------------------------------------------
 
     public function process_feed( $feed, $entry, $form ) {
+        $this->log_debug( __METHOD__ . '(): FEED TRIGGERED - Feed ID: ' . rgar( $feed, 'id' ) . ', Entry ID: ' . rgar( $entry, 'id' ) );
+        $this->log_debug( __METHOD__ . '(): Feed meta: ' . wp_json_encode( rgar( $feed, 'meta' ) ) );
+
         $api = $this->get_api();
         if ( null === $api ) {
             $this->log_error( __METHOD__ . '(): Unable to process feed - API not configured.' );
@@ -249,8 +252,10 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
         }
 
         $field_map = $this->get_field_map_fields( $feed, 'field_map' );
+        $this->log_debug( __METHOD__ . '(): Field map: ' . wp_json_encode( $field_map ) );
 
         $email = $this->get_field_value( $form, $entry, $field_map['email'] );
+        $this->log_debug( __METHOD__ . '(): Email resolved to: ' . $email );
         if ( empty( $email ) || ! is_email( $email ) ) {
             $this->log_error( __METHOD__ . '(): Invalid or empty email address. Aborting subscription.' );
             return $entry;
