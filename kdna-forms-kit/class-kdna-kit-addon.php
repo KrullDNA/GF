@@ -288,7 +288,7 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             $subscriber_data['fields'] = $custom_fields;
         }
 
-        error_log( 'KDNA Kit: Sending subscriber data: ' . wp_json_encode( $subscriber_data ) );
+        $this->log_debug( __METHOD__ . '(): Sending subscriber data: ' . wp_json_encode( $subscriber_data ) );
 
         $kit_form_id = rgars( $feed, 'meta/kit_form' );
 
@@ -298,10 +298,10 @@ class KDNA_Kit_AddOn extends KDNAFeedAddOn {
             $result = $api->add_subscriber( $subscriber_data );
         }
 
-        error_log( 'KDNA Kit: API response: ' . wp_json_encode( $result ) );
+        $this->log_debug( __METHOD__ . '(): API response: ' . wp_json_encode( $result ) );
 
         if ( is_wp_error( $result ) ) {
-            error_log( 'KDNA Kit: Error - ' . $result->get_error_message() );
+            $this->log_error( __METHOD__ . '(): Error - ' . $result->get_error_message() );
             return $entry;
         }
         $subscriber_id = null;
