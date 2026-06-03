@@ -1,4 +1,4 @@
-var GF_Settings_Dependencies = function ( args ) {
+var KDNA_Settings_Dependencies = function ( args ) {
 
 	var self = this;
 	self.args = args;
