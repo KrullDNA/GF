@@ -103,7 +103,7 @@ class KDNAFormsModel {
 		// KDNA Forms: Always return modern version to prevent legacy table fallback.
 		// The legacy tables (rg_form, rg_lead, etc.) are from Gravity Forms < 2.3
 		// and do not exist in KDNA Forms installations.
-		return '2.9.30';
+		return '1.2.0';
 	}
 
 	/**
