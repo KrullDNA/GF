@@ -2219,7 +2219,12 @@ class KDNAFormDisplay {
 		if ( rgar( $form['confirmation'], 'type' ) == 'message' ) {
 			$confirmation = self::get_confirmation_message( $form['confirmation'], $form, $entry, $aux_data );
 		} else {
-			$confirmation = array( 'redirect' => self::get_confirmation_url( $form['confirmation'], $form, $entry ) );
+			$url = self::get_confirmation_url( $form['confirmation'], $form, $entry );
+			if ( rgar( $form['confirmation'], 'openInNewWindow' ) && ! empty( $url ) ) {
+				$confirmation = self::get_new_window_confirmation( $url, $form, $entry, $aux_data );
+			} else {
+				$confirmation = array( 'redirect' => $url );
+			}
 		}
 
 		$form_id = absint( $form['id'] );
@@ -2379,6 +2384,31 @@ class KDNAFormDisplay {
 		}
 
 		return KDNACommon::get_inline_script_tag( $script_body );
+	}
+
+	/**
+	 * Builds a confirmation that opens the target URL in a new browser tab while
+	 * displaying an in-page confirmation message in the current window.
+	 *
+	 * @param string $url      The destination URL.
+	 * @param array  $form     The Form Object.
+	 * @param array  $entry    The Entry Object.
+	 * @param array  $aux_data Additional data passed to the confirmation message.
+	 *
+	 * @return string
+	 */
+	private static function get_new_window_confirmation( $url, $form, $entry, $aux_data = array() ) {
+		$message_confirmation = $form['confirmation'];
+		if ( empty( rgar( $message_confirmation, 'message' ) ) ) {
+			$default                          = KDNAFormsModel::get_default_confirmation();
+			$message_confirmation['message']  = rgar( $default, 'message' );
+		}
+		$message_html = self::get_confirmation_message( $message_confirmation, $form, $entry, $aux_data );
+
+		$encoded_url = defined( 'JSON_HEX_TAG' ) ? json_encode( $url, JSON_HEX_TAG ) : json_encode( $url );
+		$script      = KDNACommon::get_inline_script_tag( "window.open({$encoded_url}, '_blank');" );
+
+		return $message_html . $script;
 	}
 
 	public static function send_emails( $form, $lead ) {

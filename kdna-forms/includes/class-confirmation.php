@@ -338,6 +338,27 @@ class KDNA_Confirmation {
 						'description' => esc_html__( 'Sample: phone={Phone:1}&email={Email:2}', 'kdnaforms' ),
 					),
 					array(
+						'name'       => 'openInNewWindow',
+						'label'      => esc_html__( 'Open in New Window', 'kdnaforms' ),
+						'type'       => 'checkbox',
+						'choices'    => array(
+							array(
+								'name'  => 'openInNewWindow',
+								'label' => esc_html__( 'Open the page or URL in a new browser tab', 'kdnaforms' ),
+							),
+						),
+						'dependency' => array(
+							'live'     => true,
+							'operator' => 'ALL',
+							'fields'   => array(
+								array(
+									'field'  => 'type',
+									'values' => array( 'page', 'redirect' ),
+								),
+							),
+						),
+					),
+					array(
 						'name'        => 'conditionalLogic',
 						'label'       => esc_html__( 'Conditional Logic', 'kdnaforms ' ),
 						'type'        => 'conditional_logic',
@@ -561,6 +582,7 @@ class KDNA_Confirmation {
 					$confirmation['pageId']            = rgar( $values, 'page' );
 					$confirmation['url']               = rgar( $values, 'url' );
 					$confirmation['queryString']       = rgar( $values, 'queryString' );
+					$confirmation['openInNewWindow']   = (bool) rgar( $values, 'openInNewWindow' );
 
 					$confirmation['conditionalLogic'] = rgar( $confirmation, 'isDefault' ) ? array() : rgar( $values, 'confirmation_conditional_logic_object' );
 					$confirmation['conditionalLogic'] = KDNAFormsModel::sanitize_conditional_logic( $confirmation['conditionalLogic'] );
