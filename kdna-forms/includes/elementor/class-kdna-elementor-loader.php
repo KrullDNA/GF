@@ -224,12 +224,21 @@ class KDNA_Elementor_Loader {
 
 				// Listen for Elementor popup show events.
 				$( document ).on( 'elementor/popup/show', function( event, id, instance ) {
-					var $popup = instance ? instance.getElements( '$element' ) : null;
+					if ( ! instance ) {
+						return;
+					}
+					var $popup = null;
+					if ( typeof instance.getElements === 'function' ) {
+						$popup = instance.getElements( '$element' );
+					}
+					if ( ! $popup ) {
+						$popup = instance.$element || null;
+					}
 					if ( ! $popup || ! $popup.length ) {
 						return;
 					}
 
-					var $forms = $popup.find( '.gform_wrapper' );
+					var $forms = $popup.find( '.kdnaform_wrapper' );
 					if ( ! $forms.length ) {
 						return;
 					}
@@ -242,8 +251,8 @@ class KDNA_Elementor_Loader {
 							return;
 						}
 
-						// Extract numeric form ID from wrapper ID (gform_wrapper_123).
-						var numericId = formId.replace( 'gform_wrapper_', '' );
+						// Extract numeric form ID from wrapper ID (kdnaform_wrapper_123).
+						var numericId = formId.replace( 'kdnaform_wrapper_', '' );
 
 						// Reinitialize conditional logic if available.
 						if ( typeof window[ 'kdnaform_conditional_logic_' + numericId ] === 'function' ) {
