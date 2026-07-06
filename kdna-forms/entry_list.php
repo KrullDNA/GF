@@ -879,7 +879,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 		), admin_url() );
 
 		$title = __( 'Click to select columns to display', 'kdnaforms' );
-		$table_columns['column_selector'] = '<a name="<div class=\'tb-title\'><div class=\'tb-title__logo\'></div><div class=\'tb-title__text\'><div class=\'tb-title__main\'>' . esc_attr__( 'Select Entry Table Columns', 'kdnaforms' ) . '</div><div class=\'tb-title__sub\'>' . esc_attr( 'Drag & drop to order and select which columns are displayed in the entries table.', 'kdnaforms' ) . '</div></div></div>" aria-label="' . esc_attr( $title ) . '" href="' . esc_url( $column_selector_url ) . '" class="thickbox entries_edit_icon"><i title="' . esc_attr( $title ) . '" class="gform-icon gform-icon--cog gform-icon--entries-edit"></i></a>';
+		$table_columns['column_selector'] = '<a name="<div class=\'tb-title\'><div class=\'tb-title__text\'><div class=\'tb-title__main\'>' . esc_attr__( 'Select Entry Table Columns', 'kdnaforms' ) . '</div><div class=\'tb-title__sub\'>' . esc_attr( 'Drag & drop to order and select which columns are displayed in the entries table.', 'kdnaforms' ) . '</div></div></div>" aria-label="' . esc_attr( $title ) . '" href="' . esc_url( $column_selector_url ) . '" class="thickbox entries_edit_icon"><i title="' . esc_attr( $title ) . '" class="gform-icon gform-icon--cog gform-icon--entries-edit"></i></a>';
 
 		/**
 		 * Allow the columns to be displayed in the entry list table to be overridden.

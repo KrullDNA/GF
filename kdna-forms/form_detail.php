@@ -1653,7 +1653,7 @@ class KDNAFormDetail {
 
 								<?php
 								$window_title = esc_html__( 'Bulk Add / Predefined Choices', 'kdnaforms' );
-								$modal = json_encode( "<div class='tb-title'><div class='tb-title__logo'></div><div class='tb-title__text'><div class='tb-title__main'>" . $window_title . "</div><div class='tb-title__sub'>" . esc_html__( 'Select a category and customize the predefined choices or paste your own list to bulk add choices.', 'kdnaforms' ) . "</div></div></div>", JSON_UNESCAPED_UNICODE );
+								$modal = json_encode( "<div class='tb-title'><div class='tb-title__text'><div class='tb-title__main'>" . $window_title . "</div><div class='tb-title__sub'>" . esc_html__( 'Select a category and customize the predefined choices or paste your own list to bulk add choices.', 'kdnaforms' ) . "</div></div></div>", JSON_UNESCAPED_UNICODE );
 								?>
 								<div class="choices-ui__section" data-js="choices-ui-section" data-type="bulk-choices">
 									<h6 class="choices-ui__section-label"><?php esc_html_e( 'Add Bulk Choices', 'kdnaforms' ) ?></h6>
