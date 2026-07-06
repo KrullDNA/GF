@@ -29,7 +29,7 @@ class KDNA_CM_AddOn extends KDNAFeedAddOn {
      *
      * @var string
      */
-    protected $_min_kdnaforms_version = '2.9.30';
+    protected $_min_kdnaforms_version = '1.0.0';
 
     /**
      * Add-on slug.

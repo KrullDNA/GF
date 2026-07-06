@@ -13,7 +13,7 @@ class KDNA_ActiveCampaign_AddOn extends KDNAFeedAddOn {
 
     protected $_version = '1.0.0';
 
-    protected $_min_kdnaforms_version = '2.9.30';
+    protected $_min_kdnaforms_version = '1.0.0';
 
     protected $_slug = 'kdna-forms-activecampaign';
 
