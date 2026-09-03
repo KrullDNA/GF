@@ -271,14 +271,15 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	/**
 	 * Admin hooks.
 	 *
+	 * The add-on adds no menu of its own: the framework already gives it a tab
+	 * under Forms → Settings, and a second entry would only duplicate it.
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function init_admin() {
 		parent::init_admin();
-
-		add_filter( 'kdnaform_addon_navigation', array( $this, 'maybe_create_menu' ) );
 	}
 
 	/**

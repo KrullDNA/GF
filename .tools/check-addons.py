@@ -96,6 +96,28 @@ def main():
                 if name not in own and name not in framework:
                     problems.add(f'$this->{name}() is neither its own nor the framework\'s')
 
+            # A callback is only named, never called, so nothing complains until
+            # WordPress fires the hook and call_user_func_array throws. That is
+            # how array( $this, 'maybe_create_menu' ) shipped in Stripe 1.0.0
+            # and fataled the plugins screen on activation.
+            for m in re.finditer(
+                r"""array\(\s*\$this\s*,\s*['"]([A-Za-z_][A-Za-z0-9_]*)['"]\s*\)""", text
+            ):
+                name = m.group(1)
+                if name not in own and name not in framework:
+                    problems.add(f"callback array( $this, '{name}' ) has no such method")
+
+            for m in re.finditer(
+                r"""array\(\s*['"]([A-Za-z_][A-Za-z0-9_]*)['"]\s*,\s*['"]([A-Za-z_][A-Za-z0-9_]*)['"]\s*\)""",
+                text
+            ):
+                cls, name = m.groups()
+                if cls.startswith('KDNA'):
+                    if cls not in classes:
+                        problems.add(f"callback array( '{cls}', '{name}' ) — no such class")
+                    elif name not in methods[cls]:
+                        problems.add(f"callback array( '{cls}', '{name}' ) — no such method")
+
             for m in re.finditer(r"add_(?:filter|action)\(\s*['\"]([^'\"]+)['\"]", text):
                 hook = m.group(1)
                 if hook.startswith(('kdnaform_', 'kdna_')) and hook not in hooks:
