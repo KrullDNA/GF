@@ -48,6 +48,11 @@
 
 		$c.removeClass( 'anim-out-ready anim-out-active' ).addClass( 'anim-in-ready' );
 
+		// .editor-sidebar is position:fixed with z-index:1, so it is its own
+		// stacking context and nothing inside it can out-rank the editor
+		// preview. Lift the sidebar itself for as long as the panel is out.
+		$( 'body' ).addClass( 'kdnaform-cl-flyout-open' );
+
 		window.requestAnimationFrame( function () {
 			window.requestAnimationFrame( function () {
 				$c.addClass( 'anim-in-active' );
@@ -75,8 +80,11 @@
 			} );
 		} );
 
+		// Drop the sidebar back down only once the panel has finished sliding
+		// out, otherwise it disappears behind the preview mid-animation.
 		window.setTimeout( function () {
 			$c.removeClass( 'anim-out-ready anim-out-active' );
+			$( 'body' ).removeClass( 'kdnaform-cl-flyout-open' );
 		}, 220 );
 
 		$( '[data-js="cl-toggle"]' ).attr( 'aria-expanded', 'false' );
