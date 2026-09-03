@@ -1226,6 +1226,37 @@ class KDNAFormDisplay {
 			$form_string .= "
                 <div class='{$wrapper_css_class}{$custom_wrapper_css_class}' data-form-theme='{$form_theme}' {$page_instance} id='gform_wrapper_$form_id' " . $style . '>';
 
+			// The hide above is only meant to last until the conditional logic
+			// rules have run. If that never happens — a JS error anywhere in the
+			// chain is enough — the form stays invisible with nothing on screen
+			// to say why. Reveal it regardless after a grace period so a hiccup
+			// costs the correct initial field visibility, not the whole form.
+			if ( $should_render_hidden ) {
+				$failsafe = sprintf(
+					'( function() {
+						var reveal = function() {
+							window.setTimeout( function() {
+								var w = document.getElementById( "gform_wrapper_%1$d" );
+								if ( w && w.style.display === "none" ) {
+									w.style.display = "";
+									if ( window.console && window.console.warn ) {
+										window.console.warn( "KDNA Forms: conditional logic did not finish initialising for form %1$d, so the form was revealed by the failsafe. Field visibility may be wrong until the cause is fixed." );
+									}
+								}
+							}, 2000 );
+						};
+						if ( document.readyState === "loading" ) {
+							document.addEventListener( "DOMContentLoaded", reveal );
+						} else {
+							reveal();
+						}
+					} )();',
+					absint( $form_id )
+				);
+
+				$form_string .= KDNACommon::get_inline_script_tag( $failsafe );
+			}
+
 			/**
 			 * Allows markup to be added directly after the opening form wrapper.
 			 *
