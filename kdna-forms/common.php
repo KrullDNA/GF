@@ -4302,7 +4302,12 @@ Content-Type: text/html;
 	 * @return string The currency code.
 	 */
 	public static function get_submission_currency() {
+		// The hidden input is still emitted as gform_currency, so accept both
+		// names rather than silently reading nothing.
 		$posted_currency = rgpost( 'kdnaform_currency' );
+		if ( empty( $posted_currency ) ) {
+			$posted_currency = rgpost( 'gform_currency' );
+		}
 
 		if ( ! $posted_currency || ! is_string( $posted_currency ) ) {
 			return self::get_currency();
