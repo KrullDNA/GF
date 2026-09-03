@@ -12,6 +12,14 @@
    raised it again, so an opened panel rendered underneath everything. */
 .conditional_logic_flyout_container.anim-in-ready .conditional_logic_flyout,
 .conditional_logic_flyout_container.anim-out-ready .conditional_logic_flyout{z-index:100}
+/* That value alone is not enough. .editor-sidebar is position:fixed with
+   z-index:1, so it forms a stacking context and everything inside it — the
+   flyout included — is pinned at that level. The editor preview
+   (.form_editor_fields_container) is a sibling at z-index:1, rising to 2 while
+   a field is being dragged, so the panel rendered behind it. Lift the sidebar
+   itself while the panel is out. 10 clears the preview and stays well under
+   #adminmenuback at 9990. */
+body.kdnaform-cl-flyout-open .editor-sidebar{z-index:10}
 /* Status badge on the accordion row. */
 .conditional_logic_wrapper .conditional_logic_accordion__status_indicator{align-items:center;background:#ecedf8;border-radius:1rem;color:#5b5e80;display:inline-flex;font-size:.75rem;line-height:1;padding:.3125rem .625rem}
 .conditional_logic_wrapper .conditional_logic_accordion__status_indicator::before{background:#9092b2;border-radius:50%;content:"";display:inline-block;height:.375rem;margin-right:.375rem;width:.375rem}
