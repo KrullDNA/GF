@@ -55,6 +55,17 @@ a wrapper div in `entry_detail.php` whose id resembles the span inside it.
   way leaked its declarations onto a container, the containers grew over the
   toolbar, and the Save button stopped taking the click. The correct alias is
   `.gform_settings_form .hr-divider,.kdnaform_settings_form .hr-divider{…}`.
+- **An invisible element still takes the click.** `.conditional_logic_flyout` is
+  `position:absolute`, `calc(100vw - 270px)` wide and `calc(100vh - 5.75rem)`
+  tall, and it is in the DOM at all times with `opacity:0`. `opacity` and a
+  negative `z-index` hide it; neither stops it receiving pointer events, and
+  `.editor-sidebar` is `position:sticky` with `z-index:1`, which creates a
+  stacking context its `z-index:-10` cannot escape. So the panel sits over the
+  toolbar and swallows the Save click. The component already had the right
+  idiom on its own child — `.delete_field_choice{opacity:0;pointer-events:none}`
+  with `.active{pointer-events:auto}` — and the panel was simply missing it.
+  Whenever something is hidden with `opacity` alone, ask what it is now
+  covering.
 - **A correct rename can still be a regression.** Some names are only inert
   because they are wrong. Fixing one switches on code or CSS that has never run
   in this fork, and whatever was hand-written to compensate now conflicts. Ask
