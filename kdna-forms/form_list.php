@@ -35,11 +35,11 @@ class KDNAFormList {
 		</style>
 
 		<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) { ?>
-		<div id="kdna_new_form_modal" style="display:none;">
+		<div id="gf_new_form_modal" style="display:none;">
 				<div class="gform-settings__wrapper ">
 					<div class="gform-settings-panel__content">
 						<form class="gform_new_form_modal_container" onsubmit="saveNewForm();return false;">
-                            <div id="kdna_new_form_error_message" ></div>
+                            <div id="gf_new_form_error_message" ></div>
 							<div class="setting-row gform-settings-field gform-settings-field__text">
 								<label class="gform-settings-label" for="new_form_title"><?php esc_html_e( 'Form Title', 'kdnaforms' ); ?>
 									<span class="gfield_required">*</span></label>
@@ -293,7 +293,7 @@ class KDNAFormList {
 
 			function loadNewFormModal() {
 				resetNewFormModal();
-				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=kdna_new_form_modal');
+				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=gf_new_form_modal');
 				jQuery('#new_form_title').focus();
 
 				return false;
@@ -325,8 +325,8 @@ class KDNAFormList {
 				}
 
 				// clear error message
-				jQuery('#kdna_new_form_error_message').html('');
-				jQuery('#kdna_new_form_error_message').removeClass( 'alert error' );
+				jQuery('#gf_new_form_error_message').html('');
+				jQuery('#gf_new_form_error_message').removeClass( 'alert error' );
 
 				var origVal = createButton.val();
 				createButton.val(<?php echo json_encode( esc_html__( 'Creating Form...', 'kdnaforms' ) ); ?>);
@@ -379,8 +379,8 @@ class KDNAFormList {
 
 					if(respData['error']) {
 						// adding class later otherwise WP moves box up to the top of the page
-						jQuery('#kdna_new_form_error_message').addClass( 'alert error' );
-						jQuery('#kdna_new_form_error_message').html( respData.error );
+						jQuery('#gf_new_form_error_message').addClass( 'alert error' );
+						jQuery('#gf_new_form_error_message').html( respData.error );
 
 						addInputErrorIcon( '#new_form_title' );
 						createButton.val(origVal);
@@ -396,9 +396,9 @@ class KDNAFormList {
 			function resetNewFormModal() {
 				jQuery('#new_form_title').val('');
 				jQuery('#new_form_description').val('');
-				jQuery('#kdna_new_form_error_message').html('');
-				jQuery('#kdna_new_form_error_message').html('');
-				jQuery('#kdna_new_form_error_message').removeClass( 'error alert' );
+				jQuery('#gf_new_form_error_message').html('');
+				jQuery('#gf_new_form_error_message').html('');
+				jQuery('#gf_new_form_error_message').removeClass( 'error alert' );
 				removeInputErrorIcons( '.gform_new_form_modal_container' );
 			}
 

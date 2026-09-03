@@ -2590,9 +2590,9 @@ function gformValidateFileSize( field, max_file_size ) {
 	});
 
     $(document).ready(function () {
-        if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_kdna_edit_forms')|| typeof plupload == 'undefined'){
+        if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_gf_edit_forms')|| typeof plupload == 'undefined'){
             $(".gform_button_select_files").prop("disabled", true);
-        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_kdna_entries') > -1) {
+        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_gf_entries') > -1) {
             $(".gform_fileupload_multifile").each(function(){
                 setup(this);
             });

@@ -48,6 +48,17 @@ a wrapper div in `entry_detail.php` whose id resembles the span inside it.
 - **Prefer aliasing to renaming on anything already shipped.** Emitting both names,
   or accepting either on read, cannot break existing markup, saved Elementor
   styling or third-party code. Renaming the emitted side can.
+- **A CSS alias duplicates the whole selector, never the class token.** v2.8.0
+  turned `.gform_settings_form .hr-divider{grid-column:span 2}` into
+  `.gform_settings_form,.kdnaform_settings_form .hr-divider{…}`, which applies the
+  declaration to the settings form itself. Every multi-part selector treated that
+  way leaked its declarations onto a container, the containers grew over the
+  toolbar, and the Save button stopped taking the click. The correct alias is
+  `.gform_settings_form .hr-divider,.kdnaform_settings_form .hr-divider{…}`.
+- **A correct rename can still be a regression.** Some names are only inert
+  because they are wrong. Fixing one switches on code or CSS that has never run
+  in this fork, and whatever was hand-written to compensate now conflicts. Ask
+  what starts happening, not just what stops.
 
 ### Things that must not be renamed
 
@@ -56,14 +67,51 @@ a wrapper div in `entry_detail.php` whose id resembles the span inside it.
 - **`get_database_version()`** returns the schema version that gates legacy code
   paths, not the plugin version. Setting it to the plugin version made it call
   `GF_Forms_Model_Legacy`, which does not exist here, and fataled the site.
+- **Admin body classes** — `toplevel_page_gf_edit_forms`, `forms_page_gf_entries`,
+  `forms_page_gf_help`, `forms_page_gf_addons`, `toplevel_page_gf_splash`.
+  WordPress derives these from the menu slug and menu title, so with the slug now
+  `kdna_edit_forms` the stylesheets are wrong and about fifty rules have never
+  applied. `form_detail.php` carries an inline `<style>` that lays the editor out
+  as a grid to compensate. Correct the body class and `.gforms_edit_form` becomes
+  `position:fixed`/`display:flex` with the toolbar `position:fixed` inside it, the
+  Save button stops taking the click, and four other admin screens change layout.
+  v2.8.0 and v2.9.0 were both lost to this. Reviving that CSS is a deliberate
+  layout change with its own version, never a side effect of a rename.
+
+### Renaming tools
+
+`.tools/rename-plan.py` classifies every identifier by the channels it lives in
+(db, hook, request field, markup, CSS, internal) and says whether it may be
+renamed, must be dual-emitted, or must be frozen. `.tools/rename-apply.py` applies
+an explicit old/new map from `.tools/stages/`, never a prefix substitution, so a
+token either appears on the list and moves everywhere or is never touched.
+
+Two traps that have already cost a release:
+
+- **Wrap the alternation.** `(?<!x)a|b|c(?!y)` binds the lookbehind to the first
+  branch and the lookahead to the last; every branch between them matches as a
+  bare substring. One run rewrote `_page_gf_entries` and `requires_gf_vars` this
+  way. It must be `(?<!x)(?:a|b|c)(?!y)`.
+- **Check for collisions first.** An identifier that already exists under both
+  prefixes is a half-applied rename, i.e. a live bug, and merging the two is the
+  fix. One that would collide with an unrelated name is not.
 
 ## Build and release
 
+- **Run the gate before every zip. Never skip it.**
+
+  ```bash
+  python3 .tools/check-build.py --baseline <last version known to work>
+  ```
+
+  It lints, walks the Save chain end to end — the form id, the hidden meta input,
+  the functions `SaveForm()` calls, and the localized object `ValidateForm()`
+  reads — and pins the admin body classes. Save has broken twice, both times
+  invisibly: the button is wired correctly and the JS is fine, and the click just
+  lands on something else. The gate is what checks it without a browser.
 - Version lives in the `Version:` header and `KDNAForms::$version`. Both must match
   the zip filename.
 - Build to the repo root as `kdna-forms-X.Y.Z.zip`, containing the plugin folder.
 - Verify the shipped zip, not just the working tree — check the changed file inside it.
-- Lint before shipping: `php -l` across all PHP, `node --check` across all JS, and
-  brace balance across all CSS.
 - The site runs LiteSpeed. Inline scripts and CSS are cached in the page HTML, so a
   fix can look like it did nothing until the cache is purged. Say so when relevant.

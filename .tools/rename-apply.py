@@ -57,8 +57,12 @@ def load_map(path):
 
 
 def build_regex(pairs):
+    # The alternation MUST be wrapped: without the group, `(?<!x)a|b|c(?!y)`
+    # binds the lookbehind to the first branch and the lookahead to the last,
+    # leaving every branch in between to match as a bare substring. That is how
+    # an early run rewrote `_page_gf_entries` while renaming `gf_entries`.
     alt = '|'.join(re.escape(old) for old, _ in pairs)
-    return re.compile(rf'(?<![A-Za-z0-9_]){alt}(?![A-Za-z0-9_])')
+    return re.compile(rf'(?<![A-Za-z0-9_])(?:{alt})(?![A-Za-z0-9_])')
 
 
 def main():

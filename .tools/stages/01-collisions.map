@@ -17,16 +17,28 @@
 # --- JS/PHP globals ---------------------------------------------------------
 gf_vars                                 kdna_vars
 
-# --- admin page slugs, and the screen hooks WordPress derives from them ------
+# --- admin page slugs -------------------------------------------------------
 gf_edit_forms                           kdna_edit_forms
 gf_entries                              kdna_entries
 gf_new_form                             kdna_new_form
 gf_page                                 kdna_page
-toplevel_page_gf_edit_forms             toplevel_page_kdna_edit_forms
-toplevel_page_gf_splash                 toplevel_page_kdna_splash
-forms_page_gf_entries                   forms_page_kdna_entries
-forms_page_gf_help                      forms_page_kdna_help
-forms_page_gf_addons                    forms_page_kdna_addons
+
+# NOT here, deliberately: toplevel_page_gf_edit_forms, toplevel_page_gf_splash,
+# forms_page_gf_entries, forms_page_gf_help, forms_page_gf_addons.
+#
+# Those are the body classes WordPress derives from the menu slug and the menu
+# title, so with the slug now kdna_edit_forms they really should read
+# toplevel_page_kdna_edit_forms. Renaming them is correct and that is exactly
+# why it breaks the editor: about fifty stylesheet rules written against the
+# gf_ body classes have never applied in this fork, and form_detail.php carries
+# a hand-written inline <style> that lays the editor out as a grid to
+# compensate. Switch the dormant rules on and .gforms_edit_form becomes
+# position:fixed/display:flex with the toolbar position:fixed inside it, the
+# Save button stops taking the click, and four other admin screens change
+# layout at the same time.
+#
+# Reviving that CSS is a deliberate layout change, not a side effect of a
+# rename, so it gets its own stage.
 
 # --- ajax actions and nonces ------------------------------------------------
 gf_resend_notifications                 kdna_resend_notifications

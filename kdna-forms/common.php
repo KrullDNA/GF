@@ -5894,12 +5894,12 @@ Content-Type: text/html;
 			);
 		}
 
-		$kdna_vars_json = 'var kdna_vars = ' . json_encode( $kdna_vars ) . ';';
+		$gf_vars_json = 'var kdna_vars = ' . json_encode( $kdna_vars ) . ';';
 
 		if ( ! $echo ) {
-			return $kdna_vars_json;
+			return $gf_vars_json;
 		} else {
-			echo $kdna_vars_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $gf_vars_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -6042,7 +6042,7 @@ Content-Type: text/html;
 		_deprecated_function( __FUNCTION__, '2.5.7', 'Dismissable_Messages::get_db_key()' );
 	}
 
-	private static function requires_kdna_vars() {
+	private static function requires_gf_vars() {
 		$dependent_scripts = array(
 			'kdnaform_form_admin',
 			'kdnaform_kdnaforms',
@@ -6240,8 +6240,8 @@ Content-Type: text/html;
 	 *
 	 * @return void
 	 */
-	public static function maybe_output_kdna_vars() {
-		if ( self::requires_kdna_vars() ) {
+	public static function maybe_output_gf_vars() {
+		if ( self::requires_gf_vars() ) {
 			echo self::get_inline_script_tag( self::kdna_vars( false ), false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
