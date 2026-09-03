@@ -79,7 +79,7 @@ to no.
     line-height: 1.5;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_multiselect select {
+.kform_legacy_markup_wrapper .kinput_container_multiselect select {
     background-image: none !important;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -110,8 +110,8 @@ html>body .entry ul,
     clear: both;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_radio li,
-.kform_legacy_markup_wrapper ul.gfield_checkbox li {
+.kform_legacy_markup_wrapper ul.kfield_radio li,
+.kform_legacy_markup_wrapper ul.kfield_checkbox li {
     overflow: hidden;
 }
 
@@ -122,14 +122,14 @@ html>body .entry ul,
     margin-bottom: 14px;
 }
 
-.kform_legacy_markup_wrapper ul.right_label li ul.gfield_radio li,
-.kform_legacy_markup_wrapper form ul.right_label li ul.gfield_radio li,
-.kform_legacy_markup_wrapper ul.left_label li ul.gfield_radio li,
-.kform_legacy_markup_wrapper form ul.left_label li ul.gfield_radio li,
-.kform_legacy_markup_wrapper ul.right_label li ul.gfield_checkbox li,
-.kform_legacy_markup_wrapper form ul.right_label li ul.gfield_checkbox li,
-.kform_legacy_markup_wrapper ul.left_label li ul.gfield_checkbox li,
-.kform_legacy_markup_wrapper form ul.left_label li ul.gfield_checkbox li {
+.kform_legacy_markup_wrapper ul.right_label li ul.kfield_radio li,
+.kform_legacy_markup_wrapper form ul.right_label li ul.kfield_radio li,
+.kform_legacy_markup_wrapper ul.left_label li ul.kfield_radio li,
+.kform_legacy_markup_wrapper form ul.left_label li ul.kfield_radio li,
+.kform_legacy_markup_wrapper ul.right_label li ul.kfield_checkbox li,
+.kform_legacy_markup_wrapper form ul.right_label li ul.kfield_checkbox li,
+.kform_legacy_markup_wrapper ul.left_label li ul.kfield_checkbox li,
+.kform_legacy_markup_wrapper form ul.left_label li ul.kfield_checkbox li {
     margin-bottom: 10px;
 }
 
@@ -167,89 +167,89 @@ html>body .entry ul,
 
 /* date ​fields */
 
-.kform_legacy_markup_wrapper .gfield_date_day,
-.kform_legacy_markup_wrapper .gfield_date_year {
+.kform_legacy_markup_wrapper .kfield_date_day,
+.kform_legacy_markup_wrapper .kfield_date_year {
     display: -moz-inline-stack;
     display: inline-block;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_day,
-.kform_legacy_markup_wrapper .gfield_date_month,
-.kform_legacy_markup_wrapper .gfield_date_year {
+.kform_legacy_markup_wrapper .kfield_date_day,
+.kform_legacy_markup_wrapper .kfield_date_month,
+.kform_legacy_markup_wrapper .kfield_date_year {
     width: 33.333%;
     flex-direction: row;
 }
 
 @media only screen and (min-width: 321px) {
 
-    .kform_legacy_markup_wrapper .gfield_date_day,
-    .kform_legacy_markup_wrapper .gfield_date_month {
+    .kform_legacy_markup_wrapper .kfield_date_day,
+    .kform_legacy_markup_wrapper .kfield_date_month {
         max-width: 4rem;
     }
 
-    .kform_legacy_markup_wrapper .gfield_date_year {
+    .kform_legacy_markup_wrapper .kfield_date_year {
         max-width: calc(4rem + .5rem);
     }
 
 }
 
-.kform_legacy_markup_wrapper .gfield_date_dropdown_month,
-.kform_legacy_markup_wrapper .gfield_date_dropdown_day,
-.kform_legacy_markup_wrapper .gfield_date_dropdown_year {
+.kform_legacy_markup_wrapper .kfield_date_dropdown_month,
+.kform_legacy_markup_wrapper .kfield_date_dropdown_day,
+.kform_legacy_markup_wrapper .kfield_date_dropdown_year {
     vertical-align: top;
     flex-direction: row;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_dropdown_month,
-.kform_legacy_markup_wrapper .gfield_date_dropdown_day,
-.kform_legacy_markup_wrapper .gfield_date_dropdown_year {
+.kform_legacy_markup_wrapper .kfield_date_dropdown_month,
+.kform_legacy_markup_wrapper .kfield_date_dropdown_day,
+.kform_legacy_markup_wrapper .kfield_date_dropdown_year {
     margin-right: .5rem;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_month,
-.kform_legacy_markup_wrapper .gfield_date_day {
+.kform_legacy_markup_wrapper .kfield_date_month,
+.kform_legacy_markup_wrapper .kfield_date_day {
     width: 4rem;
     margin-right: .5rem;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_month input[type="number"],
-.kform_legacy_markup_wrapper .gfield_date_day input[type="number"] {
+.kform_legacy_markup_wrapper .kfield_date_month input[type="number"],
+.kform_legacy_markup_wrapper .kfield_date_day input[type="number"] {
     width: calc(3rem + 8px) !important;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_year input[type="number"] {
+.kform_legacy_markup_wrapper .kfield_date_year input[type="number"] {
     width: calc(4rem + 8px) !important;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_year {
+.kform_legacy_markup_wrapper .kfield_date_year {
     width: 5rem;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_month input,
-.kform_legacy_markup_wrapper .gfield_date_day input {
+.kform_legacy_markup_wrapper .kfield_date_month input,
+.kform_legacy_markup_wrapper .kfield_date_day input {
     width: calc(3rem + 8px);
 }
 
-.kform_legacy_markup_wrapper .gfield_date_year input {
+.kform_legacy_markup_wrapper .kfield_date_year input {
     width: 4rem;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_above div[class*="gfield_date_"].ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below div[class*="gfield_date_"].ginput_container label {
+.kform_legacy_markup_wrapper .field_sublabel_above div[class*="kfield_date_"].kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below div[class*="kfield_date_"].kinput_container label {
     width: 3rem;
     text-align: center;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_above div.gfield_date_year.ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below div.gfield_date_year.ginput_container label {
+.kform_legacy_markup_wrapper .field_sublabel_above div.kfield_date_year.kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below div.kfield_date_year.kinput_container label {
     width: 4rem;
 }
 
 /* time fields */
 
-.kform_legacy_markup_wrapper .gfield_time_hour,
-.kform_legacy_markup_wrapper .gfield_time_minute,
-.kform_legacy_markup_wrapper .gfield_time_ampm {
+.kform_legacy_markup_wrapper .kfield_time_hour,
+.kform_legacy_markup_wrapper .kfield_time_minute,
+.kform_legacy_markup_wrapper .kfield_time_ampm {
     font-size: 15px;
     width: 33.333%;
     flex-direction: row;
@@ -257,24 +257,24 @@ html>body .entry ul,
 
 @media only screen and (min-width: 321px) {
 
-    .kform_legacy_markup_wrapper .gfield_time_hour,
-    .kform_legacy_markup_wrapper .gfield_time_minute,
-    .kform_legacy_markup_wrapper .gfield_time_ampm {
+    .kform_legacy_markup_wrapper .kfield_time_hour,
+    .kform_legacy_markup_wrapper .kfield_time_minute,
+    .kform_legacy_markup_wrapper .kfield_time_ampm {
         max-width: 72px;
     }
 
 }
 
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .ginput_container_time span {
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .kinput_container_time span {
     float: left;
 }
 
-.kform_legacy_markup_wrapper .gfield_time_hour {
+.kform_legacy_markup_wrapper .kfield_time_hour {
     margin-right: 10px;
     display: flex;
 }
 
-.kform_legacy_markup_wrapper .gfield_time_hour i {
+.kform_legacy_markup_wrapper .kfield_time_hour i {
     font-style: normal !important;
     font-family: sans-serif !important;
     width: 4px;
@@ -283,38 +283,38 @@ html>body .entry ul,
     margin-top: 9%;
 }
 
-.kform_legacy_markup_wrapper .gfield_time_minute {
+.kform_legacy_markup_wrapper .kfield_time_minute {
     margin-right: 8px;
     display: flex;
 }
 
-.kform_legacy_markup_wrapper .ginput_complex .gfield_time_hour input,
-.kform_legacy_markup_wrapper .ginput_complex .gfield_time_minute input {
+.kform_legacy_markup_wrapper .kinput_complex .kfield_time_hour input,
+.kform_legacy_markup_wrapper .kinput_complex .kfield_time_minute input {
     margin-left: 0;
 	width: 85% !important;
 }
 
 /* HTML5 setting disabled input[type="text"] */
-.kform_legacy_markup_wrapper .gfield_time_hour input,
-.kform_legacy_markup_wrapper .gfield_time_minute input {
+.kform_legacy_markup_wrapper .kfield_time_hour input,
+.kform_legacy_markup_wrapper .kfield_time_minute input {
     margin-right: 6px;
     width: 56px;
 }
 
 /* HTML5 setting enabled input[type="number"] */
-.kform_legacy_markup_wrapper .gfield_time_hour input[type="number"],
-.kform_legacy_markup_wrapper .gfield_time_minute input[type="number"] {
+.kform_legacy_markup_wrapper .kfield_time_hour input[type="number"],
+.kform_legacy_markup_wrapper .kfield_time_minute input[type="number"] {
     max-width: 64px;
     min-width: 64px;
 }
 
-.kform_legacy_markup_wrapper .gfield_time_ampm {
+.kform_legacy_markup_wrapper .kfield_time_ampm {
     vertical-align: top;
     display: -moz-inline-stack;
     display: inline-block;
 }
 
-.kform_legacy_markup_wrapper .gfield_time_ampm select {
+.kform_legacy_markup_wrapper .kfield_time_ampm select {
     min-width: 77px;
     width: 77px;
     height: 100%;
@@ -322,14 +322,14 @@ html>body .entry ul,
     margin-left: 0 !important;
 }
 
-.kform_legacy_markup_wrapper .gfield_time_ampm_shim {
+.kform_legacy_markup_wrapper .kfield_time_ampm_shim {
 	display: block;
 	font-size: 13px;
 	margin: 9px 0 1px 1px;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_above div[class*="gfield_time_"].ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below div[class*="gfield_time_"].ginput_container label {
+.kform_legacy_markup_wrapper .field_sublabel_above div[class*="kfield_time_"].kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below div[class*="kfield_time_"].kinput_container label {
     width: 48px;
     text-align: center;
 }
@@ -342,54 +342,54 @@ html>body .entry ul,
     display: inline-block;
     vertical-align: top;
 }
-.kform_legacy_markup_wrapper .ginput_complex.ginput_container {
+.kform_legacy_markup_wrapper .kinput_complex.kinput_container {
     overflow: visible;
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper legend.gfield_label,
-.kform_legacy_markup_wrapper label.gfield_label {
+.kform_legacy_markup_wrapper legend.kfield_label,
+.kform_legacy_markup_wrapper label.kfield_label {
     font-weight: 700;
     font-size: inherit;
 }
 
-.kform_legacy_markup_wrapper legend.gfield_label,
-.kform_legacy_markup_wrapper .top_label .gfield_label {
+.kform_legacy_markup_wrapper legend.kfield_label,
+.kform_legacy_markup_wrapper .top_label .kfield_label {
     display: -moz-inline-stack;
     display: inline-block;
     line-height: 1.3;
     clear: both;
 }
 
-.kform_legacy_markup_wrapper .top_label .gfield_hide_label {
+.kform_legacy_markup_wrapper .top_label .kfield_hide_label {
     display: none;
 }
 
-.kform_legacy_markup_wrapper .ginput_complex input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='image']):not([type='file']),
-.kform_legacy_markup_wrapper .ginput_complex  .ginput_left input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='image']):not([type='file']),
-.kform_legacy_markup_wrapper .ginput_complex .ginput_right input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='image']):not([type='file']) {
+.kform_legacy_markup_wrapper .kinput_complex input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='image']):not([type='file']),
+.kform_legacy_markup_wrapper .kinput_complex  .kinput_left input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='image']):not([type='file']),
+.kform_legacy_markup_wrapper .kinput_complex .kinput_right input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='image']):not([type='file']) {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .ginput_complex .ginput_right select,
-.kform_legacy_markup_wrapper .ginput_complex select {
+.kform_legacy_markup_wrapper .kinput_complex .kinput_right select,
+.kform_legacy_markup_wrapper .kinput_complex select {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_above .ginput_complex.ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below .ginput_complex.ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_above div[class*="gfield_time_"].ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below div[class*="gfield_time_"].ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_above div[class*="gfield_date_"].ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below div[class*="gfield_date_"].ginput_container label {
+.kform_legacy_markup_wrapper .field_sublabel_above .kinput_complex.kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below .kinput_complex.kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_above div[class*="kfield_time_"].kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below div[class*="kfield_time_"].kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_above div[class*="kfield_date_"].kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below div[class*="kfield_date_"].kinput_container label {
     display: block;
     font-size: .813em;
     letter-spacing: .5pt;
     white-space: nowrap;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_radio li label,
-.kform_legacy_markup_wrapper ul.gfield_checkbox li label {
+.kform_legacy_markup_wrapper ul.kfield_radio li label,
+.kform_legacy_markup_wrapper ul.kfield_checkbox li label {
     display: -moz-inline-stack;
     display: inline-block;
     letter-spacing: inherit;
@@ -397,29 +397,29 @@ html>body .entry ul,
     cursor: pointer;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_above .ginput_complex.ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_above div[class*="gfield_time_"].ginput_container label {
+.kform_legacy_markup_wrapper .field_sublabel_above .kinput_complex.kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_above div[class*="kfield_time_"].kinput_container label {
     margin: 9px 0 1px 1px;
 }
 
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .ginput_container.ginput_container_name label,
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .ginput_container.ginput_container_email label,
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .ginput_container.ginput_container_password label,
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .ginput_container.ginput_container_time label {
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .kinput_container.kinput_container_name label,
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .kinput_container.kinput_container_email label,
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .kinput_container.kinput_container_password label,
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .field_sublabel_above .kinput_container.kinput_container_time label {
     margin-top: 0;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_below .ginput_complex.ginput_container label,
-.kform_legacy_markup_wrapper .field_sublabel_below div[class*="gfield_time_"].ginput_container label {
+.kform_legacy_markup_wrapper .field_sublabel_below .kinput_complex.kinput_container label,
+.kform_legacy_markup_wrapper .field_sublabel_below div[class*="kfield_time_"].kinput_container label {
     margin: 1px 0 9px 1px;
 }
 
-.kform_legacy_markup_wrapper .top_label .field_sublabel_above label.gfield_label + .ginput_complex.ginput_container,
-.kform_legacy_markup_wrapper .top_label .field_sublabel_above label.gfield_label + div[class*="gfield_time_"].ginput_container {
+.kform_legacy_markup_wrapper .top_label .field_sublabel_above label.kfield_label + .kinput_complex.kinput_container,
+.kform_legacy_markup_wrapper .top_label .field_sublabel_above label.kfield_label + div[class*="kfield_time_"].kinput_container {
     margin-top: 0;
 }
 
-body .kform_legacy_markup_wrapper .top_label div.ginput_container {
+body .kform_legacy_markup_wrapper .top_label div.kinput_container {
     margin-top: 8px;
 }
 
@@ -428,13 +428,13 @@ body.kform_legacy_markup_wrapper div.clear-multi {
     display: inline-block;
 }
 
-body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_container_radio,
-body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_container_checkbox {
+body .kform_legacy_markup_wrapper ul li.field_description_below div.kinput_container_radio,
+body .kform_legacy_markup_wrapper ul li.field_description_below div.kinput_container_checkbox {
     margin-top: 16px;
     margin-bottom: 0;
 }
 
-.kform_legacy_markup_wrapper .hidden_label .gfield_label {
+.kform_legacy_markup_wrapper .hidden_label .kfield_label {
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute !important;
     height: 1px;
@@ -451,8 +451,8 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     margin-top: 12px;
 }
 
-.kform_legacy_markup_wrapper .field_sublabel_hidden_label .ginput_complex.ginput_container input[type=text],
-.kform_legacy_markup_wrapper .field_sublabel_hidden_label .ginput_complex.ginput_container select {
+.kform_legacy_markup_wrapper .field_sublabel_hidden_label .kinput_complex.kinput_container input[type=text],
+.kform_legacy_markup_wrapper .field_sublabel_hidden_label .kinput_complex.kinput_container select {
     margin-bottom: 12px;
 }
 
@@ -487,20 +487,20 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     width: calc(100% - 24px);
 }
 
-.kform_legacy_markup_wrapper .gfield_error input.small,
-.kform_legacy_markup_wrapper .gfield_error select.small,
-.kform_legacy_markup_wrapper .gfield_error input.medium,
-.kform_legacy_markup_wrapper .gfield_error select.medium,
-.kform_legacy_markup_wrapper .gfield_error input.large,
-.kform_legacy_markup_wrapper .gfield_error select.large,
-.kform_legacy_markup_wrapper .gfield_error input.large,
-.kform_legacy_markup_wrapper .gfield_error select.large {
+.kform_legacy_markup_wrapper .kfield_error input.small,
+.kform_legacy_markup_wrapper .kfield_error select.small,
+.kform_legacy_markup_wrapper .kfield_error input.medium,
+.kform_legacy_markup_wrapper .kfield_error select.medium,
+.kform_legacy_markup_wrapper .kfield_error input.large,
+.kform_legacy_markup_wrapper .kfield_error select.large,
+.kform_legacy_markup_wrapper .kfield_error input.large,
+.kform_legacy_markup_wrapper .kfield_error select.large {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_error input.datepicker_with_icon.small,
-.kform_legacy_markup_wrapper .gfield_error input.datepicker_with_icon.medium,
-.kform_legacy_markup_wrapper .gfield_error input.datepicker_with_icon.large {
+.kform_legacy_markup_wrapper .kfield_error input.datepicker_with_icon.small,
+.kform_legacy_markup_wrapper .kfield_error input.datepicker_with_icon.medium,
+.kform_legacy_markup_wrapper .kfield_error input.datepicker_with_icon.large {
     width: calc(100% - 32px);
 }
 
@@ -519,14 +519,14 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper h2.gsection_title {
+.kform_legacy_markup_wrapper h2.ksection_title {
     margin: 0 !important;
     padding: 0 !important;
     letter-spacing: normal !important;
 }
 
-.kform_legacy_markup_wrapper .gsection .gfield_label,
-.kform_legacy_markup_wrapper h2.gsection_title,
+.kform_legacy_markup_wrapper .gsection .kfield_label,
+.kform_legacy_markup_wrapper h2.ksection_title,
 .kform_legacy_markup_wrapper h3.kform_title {
     font-weight: 700;
     font-size: 1.25em;
@@ -555,19 +555,19 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     clear: both;
 }
 
-.kform_legacy_markup_wrapper .gfield_checkbox li,
-.kform_legacy_markup_wrapper .gfield_radio li {
+.kform_legacy_markup_wrapper .kfield_checkbox li,
+.kform_legacy_markup_wrapper .kfield_radio li {
     position: relative;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_checkbox,
-.kform_legacy_markup_wrapper ul.gfield_radio {
+.kform_legacy_markup_wrapper ul.kfield_checkbox,
+.kform_legacy_markup_wrapper ul.kfield_radio {
     margin: 6px 0;
     padding: 0;
 }
 
-.kform_legacy_markup_wrapper .gfield_checkbox li label,
-.kform_legacy_markup_wrapper .gfield_radio li label {
+.kform_legacy_markup_wrapper .kfield_checkbox li label,
+.kform_legacy_markup_wrapper .kfield_radio li label {
     display: -moz-inline-stack;
     display: inline-block;
     padding: 0;
@@ -579,17 +579,17 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     white-space: normal;
 }
 
-.kform_legacy_markup_wrapper .gfield_checkbox li label {
+.kform_legacy_markup_wrapper .kfield_checkbox li label {
     margin: 0;
 }
 
-.kform_legacy_markup_wrapper .gfield_radio li label {
+.kform_legacy_markup_wrapper .kfield_radio li label {
     margin: 2px 0 0 4px;
 }
 
-.kform_legacy_markup_wrapper .gfield_checkbox li input[type=checkbox],
-.kform_legacy_markup_wrapper .gfield_radio li input[type=radio],
-.kform_legacy_markup_wrapper .gfield_checkbox li input {
+.kform_legacy_markup_wrapper .kfield_checkbox li input[type=checkbox],
+.kform_legacy_markup_wrapper .kfield_radio li input[type=radio],
+.kform_legacy_markup_wrapper .kfield_checkbox li input {
     display: -moz-inline-stack;
     display: inline-block;
     vertical-align: middle;
@@ -597,8 +597,8 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
 }
 
 .kform_legacy_markup_wrapper .description,
-.kform_legacy_markup_wrapper .gfield_description,
-.kform_legacy_markup_wrapper .gsection_description,
+.kform_legacy_markup_wrapper .kfield_description,
+.kform_legacy_markup_wrapper .ksection_description,
 .kform_legacy_markup_wrapper .instruction {
     font-size: .813em;
     line-height: inherit;
@@ -608,40 +608,40 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
 }
 
 .kform_legacy_markup_wrapper .description,
-.kform_legacy_markup_wrapper .gfield_description,
-.kform_legacy_markup_wrapper .gsection_description {
+.kform_legacy_markup_wrapper .kfield_description,
+.kform_legacy_markup_wrapper .ksection_description {
     padding: 0 16px 0 0;
 }
 
-.kform_legacy_markup_wrapper .field_description_below .gfield_description {
+.kform_legacy_markup_wrapper .field_description_below .kfield_description {
     padding-top: 16px;
 }
 
 .kform_legacy_markup_wrapper .field_sublabel_above .description,
-.kform_legacy_markup_wrapper .field_sublabel_above .gfield_description,
-.kform_legacy_markup_wrapper .field_sublabel_above .gsection_description {
+.kform_legacy_markup_wrapper .field_sublabel_above .kfield_description,
+.kform_legacy_markup_wrapper .field_sublabel_above .ksection_description {
     margin-top: 9px;
 }
 
-.kform_legacy_markup_wrapper .top_label .gsection_description {
+.kform_legacy_markup_wrapper .top_label .ksection_description {
     width: 100%;
     margin-bottom: 9px;
 }
 
-.kform_legacy_markup_wrapper .gfield_description {
+.kform_legacy_markup_wrapper .kfield_description {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .description_above .gfield_description {
+.kform_legacy_markup_wrapper .description_above .kfield_description {
     padding: 0 0 10px 0;
 }
 
-.kform_legacy_markup_wrapper .gfield_date_year+.gfield_description {
+.kform_legacy_markup_wrapper .kfield_date_year+.kfield_description {
     padding: 0;
 }
 
-.kform_legacy_markup_wrapper .gfield_consent_description,
-.kform_legacy_markup_wrapper .field_description_below .gfield_consent_description {
+.kform_legacy_markup_wrapper .kfield_consent_description,
+.kform_legacy_markup_wrapper .field_description_below .kfield_consent_description {
     width: 100%;
     max-height: 240px;
     overflow-y: scroll;
@@ -651,13 +651,13 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     font-size: .688em;
 }
 
-.kform_legacy_markup_wrapper .gfield_required {
+.kform_legacy_markup_wrapper .kfield_required {
     color: #790000;
     margin-left: 4px;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error,
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required.gfield_creditcard_warning {
+.kform_legacy_markup_wrapper li.gfield.kfield_error,
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required.kfield_creditcard_warning {
     background-color: rgba(255,223,224,.25);
     margin-bottom: 6px !important;
     border-top: 1px solid #C89797;
@@ -667,7 +667,7 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     box-sizing: border-box;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_creditcard_warning {
+.kform_legacy_markup_wrapper li.gfield.kfield_creditcard_warning {
     padding: 16px 16px 14px 16px;
     border-top: 2px solid #790000;
     border-bottom: 4px solid #790000;
@@ -675,11 +675,11 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     width: calc(100% - 16px);
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_creditcard_warning {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_creditcard_warning {
     padding: 16px 16px 14px 16px;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_creditcard_warning div.gfield_creditcard_warning_message {
+.kform_legacy_markup_wrapper li.gfield.kfield_creditcard_warning div.kfield_creditcard_warning_message {
     font-size: .875em;
     font-weight: 700;
     font-family: inherit;
@@ -689,7 +689,7 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     position: relative;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_creditcard_warning div.gfield_creditcard_warning_message span {
+.kform_legacy_markup_wrapper li.gfield.kfield_creditcard_warning div.kfield_creditcard_warning_message span {
     display: block;
     padding: 0 0 14px 24px;
     margin-bottom: 16px;
@@ -703,57 +703,57 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     background-position: left center;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_creditcard_warning div.gfield_creditcard_warning_message {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_creditcard_warning div.kfield_creditcard_warning_message {
     padding: 16px 16px 14px 16px;
 }
 
-.kform_legacy_markup_wrapper li.gfield + li.gfield.gfield_creditcard_warning {
+.kform_legacy_markup_wrapper li.gfield + li.gfield.kfield_creditcard_warning {
     margin-top: 16px !important;
 }
 
-.kform_legacy_markup_wrapper .top_label .gfield_error {
+.kform_legacy_markup_wrapper .top_label .kfield_error {
     width: calc(100% - 2px);
 }
 
-.kform_legacy_markup_wrapper .top_label .gfield_error input.large,
-.kform_legacy_markup_wrapper .top_label .gfield_error select.large,
-.kform_legacy_markup_wrapper .top_label .gfield_error textarea.textarea {
+.kform_legacy_markup_wrapper .top_label .kfield_error input.large,
+.kform_legacy_markup_wrapper .top_label .kfield_error select.large,
+.kform_legacy_markup_wrapper .top_label .kfield_error textarea.textarea {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .right_label .gfield_error input.large,
-.kform_legacy_markup_wrapper .right_label .gfield_error select.large,
-.kform_legacy_markup_wrapper .right_label .gfield_error textarea.textarea,
-.kform_legacy_markup_wrapper .left_label .gfield_error input.large,
-.kform_legacy_markup_wrapper .left_label .gfield_error select.large,
-.kform_legacy_markup_wrapper .left_label .gfield_error textarea.textarea {
+.kform_legacy_markup_wrapper .right_label .kfield_error input.large,
+.kform_legacy_markup_wrapper .right_label .kfield_error select.large,
+.kform_legacy_markup_wrapper .right_label .kfield_error textarea.textarea,
+.kform_legacy_markup_wrapper .left_label .kfield_error input.large,
+.kform_legacy_markup_wrapper .left_label .kfield_error select.large,
+.kform_legacy_markup_wrapper .left_label .kfield_error textarea.textarea {
     width: 70%;
 }
 
-.kform_legacy_markup_wrapper .gfield_error .gfield_label {
+.kform_legacy_markup_wrapper .kfield_error .kfield_label {
     color: #790000;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required {
     padding-right: 0;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required div.gfield_time_minute.ginput_container,
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required div.gfield_time_ampm.ginput_container {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required div.kfield_time_minute.kinput_container,
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required div.kfield_time_ampm.kinput_container {
     margin-left: 0;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required div.gfield_description {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required div.kfield_description {
     max-width: 100%;
     padding-right: 16px;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required label.gfield_label,
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required div.ginput_container {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required label.kfield_label,
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required div.kinput_container {
     margin-top: 12px
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error.gfield_contains_required fieldset legend.gfield_label {
+.kform_legacy_markup_wrapper li.gfield.kfield_error.kfield_contains_required fieldset legend.kfield_label {
     position: relative;
     top: 12px;
 }
@@ -854,11 +854,11 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     margin-bottom: 25px;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list tbody tr td.gfield_list_icons {
+.kform_legacy_markup_wrapper table.kfield_list tbody tr td.kfield_list_icons {
     vertical-align: middle !important;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list tr td.gfield_list_icons a {
+.kform_legacy_markup_wrapper table.kfield_list tr td.kfield_list_icons a {
     display: inline-block;
     line-height: 0;
 }
@@ -872,7 +872,7 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
 }
 
 .kform_legacy_markup_wrapper li.gfield fieldset > * { width: auto }
-.kform_legacy_markup_wrapper li.gfield fieldset legend.gfield_label {
+.kform_legacy_markup_wrapper li.gfield fieldset legend.kfield_label {
     width: 100%;
     line-height: 32px;
 }
@@ -881,7 +881,7 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     margin-top: 16px;
 }
 
-.kform_legacy_markup_wrapper div.gfield_description.validation_error {
+.kform_legacy_markup_wrapper div.kfield_description.validation_error {
     color: #790000;
     font-weight: 700;
     font-size: .875em;
@@ -899,14 +899,14 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     display: none;
 }
 
-.kform_legacy_markup_wrapper li.gfield_error input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='button']):not([type='image']):not([type='file']),
-.kform_legacy_markup_wrapper li.gfield_error textarea {
+.kform_legacy_markup_wrapper li.kfield_error input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='button']):not([type='image']):not([type='file']),
+.kform_legacy_markup_wrapper li.kfield_error textarea {
     border: 1px solid #790000;
 }
 
-.kform_legacy_markup_wrapper li.gfield_error div.ginput_complex.ginput_container label,
-.kform_legacy_markup_wrapper li.gfield_error ul.gfield_checkbox,
-.kform_legacy_markup_wrapper li.gfield_error ul.gfield_radio {
+.kform_legacy_markup_wrapper li.kfield_error div.kinput_complex.kinput_container label,
+.kform_legacy_markup_wrapper li.kfield_error ul.kfield_checkbox,
+.kform_legacy_markup_wrapper li.kfield_error ul.kfield_radio {
     color: #790000;
 }
 
@@ -943,40 +943,40 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     max-width: 100%;
 }
 
-.kform_legacy_markup_wrapper .ginput_complex .ginput_left,
-.kform_legacy_markup_wrapper .ginput_complex .ginput_right,
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full {
+.kform_legacy_markup_wrapper .kinput_complex .kinput_left,
+.kform_legacy_markup_wrapper .kinput_complex .kinput_right,
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full {
     min-height: 45px;
 }
 
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full input[type=text],
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full input[type=url],
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full input[type=email],
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full input[type=tel],
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full input[type=number],
-.kform_legacy_markup_wrapper .ginput_complex .ginput_full input[type=password] {
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full input[type=text],
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full input[type=url],
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full input[type=email],
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full input[type=tel],
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full input[type=number],
+.kform_legacy_markup_wrapper .kinput_complex .kinput_full input[type=password] {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full input[type=text],
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full input[type=url],
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full input[type=email],
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full input[type=tel],
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full input[type=number],
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full input[type=password],
-.kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_full select {
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full input[type=text],
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full input[type=url],
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full input[type=email],
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full input[type=tel],
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full input[type=number],
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full input[type=password],
+.kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_full select {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_checkbox li,
-.kform_legacy_markup_wrapper .gfield_radio li {
+.kform_legacy_markup_wrapper .kfield_checkbox li,
+.kform_legacy_markup_wrapper .kfield_radio li {
     margin: 0 0 16px 0;
     line-height: 1.2;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_radio li input[type="radio"]:checked+label,
-.kform_legacy_markup_wrapper ul.gfield_checkbox li input[type="checkbox"]:checked+label,
-.gchoice_select_all {
+.kform_legacy_markup_wrapper ul.kfield_radio li input[type="radio"]:checked+label,
+.kform_legacy_markup_wrapper ul.kfield_checkbox li input[type="checkbox"]:checked+label,
+.kchoice_select_all {
     font-weight: 700;
 }
 
@@ -995,50 +995,50 @@ body .kform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
     overflow: hidden;
 }
 
-.kform_legacy_markup_wrapper .gfield_visibility_hidden,
+.kform_legacy_markup_wrapper .kfield_visibility_hidden,
 .kform_legacy_markup_wrapper .kdna_invisible {
     visibility: hidden;
     position: absolute;
     left: -9999px;
 }
 
-.kform_legacy_markup_wrapper .ginput_full br,
-.kform_legacy_markup_wrapper .ginput_left br,
-.kform_legacy_markup_wrapper .ginput_right br {
+.kform_legacy_markup_wrapper .kinput_full br,
+.kform_legacy_markup_wrapper .kinput_left br,
+.kform_legacy_markup_wrapper .kinput_right br {
     display: none !important;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_checkbox li,
-.kform_legacy_markup_wrapper ul.gfield_radio li {
+.kform_legacy_markup_wrapper ul.kfield_checkbox li,
+.kform_legacy_markup_wrapper ul.kfield_radio li {
     padding: 0 !important;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_radio li input+input {
+.kform_legacy_markup_wrapper ul.kfield_radio li input+input {
     margin-left: 4px;
 }
 
-.kform_legacy_markup_wrapper ul.gfield_radio li input[value=kdna_other_choice] {
+.kform_legacy_markup_wrapper ul.kfield_radio li input[value=kdna_other_choice] {
     margin-right: 6px;
     margin-top: 4px;
 }
 
-.kform_legacy_markup_wrapper .gfield_description + .kform_legacy_markup_wrapper .gfield_description.validation_message {
+.kform_legacy_markup_wrapper .kfield_description + .kform_legacy_markup_wrapper .kfield_description.validation_message {
     margin-top: 6px;
 }
 
-.kform_legacy_markup_wrapper .ginput_container.ginput_list + .gfield_description.validation_message {
+.kform_legacy_markup_wrapper .kinput_container.kinput_list + .kfield_description.validation_message {
     margin-top: 0;
 }
 
-.kform_legacy_markup_wrapper li.gfield_html {
+.kform_legacy_markup_wrapper li.kfield_html {
     max-width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_html.gfield_no_follows_desc {
+.kform_legacy_markup_wrapper .kfield_html.kfield_no_follows_desc {
     margin-top: 10px;
 }
 
-body .kform_legacy_markup_wrapper ul li.gfield.gfield_html img {
+body .kform_legacy_markup_wrapper ul li.gfield.kfield_html img {
     max-width: 100%  !important;
 }
 
@@ -1055,7 +1055,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     left: -9000px;
 }
 
-.kform_legacy_markup_wrapper .gfield_captcha_input_container {
+.kform_legacy_markup_wrapper .kfield_captcha_input_container {
     padding-top: 3px;
 }
 
@@ -1080,7 +1080,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     margin-left: 32%;
 }
 
-.kform_legacy_markup_wrapper .gfield_captcha_container img.gfield_captcha {
+.kform_legacy_markup_wrapper .kfield_captcha_container img.kfield_captcha {
     border: none !important;
     background: none !important;
     float: none !important;
@@ -1127,7 +1127,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     margin-left: 32%;
 }
 
-.kform_legacy_markup_wrapper div.charleft.ginput_counter_tinymce{
+.kform_legacy_markup_wrapper div.charleft.kinput_counter_tinymce{
     border:  1px solid #eee;
     border-width: 1px 0 0;
     padding: 4px 9px;
@@ -1138,7 +1138,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     color: #767676;
 }
 
-.kform_legacy_markup_wrapper div.charleft.ginput_counter_error {
+.kform_legacy_markup_wrapper div.charleft.kinput_counter_error {
     color: red;
 }
 
@@ -1151,44 +1151,44 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     font-size: 1.375em;
 }
 
-.kform_legacy_markup_wrapper .ginput_price {
+.kform_legacy_markup_wrapper .kinput_price {
     filter: alpha(opacity=70);
     -moz-opacity: .7;
     -khtml-opacity: .7;
     opacity: .7;
 }
 
-.kform_legacy_markup_wrapper span.ginput_total {
+.kform_legacy_markup_wrapper span.kinput_total {
     color: #060;
     font-size: inherit;
 }
 
-.kform_legacy_markup_wrapper .top_label span.ginput_total {
+.kform_legacy_markup_wrapper .top_label span.kinput_total {
     margin: 8px 0;
 }
 
-.kform_legacy_markup_wrapper span.ginput_product_price_label {
+.kform_legacy_markup_wrapper span.kinput_product_price_label {
     margin-right: 2px;
 }
 
-.kform_legacy_markup_wrapper input.ginput_product_price,
-.kform_legacy_markup_wrapper span.ginput_product_price {
+.kform_legacy_markup_wrapper input.kinput_product_price,
+.kform_legacy_markup_wrapper span.kinput_product_price {
 	background: none;
 	border: none;
 	color: #900;
 	padding: 0;
 }
 
-.kform_legacy_markup_wrapper span.ginput_quantity_label {
+.kform_legacy_markup_wrapper span.kinput_quantity_label {
     margin-left: 10px;
     margin-right: 2px;
 }
 
-.kform_legacy_markup_wrapper input.ginput_quantity[type=text] {
+.kform_legacy_markup_wrapper input.kinput_quantity[type=text] {
     width: 3rem;
 }
 
-.kform_legacy_markup_wrapper input.ginput_quantity[type=number] {
+.kform_legacy_markup_wrapper input.kinput_quantity[type=number] {
     width: 4rem;
 }
 
@@ -1400,7 +1400,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     overflow: hidden;
 }
 
-.kform_legacy_markup_wrapper .gfield_password_strength {
+.kform_legacy_markup_wrapper .kfield_password_strength {
     border: 1px solid #DDD;
     margin-top: 18px;
     margin-bottom: 18px;
@@ -1411,48 +1411,48 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     border-bottom: 3px solid #DDD;
 }
 
-.kform_legacy_markup_wrapper ul.top_label li.gfield.gfield_error.gfield_contains_required .gfield_password_strength {
+.kform_legacy_markup_wrapper ul.top_label li.gfield.kfield_error.kfield_contains_required .kfield_password_strength {
     margin-right: 16px;
 }
 
-.kform_legacy_markup_wrapper ul.left_label li.gfield .gfield_password_strength,
-.kform_legacy_markup_wrapper ul.right_label li.gfield .gfield_password_strength {
+.kform_legacy_markup_wrapper ul.left_label li.gfield .kfield_password_strength,
+.kform_legacy_markup_wrapper ul.right_label li.gfield .kfield_password_strength {
     margin-top: 18px;
     margin-bottom: 18px;
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_password_strength.bad {
+.kform_legacy_markup_wrapper .kfield_password_strength.bad {
     background-color: #FFB78C;
     border-color: #FF853C;
     border-bottom: 3px solid #FF853C;
 }
 
-.kform_legacy_markup_wrapper .gfield_password_strength.good {
+.kform_legacy_markup_wrapper .kfield_password_strength.good {
     background-color: #FFEC8b;
     border-color: #FC0;
     border-bottom: 3px solid #FC0;
 }
 
-.kform_legacy_markup_wrapper .gfield_password_strength.short,
-.kform_legacy_markup_wrapper .gfield_password_strength.mismatch {
+.kform_legacy_markup_wrapper .kfield_password_strength.short,
+.kform_legacy_markup_wrapper .kfield_password_strength.mismatch {
     background-color: #FFA0A0;
     border-color: #f04040;
     border-bottom: 3px solid #f04040;
 }
 
-.kform_legacy_markup_wrapper .gfield_password_strength.strong {
+.kform_legacy_markup_wrapper .kfield_password_strength.strong {
     background-color: #C3FF88;
     border-color: #8DFF1C;
     border-bottom: 3px solid #8DFF1C;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password,
-.kform_legacy_markup_wrapper .ginput_container_password span {
+.kform_legacy_markup_wrapper .kinput_container_password,
+.kform_legacy_markup_wrapper .kinput_container_password span {
     position: relative;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password button {
+.kform_legacy_markup_wrapper .kinput_container_password button {
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
@@ -1465,35 +1465,35 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     width: 40px;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password span.ginput_left button {
+.kform_legacy_markup_wrapper .kinput_container_password span.kinput_left button {
     right: 9px;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password:not(.ginput_complex) span {
+.kform_legacy_markup_wrapper .kinput_container_password:not(.kinput_complex) span {
     display: inline-block;
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password:not(.ginput_complex) span input {
+.kform_legacy_markup_wrapper .kinput_container_password:not(.kinput_complex) span input {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password span.medium {
+.kform_legacy_markup_wrapper .kinput_container_password span.medium {
     width: calc(50% - 8px);
 }
 
-.kform_legacy_markup_wrapper .ginput_container_password span.small {
+.kform_legacy_markup_wrapper .kinput_container_password span.small {
     width: 25%;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list,
-.kform_legacy_markup_wrapper table.gfield_list caption,
-.kform_legacy_markup_wrapper table.gfield_list tbody,
-.kform_legacy_markup_wrapper table.gfield_list tfoot,
-.kform_legacy_markup_wrapper table.gfield_list thead,
-.kform_legacy_markup_wrapper table.gfield_list tr,
-.kform_legacy_markup_wrapper table.gfield_list th,
-.kform_legacy_markup_wrapper table.gfield_list td {
+.kform_legacy_markup_wrapper table.kfield_list,
+.kform_legacy_markup_wrapper table.kfield_list caption,
+.kform_legacy_markup_wrapper table.kfield_list tbody,
+.kform_legacy_markup_wrapper table.kfield_list tfoot,
+.kform_legacy_markup_wrapper table.kfield_list thead,
+.kform_legacy_markup_wrapper table.kfield_list tr,
+.kform_legacy_markup_wrapper table.kfield_list th,
+.kform_legacy_markup_wrapper table.kfield_list td {
     margin: 0;
     padding: 0;
     border: 0;
@@ -1502,64 +1502,64 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     vertical-align: baseline;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list {
+.kform_legacy_markup_wrapper table.kfield_list {
     border-spacing: 0;
     border-collapse: collapse;
 }
 
-.kform_legacy_markup_wrapper .gfield_repeater_buttons{
+.kform_legacy_markup_wrapper .kfield_repeater_buttons{
     padding-top: 15px;
 }
 
 /* fix for twentyfifteen theme table layout issue */
 
-.kform_legacy_markup_wrapper table.gfield_list {
+.kform_legacy_markup_wrapper table.kfield_list {
     table-layout: auto !important ;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list thead th {
+.kform_legacy_markup_wrapper table.kfield_list thead th {
     font-weight: 700;
     text-align: left;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list colgroup {
+.kform_legacy_markup_wrapper table.kfield_list colgroup {
     width: 100%;
     display: block;
 }
 
-.kform_legacy_markup_wrapper li.gfield.gfield_error table.gfield_list thead th {
+.kform_legacy_markup_wrapper li.gfield.kfield_error table.kfield_list thead th {
     color: #790000;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list thead,
-.kform_legacy_markup_wrapper table.gfield_list tr {
+.kform_legacy_markup_wrapper table.kfield_list thead,
+.kform_legacy_markup_wrapper table.kfield_list tr {
     padding: 0;
     margin: 0;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list th,
-.kform_legacy_markup_wrapper table.gfield_list td {
+.kform_legacy_markup_wrapper table.kfield_list th,
+.kform_legacy_markup_wrapper table.kfield_list td {
     padding: 4px 0 4px 0;
 }
 
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) table.gfield_list th {
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) table.kfield_list th {
     padding: 0 0 4px 0;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list th + th,
-.kform_legacy_markup_wrapper table.gfield_list td + td {
+.kform_legacy_markup_wrapper table.kfield_list th + th,
+.kform_legacy_markup_wrapper table.kfield_list td + td {
     padding: 0 0 0 16px;
 }
 
-.kform_legacy_markup_wrapper .gfield_list {
+.kform_legacy_markup_wrapper .kfield_list {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_list td.gfield_list_cell input {
+.kform_legacy_markup_wrapper .kfield_list td.kfield_list_cell input {
     width: 100%;
 }
 
-.kform_legacy_markup_wrapper .gfield_icon_disabled {
+.kform_legacy_markup_wrapper .kfield_icon_disabled {
     cursor: default !important;
     filter: alpha(opacity=60);
     -moz-opacity: .6;
@@ -1567,13 +1567,13 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     opacity: .6;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list tr td.gfield_list_icons {
+.kform_legacy_markup_wrapper table.kfield_list tr td.kfield_list_icons {
     width: 48px !important;
     padding: 0 0 0 4px  !important;
     box-sizing: border-box;
 }
 
-.kform_legacy_markup_wrapper table.gfield_list td.gfield_list_icons img {
+.kform_legacy_markup_wrapper table.kfield_list td.kfield_list_icons img {
     display: -moz-inline-stack;
     display: inline-block;
     vertical-align: middle;
@@ -1586,7 +1586,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
 }
 
 .kform_legacy_markup_wrapper .kform_card_icon_container div.kform_card_icon {
-    background-image: url(../../images/gf-creditcards.svg);
+    background-image: url(../../images/kdna-creditcards.svg);
     background-repeat: no-repeat;
     height: 32px;
     margin-right: 4px;
@@ -1626,18 +1626,18 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     display: block;
     content: '';
     position: absolute;
-    background: url(../../images/gf-creditcards-check.svg) center center no-repeat;
+    background: url(../../images/kdna-creditcards-check.svg) center center no-repeat;
     width: 13px;
     height: 10px;
     bottom: 4px;
     right: -2px;
 }
 
-.kform_legacy_markup_wrapper .ginput_container_creditcard .ginput_card_security_code_icon {
+.kform_legacy_markup_wrapper .kinput_container_creditcard .kinput_card_security_code_icon {
     width: 40px;
     height: 32px;
     display: inline-block;
-    background-image: url(../../images/gf-creditcards.svg);
+    background-image: url(../../images/kdna-creditcards.svg);
     background-repeat: no-repeat;
     background-position: -382px 0;
     position: relative;
@@ -1670,7 +1670,7 @@ body .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kform_validation_con
     width: auto;
 }
 
-.kform_legacy_markup_wrapper li.field_sublabel_above .ginput_complex input[type=text] {
+.kform_legacy_markup_wrapper li.field_sublabel_above .kinput_complex input[type=text] {
     margin-bottom: 1px;
 }
 
@@ -1805,8 +1805,8 @@ box-shadow: inset 0px 0px 5px 0px rgba(238,238,238,1);
   text-decoration: underline;
 }
 
-body #content .entry-content .kform_legacy_markup_wrapper form .kform_body .kform_fields .gfield .ginput_container #recaptcha_widget_div #recaptcha_area .recaptchatable tbody tr td .recaptcha_input_area,
-body .kform_legacy_markup_wrapper form .kform_body .kform_fields .gfield .ginput_container #recaptcha_widget_div #recaptcha_area .recaptchatable tbody tr td .recaptcha_input_area {
+body #content .entry-content .kform_legacy_markup_wrapper form .kform_body .kform_fields .gfield .kinput_container #recaptcha_widget_div #recaptcha_area .recaptchatable tbody tr td .recaptcha_input_area,
+body .kform_legacy_markup_wrapper form .kform_body .kform_fields .gfield .kinput_container #recaptcha_widget_div #recaptcha_area .recaptchatable tbody tr td .recaptcha_input_area {
     line-height: 1 !important;
 }
 
@@ -1828,7 +1828,7 @@ body .kform_legacy_markup_wrapper img.delete_list_item {
     margin-top: 16px;
 }
 
-.kform_legacy_markup_wrapper li.gfield ul.gfield_radio li input[type="radio"] + input[type="text"] {
+.kform_legacy_markup_wrapper li.gfield ul.kfield_radio li input[type="radio"] + input[type="text"] {
     width: 45.25%;
 }
 
@@ -1838,7 +1838,7 @@ body .kform_legacy_markup_wrapper img.delete_list_item {
 
 /* adjusting the captcha margin for left or right label settings */
 
-.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_container_captcha {
+.kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_container_captcha {
     margin-left: 29%;
 }
 
@@ -1867,71 +1867,71 @@ body .kform_legacy_markup_wrapper ul li.gfield {
     padding-top: 0;
 }
 
-body .kform_legacy_markup_wrapper ul.gfields li.gfield label.gfield_label {
+body .kform_legacy_markup_wrapper ul.gfields li.gfield label.kfield_label {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
 }
 
 /* do our best to restore styles for lists inside the HTML field */
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html {
     line-height: inherit;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html ul li,
-body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.gfield_html ul li {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ul li,
+body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ul li {
     list-style-type: disc !important;
     margin: 0 0 8px 0;
     overflow: visible;
     padding-left: 0;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html ul,
-body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.gfield_html ul {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ul,
+body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ul {
     list-style-type: disc !important;
     margin: 16px 0 16px 28px !important;
     padding-left: 0;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html ol li,
-body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.gfield_html ol li {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
+body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol li {
     list-style-type: decimal!important;
     overflow: visible;
     margin: 0 0 8px 0;
     padding-left: 0;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html ol,
-body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.gfield_html ol {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol,
+body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol {
     list-style-type: decimal !important;
     margin: 16px 0 18px 32px;
     padding-left: 0;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html ol li ul,
-body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.gfield_html ol li ul li {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol li ul,
+body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol li ul li {
     list-style-type: disc !important;
     padding-left: 0;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html ol li ul {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol li ul {
     margin: 16px 0 16px 16px;
 }
 
-body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.gfield_html ol li ul li {
+body .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol li ul li {
     margin: 0 0 8px;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html dl {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html dl {
     margin: 0 0 18px 0;
     padding-left: 0;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html dl dt {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html dl dt {
     font-weight: 700;
 }
 
-body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.gfield_html dl dd {
+body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html dl dd {
     margin: 0 0 16px 18px;
 }
 
@@ -2492,17 +2492,17 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         top: calc(50% - 6px);
     }
 
-    .kform_legacy_markup_wrapper .ginput_container span:not(.ginput_price) {
+    .kform_legacy_markup_wrapper .kinput_container span:not(.kinput_price) {
         margin-bottom: 8px;
         display: block;
     }
 
-    .kform_legacy_markup_wrapper li.field_sublabel_below .ginput_complex {
+    .kform_legacy_markup_wrapper li.field_sublabel_below .kinput_complex {
         margin-top: 12px !important;
     }
 
-    .kform_legacy_markup_wrapper ul.gfield_radio li label,
-    .kform_legacy_markup_wrapper ul.gfield_checkbox li label {
+    .kform_legacy_markup_wrapper ul.kfield_radio li label,
+    .kform_legacy_markup_wrapper ul.kfield_checkbox li label {
         width: 85%;
         cursor: pointer;
     }
@@ -2511,23 +2511,23 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 @media only screen and (max-width: 761px), (min-device-width: 768px) and (max-device-width: 1023px)  {
 
-    .kform_legacy_markup_wrapper ul.kform_fields li.gfield.gfield_error + li.gfield.gfield_error {
+    .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kfield_error + li.gfield.kfield_error {
         margin-top: 32px;
     }
 
     /* force the list table to not behave like a table anymore */
 
-    .kform_legacy_markup_wrapper table.gfield_list {
+    .kform_legacy_markup_wrapper table.kfield_list {
       border: 0;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list thead {
+    .kform_legacy_markup_wrapper table.kfield_list thead {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr {
+    .kform_legacy_markup_wrapper table.kfield_list tr {
         margin-bottom: 10px;
         display: block;
         background: #fff;
@@ -2537,19 +2537,19 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         border-bottom: 4px solid #CCC;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list td {
+    .kform_legacy_markup_wrapper table.kfield_list td {
         display: block;
         margin-left: 8px;
         margin-right: 8px;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list td.gfield_list_icons {
+    .kform_legacy_markup_wrapper table.kfield_list td.kfield_list_icons {
         border-bottom: 0;
         margin: 16px 0 0 0 !important;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_above table.gfield_list td:before,
-    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_below table.gfield_list td:after {
+    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_above table.kfield_list td:before,
+    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_below table.kfield_list td:after {
         content: attr(data-label);
         font-size: .875em;
         letter-spacing: 0.5pt;
@@ -2558,44 +2558,44 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         clear: both;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_above table.gfield_list td:before {
+    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_above table.kfield_list td:before {
         margin: 8px 0 3px 8px;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_below table.gfield_list td:after {
+    .kform_legacy_markup_wrapper ul.kform_fields.form_sublabel_below table.kfield_list td:after {
       margin: 3px 0 8px 8px;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list th + th,
-    .kform_legacy_markup_wrapper table.gfield_list td + td {
+    .kform_legacy_markup_wrapper table.kfield_list th + th,
+    .kform_legacy_markup_wrapper table.kfield_list td + td {
         padding: 4px 0 0 0;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr.gfield_list_row_odd,
-    .kform_legacy_markup_wrapper table.gfield_list tr.gfield_list_row_even {
+    .kform_legacy_markup_wrapper table.kfield_list tr.kfield_list_row_odd,
+    .kform_legacy_markup_wrapper table.kfield_list tr.kfield_list_row_even {
         margin: 16px 0;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr.gfield_list_row_odd:first-child {
+    .kform_legacy_markup_wrapper table.kfield_list tr.kfield_list_row_odd:first-child {
          padding-top: 12px;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr {
+    .kform_legacy_markup_wrapper table.kfield_list tr {
          padding-top: 12px;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr td.gfield_list_icons {
+    .kform_legacy_markup_wrapper table.kfield_list tr td.kfield_list_icons {
         width: 100% !important;
         padding: 5px 4px 1px 4px !important;
         background-color: #EEE;
         text-align: center;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr td.gfield_list_icons img.add_list_item {
+    .kform_legacy_markup_wrapper table.kfield_list tr td.kfield_list_icons img.add_list_item {
         margin: 12px 0 0 16px !important;
     }
 
-    .kform_legacy_markup_wrapper table.gfield_list tr td.gfield_list_icons img.delete_list_item {
+    .kform_legacy_markup_wrapper table.kfield_list tr td.kfield_list_icons img.delete_list_item {
         margin: 12px 0 0 8px !important;
     }
 
@@ -2604,7 +2604,7 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         margin-left: 0;
     }
 
-    .kform_legacy_markup_wrapper .gfield_list td.gfield_list_cell input {
+    .kform_legacy_markup_wrapper .kfield_list td.kfield_list_cell input {
         width: calc(100% - 16px);
         margin-left: 8px;
         margin-right: 8px;
@@ -2620,12 +2620,12 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         width: 100%;
     }
 
-    .kform_legacy_markup_wrapper.kform_validation_error .kform_body ul li.gfield.gfield_error:not(.kdna_left_half):not(.kdna_right_half) {
+    .kform_legacy_markup_wrapper.kform_validation_error .kform_body ul li.gfield.kfield_error:not(.kdna_left_half):not(.kdna_right_half) {
         max-width: calc(100% - 16px) !important;
     }
 
-    .kform_legacy_markup_wrapper .gfield_checkbox li,
-    .kform_legacy_markup_wrapper .gfield_radio li {
+    .kform_legacy_markup_wrapper .kfield_checkbox li,
+    .kform_legacy_markup_wrapper .kfield_radio li {
         margin: 0 0 8px 0;
         line-height: 1.3;
     }
@@ -2634,59 +2634,59 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         margin: 28px 16px 28px 0;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .gfield_label {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .kfield_label {
         float: left;
         width: 29%;
         padding-right: 16px;
         margin-bottom: 16px;
     }
 
-    .kform_legacy_markup_wrapper .right_label .gfield_label {
+    .kform_legacy_markup_wrapper .right_label .kfield_label {
         text-align: right;
     }
 
-    .kform_legacy_markup_wrapper .left_label .gfield_description,
-    .kform_legacy_markup_wrapper .right_label .gfield_description {
+    .kform_legacy_markup_wrapper .left_label .kfield_description,
+    .kform_legacy_markup_wrapper .right_label .kfield_description {
         width: 70%;
     }
 
-    .kform_legacy_markup_wrapper ul.right_label li ul.gfield_radio li,
-    .kform_legacy_markup_wrapper form ul.right_label li ul.gfield_radio li,
-    .kform_legacy_markup_wrapper ul.left_label li ul.gfield_radio li,
-    .kform_legacy_markup_wrapper form ul.left_label li ul.gfield_radio li,
-    .kform_legacy_markup_wrapper ul.right_label li ul.gfield_checkbox li,
-    .kform_legacy_markup_wrapper form ul.right_label li ul.gfield_checkbox li,
-    .kform_legacy_markup_wrapper ul.left_label li ul.gfield_checkbox li,
-    .kform_legacy_markup_wrapper form ul.left_label li ul.gfield_checkbox li {
+    .kform_legacy_markup_wrapper ul.right_label li ul.kfield_radio li,
+    .kform_legacy_markup_wrapper form ul.right_label li ul.kfield_radio li,
+    .kform_legacy_markup_wrapper ul.left_label li ul.kfield_radio li,
+    .kform_legacy_markup_wrapper form ul.left_label li ul.kfield_radio li,
+    .kform_legacy_markup_wrapper ul.right_label li ul.kfield_checkbox li,
+    .kform_legacy_markup_wrapper form ul.right_label li ul.kfield_checkbox li,
+    .kform_legacy_markup_wrapper ul.left_label li ul.kfield_checkbox li,
+    .kform_legacy_markup_wrapper form ul.left_label li ul.kfield_checkbox li {
         margin-bottom: 10px;
     }
 
-    .kform_legacy_markup_wrapper .right_label .gfield_description,
-    .kform_legacy_markup_wrapper .left_label .gfield_description,
+    .kform_legacy_markup_wrapper .right_label .kfield_description,
+    .kform_legacy_markup_wrapper .left_label .kfield_description,
     .kform_legacy_markup_wrapper .left_label .instruction,
     .kform_legacy_markup_wrapper .right_label .instruction {
         margin-left: 29%;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .gsection .gsection_description {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .gsection .ksection_description {
         margin-left: 0;
         padding-top: 4px;
         padding-left: 0;
         line-height: 1.5;
     }
 
-    .kform_legacy_markup_wrapper form ul.kform_fields:not(.top_label) li.gfield_html_formatted {
+    .kform_legacy_markup_wrapper form ul.kform_fields:not(.top_label) li.kfield_html_formatted {
         margin-left: 29% !important;
         width: 70%;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) ul.gfield_checkbox,
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) ul.gfield_radio {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) ul.kfield_checkbox,
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) ul.kfield_radio {
         overflow: hidden;
     }
 
-    .kform_legacy_markup_wrapper .right_label div.ginput_complex,
-    .kform_legacy_markup_wrapper .left_label div.ginput_complex {
+    .kform_legacy_markup_wrapper .right_label div.kinput_complex,
+    .kform_legacy_markup_wrapper .left_label div.kinput_complex {
         width: 70%;
         margin-left: 29%;
     }
@@ -2721,12 +2721,12 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         width: 70%;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .ginput_list {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .kinput_list {
         width: 70%;
         margin-left: 29% !important;
     }
 
-    .kform_legacy_markup_wrapper .top_label .gfield_list {
+    .kform_legacy_markup_wrapper .top_label .kfield_list {
         width: 100%;
     }
 
@@ -2744,8 +2744,8 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         margin-left: 3.7%;
     }
 
-    .kform_legacy_markup_wrapper .left_label li.gfield .gfield_password_strength,
-    .kform_legacy_markup_wrapper .right_label li.gfield .gfield_password_strength {
+    .kform_legacy_markup_wrapper .left_label li.gfield .kfield_password_strength,
+    .kform_legacy_markup_wrapper .right_label li.gfield .kfield_password_strength {
         margin-left: 29%;
     }
 
@@ -2792,8 +2792,8 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         width: 100%;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_left,
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_right {
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_left,
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_right {
         width: 50%;
         display: -moz-inline-stack;
         display: inline-block;
@@ -2801,40 +2801,40 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         margin: 0 -4px 0 0;
     }
 
-    .kform_legacy_markup_wrapper .ginput_container_password .ginput_right {
+    .kform_legacy_markup_wrapper .kinput_container_password .kinput_right {
         padding-left: 8px;
     }
 
-    .kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_left,
-    .kform_legacy_markup_wrapper .gfield_error .ginput_complex .ginput_right {
+    .kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_left,
+    .kform_legacy_markup_wrapper .kfield_error .kinput_complex .kinput_right {
         width: 50%;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_cardinfo_left,
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_cardinfo_right {
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_cardinfo_left,
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_cardinfo_right {
         min-height: 43px;
         position: relative;
         float: left;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_cardinfo_right input {
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_cardinfo_right input {
         display: inline-block;
         width: 30%;
         max-width: 7rem;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_cardinfo_left {
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_cardinfo_left {
         width: 50%;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex select.ginput_card_expiration.ginput_card_expiration_month,
-    .kform_legacy_markup_wrapper .ginput_complex select.ginput_card_expiration.ginput_card_expiration_year {
+    .kform_legacy_markup_wrapper .kinput_complex select.kinput_card_expiration.kinput_card_expiration_month,
+    .kform_legacy_markup_wrapper .kinput_complex select.kinput_card_expiration.kinput_card_expiration_year {
         width: 47% !important;
         display: -moz-inline-stack;
         display: inline-block;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_cardinfo_left select.ginput_card_expiration.ginput_card_expiration_month {
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_cardinfo_left select.kinput_card_expiration.kinput_card_expiration_month {
         margin-right: 4px;
     }
 
@@ -2877,43 +2877,43 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         padding-right: 16px;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex .ginput_left {
+    .kform_legacy_markup_wrapper .kinput_complex .kinput_left {
         padding-right: 8px;
     }
 
-    .kform_legacy_markup_wrapper .left_label .ginput_complex.ginput_container_address:after {
+    .kform_legacy_markup_wrapper .left_label .kinput_complex.kinput_container_address:after {
         content: "";
         display: block;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container_address .ginput_left {
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container_address .kinput_left {
         margin-right: 8px;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container_address .ginput_right {
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container_address .kinput_right {
         margin-right: -8px;
         padding-right: 8px;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container_address span.ginput_full + span.ginput_right {
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container_address span.kinput_full + span.kinput_right {
         padding-right: 8px !important ;
         margin-right: 8px;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container_address span.ginput_right + span.ginput_left {
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container_address span.kinput_right + span.kinput_left {
         padding-right: 8px !important ;
         margin-right: -8px;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container_address span.ginput_right + span.ginput_left.address_zip {
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container_address span.kinput_right + span.kinput_left.address_zip {
         margin-right: 8px;
     }
 
-    .kform_legacy_markup_wrapper .gfield_error .ginput_container {
+    .kform_legacy_markup_wrapper .kfield_error .kinput_container {
         padding-right: 0;
     }
 
-    .kform_legacy_markup_wrapper ul.top_label li.gfield.gfield_error.gfield_contains_required .gfield_password_strength {
+    .kform_legacy_markup_wrapper ul.top_label li.gfield.kfield_error.kfield_contains_required .kfield_password_strength {
         margin: 18px 0 18px 0;
     }
 
@@ -2925,46 +2925,46 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
     /* adjusting the name field so it aligns properly */
 
-    .kform_legacy_markup_wrapper .top_label div.ginput_complex.ginput_container.kdna_name_has_1,
-    .kform_legacy_markup_wrapper .top_label div.ginput_complex.ginput_container.kdna_name_has_2,
-    .kform_legacy_markup_wrapper .top_label div.ginput_complex.ginput_container.kdna_name_has_3 {
+    .kform_legacy_markup_wrapper .top_label div.kinput_complex.kinput_container.kdna_name_has_1,
+    .kform_legacy_markup_wrapper .top_label div.kinput_complex.kinput_container.kdna_name_has_2,
+    .kform_legacy_markup_wrapper .top_label div.kinput_complex.kinput_container.kdna_name_has_3 {
         width: calc(100% + 15px);
     }
 
-    .kform_legacy_markup_wrapper .top_label div.ginput_complex.ginput_container.kdna_name_has_4 {
+    .kform_legacy_markup_wrapper .top_label div.kinput_complex.kinput_container.kdna_name_has_4 {
         width: calc(100% + 13px);
     }
 
-    .kform_legacy_markup_wrapper .top_label div.ginput_complex.ginput_container.kdna_name_has_5 {
+    .kform_legacy_markup_wrapper .top_label div.kinput_complex.kinput_container.kdna_name_has_5 {
         width: calc(100% + 14px);
     }
 
     /* a little better specificty to avoid problems with forms in widgets */
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_complex.ginput_container.kdna_name_has_1,
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_complex.ginput_container.kdna_name_has_2,
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_complex.ginput_container.kdna_name_has_3 {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_complex.kinput_container.kdna_name_has_1,
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_complex.kinput_container.kdna_name_has_2,
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_complex.kinput_container.kdna_name_has_3 {
         width: calc(70% + 15px);
         margin-left: 29%;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_1,
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_2,
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_3 {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_1,
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_2,
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_3 {
         width: calc(70% + 24px);
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_complex.ginput_container.kdna_name_has_4 {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_complex.kinput_container.kdna_name_has_4 {
         width: calc(70% + 13px);
         margin-left: 29%;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_complex.ginput_container.kdna_name_has_5 {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_complex.kinput_container.kdna_name_has_5 {
         width: calc(70% + 14px);
         margin-left: 29%;
     }
 
-    .kform_legacy_markup_wrapper div.ginput_container_name span {
+    .kform_legacy_markup_wrapper div.kinput_container_name span {
         display: -moz-inline-stack;
         display: inline-block;
         vertical-align: top;
@@ -2972,94 +2972,94 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         margin-right: -4px;
     }
 
-    .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_1 span {
+    .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_1 span {
         width: 100%;
     }
 
-    .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_2 span {
+    .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_2 span {
         width: 50%;    }
 
-    .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_3 span {
+    .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_3 span {
         width: 33.3%;
     }
 
-    .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_4 span {
+    .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_4 span {
         width: 25%;
     }
 
-    .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_5 span {
+    .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_5 span {
         width: 19.95%;
     }
 
     /* tweak the sizes for validation and left/right label layouts */
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_1 span {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_1 span {
         width: 99.75% !important;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_2 span {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_2 span {
         width: 49.75% !important;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_3 span {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_3 span {
         width: 33% !important;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_4 span {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_4 span {
         width: 24.75% !important;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.kdna_name_has_5 span {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kdna_name_has_5 span {
         width: 19.75% !important;
     }
 
-    html .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_2 span:first-child,
-    html .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_3 span:first-child,
-    html .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_4 span:first-child,
-    html .kform_legacy_markup_wrapper div.ginput_complex.ginput_container.kdna_name_has_5 span:first-child {
+    html .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_2 span:first-child,
+    html .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_3 span:first-child,
+    html .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_4 span:first-child,
+    html .kform_legacy_markup_wrapper div.kinput_complex.kinput_container.kdna_name_has_5 span:first-child {
         margin-left: 0!important;
     }
 
-    .kform_legacy_markup_wrapper .top_label .ginput_complex.ginput_container.ginput_container_email {
+    .kform_legacy_markup_wrapper .top_label .kinput_complex.kinput_container.kinput_container_email {
         width: calc(100% + 15px);
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.ginput_complex.ginput_container.ginput_container_email {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) div.kinput_complex.kinput_container.kinput_container_email {
         width: calc(70% + 16px);
         margin-left: 29%;
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error div.ginput_complex.ginput_container.ginput_container_email {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error div.kinput_complex.kinput_container.kinput_container_email {
         width: calc(70% + 17px);
     }
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.gfield_error .ginput_complex.ginput_container.ginput_container_email {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) li.gfield.kfield_error .kinput_complex.kinput_container.kinput_container_email {
         width: calc(70% + 8px) !important;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container.ginput_container_email .ginput_left,
-    .kform_legacy_markup_wrapper .ginput_complex.ginput_container.ginput_container_email .ginput_right {
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container.kinput_container_email .kinput_left,
+    .kform_legacy_markup_wrapper .kinput_complex.kinput_container.kinput_container_email .kinput_right {
         padding-right: 16px;
     }
 
-    .kform_legacy_markup_wrapper ul.left_label li.gfield .gfield_password_strength,
-    .kform_legacy_markup_wrapper ul.right_label li.gfield .gfield_password_strength {
+    .kform_legacy_markup_wrapper ul.left_label li.gfield .kfield_password_strength,
+    .kform_legacy_markup_wrapper ul.right_label li.gfield .kfield_password_strength {
         width: 70%;
     }
 
     /* adjusting the address field alignment for some scenarios */
 
-    .kform_legacy_markup_wrapper .ginput_complex span.ginput_left + input.kform_hidden + span.ginput_left {
+    .kform_legacy_markup_wrapper .kinput_complex span.kinput_left + input.kform_hidden + span.kinput_left {
         padding-right: 0;
     }
 
-    .kform_legacy_markup_wrapper .ginput_complex span.ginput_left.address_country {
+    .kform_legacy_markup_wrapper .kinput_complex span.kinput_left.address_country {
         margin-right: 0;
     }
 
-    html:not([dir="rtl"]) .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .ginput_container:not(.ginput_container_time):not(.ginput_container_date),
+    html:not([dir="rtl"]) .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .kinput_container:not(.kinput_container_time):not(.kinput_container_date),
     html:not([dir="rtl"]) .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .clear-multi,
-    html:not([dir="rtl"]) .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .gfield_description {
+    html:not([dir="rtl"]) .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .kfield_description {
         width: 70%;
         margin-left: 29%;
     }
@@ -3073,14 +3073,14 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         width: 70%
     }
 
-    body .kform_legacy_markup_wrapper span.ginput_left.address_city + input.kform_hidden + span.ginput_left.address_country {
+    body .kform_legacy_markup_wrapper span.kinput_left.address_city + input.kform_hidden + span.kinput_left.address_country {
         width: calc(50% - 8px);
         margin-right: 0;
     }
 
     /* force the CAPTCHA field over for right and left label layouts */
 
-    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .ginput_container.ginput_recaptcha {
+    .kform_legacy_markup_wrapper ul.kform_fields:not(.top_label) .kinput_container.kinput_recaptcha {
         margin-left: 29% !important;
     }
 
@@ -3095,18 +3095,18 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
     /* updated chosen 1.8.5 styles - gravityforms specific  */
 
-    body .kform_legacy_markup_wrapper select.medium.gfield_select + div.chosen-container-single[style],
-    body .kform_legacy_markup_wrapper select.medium.gfield_select + div.chosen-container-multi[style] {
+    body .kform_legacy_markup_wrapper select.medium.kfield_select + div.chosen-container-single[style],
+    body .kform_legacy_markup_wrapper select.medium.kfield_select + div.chosen-container-multi[style] {
         width: calc(50% - 8px) !important;
     }
 
-    body .kform_legacy_markup_wrapper select.large.gfield_select + div.chosen-container-single[style],
-    body .kform_legacy_markup_wrapper select.large.gfield_select + div.chosen-container-multi[style] {
+    body .kform_legacy_markup_wrapper select.large.kfield_select + div.chosen-container-single[style],
+    body .kform_legacy_markup_wrapper select.large.kfield_select + div.chosen-container-multi[style] {
         width: 100% !important;
     }
 
-    body .kform_legacy_markup_wrapper select.small.gfield_select + div.chosen-container-single[style],
-    body .kform_legacy_markup_wrapper select.small.gfield_select + div.chosen-container-multi[style] {
+    body .kform_legacy_markup_wrapper select.small.kfield_select + div.chosen-container-single[style],
+    body .kform_legacy_markup_wrapper select.small.kfield_select + div.chosen-container-multi[style] {
         width: 25% !important;
     }
 
@@ -3118,7 +3118,7 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 
 /* Padding, Left Border, background color for nested repeaters */
-.kform_legacy_markup_wrapper .gfield_repeater_cell  > .gfield_repeater_wrapper   {
+.kform_legacy_markup_wrapper .kfield_repeater_cell  > .kfield_repeater_wrapper   {
     border-left: 8px solid rgba(54, 86, 102, 0.1);
     background-color: rgba(1,1,1,0.02);
     padding: 10px 20px;
@@ -3129,18 +3129,18 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 
 /* Targeting the border color of the repeater inputs */
-.kform_legacy_markup_wrapper .gfield_repeater_wrapper input  {
+.kform_legacy_markup_wrapper .kfield_repeater_wrapper input  {
     border:1px solid rgba(197, 198, 197, 1.000);
     border-radius: 4px;
 }
 
 /* Spacing between the wrappers */
-.kform_legacy_markup_wrapper .gfield_repeater_wrapper .gfield_repeater_wrapper{
+.kform_legacy_markup_wrapper .kfield_repeater_wrapper .kfield_repeater_wrapper{
     margin-top: 10px;
 }
 
-.kform_legacy_markup_wrapper .gfield_repeater_buttons .add_repeater_item_text,
-.kform_legacy_markup_wrapper .gfield_repeater_buttons .remove_repeater_item_text{
+.kform_legacy_markup_wrapper .kfield_repeater_buttons .add_repeater_item_text,
+.kform_legacy_markup_wrapper .kfield_repeater_buttons .remove_repeater_item_text{
     min-width: 100px;
     height: 30px;
     background: rgba(242, 242, 242, 0.5);
@@ -3155,8 +3155,8 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 }
 
 
-.kform_legacy_markup_wrapper .gfield_repeater_buttons .add_repeater_item_plus,
-.kform_legacy_markup_wrapper .gfield_repeater_buttons .remove_repeater_item_minus{
+.kform_legacy_markup_wrapper .kfield_repeater_buttons .add_repeater_item_plus,
+.kform_legacy_markup_wrapper .kfield_repeater_buttons .remove_repeater_item_minus{
     width: 22px;
     height: 22px;
     background: rgba(242, 242, 242, 0.5);
@@ -3171,7 +3171,7 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
     padding-bottom: 5px;
 }
 
-.kform_legacy_markup_wrapper .gfield_repeater_buttons button.gfield_icon_disabled {
+.kform_legacy_markup_wrapper .kfield_repeater_buttons button.kfield_icon_disabled {
     cursor: default;
     filter: alpha(opacity=30);
     -moz-opacity: .3;
@@ -3179,14 +3179,14 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
     opacity: .3;
 }
 
-.kform_legacy_markup_wrapper .gfield_repeater_buttons button.gfield_icon_disabled:hover {
+.kform_legacy_markup_wrapper .kfield_repeater_buttons button.kfield_icon_disabled:hover {
     background: rgba(242, 242, 242, 0.5);
     color: rgba(117, 117, 117, 1);
     border: 1px solid rgba(117, 117, 117, 0.4);
 }
 
 /* Hover style for Add buttons */
-.kform_legacy_markup_wrapper .gfield_repeater_buttons button:hover {
+.kform_legacy_markup_wrapper .kfield_repeater_buttons button:hover {
     background: rgba(250, 250, 250, 1.000);
     color: #374750;
     border:1px solid rgba(117, 117, 117, 1);
@@ -3194,13 +3194,13 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 
 /* Adding the separation border and padding in between items */
-.kform_legacy_markup_wrapper .gfield_repeater .gfield_repeater_items  .gfield_repeater_item:not(:last-child)  {
+.kform_legacy_markup_wrapper .kfield_repeater .kfield_repeater_items  .kfield_repeater_item:not(:last-child)  {
     border-bottom: 2px solid #e0e0e6;
     padding-bottom: 20px;
 }
 
 /* Repeater - Left Border Color */
-.kform_legacy_markup_wrapper .gfield_repeater_cell  > .gfield_repeater_wrapper   {
+.kform_legacy_markup_wrapper .kfield_repeater_cell  > .kfield_repeater_wrapper   {
     border-left: 8px solid rgba(241, 241, 241, 1.000);
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.06), 0 2px 1px -1px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.06);
 
@@ -3214,19 +3214,19 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 /* //////////////////////////////////////////////////////////////*/
 
 
-.kform_legacy_markup_wrapper .gfield_repeater_buttons .add_repeater_item_text:focus,
-.kform_legacy_markup_wrapper .gfield_repeater_buttons .remove_repeater_item_text:focus {
+.kform_legacy_markup_wrapper .kfield_repeater_buttons .add_repeater_item_text:focus,
+.kform_legacy_markup_wrapper .kfield_repeater_buttons .remove_repeater_item_text:focus {
       outline:0;
 }
 
 
  /*Coloring for the required asterisk*/
-.kform_legacy_markup_wrapper .gfield_repeater_item .gfield_repeater_cell .gfield_required {
+.kform_legacy_markup_wrapper .kfield_repeater_item .kfield_repeater_cell .kfield_required {
     color: #c32121;
 }
 
 /* Field labels styling */
-.kform_legacy_markup_wrapper .gfield_repeater_cell label{
+.kform_legacy_markup_wrapper .kfield_repeater_cell label{
     color:rgb(155, 154, 154);
     font-weight: 400;
     font-size: 14px;
@@ -3241,18 +3241,18 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 
 /* Third Level Repeater Spacing */
-.kform_legacy_markup_wrapper .gfield_repeater_value .gfield_repeater_value .gfield_repeater_cell{
+.kform_legacy_markup_wrapper .kfield_repeater_value .kfield_repeater_value .kfield_repeater_cell{
     padding-bottom: 20px;
     padding-top: 0px;
 }
 
 /*Spacing between adjancent cells in the same repeater*/
-.kform_legacy_markup_wrapper div .gfield_repeater_cell {
+.kform_legacy_markup_wrapper div .kfield_repeater_cell {
     margin-top: 5px;
 }
 
 /* Repeater styling line divider */
-.kform_legacy_markup_wrapper .gfield_repeater .gfield_repeater_items .gfield_repeater_item:not(:last-child)  {
+.kform_legacy_markup_wrapper .kfield_repeater .kfield_repeater_items .kfield_repeater_item:not(:last-child)  {
     border-bottom: 2px solid #e0e0e6;
     padding-bottom: 20px;
     margin-bottom: 20px;
@@ -3261,7 +3261,7 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 
 /* Repeater containers */
-.kform_legacy_markup_wrapper .gfield_repeater_value > .gfield_repeater {
+.kform_legacy_markup_wrapper .kfield_repeater_value > .kfield_repeater {
     border-left: 8px solid rgba(54, 86, 102, 0.1);
     background-color: rgba(1, 1, 1, 0.02);
     padding: 10px 20px;
@@ -3271,7 +3271,7 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 }
 
 /* Styling for Fake disabled input containers */
-.kform_legacy_markup_wrapper .gfield_repeater_cell  .gfield_repeater_value:not(:first-child)  {
+.kform_legacy_markup_wrapper .kfield_repeater_cell  .kfield_repeater_value:not(:first-child)  {
     color: rgba(117, 117, 117,0.7);
     border:1px solid rgba(197, 198, 197, 1.000);
     border-radius: 4px;
@@ -3283,24 +3283,24 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
 
 
 /* Consistent Padding in between cells and items */
-.kform_legacy_markup_wrapper .gfield_repeater_items .gfield_repeater_cell:not(:first-child),
-.kform_legacy_markup_wrapper .gfield_repeater .gfield_repeater_items{
+.kform_legacy_markup_wrapper .kfield_repeater_items .kfield_repeater_cell:not(:first-child),
+.kform_legacy_markup_wrapper .kfield_repeater .kfield_repeater_items{
     padding-top: 5px;
 }
 
 /* Repeaters Labels styling */
-.kform_legacy_markup_wrapper .gfield_repeater .gfield_label {
+.kform_legacy_markup_wrapper .kfield_repeater .kfield_label {
     color: rgba(35, 40, 45, 1.000);
     font-size: 16px;
     font-weight: 600;
 }
 
 /* Decreasing the space below the label */
-.kform_legacy_markup_wrapper .gfield_repeater_value .gfield_label {
+.kform_legacy_markup_wrapper .kfield_repeater_value .kfield_label {
     padding-bottom: 0px;
 }
 
 /* Removing additional 20px padding when more repeaters are added on third level repeater */
-.kform_legacy_markup_wrapper .gfield_repeater_value .gfield_repeater_value .gfield_repeater_item:first-child {
+.kform_legacy_markup_wrapper .kfield_repeater_value .kfield_repeater_value .kfield_repeater_item:first-child {
     padding-bottom: 0px;
 }

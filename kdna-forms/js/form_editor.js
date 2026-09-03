@@ -27,14 +27,14 @@ function InitializeEditor() {
 		clearInput( this );
 	} );
 
-	jQuery( '.gf-topmenu-dynamic' ).on( 'click', function( e ) {
+	jQuery( '.kdna-topmenu-dynamic' ).on( 'click', function( e ) {
 		var position = jQuery( this ).position();
-		jQuery( '.gf-popover' ).css( 'left', ( position.left + ( jQuery( this ).width() / 2 ) + 6 ) + 'px' );
-		var currentDisplay = jQuery( '.gf-popover' ).css( 'display' );
-		jQuery( '.gf-popover' ).css( 'display', ( currentDisplay === 'block' ? 'none' : 'block' ) );
+		jQuery( '.kdna-popover' ).css( 'left', ( position.left + ( jQuery( this ).width() / 2 ) + 6 ) + 'px' );
+		var currentDisplay = jQuery( '.kdna-popover' ).css( 'display' );
+		jQuery( '.kdna-popover' ).css( 'display', ( currentDisplay === 'block' ? 'none' : 'block' ) );
 	} );
 
-	jQuery( '.gf-popover__button' ).on( 'click', function() {
+	jQuery( '.kdna-popover__button' ).on( 'click', function() {
 		var url = jQuery( this ).data( 'url' );
 		if ( url !== '' ) {
 			window.location.href = url;
@@ -42,9 +42,9 @@ function InitializeEditor() {
 	} );
 
 	jQuery( document ).on( 'click', function( e ) {
-		var container = jQuery( ".gf-topmenu-dynamic" );
+		var container = jQuery( ".kdna-topmenu-dynamic" );
 		if ( ! container.is( e.target ) && container.has( e.target ).length === 0 ) {
-			jQuery( '.gf-popover' ).hide();
+			jQuery( '.kdna-popover' ).hide();
 		}
 	} );
 
@@ -138,7 +138,7 @@ function InitializeEditor() {
 	jQuery( '.panel-block > .field_settings' ).on( 'keydown', function( e ) {
 		// esc key, refocus the settings trigger in the editor preview for the active field
 		if ( e.keyCode === 27 ) {
-			jQuery( '.gfield.field_selected .gfield-edit').focus();
+			jQuery( '.gfield.field_selected .kfield-edit').focus();
 			return;
 		}
 		// not tab key, exit
@@ -236,7 +236,7 @@ function InitializeFieldSettings(){
 		});
 
 	jQuery('.field_input_choice_values_enabled').on('click keypress', function(){
-		var $container = jQuery(this).parent().siblings('.gfield_settings_input_choices_container');
+		var $container = jQuery(this).parent().siblings('.kfield_settings_input_choices_container');
 		ToggleInputChoiceValue($container, this.checked);
 		var $ul = $container.find('ul');
 		SetInputChoices($ul);
@@ -274,14 +274,14 @@ function InitializeFieldSettings(){
 		});
 
 	jQuery( '.custom_inputs_setting, .custom_inputs_sub_setting, .sub_labels_setting' )
-		.on( 'change', '.gform-field__toggle-input', function() {
-			var inputId = jQuery( this ).closest( '.gform-field__toggle' ).data( 'input_id' );
+		.on( 'change', '.kform-field__toggle-input', function() {
+			var inputId = jQuery( this ).closest( '.kform-field__toggle' ).data( 'input_id' );
 			ToggleInputHidden( jQuery( this ), inputId );
 		} )
-		.on( 'click', '#field_password_fields_container .gform-field__toggle', function() {
+		.on( 'click', '#field_password_fields_container .kform-field__toggle', function() {
 			// special handling for the password field checkboxes
 			var inputId = jQuery( this ).data( 'input_id' );
-			var toggleInput = jQuery( this ).find( '.gform-field__toggle-input' );
+			var toggleInput = jQuery( this ).find( '.kform-field__toggle-input' );
 			toggleInput[ 0 ].focus();
 			toggleInput[ 0 ].checked = ! toggleInput[ 0 ].checked;
 			ToggleInputHidden( toggleInput, inputId );
@@ -384,10 +384,10 @@ function InitializeFieldSettings(){
 	jQuery( 'input[ name="field_visibility" ]' ).on( 'DOMSubTreeModified change', function() {
 		var field = GetSelectedField();
 		SetFieldProperty( 'visibility', this.value );
-		var hidden_markup = '<div class="admin-hidden-markup"><i class="gform-icon gform-icon--hidden" aria-hidden="true" title="This field is hidden when viewing the form"></i><span>This field is hidden when viewing the form</span></div>';
+		var hidden_markup = '<div class="admin-hidden-markup"><i class="kform-icon kform-icon--hidden" aria-hidden="true" title="This field is hidden when viewing the form"></i><span>This field is hidden when viewing the form</span></div>';
 		if ( field[ 'visibility' ] === 'hidden' ) {
-			jQuery( '#field_' + field.id + ' .gfield_label' ).before( hidden_markup );
-			jQuery( '#field_' + field.id + ' .gsection_title' ).before( hidden_markup );
+			jQuery( '#field_' + field.id + ' .kfield_label' ).before( hidden_markup );
+			jQuery( '#field_' + field.id + ' .ksection_title' ).before( hidden_markup );
 			jQuery( '#field_' + field.id ).addClass( 'admin-hidden' );
 		} else {
 			jQuery( '#field_' + field.id ).removeClass( 'admin-hidden' );
@@ -428,7 +428,7 @@ function InitializeFieldSettings(){
 		SetCustomFieldTemplate();
 	});
 
-	jQuery('#gfield_calendar_icon_url').on('input propertychange', function(){
+	jQuery('#kfield_calendar_icon_url').on('input propertychange', function(){
 		SetFieldProperty('calendarIconUrl', this.value);
 	});
 
@@ -608,7 +608,7 @@ function InitializeForm(form){
 	if(form.useCurrentUserAsAuthor === undefined)
 		form.useCurrentUserAsAuthor = true;
 
-	jQuery('#gfield_current_user_as_author').prop('checked', form.useCurrentUserAsAuthor ? true : false);
+	jQuery('#kfield_current_user_as_author').prop('checked', form.useCurrentUserAsAuthor ? true : false);
 
 	if(form.postCategory)
 		jQuery('#field_post_category').val(form.postCategory);
@@ -617,21 +617,21 @@ function InitializeForm(form){
 		jQuery('#field_post_format').val(form.postFormat);
 
 	if(form.postContentTemplateEnabled){
-		jQuery('#gfield_post_content_enabled').prop('checked', true);
+		jQuery('#kfield_post_content_enabled').prop('checked', true);
 		jQuery('#field_post_content_template').val(form.postContentTemplate);
 	}
 	else{
-		jQuery('#gfield_post_content_enabled').prop('checked', false);
+		jQuery('#kfield_post_content_enabled').prop('checked', false);
 		jQuery('#field_post_content_template').val('');
 	}
 	TogglePostContentTemplate(true);
 
 	if(form.postTitleTemplateEnabled){
-		jQuery('#gfield_post_title_enabled').prop('checked', true);
+		jQuery('#kfield_post_title_enabled').prop('checked', true);
 		jQuery('#field_post_title_template').val(form.postTitleTemplate);
 	}
 	else{
-		jQuery('#gfield_post_title_enabled').prop('checked', false);
+		jQuery('#kfield_post_title_enabled').prop('checked', false);
 		jQuery('#field_post_title_template').val('');
 	}
 	TogglePostTitleTemplate(true);
@@ -769,14 +769,14 @@ function LoadFieldSettings() {
 	jQuery('#field_other_choice').prop('checked', field.enableOtherChoice ? true : false);
 	jQuery('#field_add_icon_url').val(field.addIconUrl ? field.addIconUrl : "");
 	jQuery('#field_delete_icon_url').val(field.deleteIconUrl ? field.deleteIconUrl : "");
-	jQuery('#gfield_enable_enhanced_ui').prop('checked', field.enableEnhancedUI ? true : false);
-	jQuery("#gfield_password_strength_enabled").prop("checked", field.passwordStrengthEnabled == true ? true : false);
-	jQuery("#gfield_password_visibility_enabled").prop("checked", field.passwordVisibilityEnabled == true ? true : false);
+	jQuery('#kfield_enable_enhanced_ui').prop('checked', field.enableEnhancedUI ? true : false);
+	jQuery("#kfield_password_strength_enabled").prop("checked", field.passwordStrengthEnabled == true ? true : false);
+	jQuery("#kfield_password_visibility_enabled").prop("checked", field.passwordVisibilityEnabled == true ? true : false);
 	TogglePasswordVisibility(true);
-	jQuery("#gfield_min_strength").val(field.minPasswordStrength == undefined ? "" : field.minPasswordStrength);
+	jQuery("#kfield_min_strength").val(field.minPasswordStrength == undefined ? "" : field.minPasswordStrength);
 	TogglePasswordStrength(true);
 
-	jQuery("#gfield_email_confirm_enabled").prop("checked", field.emailConfirmEnabled == true ? true : false);
+	jQuery("#kfield_email_confirm_enabled").prop("checked", field.emailConfirmEnabled == true ? true : false);
 
 	//Creating blank item for number format to existing number fields so that user is not force into a format (for backwards compatibility)
 	if (!field.numberFormat) {
@@ -864,32 +864,32 @@ function LoadFieldSettings() {
 
 	SetAddressType(true);
 
-	jQuery("#gfield_display_alt").prop("checked", field.displayAlt == true ? true : false);
-	jQuery("#gfield_display_title").prop("checked", field.displayTitle == true ? true : false);
-	jQuery("#gfield_display_caption").prop("checked", field.displayCaption == true ? true : false);
-	jQuery("#gfield_display_description").prop("checked", field.displayDescription == true ? true : false);
+	jQuery("#kfield_display_alt").prop("checked", field.displayAlt == true ? true : false);
+	jQuery("#kfield_display_title").prop("checked", field.displayTitle == true ? true : false);
+	jQuery("#kfield_display_caption").prop("checked", field.displayCaption == true ? true : false);
+	jQuery("#kfield_display_description").prop("checked", field.displayDescription == true ? true : false);
 
 	jQuery("#field_custom_field_name_text").val( field.postCustomFieldName == undefined ? "" : field.postCustomFieldName );
 
 	ToggleCustomField(true);
 
-	jQuery('#gfield_customfield_content_enabled').prop("checked", field.customFieldTemplateEnabled ? true : false);
+	jQuery('#kfield_customfield_content_enabled').prop("checked", field.customFieldTemplateEnabled ? true : false);
 	jQuery('#field_customfield_content_template').val(field.customFieldTemplateEnabled ? field.customFieldTemplate : "");
 	ToggleCustomFieldTemplate(true);
 
 	if (field.displayAllCategories)
-		jQuery("#gfield_category_all").prop("checked", true);
+		jQuery("#kfield_category_all").prop("checked", true);
 	else
-		jQuery("#gfield_category_select").prop("checked", true);
+		jQuery("#kfield_category_select").prop("checked", true);
 
 	ToggleCategory(true);
 
-	jQuery('#gfield_post_category_initial_item_enabled').prop("checked", field.categoryInitialItemEnabled ? true : false);
+	jQuery('#kfield_post_category_initial_item_enabled').prop("checked", field.categoryInitialItemEnabled ? true : false);
 	jQuery('#field_post_category_initial_item').val(field.categoryInitialItemEnabled ? field.categoryInitialItem : "");
 	TogglePostCategoryInitialItem(true);
 
 	var hasPostFeaturedImage = field.postFeaturedImage ? true : false;
-	jQuery('#gfield_featured_image').prop('checked', hasPostFeaturedImage);
+	jQuery('#kfield_featured_image').prop('checked', hasPostFeaturedImage);
 
 	if (typeof field.inputMaskIsCustom != 'boolean') {
 		field.inputMaskIsCustom = !IsStandardMask(field.inputMaskValue);
@@ -945,7 +945,7 @@ function LoadFieldSettings() {
 	}
 
 	jQuery("#field_date_input_type").val(field["dateType"]);
-	jQuery("#gfield_calendar_icon_url").val(field["calendarIconUrl"] == undefined ? "" : field["calendarIconUrl"]);
+	jQuery("#kfield_calendar_icon_url").val(field["calendarIconUrl"] == undefined ? "" : field["calendarIconUrl"]);
 	jQuery('#field_date_format').val(field['dateFormat'] == undefined ? "mdy" : field['dateFormat']);
 	jQuery('#field_time_format').val(field['timeFormat'] == "24" ? "24" : "12");
 
@@ -1020,7 +1020,7 @@ function LoadFieldSettings() {
 	TogglePageButton("next", true);
 	TogglePageButton("previous", true);
 
-	jQuery(".gfield_category_checkbox").each(function () {
+	jQuery(".kfield_category_checkbox").each(function () {
 		if (field["choices"]) {
 			for (var i = 0; i < field["choices"].length; i++) {
 				if (this.value == field["choices"][i].value) {
@@ -1076,7 +1076,7 @@ function LoadFieldSettings() {
 	// hide "Display placeholder" option for post category field if input type is not a select
 	if (field.type == 'post_category' && inputType != 'select') {
 		jQuery('.post_category_initial_item_setting').hide();
-		jQuery('#gfield_post_category_initial_item_enabled').prop('checked', false);
+		jQuery('#kfield_post_category_initial_item_enabled').prop('checked', false);
 		SetCategoryInitialItem();
 	}
 
@@ -1207,7 +1207,7 @@ function LoadFieldSettings() {
 		var passwordFields = GetCustomizeInputsUI(field);
 		jQuery('#field_password_fields_container').html(passwordFields);
 		// remove the toggle from the "Enter Password" field
-		jQuery('#field_password_fields_container .field_custom_input_row').first().find('.gform-field__toggle').remove();
+		jQuery('#field_password_fields_container .field_custom_input_row').first().find('.kform-field__toggle').remove();
 
 		// Show/Hide Size setting.
 		var confirmEnabled = field.inputs[1].isHidden == 'undefined' ? true : !field.inputs[1].isHidden;
@@ -1216,7 +1216,7 @@ function LoadFieldSettings() {
 		}
 
 		// Hide Password sub-label.
-		jQuery('.password_setting .custom_inputs_setting ').on('click keypress', '.gform-field__toggle', function () {
+		jQuery('.password_setting .custom_inputs_setting ').on('click keypress', '.kform-field__toggle', function () {
 			var field = GetSelectedField(),
 				confirmEnabled = !field.inputs[1].isHidden,
 				passwordSubLabel = jQuery('label[for="input_' + field.id + '"]');
@@ -1380,10 +1380,10 @@ function SetUpAdvancedNameField(){
 
 	ToggleNamePrefixUI(!prefixInput.isHidden);
 
-	jQuery( '.name_setting .custom_inputs_setting' ).on( 'click', '.gform-field__toggle', function() {
+	jQuery( '.name_setting .custom_inputs_setting' ).on( 'click', '.kform-field__toggle', function() {
 		var inputId = jQuery( this ).data( 'input_id' );
 		if ( inputId.toString().indexOf( ".2" ) >= 0 ) {
-			var isActive = jQuery( this ).find( '.gform-field__toggle-input' ).is( ':checked' );
+			var isActive = jQuery( this ).find( '.kform-field__toggle-input' ).is( ':checked' );
 			ToggleNamePrefixUI( isActive );
 		}
 	} );
@@ -1435,9 +1435,9 @@ function TogglePageBreakSettings(){
 function SetDisableQuantity(isChecked){
 	SetFieldProperty('disableQuantity', isChecked);
 	if(isChecked)
-		jQuery(".field_selected .ginput_quantity_label, .field_selected .ginput_quantity").hide();
+		jQuery(".field_selected .kinput_quantity_label, .field_selected .kinput_quantity").hide();
 	else
-		jQuery(".field_selected .ginput_quantity_label, .field_selected .ginput_quantity").show();
+		jQuery(".field_selected .kinput_quantity_label, .field_selected .kinput_quantity").show();
 }
 
 function SetBasePrice(number){
@@ -1452,8 +1452,8 @@ function SetBasePrice(number){
 	jQuery("#field_base_price").val(price);
 
 	SetFieldProperty('basePrice', price);
-	jQuery(".field_selected .ginput_product_price, .field_selected .ginput_shipping_price").html(price);
-	jQuery(".field_selected .ginput_amount").val(price);
+	jQuery(".field_selected .kinput_product_price, .field_selected .kinput_shipping_price").html(price);
+	jQuery(".field_selected .kinput_amount").val(price);
 }
 
 function ChangeAddressType(){
@@ -1481,7 +1481,7 @@ function SetAddressType( isInit ){
 		return;
 
 	SetAddressProperties();
-	jQuery(".gfield_address_type_container").hide();
+	jQuery(".kfield_address_type_container").hide();
 	jQuery("#address_type_container_" + jQuery("#field_address_type").val()).show();
 	CreatePlaceholdersUI(field);
 	CreateAutocompleteUI(field);
@@ -1515,7 +1515,7 @@ function UpdateAddressFields(){
 	// hide country drop down and setting.
 	var isInternational = jQuery( "#field_address_country_" + addressType ).val() == "";
 	var hideCountrySetting = ! isInternational;
-	var hideCountryField = ! isInternational || ! jQuery( '#field_address_fields_container [id="gforms-editor-toggle-' + field.id + '.6"' ).is( ':checked' );
+	var hideCountryField = ! isInternational || ! jQuery( '#field_address_fields_container [id="kforms-editor-toggle-' + field.id + '.6"' ).is( ':checked' );
 
 	// hide country setting if this address type applies to a specific country.
 	if ( hideCountrySetting ) {
@@ -1674,32 +1674,32 @@ function UpgradeConsentField(field) {
 }
 
 function TogglePasswordVisibility( isInit ){
-	if ( jQuery( '#gfield_password_visibility_enabled' ).is( ":checked" ) ) {
-		jQuery( '.gfield.field_selected .ginput_container_password span button' ).show();
+	if ( jQuery( '#kfield_password_visibility_enabled' ).is( ":checked" ) ) {
+		jQuery( '.gfield.field_selected .kinput_container_password span button' ).show();
 	} else {
-		jQuery( '.gfield.field_selected .ginput_container_password span button' ).hide();
+		jQuery( '.gfield.field_selected .kinput_container_password span button' ).hide();
 	}
 }
 
 function TogglePasswordStrength( isInit ){
 
-	if(jQuery("#gfield_password_strength_enabled").is(":checked")){
-		jQuery("#gfield_min_strength_container").show();
+	if(jQuery("#kfield_password_strength_enabled").is(":checked")){
+		jQuery("#kfield_min_strength_container").show();
 	}
 	else{
-		jQuery("#gfield_min_strength_container").hide();
+		jQuery("#kfield_min_strength_container").hide();
 	}
 }
 
 function ToggleCategory( isInit ){
 
-	if(jQuery("#gfield_category_all").is(":checked")){
-		jQuery("#gfield_settings_category_container").hide();
+	if(jQuery("#kfield_category_all").is(":checked")){
+		jQuery("#kfield_settings_category_container").hide();
 		 SetFieldProperty("displayAllCategories", true);
 		 SetFieldProperty("choices", new Array()); //reset selected categories
 	}
 	else{
-		jQuery("#gfield_settings_category_container").show();
+		jQuery("#kfield_settings_category_container").show();
 		SetFieldProperty("displayAllCategories", false);
 	}
 }
@@ -1710,13 +1710,13 @@ function SetCopyValuesOptionLabel(value){
 }
 
 function SetCustomFieldTemplate(){
-	var enabled = jQuery("#gfield_customfield_content_enabled").is(":checked");
+	var enabled = jQuery("#kfield_customfield_content_enabled").is(":checked");
 	SetFieldProperty("customFieldTemplate", enabled ? jQuery("#field_customfield_content_template").val() : null);
 	SetFieldProperty("customFieldTemplateEnabled", enabled );
 }
 
 function SetCategoryInitialItem(){
-	var enabled = jQuery("#gfield_post_category_initial_item_enabled").is(":checked");
+	var enabled = jQuery("#kfield_post_category_initial_item_enabled").is(":checked");
 	SetFieldProperty("categoryInitialItem", enabled ? jQuery("#field_post_category_initial_item").val() : null);
 	SetFieldProperty("categoryInitialItemEnabled", enabled );
 }
@@ -1729,38 +1729,38 @@ function PopulateContentTemplate(fieldName){
 }
 
 function TogglePostContentTemplate(isInit){
-	if(jQuery("#gfield_post_content_enabled").is(":checked")){
-		jQuery("#gfield_post_content_container").show();
+	if(jQuery("#kfield_post_content_enabled").is(":checked")){
+		jQuery("#kfield_post_content_container").show();
 		if(!isInit){
 			PopulateContentTemplate("field_post_content_template");
 		}
 	}
 	else{
-		jQuery("#gfield_post_content_container").hide();
+		jQuery("#kfield_post_content_container").hide();
 	}
 }
 
 function TogglePostTitleTemplate(isInit){
-	if(jQuery("#gfield_post_title_enabled").is(":checked")){
-		jQuery("#gfield_post_title_container").show();
+	if(jQuery("#kfield_post_title_enabled").is(":checked")){
+		jQuery("#kfield_post_title_container").show();
 		if(!isInit)
 			PopulateContentTemplate("field_post_title_template");
 
 	}
 	else{
-		jQuery("#gfield_post_title_container").hide();
+		jQuery("#kfield_post_title_container").hide();
 	}
 }
 
 function ToggleCustomFieldTemplate(isInit){
-	if(jQuery("#gfield_customfield_content_enabled").is(":checked")){
-		jQuery("#gfield_customfield_content_container").show();
+	if(jQuery("#kfield_customfield_content_enabled").is(":checked")){
+		jQuery("#kfield_customfield_content_container").show();
 		if(!isInit){
 			PopulateContentTemplate("field_customfield_content_template");
 		}
 	}
 	else{
-		jQuery("#gfield_customfield_content_container").hide();
+		jQuery("#kfield_customfield_content_container").hide();
 	}
 }
 
@@ -1783,7 +1783,7 @@ function SetFieldColumns(){
 function ToggleChoiceValue( isInit ){
 	var field = GetSelectedField();
 	var suffix = field.enablePrice ? "_and_price" : "";
-	var container = jQuery('#gfield_settings_choices_container');
+	var container = jQuery('#kfield_settings_choices_container');
 
 	//removing all classes
 	container.removeClass("choice_with_price choice_with_value choice_with_value_and_price");
@@ -1856,8 +1856,8 @@ function ToggleCustomField( isInit ){
     jQuery("#field_custom_existing").prop("checked", true);
   }
 
-  show_element = isExisting ? "#gform-post-custom-select-container" : "#field_custom_field_name_text"
-	hide_element = isExisting ? "#field_custom_field_name_text"  : "#gform-post-custom-select-container";
+  show_element = isExisting ? "#kform-post-custom-select-container" : "#field_custom_field_name_text"
+	hide_element = isExisting ? "#field_custom_field_name_text"  : "#kform-post-custom-select-container";
 
 	jQuery(hide_element).hide();
 	jQuery(show_element).show();
@@ -2040,23 +2040,23 @@ function UpdateFormObject(){
 		jQuery('#field_submit').attr( 'data-field-position', 'bottom' );
 		jQuery('input[name="submit_location"][value="bottom"]').prop( 'checked', true );
 	} else {
-		jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
+		jQuery( '.submit_location_setting' ).prev( '.kform-alert--notice' ).remove();
 	}
 
 	if(HasPostField()){
 		form.postAuthor = jQuery('#field_post_author').val() ? jQuery('#field_post_author').val() : "";
-		form.useCurrentUserAsAuthor = jQuery('#gfield_current_user_as_author').is(":checked");
+		form.useCurrentUserAsAuthor = jQuery('#kfield_current_user_as_author').is(":checked");
 		form.postCategory = jQuery('#field_post_category').val();
 		form.postFormat = jQuery('#field_post_format').length != 0 ? jQuery('#field_post_format').val() : 0;
 		form.postStatus = jQuery('#field_post_status').val();
 	}
 
-	if(jQuery("#gfield_post_content_enabled").is(":checked") && HasPostContentField()){
+	if(jQuery("#kfield_post_content_enabled").is(":checked") && HasPostContentField()){
 		form.postContentTemplateEnabled = true;
 		form.postContentTemplate = jQuery("#field_post_content_template").val();
 	}
 
-	if(jQuery("#gfield_post_title_enabled").is(":checked")  && HasPostTitleField()){
+	if(jQuery("#kfield_post_title_enabled").is(":checked")  && HasPostTitleField()){
 		form.postTitleTemplateEnabled = true;
 		form.postTitleTemplate = jQuery("#field_post_title_template").val();
 	}
@@ -2882,8 +2882,8 @@ function ShowSettings( element ) {
 		//hide field and form pagination setting fields
 		jQuery( '.field_setting' ).hide();
 		jQuery( '.pagination_setting' ).hide();
-		jQuery("#gfield_post_category_initial_item_container").hide();
-		jQuery("#gfield_min_strength_container").hide();
+		jQuery("#kfield_post_category_initial_item_container").hide();
+		jQuery("#kfield_min_strength_container").hide();
 		// Show last pagination setting fields
 		fieldObject = GetSelectedField();
 		jQuery( '.last_pagination_setting' ).show();
@@ -2897,8 +2897,8 @@ function ShowSettings( element ) {
 		jQuery( '.last_pagination_setting' ).hide();
 		// Show form pagination setting fields
 		jQuery( '.pagination_setting' ).show();
-		jQuery("#gfield_post_category_initial_item_container").hide();
-		jQuery("#gfield_min_strength_container").hide();
+		jQuery("#kfield_post_category_initial_item_container").hide();
+		jQuery("#kfield_min_strength_container").hide();
 		InitPaginationOptions();
 		var label = jQuery( '#kform_pagination' ).data( 'title' );
 		var description = jQuery( '#kform_pagination' ).data( 'description' );
@@ -2912,7 +2912,7 @@ function ShowSettings( element ) {
 		fieldObject = GetSubmitField();
 		var label = kdna_vars.button;
 		var description = kdna_vars.buttonDescription;
-		var icon_classes = 'gform-icon gform-icon--smart-button';
+		var icon_classes = 'kform-icon kform-icon--smart-button';
 	} else {
 		// Hide form pagination and last pagination setting fields
 		jQuery( '.pagination_setting' ).hide();
@@ -3088,7 +3088,7 @@ function LoadBulkChoices(field){
 	 */
 	choices = gform.applyFilters( 'kform_choices_post_bulk_load', choices, field.choices );
 
-	jQuery("#gfield_bulk_add_input").val(choices.join("\n"));
+	jQuery("#kfield_bulk_add_input").val(choices.join("\n"));
 }
 
 /**
@@ -3250,7 +3250,7 @@ function LoadCustomChoices(){
 
 function SelectCustomChoice( name ){
 
-	jQuery("#gfield_bulk_add_input").val(kform_custom_choices[name].join("\n"));
+	jQuery("#kfield_bulk_add_input").val(kform_custom_choices[name].join("\n"));
 	kform_selected_custom_choice = name;
 	InitBulkCustomPanel();
 }
@@ -3261,7 +3261,7 @@ function SelectPredefinedChoice(name){
 	if( name == "Countries" && Array.isArray( list ) !== true ) {
 		list = Object.values( list );
 	}
-	jQuery('#gfield_bulk_add_input').val(list.join('\n'));
+	jQuery('#kfield_bulk_add_input').val(list.join('\n'));
 	kform_selected_custom_choice = "";
 	InitBulkCustomPanel();
 }
@@ -3505,7 +3505,7 @@ function UpdateFieldChoices(fieldType){
 
 			}
 			if(field.choices.length > 5)
-				choices += "<" + inputContainer + " class='gchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='kchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 
 			if ( field.enableSelectAll ) {
 				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + kdna_vars["selectAll"] + '</button>';
@@ -3527,7 +3527,7 @@ function UpdateFieldChoices(fieldType){
 			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + kdna_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
 
 			if(field.choices.length > 5) {
-				choices += "<" + inputContainer + " class='gchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='kchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 			}
 
 			break;
@@ -3780,11 +3780,11 @@ function ToggleDateCalendar( isInit ){
 function ToggleCalendarIconUrl( isInit ){
 
 	if(jQuery("#gsetting_icon_custom").is(":checked")){
-		jQuery("#gfield_icon_url_container").show();
+		jQuery("#kfield_icon_url_container").show();
 	}
 	else{
-		jQuery("#gfield_icon_url_container").hide();
-		jQuery("#gfield_calendar_icon_url").val("");
+		jQuery("#kfield_icon_url_container").hide();
+		jQuery("#kfield_calendar_icon_url").val("");
 		SetFieldProperty('calendarIconUrl', '');
 	}
 }
@@ -3804,10 +3804,10 @@ function LoadTimeInputs(){
 
 	if(format == "24"){
 		jQuery('#input_default_value_row_input_' + field.id +'_3').hide();
-		jQuery(".field_selected .gfield_time_ampm").hide();
+		jQuery(".field_selected .kfield_time_ampm").hide();
 	} else {
 		jQuery('#input_default_value_row_input_' + field.id +'_3').show();
-		jQuery(".field_selected .gfield_time_ampm").show();
+		jQuery(".field_selected .kfield_time_ampm").show();
 	}
 	jQuery('#input_placeholder_row_input_' + field.id +'_3').hide(); // No support for placeholder.
 	// AM/PM Sub label is hidden in the time field class after `kform_post_load_field_settings` is fired.
@@ -3830,7 +3830,7 @@ function SetDateFormat( format ) {
 		var formatLabel = jQuery( '#field_date_format option:selected' ).text();
 
 		if ( field.placeholder === '' ) {
-			jQuery( '.field_selected input[name="ginput_datepicker"]' )
+			jQuery( '.field_selected input[name="kinput_datepicker"]' )
 				.attr( 'placeholder', formatLabel );
 		}
 	}
@@ -3848,75 +3848,75 @@ function LoadDateInputs(){
 	if(type == "datefield") {
 		switch(position){
 			case "ymd" :
-				jQuery(".field_selected #gfield_input_date_month").remove().insertBefore(".field_selected #gfield_input_date_day");
-				jQuery(".field_selected #gfield_input_date_year").remove().insertBefore(".field_selected #gfield_input_date_month");
+				jQuery(".field_selected #kfield_input_date_month").remove().insertBefore(".field_selected #kfield_input_date_day");
+				jQuery(".field_selected #kfield_input_date_year").remove().insertBefore(".field_selected #kfield_input_date_month");
 			break;
 
 			case "mdy" :
-				jQuery(".field_selected #gfield_input_date_day").remove().insertBefore(".field_selected #gfield_input_date_year");
-				jQuery(".field_selected #gfield_input_date_month").remove().insertBefore(".field_selected #gfield_input_date_day");
+				jQuery(".field_selected #kfield_input_date_day").remove().insertBefore(".field_selected #kfield_input_date_year");
+				jQuery(".field_selected #kfield_input_date_month").remove().insertBefore(".field_selected #kfield_input_date_day");
 			break;
 
 			case "dmy" :
-				jQuery(".field_selected #gfield_input_date_month").remove().insertBefore(".field_selected #gfield_input_date_year");
-				jQuery(".field_selected #gfield_input_date_day").remove().insertBefore(".field_selected #gfield_input_date_month");
+				jQuery(".field_selected #kfield_input_date_month").remove().insertBefore(".field_selected #kfield_input_date_year");
+				jQuery(".field_selected #kfield_input_date_day").remove().insertBefore(".field_selected #kfield_input_date_month");
 			break;
 		}
 
 		jQuery('.field_selected')
-			.removeClass( 'gfield--datepicker-default-icon gfield--datepicker-no-icon' )
-			.removeClass( 'gfield--input-type-datedropdown gfield--input-type-datepicker' )
-			.addClass( 'gfield--input-type-datefield' );
+			.removeClass( 'kfield--datepicker-default-icon kfield--datepicker-no-icon' )
+			.removeClass( 'kfield--input-type-datedropdown kfield--input-type-datepicker' )
+			.addClass( 'kfield--input-type-datefield' );
 
-		jQuery(".field_selected [id^='gfield_input_date']").show();
-		jQuery(".field_selected [id^='gfield_dropdown_date']").hide();
-		jQuery(".field_selected #gfield_input_datepicker").hide();
-		jQuery(".field_selected #gfield_input_datepicker_icon").hide();
+		jQuery(".field_selected [id^='kfield_input_date']").show();
+		jQuery(".field_selected [id^='kfield_dropdown_date']").hide();
+		jQuery(".field_selected #kfield_input_datepicker").hide();
+		jQuery(".field_selected #kfield_input_datepicker_icon").hide();
 	}
 	else if(type == "datedropdown") {
 		switch(position) {
 			case "ymd" :
-				jQuery(".field_selected #gfield_dropdown_date_month").remove().insertBefore(".field_selected #gfield_dropdown_date_day");
-				jQuery(".field_selected #gfield_dropdown_date_year").remove().insertBefore(".field_selected #gfield_dropdown_date_month");
+				jQuery(".field_selected #kfield_dropdown_date_month").remove().insertBefore(".field_selected #kfield_dropdown_date_day");
+				jQuery(".field_selected #kfield_dropdown_date_year").remove().insertBefore(".field_selected #kfield_dropdown_date_month");
 			break;
 
 			case "mdy" :
-				jQuery(".field_selected #gfield_dropdown_date_day").remove().insertBefore(".field_selected #gfield_dropdown_date_year");
-				jQuery(".field_selected #gfield_dropdown_date_month").remove().insertBefore(".field_selected #gfield_dropdown_date_day");
+				jQuery(".field_selected #kfield_dropdown_date_day").remove().insertBefore(".field_selected #kfield_dropdown_date_year");
+				jQuery(".field_selected #kfield_dropdown_date_month").remove().insertBefore(".field_selected #kfield_dropdown_date_day");
 			break;
 
 			case "dmy" :
-				jQuery(".field_selected #gfield_dropdown_date_month").remove().insertBefore(".field_selected #gfield_dropdown_date_year");
-				jQuery(".field_selected #gfield_dropdown_date_day").remove().insertBefore(".field_selected #gfield_dropdown_date_month");
+				jQuery(".field_selected #kfield_dropdown_date_month").remove().insertBefore(".field_selected #kfield_dropdown_date_year");
+				jQuery(".field_selected #kfield_dropdown_date_day").remove().insertBefore(".field_selected #kfield_dropdown_date_month");
 			break;
 		}
 
 		jQuery('.field_selected')
-			.removeClass( 'gfield--datepicker-default-icon gfield--datepicker-no-icon' )
-			.removeClass( 'gfield--input-type-datefield gfield--input-type-datepicker' )
-			.addClass( 'gfield--input-type-datedropdown' );
+			.removeClass( 'kfield--datepicker-default-icon kfield--datepicker-no-icon' )
+			.removeClass( 'kfield--input-type-datefield kfield--input-type-datepicker' )
+			.addClass( 'kfield--input-type-datedropdown' );
 
-		jQuery(".field_selected [id^='gfield_dropdown_date']").css('display', 'flex');
-		jQuery(".field_selected [id^='gfield_input_date']").hide();
-		jQuery(".field_selected #gfield_input_datepicker").hide();
-		jQuery(".field_selected #gfield_input_datepicker_icon").hide();
+		jQuery(".field_selected [id^='kfield_dropdown_date']").css('display', 'flex');
+		jQuery(".field_selected [id^='kfield_input_date']").hide();
+		jQuery(".field_selected #kfield_input_datepicker").hide();
+		jQuery(".field_selected #kfield_input_datepicker_icon").hide();
 	}
 	else {
 		jQuery('.field_selected')
-			.removeClass( 'gfield--input-type-datefield gfield--input-type-datedropdown' )
-			.addClass( 'gfield--input-type-datepicker' );
+			.removeClass( 'kfield--input-type-datefield kfield--input-type-datedropdown' )
+			.addClass( 'kfield--input-type-datepicker' );
 
-		jQuery(".field_selected [id^='gfield_input_date']").hide();
-		jQuery(".field_selected [id^='gfield_dropdown_date']").hide();
-		jQuery(".field_selected #gfield_input_datepicker").css( 'display', 'flex' );
+		jQuery(".field_selected [id^='kfield_input_date']").hide();
+		jQuery(".field_selected [id^='kfield_dropdown_date']").hide();
+		jQuery(".field_selected #kfield_input_datepicker").css( 'display', 'flex' );
 
 		// Displaying or hiding the calendar icon
 		if(jQuery("#gsetting_icon_calendar").is(":checked")) {
-			jQuery(".field_selected").removeClass( 'gfield--datepicker-no-icon' ).addClass( 'gfield--datepicker-default-icon' );
-			jQuery(".field_selected #gfield_input_datepicker_icon").show();
+			jQuery(".field_selected").removeClass( 'kfield--datepicker-no-icon' ).addClass( 'kfield--datepicker-default-icon' );
+			jQuery(".field_selected #kfield_input_datepicker_icon").show();
 		} else {
-			jQuery(".field_selected").removeClass( 'gfield--datepicker-default-icon' ).addClass( 'gfield--datepicker-no-icon' );
-			jQuery(".field_selected #gfield_input_datepicker_icon").hide();
+			jQuery(".field_selected").removeClass( 'kfield--datepicker-default-icon' ).addClass( 'kfield--datepicker-no-icon' );
+			jQuery(".field_selected #kfield_input_datepicker_icon").hide();
 		}
 	}
 }
@@ -3967,10 +3967,10 @@ function SetDateInputType(type){
 }
 
 function SetPostImageMeta(){
-	var displayAlt = jQuery('#gfield_display_alt').is(":checked");
-	var displayTitle = jQuery('#gfield_display_title').is(":checked");
-	var displayCaption = jQuery('#gfield_display_caption').is(":checked");
-	var displayDescription = jQuery('#gfield_display_description').is(":checked");
+	var displayAlt = jQuery('#kfield_display_alt').is(":checked");
+	var displayTitle = jQuery('#kfield_display_title').is(":checked");
+	var displayCaption = jQuery('#kfield_display_caption').is(":checked");
+	var displayDescription = jQuery('#kfield_display_description').is(":checked");
 	var displayLabel = (displayAlt || displayTitle || displayCaption || displayDescription);
 
 	//setting property
@@ -3980,16 +3980,16 @@ function SetPostImageMeta(){
 	SetFieldProperty('displayDescription', displayDescription);
 
 	//updating UI
-	jQuery('.field_selected .ginput_post_image_alt').css("display", displayAlt ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_title').css("display", displayTitle ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_caption').css("display", displayCaption ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_description').css("display", displayDescription ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_file').css("display", displayLabel ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_alt').css("display", displayAlt ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_title').css("display", displayTitle ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_caption').css("display", displayCaption ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_description').css("display", displayDescription ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_file').css("display", displayLabel ? "block" : "none");
 }
 
 function SetFeaturedImage() {
 
-	var isChecked = jQuery('#gfield_featured_image').is(':checked');
+	var isChecked = jQuery('#kfield_featured_image').is(':checked');
 
 	if(isChecked) {
 
@@ -4174,7 +4174,7 @@ function SetInputCustomLabel( value, inputId ) {
 
 			elementID = 'input_' + field.inputs[ i ].id;
 			elementID = elementID.replace( '.', '_' );
-			elementID = '.ginput_container label[for=' + elementID + "]";
+			elementID = '.kinput_container label[for=' + elementID + "]";
 			jQuery( elementID ).text( label );
 
 			// Toggle the screen-reader-text class based on if the customLabel is set.
@@ -4205,7 +4205,7 @@ function SetSelectedCategories(){
 	var field = GetSelectedField();
 	field["choices"] = new Array();
 
-	jQuery(".gfield_category_checkbox").each(function(){
+	jQuery(".kfield_category_checkbox").each(function(){
 		if(this.checked)
 			field["choices"].push(new Choice(this.name, this.value));
 	});
@@ -4214,8 +4214,8 @@ function SetSelectedCategories(){
 }
 
 function SetFieldLabel(label){
-	var requiredElement = jQuery(".field_selected .gfield_required")[0];
-	jQuery(".field_selected label.gfield_label, .field_selected .gsection_title, .field_selected legend.gfield_label > span").text(label).append(requiredElement);
+	var requiredElement = jQuery(".field_selected .kfield_required")[0];
+	jQuery(".field_selected label.kfield_label, .field_selected .ksection_title, .field_selected legend.kfield_label > span").text(label).append(requiredElement);
 	SetFieldProperty("label", label);
 
 	var nativeEvent = new Event('gform/form_editor/set_field_label');
@@ -4233,11 +4233,11 @@ function SetAriaLabel(label){
 	var fieldId   = jQuery( ".field_selected" )[0].id.split( '_' )[1];
 	var field     = GetFieldById( fieldId );
 	var ariaLabel = window.kdna_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
-	jQuery( ".field_selected .gfield-edit" ).attr( 'aria-label', ariaLabel );
+	jQuery( ".field_selected .kfield-edit" ).attr( 'aria-label', ariaLabel );
 }
 
 function SetCaptchaTheme(theme, thumbnailUrl){
-	jQuery(".field_selected .gfield_captcha").attr("src", thumbnailUrl);
+	jQuery(".field_selected .kfield_captcha").attr("src", thumbnailUrl);
 	SetFieldProperty("captchaTheme", theme);
 }
 
@@ -4246,7 +4246,7 @@ function SetCaptchaSize(size){
 	var type = jQuery("#field_captcha_type").val();
 	SetFieldProperty("simpleCaptchaSize", size);
 	RedrawCaptcha();
-	jQuery(".field_selected .gfield_captcha_input_container").removeClass(type + "_small").removeClass(type + "_medium").removeClass(type + "_large").addClass(type + "_" + size);
+	jQuery(".field_selected .kfield_captcha_input_container").removeClass(type + "_small").removeClass(type + "_medium").removeClass(type + "_large").addClass(type + "_" + size);
 }
 
 function SetCaptchaFontColor(color){
@@ -4266,13 +4266,13 @@ function RedrawCaptcha(){
 		url_1 = GetCaptchaUrl(1);
 		url_2 = GetCaptchaUrl(2);
 		url_3 = GetCaptchaUrl(3);
-		jQuery(".field_selected .gfield_captcha:eq(0)").attr("src", url_1);
-		jQuery(".field_selected .gfield_captcha:eq(1)").attr("src", url_2);
-		jQuery(".field_selected .gfield_captcha:eq(2)").attr("src", url_3);
+		jQuery(".field_selected .kfield_captcha:eq(0)").attr("src", url_1);
+		jQuery(".field_selected .kfield_captcha:eq(1)").attr("src", url_2);
+		jQuery(".field_selected .kfield_captcha:eq(2)").attr("src", url_3);
 	}
 	else{
 		url = GetCaptchaUrl();
-		jQuery(".field_selected .gfield_captcha").attr("src", url);
+		jQuery(".field_selected .kfield_captcha").attr("src", url);
 	}
 }
 
@@ -4426,13 +4426,13 @@ function SetFieldCheckboxInputs(field) {
 
 function SetPasswordStrength(isEnabled){
 	if(isEnabled){
-		jQuery(".field_selected .gfield_password_strength").show();
+		jQuery(".field_selected .kfield_password_strength").show();
 	}
 	else{
-		jQuery(".field_selected .gfield_password_strength").hide();
+		jQuery(".field_selected .kfield_password_strength").hide();
 
 		//resetting min strength
-		jQuery("#gfield_min_strength").val("");
+		jQuery("#kfield_min_strength").val("");
 		SetFieldProperty('minPasswordStrength', "");
 	}
 
@@ -4452,12 +4452,12 @@ function ToggleEmailSettings(field){
 function SetEmailConfirmation(isEnabled){
 	var field = GetSelectedField();
 	if(isEnabled){
-		jQuery(".field_selected .ginput_single_email").hide();
-		jQuery(".field_selected .ginput_confirm_email").show();
+		jQuery(".field_selected .kinput_single_email").hide();
+		jQuery(".field_selected .kinput_confirm_email").show();
 	}
 	else{
-		jQuery(".field_selected .ginput_confirm_email").hide();
-		jQuery(".field_selected .ginput_single_email").show();
+		jQuery(".field_selected .kinput_confirm_email").hide();
+		jQuery(".field_selected .kinput_single_email").show();
 	}
 
 	field['emailConfirmEnabled'] = isEnabled;
@@ -4501,7 +4501,7 @@ function SetCardType(elem, value) {
 
 function SetFieldRequired( isRequired ) {
 	var required = kform_form_strings.requiredIndicator;
-	var requiredSelector = '.field_selected .gfield_required';
+	var requiredSelector = '.field_selected .kfield_required';
 	var appendRequired = false;
 
 	if ( field.type === 'consent' ) {
@@ -4520,8 +4520,8 @@ function SetFieldRequired( isRequired ) {
 	}
 
 	if ( appendRequired ) {
-		var labelSelector = field.type === 'consent' && field.labelPlacement === 'hidden_label' ? '.field_selected .gfield_consent_label' : '.field_selected legend.gfield_label span, .field_selected label.gfield_label';
-		jQuery( labelSelector ).append( '<span class="gfield_required">' + required + '</span>' );
+		var labelSelector = field.type === 'consent' && field.labelPlacement === 'hidden_label' ? '.field_selected .kfield_consent_label' : '.field_selected legend.kfield_label span, .field_selected label.kfield_label';
+		jQuery( labelSelector ).append( '<span class="kfield_required">' + required + '</span>' );
 	}
 
 	SetFieldProperty( 'isRequired', isRequired );
@@ -4663,7 +4663,7 @@ function SetHTMLMargins( value ) {
 	var field      = GetSelectedField(),
 		$container = jQuery( '#field_' + field.id );
 
-	$container.toggleClass( 'gfield_html_formatted' );
+	$container.toggleClass( 'kfield_html_formatted' );
 	SetFieldProperty('disableMargins', value );
 }
 
@@ -4686,7 +4686,7 @@ function SetSubmitLocation( location ) {
 		var groupID = jQuery( '#field_submit' ).attr( 'data-groupid' );
 		jQuery( '#field_submit' )
 			.removeAttr( 'data-groupid' )
-			.addClass( 'gfield--width-full' )
+			.addClass( 'kfield--width-full' )
 			.setGridColumnSpan( 12 )
 			.resizeGroup( groupID );
 
@@ -4698,9 +4698,9 @@ function SetSubmitLocation( location ) {
 
 function SetSubmitWidth( width ) {
 	if( 'full' === width ) {
-		jQuery( '#field_submit .gform-button' ).addClass( 'gform-button--width-full' );
+		jQuery( '#field_submit .kform-button' ).addClass( 'kform-button--width-full' );
 	} else {
-		jQuery( '#field_submit .gform-button' ).removeClass( 'gform-button--width-full' );
+		jQuery( '#field_submit .kform-button' ).removeClass( 'kform-button--width-full' );
 	}
 }
 
@@ -4951,7 +4951,7 @@ function SearchWithinFieldGroup( group, search ) {
 
 	var resultsDisplay = results ? 'none' : 'block';
 
-	jQuery( group ).parent().find( '.gf-field-group__no-results' ).css( 'display', resultsDisplay );
+	jQuery( group ).parent().find( '.kdna-field-group__no-results' ).css( 'display', resultsDisplay );
 }
 
 /**
@@ -5049,8 +5049,8 @@ function IsValidFormula(formula) {
 function ResetFieldNotice( fieldSetting ) {
 	if ( typeof fieldSetting !== 'undefined' ) {
 		jQuery( '.' + fieldSetting )
-			.nextAll( '.gform-alert--notice' ).remove()
-			.prevAll( '.gform-alert--notice' ).remove();
+			.nextAll( '.kform-alert--notice' ).remove()
+			.prevAll( '.kform-alert--notice' ).remove();
 	}
 }
 
@@ -5060,8 +5060,8 @@ function ResetFieldNotice( fieldSetting ) {
  * @since 2.6
  */
 function resetAllFieldNotices() {
-	if ( jQuery('.editor-sidebar').find('.gform-alert--notice').length ) {
-		jQuery('.editor-sidebar').find('.gform-alert--notice:not(.gform-visible-notice)').remove();
+	if ( jQuery('.editor-sidebar').find('.kform-alert--notice').length ) {
+		jQuery('.editor-sidebar').find('.kform-alert--notice:not(.kform-visible-notice)').remove();
 	}
 }
 
@@ -5072,7 +5072,7 @@ function resetAllFieldNotices() {
  */
 function ResetFieldAccessibilityWarning( fieldSetting ) {
 	if ( typeof fieldSetting !== 'undefined' ) {
-		jQuery( '.gform-alert--accessibility[data-field-setting="' + fieldSetting + '"]' ).remove()
+		jQuery( '.kform-alert--accessibility[data-field-setting="' + fieldSetting + '"]' ).remove()
 	}
 }
 
@@ -5082,8 +5082,8 @@ function ResetFieldAccessibilityWarning( fieldSetting ) {
  * @since 2.5.8
  */
 function resetAllFieldAccessibilityWarnings() {
-	if ( jQuery('.editor-sidebar').find('.gform-alert--accessibility').length ) {
-		jQuery('.editor-sidebar').find('.gform-alert--accessibility').remove();
+	if ( jQuery('.editor-sidebar').find('.kform-alert--accessibility').length ) {
+		jQuery('.editor-sidebar').find('.kform-alert--accessibility').remove();
 	}
 }
 
@@ -5095,11 +5095,11 @@ function resetAllFieldAccessibilityWarnings() {
 function setSidebarFieldMessage() {
 
 	let types = [
-		{ type: 'warning', iconClasses: ['gform-icon--exclamation-simple', 'gform-icon-preset--status-error'] },
-		{ type: 'error', iconClasses: ['gform-icon--exclamation-simple', 'gform-icon-preset--status-error'] },
-		{ type: 'info', iconClasses: ['gform-icon--information-simple', 'gform-icon-preset--status-info'] },
-		{ type: 'notice', iconClasses: ['gform-icon--information-simple', 'gform-icon-preset--status-info'] },
-		{ type: 'success', iconClasses: ['gform-icon--checkmark-simple', 'gform-icon-preset--status-correct'] },
+		{ type: 'warning', iconClasses: ['kform-icon--exclamation-simple', 'kform-icon-preset--status-error'] },
+		{ type: 'error', iconClasses: ['kform-icon--exclamation-simple', 'kform-icon-preset--status-error'] },
+		{ type: 'info', iconClasses: ['kform-icon--information-simple', 'kform-icon-preset--status-info'] },
+		{ type: 'notice', iconClasses: ['kform-icon--information-simple', 'kform-icon-preset--status-info'] },
+		{ type: 'success', iconClasses: ['kform-icon--checkmark-simple', 'kform-icon-preset--status-correct'] },
 	];
 
 	/**
@@ -5117,17 +5117,17 @@ function setSidebarFieldMessage() {
 			$container = jQuery( '.field_selected .field-sidebar-message-content--type-' + type );
 			messageMarkup = $container && $container.length ? kform_strip_scripts( $container.html() ) : '';
 			if ( messageMarkup ) {
-				jQuery( '#sidebar_field_message_container' ).html( '<div class="gform-alert gform-alert--theme-cosmos"><span class="gform-icon gform-icon--preset-active gform-alert__icon" aria-hidden="true"></span><div class="gform-alert__message-wrap"><div class="gform-alert__message"></div></div></div>' );
-				jQuery( '#sidebar_field_message_container .gform-alert__message' ).html( messageMarkup );
-				jQuery( '#sidebar_field_message_container .gform-alert' ).addClass( 'gform-alert--' + ( type === 'warning' ? 'error' : type ) );
+				jQuery( '#sidebar_field_message_container' ).html( '<div class="kform-alert kform-alert--theme-cosmos"><span class="kform-icon kform-icon--preset-active kform-alert__icon" aria-hidden="true"></span><div class="kform-alert__message-wrap"><div class="kform-alert__message"></div></div></div>' );
+				jQuery( '#sidebar_field_message_container .kform-alert__message' ).html( messageMarkup );
+				jQuery( '#sidebar_field_message_container .kform-alert' ).addClass( 'kform-alert--' + ( type === 'warning' ? 'error' : type ) );
 				iconClasses.forEach(
 					( className ) => {
-						jQuery( '#sidebar_field_message_container .gform-alert__icon' ).addClass( className );
+						jQuery( '#sidebar_field_message_container .kform-alert__icon' ).addClass( className );
 					}
 				);
 				// Add class to force this notice visible, as all field notices are reset when a field is selected.
 				if ( type === 'notice' ) {
-					jQuery( '#sidebar_field_message_container .gform-alert' ).addClass( 'gform-visible-notice' );
+					jQuery( '#sidebar_field_message_container .kform-alert' ).addClass( 'kform-visible-notice' );
 				}
 				showSidebarMessage = true;
 				wp.a11y.speak( messageMarkup );
@@ -5139,7 +5139,7 @@ function setSidebarFieldMessage() {
 
 	if ( showSidebarMessage ) {
 		jQuery( '#sidebar_field_message_container' ).show();
-		jQuery( '#sidebar_field_message_container .gform-alert' ).show();
+		jQuery( '#sidebar_field_message_container .kform-alert' ).show();
 	}
 }
 
@@ -5194,15 +5194,15 @@ function setFieldError( fieldSetting, position, message ) {
 		message = getFieldErrorMessage( fieldSetting );
 	}
 
-	var errorDiv = '<div class="gform-alert gform-alert--error gform-alert--inline" data-field-setting="' + fieldSetting + '">';
-		errorDiv += '<span class="gform-alert__icon gform-icon gform-icon--circle-error-fine" aria-hidden="true"></span>';
-		errorDiv += '<div class="gform-alert__message-wrap">' + message + '</div>';
+	var errorDiv = '<div class="kform-alert kform-alert--error kform-alert--inline" data-field-setting="' + fieldSetting + '">';
+		errorDiv += '<span class="kform-alert__icon kform-icon kform-icon--circle-error-fine" aria-hidden="true"></span>';
+		errorDiv += '<div class="kform-alert__message-wrap">' + message + '</div>';
 		errorDiv += '</div>';
 
 	// Display the error message.
 	var fieldSettingContainer = jQuery( '.' + fieldSetting );
 	fieldSettingContainer.addClass( 'error' );
-	jQuery( '.gform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove();
+	jQuery( '.kform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove();
 	if ( position === 'above' ) {
 		fieldSettingContainer.before( errorDiv );
 	} else {
@@ -5223,7 +5223,7 @@ function resetFieldError( fieldSetting ) {
 
 	if ( typeof fieldSetting !== 'undefined' ) {
 
-		jQuery( '.gform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove()
+		jQuery( '.kform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove()
 		jQuery( '.' + fieldSetting ).removeClass( 'error' );
 
 		var index = errorProperties.indexOf( fieldSetting );
@@ -5250,7 +5250,7 @@ function resetAllFieldErrors() {
 		return;
 	}
 
-	jQuery('.editor-sidebar .gform-alert--error').remove();
+	jQuery('.editor-sidebar .kform-alert--error').remove();
 	jQuery('.field_setting').filter('.error').removeClass( 'error' );
 
 	if ( form.fields.length > 0 ) {

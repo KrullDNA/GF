@@ -42,14 +42,14 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--image_choice';
+		return 'kform-icon--image_choice';
 	}
 
 	function get_form_editor_field_settings() {

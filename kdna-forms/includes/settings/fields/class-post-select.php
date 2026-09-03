@@ -55,8 +55,8 @@ class Post_Select extends Select {
 			$post_plural   = $post_type->labels->name;
 
 			$html .= sprintf(
-				'<article class="gform-dropdown" data-js="gform-settings-field-select" data-post-type="%1$s">
-				    <span class="gform-visually-hidden" id="gform-%2$s-label">
+				'<article class="kform-dropdown" data-js="kform-settings-field-select" data-post-type="%1$s">
+				    <span class="kform-visually-hidden" id="gform-%2$s-label">
 						%3$s
 				    </span>
 
@@ -65,52 +65,52 @@ class Post_Select extends Select {
 						aria-expanded="false"
 						aria-haspopup="listbox"
 						aria-labelledby="gform-%2$s-label gform-%2$s-control"
-						class="gform-dropdown__control %6$s"
-						data-js="gform-dropdown-control"
+						class="kform-dropdown__control %6$s"
+						data-js="kform-dropdown-control"
 						id="gform-%2$s-control"
 				    >
 						<span
-							class="gform-dropdown__control-text"
-							data-js="gform-dropdown-control-text"
+							class="kform-dropdown__control-text"
+							data-js="kform-dropdown-control-text"
 						>
 				            %3$s
 				        </span>
-						<span class="gform-spinner gform-dropdown__spinner"></span>
-						<span class="gform-icon gform-icon--chevron gform-dropdown__chevron"></span>
+						<span class="kform-spinner kform-dropdown__spinner"></span>
+						<span class="kform-icon kform-icon--chevron kform-dropdown__chevron"></span>
 				    </button>
 				    <div
 						aria-labelledby="gform-%2$s-label"
-						class="gform-dropdown__container"
+						class="kform-dropdown__container"
 						role="listbox"
-						data-js="gform-dropdown-container"
+						data-js="kform-dropdown-container"
 						tabindex="-1"
 				    >
-						<div class="gform-dropdown__search">
-							<label for="gform-settings-field__%2$s-search" class="gform-visually-hidden">
+						<div class="kform-dropdown__search">
+							<label for="kform-settings-field__%2$s-search" class="kform-visually-hidden">
 								%4$s
 							</label>
 							<input
-								id="gform-settings-field__%2$s-search"
+								id="kform-settings-field__%2$s-search"
 								type="text"
-								class="gform-input gform-dropdown__search-input"
+								class="kform-input kform-dropdown__search-input"
 								placeholder="%4$s"
-								data-js="gform-dropdown-search"
+								data-js="kform-dropdown-search"
 							/>
-							<span class="gform-icon gform-icon--search gform-dropdown__search-icon"></span>
+							<span class="kform-icon kform-icon--search kform-dropdown__search-icon"></span>
 						</div>
 
-						<div class="gform-dropdown__list-container">
-				        <ul class="gform-dropdown__list" data-js="gform-dropdown-list"></ul>
+						<div class="kform-dropdown__list-container">
+				        <ul class="kform-dropdown__list" data-js="kform-dropdown-list"></ul>
 				      </div>
 				    </div>
-				    <input type="hidden" data-js="gf-post-select-input" name="_kdnaform_setting_%2$s" id="%2$s" value="%5$s"/>
+				    <input type="hidden" data-js="kdna-post-select-input" name="_kdnaform_setting_%2$s" id="%2$s" value="%5$s"/>
 				</article>',
 				$this->post_type,
 				esc_attr( $this->name ), // field name, used in HTML attributes
 				esc_html( $this->get_dropdown_label( $post_singular ) ), // form switcher label
 				esc_html( $this->get_search_label( $post_plural ) ), // label for search field
 				esc_attr( $this->get_value() ),
-				empty( $this->get_value() ) ? 'gform-dropdown__control--placeholder' : ''
+				empty( $this->get_value() ) ? 'kform-dropdown__control--placeholder' : ''
 			);
 
 		}

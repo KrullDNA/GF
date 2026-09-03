@@ -13,9 +13,9 @@ class KDNA_Download {
 	 * @since 2.0
 	 */
 	public static function maybe_process() {
-		if ( isset( $_GET['gf-download'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['kdna-download'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-			$file     = $_GET['gf-download']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
+			$file     = $_GET['kdna-download']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 			$form_id  = rgget( 'form-id' );
 			$field_id = rgget( 'field-id' );
 

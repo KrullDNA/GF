@@ -3,7 +3,7 @@ var GFGenericMap = function( options ) {
 	var self = this;
 
 	self.options = options;
-	self.UI = jQuery( '#gaddon-setting-row-'+ self.options.fieldName );
+	self.UI = jQuery( '#kaddon-setting-row-'+ self.options.fieldName );
 
 	self.init = function() {
 
@@ -119,8 +119,8 @@ var GFGenericMap = function( options ) {
 
 			limit:              limit,
 			items:              self.data,
-			addButtonMarkup:    '<i class="gficon-add"></i>',
-			removeButtonMarkup: '<i class="gficon-subtract"></i>',
+			addButtonMarkup:    '<i class="kficon-add"></i>',
+			removeButtonMarkup: '<i class="kficon-subtract"></i>',
 			callbacks:          {
 				add:  function( obj, $elem, item ) {
 

@@ -26,14 +26,14 @@ class KDNA_Field_Section extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--section';
+		return 'kform-icon--section';
 	}
 
 	function get_form_editor_field_settings() {
@@ -70,10 +70,10 @@ class KDNA_Field_Section extends KDNA_Field {
 
 		$admin_hidden_markup = ( $this->visibility == 'hidden' ) ? $this->get_hidden_admin_markup() : '';
 
-		$description = $this->get_description( $this->description, 'gsection_description' );
+		$description = $this->get_description( $this->description, 'ksection_description' );
 		$tag         = KDNACommon::is_legacy_markup_enabled( $form ) ? 'h2' : 'h3';
 		/* translators: 1. Admin buttons markup 2. Heading tag 3. The field label 4. The description */
-		$field_content = sprintf( '%1$s%2$s<%3$s class="gsection_title">%4$s</%3$s>%5$s', $admin_buttons, $admin_hidden_markup, $tag, esc_html( $field_label ), $description );
+		$field_content = sprintf( '%1$s%2$s<%3$s class="ksection_title">%4$s</%3$s>%5$s', $admin_buttons, $admin_hidden_markup, $tag, esc_html( $field_label ), $description );
 
 		return $field_content;
 	}

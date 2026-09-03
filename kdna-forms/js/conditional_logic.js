@@ -432,13 +432,13 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 	 * Do not re-enable inputs that are disabled by default. Check if field's inputs have been assessed. If not, add
 	 * designator class so these inputs are exempted below.
 	 */
-	if( ! $target.data( 'gf-disabled-assessed' ) ) {
-		$target.find( ':input:disabled' ).addClass( 'gf-default-disabled' );
-		$target.data( 'gf-disabled-assessed', true );
+	if( ! $target.data( 'kdna-disabled-assessed' ) ) {
+		$target.find( ':input:disabled' ).addClass( 'kdna-default-disabled' );
+		$target.data( 'kdna-disabled-assessed', true );
 	}
 
 	// honeypot should not be impacted by conditional logic.
-	if( $target.hasClass( 'gfield--type-honeypot') ) {
+	if( $target.hasClass( 'kfield--type-honeypot') ) {
 		return;
 	}
 
@@ -451,7 +451,7 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 
 		if(useAnimation && !isInit){
 			if($target.length > 0){
-				$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false );
+				$target.find(':input:hidden:not(.kdna-default-disabled)').prop( 'disabled', false );
 				if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kform_next_button' ) ) {
 					kdna_show_button( $target );
 				}
@@ -468,7 +468,7 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 			if ( display == '' || display == 'none' ){
 				display = '1' === kdna_legacy.is_legacy ? 'list-item' : 'block';
 			}
-			$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false ).attr( 'data-conditional-logic', 'visible' );
+			$target.find(':input:hidden:not(.kdna-default-disabled)').prop( 'disabled', false ).attr( 'data-conditional-logic', 'visible' );
 
 			// Handle conditional submit and next buttons.
 			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kform_next_button' ) ) {
@@ -528,7 +528,7 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 				$target.css( 'display', 'none' );
 				$target.attr( 'data-conditional-logic', 'hidden' );
 			}
-			$target.find(':input:hidden:not(.gf-default-disabled)').attr( 'disabled', 'disabled' );
+			$target.find(':input:hidden:not(.kdna-default-disabled)').attr( 'disabled', 'disabled' );
 			if(callback){
 				callback();
 			}
@@ -572,12 +572,12 @@ function kdna_hide_button( $target ) {
 function kdna_reset_to_default(targetId, defaultValue){
 
 	var $target = jQuery( targetId );
-    if( $target.hasClass('gfield_shipping') || $target.hasClass('gfield_total') ||
-        $target.hasClass('gfield--type-shipping') || $target.hasClass('gfield--type-total') ) {
+    if( $target.hasClass('kfield_shipping') || $target.hasClass('kfield_total') ||
+        $target.hasClass('kfield--type-shipping') || $target.hasClass('kfield--type-total') ) {
         return;
     }
 
-	var dateFields = jQuery( targetId ).find( '.gfield_date_month input, .gfield_date_day input, .gfield_date_year input, .gfield_date_dropdown_month select, .gfield_date_dropdown_day select, .gfield_date_dropdown_year select' );
+	var dateFields = jQuery( targetId ).find( '.kfield_date_month input, .kfield_date_day input, .kfield_date_year input, .kfield_date_dropdown_month select, .kfield_date_dropdown_day select, .kfield_date_dropdown_year select' );
 	if( dateFields.length > 0 ) {
 
 		dateFields.each( function(){
@@ -588,10 +588,10 @@ function kdna_reset_to_default(targetId, defaultValue){
 			if( defaultValue ) {
 
 				var key = 'd';
-				if (element.parents().hasClass('gfield_date_month') || element.parents().hasClass('gfield_date_dropdown_month') ){
+				if (element.parents().hasClass('kfield_date_month') || element.parents().hasClass('kfield_date_dropdown_month') ){
 					key = 'm';
 				}
-				else if(element.parents().hasClass('gfield_date_year') || element.parents().hasClass('gfield_date_dropdown_year') ){
+				else if(element.parents().hasClass('kfield_date_year') || element.parents().hasClass('kfield_date_dropdown_year') ){
 					key = 'y';
 				}
 
@@ -623,7 +623,7 @@ function kdna_reset_to_default(targetId, defaultValue){
 
 	// When a List field is hidden via conditional logic during a page submission, the markup will be reduced to a
 	// single row. Add enough rows/inputs to satisfy the default value.
-	if( defaultValue && target.parents( '.ginput_list' ).length > 0 && target.length < defaultValue.length ) {
+	if( defaultValue && target.parents( '.kinput_list' ).length > 0 && target.length < defaultValue.length ) {
 		while( target.length < defaultValue.length ) {
 			gformAddListItem( target.eq( 0 ), 0 );
 			target = jQuery(targetId).find( 'select, input[type="text"]:not([id*="_shim"]), input[type="number"], textarea' );
@@ -719,7 +719,7 @@ function kdna_reset_to_default(targetId, defaultValue){
 function kdna_is_hidden_pricing_input( element ) {
 
 	// Check for Single Product fields.
-	if( element.attr( 'id' ) && element.attr( 'id' ).indexOf( 'ginput_base_price' ) === 0 ) {
+	if( element.attr( 'id' ) && element.attr( 'id' ).indexOf( 'kinput_base_price' ) === 0 ) {
 		return true;
 	}
 
@@ -728,5 +728,5 @@ function kdna_is_hidden_pricing_input( element ) {
 	}
 
 	// Check for Shipping fields.
-	return element.parents( '.gfield_shipping' ).length;
+	return element.parents( '.kfield_shipping' ).length;
 }

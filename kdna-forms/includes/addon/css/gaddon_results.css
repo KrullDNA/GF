@@ -25,13 +25,13 @@ table#gquiz-results-summary td.gquiz-results-summary-data {
     margin: auto;
 }
 
-.gaddon-results-summary-secondary{
+.kaddon-results-summary-secondary{
     padding-top: 4px;
     font-weight: normal;
     font-size:13px;
 }
 
-.gaddon-results-summary-primary{
+.kaddon-results-summary-primary{
     padding:5px;
 }
 
@@ -43,47 +43,47 @@ table#gquiz-results-summary td.gquiz-results-summary-data {
 
 /* -------------------------------------*/
 
-table#gaddon-results-summary {
+table#kaddon-results-summary {
     table-layout: fixed;
 }
 
-table#gaddon-results-summary td {
+table#kaddon-results-summary td {
     font-weight: bold;
     text-align: center;
     padding: 10px;
 }
 
-table#gaddon-results-summary td.gaddon-results-summary-label {
+table#kaddon-results-summary td.kaddon-results-summary-label {
     font-size: 1.2em;
 }
 
-table#gaddon-results-summary td.gaddon-results-summary-data {
+table#kaddon-results-summary td.kaddon-results-summary-data {
     font-size: 2em;
 }
 
-.gaddon-results-summary-data-box {
+.kaddon-results-summary-data-box {
     border: 1px solid silver;
     padding: 10px;
     width: 75%;
     margin: auto;
 }
 
-.gaddon-field-precentages-correct {
+.kaddon-field-precentages-correct {
     float: left;
     margin: 15px 0 0 50px;
 }
 
 
 /*-------------*/
-#gresults-results {
+#kresults-results {
     margin-right: 300px;
 }
 
-.kdnaform-admin .gresults-filter-loading .kdnaform-spinner {
+.kdnaform-admin .kresults-filter-loading .kdnaform-spinner {
     display: inline-block;
 }
 
-.gf-results .gf-result-box {
+.kdna-results .kdna-result-box {
     background: #fff;
     border-radius: 3px;
     border: 1px solid #e3e6ef;
@@ -91,68 +91,68 @@ table#gaddon-results-summary td.gaddon-results-summary-data {
     padding: 1.562rem 1rem;
 }
 
-.gf-results .gf-result-box {
+.kdna-results .kdna-result-box {
     margin-right: 0;
     margin-bottom: 1.25rem;
 }
 
-.gf-results .gf-result-box__primary {
+.kdna-results .kdna-result-box__primary {
     display: flex;
 }
 
 @media screen and ( min-width: 782px ) {
-    .gf-results {
+    .kdna-results {
         display: flex;
         justify-content: space-between;
         margin-bottom: 1.25rem;
     }
 
-    .gf-results .gf-result-box {
+    .kdna-results .kdna-result-box {
         flex: 1 1 0px;
         margin-inline-end: 1.25rem;
         margin-bottom: 0;
     }
 
-    .gf-results .gf-result-box:last-child {
+    .kdna-results .kdna-result-box:last-child {
         margin-inline-end: 0;
     }
 }
 
-.gresults-results-field {
+.kresults-results-field {
     margin-bottom:20px;
 }
 
-.gresults-results-field table{
+.kresults-results-field table{
     border-bottom: 1px solid silver;
     border-spacing: 0;
 }
 
-.gresults-results-field table td{
+.kresults-results-field table td{
     padding:5px;
     border-right: 1px solid silver;
     border-top: 1px solid silver;
     text-align:center;
 }
 
-.gresults-results-field-table-header{
+.kresults-results-field-table-header{
     background-color: #eeeeee;
 }
 
-.gresults-results-field table td:first-child {
+.kresults-results-field table td:first-child {
     border-left: 1px solid silver;
 }
 
 
-ul.gresults-results-field-content,
-ul.gresults-results-field-content li{
+ul.kresults-results-field-content,
+ul.kresults-results-field-content li{
     list-style:disc outside none;
 }
-ul.gresults-results-field-content{
+ul.kresults-results-field-content{
     margin:10px;
 }
 
-td.gresults-rank-field-score,
-td.gresults-rank-field-rank{
+td.kresults-rank-field-score,
+td.kresults-rank-field-rank{
     width:110px;
 }
 
@@ -163,46 +163,46 @@ td.gresults-rank-field-rank{
 
 /* filter box */
 
-#gresults-results-filter-content {
+#kresults-results-filter-content {
 	padding:12px;
 	border-top: 1px solid #EBEBF2
 }
 
 
-.gresults-results-filter-section-label {
+.kresults-results-filter-section-label {
     font-size:1.2em;
     font-weight:bold;
     margin-top:10px;
     margin-bottom:10px;
 }
 
-#gresults-results-filter label {
+#kresults-results-filter label {
     margin-top:10px;
     display:block;
 }
 
-#gresults-results-filter-content #kdnaform-no-filters {
+#kresults-results-filter-content #kdnaform-no-filters {
     color: #242748;
 }
 
-.gresults-remove,
-.gresults-add {
+.kresults-remove,
+.kresults-add {
     margin-top:2px;
     vertical-align:middle;
     cursor:pointer;
 }
 
-.gresults-add {
+.kresults-add {
     margin-left:5px;
 }
 
-#gresults-no-filters{
+#kresults-no-filters{
     color:silver;
 }
 
-.gresults-datepicker,
-.gresults-filter-value,
-.gresults-filter-field {
+.kresults-datepicker,
+.kresults-filter-value,
+.kresults-filter-field {
     width:150px;
     box-sizing:border-box;
     -ms-box-sizing:border-box;
@@ -212,47 +212,47 @@ td.gresults-rank-field-rank{
     padding: 2px;
 }
 
-.gresults-filter-operator {
+.kresults-filter-operator {
     width:70px;
 }
 
-#gresults-results-filter-buttons {
+#kresults-results-filter-buttons {
     clear:both;
     margin-top:20px;
     width:180px;
 }
 
-.gresults-results-filter-field-label {
+.kresults-results-filter-field-label {
     font-size:1.1em;
     font-weight:bold;
     margin-bottom:10px;
 }
 
-.gresults-results-filter-field {
+.kresults-results-filter-field {
     margin-bottom:20px;
 }
 
-.gresults-results-filter-field ul li label {
+.kresults-results-filter-field ul li label {
     margin-left:5px;
 }
 
-.gresults-results-filter-title {
+.kresults-results-filter-title {
     font-size:1.5em;
     font-weight:bold;
 }
 
 /*
-#gresults-results-filter {
+#kresults-results-filter {
     visibility: hidden;
 }
 */
 
-#gresults-results-field-filters-container.resizable {
+#kresults-results-field-filters-container.resizable {
     border-bottom:5px double #ddd;
     min-height:120px;
 }
 
-#gresults-results-field-filters {
+#kresults-results-field-filters {
     height:100%;
     overflow-y:auto;
 }
@@ -284,10 +284,10 @@ td.gresults-rank-field-rank{
 
 #gquiz-results-summary { margin: 60px 0; }
 
-.gresults-chart-wrapper { border-top: 1px solid #dfdfdf; margin: 0 0 28px; }
-    .gquiz-field-precentages-correct + .gresults-chart-wrapper { margin: 0 0 14px; }
+.kresults-chart-wrapper { border-top: 1px solid #dfdfdf; margin: 0 0 28px; }
+    .gquiz-field-precentages-correct + .kresults-chart-wrapper { margin: 0 0 14px; }
 
-.gresults-label-group { display: block; clear: right; }
-.gresults-label-group .gresults-label { display: inline-block; width: 65px; }
-.gresults-group-correct .gresults-value { color: green; }
-.gresults-group-incorrect .gresults-value { color: red; }
+.kresults-label-group { display: block; clear: right; }
+.kresults-label-group .kresults-label { display: inline-block; width: 65px; }
+.kresults-group-correct .kresults-value { color: green; }
+.kresults-group-incorrect .kresults-value { color: red; }

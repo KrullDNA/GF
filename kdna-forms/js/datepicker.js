@@ -95,29 +95,29 @@
 			beforeShow: function( input, inst ) {
 
 				// Remove any classes that were added before as it could have been added to a different datepicker.
-				inst.dpDiv[0].classList.remove( 'gform-theme-datepicker' );
+				inst.dpDiv[0].classList.remove( 'kform-theme-datepicker' );
 				inst.dpDiv[0].classList.remove( 'gravity-theme' );
-				inst.dpDiv[0].classList.remove( 'gform-theme' );
-				inst.dpDiv[0].classList.remove( 'gform-legacy-datepicker' );
-				inst.dpDiv[0].classList.remove( 'gform-theme--framework' );
-				inst.dpDiv[0].classList.remove( 'gform-theme--foundation' );
-				inst.dpDiv[0].classList.remove( 'gform-theme--orbital' );
+				inst.dpDiv[0].classList.remove( 'kform-theme' );
+				inst.dpDiv[0].classList.remove( 'kform-legacy-datepicker' );
+				inst.dpDiv[0].classList.remove( 'kform-theme--framework' );
+				inst.dpDiv[0].classList.remove( 'kform-theme--foundation' );
+				inst.dpDiv[0].classList.remove( 'kform-theme--orbital' );
 
 				// Add classes based on the form theme
 				if ( isThemeDatepicker ) {
-					inst.dpDiv[ 0 ].classList.add( 'gform-theme-datepicker' );
+					inst.dpDiv[ 0 ].classList.add( 'kform-theme-datepicker' );
 					$( inst.dpDiv[ 0 ] ).attr( 'data-parent-form', formId + '_' + formPageInstance );
 				}
 
 				if ( formTheme === undefined || formTheme === 'gravity-theme' ) {
 					$( inst.dpDiv[0] ).addClass( 'gravity-theme' );
 				} else if ( formTheme === 'legacy' ) {
-					$( inst.dpDiv[0] ).addClass( 'gform-legacy-datepicker' );
+					$( inst.dpDiv[0] ).addClass( 'kform-legacy-datepicker' );
 				} else {
-					$( inst.dpDiv[0] ).addClass( 'gform-theme--' + formTheme );
+					$( inst.dpDiv[0] ).addClass( 'kform-theme--' + formTheme );
 					if ( formTheme === 'orbital' ) {
-						$( inst.dpDiv[0] ).addClass( 'gform-theme--framework' );
-						$( inst.dpDiv[0] ).addClass( 'gform-theme--foundation' );
+						$( inst.dpDiv[0] ).addClass( 'kform-theme--framework' );
+						$( inst.dpDiv[0] ).addClass( 'kform-theme--foundation' );
 					}
 				}
 
@@ -192,7 +192,7 @@
 	 */
 
 	function initDatepickers() {
-		$( '.gform-datepicker:not(.initialized)' ).each( function() {
+		$( '.kform-datepicker:not(.initialized)' ).each( function() {
 			var $element = $( this );
 			initSingleDatepicker( $element );
 			$element.addClass( 'initialized' );

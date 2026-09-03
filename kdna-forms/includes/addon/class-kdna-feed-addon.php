@@ -1485,7 +1485,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			esc_html__( 'The table `%1$s` does not exist. Please visit the %2$sForms > System Status%3$s page and click the "Re-run database upgrade" link (under the Database section) to create the missing table.', 'kdnaforms' ),
 			esc_html( $table ),
 			'<a href="' . esc_attr( $status_page_url ) . '" target="_blank" rel="noopener">',
-			'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+			'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 		);
 	}
 
@@ -1503,7 +1503,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		}
 
 		$error   = $this->get_table_not_exists_error( $table );
-		$classes = $this->is_kdnaforms_supported( '2.5-beta' ) ? 'notice notice-error gf-notice' : 'notice notice-error';
+		$classes = $this->is_kdnaforms_supported( '2.5-beta' ) ? 'notice notice-error kdna-notice' : 'notice notice-error';
 
 		$notice = sprintf(
 			'<div class="%s"><p>%s</p></div>',
@@ -1978,13 +1978,13 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		?>
 
-		<div class="gform-settings-panel">
-			<header class="gform-settings-panel__header">
-				<h4 class="gform-settings-panel__title"><span><?php echo $this->feed_list_title(); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></h4>
+		<div class="kform-settings-panel">
+			<header class="kform-settings-panel__header">
+				<h4 class="kform-settings-panel__title"><span><?php echo $this->feed_list_title(); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></h4>
 			</header>
 
-			<div class="gform-settings-panel__content">
-				<form id="gform-settings" action="" method="post">
+			<div class="kform-settings-panel__content">
+				<form id="kform-settings" action="" method="post">
 					<?php
 					$feed_list = $this->get_feed_table( $form );
 					$feed_list->prepare_items();
@@ -2048,7 +2048,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 	public function maybe_save_feed_settings( $feed_id, $form_id ) {
 
-		if ( ! rgpost( 'gform-settings-save' ) ) {
+		if ( ! rgpost( 'kform-settings-save' ) ) {
 			return $feed_id;
 		}
 
@@ -3024,20 +3024,20 @@ class KDNAAddOnFeedsTable extends WP_List_Table {
 
 		// Display the active/inactive toggle button.
 		if ( rgar( $item, 'is_active' ) ) {
-			$class = 'gform-status--active';
+			$class = 'kform-status--active';
 			$text  = esc_html__( 'Active', 'kdnaforms' );
 		} else {
-			$class = 'gform-status--inactive';
+			$class = 'kform-status--inactive';
 			$text  = esc_html__( 'Inactive', 'kdnaforms' );
 		}
 		?>
 		<button
 			type="button"
-			class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
+			class="kform-status-indicator kform-status-indicator--size-sm kform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
 			onclick="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
 			onkeypress="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
 		>
-			<span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs">
+			<span class="kform-status-indicator-status kform-typography--weight-medium kform-typography--size-text-xs">
 				<?php echo esc_html( $text ); ?>
 			</span>
 		</button>

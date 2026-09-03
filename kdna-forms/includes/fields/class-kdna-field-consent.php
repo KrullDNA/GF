@@ -104,14 +104,14 @@ class KDNA_Field_Consent extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--consent';
+		return 'kform-icon--consent';
 	}
 
 	/**
@@ -208,7 +208,7 @@ class KDNA_Field_Consent extends KDNA_Field {
 
 		$target_input_id       = parent::get_first_input_id( $form );
 		$for_attribute         = empty( $target_input_id ) ? '' : "for='{$target_input_id}'";
-		$label_class_attribute = 'class="gform-field-label gform-field-label--type-inline gfield_consent_label"';
+		$label_class_attribute = 'class="kform-field-label kform-field-label--type-inline kfield_consent_label"';
 		$required_div          = ( $this->labelPlacement === 'hidden_label' && $this->isRequired && ! KDNACommon::is_entry_detail_edit() ) ? $this->get_required_indicator() : '';
 
 		if ( $is_admin && ! KDNACommon::is_entry_detail_edit() ) {
@@ -227,7 +227,7 @@ class KDNA_Field_Consent extends KDNA_Field {
 		$checked = $is_form_editor ? '' : checked( '1', $value, false );
 
 		$description           = $is_entry_detail ? $this->get_field_description_from_revision( $revision_id ) : $this->description;
-		$extra_describedby_ids = empty( $description ) ? array() : array( "gfield_consent_description_{$form['id']}_{$this->id}" );
+		$extra_describedby_ids = empty( $description ) ? array() : array( "kfield_consent_description_{$form['id']}_{$this->id}" );
 		$aria_describedby      = $this->get_aria_describedby( $extra_describedby_ids );
 
 		$input  = "<input name='input_{$id}.1' id='{$target_input_id}' type='{$html_input_type}' value='1' {$tabindex} {$aria_describedby} {$required_attribute} {$invalid_attribute} {$disabled_text} {$checked} /> <label {$label_class_attribute} {$for_attribute} >{$checkbox_label}{$required_div}</label>";
@@ -238,7 +238,7 @@ class KDNA_Field_Consent extends KDNA_Field {
 			$input .= $this->get_description( $this->get_field_description_from_revision( $revision_id ), '' );
 		}
 
-		return sprintf( "<div class='ginput_container ginput_container_consent'>%s</div>", $input );
+		return sprintf( "<div class='kinput_container kinput_container_consent'>%s</div>", $input );
 	}
 
 	/**
@@ -268,9 +268,9 @@ class KDNA_Field_Consent extends KDNA_Field {
 	 */
 	public function get_description( $description, $css_class ) {
 		if ( ! empty( $description ) ) {
-			$id = "gfield_consent_description_{$this->formId}_{$this->id}";
+			$id = "kfield_consent_description_{$this->formId}_{$this->id}";
 
-			$css_class .= ' gfield_consent_description';
+			$css_class .= ' kfield_consent_description';
 
 			return "<div class='$css_class' id='$id' tabindex='0'>" . nl2br( $description ) . '</div>';
 		}
@@ -444,7 +444,7 @@ class KDNA_Field_Consent extends KDNA_Field {
 					$description = $this->get_field_description_from_revision( $revision_id );
 
 					if ( ! empty( $description ) ) {
-						$return .= '<br /><div class="gfield_consent_description">' . nl2br( $description ) . '</div>';
+						$return .= '<br /><div class="kfield_consent_description">' . nl2br( $description ) . '</div>';
 					}
 				}
 			}

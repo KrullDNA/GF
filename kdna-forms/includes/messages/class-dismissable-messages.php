@@ -166,7 +166,7 @@ class Dismissable_Messages {
 
 				$need_script = true;
 				?>
-				<div class="notice below-h1 notice-<?php echo esc_attr( $class ); ?> is-dismissible gf-notice"
+				<div class="notice below-h1 notice-<?php echo esc_attr( $class ); ?> is-dismissible kdna-notice"
 				     data-kdna_dismissible_key="<?php echo esc_attr( $message['key'] ) ?>"
 				     data-kdna_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'kdna_dismissible_nonce' ) ) ?>">
 					<p>

@@ -26,14 +26,14 @@ class KDNA_Field_Post_Category extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--category';
+		return 'kform-icon--category';
 	}
 
 	function get_form_editor_field_settings() {

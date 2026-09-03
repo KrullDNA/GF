@@ -223,7 +223,7 @@ class KDNAEntryList {
 		$return .= "
 			<fieldset class='screen-options'>
             <legend>{$filter_title}</legend>
-            <div class='gform-screen-options-filters-container'>
+            <div class='kform-screen-options-filters-container'>
 				{$radios_str}
             </div>
             </fieldset>
@@ -331,14 +331,14 @@ class KDNAEntryList {
 		$table->prepare_items();
 		$table->output_scripts();
 		?>
-			<form id="entry_list_form" method="post" class="gform-settings-panel__content gform-settings-panel__content--entry-list">
+			<form id="entry_list_form" method="post" class="kform-settings-panel__content kform-settings-panel__content--entry-list">
 				<?php
 				$table->views();
                 ?>
                 <div id="entry_search_container">
                     <div id="entry_filters" ></div>
                     <a style="" class="button" id="entry_search_button"
-                       href="javascript:Search('<?php echo esc_js( $table->get_orderby() ); ?>', '<?php echo esc_js( $table->get_order() ) ?>', <?php echo absint( $form_id ); ?>, jQuery('.gform-filter-value').val(), '<?php echo esc_js( $table->get_filter() ) ?>', jQuery('.gform-filter-field').val(), jQuery('.gform-filter-operator').val());"><?php esc_html_e( 'Search', 'kdnaforms' ) ?></a>
+                       href="javascript:Search('<?php echo esc_js( $table->get_orderby() ); ?>', '<?php echo esc_js( $table->get_order() ) ?>', <?php echo absint( $form_id ); ?>, jQuery('.kform-filter-value').val(), '<?php echo esc_js( $table->get_filter() ) ?>', jQuery('.kform-filter-field').val(), jQuery('.kform-filter-operator').val());"><?php esc_html_e( 'Search', 'kdnaforms' ) ?></a>
 
                 </div>
                 <?php
@@ -879,7 +879,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 		), admin_url() );
 
 		$title = __( 'Click to select columns to display', 'kdnaforms' );
-		$table_columns['column_selector'] = '<a name="<div class=\'tb-title\'><div class=\'tb-title__text\'><div class=\'tb-title__main\'>' . esc_attr__( 'Select Entry Table Columns', 'kdnaforms' ) . '</div><div class=\'tb-title__sub\'>' . esc_attr( 'Drag & drop to order and select which columns are displayed in the entries table.', 'kdnaforms' ) . '</div></div></div>" aria-label="' . esc_attr( $title ) . '" href="' . esc_url( $column_selector_url ) . '" class="thickbox entries_edit_icon"><i title="' . esc_attr( $title ) . '" class="gform-icon gform-icon--cog gform-icon--entries-edit"></i></a>';
+		$table_columns['column_selector'] = '<a name="<div class=\'tb-title\'><div class=\'tb-title__text\'><div class=\'tb-title__main\'>' . esc_attr__( 'Select Entry Table Columns', 'kdnaforms' ) . '</div><div class=\'tb-title__sub\'>' . esc_attr( 'Drag & drop to order and select which columns are displayed in the entries table.', 'kdnaforms' ) . '</div></div></div>" aria-label="' . esc_attr( $title ) . '" href="' . esc_url( $column_selector_url ) . '" class="thickbox entries_edit_icon"><i title="' . esc_attr( $title ) . '" class="kform-icon kform-icon--cog kform-icon--entries-edit"></i></a>';
 
 		/**
 		 * Allow the columns to be displayed in the entry list table to be overridden.
@@ -1951,29 +1951,29 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 			function setSelectAllText() {
 				var tr = getSelectAllText();
-				jQuery("#gform-select-all-message td").html(tr);
+				jQuery("#kform-select-all-message td").html(tr);
 			}
 
 			function getSelectAllText() {
 				var count;
-				count = jQuery("#the-list tr.entry_row:visible:not('#gform-select-all-message')").length;
+				count = jQuery("#the-list tr.entry_row:visible:not('#kform-select-all-message')").length;
 				return gformStrings.allEntriesOnPageAreSelected.gformFormat(count) + " <a href='javascript:void(0)' onclick='selectAllEntriesOnAllPages();'>" + gformStrings.selectAll.gformFormat(gformVars.countAllEntries) + "</a>";
 			}
 
 			function getSelectAllTr() {
 				var t = getSelectAllText();
 				var colspan = jQuery("#the-list").find("tr:first td").length + 2;
-				return "<tr id='gform-select-all-message' class='no-items' style='display:none;background-color:lightyellow;text-align:center;'><td colspan='{0}'>{1}</td></tr>".gformFormat(colspan, t);
+				return "<tr id='kform-select-all-message' class='no-items' style='display:none;background-color:lightyellow;text-align:center;'><td colspan='{0}'>{1}</td></tr>".gformFormat(colspan, t);
 			}
 			function toggleSelectAll(visible) {
 				if (gformVars.countAllEntries <= gformVars.perPage) {
-					jQuery('#gform-select-all-message').hide();
+					jQuery('#kform-select-all-message').hide();
 					return;
 				}
 
 				if (visible)
 					setSelectAllText();
-				jQuery('#gform-select-all-message').toggle(visible);
+				jQuery('#kform-select-all-message').toggle(visible);
 			}
 
 
@@ -1984,15 +1984,15 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 			function clearSelectAllMessage() {
 				jQuery("#all_entries").val("0");
-				jQuery("#gform-select-all-message").hide();
-				jQuery("#gform-select-all-message td").html('');
+				jQuery("#kform-select-all-message").hide();
+				jQuery("#kform-select-all-message td").html('');
 			}
 
 			function selectAllEntriesOnAllPages() {
 				var trHtmlClearSelection;
 				trHtmlClearSelection = gformStrings.allEntriesSelected.gformFormat(gformVars.countAllEntries) + " <a href='javascript:void(0);' onclick='clearSelectAllEntries();'>" + gformStrings.clearSelection + "</a>";
 				jQuery("#all_entries").val("1");
-				jQuery("#gform-select-all-message td").html(trHtmlClearSelection);
+				jQuery("#kform-select-all-message td").html(trHtmlClearSelection);
 			}
 
 			function initSelectAllEntries() {
@@ -2067,11 +2067,11 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				initSelectAllEntries();
 
 				jQuery('#entry_filters').gfFilterUI(gformFieldFilters, gformInitFilter, false);
-				jQuery("#entry_filters").on("keypress", ".gform-filter-value", (function (event) {
+				jQuery("#entry_filters").on("keypress", ".kform-filter-value", (function (event) {
 					if (event.keyCode == 13) {
 						var urlParams = new URLSearchParams(window.location.search);
 						var currentFilter = urlParams.get('filter') || '';
-						Search(<?php echo json_encode( $orderby ); ?>, <?php echo json_encode( $order ); ?>, <?php echo absint( $form_id ) ?>, jQuery('.gform-filter-value').val(), currentFilter, jQuery('.gform-filter-field').val(), jQuery('.gform-filter-operator').val());
+						Search(<?php echo json_encode( $orderby ); ?>, <?php echo json_encode( $order ); ?>, <?php echo absint( $form_id ) ?>, jQuery('.kform-filter-value').val(), currentFilter, jQuery('.kform-filter-field').val(), jQuery('.kform-filter-operator').val());
 						event.preventDefault();
 					}
 				}));
@@ -2173,7 +2173,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 							<input type="button" name="notification_resend" id="notification_resend" value="<?php esc_attr_e( 'Resend Notifications', 'kdnaforms' ) ?>" class="button" style="" onclick="BulkResendNotifications();" />
 							<span id="please_wait_container" style="display:none; margin-left: 5px;">
-                                                <i class='gficon-kdnaforms-spinner-icon gficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
+                                                <i class='kficon-kdnaforms-spinner-icon kficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
                                             </span>
 							<?php
 						}

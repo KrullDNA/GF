@@ -27,14 +27,14 @@ class KDNA_Field_Email extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--mail';
+		return 'kform-icon--mail';
 	}
 
 	function get_form_editor_field_settings() {
@@ -231,34 +231,34 @@ class KDNA_Field_Email extends KDNA_Field {
 			$confirm_style = $this->emailConfirmEnabled ? '' : "style='display:none;'";
 
 			if ( $is_sub_label_above ) {
-				return "<div class='ginput_container ginput_container_email ginput_single_email' {$single_style}>
+				return "<div class='kinput_container kinput_container_email kinput_single_email' {$single_style}>
                             <input name='input_{$id}' type='{$html_input_type}' class='" . esc_attr( $class ) . "' disabled='disabled' {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$single_autocomplete_attribute} />
                             <div class='kdna_clear kdna_clear_complex'></div>
                         </div>
-                        <div class='ginput_complex ginput_container ginput_container_email ginput_confirm_email gform-grid-row' {$confirm_style} id='{$field_id}_container'>
-                            <span id='{$field_id}_1_container' class='ginput_left gform-grid-col gform-grid-col--size-auto'>
-                                <label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$enter_email_label}</label>
+                        <div class='kinput_complex kinput_container kinput_container_email kinput_confirm_email kform-grid-row' {$confirm_style} id='{$field_id}_container'>
+                            <span id='{$field_id}_1_container' class='kinput_left kform-grid-col kform-grid-col--size-auto'>
+                                <label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$enter_email_label}</label>
                                 <input class='{$class}' type='text' name='input_{$id}' id='{$field_id}' disabled='disabled' {$enter_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$enter_email_autocomplete_attribute} />
                             </span>
-                            <span id='{$field_id}_2_container' class='ginput_right gform-grid-col gform-grid-col--size-auto'>
-                                <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
+                            <span id='{$field_id}_2_container' class='kinput_right kform-grid-col kform-grid-col--size-auto'>
+                                <label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                                 <input class='{$class}' type='text' name='input_{$id}_2' id='{$field_id}_2' disabled='disabled' {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$confirm_email_autocomplete_attribute} />
                             </span>
                             <div class='kdna_clear kdna_clear_complex'></div>
                         </div>";
 			} else {
-				return "<div class='ginput_container ginput_container_email ginput_single_email' {$single_style}>
+				return "<div class='kinput_container kinput_container_email kinput_single_email' {$single_style}>
                             <input name='input_{$id}' type='{$html_input_type}' class='" . esc_attr( $class ) . "' disabled='disabled' {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$single_autocomplete_attribute} />
                             <div class='kdna_clear kdna_clear_complex'></div>
                         </div>
-                        <div class='ginput_complex ginput_container ginput_container_email ginput_confirm_email gform-grid-row' {$confirm_style} id='{$field_id}_container'>
-                            <span id='{$field_id}_1_container' class='ginput_left gform-grid-col gform-grid-col--size-auto'>
+                        <div class='kinput_complex kinput_container kinput_container_email kinput_confirm_email kform-grid-row' {$confirm_style} id='{$field_id}_container'>
+                            <span id='{$field_id}_1_container' class='kinput_left kform-grid-col kform-grid-col--size-auto'>
                                 <input class='{$class}' type='text' name='input_{$id}' id='{$field_id}' disabled='disabled' {$enter_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$enter_email_autocomplete_attribute} />
-                                <label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$enter_email_label}</label>
+                                <label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$enter_email_label}</label>
                             </span>
-                            <span id='{$field_id}_2_container' class='ginput_right gform-grid-col gform-grid-col--size-auto'>
+                            <span id='{$field_id}_2_container' class='kinput_right kform-grid-col kform-grid-col--size-auto'>
                                 <input class='{$class}' type='text' name='input_{$id}_2' id='{$field_id}_2' disabled='disabled' {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$confirm_email_autocomplete_attribute} />
-                                <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
+                                <label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                             </span>
                             <div class='kdna_clear kdna_clear_complex'></div>
                         </div>";
@@ -274,26 +274,26 @@ class KDNA_Field_Email extends KDNA_Field {
 				$confirmation_value = esc_attr( $confirmation_value );
 				$confirmation_disabled = $is_entry_detail ? "disabled='disabled'" : $disabled_text;
 				if ( $is_sub_label_above ) {
-					return "<div class='ginput_complex ginput_container ginput_container_email gform-grid-row' id='{$field_id}_container'>
-                                <span id='{$field_id}_1_container' class='ginput_left gform-grid-col gform-grid-col--size-auto'>
-                                    <label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>" . $enter_email_label . "</label>
+					return "<div class='kinput_complex kinput_container kinput_container_email kform-grid-row' id='{$field_id}_container'>
+                                <span id='{$field_id}_1_container' class='kinput_left kform-grid-col kform-grid-col--size-auto'>
+                                    <label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>" . $enter_email_label . "</label>
                                     <input class='{$class}' type='{$html_input_type}' name='input_{$id}' id='{$field_id}' value='{$email_value}' {$first_tabindex} {$disabled_text} {$enter_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$enter_email_autocomplete_attribute}/>
                                 </span>
-                                <span id='{$field_id}_2_container' class='ginput_right gform-grid-col gform-grid-col--size-auto'>
-                                    <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
+                                <span id='{$field_id}_2_container' class='kinput_right kform-grid-col kform-grid-col--size-auto'>
+                                    <label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                                     <input class='{$class}' type='{$html_input_type}' name='input_{$id}_2' id='{$field_id}_2' value='{$confirmation_value}' {$last_tabindex} {$confirmation_disabled} {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$confirm_email_autocomplete_attribute}/>
                                 </span>
                                 <div class='kdna_clear kdna_clear_complex'></div>
                             </div>";
 				} else {
-					return "<div class='ginput_complex ginput_container ginput_container_email gform-grid-row' id='{$field_id}_container'>
-                                <span id='{$field_id}_1_container' class='ginput_left gform-grid-col gform-grid-col--size-auto'>
+					return "<div class='kinput_complex kinput_container kinput_container_email kform-grid-row' id='{$field_id}_container'>
+                                <span id='{$field_id}_1_container' class='kinput_left kform-grid-col kform-grid-col--size-auto'>
                                     <input class='{$class}' type='{$html_input_type}' name='input_{$id}' id='{$field_id}' value='{$email_value}' {$first_tabindex} {$disabled_text} {$enter_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$enter_email_autocomplete_attribute}/>
-                                    <label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$enter_email_label}</label>
+                                    <label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$enter_email_label}</label>
                                 </span>
-                                <span id='{$field_id}_2_container' class='ginput_right gform-grid-col gform-grid-col--size-auto'>
+                                <span id='{$field_id}_2_container' class='kinput_right kform-grid-col kform-grid-col--size-auto'>
                                     <input class='{$class}' type='{$html_input_type}' name='input_{$id}_2' id='{$field_id}_2' value='{$confirmation_value}' {$last_tabindex} {$confirmation_disabled} {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$confirm_email_autocomplete_attribute}/>
-                                    <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
+                                    <label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                                 </span>
                                 <div class='kdna_clear kdna_clear_complex'></div>
                             </div>";
@@ -303,7 +303,7 @@ class KDNA_Field_Email extends KDNA_Field {
 				$value    = esc_attr( $value );
 				$class    = esc_attr( $class );
 
-				return "<div class='ginput_container ginput_container_email'>
+				return "<div class='kinput_container kinput_container_email'>
                             <input name='input_{$id}' id='{$field_id}' type='{$html_input_type}' value='$value' class='{$class}' {$tabindex} {$disabled_text} {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$single_autocomplete_attribute}/>
                         </div>";
 			}

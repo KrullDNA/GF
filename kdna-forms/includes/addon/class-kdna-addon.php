@@ -1260,7 +1260,7 @@ abstract class KDNAAddOn {
 	 * @return string
 	 */
 	public function theme_layer_icon() {
-		return 'gform-icon--user';
+		return 'kform-icon--user';
 	}
 
 	/**
@@ -1994,7 +1994,7 @@ abstract class KDNAAddOn {
 
 		?>
 
-		<form id="gform-settings" action="" method="post">
+		<form id="kform-settings" action="" method="post">
 			<?php wp_nonce_field( $this->get_slug() . '_save_settings', '_' . $this->get_slug() . '_save_settings_nonce' ) ?>
 			<?php $this->settings( $sections ); ?>
 
@@ -2052,10 +2052,10 @@ abstract class KDNAAddOn {
 
 		$section_fields = $this->prepare_settings_fields( $section['fields'] );
 
-		$classes = array( 'gaddon-section' );
+		$classes = array( 'kaddon-section' );
 
 		if ( $is_first ) {
-			$classes[] = 'gaddon-first-section';
+			$classes[] = 'kaddon-first-section';
 		}
 
 		if ( $class )
@@ -2070,7 +2070,7 @@ abstract class KDNAAddOn {
 			>
 
 			<?php if ( $title ): ?>
-				<h4 class="gaddon-section-title kdna_settings_subgroup_title">
+				<h4 class="kaddon-section-title kdna_settings_subgroup_title">
 					<?php echo $title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php if( $tooltip ): ?>
 						<?php kdnaform_tooltip( $tooltip, $tooltip_class ); ?>
@@ -2079,7 +2079,7 @@ abstract class KDNAAddOn {
 			<?php endif; ?>
 
 			<?php if ( $description ): ?>
-				<div class="gaddon-section-description"><?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></div>
+				<div class="kaddon-section-description"><?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></div>
 			<?php endif; ?>
 
 			<table class="form-table kforms_form_settings">
@@ -2135,7 +2135,7 @@ abstract class KDNAAddOn {
 
 		?>
 
-		<tr id="gaddon-setting-row-<?php echo esc_attr( $field['name'] ); ?>" <?php echo $display; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<tr id="kaddon-setting-row-<?php echo esc_attr( $field['name'] ); ?>" <?php echo $display; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<th>
 				<?php $this->single_setting_label( $field ); ?>
 			</th>
@@ -2623,9 +2623,9 @@ abstract class KDNAAddOn {
 	public function checkbox_item( $choice, $horizontal_class, $attributes, $value, $tooltip, $error_icon = '' ) {
 
 		$hidden_field_value = $value == '1' ? '1' : '0';
-		$icon_class         = rgar( $choice, 'icon' ) ? ' gaddon-setting-choice-visual' : '';
+		$icon_class         = rgar( $choice, 'icon' ) ? ' kaddon-setting-choice-visual' : '';
 
-		$checkbox_item  = '<div id="gaddon-setting-checkbox-choice-' . $choice['id'] . '" class="gaddon-setting-checkbox' . $horizontal_class . $icon_class . '">';
+		$checkbox_item  = '<div id="kaddon-setting-checkbox-choice-' . $choice['id'] . '" class="kaddon-setting-checkbox' . $horizontal_class . $icon_class . '">';
 		$checkbox_item .= '<input type=hidden name="_gaddon_setting_' . esc_attr( $choice['name'] ) . '" value="' . $hidden_field_value . '" />';
 
 		if ( is_callable( array( $this, "checkbox_input_{$choice['name']}" ) ) ) {
@@ -3573,7 +3573,7 @@ abstract class KDNAAddOn {
 		_deprecated_function( __METHOD__, '2.5', 'the \KDNA_Forms\KDNA_Forms\Settings\Fields\Button class to add a save button to your form' );
 
 		$field['type']  = 'submit';
-		$field['name']  = 'gform-settings-save';
+		$field['name']  = 'kform-settings-save';
 		$field['class'] = 'button-primary gfbutton';
 
 		if ( ! rgar( $field, 'value' ) ) {
@@ -5227,9 +5227,9 @@ abstract class KDNAAddOn {
 				<div id="message" class="updated"><p><?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
 			<?php } ?>
 
-			<div class="gform-settings__wrapper">
+			<div class="kform-settings__wrapper">
 
-				<nav class="gform-settings__navigation">
+				<nav class="kform-settings__navigation">
 				<?php
 				foreach ( $tabs as $tab ) {
 
@@ -5243,7 +5243,7 @@ abstract class KDNAAddOn {
 					$url  = add_query_arg( array( 'view' => $tab['name'] ) );
 
 					// Get tab icon.
-					$icon_markup = KDNACommon::get_icon_markup( $tab, 'gform-icon--cog' );
+					$icon_markup = KDNACommon::get_icon_markup( $tab, 'kform-icon--cog' );
 
 					printf(
 						'<a href="%s"%s><span class="icon">%s</span> <span class="label">%s</span></a>',
@@ -5256,7 +5256,7 @@ abstract class KDNAAddOn {
 				?>
 			</nav>
 
-			<div class="gform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
+			<div class="kform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
 
 	<?php
 	}
@@ -5268,9 +5268,9 @@ abstract class KDNAAddOn {
 	public function app_tab_page_footer() {
 					?>
 				</div>
-				<!-- / gform-settings__content -->
+				<!-- / kform-settings__content -->
 			</div>
-			<!-- / gform-settings__wrapper -->
+			<!-- / kform-settings__wrapper -->
 
 		</div> <!-- / wrap -->
 
@@ -5493,12 +5493,12 @@ abstract class KDNAAddOn {
 		// Show different panel styles for the uninstall page and the individual settings pages.
 		if ( rgget( 'subview' ) == 'uninstall' ) {
 			?>
-			<form action="" method="post" class="gform-settings-panel gform-settings-panel__addon-uninstall">
+			<form action="" method="post" class="kform-settings-panel kform-settings-panel__addon-uninstall">
 				<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
-				<div class="gform-settings-panel__content">
+				<div class="kform-settings-panel__content">
 					<div class="addon-logo dashicons"><?php echo $icon_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 					<div class="addon-uninstall-text">
-						<h4 class="gform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
+						<h4 class="kform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
 						<div><?php echo esc_html( $this->uninstall_message() ); ?></div>
 					</div>
 					<div class="addon-uninstall-button">
@@ -5513,23 +5513,23 @@ abstract class KDNAAddOn {
 			<?php
 		} else {
 			?>
-			<form action="" method="post" class="gform-settings-panel gform-settings-panel--collapsible gform-settings-panel--collapsed gform-settings-panel__uninstall">
+			<form action="" method="post" class="kform-settings-panel kform-settings-panel--collapsible kform-settings-panel--collapsed kform-settings-panel__uninstall">
 				<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
-				<header class="gform-settings-panel__header">
-					<h4 class="gform-settings-panel__title"><?php printf( esc_html__( 'Uninstall %s Add-On', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
-					<span class="gform-settings-panel__collapsible-control">
+				<header class="kform-settings-panel__header">
+					<h4 class="kform-settings-panel__title"><?php printf( esc_html__( 'Uninstall %s Add-On', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
+					<span class="kform-settings-panel__collapsible-control">
 						<input
 							type="checkbox"
 							name="kdnaform_settings_section_collapsed_uninstall"
 							id="kdnaform_settings_section_collapsed_uninstall"
 							value="1"
-							onclick="this.checked ? this.closest( '.gform-settings-panel' ).classList.add( 'gform-settings-panel--collapsed' ) : this.closest( '.gform-settings-panel' ).classList.remove( 'gform-settings-panel--collapsed' )"
+							onclick="this.checked ? this.closest( '.kform-settings-panel' ).classList.add( 'kform-settings-panel--collapsed' ) : this.closest( '.kform-settings-panel' ).classList.remove( 'kform-settings-panel--collapsed' )"
 							checked
 						/>
-						<label class="gform-settings-panel__collapsible-toggle" for="kdnaform_settings_section_collapsed_uninstall"><span class="screen-reader-text"><?php esc_html_e( 'Toggle Uninstall Section' ); ?></span></label>
+						<label class="kform-settings-panel__collapsible-toggle" for="kdnaform_settings_section_collapsed_uninstall"><span class="screen-reader-text"><?php esc_html_e( 'Toggle Uninstall Section' ); ?></span></label>
 					</span>
 				</header>
-				<div class="gform-settings-panel__content">
+				<div class="kform-settings-panel__content">
 
 					<div class="alert error">
 						<?php echo $this->uninstall_warning_message(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -5560,17 +5560,17 @@ abstract class KDNAAddOn {
 		$icon_markup = KDNACommon::get_icon_markup( $icon, 'dashicon-admin-generic' );
 		$url         = add_query_arg( array( 'subview' => $this->get_slug() ), admin_url( 'admin.php?page=kdna_settings' ) );
 		?>
-		<form action="" method="post" class="gform-settings-panel gform-settings-panel__addon-uninstall">
+		<form action="" method="post" class="kform-settings-panel kform-settings-panel__addon-uninstall">
 			<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
-			<div class="gform-settings-panel__content">
+			<div class="kform-settings-panel__content">
 				<div class="addon-logo dashicons"><?php echo $icon_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 				<div class="addon-uninstall-text">
-					<h4 class="gform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
+					<h4 class="kform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
 					<div><?php esc_attr_e( 'To continue uninstalling this add-on click the settings button.', 'kdnaforms' ) ?></div>
 				</div>
 				<div class="addon-uninstall-button">
 					<a href="<?php echo esc_url( $url ); ?>" aria-label="<?php echo 'Visit ' . $this->get_short_title() . ' Settings page'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" class="button addon-settings">
-						<i class="gform-icon gform-icon--cog"></i>
+						<i class="kform-icon kform-icon--cog"></i>
 						<?php esc_attr_e( 'Settings', 'kdnaforms' ); ?>
 					</a>
 				</div>
@@ -6332,7 +6332,7 @@ abstract class KDNAAddOn {
 		);
 		?>
 
-		<div class="gf-notice notice notice-error">
+		<div class="kdna-notice notice notice-error">
 			<p><?php echo wp_kses( $message, array( 'a' => array( 'href' => true ) ) ); ?></p>
 		</div>
 		<?php
@@ -6354,14 +6354,14 @@ abstract class KDNAAddOn {
 	 * @return string
 	 */
 	public function get_menu_icon() {
-		return 'gform-icon--cog';
+		return 'kform-icon--cog';
 	}
 
 	/**
 	 * Return the plugin's icon namespace.
 	 * For implementation of a custom font icon kit.
 	 * Used by KDNACommon::get_icon_markup() and assumes your font icon kit
-	 * is setup in a similar fashion to KDNA Forms (`class="gform-icon gform-icon--icon-name"`).
+	 * is setup in a similar fashion to KDNA Forms (`class="kform-icon kform-icon--icon-name"`).
 	 * The namespace declared here should not include the `-icon`.
 	 *
 	 * @return string|null
@@ -6412,7 +6412,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the settings "Save" button was pressed
 	 */
 	public function is_save_postback() {
-		return ! rgempty( 'gform-settings-save' );
+		return ! rgempty( 'kform-settings-save' );
 	}
 
 	/**
@@ -6817,7 +6817,7 @@ abstract class KDNAAddOn {
 	 */
 	public static function addons_for_uninstall( $uninstallable_addons ) {
 		?>
-		<div class="gform-addons-uninstall-panel">
+		<div class="kform-addons-uninstall-panel">
 			<?php
 			/* @var KDNAAddOn $addon An add-on instance. */
 			foreach ( $uninstallable_addons as $addon ) {

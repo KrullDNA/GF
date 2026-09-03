@@ -46,14 +46,14 @@ class KDNA_Field_Post_Image extends KDNA_Field_Fileupload {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--post-image';
+		return 'kform-icon--post-image';
 	}
 
 	function get_form_editor_field_settings() {
@@ -109,7 +109,7 @@ class KDNA_Field_Post_Image extends KDNA_Field_Fileupload {
 		// Prepare accepted extensions message.
 		$extensions_message_id = 'extensions_message_' . $form_id . '_' . $id;
 		$extensions_message    = sprintf(
-			"<span id='%s' class='gfield_description kform_fileupload_rules'>%s</span>",
+			"<span id='%s' class='kfield_description kform_fileupload_rules'>%s</span>",
 			$extensions_message_id,
 			esc_attr( sprintf( __( 'Accepted file types: %s.', 'kdnaforms' ), implode( ', ', $this->get_clean_allowed_extensions() ) ) )
 		);
@@ -125,53 +125,53 @@ class KDNA_Field_Post_Image extends KDNA_Field_Fileupload {
 		if ( ! empty( $file_info ) ) {
 			$hidden_class     = ' kform_hidden';
 			$file_label_style = $hidden_style;
-			$preview          = "<span class='ginput_preview'><strong>" . esc_html( $file_info['uploaded_filename'] ) . "</strong> | <a href='javascript:;' onclick='gformDeleteUploadedFile({$form_id}, {$id});' onkeypress='gformDeleteUploadedFile({$form_id}, {$id});'>" . __( 'delete', 'kdnaforms' ) . '</a></span>';
+			$preview          = "<span class='kinput_preview'><strong>" . esc_html( $file_info['uploaded_filename'] ) . "</strong> | <a href='javascript:;' onclick='gformDeleteUploadedFile({$form_id}, {$id});' onkeypress='gformDeleteUploadedFile({$form_id}, {$id});'>" . __( 'delete', 'kdnaforms' ) . '</a></span>';
 		}
 
 		//in admin, render all meta fields to allow for immediate feedback, but hide the ones not selected
-		$file_label = ( $is_admin || $this->displayAlt || $this->displayTitle || $this->displayCaption || $this->displayDescription ) ? "<label for='$field_id' class='gform-field-label gform-field-label--type-sub ginput_post_image_file' $file_label_style>" . kdna_apply_filters( array( 'kdnaform_postimage_file', $form_id ), __( 'File', 'kdnaforms' ), $form_id ) . '</label>' : '';
+		$file_label = ( $is_admin || $this->displayAlt || $this->displayTitle || $this->displayCaption || $this->displayDescription ) ? "<label for='$field_id' class='kform-field-label kform-field-label--type-sub kinput_post_image_file' $file_label_style>" . kdna_apply_filters( array( 'kdnaform_postimage_file', $form_id ), __( 'File', 'kdnaforms' ), $form_id ) . '</label>' : '';
 
 		$tabindex = $this->get_tabindex();
 
 		if( $is_sub_label_above ){
-			$upload = sprintf( "<span class='ginput_full$class_suffix gform-grid-col'>$file_label{$preview}<input name='input_%d' id='%s' type='file' class='%s' $tabindex $required_attribute $invalid_attribute $aria_describedby %s/>{$extensions_message}</span>", $id, $field_id, esc_attr( $class . $hidden_class ), $disabled_text );
+			$upload = sprintf( "<span class='kinput_full$class_suffix kform-grid-col'>$file_label{$preview}<input name='input_%d' id='%s' type='file' class='%s' $tabindex $required_attribute $invalid_attribute $aria_describedby %s/>{$extensions_message}</span>", $id, $field_id, esc_attr( $class . $hidden_class ), $disabled_text );
 		} else {
-			$upload = sprintf( "<span class='ginput_full$class_suffix gform-grid-col'>{$preview}<input name='input_%d' id='%s' type='file' class='%s' $tabindex $required_attribute $invalid_attribute $aria_describedby %s/>{$extensions_message}$file_label</span>", $id, $field_id, esc_attr( $class . $hidden_class ), $disabled_text );
+			$upload = sprintf( "<span class='kinput_full$class_suffix kform-grid-col'>{$preview}<input name='input_%d' id='%s' type='file' class='%s' $tabindex $required_attribute $invalid_attribute $aria_describedby %s/>{$extensions_message}$file_label</span>", $id, $field_id, esc_attr( $class . $hidden_class ), $disabled_text );
 		}
 
 		$tabindex = $this->get_tabindex();
 
 		if( $is_sub_label_above ){
-			$alt_field = $this->displayAlt || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_alt gform-grid-col' $alt_style><label for='%s_2' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_alt', $form_id ), __( 'Alternative Text', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.2' id='%s_2' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $alt, $disabled_text ) : '';
+			$alt_field = $this->displayAlt || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_alt kform-grid-col' $alt_style><label for='%s_2' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_alt', $form_id ), __( 'Alternative Text', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.2' id='%s_2' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $alt, $disabled_text ) : '';
 		} else {
-			$alt_field = $this->displayAlt || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_alt gform-grid-col' $alt_style><input type='text' name='input_%d.2' id='%s_2' value='%s' $tabindex %s/><label for='%s_2' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_alt', $form_id ), __( 'Alternative Text', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $alt, $disabled_text, $field_id ) : '';
+			$alt_field = $this->displayAlt || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_alt kform-grid-col' $alt_style><input type='text' name='input_%d.2' id='%s_2' value='%s' $tabindex %s/><label for='%s_2' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_alt', $form_id ), __( 'Alternative Text', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $alt, $disabled_text, $field_id ) : '';
 		}
 
 		$tabindex = $this->get_tabindex();
 
 		if( $is_sub_label_above ){
-			$title_field = $this->displayTitle || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_title gform-grid-col' $title_style><label for='%s_1' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_title', $form_id ), __( 'Title', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.1' id='%s_1' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $title, $disabled_text ) : '';
+			$title_field = $this->displayTitle || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_title kform-grid-col' $title_style><label for='%s_1' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_title', $form_id ), __( 'Title', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.1' id='%s_1' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $title, $disabled_text ) : '';
 		} else {
-			$title_field = $this->displayTitle || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_title gform-grid-col' $title_style><input type='text' name='input_%d.1' id='%s_1' value='%s' $tabindex %s/><label for='%s_1' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_title', $form_id ), __( 'Title', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $title, $disabled_text, $field_id ) : '';
+			$title_field = $this->displayTitle || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_title kform-grid-col' $title_style><input type='text' name='input_%d.1' id='%s_1' value='%s' $tabindex %s/><label for='%s_1' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_title', $form_id ), __( 'Title', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $title, $disabled_text, $field_id ) : '';
 		}
 
 		$tabindex = $this->get_tabindex();
 
 		if( $is_sub_label_above ){
-			$caption_field = $this->displayCaption || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_caption gform-grid-col' $caption_style><label for='%s_4' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_caption', $form_id ), __( 'Caption', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.4' id='%s_4' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $caption, $disabled_text ) : '';
+			$caption_field = $this->displayCaption || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_caption kform-grid-col' $caption_style><label for='%s_4' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_caption', $form_id ), __( 'Caption', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.4' id='%s_4' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $caption, $disabled_text ) : '';
 		} else {
-			$caption_field = $this->displayCaption || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_caption gform-grid-col' $caption_style><input type='text' name='input_%d.4' id='%s_4' value='%s' $tabindex %s/><label for='%s_4' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_caption', $form_id ), __( 'Caption', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $caption, $disabled_text, $field_id ) : '';
+			$caption_field = $this->displayCaption || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_caption kform-grid-col' $caption_style><input type='text' name='input_%d.4' id='%s_4' value='%s' $tabindex %s/><label for='%s_4' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_caption', $form_id ), __( 'Caption', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $caption, $disabled_text, $field_id ) : '';
 		}
 
 		$tabindex = $this->get_tabindex();
 
 		if( $is_sub_label_above ){
-			$description_field = $this->displayDescription || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_description gform-grid-col' $description_style><label for='%s_7' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_description', $form_id ), __( 'Description', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.7' id='%s_7' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $description, $disabled_text ) : '';
+			$description_field = $this->displayDescription || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_description kform-grid-col' $description_style><label for='%s_7' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_description', $form_id ), __( 'Description', 'kdnaforms' ), $form_id ) . "</label><input type='text' name='input_%d.7' id='%s_7' value='%s' $tabindex %s/></span>", $field_id, $id, $field_id, $description, $disabled_text ) : '';
 		} else {
-			$description_field = $this->displayDescription || $is_admin ? sprintf( "<span class='ginput_full$class_suffix ginput_post_image_description gform-grid-col' $description_style><input type='text' name='input_%d.7' id='%s_7' value='%s' $tabindex %s/><label for='%s_7' class='gform-field-label gform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_description', $form_id ), __( 'Description', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $description, $disabled_text, $field_id ) : '';
+			$description_field = $this->displayDescription || $is_admin ? sprintf( "<span class='kinput_full$class_suffix kinput_post_image_description kform-grid-col' $description_style><input type='text' name='input_%d.7' id='%s_7' value='%s' $tabindex %s/><label for='%s_7' class='kform-field-label kform-field-label--type-sub'>" . kdna_apply_filters( array( 'kdnaform_postimage_description', $form_id ), __( 'Description', 'kdnaforms' ), $form_id ) . '</label></span>', $id, $field_id, $description, $disabled_text, $field_id ) : '';
 		}
 
-		return "<div class='ginput_complex$class_suffix ginput_container ginput_container_post_image gform-grid-row'>" . $upload . $alt_field . $title_field . $caption_field . $description_field . '</div>';
+		return "<div class='kinput_complex$class_suffix kinput_container kinput_container_post_image kform-grid-row'>" . $upload . $alt_field . $title_field . $caption_field . $description_field . '</div>';
 	}
 
 	public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {

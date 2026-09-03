@@ -12,11 +12,11 @@ jQuery( document ).on( 'kform_post_render', gformBindFormatPricingFields );
 
 function gformBindFormatPricingFields(){
 	// Namespace the event and remove before adding to prevent double binding.
-    jQuery(".ginput_amount, .ginput_donation_amount").off('change.gform').on("change.gform", function(){
+    jQuery(".kinput_amount, .kinput_donation_amount").off('change.gform').on("change.gform", function(){
         gformFormatPricingField(this);
     });
 
-    jQuery(".ginput_amount, .ginput_donation_amount").each(function(){
+    jQuery(".kinput_amount, .kinput_donation_amount").each(function(){
         gformFormatPricingField(this);
     });
 }
@@ -706,7 +706,7 @@ function gformDeleteUploadedFile(formId, fieldId, deleteButton){
 
     var fileIndex = jQuery(deleteButton).parent().index();
 
-    var filePreview = jQuery( deleteButton ).closest( '.ginput_preview' )[0];
+    var filePreview = jQuery( deleteButton ).closest( '.kinput_preview' )[0];
     var fileId = filePreview.id;
     filePreview.remove();
 
@@ -714,7 +714,7 @@ function gformDeleteUploadedFile(formId, fieldId, deleteButton){
     parent.find('.validation_message,#extensions_message_' + formId + '_' + fieldId).removeClass("kform_hidden");
 
     //displaying post image label
-    parent.find(".ginput_post_image_file").show();
+    parent.find(".kinput_post_image_file").show();
 
     //clearing post image meta fields
     parent.find("input[type=\"text\"]").val('');
@@ -758,7 +758,7 @@ var _gformPriceFields = new Array();
 var _anyProductSelected;
 
 function gformIsHidden(element){
-	isHidden = element.parents('.gfield').not(".gfield_hidden_product").css("display") == "none";
+	isHidden = element.parents('.gfield').not(".kfield_hidden_product").css("display") == "none";
 
 	/**
 	 * Allows user to filter the logic for determining if a field is hidden by conditional logic..
@@ -816,7 +816,7 @@ var gformCalculateTotalPrice =  gform.tools.debounce(function(formId){
  * @return {void}
  */
 function gformUpdateTotalFieldPrice( formId, price ) {
-	var $totalElement = jQuery( '.ginput_total_' + formId );
+	var $totalElement = jQuery( '.kinput_total_' + formId );
 	if ( ! $totalElement.length > 0 ) {
 		return;
 	}
@@ -870,7 +870,7 @@ function gformUpdateTotalFieldPrice( formId, price ) {
 }
 
 function gformGetShippingPrice(formId){
-    var shippingField = jQuery(".gfield_shipping_" + formId + " input[readonly], .gfield_shipping_" + formId + " select, .gfield_shipping_" + formId + " input:checked");
+    var shippingField = jQuery(".kfield_shipping_" + formId + " input[readonly], .kfield_shipping_" + formId + " select, .kfield_shipping_" + formId + " input:checked");
     var shipping = 0;
     if(shippingField.length == 1 && !gformIsHidden(shippingField)){
         if(shippingField.attr("readonly"))
@@ -899,7 +899,7 @@ function gformCalculateProductPrice(form_id, productFieldId){
 
 
     //Drop down auto-calculating labels
-    jQuery('.gfield_option' + suffix + ', .gfield_shipping_' + form_id).find('select').each(function(){
+    jQuery('.kfield_option' + suffix + ', .kfield_shipping_' + form_id).find('select').each(function(){
 
         var dropdown_field = jQuery(this);
         var selected_price = gformGetPrice(dropdown_field.val());
@@ -913,7 +913,7 @@ function gformCalculateProductPrice(form_id, productFieldId){
 
 
     //Checkboxes labels with prices
-    jQuery('.gfield_option' + suffix).find('.gfield_checkbox').find('input:checkbox').each(function(){
+    jQuery('.kfield_option' + suffix).find('.kfield_checkbox').find('input:checkbox').each(function(){
         var checkbox_item = jQuery(this);
         var id = checkbox_item.attr('id');
         var field_id = id.split('_')[2];
@@ -925,7 +925,7 @@ function gformCalculateProductPrice(form_id, productFieldId){
 
 
     //Radio button auto-calculating lables
-    jQuery('.gfield_option' + suffix + ', .gfield_shipping_' + form_id).find('.gfield_radio').each(function(){
+    jQuery('.kfield_option' + suffix + ', .kfield_shipping_' + form_id).find('.kfield_radio').each(function(){
         var selected_price = 0;
         var radio_field = jQuery(this);
         var id = radio_field.attr('id');
@@ -952,7 +952,7 @@ function gformCalculateProductPrice(form_id, productFieldId){
 	//calculating options if quantity is more than 0 (a product was selected).
 	if( quantity > 0 ) {
 
-		jQuery('.gfield_option' + suffix).find('input:checked, select').each(function(){
+		jQuery('.kfield_option' + suffix).find('input:checked, select').each(function(){
 			if(!gformIsHidden(jQuery(this)))
 				price += gformGetPrice(jQuery(this).val());
 		});
@@ -977,7 +977,7 @@ function gformGetProductQuantity(formId, productFieldId) {
     }
 
     var quantity,
-        quantityInput = jQuery( '#ginput_quantity_' + formId + '_' + productFieldId ),
+        quantityInput = jQuery( '#kinput_quantity_' + formId + '_' + productFieldId ),
         numberFormat;
 
     // New input ID starts from 2.5, for the single product and calculation fields.
@@ -995,7 +995,7 @@ function gformGetProductQuantity(formId, productFieldId) {
 
     } else {
 
-        quantityInput = jQuery('.gfield_quantity_' + formId + '_' + productFieldId + ' :input');
+        quantityInput = jQuery('.kfield_quantity_' + formId + '_' + productFieldId + ' :input');
         quantity = 1;
 
         if (quantityInput.length > 0) {
@@ -1026,13 +1026,13 @@ function gformIsProductSelected( formId, productFieldId ) {
 
 	var suffix = "_" + formId + "_" + productFieldId;
 
-	var productField = jQuery("#ginput_base_price" + suffix + ", .gfield_donation" + suffix + " input[type=\"text\"], .gfield_product" + suffix + " .ginput_amount");
+	var productField = jQuery("#kinput_base_price" + suffix + ", .kfield_donation" + suffix + " input[type=\"text\"], .kfield_product" + suffix + " .kinput_amount");
 	if( productField.val() && ! gformIsHidden(productField) ){
 		return true;
 	}
 	else
 	{
-		productField = jQuery(".gfield_product" + suffix + " select, .gfield_product" + suffix + " input:checked, .gfield_donation" + suffix + " select, .gfield_donation" + suffix + " input:checked");
+		productField = jQuery(".kfield_product" + suffix + " select, .kfield_product" + suffix + " input:checked, .kfield_donation" + suffix + " select, .kfield_donation" + suffix + " input:checked");
 		if( productField.val() && ! gformIsHidden(productField) ){
 			return true;
 		}
@@ -1044,7 +1044,7 @@ function gformGetBasePrice(formId, productFieldId){
 
     var suffix = "_" + formId + "_" + productFieldId;
     var price = 0;
-    var productField = jQuery("#ginput_base_price" + suffix+ ", .gfield_donation" + suffix + " input[type=\"text\"], .gfield_product" + suffix + " .ginput_amount");
+    var productField = jQuery("#kinput_base_price" + suffix+ ", .kfield_donation" + suffix + " input[type=\"text\"], .kfield_product" + suffix + " .kinput_amount");
     if(productField.length > 0){
         price = productField.val();
 
@@ -1055,7 +1055,7 @@ function gformGetBasePrice(formId, productFieldId){
     }
     else
     {
-        productField = jQuery(".gfield_product" + suffix + " select, .gfield_product" + suffix + " input:checked, .gfield_donation" + suffix + " select, .gfield_donation" + suffix + " input:checked");
+        productField = jQuery(".kfield_product" + suffix + " select, .kfield_product" + suffix + " input:checked, .kfield_donation" + suffix + " select, .kfield_donation" + suffix + " input:checked");
         var val = productField.val();
         if(val){
             const value = gformParseChoiceValue( val );
@@ -1147,7 +1147,7 @@ function gformGetOptionLabel(element, selected_value, current_price, form_id, fi
     element.attr('price', diff);
 
     //don't add <span> for drop down items (not supported)
-    var price_label = element[0].tagName.toLowerCase() == "option" ? diff : "<span class='ginput_price'>" + diff + "</span>";
+    var price_label = element[0].tagName.toLowerCase() == "option" ? diff : "<span class='kinput_price'>" + diff + "</span>";
     var label = original_label + price_label;
 
     //calling hook to allow for custom option formatting
@@ -1205,9 +1205,9 @@ function gformRegisterPriceField(item){
 function gformInitPriceFields(){
 
 	// Getting all product fields and registering them.
-    const priceFields = gform.tools.getNodes('.gfield_price', true, document, true );
+    const priceFields = gform.tools.getNodes('.kfield_price', true, document, true );
 	priceFields.forEach( ( field ) => {
-		const productIds = gformGetProductIds( 'gfield_price', field );
+		const productIds = gformGetProductIds( 'kfield_price', field );
 		gformRegisterPriceField( productIds );
 	});
 
@@ -1317,7 +1317,7 @@ function gformToggleCheckboxes( toggleElement ) {
         toggleElementCheckbox = $toggleElement.is( 'input[type="checkbox"]' ),
         $toggle               = $toggleElement.parent(),
 	    $toggleLabel          = $toggle.find( 'label' ),
-	    $checkboxes           = $toggle.parent().find( '.gchoice:not( .gchoice_select_all )' ),
+	    $checkboxes           = $toggle.parent().find( '.gchoice:not( .kchoice_select_all )' ),
 	    formId         = kdna_get_form_id_by_html_id( $toggle.parents( '.gfield' ).attr( 'id' ) ),
 	    calcObj               = rgars( window, 'kdna_global/gfcalc/' + formId );
 
@@ -1376,8 +1376,8 @@ function gformToggleSelectAll( selectAllElement, action ) {
 	}
 }
 
-jQuery(document).on('click', '.gfield_choice--select_all_enabled *', function() {
-	var $select_all = jQuery( this ).closest( '.gfield_choice--select_all_enabled' ).find( '.gfield_choice_all_toggle' );
+jQuery(document).on('click', '.kfield_choice--select_all_enabled *', function() {
+	var $select_all = jQuery( this ).closest( '.kfield_choice--select_all_enabled' ).find( '.kfield_choice_all_toggle' );
 
 	// if any of the checkboxes are unchecked, turn the "deselect all" button/checkbox into a "select all" button/checkbox
 	if ( jQuery( this ).is( '.gchoice input[type="checkbox"]' ) ) {
@@ -1392,7 +1392,7 @@ jQuery(document).on('click', '.gfield_choice--select_all_enabled *', function() 
 
 	// if all checkboxes that are not the "select all" checkbox are checked, turn the "select all" button/checkbox into a "deselect all" button/checkbox
 	if ( jQuery( this ).is( '.gchoice input[type="checkbox"]' ) ) {
-		var $checkboxes = jQuery( this ).closest( '.gfield_choice--select_all_enabled' ).find( '.gchoice input[type="checkbox"]:not(".gfield_choice_all_toggle")' );
+		var $checkboxes = jQuery( this ).closest( '.kfield_choice--select_all_enabled' ).find( '.gchoice input[type="checkbox"]:not(".kfield_choice_all_toggle")' );
 		if ( $checkboxes.length === $checkboxes.filter( ':checked' ).length ) {
 			if( $select_all.is( 'input[type="checkbox"]' ) ) {
 				$select_all.prop( 'checked', true );
@@ -1412,7 +1412,7 @@ jQuery(document).on('click', '.gfield_choice--select_all_enabled *', function() 
 function gformToggleRadioOther( radioElement ) {
 
     // Get Other input element.
-    var $other = gform.tools.getClosest( radioElement, '.ginput_container_radio' ).querySelector( 'input.gchoice_other_control' );
+    var $other = gform.tools.getClosest( radioElement, '.kinput_container_radio' ).querySelector( 'input.kchoice_other_control' );
 
     if ( $other ) {
         $other.disabled = radioElement.value !== 'kdna_other_choice';
@@ -1428,13 +1428,13 @@ function gformAddListItem( addButton, max ) {
 
     var $addButton = jQuery( addButton );
 
-    if( $addButton.hasClass( 'gfield_icon_disabled' ) ) {
+    if( $addButton.hasClass( 'kfield_icon_disabled' ) ) {
         return;
     }
 
-    var $group     = $addButton.parents( '.gfield_list_group' ),
+    var $group     = $addButton.parents( '.kfield_list_group' ),
         $clone     = $group.clone(),
-        $container = $group.parents( '.gfield_list_container' ),
+        $container = $group.parents( '.kfield_list_container' ),
         tabindex   = $clone.find( ':input:last' ).attr( 'tabindex' );
 
     // reset all inputs to empty state
@@ -1466,8 +1466,8 @@ function gformDeleteListItem( deleteButton, max ) {
 		$deleteButton.prop( 'disabled', true );
 	}
 
-	var $group     = $deleteButton.parents( '.gfield_list_group' ),
-		$container = $group.parents( '.gfield_list_container' );
+	var $group     = $deleteButton.parents( '.kfield_list_group' ),
+		$container = $group.parents( '.kfield_list_container' );
 
     $group.remove();
 
@@ -1483,14 +1483,14 @@ function gformDeleteListItem( deleteButton, max ) {
 
 function gformAdjustClasses( $container ) {
 
-    var $groups = $container.find( '.gfield_list_group' );
+    var $groups = $container.find( '.kfield_list_group' );
 
     $groups.each( function( i ) {
 
         var $group       = jQuery( this ),
-            oddEvenClass = ( i + 1 ) % 2 == 0 ? 'gfield_list_row_even' : 'gfield_list_row_odd';
+            oddEvenClass = ( i + 1 ) % 2 == 0 ? 'kfield_list_row_even' : 'kfield_list_row_odd';
 
-        $group.removeClass( 'gfield_list_row_odd gfield_list_row_even' ).addClass( oddEvenClass );
+        $group.removeClass( 'kfield_list_row_odd kfield_list_row_even' ).addClass( oddEvenClass );
 
     } );
 
@@ -1502,7 +1502,7 @@ function gformAdjustRowAttributes( $container ) {
         return;
     }
 
-    $container.find( '.gfield_list_group' ).each( function( i ) {
+    $container.find( '.kfield_list_group' ).each( function( i ) {
 
         var $input = jQuery( this ).find( 'input, select, textarea' );
         $input.each( function( index, input ) {
@@ -1519,7 +1519,7 @@ function gformAdjustRowAttributes( $container ) {
 
 function gformToggleIcons( $container, max ) {
 
-    var groupCount  = $container.find( '.gfield_list_group' ).length,
+    var groupCount  = $container.find( '.kfield_list_group' ).length,
         $addButtons = $container.find( '.add_list_item' ),
         isLegacy    =  typeof kdna_legacy !== 'undefined' && kdna_legacy.is_legacy;
 
@@ -1533,7 +1533,7 @@ function gformToggleIcons( $container, max ) {
 
         // store original title in the add button
         $addButtons.data( 'title', $container.find( '.add_list_item' ).attr( 'title' ) );
-        $addButtons.addClass( 'gfield_icon_disabled' ).attr( 'title', '' );
+        $addButtons.addClass( 'kfield_icon_disabled' ).attr( 'title', '' );
 
 		if ( ! isLegacy ) {
 			$addButtons.prop( 'disabled', true );
@@ -1541,7 +1541,7 @@ function gformToggleIcons( $container, max ) {
 
     } else if( max > 0 ) {
 
-        $addButtons.removeClass( 'gfield_icon_disabled' );
+        $addButtons.removeClass( 'kfield_icon_disabled' );
 
 	    if ( ! isLegacy ) {
 		    $addButtons.prop( 'disabled', false );
@@ -1562,13 +1562,13 @@ function gformAddRepeaterItem( addButton, max ) {
 
 	var $addButton = jQuery( addButton );
 
-	if( $addButton.hasClass( 'gfield_icon_disabled' ) ) {
+	if( $addButton.hasClass( 'kfield_icon_disabled' ) ) {
 		return;
 	}
 
-	var $item     = $addButton.closest( '.gfield_repeater_item' ),
+	var $item     = $addButton.closest( '.kfield_repeater_item' ),
 		$clone     = $item.clone(),
-		$container = $item.closest( '.gfield_repeater_container' ),
+		$container = $item.closest( '.kfield_repeater_container' ),
 		tabindex   = $clone.find( ':input:last' ).attr( 'tabindex' );
 
 	// reset all inputs to empty state
@@ -1586,27 +1586,27 @@ function gformAddRepeaterItem( addButton, max ) {
 	} );
 	$clone.find( ':checkbox, :radio' ).prop( 'checked', false );
 	$clone.find('.validation_message').remove();
-	$clone.find('.gform-datepicker.initialized').removeClass('initialized');
+	$clone.find('.kform-datepicker.initialized').removeClass('initialized');
 
 	$clone = gform.applyFilters( 'kform_repeater_item_pre_add', $clone, $item );
 
 	$item.after( $clone );
 
-	var $cells = $clone.children('.gfield_repeater_cell');
+	var $cells = $clone.children('.kfield_repeater_cell');
 	$cells.each(function () {
-		var $subContainer = jQuery(this).find('.gfield_repeater_container').first();
+		var $subContainer = jQuery(this).find('.kfield_repeater_container').first();
 		if ($subContainer.length > 0) {
 			resetContainerItems = function ($c) {
-				$c.children('.gfield_repeater_items').children('.gfield_repeater_item').each(function (i) {
-					var $children = jQuery(this).children('.gfield_repeater_cell');
+				$c.children('.kfield_repeater_items').children('.kfield_repeater_item').each(function (i) {
+					var $children = jQuery(this).children('.kfield_repeater_cell');
 					$children.each(function () {
-						var $subSubContainer = jQuery(this).find('.gfield_repeater_container').first();
+						var $subSubContainer = jQuery(this).find('.kfield_repeater_container').first();
 						if ($subSubContainer.length > 0) {
 							resetContainerItems($subSubContainer);
 						}
 					})
 				})
-				$c.children('.gfield_repeater_items').children('.gfield_repeater_item').not(':first').remove();
+				$c.children('.kfield_repeater_items').children('.kfield_repeater_item').not(':first').remove();
 			}
 			resetContainerItems($subContainer);
 		}
@@ -1631,8 +1631,8 @@ function gformAddRepeaterItem( addButton, max ) {
 function gformDeleteRepeaterItem(deleteButton, max) {
 
 	var $deleteButton = jQuery(deleteButton),
-		$group = $deleteButton.closest('.gfield_repeater_item'),
-		$container = $group.closest('.gfield_repeater_container');
+		$group = $deleteButton.closest('.kfield_repeater_item'),
+		$container = $group.closest('.kfield_repeater_container');
 
 	$group.remove();
 
@@ -1655,11 +1655,11 @@ function gformResetRepeaterAttributes($container, depth, row) {
 		row = 0;
 	}
 
-	$container.children('.gfield_repeater_items').children('.gfield_repeater_item').each(function () {
-		var $children = jQuery(this).children('.gfield_repeater_cell');
+	$container.children('.kfield_repeater_items').children('.kfield_repeater_item').each(function () {
+		var $children = jQuery(this).children('.kfield_repeater_cell');
 		$children.each(function () {
 			var $cell = jQuery(this);
-			var $subContainer = jQuery(this).find('.gfield_repeater_container').first();
+			var $subContainer = jQuery(this).find('.kfield_repeater_container').first();
 
 			if ($subContainer.length > 0) {
 				var newDepth = depth + 1;
@@ -1744,9 +1744,9 @@ function gformResetRepeaterAttributes($container, depth, row) {
 
 function gformToggleRepeaterButtons($container) {
 
-	var max = $container.closest('.gfield_repeater_wrapper').data('max_items'),
-		groupCount = $container.children('.gfield_repeater_items').children('.gfield_repeater_item').length,
-		$buttonsContainer = $container.children('.gfield_repeater_items').children('.gfield_repeater_item').children('.gfield_repeater_buttons'),
+	var max = $container.closest('.kfield_repeater_wrapper').data('max_items'),
+		groupCount = $container.children('.kfield_repeater_items').children('.kfield_repeater_item').length,
+		$buttonsContainer = $container.children('.kfield_repeater_items').children('.kfield_repeater_item').children('.kfield_repeater_buttons'),
 		$addButtons = $buttonsContainer.children('.add_repeater_item');
 
 	$buttonsContainer.children('.remove_repeater_item').css('visibility', groupCount == 1 ? 'hidden' : 'visible');
@@ -1755,11 +1755,11 @@ function gformToggleRepeaterButtons($container) {
 
 		// store original title in the add button
 		$addButtons.data('title', $buttonsContainer.children('.add_repeater_item').attr('title'));
-		$addButtons.addClass('gfield_icon_disabled').attr('title', '');
+		$addButtons.addClass('kfield_icon_disabled').attr('title', '');
 
 	} else if (max > 0) {
 
-		$addButtons.removeClass('gfield_icon_disabled');
+		$addButtons.removeClass('kfield_icon_disabled');
 
 		if ($addButtons.data('title')) {
 			$addButtons.attr('title', $addButtons.data('title'));
@@ -1767,10 +1767,10 @@ function gformToggleRepeaterButtons($container) {
 	}
 
 	$container
-		.children('.gfield_repeater_items')
-		.children('.gfield_repeater_item')
-		.children( '.gfield_repeater_cell').each(function (i) {
-			var $subContainer = jQuery(this).find('.gfield_repeater_container').first();
+		.children('.kfield_repeater_items')
+		.children('.kfield_repeater_item')
+		.children( '.kfield_repeater_cell').each(function (i) {
+			var $subContainer = jQuery(this).find('.kfield_repeater_container').first();
 			if ($subContainer.length > 0) {
 				gformToggleRepeaterButtons($subContainer);
 			}
@@ -1985,7 +1985,7 @@ var GFCalc = function(formId, formulaFields){
     this.runCalc = function(formulaField, formId) {
         var calcObj      = this,
             field        = jQuery('#field_' + formId + '_' + formulaField.field_id),
-            formulaInput = field.hasClass( 'gfield_price' ) ? jQuery( '#ginput_base_price_' + formId + '_' + formulaField.field_id ) : jQuery( '#input_' + formId + '_' + formulaField.field_id ),
+            formulaInput = field.hasClass( 'kfield_price' ) ? jQuery( '#kinput_base_price_' + formId + '_' + formulaField.field_id ) : jQuery( '#input_' + formId + '_' + formulaField.field_id ),
             previous_val = formulaInput.val(),
             formula      = gform.applyFilters( 'kform_calculation_formula', formulaField.formula, formulaField, formId, calcObj ),
             expr         = calcObj.replaceFieldTags( formId, formula, formulaField ).replace(/(\r\n|\n|\r)/gm,""),
@@ -2025,7 +2025,7 @@ var GFCalc = function(formId, formulaFields){
         if( formattedResult !== false) {
             result = formattedResult;
         }
-        else if( field.hasClass( 'gfield_price' ) || numberFormat == "currency") {
+        else if( field.hasClass( 'kfield_price' ) || numberFormat == "currency") {
 
             result = gformFormatMoney(result ? result : 0, true);
         }
@@ -2048,7 +2048,7 @@ var GFCalc = function(formId, formulaFields){
             return;
 
         // if this is a calculation product, handle differently
-        if(field.hasClass('gfield_price')) {
+        if(field.hasClass('kfield_price')) {
             jQuery('#input_' + formId + '_' + formulaField.field_id).text(result);
 
 			// Firing jQuery change event for backwards compatibility with legacy code.
@@ -2060,8 +2060,8 @@ var GFCalc = function(formId, formulaFields){
 			}
 
             // Announce the price change of the product only if there's no Total field.
-            if ( jQuery( '.gfield_label_product' ).length && ! jQuery( '.ginput_total' ).length ) {
-                result = jQuery( 'label[ for=input_' + formId + '_' + formulaField.field_id + '_1 ]' ).find( '.gfield_label_product' ).text() + ' ' + result;
+            if ( jQuery( '.kfield_label_product' ).length && ! jQuery( '.kinput_total' ).length ) {
+                result = jQuery( 'label[ for=input_' + formId + '_' + formulaField.field_id + '_1 ]' ).find( '.kfield_label_product' ).text() + ' ' + result;
                 wp.a11y.speak( result );
             }
         } else {
@@ -2099,7 +2099,7 @@ var GFCalc = function(formId, formulaFields){
                     calcObj.bindCalcEvent(inputId, formulaField, formId, 0);
                 });
                 // Bind calc event to the image in an image choice field.
-                var imageChoice = input.closest('.gfield--type-image_choice .gchoice');
+                var imageChoice = input.closest('.kfield--type-image_choice .gchoice');
                 if ( imageChoice.length > 0 ) {
                     jQuery(imageChoice).click(function(){
                     	calcObj.bindCalcEvent(inputId, formulaField, formId, 0);
@@ -2161,9 +2161,9 @@ var GFCalc = function(formId, formulaFields){
 				modifier = matches[i][3];
 			}
 			else {
-				var is_product_radio =  jQuery('.gfield_price input[name=input_' + fieldId + ']').is('input[type=radio]');
-                var is_product_dropdown = jQuery('.gfield_price select[name=input_' + fieldId + ']').length > 0;
-                var is_option_checkbox = jQuery('.gfield_price input[name="input_' + inputId + '"]').is('input[type=checkbox]');
+				var is_product_radio =  jQuery('.kfield_price input[name=input_' + fieldId + ']').is('input[type=radio]');
+                var is_product_dropdown = jQuery('.kfield_price select[name=input_' + fieldId + ']').length > 0;
+                var is_option_checkbox = jQuery('.kfield_price input[name="input_' + inputId + '"]').is('input[type=checkbox]');
 
                 if( is_product_dropdown || is_product_radio || is_option_checkbox ) {
 					modifier = 'price';
@@ -2280,10 +2280,10 @@ gform.recaptcha = {
 	/**
 	 * Callback function on the reCAPTCAH API script.
 	 *
-	 * @see GF_Field_CAPTCHA::get_field_input() in /includes/fields/class-gf-field-catpcha.php
+	 * @see GF_Field_CAPTCHA::get_field_input() in /includes/fields/class-kdna-field-catpcha.php
 	 */
 	renderRecaptcha: function() {
-		jQuery( '.ginput_recaptcha:not(.gform-initialized)' ).each( function() {
+		jQuery( '.kinput_recaptcha:not(.kform-initialized)' ).each( function() {
 			let $elem      = jQuery( this ),
 				parameters = {
 					'sitekey':        $elem.data( 'sitekey' ),
@@ -2306,7 +2306,7 @@ gform.recaptcha = {
 			 * @since 2.2.5.20
 			 *
 			 * @param string|false|object   The name of the callback function or the function object itself to be executed when the user successfully submits the captcha.
-			 * @param object       $elem    The jQuery object containing the div element with the ginput_recaptcha class for the current reCaptcha field.
+			 * @param object       $elem    The jQuery object containing the div element with the kinput_recaptcha class for the current reCaptcha field.
 			 */
 			const callback = gform.applyFilters( 'kform_recaptcha_callback', false, $elem );
 			if ( callback ) {
@@ -2321,7 +2321,7 @@ gform.recaptcha = {
 				$elem.find( 'iframe' ).attr( 'tabindex', parameters.tabindex );
 			}
 
-			$elem.addClass( 'gform-initialized' );
+			$elem.addClass( 'kform-initialized' );
 
 			gform.doAction( 'kform_post_recaptcha_render', $elem );
 		} );
@@ -2370,7 +2370,7 @@ gform.recaptcha = {
 	maybeExecuteInvisibleRecaptcha: async function( data ) {
 
 		if ( gform.recaptcha.gformIsRecaptchaPending( jQuery( data.form ) ) ) {
-			const recaptcha = gform.utils.getNode( '.ginput_recaptcha', data.form, true );
+			const recaptcha = gform.utils.getNode( '.kinput_recaptcha', data.form, true );
 
 			await gform.recaptcha.executeRecaptcha( recaptcha.getAttribute( 'data-widget-id' ), data.form );
 		}
@@ -2390,7 +2390,7 @@ gform.recaptcha = {
 	executeRecaptcha: async function( widgetId, form ) {
 
 		// If there was an error loading recaptcha, just abort and let the submission fail validation.
-		const recaptcha = gform.utils.getNode( '.ginput_recaptcha', form, true );
+		const recaptcha = gform.utils.getNode( '.kinput_recaptcha', form, true );
 		if ( recaptcha.getAttribute( 'data-recaptcha-error' ) === '1' ) {
 			return;
 		}
@@ -2477,7 +2477,7 @@ gform.recaptcha = {
 	 * @returns {boolean}
 	 */
 	gformIsRecaptchaPending: function( form ) {
-		const recaptcha = form.find( '.ginput_recaptcha' );
+		const recaptcha = form.find( '.kinput_recaptcha' );
 
 		if ( ! recaptcha.length || recaptcha.data( 'size' ) !== 'invisible' ) {
 			return false;
@@ -2495,7 +2495,7 @@ gform.recaptcha = {
 	 * @since 2.5.6
 	 */
 	needsRender: function() {
-		return document.querySelectorAll( '.ginput_recaptcha:not(.gform-initialized)' )[ 0 ];
+		return document.querySelectorAll( '.kinput_recaptcha:not(.kform-initialized)' )[ 0 ];
 	},
 
 	/**
@@ -2683,7 +2683,7 @@ function gformValidateFileSize( field, max_file_size ) {
 	    function setFieldAccessibility( container ) {
 		    var input = container.querySelectorAll( 'input[type="file"]' )[ 0 ];
 		    var button = container.querySelectorAll( '.kform_button_select_files' )[ 0 ];
-		    var label = $( uploadElement ).closest( '.gfield' ).find( '.gfield_label' )[ 0 ];
+		    var label = $( uploadElement ).closest( '.gfield' ).find( '.kfield_label' )[ 0 ];
 		    if ( ! input || ! label || ! button ) {
 			    return;
 		    }
@@ -2695,7 +2695,7 @@ function gformValidateFileSize( field, max_file_size ) {
 	    }
 
 		function addMessage( messagesID, message) {
-			$( "#" + messagesID ).prepend( "<li class='gfield_description gfield_validation_message'>" + htmlEncode( message ) + "</li>" );
+			$( "#" + messagesID ).prepend( "<li class='kfield_description kfield_validation_message'>" + htmlEncode( message ) + "</li>" );
 			// Announce errors.
 			setTimeout(function () {
 				wp.a11y.speak( $( "#" + messagesID ).text() );
@@ -2756,7 +2756,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
                 var size         = typeof file.size !== 'undefined' ? plupload.formatSize(file.size) : strings.in_progress,
                     removeFileJs = '$this=jQuery(this); var uploader = gfMultiFileUploader.uploaders.' + up.settings.container.id + ';uploader.stop();uploader.removeFile(uploader.getFile(\'' + file.id +'\'));$this.after(\'' + strings.cancelled + '\'); uploader.start();$this.remove();',
-                    statusMarkup = '<div id="{0}" class="ginput_preview"><span class="gfield_fileupload_filename">{1}</span><span class="gfield_fileupload_filesize">{2}</span><span class="gfield_fileupload_progress"><span class="gfield_fileupload_progressbar"><span class="gfield_fileupload_progressbar_progress"></span></span><span class="gfield_fileupload_percent"></span></span><a class="gfield_fileupload_cancel gform-theme-button gform-theme-button--simple" href="javascript:void(0)" title="{3}" onclick="{4}" onkeypress="{4}">{5}</a>';
+                    statusMarkup = '<div id="{0}" class="kinput_preview"><span class="kfield_fileupload_filename">{1}</span><span class="kfield_fileupload_filesize">{2}</span><span class="kfield_fileupload_progress"><span class="kfield_fileupload_progressbar"><span class="kfield_fileupload_progressbar_progress"></span></span><span class="kfield_fileupload_percent"></span></span><a class="kfield_fileupload_cancel kform-theme-button kform-theme-button--simple" href="javascript:void(0)" title="{3}" onclick="{4}" onkeypress="{4}">{5}</a>';
 
                 /**
                  *  Filer the file upload markup as it is being uploaded.
@@ -2807,8 +2807,8 @@ function gformValidateFileSize( field, max_file_size ) {
 
         uploader.bind('UploadProgress', function(up, file) {
             var html = file.percent + "%";
-            $('#' + file.id + ' span.gfield_fileupload_percent').html(html);
-			$('#' + file.id + ' span.gfield_fileupload_progressbar_progress').css('width', file.percent + '%');
+            $('#' + file.id + ' span.kfield_fileupload_percent').html(html);
+			$('#' + file.id + ' span.kfield_fileupload_progressbar_progress').css('width', file.percent + '%');
         });
 
         uploader.bind('Error', function(up, err) {
@@ -2857,8 +2857,8 @@ function gformValidateFileSize( field, max_file_size ) {
 			}
 
 			var uploadedName = rgars(response, 'data/uploaded_filename');
-			var html = '<span class="gfield_fileupload_filename">' + htmlEncode(uploadedName) + '</span><span class="gfield_fileupload_filesize">' + plupload.formatSize(file.size) + '</span>';
-			html += '<span class="gfield_fileupload_progress gfield_fileupload_progress_complete"><span class="gfield_fileupload_progressbar"><span class="gfield_fileupload_progressbar_progress"></span></span><span class="gfield_fileupload_percent">' + file.percent + '%</span></span>';
+			var html = '<span class="kfield_fileupload_filename">' + htmlEncode(uploadedName) + '</span><span class="kfield_fileupload_filesize">' + plupload.formatSize(file.size) + '</span>';
+			html += '<span class="kfield_fileupload_progress kfield_fileupload_progress_complete"><span class="kfield_fileupload_progressbar"><span class="kfield_fileupload_progressbar_progress"></span></span><span class="kfield_fileupload_percent">' + file.percent + '%</span></span>';
 			var formId = up.settings.multipart_params.form_id;
 			var fieldId = up.settings.multipart_params.field_id;
 
@@ -2873,7 +2873,7 @@ function gformValidateFileSize( field, max_file_size ) {
 					+ "' /> "
 					+ html;
 			} else {
-				html = html + "<button class='kform_delete_file gform-theme-button gform-theme-button--simple' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + htmlEncode(uploadedName) + "</span></button>";
+				html = html + "<button class='kform_delete_file kform-theme-button kform-theme-button--simple' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + htmlEncode(uploadedName) + "</span></button>";
 			}
 
 			/**
@@ -2892,7 +2892,7 @@ function gformValidateFileSize( field, max_file_size ) {
 			html = gform.applyFilters('kform_file_upload_markup', html, file, up, strings, imagesUrl, response);
 
 			$('#' + file.id).html(html);
-			$('#' + file.id + ' span.gfield_fileupload_progressbar_progress').css('width', file.percent + '%');
+			$('#' + file.id + ' span.kfield_fileupload_progressbar_progress').css('width', file.percent + '%');
 
 			if (file.percent == 100) {
 				if (response.status && response.status == 'ok') {
@@ -3046,9 +3046,9 @@ function gformShowSpinner( formId, spinnerUrl ) {
  *
  * @return void
  */
-function gformInitializeSpinner( formId, target, uniqId = 'gform-ajax-spinner' ) {
+function gformInitializeSpinner( formId, target, uniqId = 'kform-ajax-spinner' ) {
 	if (jQuery('#kform_ajax_spinner_' + formId).length == 0) {
-		var loaderHTML = '<span data-js-spinner-id="' + uniqId + '" id="kform_ajax_spinner_' + formId + '" class="gform-loader"></span>';
+		var loaderHTML = '<span data-js-spinner-id="' + uniqId + '" id="kform_ajax_spinner_' + formId + '" class="kform-loader"></span>';
 		var $spinnerTarget = target instanceof jQuery ? target : jQuery( target );
 		$spinnerTarget.after( loaderHTML );
 	}
@@ -3063,7 +3063,7 @@ function gformInitializeSpinner( formId, target, uniqId = 'gform-ajax-spinner' )
  *
  * @return void
  */
-function gformRemoveSpinner( uniqId = 'gform-ajax-spinner' ) {
+function gformRemoveSpinner( uniqId = 'kform-ajax-spinner' ) {
 	var spinners = document.querySelectorAll( '[data-js-spinner-id="' + uniqId + '"]' );
 
 	if ( ! spinners ) {
@@ -3302,17 +3302,17 @@ if ( ! String.prototype.gformFormat ) {
  * @since 2.5
  */
 jQuery( document ).ready( function() {
-	jQuery( '#gform-form-toolbar__menu' )
+	jQuery( '#kform-form-toolbar__menu' )
 	.on( 'mouseenter focus', '> li',function() {
-			jQuery( this ).find( '.gform-form-toolbar__submenu' ).toggleClass( 'open' );
+			jQuery( this ).find( '.kform-form-toolbar__submenu' ).toggleClass( 'open' );
 			jQuery( this ).find( '.has_submenu' ).toggleClass( 'submenu-open' );
 		} );
-	jQuery( '#gform-form-toolbar__menu' )
+	jQuery( '#kform-form-toolbar__menu' )
 		.on( 'mouseleave blur', '> li',function() {
-			jQuery( '.gform-form-toolbar__submenu.open' ).removeClass( 'open' );
+			jQuery( '.kform-form-toolbar__submenu.open' ).removeClass( 'open' );
 			jQuery( '.has_submenu.submenu-open' ).removeClass( 'submenu-open' );
 		} );
-	jQuery( '#gform-form-toolbar__menu .has_submenu' )
+	jQuery( '#kform-form-toolbar__menu .has_submenu' )
 		.on( 'click', function( e ) {
 			e.preventDefault();
 		} );
@@ -3324,10 +3324,10 @@ jQuery( document ).ready( function() {
  * @since 2.5
  */
 jQuery( document ).ready( function() {
-	var settingsFields = jQuery( '.gform-settings-field' );
+	var settingsFields = jQuery( '.kform-settings-field' );
 	settingsFields.each( function() {
-		if ( jQuery( this ).find( '> .gform-settings-input__container' ).length > 1 ) {
-			jQuery( this ).addClass( 'gform-settings-field--multiple-inputs' );
+		if ( jQuery( this ).find( '> .kform-settings-input__container' ).length > 1 ) {
+			jQuery( this ).addClass( 'kform-settings-field--multiple-inputs' );
 		}
 	} );
 } );

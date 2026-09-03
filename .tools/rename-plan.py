@@ -17,7 +17,13 @@ import os
 import re
 import sys
 
-IDENT = re.compile(r'\b(?:gform_|gforms_|gf_|kdnaform_|kdna_)[A-Za-z0-9_]+')
+# Gravity Forms uses eleven markup prefixes, not one. Missing a family is how
+# a rename ends up half-applied, so they are all enumerated here.
+IDENT = re.compile(
+    r'\b(?:gform_|gforms_|gf_|kdnaform_|kdna_'
+    r'|gform-|gforms-|gf-|gfield_|gfield-|ginput_|gravity-'
+    r'|gsection_|gresults-|gaddon-|gficon-|gchoice_)[A-Za-z0-9_-]+'
+)
 
 SKIP_EXT = {
     '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.webp',

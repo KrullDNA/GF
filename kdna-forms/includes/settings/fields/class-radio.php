@@ -55,7 +55,7 @@ class Radio extends Base {
 	public function __construct( $props, $settings ) {
 
 		// Prepare class.
-		$class = self::has_icons( rgar( $props, 'choices', array() ) ) ? array( 'gform-settings-field__radio--visual' ) : array();
+		$class = self::has_icons( rgar( $props, 'choices', array() ) ) ? array( 'kform-settings-field__radio--visual' ) : array();
 
 		// Convert defined classes.
 		if ( rgar( $props, 'class' ) ) {
@@ -88,11 +88,11 @@ class Radio extends Base {
 		// Get choices, selected value, classes.
 		$choices          = $this->get_choices();
 		$selected_value   = $this->get_value();
-		$horizontal_class = rgobj( $this, 'horizontal' ) || self::has_icons( $choices ) ? ' gform-settings-choice--inline' : '';
-		$icon_class       = self::has_icons( $choices ) ? ' gform-settings-choice--visual' : '';
+		$horizontal_class = rgobj( $this, 'horizontal' ) || self::has_icons( $choices ) ? ' kform-settings-choice--inline' : '';
+		$icon_class       = self::has_icons( $choices ) ? ' kform-settings-choice--visual' : '';
 
 		if ( $this->image_select ) {
-			$icon_class = ' gform-settings-choice--image-select';
+			$icon_class = ' kform-settings-choice--image-select';
 		}
 
 		// If no choices exist, return.
@@ -132,10 +132,10 @@ class Radio extends Base {
 			}
 
 			$html .= sprintf(
-				'<div id="gform-settings-radio-choice-%1$s" class="gform-settings-choice%2$s%3$s">
+				'<div id="kform-settings-radio-choice-%1$s" class="kform-settings-choice%2$s%3$s">
 					%4$s
 					<label for="%1$s">
-						<span>%5$s <span class="gform-settings-choice-label">%6$s</span> %7$s</span>
+						<span>%5$s <span class="kform-settings-choice-label">%6$s</span> %7$s</span>
 					</label>
 				</div>',
 				esc_attr( $choice['id'] ),
@@ -152,7 +152,7 @@ class Radio extends Base {
 		// Wrap visual choices with container.
 		if ( ! empty( $icon_class ) ) {
 			$html = sprintf(
-				'<div class="gform-settings-choices--visual">%s</div>',
+				'<div class="kform-settings-choices--visual">%s</div>',
 				$html
 			);
 		}

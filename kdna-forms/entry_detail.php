@@ -538,7 +538,7 @@ class KDNAEntryDetail {
 			}
 
 			function EndDeleteFile(fieldId, fileIndex) {
-				var previewFileSelector = "#preview_existing_files_" + fieldId + " .ginput_preview";
+				var previewFileSelector = "#preview_existing_files_" + fieldId + " .kinput_preview";
 				var $previewFiles = jQuery(previewFileSelector);
 				var rr = $previewFiles.eq(fileIndex);
 				$previewFiles.eq(fileIndex).remove();
@@ -696,7 +696,7 @@ class KDNAEntryDetail {
 					<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 
 
-					<div id="post-body" class="metabox-holder columns-2 gform-settings-panel__content">
+					<div id="post-body" class="metabox-holder columns-2 kform-settings-panel__content">
 						<div id="post-body-content" >
 							<?php
 							/**
@@ -1384,7 +1384,7 @@ class KDNAEntryDetail {
 				}
 
 				esc_html_e( 'Embed Url', 'kdnaforms' ); ?>:
-				<a href="<?php echo esc_url( $entry['source_url'] ) ?>" target="_blank">.../<?php echo esc_html( KDNACommon::truncate_url( $entry['source_url'] ) ) ?><span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>
+				<a href="<?php echo esc_url( $entry['source_url'] ) ?>" target="_blank">.../<?php echo esc_html( KDNACommon::truncate_url( $entry['source_url'] ) ) ?><span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>
 				<br /><br />
 				<?php
 				if ( ! empty( $entry['post_id'] ) ) {
@@ -1523,7 +1523,7 @@ class KDNAEntryDetail {
 
 				<input type="button" name="notification_resend" value="<?php esc_attr_e( 'Resend', 'kdnaforms' ) ?>" class="button" style="" onclick="ResendNotifications();" />
 				<span id="please_wait_container" style="display:none; margin-left: 5px;">
-							<i class='gficon-kdnaforms-spinner-icon gficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
+							<i class='kficon-kdnaforms-spinner-icon kficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
                         </span>
 				<?php
 			}

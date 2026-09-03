@@ -26,14 +26,14 @@ class KDNA_Field_Post_Tags extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--tags';
+		return 'kform-icon--tags';
 	}
 
 	function get_form_editor_field_settings() {
@@ -82,13 +82,13 @@ class KDNA_Field_Post_Tags extends KDNA_Field {
 		$aria_describedby      = $this->get_aria_describedby();
 
 		// Use the WordPress built-in class "howto" in the form editor.
-		$text_hint = '<p class="gfield_post_tags_hint gfield_description" id="' . $field_id . '_desc">' . kdna_apply_filters( array(
+		$text_hint = '<p class="kfield_post_tags_hint kfield_description" id="' . $field_id . '_desc">' . kdna_apply_filters( array(
 				'kdnaform_post_tags_hint',
 				$form_id,
 				$this->id,
 			), esc_html__( 'Separate tags with commas', 'kdnaforms' ), $form_id ) . '</p>';
 
-		return "<div class='ginput_container ginput_container_post_tags'>
+		return "<div class='kinput_container kinput_container_post_tags'>
 					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class}' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$disabled_text}/>{$text_hint}
 				</div>";
 	}
@@ -120,7 +120,7 @@ class KDNA_Field_Post_Tags extends KDNA_Field {
 		}
 
 		if ( ! empty( $this->description ) ) {
-			$describedby .= " gfield_description_{$form_id}_{$id}";
+			$describedby .= " kfield_description_{$form_id}_{$id}";
 		}
 
 		if ( $this->failed_validation ) {

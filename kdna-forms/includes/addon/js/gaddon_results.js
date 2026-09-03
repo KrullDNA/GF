@@ -3,7 +3,7 @@ var gresultsAjaxRequest;
 var gresults = {
 
     drawCharts: function () {
-        var containers = jQuery('.gresults-chart-wrapper');
+        var containers = jQuery('.kresults-chart-wrapper');
         containers.each(function (index, elem) {
             var id = jQuery(elem).attr('id');
             var options = jQuery(elem).data('options');
@@ -25,7 +25,7 @@ var gresults = {
 
 		// For RTL languages, set the text-anchor of bar chart labels to "start" to keep proper alignment.
 		const isRTL   = document.documentElement.dir === 'rtl';
-		const isResultsWrapper = document.querySelector('.gresults-chart-wrapper svg')
+		const isResultsWrapper = document.querySelector('.kresults-chart-wrapper svg')
 		if (isResultsWrapper && isRTL) {
 			document.querySelectorAll('text[text-anchor="end"]').forEach(function(el) {
 				el.setAttribute('text-anchor', 'start');
@@ -34,15 +34,15 @@ var gresults = {
     },
 
     renderStateData: function (state) {
-        var results = jQuery("#gresults-results");
+        var results = jQuery("#kresults-results");
         results.data('searchcriteria', state.searchCriteria);
-        jQuery("#gresults-results-filter").html(state.filterUI);
+        jQuery("#kresults-results-filter").html(state.filterUI);
         results.css('opacity', 0);
         results.html(state.html);
         gresults.drawCharts();
         results.fadeTo("slow", 1);
 
-        var filterContainer = jQuery("#gresults-results-field-filters-container");
+        var filterContainer = jQuery("#kresults-results-field-filters-container");
         filterContainer.resizable();
         filterContainer.resizable('destroy');
         filterContainer.resizable({
@@ -52,14 +52,14 @@ var gresults = {
 
     getResults: function () {
         gresults.recordFormState();
-        var gresultsData = jQuery('#gresults-results-filter-form').serialize();
+        var gresultsData = jQuery('#kresults-results-filter-form').serialize();
         gresults.sendRequest(gresultsData)
     },
 
     sendRequest: function (gresultsData, serverStateObject, checkSum) {
-        var results = jQuery("#gresults-results");
-        var filterButtons = jQuery("#gresults-results-filter-buttons input");
-        var viewSlug = jQuery("#gresults-view-slug").val();
+        var results = jQuery("#kresults-results");
+        var filterButtons = jQuery("#kresults-results-filter-buttons input");
+        var viewSlug = jQuery("#kresults-view-slug").val();
 		var nonce = jQuery("#_gf_results_nonce").val()
         var data_str = "action=gresults_get_results_" + viewSlug + "&" + gresultsData + '&_gf_results_nonce' + nonce ;
         if (serverStateObject)
@@ -86,9 +86,9 @@ var gresults = {
                     filterButtons.removeAttr('disabled');
                     gform.utils.trigger( { event: 'gform/page_loader/hide' } );
                     results.html(response.html);
-                    jQuery("#gresults-results").data('searchcriteria', response.searchCriteria); //used in 'more' links
+                    jQuery("#kresults-results").data('searchcriteria', response.searchCriteria); //used in 'more' links
 
-                    var filterUI = jQuery("#gresults-results-filter").html();
+                    var filterUI = jQuery("#kresults-results-filter").html();
 
                     gresults.drawCharts();
                     results.fadeTo("slow", 1);
@@ -127,10 +127,10 @@ var gresults = {
     },
 
     getMoreResults: function (formId, fieldId) {
-        var container = jQuery('#gresults-results-field-content-' + fieldId),
-            results = jQuery("#gresults-results"),
+        var container = jQuery('#kresults-results-field-content-' + fieldId),
+            results = jQuery("#kresults-results"),
             offset = jQuery(container).data('offset'),
-            viewSlug = jQuery("#gresults-view-slug").val(),
+            viewSlug = jQuery("#kresults-view-slug").val(),
             searchCriteria = results.data('searchcriteria'),
             nonce = jQuery("#_gf_results_nonce").val();
 
@@ -155,7 +155,7 @@ var gresults = {
                     if (response.html)
                         jQuery(container).append(response.html);
                     if (!response.more_remaining)
-                        jQuery('#gresults-results-field-more-link-' + fieldId).hide();
+                        jQuery('#kresults-results-field-more-link-' + fieldId).hide();
 
                     jQuery(container).data('offset', response.offset);
                 }
@@ -167,8 +167,8 @@ var gresults = {
     },
 
     clearFilterForm: function () {
-        jQuery("#gresults-results-field-filters-container").off('click', '.gform-add').gfFilterUI(gresultsFilterSettings, [], true);
-        jQuery('#gresults-results-filter-form').find('input, select').each(function () {
+        jQuery("#kresults-results-field-filters-container").off('click', '.kform-add').gfFilterUI(gresultsFilterSettings, [], true);
+        jQuery('#kresults-results-filter-form').find('input, select').each(function () {
             switch (this.type) {
                 case 'text':
                 case 'select-one':
@@ -182,32 +182,32 @@ var gresults = {
     },
 
     recordFormState: function () {
-        jQuery("#gresults-results-filter-form input[type='radio']").each(function () {
+        jQuery("#kresults-results-filter-form input[type='radio']").each(function () {
             if (this.checked) {
                 jQuery(this).prop("defaultChecked", true);
             } else {
                 jQuery(this).prop("defaultChecked", false);
             }
         });
-        jQuery("#gresults-results-filter-form input[type='checkbox']").each(function () {
+        jQuery("#kresults-results-filter-form input[type='checkbox']").each(function () {
             if (this.checked) {
                 jQuery(this).prop("defaultChecked", true);
             } else {
                 jQuery(this).prop("defaultChecked", false);
             }
         });
-        jQuery("#gresults-results-filter-form input[type='text']").each(function () {
+        jQuery("#kresults-results-filter-form input[type='text']").each(function () {
             jQuery(this).prop("defaultValue", jQuery(this).val());
         });
-        jQuery("#gresults-results-filter-form select option").each(function () {
+        jQuery("#kresults-results-filter-form select option").each(function () {
             jQuery(this).prop("defaultSelected", jQuery(this).prop('selected'));
         });
     },
 
     setCustomFilter: function(key, value){
-        elementId = "gresults-custom-" + key;
+        elementId = "kresults-custom-" + key;
         if(jQuery('#' + elementId).length == 0)
-            jQuery('#gresults-results-filter-form').append("<input type='hidden' id='" + elementId + "' name='" + key + "' value='" + value + "'>");
+            jQuery('#kresults-results-filter-form').append("<input type='hidden' id='" + elementId + "' name='" + key + "' value='" + value + "'>");
         else
             jQuery('#' + elementId).val(value);
     }
@@ -220,9 +220,9 @@ google.setOnLoadCallback(gresults.drawCharts);
 
 jQuery( window ).on( 'load', function () {
 
-    if (jQuery("#gresults-results").length > 0) {
+    if (jQuery("#kresults-results").length > 0) {
 
-        jQuery("#gresults-results-field-filters-container").gfFilterUI(gresultsFilterSettings, gresultsInitVars, true);
+        jQuery("#kresults-results-field-filters-container").gfFilterUI(gresultsFilterSettings, gresultsInitVars, true);
         var $window = jQuery(window);
 
          $window.resize(function (e) {
@@ -237,13 +237,13 @@ jQuery( window ).on( 'load', function () {
         };
 
 
-        jQuery("#gresults-results-filter-date-start, #gresults-results-filter-date-end").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true});
+        jQuery("#kresults-results-filter-date-start, #kresults-results-filter-date-end").datepicker({dateFormat: 'yy-mm-dd', changeMonth: true, changeYear: true});
 
         jQuery('.ui-datepicker-trigger').on('click', function() {
             jQuery(this).parent().find('input').datepicker( 'show' );
         });
 
-        jQuery("#gresults-results-filter-form").submit(function (e) {
+        jQuery("#kresults-results-filter-form").submit(function (e) {
             gresults.getResults();
             return false;
         });

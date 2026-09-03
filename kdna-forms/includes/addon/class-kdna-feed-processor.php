@@ -64,7 +64,11 @@ class KDNA_Feed_Processor extends KDNA_Background_Process {
 	 */
 	public function __construct( $allowed_batch_data_classes = true, $add_on = null ) {
 		if ( $add_on instanceof KDNAFeedAddOn ) {
-			$this->action = str_replace( 'gf', 'gf_' . $add_on->get_short_slug(), $this->action );
+			// Each add-on needs its own background process identity, or they all
+			// share one queue. This was a str_replace of 'gf' inside $action,
+			// which stopped doing anything once $action became kdna_feed_processor
+			// and left every add-on running under the same name.
+			$this->action = 'kdna_' . $add_on->get_short_slug() . '_feed_processor';
 			$this->add_on = $add_on;
 		}
 		parent::__construct( $allowed_batch_data_classes );

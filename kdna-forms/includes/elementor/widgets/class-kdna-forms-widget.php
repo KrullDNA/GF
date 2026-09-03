@@ -219,7 +219,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'        => \Elementor\Controls_Manager::COLOR,
 			'description' => esc_html__( 'Border and outline color when inputs are focused. Important for keyboard accessibility.', 'kdnaforms' ),
 			'selectors'   => array(
-				'{{WRAPPER}} .kform_wrapper' => '--gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3);',
+				'{{WRAPPER}} .kform_wrapper' => '--kdna-ctrl-border-color-focus: {{VALUE}}; --kdna-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3);',
 				'{{WRAPPER}} .kform_wrapper input:focus, {{WRAPPER}} .kform_wrapper textarea:focus, {{WRAPPER}} .kform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important;',
 			),
 		) );
@@ -232,7 +232,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'default'     => array( 'size' => 2, 'unit' => 'px' ),
 			'description' => esc_html__( 'Width of the focus outline. Minimum 2px for WCAG accessibility compliance.', 'kdnaforms' ),
 			'selectors'   => array(
-				'{{WRAPPER}} .kform_wrapper' => '--gf-ctrl-outline-width-focus: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_wrapper' => '--kdna-ctrl-outline-width-focus: {{SIZE}}{{UNIT}};',
 				'{{WRAPPER}} .kform_wrapper input:focus, {{WRAPPER}} .kform_wrapper textarea:focus, {{WRAPPER}} .kform_wrapper select:focus' => 'outline-width: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
@@ -242,9 +242,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'        => \Elementor\Controls_Manager::COLOR,
 			'description' => esc_html__( 'Color for checked checkboxes, radio buttons, and selected image choices.', 'kdnaforms' ),
 			'selectors'   => array(
-				'{{WRAPPER}} .kform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper' => '--kdna-color-primary: {{VALUE}}; --kdna-ctrl-accent-color: {{VALUE}}; --kdna-color-in-ctrl-primary: {{VALUE}};',
 				'{{WRAPPER}} .kform_wrapper input[type="checkbox"]:checked, {{WRAPPER}} .kform_wrapper input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
-				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -375,14 +375,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'label_typography',
-			'selector' => '{{WRAPPER}} .gfield_label label, {{WRAPPER}} .gfield_label',
+			'selector' => '{{WRAPPER}} .kfield_label label, {{WRAPPER}} .kfield_label',
 		) );
 
 		$this->add_control( 'label_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield_label label, {{WRAPPER}} .gfield_label' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kfield_label label, {{WRAPPER}} .kfield_label' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -390,7 +390,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Required Indicator Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield_required' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kfield_required' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -399,7 +399,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield_label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kfield_label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -408,7 +408,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield_label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kfield_label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -427,14 +427,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'sub_label_typography',
-			'selector' => '{{WRAPPER}} .kform_body .ginput_complex label, {{WRAPPER}} .kform_body .gfield_description',
+			'selector' => '{{WRAPPER}} .kform_body .kinput_complex label, {{WRAPPER}} .kform_body .kfield_description',
 		) );
 
 		$this->add_control( 'sub_label_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .kform_body .ginput_complex label, {{WRAPPER}} .kform_body .gfield_description' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .kinput_complex label, {{WRAPPER}} .kform_body .kfield_description' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -770,7 +770,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'default' => '',
 			'selectors_dictionary' => $layout_dict,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield_radio:not(.gfield_radio--image-choice)' => '{{VALUE}}',
+				'{{WRAPPER}} .kfield_radio:not(.kfield_radio--image-choice)' => '{{VALUE}}',
 			),
 		) );
 
@@ -781,7 +781,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'default' => '',
 			'selectors_dictionary' => $layout_dict,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield_checkbox' => '{{VALUE}}',
+				'{{WRAPPER}} .kfield_checkbox' => '{{VALUE}}',
 			),
 		) );
 
@@ -792,7 +792,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'default' => '',
 			'selectors_dictionary' => $layout_dict,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .gfield_radio--image-choice' => '{{VALUE}}',
+				'{{WRAPPER}} .kfield--type-image_choice .kfield_radio, {{WRAPPER}} .kfield--type-image_choice .kfield_checkbox, {{WRAPPER}} .kfield_radio--image-choice' => '{{VALUE}}',
 			),
 		) );
 
@@ -808,7 +808,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield_radio .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kfield_radio .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
@@ -818,7 +818,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield_checkbox .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kfield_checkbox .gchoice' => 'gap: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
@@ -844,7 +844,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Checked Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .kform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}}; --gf-ctrl-choice-check-color: {{VALUE}}; --gf-color-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper' => '--kdna-ctrl-accent-color: {{VALUE}}; --kdna-color-in-ctrl-primary: {{VALUE}}; --kdna-ctrl-choice-check-color: {{VALUE}}; --kdna-color-primary: {{VALUE}};',
 				'{{WRAPPER}} .kform_wrapper input[type="checkbox"], {{WRAPPER}} .kform_wrapper input[type="radio"]' => 'accent-color: {{VALUE}} !important;',
 				'{{WRAPPER}} .kform_wrapper input[type="radio"]::before' => 'background-color: {{VALUE}} !important;',
 			),
@@ -871,14 +871,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'checkbox_label_typography',
 			'label'    => esc_html__( 'Choice Label Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .kform_body .gchoice_label, {{WRAPPER}} .kform_body .gchoice label',
+			'selector' => '{{WRAPPER}} .kform_body .kchoice_label, {{WRAPPER}} .kform_body .gchoice label',
 		) );
 
 		$this->add_control( 'checkbox_label_color', array(
 			'label'     => esc_html__( 'Choice Label Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .kform_body .gchoice_label, {{WRAPPER}} .kform_body .gchoice label' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .kchoice_label, {{WRAPPER}} .kform_body .gchoice label' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -889,8 +889,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 40 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .kform_wrapper .gfield_radio:not([class*="image-choice"]), {{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio, {{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio .gchoice, {{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .kfield_radio:not([class*="image-choice"]), {{WRAPPER}} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_radio, {{WRAPPER}} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_radio .gchoice, {{WRAPPER}} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
 			),
 		) );
 
@@ -907,7 +907,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
 		) );
 
-		$image_selector = '{{WRAPPER}} .gfield_radio .gchoice img, {{WRAPPER}} .gfield_checkbox .gchoice img, {{WRAPPER}} .gchoice .gfield-choice-image-wrapper img';
+		$image_selector = '{{WRAPPER}} .kfield_radio .gchoice img, {{WRAPPER}} .kfield_checkbox .gchoice img, {{WRAPPER}} .gchoice .kfield-choice-image-wrapper img';
 
 		$this->add_responsive_control( 'image_choice_width', array(
 			'label'      => esc_html__( 'Image Width', 'kdnaforms' ),
@@ -979,8 +979,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'px' => array( 'min' => 0, 'max' => 50 ),
 			),
 			'selectors'  => array(
-				'{{WRAPPER}} .kform_wrapper .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .kform_wrapper .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .kform_wrapper .gfield_radio--image-choice' => 'gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .kform_wrapper .gfield--type-image_choice .gchoice' => 'margin: 0 !important; padding: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .kfield--type-image_choice .kfield_radio, {{WRAPPER}} .kform_wrapper .kfield--type-image_choice .kfield_checkbox, {{WRAPPER}} .kform_wrapper .kfield_radio--image-choice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .kfield--type-image_choice .gchoice' => 'margin: 0 !important; padding: 0 !important;',
 			),
 		) );
 
@@ -991,7 +991,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 30 ) ),
 			'default'    => array( 'size' => 10, 'unit' => 'px' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gfield-image-choice-wrapper-inner' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kfield--type-image_choice .kfield-image-choice-wrapper-inner' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
@@ -1002,11 +1002,11 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
 			'default'    => array( 'size' => 6, 'unit' => 'px' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gfield-image-choice-wrapper-inner .gform-field-label' => 'margin-left: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kfield--type-image_choice .kfield-image-choice-wrapper-inner .kform-field-label' => 'margin-left: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
-		$selected_image_selector = '{{WRAPPER}} .gchoice input:checked + label img, {{WRAPPER}} .gchoice input:checked ~ .gfield-choice-image-wrapper img';
+		$selected_image_selector = '{{WRAPPER}} .gchoice input:checked + label img, {{WRAPPER}} .gchoice input:checked ~ .kfield-choice-image-wrapper img';
 
 		$this->add_control( 'image_choice_selected_border_color', array(
 			'label'     => esc_html__( 'Selected Image Border Color', 'kdnaforms' ),
@@ -1033,7 +1033,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Selected Tick Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -1041,7 +1041,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Selected Tick Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kfield--type-image_choice .gchoice:has(input:checked)::after' => 'color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -1133,25 +1133,25 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'section_title_typography',
 			'label'    => esc_html__( 'Title Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .kform_body .gsection_title',
+			'selector' => '{{WRAPPER}} .kform_body .ksection_title',
 		) );
 
 		$this->add_control( 'section_title_color', array(
 			'label'     => esc_html__( 'Title Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .kform_body .gsection_title' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .ksection_title' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'section_desc_typography',
 			'label'    => esc_html__( 'Description Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .kform_body .gsection_description',
+			'selector' => '{{WRAPPER}} .kform_body .ksection_description',
 		) );
 
 		$this->add_control( 'section_desc_color', array(
 			'label'     => esc_html__( 'Description Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .kform_body .gsection_description' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .ksection_description' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
@@ -1190,8 +1190,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		// Use a short variable for the high-specificity button selector
 		// Selectors for submit button - covers BOTH "End of form" (.kform_footer) and "End of last row" (#field_submit)
-		$btn = '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer input[type="submit"], {{WRAPPER}} .kform_wrapper .kform_footer .kform_button, {{WRAPPER}} .kform_wrapper .kform_footer input[type="submit"], {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .kform_wrapper #field_submit .kform_button, {{WRAPPER}} .kform_wrapper .gfield--type-submit input[type="submit"], {{WRAPPER}} .kform_wrapper .gfield--type-submit .kform_button';
-		$btn_hover = '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper .kform_footer .kform_button:hover, {{WRAPPER}} .kform_wrapper .kform_footer input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper #field_submit .kform_button:hover, {{WRAPPER}} .kform_wrapper .gfield--type-submit input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper .gfield--type-submit .kform_button:hover';
+		$btn = '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer input[type="submit"], {{WRAPPER}} .kform_wrapper .kform_footer .kform_button, {{WRAPPER}} .kform_wrapper .kform_footer input[type="submit"], {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .kform_wrapper #field_submit .kform_button, {{WRAPPER}} .kform_wrapper .kfield--type-submit input[type="submit"], {{WRAPPER}} .kform_wrapper .kfield--type-submit .kform_button';
+		$btn_hover = '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper .kform_footer .kform_button:hover, {{WRAPPER}} .kform_wrapper .kform_footer input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper #field_submit .kform_button:hover, {{WRAPPER}} .kform_wrapper .kfield--type-submit input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper .kfield--type-submit .kform_button:hover';
 
 		$this->start_controls_section( 'section_style_submit', array(
 			'label' => esc_html__( 'Submit Button', 'kdnaforms' ),
@@ -1208,9 +1208,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 			'selectors' => array(
 				// The submit button area: both the inline #field_submit AND the .kform_footer
-				'{{WRAPPER}} .kform_wrapper .gform-footer, {{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer, {{WRAPPER}} .kform_wrapper.gform-theme--framework .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .kform-footer, {{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer, {{WRAPPER}} .kform_wrapper.kform-theme--framework .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
 				// The hidden #field_submit gfield inside the grid - collapse it
-				'{{WRAPPER}} .kform_wrapper .gfield--type-submit, {{WRAPPER}} .kform_wrapper #field_submit' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .kfield--type-submit, {{WRAPPER}} .kform_wrapper #field_submit' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important;',
 				// Remove margin from the last visible field
 				'{{WRAPPER}} .kform_wrapper .kform_body .kform_fields > .gfield:nth-last-child(2)' => 'margin-bottom: 0 !important;',
 			),
@@ -1237,7 +1237,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
 				$btn => 'background-color: {{VALUE}} !important; background-image: none !important;',
-				'{{WRAPPER}} .kform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-primary: {{VALUE}}; --gf-color-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper.kform-theme--framework' => '--kdna-ctrl-btn-bg-color-primary: {{VALUE}}; --kdna-color-primary: {{VALUE}};',
 			),
 		) );
 
@@ -1273,7 +1273,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
 				$btn_hover => 'background-color: {{VALUE}} !important; background-image: none !important;',
-				'{{WRAPPER}} .kform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-hover-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper.kform-theme--framework' => '--kdna-ctrl-btn-bg-color-hover-primary: {{VALUE}};',
 			),
 		) );
 
@@ -1318,7 +1318,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'center' => array( 'title' => esc_html__( 'Center', 'kdnaforms' ), 'icon' => 'eicon-text-align-center' ),
 				'right'  => array( 'title' => esc_html__( 'Right', 'kdnaforms' ), 'icon' => 'eicon-text-align-right' ),
 			),
-			'selectors' => array( '{{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer, {{WRAPPER}} .kform_wrapper #field_submit, {{WRAPPER}} .kform_wrapper .gfield--type-submit' => 'text-align: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer, {{WRAPPER}} .kform_wrapper #field_submit, {{WRAPPER}} .kform_wrapper .kfield--type-submit' => 'text-align: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'submit_transition', array(
@@ -1337,7 +1337,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'flex-end'   => array( 'title' => esc_html__( 'Bottom', 'kdnaforms' ), 'icon' => 'eicon-v-align-bottom' ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .kform_wrapper #field_submit, {{WRAPPER}} .kform_wrapper .gfield--type-submit' => 'display: flex !important; align-items: {{VALUE}} !important;',
+				'{{WRAPPER}} .kform_wrapper #field_submit, {{WRAPPER}} .kform_wrapper .kfield--type-submit' => 'display: flex !important; align-items: {{VALUE}} !important;',
 			),
 			'description' => esc_html__( 'Align the inline submit button vertically within its grid cell. Use "Bottom" to align with input fields.', 'kdnaforms' ),
 		) );
@@ -1348,7 +1348,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => -50, 'max' => 50 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .kform_wrapper #field_submit .kform_button, {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .kform_wrapper .gfield--type-submit .kform_button, {{WRAPPER}} .kform_wrapper .gfield--type-submit input[type="submit"]' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper #field_submit .kform_button, {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .kform_wrapper .kfield--type-submit .kform_button, {{WRAPPER}} .kform_wrapper .kfield--type-submit input[type="submit"]' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
 			),
 			'description' => esc_html__( 'Fine-tune the button position. Use negative values to move up.', 'kdnaforms' ),
 		) );
@@ -1521,7 +1521,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Error Field Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .kform_body .gfield_error input, {{WRAPPER}} .kform_body .gfield_error textarea, {{WRAPPER}} .kform_body .gfield_error select' => 'border-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .kfield_error input, {{WRAPPER}} .kform_body .kfield_error textarea, {{WRAPPER}} .kform_body .kfield_error select' => 'border-color: {{VALUE}};',
 			),
 		) );
 
@@ -1699,7 +1699,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'selectors' => array(
 				'{{WRAPPER}} .kform_body .gfield' => 'margin-bottom: {{SIZE}}{{UNIT}} !important;',
 				'{{WRAPPER}} .kform_wrapper .kform_fields' => 'row-gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .kform_wrapper' => '--gf-field-gap-y: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_wrapper' => '--kdna-field-gap-y: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -1713,8 +1713,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 			'selectors' => array(
 				'{{WRAPPER}} .kform_body .kform_fields' => 'column-gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .kform_body .gfield--width-half' => 'padding-right: {{SIZE}}{{UNIT}};',
-				'{{WRAPPER}} .kform_wrapper' => '--gf-field-gap-x: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body .kfield--width-half' => 'padding-right: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_wrapper' => '--kdna-field-gap-x: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -1772,7 +1772,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		// Checked color - override ALL theme CSS variables for radio/checkbox
 		$checked_color = $settings['checkbox_checked_color'] ?? '';
 		if ( ! empty( $checked_color ) ) {
-			$inline_css .= "{$widget_selector} .kform_wrapper { --gf-ctrl-accent-color: {$checked_color}; --gf-color-in-ctrl-primary: {$checked_color}; --gf-ctrl-choice-check-color: {$checked_color}; --gf-color-primary: {$checked_color}; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper { --kdna-ctrl-accent-color: {$checked_color}; --kdna-color-in-ctrl-primary: {$checked_color}; --kdna-ctrl-choice-check-color: {$checked_color}; --kdna-color-primary: {$checked_color}; }";
 			$inline_css .= "{$widget_selector} .kform_wrapper input[type='checkbox'], {$widget_selector} .kform_wrapper input[type='radio'] { accent-color: {$checked_color} !important; }";
 			$inline_css .= "{$widget_selector} .kform_wrapper input[type='radio']::before { background-color: {$checked_color} !important; }";
 			$inline_css .= "{$widget_selector} .kform_wrapper input[type='checkbox']::before { color: {$checked_color} !important; }";
@@ -1782,8 +1782,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$spacing = $settings['checkbox_spacing']['size'] ?? '';
 		if ( $spacing !== '' ) {
 			$unit = $settings['checkbox_spacing']['unit'] ?? 'px';
-			$inline_css .= "{$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio, {$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
-			$inline_css .= "{$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio .gchoice, {$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_radio, {$widget_selector} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_checkbox { gap: {$spacing}{$unit} !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_radio .gchoice, {$widget_selector} .kform_wrapper .gfield:not(.kfield--type-image_choice) .kfield_checkbox .gchoice { margin-bottom: 0 !important; }";
 		}
 
 		// Focus color
@@ -1795,14 +1795,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		// Accent color
 		$accent_color = $settings['global_accent_color'] ?? '';
 		if ( ! empty( $accent_color ) ) {
-			$inline_css .= "{$widget_selector} .kform_wrapper { --gf-color-primary: {$accent_color}; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper { --kdna-color-primary: {$accent_color}; }";
 		}
 
 		// Layouts - output CSS with responsive media queries
 		$layout_map = array(
-			'radio_layout' => '.gfield_radio:not(.gfield_radio--image-choice)',
-			'checkbox_layout' => '.gfield_checkbox',
-			'image_choice_layout' => '.gfield--type-image_choice .gfield_radio, ' . $widget_selector . ' .gfield--type-image_choice .gfield_checkbox',
+			'radio_layout' => '.kfield_radio:not(.kfield_radio--image-choice)',
+			'checkbox_layout' => '.kfield_checkbox',
+			'image_choice_layout' => '.kfield--type-image_choice .kfield_radio, ' . $widget_selector . ' .kfield--type-image_choice .kfield_checkbox',
 		);
 
 		// Get Elementor breakpoints
@@ -1861,7 +1861,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		if ( $submit_gap !== '' ) {
 			$submit_gap_unit = $settings['submit_gap_above']['unit'] ?? 'px';
 			$inline_css .= "{$widget_selector} .kform_wrapper .kform_footer, {$widget_selector} .kform_wrapper.gravity-theme .kform_footer { margin-top: {$submit_gap}{$submit_gap_unit} !important; padding: 0 !important; margin-bottom: 0 !important; }";
-			$inline_css .= "{$widget_selector} .kform_wrapper .gfield--type-submit, {$widget_selector} .kform_wrapper #field_submit { margin-top: {$submit_gap}{$submit_gap_unit} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .kfield--type-submit, {$widget_selector} .kform_wrapper #field_submit { margin-top: {$submit_gap}{$submit_gap_unit} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important; }";
 			$inline_css .= "{$widget_selector} .kform_wrapper .kform_body .kform_fields > .gfield:nth-last-child(2) { margin-bottom: 0 !important; }";
 		}
 
@@ -1870,7 +1870,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		}
 
 		// Always-on: collapse the empty sublabel span on the inline submit field so it doesn't reserve trailing space.
-		echo '<style>' . $widget_selector . ' .kform_wrapper #field_submit .gfield_label, ' . $widget_selector . ' .kform_wrapper #field_submit .field_sublabel_below, ' . $widget_selector . ' .kform_wrapper #field_submit .field_sublabel_above, ' . $widget_selector . ' .kform_wrapper #field_submit .gfield_description, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .gfield_label, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .field_sublabel_below, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .field_sublabel_above, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .gfield_description { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }</style>';
+		echo '<style>' . $widget_selector . ' .kform_wrapper #field_submit .kfield_label, ' . $widget_selector . ' .kform_wrapper #field_submit .field_sublabel_below, ' . $widget_selector . ' .kform_wrapper #field_submit .field_sublabel_above, ' . $widget_selector . ' .kform_wrapper #field_submit .kfield_description, ' . $widget_selector . ' .kform_wrapper .kfield--type-submit .kfield_label, ' . $widget_selector . ' .kform_wrapper .kfield--type-submit .field_sublabel_below, ' . $widget_selector . ' .kform_wrapper .kfield--type-submit .field_sublabel_above, ' . $widget_selector . ' .kform_wrapper .kfield--type-submit .kfield_description { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }</style>';
 
 		// Build shortcode attributes
 		$shortcode_atts = array(

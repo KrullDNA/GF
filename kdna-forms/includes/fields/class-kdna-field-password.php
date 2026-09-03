@@ -47,14 +47,14 @@ class KDNA_Field_Password extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--password';
+		return 'kform-icon--password';
 	}
 
 	public function get_form_editor_button() {
@@ -191,7 +191,7 @@ class KDNA_Field_Password extends KDNA_Field {
 
 		$strength_style           = ! $this->passwordStrengthEnabled ? "style='display:none;'" : '';
 		$strength_indicator_label = esc_html__( 'Strength indicator', 'kdnaforms' );
-		$strength                 = $this->passwordStrengthEnabled || $is_admin ? "<div id='{$field_id}_strength_indicator' class='gfield_password_strength' {$strength_style} aria-live='assertive' aria-atomic='true'>
+		$strength                 = $this->passwordStrengthEnabled || $is_admin ? "<div id='{$field_id}_strength_indicator' class='kfield_password_strength' {$strength_style} aria-live='assertive' aria-atomic='true'>
 																			{$strength_indicator_label}
 																		</div>
 																		<input type='hidden' class='kform_hidden' id='{$field_id}_strength' name='input_{$id}_strength' />" : '';
@@ -222,8 +222,8 @@ class KDNA_Field_Password extends KDNA_Field {
 		$confirm_password_placeholder_attribute = KDNACommon::get_input_placeholder_attribute( $confirm_password_field_input );
 
 		$visibility_toggle_style = ! $this->passwordVisibilityEnabled ? " style='display:none;'" : '';
-		$enter_password_toggle   = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password gform-theme-button gform-theme-button--simple' onclick='javascript:gformToggleShowPassword(\"{$field_id}\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
-		$confirm_password_toggle = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password gform-theme-button gform-theme-button--simple' onclick='javascript:gformToggleShowPassword(\"{$field_id}_2\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
+		$enter_password_toggle   = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password kform-theme-button kform-theme-button--simple' onclick='javascript:gformToggleShowPassword(\"{$field_id}\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
+		$confirm_password_toggle = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password kform-theme-button kform-theme-button--simple' onclick='javascript:gformToggleShowPassword(\"{$field_id}_2\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
 
 		$describedby_extra_id = array();
 		if ( $this->passwordStrengthEnabled ) {
@@ -236,16 +236,16 @@ class KDNA_Field_Password extends KDNA_Field {
 			$confirm_style = $this->is_confirm_input_enabled() ? '' : "style='display:none;'";
 
 			if ( $is_sub_label_above ) {
-				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password gform-grid-row' id='{$field_id}_container'>
-						<span id='{$field_id}_1_container' class='ginput_password ginput_left gform-grid-col gform-grid-col--size-auto'>
-							<label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}' {$confirm_style}>{$enter_password_label}</label>
+				return "<div class='kinput_complex$class_suffix kinput_container kinput_container_password kform-grid-row' id='{$field_id}_container'>
+						<span id='{$field_id}_1_container' class='kinput_password kinput_left kform-grid-col kform-grid-col--size-auto'>
+							<label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}' {$confirm_style}>{$enter_password_label}</label>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} {$aria_describedby} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$enter_password_toggle}
 							</span>
 						</span>
-						<span id='{$field_id}_2_container' class='ginput_password ginput_right gform-grid-col gform-grid-col--size-auto' {$confirm_style}>
-							<label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
+						<span id='{$field_id}_2_container' class='kinput_password kinput_right kform-grid-col kform-grid-col--size-auto' {$confirm_style}>
+							<label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$confirm_password_toggle}
@@ -254,20 +254,20 @@ class KDNA_Field_Password extends KDNA_Field {
 						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 			} else {
-				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password gform-grid-row' id='{$field_id}_container'>
-						<span id='{$field_id}_1_container' class='ginput_password ginput_left gform-grid-col gform-grid-col--size-auto'>
+				return "<div class='kinput_complex$class_suffix kinput_container kinput_container_password kform-grid-row' id='{$field_id}_container'>
+						<span id='{$field_id}_1_container' class='kinput_password kinput_left kform-grid-col kform-grid-col--size-auto'>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} {$aria_describedby} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$enter_password_toggle}
 							</span>
-							<label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}' {$confirm_style}>{$enter_password_label}</label>
+							<label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}' {$confirm_style}>{$enter_password_label}</label>
 						</span>
-						<span id='{$field_id}_2_container' class='ginput_password ginput_right gform-grid-col gform-grid-col--size-auto' {$confirm_style}>
+						<span id='{$field_id}_2_container' class='kinput_password kinput_right kform-grid-col kform-grid-col--size-auto' {$confirm_style}>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$confirm_password_toggle}
 							</span>
-							<label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
+							<label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
 						</span>
 						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
@@ -277,16 +277,16 @@ class KDNA_Field_Password extends KDNA_Field {
 		if ( $this->is_confirm_input_enabled() ) {
 
 			if ( $is_sub_label_above ) {
-				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password gform-grid-row' id='{$field_id}_container'>
-						<span id='{$field_id}_1_container' class='ginput_password ginput_left gform-grid-col gform-grid-col--size-auto'>
-							<label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$enter_password_label}</label>
+				return "<div class='kinput_complex$class_suffix kinput_container kinput_container_password kform-grid-row' id='{$field_id}_container'>
+						<span id='{$field_id}_1_container' class='kinput_password kinput_left kform-grid-col kform-grid-col--size-auto'>
+							<label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$enter_password_label}</label>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} {$aria_describedby} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$enter_password_toggle}
 							</span>
 						</span>
-						<span id='{$field_id}_2_container' class='ginput_password ginput_right gform-grid-col gform-grid-col--size-auto'>
-							<label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
+						<span id='{$field_id}_2_container' class='kinput_password kinput_right kform-grid-col kform-grid-col--size-auto'>
+							<label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$confirm_password_toggle}
@@ -295,20 +295,20 @@ class KDNA_Field_Password extends KDNA_Field {
 						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 			} else {
-				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password gform-grid-row' id='{$field_id}_container'>
-						<span id='{$field_id}_1_container' class='ginput_password ginput_left gform-grid-col gform-grid-col--size-auto'>
+				return "<div class='kinput_complex$class_suffix kinput_container kinput_container_password kform-grid-row' id='{$field_id}_container'>
+						<span id='{$field_id}_1_container' class='kinput_password kinput_left kform-grid-col kform-grid-col--size-auto'>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} {$aria_describedby} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$enter_password_toggle}
 							</span>
-							<label for='{$field_id}' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$enter_password_label}</label>
+							<label for='{$field_id}' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$enter_password_label}</label>
 						</span>
-						<span id='{$field_id}_2_container' class='ginput_password ginput_right gform-grid-col gform-grid-col--size-auto'>
+						<span id='{$field_id}_2_container' class='kinput_password kinput_right kform-grid-col kform-grid-col--size-auto'>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}_2' id='{$field_id}_2' {$onkeyup} {$onchange} value='{$confirmation_value}' {$last_tabindex} {$confirm_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$confirm_password_toggle}
 							</span>
-							<label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
+							<label for='{$field_id}_2' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
 						</span>
 						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
@@ -317,8 +317,8 @@ class KDNA_Field_Password extends KDNA_Field {
 		} else {
 			$class    = esc_attr( $class );
 
-			return "<div class='ginput_container ginput_container_password'>
-						<span id='{$field_id}_1_container' class='ginput_password {$size}'>
+			return "<div class='kinput_container kinput_container_password'>
+						<span id='{$field_id}_1_container' class='kinput_password {$size}'>
 							<span class='password_input_container'>
 							<input type='password' name='input_{$id}' id='{$field_id}' {$onkeyup} {$onchange} {$aria_describedby} value='{$password_value}' {$first_tabindex} {$enter_password_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 							{$enter_password_toggle}
@@ -332,7 +332,7 @@ class KDNA_Field_Password extends KDNA_Field {
 	}
 
 	public function get_field_label_class(){
-		return 'gfield_label gform-field-label gfield_label_before_complex';
+		return 'kfield_label kform-field-label kfield_label_before_complex';
 	}
 
 	public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {

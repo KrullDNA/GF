@@ -136,7 +136,7 @@ table.settings-field-map-table tbody td {
 
 /* ---------------- Select Custom ---------------- */
 
-.gaddon-setting-select-custom-container .select-custom-reset {
+.kaddon-setting-select-custom-container .select-custom-reset {
 	background: url( ../../../images/xit.gif ) no-repeat scroll 0 0 transparent;
 	cursor:pointer;
 	display:none;
@@ -151,29 +151,29 @@ table.settings-field-map-table tbody td {
 	z-index: 99;
 }
 
-.gaddon-setting-select-custom-container .select-custom-reset:hover { background-position-x: -10px; }
+.kaddon-setting-select-custom-container .select-custom-reset:hover { background-position-x: -10px; }
 
-.gaddon-setting-select-custom-container:hover .select-custom-reset {
+.kaddon-setting-select-custom-container:hover .select-custom-reset {
 	display:block;
 }
 
-.gaddon-setting-select-custom-container {
+.kaddon-setting-select-custom-container {
 	display:inline-block;
 	position:relative;
 	width: 210px;
 }
-.gaddon-setting-select-custom-container .select-custom-reset {
+.kaddon-setting-select-custom-container .select-custom-reset {
 	left: 171px;
 	top: 10px;
 }
-.gaddon-section .required { color: #f00; }
-.gaddon-setting-inline{
+.kaddon-section .required { color: #f00; }
+.kaddon-setting-inline{
     display:inline;
     margin-right:6px;
 }
 
-.gaddon-section-description ol { }
-.gaddon-section-description ol li {
+.kaddon-section-description ol { }
+.kaddon-section-description ol li {
     list-style: decimal;
 }
 
@@ -185,7 +185,7 @@ table.settings-field-map-table tbody td {
 	color: #444;
 }
 
-.mt-gaddon-editor {
+.mt-kaddon-editor {
 	float: right;
 	position: relative;
 	right: 0.625rem;
@@ -193,32 +193,32 @@ table.settings-field-map-table tbody td {
 	z-index: 1;
 }
 
-div#tab_notification .mt-gaddon-editor {
+div#tab_notification .mt-kaddon-editor {
 	top: 3.3125rem;
 }
 
-html[dir="rtl"] .mt-gaddon-editor {
+html[dir="rtl"] .mt-kaddon-editor {
 	float: left;
 }
 
-.mt-gaddon-editor ~ .wp-editor-wrap {
+.mt-kaddon-editor ~ .wp-editor-wrap {
 	margin-right: 23px;
 }
 
 /* Visual Radio Buttons */
-.gaddon-setting-choice-visual {
+.kaddon-setting-choice-visual {
 	display: inline-block;
 	margin-bottom: 5px;
 	text-align: center;
 }
 
-.gaddon-setting-choice-visual label {
+.kaddon-setting-choice-visual label {
 	background: #F9F9F9;
 	border: 1px solid #eee;
 	display: inline-block;
 }
 
-.gaddon-setting-choice-visual label > span {
+.kaddon-setting-choice-visual label > span {
 	display: inline-block;
 	-webkit-filter: brightness( 1.8 ) grayscale( 1 ) opacity( .5 );
 	-moz-filter: brightness( 1.8 ) grayscale( 1 ) opacity( .5 );
@@ -232,7 +232,7 @@ html[dir="rtl"] .mt-gaddon-editor {
 	vertical-align: top;
 }
 
-.gaddon-setting-choice-visual label > span > i {
+.kaddon-setting-choice-visual label > span > i {
 	color: #0074a2;
 	display: inline-block;
 	font-size: 2.5em;
@@ -241,29 +241,29 @@ html[dir="rtl"] .mt-gaddon-editor {
 	width: 32px;
 }
 
-.gaddon-setting-choice-visual label > span > img{
+.kaddon-setting-choice-visual label > span > img{
     height: 32px;
     margin: 5px;
     vertical-align: middle;
     width: 32px;
 }
 
-.gaddon-setting-choice-visual input {
+.kaddon-setting-choice-visual input {
 	display: none;
 }
 
-.gaddon-setting-choice-visual input:checked + label {
+.kaddon-setting-choice-visual input:checked + label {
 	background-color: #fff;
 	border: 1px solid #ccc;
 }
 
-.gaddon-setting-choice-visual input:checked + label > span {
+.kaddon-setting-choice-visual input:checked + label > span {
 	-webkit-filter: none;
 	-moz-filter: none;
 	filter: none;
 }
 
-.gaddon-setting-choice-visual input:not([disabled]):not([checked]) + label > span:hover{
+.kaddon-setting-choice-visual input:not([disabled]):not([checked]) + label > span:hover{
     -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
     -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
     filter: brightness(1.2) grayscale(.5) opacity(.9);

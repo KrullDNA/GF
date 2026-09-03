@@ -42,14 +42,14 @@ class KDNA_Field_Submit extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.6
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--smart-button';
+		return 'kform-icon--smart-button';
 	}
 
 	/**
@@ -154,8 +154,8 @@ class KDNA_Field_Submit extends KDNA_Field {
 		$form_id        = absint( $form['id'] );
 		$is_form_editor = $this->is_form_editor();
 
-		$class_theme  = $is_form_editor ? esc_attr( 'gform-theme-button gform-theme-button--secondary ' ) : '';
-		$class        = sprintf( '%s%s', esc_attr( 'gform-button gform-button--white ' ), $class_theme );
+		$class_theme  = $is_form_editor ? esc_attr( 'kform-theme-button kform-theme-button--secondary ' ) : '';
+		$class        = sprintf( '%s%s', esc_attr( 'kform-button kform-button--white ' ), $class_theme );
 		$default_text = __( 'Submit', 'kdnaforms' );
 		$button       = rgar( $form, 'button', array( 'type' => 'link' ) );
 
@@ -229,40 +229,40 @@ class KDNA_Field_Submit extends KDNA_Field {
 		$span = rgar( $form['button'], 'layoutGridColumnSpan', '12' );
 		switch ( $span ) {
 			case 12:
-				$class = 'gfield--width-full';
+				$class = 'kfield--width-full';
 				break;
 			case 11:
-				$class = 'gfield--width-eleven-twelfths';
+				$class = 'kfield--width-eleven-twelfths';
 				break;
 			case 10:
-				$class = 'gfield--width-five-sixths';
+				$class = 'kfield--width-five-sixths';
 				break;
 			case 9:
-				$class = 'gfield--width-three-quarter';
+				$class = 'kfield--width-three-quarter';
 				break;
 			case 8:
-				$class = 'gfield--width-two-thirds';
+				$class = 'kfield--width-two-thirds';
 				break;
 			case 7:
-				$class = 'gfield--width-seven-twelfths';
+				$class = 'kfield--width-seven-twelfths';
 				break;
 			case 6:
-				$class = 'gfield--width-half';
+				$class = 'kfield--width-half';
 				break;
 			case 5:
-				$class = 'gfield--width-five-twelfths';
+				$class = 'kfield--width-five-twelfths';
 				break;
 			case 4:
-				$class = 'gfield--width-third';
+				$class = 'kfield--width-third';
 				break;
 			case 3:
-				$class = 'gfield--width-quarter';
+				$class = 'kfield--width-quarter';
 				break;
 			case 2:
-				$class = 'gfield--width-one-sixth';
+				$class = 'kfield--width-one-sixth';
 				break;
 			case 1:
-				$class = 'gfield--width-one-twelfth';
+				$class = 'kfield--width-one-twelfth';
 				break;
 			default:
 				$class = '';

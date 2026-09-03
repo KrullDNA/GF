@@ -3948,7 +3948,7 @@ Content-Type: text/html;
 		// Pricing fields are not editable.
 		if ( rgget('view') == 'entry' && self::is_pricing_field( $field->type ) ) {
 
-			return "<div class='ginput_container'>" . esc_html__( 'Pricing fields are not editable' , 'kdnaforms' ) . '</div>';
+			return "<div class='kinput_container'>" . esc_html__( 'Pricing fields are not editable' , 'kdnaforms' ) . '</div>';
 
 		}
 
@@ -4052,7 +4052,7 @@ Content-Type: text/html;
 			),
 			'form_id'      => 0,
 			'label'        => __( 'Preview', 'kdnaforms' ),
-			'link_class'   => 'preview-form gform-button gform-button--white',
+			'link_class'   => 'preview-form kform-button kform-button--white',
 			'menu_class'   => 'kdna_form_toolbar_preview',
 			'priority'     => 700,
 			'target'       => '_blank',
@@ -4094,10 +4094,10 @@ Content-Type: text/html;
 
 		$preview_link = sprintf(
 			'
-			<a href="%s" class="%s gform-button--icon-leading" target="%s" rel="noopener">
+			<a href="%s" class="%s kform-button--icon-leading" target="%s" rel="noopener">
 				<span class="screen-reader-text">%s</span>
 				<span class="screen-reader-text">%s</span>
-				<i class="gform-button__icon gform-common-icon gform-common-icon--eye" aria-hidden="true"></i>%s
+				<i class="kform-button__icon kform-common-icon kform-common-icon--eye" aria-hidden="true"></i>%s
 			</a>
 				',
 			esc_url( $options['url'] ),
@@ -5726,7 +5726,7 @@ Content-Type: text/html;
 		 */
 		$logic_a11y_warn                   = esc_html__( 'Adding conditional logic to the form submit button could cause usability problems for some users and negatively impact the accessibility of your form. Learn more about button conditional logic in our %1$sdocumentation%2$s.', 'kdnaforms' );
 		$logic_a11y_warn_link1             = '<a href="https://docs.kdnaforms.com/field-accessibility-warning/" target="_blank" rel="noopener">';
-		$logic_a11y_warn_link2             = '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
+		$logic_a11y_warn_link2             = '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
 		$kdna_vars['conditional_logic_a11y'] = sprintf( $logic_a11y_warn, $logic_a11y_warn_link1, $logic_a11y_warn_link2 );
 		$kdna_vars['page']                   = esc_html__( 'Page', 'kdnaforms' );
 		$kdna_vars['next_button']            = esc_html__( 'Next Button', 'kdnaforms' );
@@ -5965,7 +5965,7 @@ Content-Type: text/html;
 
 		if ( ! empty( $errors ) ) {
 			?>
-			<div class="notice notice-error gf-notice" id="gf-admin-notices-wrapper">
+			<div class="notice notice-error kdna-notice" id="kdna-admin-notices-wrapper">
 				<?php if ( count( $errors ) > 1 ) { ?>
 					<ul style="margin: 0.5em 0 0; padding: 2px;">
 						<li><?php echo wp_kses_post( implode( '</li><li>', $errors ) ); ?></li>
@@ -6116,18 +6116,18 @@ Content-Type: text/html;
 	public static function kdna_header() {
 		$header_buttons = apply_filters( 'kdnaform_settings_header_buttons', '' );
 		if ( !empty( $header_buttons ) ) {
-			$header_button_class = 'gform-settings-header--has_buttons';
+			$header_button_class = 'kform-settings-header--has_buttons';
 		} else {
 			$header_button_class = '';
 		}
 		?>
-		<header class="gform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
-			<div class="gform-settings__wrapper">
+		<header class="kform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
+			<div class="kform-settings__wrapper">
 				<h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #1d2327; line-height: 1.4;">KDNA Forms</h2>
 
 				<?php
 				if ( !empty ( $header_buttons ) ) { ?>
-					<div class="gform-settings-header_buttons">
+					<div class="kform-settings-header_buttons">
 						<?php echo $header_buttons; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 				<?php } ?>
@@ -6160,7 +6160,7 @@ Content-Type: text/html;
 	 */
 	public static function notices_section() {
 		?>
-		<div id="gf-admin-notices-wrapper">
+		<div id="kdna-admin-notices-wrapper">
 		<?php self::admin_screen_reader_title(); ?>
 		</div>
 		<?php
@@ -6203,7 +6203,7 @@ Content-Type: text/html;
 					call_user_func( $callback['function'] );
 					$content = ob_get_clean();
 
-					if ( strpos( $content, 'gf-notice' ) == false ) {
+					if ( strpos( $content, 'kdna-notice' ) == false ) {
 						remove_action( $hook, $name, $priority );
 					}
 				}
@@ -6221,11 +6221,11 @@ Content-Type: text/html;
 	public static function admin_notices_style() {
 		?>
 		<style>
-			.gf-notice {
+			.kdna-notice {
 				display: none;
 			}
-			#gf-admin-notices-wrapper .gf-notice,
-			#gf-wordpress-notices {
+			#kdna-admin-notices-wrapper .kdna-notice,
+			#kdna-wordpress-notices {
 				display: block;
 			}
 		</style>
@@ -6449,7 +6449,7 @@ Content-Type: text/html;
 				'text'        => esc_html__( 'Entry Date', 'kdnaforms' ),
 				'operators'   => array( 'is', '>', '<' ),
 				'placeholder' => __( 'yyyy-mm-dd', 'kdnaforms' ),
-				'cssClass'    => 'datepicker gform-datepicker ymd_dash',
+				'cssClass'    => 'datepicker kform-datepicker ymd_dash',
 			),
 			'is_starred'     => array(
 				'text'      => esc_html__( 'Starred', 'kdnaforms' ),
@@ -6482,7 +6482,7 @@ Content-Type: text/html;
 				'text'        => esc_html__( 'Payment Date', 'kdnaforms' ),
 				'operators'   => array( 'is', 'isnot', '>', '<' ),
 				'placeholder' => __( 'yyyy-mm-dd', 'kdnaforms' ),
-				'cssClass'    => 'datepicker gform-datepicker ymd_dash',
+				'cssClass'    => 'datepicker kform-datepicker ymd_dash',
 			),
 			'payment_amount' => array(
 				'text'      => esc_html__( 'Payment Amount', 'kdnaforms' ),
@@ -7609,8 +7609,8 @@ Content-Type: text/html;
 			}
 		} else if ( strpos( $icon, 'dashicons' ) === 0 ) {
 			return sprintf( '<i class="dashicons %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
-		} else if ( strpos( $icon, 'gform-icon' ) === 0 ) {
-			return sprintf( '<i class="gform-icon %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
+		} else if ( strpos( $icon, 'kform-icon' ) === 0 ) {
+			return sprintf( '<i class="kform-icon %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
 		}
 
 		return null;

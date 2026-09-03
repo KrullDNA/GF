@@ -17,14 +17,14 @@ gform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, form
 	var overrides = {
 		showOtherMonths: false,
 		beforeShow: function( input, inst ) {
-			inst.dpDiv[0].classList.remove( 'gform-theme-datepicker' );
+			inst.dpDiv[0].classList.remove( 'kform-theme-datepicker' );
 			inst.dpDiv[0].classList.remove( 'gravity-theme' );
-			inst.dpDiv[0].classList.remove( 'gform-theme' );
-			inst.dpDiv[0].classList.remove( 'gform-legacy-datepicker' );
-			inst.dpDiv[0].classList.remove( 'gform-theme--framework' );
-			inst.dpDiv[0].classList.remove( 'gform-theme--foundation' );
-			inst.dpDiv[0].classList.remove( 'gform-theme--orbital' );
-			inst.dpDiv[0].classList.add( 'gform-legacy-datepicker' );
+			inst.dpDiv[0].classList.remove( 'kform-theme' );
+			inst.dpDiv[0].classList.remove( 'kform-legacy-datepicker' );
+			inst.dpDiv[0].classList.remove( 'kform-theme--framework' );
+			inst.dpDiv[0].classList.remove( 'kform-theme--foundation' );
+			inst.dpDiv[0].classList.remove( 'kform-theme--orbital' );
+			inst.dpDiv[0].classList.add( 'kform-legacy-datepicker' );
 
 			if ( isRTL && isPreview ) {
 				var $inputContainer = $( input ).closest( '.gfield' );
@@ -33,7 +33,7 @@ gform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, form
 			}
 
 			if ( isPreview ) {
-				inst.dpDiv[0].classList.add( 'gform-preview-datepicker' );
+				inst.dpDiv[0].classList.add( 'kform-preview-datepicker' );
 			}
 			return ! this.suppressDatePicker;
 		}

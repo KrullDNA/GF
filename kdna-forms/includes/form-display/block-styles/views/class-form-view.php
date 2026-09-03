@@ -26,14 +26,14 @@ class Form_View extends View {
 
 		switch ( $theme_slug ) {
 			case 'orbital':
-				$classes = ' kform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--' . $theme_slug;
+				$classes = ' kform_wrapper kform-theme kform-theme--foundation kform-theme--framework kform-theme--' . $theme_slug;
 				break;
 			case 'gravity-theme':
 			default:
-				$classes = ' kform_wrapper gravity-theme gform-theme--no-framework';
+				$classes = ' kform_wrapper gravity-theme kform-theme--no-framework';
 				break;
 			case 'legacy':
-				$classes = ' kform_wrapper kdnaform_legacy_markup_wrapper gform-theme--no-framework';
+				$classes = ' kform_wrapper kdnaform_legacy_markup_wrapper kform-theme--no-framework';
 				break;
 		}
 

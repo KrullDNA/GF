@@ -120,15 +120,15 @@ class KDNAFormSettings {
 			];
 
 			if ( in_array( $value, $deprecated_confirmation_classes ) ) {
-				return '<div id="gfield-warning-deprecated" class="gform-alert gform-alert--notice gform-alert--inline" role="alert" style="margin-block-start: 1rem;">
-					<span class="gform-alert__icon gform-icon gform-icon--circle-notice-fine" aria-hidden="true"></span>
-					<div class="gform-alert__message-wrap">
-						<p class="gform-alert__message">' . esc_html__( 'This form uses the "' . $value . '" Ready Class, which will be removed in KDNA Forms 4.0. You can use a CSS code snippet instead.', 'kdnaforms' ) .
+				return '<div id="kfield-warning-deprecated" class="kform-alert kform-alert--notice kform-alert--inline" role="alert" style="margin-block-start: 1rem;">
+					<span class="kform-alert__icon kform-icon kform-icon--circle-notice-fine" aria-hidden="true"></span>
+					<div class="kform-alert__message-wrap">
+						<p class="kform-alert__message">' . esc_html__( 'This form uses the "' . $value . '" Ready Class, which will be removed in KDNA Forms 4.0. You can use a CSS code snippet instead.', 'kdnaforms' ) .
 					   ' <a href="https://docs.kdnaforms.com/migrating-your-forms-from-ready-classes/" target="_blank" title="' .
 					   esc_attr__( 'Deprecation of Ready Classes in KDNA Forms 4.0', 'kdnaforms' ) . '">' .
 					   esc_html__( 'Learn more', 'kdnaforms' ) .
 					   '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;' .
-					   '<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a></p>
+					   '<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a></p>
 					</div>
 				</div>';
 			}
@@ -793,23 +793,23 @@ class KDNAFormSettings {
 	 * @return string
 	 */
 	public static function legacy_markup_warning() {
-		return '<div class="gform-alert" data-js="gform-alert" role="status">
+		return '<div class="kform-alert" data-js="kform-alert" role="status">
 		    <span
-		        class="gform-alert__icon gform-icon gform-icon--campaign"
+		        class="kform-alert__icon kform-icon kform-icon--campaign"
 		        aria-hidden="true"
 		    ></span>
-		    <div class="gform-alert__message-wrap">
-		        <p class="gform-alert__message">' . esc_html__( 'Legacy markup is incompatible with many new features, including the Orbital Theme.', 'kdnaforms' ) . '</p>
-		        <p class="gform-alert__message">' . esc_html__( 'Legacy markup will be removed in KDNA Forms 4.0, and then all forms will use modern markup.  We recommend using modern markup on all forms.', 'kdnaforms' ) . '</p>
+		    <div class="kform-alert__message-wrap">
+		        <p class="kform-alert__message">' . esc_html__( 'Legacy markup is incompatible with many new features, including the Orbital Theme.', 'kdnaforms' ) . '</p>
+		        <p class="kform-alert__message">' . esc_html__( 'Legacy markup will be removed in KDNA Forms 4.0, and then all forms will use modern markup.  We recommend using modern markup on all forms.', 'kdnaforms' ) . '</p>
 			    <a
-		            class="gform-alert__cta gform-button gform-button--white gform-button--size-xs"
+		            class="kform-alert__cta kform-button kform-button--white kform-button--size-xs"
 			        href="https://docs.kdnaforms.com/about-legacy-markup"
 			        target="_blank"
 			    >'
 			        . esc_html__( 'Learn More', 'kdnaforms' ) .
 			   		'<span class="screen-reader-text">' . esc_html__('about form legacy markup', 'kdnaforms') . '</span>
 					<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;
-					<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
+					<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span>
 				</a>
 		    </div>
 		</div>';
@@ -843,15 +843,15 @@ class KDNAFormSettings {
 			$field_classes = explode( ' ', $form['cssClass'] );
 			foreach ( $field_classes as $class ) {
 				if ( in_array( $class, $deprecated_confirmation_classes ) ) {
-					return '<div class="gform-alert" data-js="gform-alert" style="grid-column: 1/-1;">
-						<span class="gform-alert__icon gform-icon gform-icon--campaign" aria-hidden="true"></span>
-						<div class="gform-alert__message-wrap">
-							<p class="gform-alert__message">' . esc_html__( 'This form uses a deprecated CSS Ready Class, which will be removed in KDNA Forms 4.0.', 'kdnaforms' ) . '</p>
-							<a class="gform-alert__cta gform-button gform-button--white gform-button--size-xs" href="https://docs.kdnaforms.com/migrating-your-forms-from-ready-classes/" target="_blank">'
+					return '<div class="kform-alert" data-js="kform-alert" style="grid-column: 1/-1;">
+						<span class="kform-alert__icon kform-icon kform-icon--campaign" aria-hidden="true"></span>
+						<div class="kform-alert__message-wrap">
+							<p class="kform-alert__message">' . esc_html__( 'This form uses a deprecated CSS Ready Class, which will be removed in KDNA Forms 4.0.', 'kdnaforms' ) . '</p>
+							<a class="kform-alert__cta kform-button kform-button--white kform-button--size-xs" href="https://docs.kdnaforms.com/migrating-your-forms-from-ready-classes/" target="_blank">'
 						   	. esc_html__( 'Learn More', 'kdnaforms' ) .
 						   	'<span class="screen-reader-text">' . esc_html__('about deprecated ready classes', 'kdnaforms') . '</span>
 							<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;
-							<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
+							<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span>
 							</a>
 						</div>
 					</div>';
@@ -1225,14 +1225,14 @@ class KDNAFormSettings {
 				KDNACommon::notices_section();
 			?>
 
-			<div class="gform-settings__wrapper">
+			<div class="kform-settings__wrapper">
 
 				<?php
 					KDNACommon::display_dismissible_message();
 					KDNACommon::display_admin_message();
 				?>
 
-				<nav class="gform-settings__navigation">
+				<nav class="kform-settings__navigation">
 				<?php
 
 				    foreach ( $setting_tabs as $tab ) {
@@ -1255,7 +1255,7 @@ class KDNAFormSettings {
 						$url = add_query_arg( $query, admin_url( 'admin.php' ) );
 
 						// Get tab icon.
-						$icon_markup = KDNACommon::get_icon_markup( $tab, 'gform-icon--cog' );
+						$icon_markup = KDNACommon::get_icon_markup( $tab, 'kform-icon--cog' );
 
 						printf(
 							'<a href="%s"%s><span class="icon">%s</span> <span class="label">%s</span></a>',
@@ -1268,7 +1268,7 @@ class KDNAFormSettings {
 					?>
 				</nav>
 
-				<div class="gform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
+				<div class="kform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
 	<?php
 	}
 
@@ -1301,28 +1301,28 @@ class KDNAFormSettings {
 			'10' => array(
 				'name'         => 'settings',
 				'label'        => __( 'Form Settings', 'kdnaforms' ),
-				'icon'         => 'gform-icon--cog',
+				'icon'         => 'kform-icon--cog',
 				'query'        => array( 'cid' => null, 'nid' => null, 'fid' => null ),
 				'capabilities' => array( 'kdnaforms_edit_forms' ),
 			),
 			'20' => array(
 				'name'         => 'confirmation',
 				'label'        => __( 'Confirmations', 'kdnaforms' ),
-				'icon'         => 'gform-icon--confirmations',
+				'icon'         => 'kform-icon--confirmations',
 				'query'        => array( 'cid' => null, 'duplicatedcid' => null ),
 				'capabilities' => array( 'kdnaforms_edit_forms' ),
 			),
 			'30' => array(
 				'name'         => 'notification',
 				'label'        => __( 'Notifications', 'kdnaforms' ),
-				'icon'         => 'gform-icon--flag',
+				'icon'         => 'kform-icon--flag',
 				'query'        => array( 'nid' => null ),
 				'capabilities' => array( 'kdnaforms_edit_forms' ),
 			),
 			'40' => array(
 				'name'         => 'personal-data',
 				'label'        => __( 'Personal Data', 'kdnaforms' ),
-				'icon'         => 'gform-icon--user',
+				'icon'         => 'kform-icon--user',
 				'query'        => array( 'nid' => null ),
 				'capabilities' => array( 'kdnaforms_edit_forms' ),
 			),

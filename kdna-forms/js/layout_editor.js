@@ -98,7 +98,7 @@ function initLayoutEditor( $ ) {
 		$noFields = $( '#no-fields' ),
 		$noFieldsDropzone = $( '#no-fields-drop' ),
 		$sidebar = $( '.editor-sidebar' ),
-		$button = $( '.gfield-field-action' ),
+		$button = $( '.kfield-field-action' ),
 		$fields = $elements(),
 		$elem = null,
 		fieldButtonsSelector = '.add-buttons button';
@@ -183,7 +183,7 @@ function initLayoutEditor( $ ) {
 	} );
 	$editorContainer.on( 'click', function ( event ) {
 		// Don't clear if mousedown originated inside any flyout
-		if ( mousedownTarget && $( mousedownTarget ).closest( '.gform-flyout, [id$="_flyout_container"]' ).length ) {
+		if ( mousedownTarget && $( mousedownTarget ).closest( '.kform-flyout, [id$="_flyout_container"]' ).length ) {
 			mousedownTarget = null;
 			return;
 		}
@@ -250,7 +250,7 @@ function initLayoutEditor( $ ) {
 		deletedFieldGroupId = getGroupId( $( '#field_' + fieldId ) );
 		if ( ! HasPageField() ) {
 			jQuery('input[name="submit_location"][value="inline"]').prop( 'disabled', false );
-			jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
+			jQuery( '.submit_location_setting' ).prev( '.kform-alert--notice' ).remove();
 		}
 
 		var nativeEvent = new Event('gform/layout_editor/kform_field_deleted');
@@ -388,7 +388,7 @@ function initLayoutEditor( $ ) {
 			.draggable( {
 				helper: 'clone',
 				zIndex: 999,
-				handle: '.gfield-drag',
+				handle: '.kfield-drag',
 				create: function( event, ui ) {
 					if ( isSpacer( $( this ) ) ) {
 						return;
@@ -678,7 +678,7 @@ function initLayoutEditor( $ ) {
 						return false;
 					}
 
-					ui.helper.addClass( 'gform-theme__disable' );
+					ui.helper.addClass( 'kform-theme__disable' );
 
 					// Match the helper to the current elements size.
 					ui.helper
@@ -709,7 +709,7 @@ function initLayoutEditor( $ ) {
 					$( this ).removeClass( 'fieldPlaceholder' );
 					$editorContainer.removeClass( 'droppable' );
 					$container.removeClass( 'dragging' );
-					ui.helper.removeClass( 'gform-theme__disable' );
+					ui.helper.removeClass( 'kform-theme__disable' );
 
 					var isAddingField = false;
 
@@ -748,7 +748,7 @@ function initLayoutEditor( $ ) {
 
 		$elements().removeClass( 'hovering' );
 
-		var isCompactView = $( '.gform-compact-view' ).length > 0;
+		var isCompactView = $( '.kform-compact-view' ).length > 0;
 
 		if ( ! isInEditorArea( helperLeft, helperTop, isCompactView ) ) {
 			$indicator( false ).remove();

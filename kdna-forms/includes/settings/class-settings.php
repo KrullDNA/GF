@@ -614,7 +614,7 @@ class Settings {
 
 		?>
 
-		<form id="gform-settings" class="kdnaform_settings_form" data-js="page-loader" action="" method="post" enctype="multipart/form-data" novalidate>
+		<form id="kform-settings" class="kdnaform_settings_form" data-js="page-loader" action="" method="post" enctype="multipart/form-data" novalidate>
 			<?php
 
 				if ( ! empty( $this->before_fields ) && is_callable( $this->before_fields ) ) {
@@ -642,7 +642,7 @@ class Settings {
 				// Get save button.
 				$save = $this->render_save_button();
 				if ( ! empty( $save ) ) {
-					printf( '<div class="gform-settings-save-container">%s</div>', $save ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					printf( '<div class="kform-settings-save-container">%s</div>', $save ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 
 				if ( ! empty( $this->after_fields ) && is_callable( $this->after_fields ) ) {
@@ -700,10 +700,10 @@ class Settings {
 		// Get active tab.
 		$active_tab = $this->get_active_tab();
 
-		echo '<nav class="gform-settings-tabs__navigation" role="tablist">';
+		echo '<nav class="kform-settings-tabs__navigation" role="tablist">';
 		foreach ( $tabs as $i => $tab ) {
 			printf(
-				'<a href="#" role="tab" aria-selected="%3$s" id="gform-settings-tab-%2$s" data-tab="%2$s" class="%4$s"%5$s>%1$s</a>',
+				'<a href="#" role="tab" aria-selected="%3$s" id="kform-settings-tab-%2$s" data-tab="%2$s" class="%4$s"%5$s>%1$s</a>',
 				esc_html( $tab['label'] ),
 				esc_attr( $tab['name'] ),
 				$tab['name'] === $active_tab ? 'true' : 'false',
@@ -734,7 +734,7 @@ class Settings {
 
 		// Open tab container.
 		printf(
-			'<div class="gform-settings-tabs__container%2$s" role="tabpanel" aria-hidden="%3$s" data-tab="%1$s" aria-labelledby="gform-settings-tab-%1$s">',
+			'<div class="kform-settings-tabs__container%2$s" role="tabpanel" aria-hidden="%3$s" data-tab="%1$s" aria-labelledby="kform-settings-tab-%1$s">',
 			esc_attr( $tab['id'] ),
 			$tab['id'] === $active_tab ? ' active' : '',
 			$tab['id'] === $active_tab ? 'false' : 'true'
@@ -760,7 +760,7 @@ class Settings {
 	public function render_section( $section ) {
 
 		// Prepare section classes.
-		$class = array( 'gform-settings-panel' );
+		$class = array( 'kform-settings-panel' );
 
 		// Add defined classes.
 		if ( rgar( $section, 'class' ) ) {
@@ -769,24 +769,24 @@ class Settings {
 		}
 
 		if ( rgar( $section, 'title' ) || ( rgar( $section, 'collapsible' ) && rgar( $section, 'id' ) ) ) {
-			$class[] = 'gform-settings-panel--with-title';
+			$class[] = 'kform-settings-panel--with-title';
 		}
 
 		// Add collapsible classes.
 		if ( rgar( $section, 'collapsible' ) && rgar( $section, 'id' ) ) {
 
-			$class[] = 'gform-settings-panel--collapsible';
+			$class[] = 'kform-settings-panel--collapsible';
 
 			// Add collapsed class.
 			if ( self::is_section_collapsed( $section ) ) {
-				$class[] = 'gform-settings-panel--collapsed';
+				$class[] = 'kform-settings-panel--collapsed';
 			}
 
 		}
 
 		// Add card layout class.
 		if ( self::has_card_layout( $section ) ) {
-			$class[] = 'gform-settings-panel--card';
+			$class[] = 'kform-settings-panel--card';
 		}
 
 		// If dependency is not met for section, do not render if no live dependency.
@@ -811,7 +811,7 @@ class Settings {
 			// Display title.
 			if ( rgar( $section, 'title' ) ) {
 				printf(
-					'<legend class="gform-settings-panel__title gform-settings-panel__title--header">%s %s</legend>',
+					'<legend class="kform-settings-panel__title kform-settings-panel__title--header">%s %s</legend>',
 					esc_html( $section['title'] ),
 					self::maybe_get_tooltip( $section ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				);
@@ -820,27 +820,27 @@ class Settings {
 			// Display collapsible toggle.
 			if ( rgar( $section, 'collapsible' ) && rgar( $section, 'id' ) ) {
 				?>
-				<span class="gform-settings-panel__collapsible-control">
+				<span class="kform-settings-panel__collapsible-control">
 					<input
 							type="checkbox"
 							id="kdnaform_settings_section_collapsed_<?php echo esc_attr( $section['id'] ); ?>"
 							name="kdnaform_settings_section_collapsed_<?php echo esc_attr( $section['id'] ); ?>"
 							value="1"
-							onclick="this.checked ? this.closest( '.gform-settings-panel' ).classList.add( 'gform-settings-panel--collapsed' ) : this.closest( '.gform-settings-panel' ).classList.remove( 'gform-settings-panel--collapsed' )"
+							onclick="this.checked ? this.closest( '.kform-settings-panel' ).classList.add( 'kform-settings-panel--collapsed' ) : this.closest( '.kform-settings-panel' ).classList.remove( 'kform-settings-panel--collapsed' )"
 							<?php checked( true, self::is_section_collapsed( $section ), true ); ?>
 					/>
-					<label class="gform-settings-panel__collapsible-toggle" for="kdnaform_settings_section_collapsed_uninstall"><span class="screen-reader-text"><?php printf( esc_html__( 'Toggle %s Section', 'kdnaforms' ), esc_html( $section['title' ]) ); ?></span></label>
+					<label class="kform-settings-panel__collapsible-toggle" for="kdnaform_settings_section_collapsed_uninstall"><span class="screen-reader-text"><?php printf( esc_html__( 'Toggle %s Section', 'kdnaforms' ), esc_html( $section['title' ]) ); ?></span></label>
 				</span>
 				<?php
 			}
 		}
 
 		// Open settings table.
-		echo '<div class="gform-settings-panel__content">';
+		echo '<div class="kform-settings-panel__content">';
 
 		// Display section description.
 		if ( rgar( $section, 'description' ) ) {
-			printf( '<div class="gform-settings-description gform-kitchen-sink">%s</div>', $section['description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( '<div class="kform-settings-description kform-kitchen-sink">%s</div>', $section['description'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**
@@ -886,7 +886,7 @@ class Settings {
 		$field_name = $field->name ? str_replace( array( '[', ']' ), array( '_', null ), $field->name ) : '';
 
 		printf(
-			'<div id="kdnaform_setting_%s" class="gform-settings-field gform-settings-field__%s" %s>',
+			'<div id="kdnaform_setting_%s" class="kform-settings-field kform-settings-field__%s" %s>',
 			esc_attr( $field_name ),
 			esc_attr( $field->type ),
 			$hidden // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -895,7 +895,7 @@ class Settings {
 		// Display field label.
 		if ( rgobj( $field, 'label' ) ) {
 			printf(
-				'<div class="gform-settings-field__header"><label class="gform-settings-label" for="%s">%s%s</label>%s</div>',
+				'<div class="kform-settings-field__header"><label class="kform-settings-label" for="%s">%s%s</label>%s</div>',
 				esc_attr( $field->name ),
 				rgobj( $field, 'label' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$field->required ? '<span class="required">(' . esc_html__( 'Required', 'kdnaforms' ) . ')</span>' : '',
@@ -952,7 +952,7 @@ class Settings {
 
 		// Prepare Save button markup.
 		$html .= sprintf(
-			'<button type="submit" id="gform-settings-save" name="gform-settings-save" value="save" form="gform-settings" class="%2$s"%3$s>%1$s</button>',
+			'<button type="submit" id="kform-settings-save" name="kform-settings-save" value="save" form="kform-settings" class="%2$s"%3$s>%1$s</button>',
 			esc_html( rgar( $save_props, 'value' ) ),
 			esc_attr( $save_props['class'] ),
 			! $this->is_dependency_met( rgar( $save_props, 'dependency' ) ) ? 'style="display:none;"' : ''
@@ -1215,7 +1215,7 @@ class Settings {
 	 * @return mixed|string
 	 */
 	private function get_section_id( $section ) {
-		$section_prefix = 'gform-settings-section-';
+		$section_prefix = 'kform-settings-section-';
 		if ( rgar( $section, 'id' ) ) {
 			return $section_prefix . $section['id'];
 		} else {
@@ -2728,7 +2728,7 @@ class Settings {
 	 */
 	public static function is_save_postback() {
 
-		return ! rgempty( 'gform-settings-save' );
+		return ! rgempty( 'kform-settings-save' );
 
 	}
 

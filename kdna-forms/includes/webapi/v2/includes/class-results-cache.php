@@ -225,7 +225,7 @@ class KDNA_Results_Cache {
 	 * @return string
 	 */
 	private function get_results_cache_meta_key( $form_id ) {
-		$key = 'gf-results-cache-meta-form-' . $form_id;
+		$key = 'kdna-results-cache-meta-form-' . $form_id;
 
 		return $key;
 	}
@@ -332,7 +332,7 @@ class KDNA_Results_Cache {
 	 */
 	public function get_results_cache_key_prefix( $form_id ) {
 
-		$key = sprintf( 'gf-results-cache-%s-', $form_id );
+		$key = sprintf( 'kdna-results-cache-%s-', $form_id );
 
 		// The option_name column in the options table has a max length of 64 chars.
 		// Truncate the key if it's too long for column and allow space for the 'tmp' prefix

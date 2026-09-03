@@ -341,14 +341,14 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--cog';
+		return 'kform-icon--cog';
 	}
 
 	/**
@@ -483,13 +483,13 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		}
 
 		$validation_message_id = 'validation_message_' . $form_id . '_' . $this->id;
-		$validation_message = ( $this->failed_validation && ! empty( $this->validation_message ) ) ? sprintf( "<div id='%s' class='gfield_description validation_message gfield_validation_message'>%s</div>", $validation_message_id, $this->validation_message ) : '';
+		$validation_message = ( $this->failed_validation && ! empty( $this->validation_message ) ) ? sprintf( "<div id='%s' class='kfield_description validation_message kfield_validation_message'>%s</div>", $validation_message_id, $this->validation_message ) : '';
 
 		$is_form_editor  = $this->is_form_editor();
 		$is_entry_detail = $this->is_entry_detail();
 		$is_admin        = $is_form_editor || $is_entry_detail;
 
-		$required_div = $this->isRequired ? '<span class="gfield_required">' . $this->get_required_indicator() . '</span>' : '';
+		$required_div = $this->isRequired ? '<span class="kfield_required">' . $this->get_required_indicator() . '</span>' : '';
 
 		$admin_buttons = $this->get_admin_buttons();
 
@@ -505,7 +505,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 
 		$admin_hidden_markup = ( $this->visibility == 'hidden' ) ? $this->get_hidden_admin_markup() : '';
 
-		$description = $this->get_description( $this->description, 'gfield_description' );
+		$description = $this->get_description( $this->description, 'kfield_description' );
 
 		$clear = '';
 
@@ -616,7 +616,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		}
 
 		if ( ! empty( $sidebar_message_content ) ) {
-			$atts['class'] .= ' gfield-has-sidebar-message gfield-has-sidebar-message--type-' . ( $sidebar_message_type === 'error' ? 'warning' : $sidebar_message_type );
+			$atts['class'] .= ' kfield-has-sidebar-message kfield-has-sidebar-message--type-' . ( $sidebar_message_type === 'error' ? 'warning' : $sidebar_message_type );
 			if ( $sidebar_message_type === 'error' ) {
 				$atts['aria-invalid'] = 'true';
 			}
@@ -657,20 +657,20 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 	 * Get field label class.
 	 *
 	 * @since unknown
-	 * @since 2.5     Added `screen-reader-text` if the label hasn't been set; added `gfield_label_before_complex` if the field has inputs.
-	 * @since 2.7     Added `gform-field-label` for the theme framework.
+	 * @since 2.5     Added `screen-reader-text` if the label hasn't been set; added `kfield_label_before_complex` if the field has inputs.
+	 * @since 2.7     Added `kform-field-label` for the theme framework.
 	 *
 	 * @return string
 	 */
 	public function get_field_label_class() {
-		$class = 'gfield_label';
-		$class .= ' gform-field-label';
+		$class = 'kfield_label';
+		$class .= ' kform-field-label';
 
 		// Added `screen-reader-text` if the label hasn't been set.
 		$class .= ( rgblank( $this->label ) ) ? ' screen-reader-text' : '';
 
-		// Added `gfield_label_before_complex` if the field has inputs.
-		$class .= is_array( $this->inputs ) ? ' gfield_label_before_complex' : '';
+		// Added `kfield_label_before_complex` if the field has inputs.
+		$class .= is_array( $this->inputs ) ? ' kfield_label_before_complex' : '';
 
 		return $class;
 	}
@@ -1227,10 +1227,10 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 			}
 
 			return '<div class="error-alert-container alert-container">
-						<div class="gform-alert gform-alert--error">
-							<span class="gform-alert__icon gform-icon gform-icon--circle-close" aria-hidden="true"></span>
-							<div class="gform-alert__message-wrap">
-								<p class="gform-alert__message">' . $error_message . '</p>
+						<div class="kform-alert kform-alert--error">
+							<span class="kform-alert__icon kform-icon kform-icon--circle-close" aria-hidden="true"></span>
+							<div class="kform-alert__message-wrap">
+								<p class="kform-alert__message">' . $error_message . '</p>
 							</div>
 						</div>
 					</div>';
@@ -1728,8 +1728,8 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 			$duplicate_aria_action = __( 'duplicate this field', 'kdnaforms' );
 			$duplicate_field_link = "
 				<button
-					id='gfield_duplicate_{$this->id}'
-					class='gfield-field-action gfield-duplicate'
+					id='kfield_duplicate_{$this->id}'
+					class='kfield-field-action kfield-duplicate'
 					onclick='StartDuplicateField(this); return false;'
 					onkeypress='StartDuplicateField(this); return false;'
 					aria-label='" . esc_html( $this->get_field_action_aria_label( $duplicate_aria_action ) ) . "'
@@ -1741,7 +1741,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 						<rect class='fill' x='.254' y='15.027' width='7' height='1.492' rx='.746' transform='rotate(-90 .254 15.027)' fill='#242748'/>
 						<path class='stroke' d='M1 14V4c0-1.657 1.34-3 2.997-3H16' stroke='#242748' stroke-width='1.5'/>
 					</svg>
-					<span class='gfield-field-action__description' aria-hidden='true'>" . esc_html__( 'Duplicate', 'kdnaforms' ) . "</span>
+					<span class='kfield-field-action__description' aria-hidden='true'>" . esc_html__( 'Duplicate', 'kdnaforms' ) . "</span>
 				</button>";
 		}
 
@@ -1755,14 +1755,14 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$delete_aria_action = __( 'delete this field', 'kdnaforms' );
 		$delete_field_link = "
 			<button
-				id='gfield_delete_{$this->id}'
-				class='gfield-field-action gfield-delete'
+				id='kfield_delete_{$this->id}'
+				class='kfield-field-action kfield-delete'
 				onclick='DeleteField(this);'
 				onkeypress='DeleteField(this); return false;'
 				aria-label='" . esc_html( $this->get_field_action_aria_label( $delete_aria_action ) ) . "'
 			>
-				<i class='gform-icon gform-icon--trash'></i>
-				<span class='gfield-field-action__description' aria-hidden='true'>" . esc_html__( 'Delete', 'kdnaforms' ) . "</span>
+				<i class='kform-icon kform-icon--trash'></i>
+				<span class='kfield-field-action__description' aria-hidden='true'>" . esc_html__( 'Delete', 'kdnaforms' ) . "</span>
 			</button>";
 
 		if( 'submit' == $this->type ) {
@@ -1779,14 +1779,14 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$edit_aria_action = __( 'jump to this field\'s settings', 'kdnaforms' );
 		$edit_field_link = "
 			<button
-				id='gfield_edit_{$this->id}'
-				class='gfield-field-action gfield-edit'
+				id='kfield_edit_{$this->id}'
+				class='kfield-field-action kfield-edit'
 				onclick='EditField(this);'
 				onkeypress='EditField(this); return false;'
 				aria-label='" . esc_html( $this->get_field_action_aria_label( $edit_aria_action ) ) . "'
 			>
-				<i class='gform-icon gform-icon--settings'></i>
-				<span class='gfield-field-action__description' aria-hidden='true'>" . esc_html__( 'Settings', 'kdnaforms' ) . "</span>
+				<i class='kform-icon kform-icon--settings'></i>
+				<span class='kfield-field-action__description' aria-hidden='true'>" . esc_html__( 'Settings', 'kdnaforms' ) . "</span>
 			</button>";
 
 		/**
@@ -1797,21 +1797,21 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$edit_field_link = apply_filters( 'kdnaform_edit_field_link', $edit_field_link );
 
 		$drag_handle = '
-			<span class="gfield-field-action gfield-drag">
-				<i class="gform-icon gform-icon--drag-indicator"></i>
-				<span class="gfield-field-action__description">' . esc_html__( 'Move', 'kdnaforms' ) . '</span>
+			<span class="kfield-field-action kfield-drag">
+				<i class="kform-icon kform-icon--drag-indicator"></i>
+				<span class="kfield-field-action__description">' . esc_html__( 'Move', 'kdnaforms' ) . '</span>
 			</span>';
 
 		if( 'submit' == $this->type ) {
 			$drag_handle = '';
 		}
 
-		$field_icon = '<span class="gfield-field-action gfield-icon" title="' . $this->get_form_editor_field_title() . '">' . KDNACommon::get_icon_markup( array( 'icon' => $this->get_form_editor_field_type_icon() ) ) . '</span>';
+		$field_icon = '<span class="kfield-field-action kfield-icon" title="' . $this->get_form_editor_field_title() . '">' . KDNACommon::get_icon_markup( array( 'icon' => $this->get_form_editor_field_type_icon() ) ) . '</span>';
 
-		$field_id = '<span class="gfield-compact-icon--id">' . sprintf( esc_html__( 'ID: %s', 'kdnaforms' ), $this->id ) . '</span>';
+		$field_id = '<span class="kfield-compact-icon--id">' . sprintf( esc_html__( 'ID: %s', 'kdnaforms' ), $this->id ) . '</span>';
 
 		$conditional_display = rgars( $this, 'conditionalLogic/enabled' ) && $this->conditionalLogic['enabled'] ? 'block' : 'none';
-		$conditional         = "<span class='gfield-compact-icon--conditional' id='gfield_{$this->id}-conditional-logic-icon' title='" . esc_attr( 'Conditional Logic', 'kdnaforms' ) . "' style='display: {$conditional_display}' aria-label=" . esc_html( 'Conditional Logic', 'kdnaforms' ) . ">" . KDNACommon::get_icon_markup( array( 'icon' => 'gform-icon--conditional-logic' ) ) . "<span class='screen-reader-text'>" . esc_attr( 'This field has conditional logic enabled.', 'kdnaforms' ) . "</span></span>";
+		$conditional         = "<span class='kfield-compact-icon--conditional' id='gfield_{$this->id}-conditional-logic-icon' title='" . esc_attr( 'Conditional Logic', 'kdnaforms' ) . "' style='display: {$conditional_display}' aria-label=" . esc_html( 'Conditional Logic', 'kdnaforms' ) . ">" . KDNACommon::get_icon_markup( array( 'icon' => 'kform-icon--conditional-logic' ) ) . "<span class='screen-reader-text'>" . esc_attr( 'This field has conditional logic enabled.', 'kdnaforms' ) . "</span></span>";
 
 		$field_sidebar_messages    = $this->get_field_sidebar_messages();
 		$field_sidebar_messages    = KDNACommon::is_form_editor() ? apply_filters( 'kdnaform_field_sidebar_messages', $field_sidebar_messages, $this ) : $field_sidebar_messages;
@@ -1819,19 +1819,19 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$compact_view_sidebar_message_icon = '';
 		if ( ! empty( $sidebar_message ) ) {
 			$sidebar_message_types = array(
-				'warning' => array( 'gform-icon--exclamation-simple', 'gform-icon-preset--status-error' ),
-				'error'   => array( 'gform-icon--exclamation-simple', 'gform-icon-preset--status-error' ),
-				'info'    => array( 'gform-icon--information-simple', 'gform-icon-preset--status-info' ),
-				'notice'  => array( 'gform-icon--information-simple', 'gform-icon-preset--status-info' ),
-				'success' => array( 'gform-icon--checkmark-simple', 'gform-icon-preset--status-correct' ),
+				'warning' => array( 'kform-icon--exclamation-simple', 'kform-icon-preset--status-error' ),
+				'error'   => array( 'kform-icon--exclamation-simple', 'kform-icon-preset--status-error' ),
+				'info'    => array( 'kform-icon--information-simple', 'kform-icon-preset--status-info' ),
+				'notice'  => array( 'kform-icon--information-simple', 'kform-icon-preset--status-info' ),
+				'success' => array( 'kform-icon--checkmark-simple', 'kform-icon-preset--status-correct' ),
 			);
 			$compact_view_sidebar_message_icon_type        = is_array( $field_sidebar_messages ) ? rgar( $sidebar_message, 'type' ) : 'warning';
 			$compact_view_sidebar_message_icon_helper_text = is_array( $field_sidebar_messages ) ? rgar( $sidebar_message, 'icon_helper_text' ) : __( 'This field has an issue', 'kdnaforms' );
-			$compact_view_sidebar_message_icon             = sprintf( '<span class="gfield-sidebar-message-icon gform-icon gform-icon--preset-active %1$s" title="%2$s" aria-label="%2$s"></span>', implode( ' ', $sidebar_message_types[ $compact_view_sidebar_message_icon_type ] ), esc_attr( $compact_view_sidebar_message_icon_helper_text ) );
+			$compact_view_sidebar_message_icon             = sprintf( '<span class="kfield-sidebar-message-icon kform-icon kform-icon--preset-active %1$s" title="%2$s" aria-label="%2$s"></span>', implode( ' ', $sidebar_message_types[ $compact_view_sidebar_message_icon_type ] ), esc_attr( $compact_view_sidebar_message_icon_helper_text ) );
 		}
 
 		$admin_buttons = "
-			<div class='gfield-admin-icons gform-theme__disable'>
+			<div class='kfield-admin-icons kform-theme__disable'>
 				{$drag_handle}
 				{$duplicate_field_link}
 				{$edit_field_link}
@@ -1839,7 +1839,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 				{$compact_view_sidebar_message_icon}
 				{$field_icon}
 			</div>
-			<div class='gfield-compact-icons gform-theme__disable'>
+			<div class='kfield-compact-icons kform-theme__disable'>
 				{$field_id}
 				{$conditional}
 			</div>";
@@ -1867,7 +1867,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 	 */
 	public function get_hidden_admin_markup() {
 
-		 return '<div class="admin-hidden-markup"><i class="gform-icon gform-icon--hidden" aria-hidden="true" title="'. esc_attr( __( 'This field is hidden when viewing the form', 'kdnaforms' ) ) .'"></i><span>'. esc_attr( __( 'This field is hidden when viewing the form', 'kdnaforms' ) ) .'</span></div>';
+		 return '<div class="admin-hidden-markup"><i class="kform-icon kform-icon--hidden" aria-hidden="true" title="'. esc_attr( __( 'This field is hidden when viewing the form', 'kdnaforms' ) ) .'"></i><span>'. esc_attr( __( 'This field is hidden when viewing the form', 'kdnaforms' ) ) .'</span></div>';
 
 	}
 
@@ -2022,7 +2022,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$is_form_editor  = $this->is_form_editor();
 		$is_entry_detail = $this->is_entry_detail();
 		$is_admin        = $is_form_editor || $is_entry_detail;
-		$id              = "gfield_description_{$this->formId}_{$this->id}";
+		$id              = "kfield_description_{$this->formId}_{$this->id}";
 
 		// Strip description tags when on edit page to avoid invalid markup breaking the editor.
 		if ( $this->is_form_editor() ) {
@@ -2051,7 +2051,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		}
 
 		if ( ! empty( $this->description ) ) {
-			$describedby_ids[] = "gfield_description_{$this->formId}_{$this->id}";
+			$describedby_ids[] = "kfield_description_{$this->formId}_{$this->id}";
 		}
 
 		if ( empty( $describedby_ids ) ) {
@@ -2330,34 +2330,34 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 	public function get_css_grid_class( $form = '' ) {
 		switch ( $this->layoutGridColumnSpan ) {
 			case 12:
-				$class = 'gfield--width-full';
+				$class = 'kfield--width-full';
 				break;
 			case 11:
-				$class = 'gfield--width-eleven-twelfths';
+				$class = 'kfield--width-eleven-twelfths';
 				break;
 			case 10:
-				$class = 'gfield--width-five-sixths';
+				$class = 'kfield--width-five-sixths';
 				break;
 			case 9:
-				$class = 'gfield--width-three-quarter';
+				$class = 'kfield--width-three-quarter';
 				break;
 			case 8:
-				$class = 'gfield--width-two-thirds';
+				$class = 'kfield--width-two-thirds';
 				break;
 			case 7:
-				$class = 'gfield--width-seven-twelfths';
+				$class = 'kfield--width-seven-twelfths';
 				break;
 			case 6:
-				$class = 'gfield--width-half';
+				$class = 'kfield--width-half';
 				break;
 			case 5:
-				$class = 'gfield--width-five-twelfths';
+				$class = 'kfield--width-five-twelfths';
 				break;
 			case 4:
-				$class = 'gfield--width-third';
+				$class = 'kfield--width-third';
 				break;
 			case 3:
-				$class = 'gfield--width-quarter';
+				$class = 'kfield--width-quarter';
 				break;
 			default:
 				$class = '';

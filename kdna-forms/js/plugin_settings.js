@@ -1,7 +1,7 @@
 ( function ( $ ) {
 
 	$(document).ready(function() {
-		gform.adminUtils.handleUnsavedChanges( '#gform-settings' );
+		gform.adminUtils.handleUnsavedChanges( '#kform-settings' );
 	});
 
 	var $container  = $( 'div[id="kform_setting_reset"]' ),
@@ -12,7 +12,7 @@
 	window.loadRecaptcha = function () {
 
 		var $recaptcha = $( '#recaptcha' ),
-			$save      = $( '#gform-settings-save' ),
+			$save      = $( '#kform-settings-save' ),
 			type       = $( 'input[name="_gform_setting_type"]:checked' ).val();
 
 		// Flush existing state.
@@ -22,7 +22,7 @@
 		$reset.val( 1 );
 
 		// Reset key status.
-		$( '#recpatcha .gform-settings-field__feedback' ).remove();
+		$( '#recpatcha .kform-settings-field__feedback' ).remove();
 
 		// If no public or private key is provided, exit.
 		if ( ! $publicKey.val() || ! $privateKey.val() ) {

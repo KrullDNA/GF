@@ -234,7 +234,7 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 		$input_name = 'input_' . md5( 'recaptchav3' . $this->_version . rgar( $form, 'id' ) );
 
 		$recaptcha_input = sprintf(
-			'<div class="kdna_invisible ginput_recaptchav3" data-sitekey="%s"><input type="hidden" name="%s" class="gfield_recaptcha_response" value=""/></div>',
+			'<div class="kdna_invisible kinput_recaptchav3" data-sitekey="%s"><input type="hidden" name="%s" class="kfield_recaptcha_response" value=""/></div>',
 			esc_attr( $site_key ),
 			esc_attr( $input_name )
 		);

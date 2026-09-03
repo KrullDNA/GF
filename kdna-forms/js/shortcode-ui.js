@@ -162,16 +162,16 @@ var GformShortcodeUI;
      */
     sui.views.editShortcodeForm = wp.Backbone.View.extend({
 
-        el: '#gform-shortcode-ui-container',
+        el: '#kform-shortcode-ui-container',
 
-        template: wp.template('gf-shortcode-default-edit-form'),
+        template: wp.template('kdna-shortcode-default-edit-form'),
 
         hasAdvancedValue: false,
 
         events: {
-            'click #gform-update-shortcode': 'insertShortcode',
-            'click #gform-insert-shortcode': 'insertShortcode',
-            'click #gform-cancel-shortcode': 'cancelShortcode'
+            'click #kform-update-shortcode': 'insertShortcode',
+            'click #kform-insert-shortcode': 'insertShortcode',
+            'click #kform-cancel-shortcode': 'cancelShortcode'
         },
 
         initialize: function () {
@@ -191,19 +191,19 @@ var GformShortcodeUI;
                 switch (attr.get('section')) {
                     case 'required':
                         t.views.add(
-                            '.gf-edit-shortcode-form-required-attrs',
+                            '.kdna-edit-shortcode-form-required-attrs',
                             new sui.views.editAttributeField({model: attr, parent: t})
                         );
                         break;
                     case 'standard':
                         t.views.add(
-                            '.gf-edit-shortcode-form-standard-attrs',
+                            '.kdna-edit-shortcode-form-standard-attrs',
                             new sui.views.editAttributeField({model: attr, parent: t})
                         );
                         break;
                     default:
                         t.views.add(
-                            '.gf-edit-shortcode-form-advanced-attrs',
+                            '.kdna-edit-shortcode-form-advanced-attrs',
                             new sui.views.editAttributeField({model: attr, parent: t})
                         );
                         if (!t.hasAdvancedVal) {
@@ -222,9 +222,9 @@ var GformShortcodeUI;
         afterRender: function () {
             kdnaform_initialize_tooltips();
 
-            $('#gform-insert-shortcode').toggle(this.options.viewMode == 'insert');
-            $('#gform-update-shortcode').toggle(this.options.viewMode != 'insert');
-            $('#gf-edit-shortcode-form-advanced-attrs').toggle(this.hasAdvancedVal);
+            $('#kform-insert-shortcode').toggle(this.options.viewMode == 'insert');
+            $('#kform-update-shortcode').toggle(this.options.viewMode != 'insert');
+            $('#kdna-edit-shortcode-form-advanced-attrs').toggle(this.hasAdvancedVal);
         },
 
         insertShortcode: function (e) {
@@ -251,7 +251,7 @@ var GformShortcodeUI;
         },
         dispose: function () {
             this.remove();
-            $('#gform-shortcode-ui-wrap').append('<div id="gform-shortcode-ui-container"></div>');
+            $('#kform-shortcode-ui-wrap').append('<div id="kform-shortcode-ui-container"></div>');
         }
     });
 
@@ -267,7 +267,7 @@ var GformShortcodeUI;
             'keyup  input[type="text"]': 'updateValue',
             'keyup  textarea': 'updateValue',
             'change select': 'updateValue',
-            'change #gf-shortcode-attr-action': 'updateAction',
+            'change #kdna-shortcode-attr-action': 'updateAction',
             'change input[type=checkbox]': 'updateCheckbox',
             'change input[type=radio]': 'updateValue',
             'change input[type=email]': 'updateValue',
@@ -279,7 +279,7 @@ var GformShortcodeUI;
 
 
         render: function () {
-            this.template = wp.media.template('gf-shortcode-ui-field-' + this.model.get('type'));
+            this.template = wp.media.template('kdna-shortcode-ui-field-' + this.model.get('type'));
             return this.$el.html(this.template(this.model.toJSON()));
         },
 
@@ -578,7 +578,7 @@ var GformShortcodeUI;
                         iframe = dom.add(content, 'iframe', {
                             src: tinymce.Env.ie ? 'javascript:""' : '',
                             frameBorder: '0',
-                            id: 'gf-shortcode-preview-' + new Date().getTime(),
+                            id: 'kdna-shortcode-preview-' + new Date().getTime(),
                             allowTransparency: 'true',
                             scrolling: 'no',
                             'class': 'wpview-sandbox',
@@ -730,8 +730,8 @@ var GformShortcodeUI;
                 GformShortcodeUI = new sui.views.editShortcodeForm({model: currentShortcodeModel, viewMode: 'update'});
                 GformShortcodeUI.render();
 
-                $('#gform-insert-shortcode').hide();
-                $('#gform-update-shortcode').show();
+                $('#kform-insert-shortcode').hide();
+                $('#kform-update-shortcode').show();
                 tb_show( i18n.shortcode_ui.edit_form, "#TB_inline?inlineId=select_gravity_form&width=753&height=686", "");
 
             }

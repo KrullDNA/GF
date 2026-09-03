@@ -62,7 +62,7 @@ class KDNASettings {
 		}
 
 		$title = '';
-		$icon  = 'gform-icon--cog';
+		$icon  = 'kform-icon--cog';
 
 		// if name is an array, assume that an array of args is passed.
 		if ( is_array( $name ) ) {
@@ -83,7 +83,7 @@ class KDNASettings {
 						'title'     => '',
 						'tab_label' => '',
 						'handler'   => false,
-						'icon'      => 'gform-icon--cog',
+						'icon'      => 'kform-icon--cog',
 					)
 				)
 			);
@@ -253,7 +253,7 @@ class KDNASettings {
 			update_option( 'recently_activated', array( $plugin => time() ) + (array) get_option( 'recently_activated' ) );
 
 			?>
-			<div class="updated fade gf-notice notice-success" role="alert"><?php echo sprintf( esc_html__( 'KDNA Forms has been successfully uninstalled. It can be re-activated from the %splugins page%s.', 'kdnaforms' ), "<a href='plugins.php'>", '</a>' ) ?></div>
+			<div class="updated fade kdna-notice notice-success" role="alert"><?php echo sprintf( esc_html__( 'KDNA Forms has been successfully uninstalled. It can be re-activated from the %splugins page%s.', 'kdnaforms' ), "<a href='plugins.php'>", '</a>' ) ?></div>
 			<?php
 			return;
 		}
@@ -262,11 +262,11 @@ class KDNASettings {
 
 		?>
 
-		<div class="gform-settings-panel">
-			<header class="gform-settings-panel__header">
-				<h4 class="gform-settings-panel__title"><?php esc_html_e( 'Uninstall KDNA Forms', 'kdnaforms' ); ?></h4>
+		<div class="kform-settings-panel">
+			<header class="kform-settings-panel__header">
+				<h4 class="kform-settings-panel__title"><?php esc_html_e( 'Uninstall KDNA Forms', 'kdnaforms' ); ?></h4>
 			</header>
-			<div class="gform-settings-panel__content">
+			<div class="kform-settings-panel__content">
 				<p class="alert error">
 					<?php esc_html_e('This operation deletes ALL KDNA Forms settings. If you continue, you will NOT be able to retrieve these settings.', 'kdnaforms'); ?>
 				</p>
@@ -432,7 +432,7 @@ class KDNASettings {
 			'currency'            => array(
 				'id'     => 'section_currency',
 				'title'  => esc_html__( 'Default Currency', 'kdnaforms' ),
-				'class'  => 'gform-settings-panel--half',
+				'class'  => 'kform-settings-panel--half',
 				'fields' => array(
 					array(
 						'name'          => 'currency',
@@ -453,7 +453,7 @@ class KDNASettings {
 				'id'          => 'section_enable_logging',
 				'title'       => esc_html__( 'Logging', 'kdnaforms' ),
 				'description' => esc_html__( 'Enable if you would like logging within KDNA Forms. Logging allows you to easily debug the inner workings of KDNA Forms to solve any possible issues. ', 'kdnaforms' ),
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'fields'      => array(
 					array(
 						'name'          => 'enable_logging',
@@ -476,7 +476,7 @@ class KDNASettings {
 		$fields['default_theme'] = array(
 			'id'     => 'section_default_theme',
 			'title'  => esc_html__( 'Default Form Theme', 'kdnaforms' ),
-			'class'  => 'gform-settings-panel--half',
+			'class'  => 'kform-settings-panel--half',
 			'fields' => array(
 					array(
 					'name'          => 'default_theme',
@@ -494,7 +494,7 @@ class KDNASettings {
 						),
 					),
 					'description'   => sprintf(
-						'%s&nbsp;<a href="%s" target="_blank">%s<span class="screen-reader-text">%s</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>',
+						'%s&nbsp;<a href="%s" target="_blank">%s<span class="screen-reader-text">%s</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>',
 						esc_html__( 'This theme will be used by default everywhere forms are embedded on your site', 'kdnaforms' ),
 						'https://docs.kdnaforms.com/block-themes-and-style-settings/',
 						esc_html__( 'Learn more about form theme and style settings.', 'kdnaforms' ),
@@ -514,7 +514,7 @@ class KDNASettings {
 				'id'          => 'section_enable_toolbar',
 				'title'       => esc_html__( 'Toolbar Menu', 'kdnaforms' ),
 				'description' => esc_html__( 'Enable to display the forms menu in the WordPress top toolbar. The forms menu will display the ten forms recently opened in the form editor.', 'kdnaforms' ),
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'fields'      => array(
 					array(
 						'name'          => 'enable_toolbar',
@@ -533,7 +533,7 @@ class KDNASettings {
 				'id'          => 'section_enable_dashboard_widget',
 				'title'       => esc_html__( 'Dashboard Widget', 'kdnaforms' ),
 				'description' => esc_html__( 'Turn on to enable the KDNA Forms dashboard widget. The dashboard widget displays a list of forms and the number of entries each form has.', 'kdnaforms' ),
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'fields'      => array(
 					array(
 						'name'          => 'enable_dashboard_widget',
@@ -553,7 +553,7 @@ class KDNASettings {
 				'id'          => 'section_enable_background_updates',
 				'title'       => esc_html__( 'Automatic Background Updates', 'kdnaforms' ),
 				'description' => esc_html__( 'Enable to allow KDNA Forms to download and install bug fixes and security updates automatically in the background. Requires a valid license key.', 'kdnaforms' ),
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'fields'      => array(
 					array(
 						'name'          => 'enable_background_updates',
@@ -572,7 +572,7 @@ class KDNASettings {
 				'id'          => 'section_conflict_mode',
 				'title'       => esc_html__( 'No Conflict Mode', 'kdnaforms' ),
 				'description' => esc_html__( 'Enable to prevent extraneous scripts and styles from being printed on a KDNA Forms admin pages, reducing conflicts with other plugins and themes.', 'kdnaforms' ),
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'fields'      => array(
 					array(
 						'name'          => 'enable_noconflict',
@@ -591,7 +591,7 @@ class KDNASettings {
 				'id'          => 'section_enable_akismet',
 				'title'       => esc_html__( 'Akismet Integration', 'kdnaforms' ),
 				'description' => esc_html__( 'Protect your form entries from spam using Akismet.', 'kdnaforms' ),
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'dependency'  => array( 'KDNACommon', 'has_akismet' ),
 				'fields'      => array(
 					array(
@@ -614,9 +614,9 @@ class KDNASettings {
 				'description' => sprintf(
 					esc_html__( 'We love improving the form building experience for everyone in our community. By enabling data collection, you can help us learn more about how our customers use KDNA Forms. %1$sLearn more...%2$s','kdnaforms'),
 					'<a target="_blank" href="https://docs.kdnaforms.com/about-additional-data-collection/">',
-					'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+					'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 				),
-				'class'         => 'gform-settings-panel--half',
+				'class'         => 'kform-settings-panel--half',
 				'fields'        => array(
 					array(
 						'name'          => 'kdna_forms_dataCollection',
@@ -636,7 +636,7 @@ class KDNASettings {
 			'id'          => 'section_email_logo',
 			'title'       => esc_html__( 'Email Logo', 'kdnaforms' ),
 			'description' => esc_html__( 'Upload a logo to display at the top of email notifications.', 'kdnaforms' ),
-			'class'       => 'gform-settings-panel--half',
+			'class'       => 'kform-settings-panel--half',
 			'fields'      => array(
 				array(
 					'name'          => 'kdna_email_logo_url',
@@ -666,10 +666,10 @@ class KDNASettings {
 				'description' => sprintf(
 						esc_html__( 'Enable this option to output the default form CSS. Disable it if you plan to create your own CSS in a child theme. Note: after KDNA Forms 2.8, this setting will no longer appear on the settings page. If you previously had it enabled, you will need to use the %skdnaform_disable_css%s filter to disable it.', 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/kdnaform_disable_css/" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 						),
 
-				'class'       => 'gform-settings-panel--half',
+				'class'       => 'kform-settings-panel--half',
 				'fields'      => array(
 					array(
 						'name'          => 'disable_css',
@@ -904,14 +904,14 @@ class KDNASettings {
 						'id'          => 'recpatcha',
 						'title'       => esc_html__( 'reCAPTCHA Settings', 'kdnaforms' ),
 						'description' => sprintf(
-							'%s <strong>%s</strong> %s <a href="https://www.google.com/recaptcha/admin/create" target="_blank">%s<span class="screen-reader-text">%s</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>',
+							'%s <strong>%s</strong> %s <a href="https://www.google.com/recaptcha/admin/create" target="_blank">%s<span class="screen-reader-text">%s</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>',
 							esc_html__( 'KDNA Forms integrates with reCAPTCHA, a free CAPTCHA service that uses an advanced risk analysis engine and adaptive challenges to keep automated software from engaging in abusive activities on your site. ', 'kdnaforms' ),
 							esc_html__( 'Please note, only v2 keys are supported and checkbox keys are not compatible with invisible reCAPTCHA.', 'kdnaforms' ),
 							esc_html__( 'These settings are required only if you decide to use the reCAPTCHA field.', 'kdnaforms' ),
 							esc_html__( 'Get your reCAPTCHA Keys.', 'kdnaforms' ),
 							esc_html__( '(opens in a new tab)', 'kdnaforms' )
 						),
-						'class'       => 'gform-settings-panel--full',
+						'class'       => 'kform-settings-panel--full',
 						'fields'      => array(
 							array(
 								'name'              => 'public_key',
@@ -1216,7 +1216,7 @@ class KDNASettings {
 
 		// Build left side options, always have GF Settings first and Uninstall last, put add-ons in the middle.
 		$setting_tabs = array(
-			'10' => array( 'name' => 'settings', 'label' => __( 'Settings', 'kdnaforms' ), 'icon' => 'gform-icon--cog' ),
+			'10' => array( 'name' => 'settings', 'label' => __( 'Settings', 'kdnaforms' ), 'icon' => 'kform-icon--cog' ),
 		);
 
 		// Remove an addon from the sidebar if it is uninstalled from the main uninstall page.
@@ -1249,7 +1249,7 @@ class KDNASettings {
 					'name'  => urlencode( $sorted_addon['name'] ),
 					'label' => esc_html( $sorted_addon['tab_label'] ),
 					'title' => esc_html( rgar( $sorted_addon, 'title' ) ),
-					'icon'  => rgar( $sorted_addon, 'icon', 'gform-icon--cog' ),
+					'icon'  => rgar( $sorted_addon, 'icon', 'kform-icon--cog' ),
 				);
 			}
 		}
@@ -1259,7 +1259,7 @@ class KDNASettings {
 			$setting_tabs[] = array(
 				'name'  => 'uninstall',
 				'label' => __( 'Uninstall', 'kdnaforms' ),
-				'icon'  => 'gform-icon--trash',
+				'icon'  => 'kform-icon--trash',
 			);
 		}
 
@@ -1296,11 +1296,11 @@ class KDNASettings {
 				<div id="message" class="updated"><p><?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
 			<?php } ?>
 
-			<div class="gform-settings__wrapper">
+			<div class="kform-settings__wrapper">
 
 				<?php KDNACommon::display_dismissible_message(); ?>
 
-				<nav class="gform-settings__navigation">
+				<nav class="kform-settings__navigation">
 					<?php
 					foreach ( $setting_tabs as $tab ) {
 
@@ -1308,7 +1308,7 @@ class KDNASettings {
 						$url  = add_query_arg( array( 'subview' => $tab['name'] ), admin_url( 'admin.php?page=kdna_settings' ) );
 
 						// Get tab icon.
-						$icon_markup = KDNACommon::get_icon_markup( $tab, 'gform-icon--cog' );
+						$icon_markup = KDNACommon::get_icon_markup( $tab, 'kform-icon--cog' );
 
 						printf(
 							'<a href="%s" %s><span class="icon">%s</span> <span class="label">%s</span></a>',
@@ -1321,7 +1321,7 @@ class KDNASettings {
 					?>
 				</nav>
 
-				<div class="gform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
+				<div class="kform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
 
 		<?php
 	}
@@ -1352,9 +1352,9 @@ class KDNASettings {
 	public static function page_footer() {
 		?>
 				</div>
-				<!-- / gform-settings__content -->
+				<!-- / kform-settings__content -->
 			</div>
-			<!-- / gform-settings__wrapper -->
+			<!-- / kform-settings__wrapper -->
 
 		</div> <!-- / wrap -->
 

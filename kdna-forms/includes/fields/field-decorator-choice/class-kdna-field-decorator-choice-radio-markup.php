@@ -15,7 +15,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 		$image_style_classes = $this->get_field_classes( $form_id, $this->field );
 
-		return sprintf( "<div class='ginput_container ginput_container_radio ginput_container_image_choice {$image_style_classes}'>%s</div>", $this->get_radio_choices( $value, $disabled_text, $form, $field_id ) );
+		return sprintf( "<div class='kinput_container kinput_container_radio kinput_container_image_choice {$image_style_classes}'>%s</div>", $this->get_radio_choices( $value, $disabled_text, $form, $field_id ) );
 	}
 
 	public function get_radio_choices( $value, $disabled_text, $form, $field_id ) {
@@ -44,7 +44,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 			 */
 			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
 
-			$choices .= sprintf( '<div class="gfield_radio" id="%s">', esc_attr( $field_id ) );
+			$choices .= sprintf( '<div class="kfield_radio" id="%s">', esc_attr( $field_id ) );
 
 			foreach ( $field_choices as $choice ) {
 				if ( rgar( $choice, 'isOtherChoice' ) ) {
@@ -83,7 +83,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 			$total = sizeof( $field_choices );
 			if ( $is_form_editor && ( $count < $total ) ) {
-				$choices .= "<div class='gchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></div>";
+				$choices .= "<div class='kchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></div>";
 			}
 		}
 
@@ -127,7 +127,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		$tabindex = $this->field->get_tabindex();
 
 		$image                  = $this->get_image_markup( $choice, $id, $choice_id, $form );
-		$image_aria_describedby = 'gchoice_image_' . $id;
+		$image_aria_describedby = 'kchoice_image_' . $id;
 
 		// Handle 'other' choice.
 		$other = '';
@@ -147,7 +147,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 				$other_value = empty( $choice['text'] ) ? KDNACommon::get_other_choice_value( $this->field ) : $choice['text'];
 			}
 
-			$other = "<br /><input id='input_{$this->field->formId}_{$this->field->id}_other' class='gchoice_other_control' name='input_{$this->field->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
+			$other = "<br /><input id='input_{$this->field->formId}_{$this->field->id}_other' class='kchoice_other_control' name='input_{$this->field->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
 		}
 
 		// Handling of input/image aria-describedby
@@ -162,11 +162,11 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		$choice_value = esc_attr( $field_value );
 
 		$choice_markup = "<div class='gchoice gchoice_{$id}'>
-			<span class='gfield-image-choice-wrapper-outer'>
-				<label for='choice_{$id}' class='gfield-choice-image-label'>{$image}</label>
-				<span class='gfield-image-choice-wrapper-inner'>
-					<input class='gfield-choice-input' name='input_{$this->field->id}' type='radio' value='{$choice_value}' {$checked} id='choice_{$id}' onchange='gformToggleRadioOther( this )' {$tabindex} {$disabled_text} {$aria_describedby}/>
-					<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>
+			<span class='kfield-image-choice-wrapper-outer'>
+				<label for='choice_{$id}' class='kfield-choice-image-label'>{$image}</label>
+				<span class='kfield-image-choice-wrapper-inner'>
+					<input class='kfield-choice-input' name='input_{$this->field->id}' type='radio' value='{$choice_value}' {$checked} id='choice_{$id}' onchange='gformToggleRadioOther( this )' {$tabindex} {$disabled_text} {$aria_describedby}/>
+					<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>
 						{$choice['text']}
 					</label>
 				</span>

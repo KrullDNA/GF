@@ -7032,24 +7032,24 @@ class KDNAFormsModel {
 		switch( $required_indicator ) {
 			case 'text':
 				$indicator       = esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = 'gfield_required_text';
+				$indicator_class = 'kfield_required_text';
 				break;
 			case 'asterisk':
 				$indicator       = '*';
-				$indicator_class = 'gfield_required_asterisk';
+				$indicator_class = 'kfield_required_asterisk';
 				break;
 			case 'custom':
 				$indicator       = rgar( $meta, 'customRequiredIndicator' ) ? $meta['customRequiredIndicator'] : esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = 'gfield_required_custom';
+				$indicator_class = 'kfield_required_custom';
 				break;
 			default:
 				$legacy_markup   = KDNACommon::is_legacy_markup_enabled( $meta );
 				$indicator       = $legacy_markup ? '*' : esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = $legacy_markup ? 'gfield_required_asterisk' : 'gfield_required_text';
+				$indicator_class = $legacy_markup ? 'kfield_required_asterisk' : 'kfield_required_text';
 				break;
 		}
 
-		return '<span class="gfield_required ' . $indicator_class . '">' . $indicator . '</span>';
+		return '<span class="kfield_required ' . $indicator_class . '">' . $indicator . '</span>';
 	}
 
 	/**

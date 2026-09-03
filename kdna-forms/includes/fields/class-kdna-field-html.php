@@ -26,14 +26,14 @@ class KDNA_Field_HTML extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--html-code';
+		return 'kform-icon--html-code';
 	}
 
 	function get_form_editor_field_settings() {
@@ -52,7 +52,7 @@ class KDNA_Field_HTML extends KDNA_Field {
 		$is_entry_detail = $this->is_entry_detail();
 		$is_form_editor  = $this->is_form_editor();
 
-		$content = $is_entry_detail || $is_form_editor ? "<div class='gf-html-container'><span class='kdna_blockheader'>
+		$content = $is_entry_detail || $is_form_editor ? "<div class='kdna-html-container'><span class='kdna_blockheader'>
 															<i class='fa fa-code fa-lg'></i> " . esc_html__( 'HTML Content', 'kdnaforms' ) .
 															'</span><span>' . esc_html__( 'This is a content placeholder. HTML content is not displayed in the form admin. Preview this form to view the content.', 'kdnaforms' ) . '</span></div>'
 														: $this->content;
@@ -73,7 +73,7 @@ class KDNA_Field_HTML extends KDNA_Field {
 		$field_label         = $this->get_field_label( $force_frontend_label, $value );
 		$field_id            = $is_admin || $form_id == 0 ? "input_{$this->id}" : 'input_' . $form_id . "_{$this->id}";
 		$admin_hidden_markup = ( $this->visibility == 'hidden' ) ? $this->get_hidden_admin_markup() : '';
-		$field_content       = ! $is_admin ? '{FIELD}' : $field_content = sprintf( "%s%s<label class='gfield_label gform-field-label' for='%s'>%s</label>{FIELD}", $admin_buttons, $admin_hidden_markup, $field_id, esc_html( $field_label ) );
+		$field_content       = ! $is_admin ? '{FIELD}' : $field_content = sprintf( "%s%s<label class='kfield_label kform-field-label' for='%s'>%s</label>{FIELD}", $admin_buttons, $admin_hidden_markup, $field_id, esc_html( $field_label ) );
 
 		return $field_content;
 	}
