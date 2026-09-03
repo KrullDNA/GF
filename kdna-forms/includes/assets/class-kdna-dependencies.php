@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Assets;
 
-abstract class GF_Dependencies {
+abstract class KDNA_Dependencies {
 
 	/**
 	 * Items to enqueue

@@ -1593,7 +1593,7 @@ class KDNAFormDisplay {
 				 * @param bool Whether to output init scripts in the footer. Defaults to ( ! DOING_AJAX ).
 				 */
 				if ( apply_filters( 'kdnaform_init_scripts_footer', $init_in_footer ) ) {
-					$callback = array( new GF_Late_Static_Binding( array( 'form_id' => $form['id'] ) ), 'KDNAFormDisplay_footer_init_scripts' );
+					$callback = array( new KDNA_Late_Static_Binding( array( 'form_id' => $form['id'] ) ), 'KDNAFormDisplay_footer_init_scripts' );
 					add_action( 'wp_footer', $callback, 999 );
 					add_action( 'admin_print_footer_scripts', $callback, 999 );
 					add_action( 'kdnaform_preview_footer', $callback );
@@ -4125,13 +4125,13 @@ class KDNAFormDisplay {
 			return '';
 		}
 
-		$script = 'if( typeof window.kdna_global["gfcalc"] == "undefined" ) { window.kdna_global["gfcalc"] = {}; } window.kdna_global["gfcalc"][' . $form['id'] . '] = new GFCalc(' . $form['id'] . ', ' . KDNACommon::json_encode( $formula_fields ) . ');';
+		$script = 'if( typeof window.kdna_global["gfcalc"] == "undefined" ) { window.kdna_global["gfcalc"] = {}; } window.kdna_global["gfcalc"][' . $form['id'] . '] = new KDNACalc(' . $form['id'] . ', ' . KDNACommon::json_encode( $formula_fields ) . ');';
 
 		return $script;
 	}
 
 	/**
-	 * Generates a map of fields IDs and their corresponding number formats used by the GFCalc JS object for correctly
+	 * Generates a map of fields IDs and their corresponding number formats used by the KDNACalc JS object for correctly
 	 * converting field values to clean numbers.
 	 *
 	 * - Number fields have a 'numberFormat' setting (w/ UI).

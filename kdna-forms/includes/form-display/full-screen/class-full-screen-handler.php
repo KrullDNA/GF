@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Form_Display\Full_Screen;
 
-use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\GF_JSON_Handler;
+use KDNA_Forms\KDNA_Forms\Query\JSON_Handlers\KDNA_JSON_Handler;
 
 class Full_Screen_Handler {
 
@@ -25,11 +25,11 @@ class Full_Screen_Handler {
 	/**
 	 * The JSON query handler.
 	 *
-	 * @var GF_JSON_Handler
+	 * @var KDNA_JSON_Handler
 	 */
 	private $json_handler;
 
-	public function __construct( GF_JSON_Handler $handler ) {
+	public function __construct( KDNA_JSON_Handler $handler ) {
 		$this->json_handler = $handler;
 
 		add_filter( 'redirect_canonical', function ( $redirect_url ) use ( $handler ) {
@@ -110,7 +110,7 @@ class Full_Screen_Handler {
 		 *
 		 * @param string          $form_for_display The current Form ID found.
 		 * @param string          $template         The current template being loaded by template_load.
-		 * @param GF_JSON_Handler $json_handler     The JSON handler to query the forms
+		 * @param KDNA_JSON_Handler $json_handler     The JSON handler to query the forms
 		 *
 		 * @return string
 		 */

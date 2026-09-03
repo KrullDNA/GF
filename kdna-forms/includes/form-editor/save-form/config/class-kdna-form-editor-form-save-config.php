@@ -3,10 +3,10 @@
 namespace KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Config;
 
 use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
-use KDNA_Forms\KDNA_Forms\Save_Form\Config\GF_Admin_Form_Save_Config;
+use KDNA_Forms\KDNA_Forms\Save_Form\Config\KDNA_Admin_Form_Save_Config;
 use KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Endpoints\KDNA_Save_Form_Endpoint_Form_Editor;
 
-class KDNA_Form_Editor_Form_Save_Config extends GF_Admin_Form_Save_Config {
+class KDNA_Form_Editor_Form_Save_Config extends KDNA_Admin_Form_Save_Config {
 
 	protected $name = 'kform_admin_config';
 
@@ -21,8 +21,8 @@ class KDNA_Form_Editor_Form_Save_Config extends GF_Admin_Form_Save_Config {
 					'domEvents'        => $this->get_dom_events(),
 					'animationDelay'   => '1000',
 					'json_containers'  => array(
-						GF_Admin_Form_Save_Config::JSON_START_STRING,
-						GF_Admin_Form_Save_Config::JSON_END_STRING,
+						KDNA_Admin_Form_Save_Config::JSON_START_STRING,
+						KDNA_Admin_Form_Save_Config::JSON_END_STRING,
 					),
 					'urls'             => array(
 						'formPreview' => trailingslashit( site_url() ) . '?kdna_page=preview&id=%s',

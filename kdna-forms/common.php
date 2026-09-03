@@ -3007,7 +3007,7 @@ Content-Type: text/html;
 	 * @return string Returns the support URL.
 	 */
 	public static function get_support_url() {
-		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::GF_ENVIRONMENT_CONFIG_HANDLER );
+		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::KDNA_ENVIRONMENT_CONFIG_HANDLER );
 
 		return $env_handler->get_support_url();
 	}
@@ -3022,7 +3022,7 @@ Content-Type: text/html;
 	 * @return string Returns the environment variable.
 	 */
 	public static function get_environment_setting( $name ) {
-		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::GF_ENVIRONMENT_CONFIG_HANDLER );
+		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::KDNA_ENVIRONMENT_CONFIG_HANDLER );
 		return $env_handler->get_environment_setting( $name );
 	}
 
@@ -4323,7 +4323,7 @@ Content-Type: text/html;
 	}
 
 	public static function get_simple_captcha() {
-		_deprecated_function( 'KDNACommon::get_simple_captcha', '1.9', 'GFField_CAPTCHA::get_simple_captcha' );
+		_deprecated_function( 'KDNACommon::get_simple_captcha', '1.9', 'KDNA_Field_CAPTCHA::get_simple_captcha' );
 		$captcha          = new ReallySimpleCaptcha();
 		$captcha->tmp_dir = KDNAFormsModel::get_upload_path( 'captcha' ) . '/';
 
@@ -4338,7 +4338,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function get_captcha( $field ) {
-		_deprecated_function( 'KDNACommon::get_captcha', '1.9', 'GFField_CAPTCHA::get_captcha' );
+		_deprecated_function( 'KDNACommon::get_captcha', '1.9', 'KDNA_Field_CAPTCHA::get_captcha' );
 
 		return $field->get_captcha();
 	}
@@ -4352,7 +4352,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function get_math_captcha( $field, $pos ) {
-		_deprecated_function( 'KDNACommon::get_math_captcha', '1.9', 'GFField_CAPTCHA::get_math_captcha' );
+		_deprecated_function( 'KDNACommon::get_math_captcha', '1.9', 'KDNA_Field_CAPTCHA::get_math_captcha' );
 
 		return $field->get_math_captcha( $pos );
 	}
@@ -7966,7 +7966,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function darken_color( $color, $darken_amount, $format = 'hex' ) {
-		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::GF_COLORS );
+		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::KDNA_COLORS );
 
 		if ( $darken_amount > 0 ) {
 			$darken_amount *= -1;
@@ -7987,7 +7987,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function lighten_color( $color, $lighten_amount, $format = 'hex' ) {
-		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::GF_COLORS );
+		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::KDNA_COLORS );
 
 		if ( $lighten_amount < 0 ) {
 			$lighten_amount *= -1;
@@ -8007,7 +8007,7 @@ Content-Type: text/html;
 	 * @return bool
 	 */
     public static function is_dark_color( $color = '', $threshold = 465 ) {
-	    $color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::GF_COLORS );
+	    $color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::KDNA_COLORS );
 	    $hex_color      = $color_modifier->sanitize_color_string( $color );
 
 	    return hexdec( substr( $hex_color, 0, 2 ) ) + hexdec( substr( $hex_color, 2, 2 ) ) + hexdec( substr( $hex_color, 4, 2 ) ) < $threshold;
@@ -8024,7 +8024,7 @@ Content-Type: text/html;
 	 * @return array[]
 	 */
 	public static function generate_block_styles_palette( $block_settings ) {
-		$default_settings = \KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Form_Display\GF_Form_Display_Service_Provider::BLOCK_STYLES_DEFAULTS );
+		$default_settings = \KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Form_Display\KDNA_Form_Display_Service_Provider::BLOCK_STYLES_DEFAULTS );
 		$applied_settings = wp_parse_args( $block_settings, $default_settings );
 
 		// Set up the inside control primary color used by default to be user-friendly
@@ -8620,7 +8620,7 @@ class KDNACache {
  * do any garbage collection of transients.
  *
  */
-class GF_Cache {
+class KDNA_Cache {
 	public function get( $key, &$found = null, $is_persistent = true ) {
 		return KDNACache::get( $key, $found, $is_persistent );
 	}
@@ -8682,7 +8682,7 @@ class EncryptDB extends wpdb {
  * Provides compatibility with PHP 7.2 (create_function deprecated) and 5.2.
  * So whenever the need for `create_function` arises, use this instead.
  */
-class GF_Late_Static_Binding {
+class KDNA_Late_Static_Binding {
 	private $args = array();
 
 	public function __construct( $args ) {

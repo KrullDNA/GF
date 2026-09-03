@@ -11,7 +11,7 @@ namespace KDNA_Forms\KDNA_Forms\Save_Form;
 
 use KDNA_Forms\KDNA_Forms\Config\KDNA_Config_Service_Provider;
 use KDNA_Forms\KDNA_Forms\Save_Form\Config\KDNA_Form_Editor_Form_Save_Config;
-use KDNA_Forms\KDNA_Forms\Save_Form\Config\GF_Admin_Form_Save_Config;
+use KDNA_Forms\KDNA_Forms\Save_Form\Config\KDNA_Admin_Form_Save_Config;
 use KDNA_Forms\KDNA_Forms\Save_Form\Endpoints\KDNA_Save_Form_Endpoint_Admin;
 use KDNA_Forms\KDNA_Forms\Save_Form\Endpoints\KDNA_Save_Form_Endpoint_Form_Editor;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
@@ -40,7 +40,7 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 	 * @var string[]
 	 */
 	protected $configs = array(
-		self::ADMIN_SAVE_CONFIG => GF_Admin_Form_Save_Config::class,
+		self::ADMIN_SAVE_CONFIG => KDNA_Admin_Form_Save_Config::class,
 	);
 
 	// Endpoint names, used as keys for the endpoint classes in the service container.
@@ -59,8 +59,8 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 	);
 
 	// The CRUD handler key in the service container.
-	const GF_FORM_CRUD_HANDLER = 'kdna_form_crud_handler';
-	const GF_SAVE_FROM_HELPER  = 'kdna_save_form_helper';
+	const KDNA_FORM_CRUD_HANDLER = 'kdna_form_crud_handler';
+	const KDNA_SAVE_FROM_HELPER  = 'kdna_save_form_helper';
 
 	/**
 	 * Includes all related files and adds all containers.
@@ -76,26 +76,26 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 		require_once plugin_dir_path( __FILE__ ) . 'class-kdna-save-form-helper.php';
 
 		$container->add(
-			self::GF_FORM_CRUD_HANDLER,
+			self::KDNA_FORM_CRUD_HANDLER,
 			function () use ( $container ) {
 				return new KDNA_Form_CRUD_Handler(
 					array(
-						KDNA_Util_Service_Provider::GF_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::GF_FORMS_MODEL ),
+						KDNA_Util_Service_Provider::KDNA_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS_MODEL ),
 						KDNA_Util_Service_Provider::RG_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::RG_FORMS_MODEL ),
-						KDNA_Util_Service_Provider::GF_COMMON => $container->get( KDNA_Util_Service_Provider::GF_COMMON ),
-						KDNA_Util_Service_Provider::GF_API   => $container->get( KDNA_Util_Service_Provider::GF_API ),
-						KDNA_Util_Service_Provider::GF_FORMS => $container->get( KDNA_Util_Service_Provider::GF_FORMS ),
+						KDNA_Util_Service_Provider::KDNA_COMMON => $container->get( KDNA_Util_Service_Provider::KDNA_COMMON ),
+						KDNA_Util_Service_Provider::KDNA_API   => $container->get( KDNA_Util_Service_Provider::KDNA_API ),
+						KDNA_Util_Service_Provider::KDNA_FORMS => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS ),
 					)
 				);
 			}
 		);
 
 		$container->add(
-			self::GF_SAVE_FROM_HELPER,
+			self::KDNA_SAVE_FROM_HELPER,
 			function () use ( $container ) {
 				return new KDNA_Save_Form_Helper(
 					array(
-						KDNA_Util_Service_Provider::GF_FORMS => $container->get( KDNA_Util_Service_Provider::GF_FORMS ),
+						KDNA_Util_Service_Provider::KDNA_FORMS => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS ),
 					)
 				);
 			}
@@ -121,8 +121,8 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 					return new $class(
 						$container->get( KDNA_Config_Service_Provider::DATA_PARSER ),
 						array(
-							KDNA_Util_Service_Provider::GF_FORMS => $container->get( KDNA_Util_Service_Provider::GF_FORMS ),
-							KDNA_Util_Service_Provider::GF_API   => $container->get( KDNA_Util_Service_Provider::GF_API ),
+							KDNA_Util_Service_Provider::KDNA_FORMS => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS ),
+							KDNA_Util_Service_Provider::KDNA_API   => $container->get( KDNA_Util_Service_Provider::KDNA_API ),
 						)
 					);
 				}
@@ -148,8 +148,8 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 				function () use ( $container, $class ) {
 					return new $class(
 						array(
-							KDNA_Save_Form_Service_Provider::GF_FORM_CRUD_HANDLER => $container->get( KDNA_Save_Form_Service_Provider::GF_FORM_CRUD_HANDLER ),
-							KDNA_Util_Service_Provider::GF_FORMS_MODEL            => $container->get( KDNA_Util_Service_Provider::GF_FORMS_MODEL ),
+							KDNA_Save_Form_Service_Provider::KDNA_FORM_CRUD_HANDLER => $container->get( KDNA_Save_Form_Service_Provider::KDNA_FORM_CRUD_HANDLER ),
+							KDNA_Util_Service_Provider::KDNA_FORMS_MODEL            => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS_MODEL ),
 						)
 					);
 				}

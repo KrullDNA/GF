@@ -12,7 +12,7 @@ use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Factories\Output_Engine_Factory
 
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Assets\Scripts;
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Assets\Styles;
-use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\GF_Theme_Layer;
+use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\KDNA_Theme_Layer;
 
 /**
  * Class KDNA_Theme_Layers_Provider
@@ -145,14 +145,14 @@ class KDNA_Theme_Layers_Provider extends KDNA_Service_Provider {
 	public function output_settings( KDNA_Service_Container $container ) {
 		add_filter( 'kdnaform_addon_form_settings_fields', function ( $sections, $form ) use ( $container ) {
 			/**
-			 * @var GF_Theme_Layer[]
+			 * @var KDNA_Theme_Layer[]
 			 */
 			$style_layers = $container->get( self::THEME_LAYERS );
 			$layer_name   = rgget( 'theme_layer' );
 
 			foreach ( $style_layers as $layer ) {
 				/**
-				 * @var GF_Theme_Layer $layer
+				 * @var KDNA_Theme_Layer $layer
 				 */
 				if ( $layer->name() !== $layer_name ) {
 					continue;

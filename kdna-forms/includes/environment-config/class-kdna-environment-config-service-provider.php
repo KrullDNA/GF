@@ -15,7 +15,7 @@ use KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider;
  */
 class KDNA_Environment_Config_Service_Provider extends KDNA_Service_Provider {
 
-	const GF_ENVIRONMENT_CONFIG_HANDLER = 'kdna_environment_config_handler';
+	const KDNA_ENVIRONMENT_CONFIG_HANDLER = 'kdna_environment_config_handler';
 
 	/**
 	 * Register services to the container.
@@ -28,9 +28,9 @@ class KDNA_Environment_Config_Service_Provider extends KDNA_Service_Provider {
 		require_once plugin_dir_path( __FILE__ ) . 'class-kdna-environment-config-handler.php';
 
 		$container->add(
-			self::GF_ENVIRONMENT_CONFIG_HANDLER,
+			self::KDNA_ENVIRONMENT_CONFIG_HANDLER,
 			function () use ( $container ) {
-				return new KDNA_Environment_Config_Handler( $container->get( KDNA_Util_Service_Provider::GF_CACHE ) );
+				return new KDNA_Environment_Config_Handler( $container->get( KDNA_Util_Service_Provider::KDNA_CACHE ) );
 			}
 		);
 	}
@@ -46,7 +46,7 @@ class KDNA_Environment_Config_Service_Provider extends KDNA_Service_Provider {
 	 */
 	public function init( KDNA_Service_Container $container ) {
 
-		$handler = $container->get( self::GF_ENVIRONMENT_CONFIG_HANDLER );
+		$handler = $container->get( self::KDNA_ENVIRONMENT_CONFIG_HANDLER );
 
 		// Gets environment license key.
 		add_filter( 'pre_option_kdna_forms_key', array( $handler, 'maybe_override_kdna_forms_key' ) );

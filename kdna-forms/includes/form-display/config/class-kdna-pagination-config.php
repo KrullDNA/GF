@@ -9,7 +9,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
  *
  * @since 2.9.0
  */
-class GF_Pagination_Config extends KDNA_Config {
+class KDNA_Pagination_Config extends KDNA_Config {
 
 	protected $name               = 'kform_theme_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_theme';

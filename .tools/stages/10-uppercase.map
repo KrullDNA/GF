@@ -10,6 +10,12 @@
 # GFFrontendFeeds, GFPageConditionalLogic, GFToken and GF_Field_CAPTCHA all
 # have a KDNA-prefixed twin already in the tree.
 #
+# Naming rule: where the f belongs to the following word — GFORMS, gform,
+# gfield, ginput — only the g changes, giving KFORMS, kform, kfield, kinput.
+# Where the GF is the Gravity Forms abbreviation and the next letters start a
+# new word, the whole GF becomes KDNA. That is why GFORMS_DOING_MOCK goes to
+# KFORMS_DOING_MOCK and not KDNAORMS_DOING_MOCK.
+#
 # GF_Forms_Model_Legacy is renamed but stays a class that does not exist here.
 # It is the legacy model the schema version gates, and reaching it fatals the
 # site either way; the rename neither helps nor hurts that, and the landmine is
@@ -33,7 +39,7 @@ GF_JSON_Handler                              KDNA_JSON_Handler
 GF_FORMS_MODEL                               KDNA_FORMS_MODEL
 GF_API                                       KDNA_API
 GF_FORM_CRUD_HANDLER                         KDNA_FORM_CRUD_HANDLER
-GFORMS_DOING_MOCK                            KDNAORMS_DOING_MOCK
+GFORMS_DOING_MOCK                            KFORMS_DOING_MOCK
 GF_Dependencies                              KDNA_Dependencies
 GF_SAVE_FROM_HELPER                          KDNA_SAVE_FROM_HELPER
 GF_All_Access_Theme_Layer                    KDNA_All_Access_Theme_Layer
@@ -73,8 +79,8 @@ GF_Default_Order_Formatter                   KDNA_Default_Order_Formatter
 GF_Entry_Details_Order_Formatter             KDNA_Entry_Details_Order_Formatter
 GFCF_Style_Layers_Provider                   KDNACF_Style_Layers_Provider
 GF_Conversational_Forms                      KDNA_Conversational_Forms
-GFORMS_SAVE_REQUEST_JSON_START               KDNAORMS_SAVE_REQUEST_JSON_START
-GFORMS_SAVE_REQUEST_JSON_END                 KDNAORMS_SAVE_REQUEST_JSON_END
+GFORMS_SAVE_REQUEST_JSON_START               KFORMS_SAVE_REQUEST_JSON_START
+GFORMS_SAVE_REQUEST_JSON_END                 KFORMS_SAVE_REQUEST_JSON_END
 GF_Dom_Parser                                KDNA_Dom_Parser
 GF_Field_CAPTCHA                             KDNA_Field_CAPTCHA
 GFAsyncUpload                                KDNAAsyncUpload

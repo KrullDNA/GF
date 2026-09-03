@@ -92,7 +92,7 @@ class KDNA_Blocks_Config extends KDNA_Config {
 						'orbitalDefault' => $orbital_default,
 						'block_docs_url' => 'https://docs.kdnaforms.com/kdna-forms-gutenberg-block/',
 						'styles'     	 => array(
-							'defaults' => \KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Form_Display\GF_Form_Display_Service_Provider::BLOCK_STYLES_DEFAULTS ),
+							'defaults' => \KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Form_Display\KDNA_Form_Display_Service_Provider::BLOCK_STYLES_DEFAULTS ),
 						),
 					),
 					'i18n' => array(
