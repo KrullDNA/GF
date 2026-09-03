@@ -2758,6 +2758,76 @@ class KDNAFormDetail {
 									<!-- content dynamically created from js.php -->
 								</div>
 							</li>
+							<?php
+							do_action( 'kdnaform_field_advanced_settings', - 1, $form_id );
+							?>
+						</ul>
+
+						<?php
+						/**
+						 * Filters custom setting tabs.
+						 *
+						 * @param array $field_setting_tabs Custom tabs array.
+						 * @param array $from The current form object.
+						 *
+						 * @since 2.5
+						 *
+						 */
+						$field_setting_tabs = gf_apply_filters( array( 'kdnaform_field_settings_tabs', $form_id ), array(), $form );
+						foreach ( $field_setting_tabs as $tab ) {
+						$tab_id = empty( $tab['id'] ) ? '' : $tab['id'];
+						$tab_title = empty( $tab['title'] ) ? '' : $tab['title'];
+						$tab_toggle_classes = empty( $tab['toggle_classes'] ) ? array() : $tab['toggle_classes'];
+						$tab_body_classes = empty( $tab['body_classes'] ) ? array() : $tab['body_classes'];
+						?>
+						<button tabindex="0" id="<?php echo esc_attr( $tab_id ) ?>_tab_toggle" class="panel-block-tabs__toggle <?php echo esc_attr( implode( ' ', $tab_toggle_classes ) ); ?>">
+							<?php echo $tab_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+						</button>
+						<ul id="<?php echo esc_attr( $tab_id ); ?>_tab" class="panel-block-tabs__body panel-block-tabs__body--settings <?php echo esc_attr( implode( ' ', $tab_body_classes ) ); ?>">
+							<?php
+							/**
+							 * Insert field settings for custom settings panel.
+							 *
+							 * @param array $form The current form object.
+							 * @param string $tab_id The current tab ID.
+							 *
+							 * @since 2.5
+							 *
+							 */
+							gf_do_action( array( 'kdnaform_field_settings_tab_content', $tab_id, $form_id ), $form, $tab_id );
+							?>
+						</ul>
+						<?php
+						}
+						?>
+					</div>
+					<!-- Conditional Logic accordion row. Opens the flyout below. The
+					     accordion CSS is scoped under .conditional_logic_wrapper, so the
+					     row has to sit inside one for its styling to apply. -->
+					<div class="conditional_logic_wrapper">
+						<div class="conditional_logic_accordion" data-js="cl-accordion">
+							<span class="conditional_logic_accordion__label"><?php esc_html_e( 'Conditional Logic', 'kdnaforms' ); ?></span>
+							<span class="conditional_logic_accordion__status_indicator" data-js="cl-status"><?php esc_html_e( 'Inactive', 'kdnaforms' ); ?></span>
+							<div class="conditional_logic_accordion__toggle active">
+								<button type="button" data-js="cl-toggle" aria-expanded="false"
+									aria-controls="conditional_logic_flyout_container">
+									<span class="conditional_logic_accordion__toggle_button_icon" aria-hidden="true"></span>
+									<span class="screen-reader-text"><?php esc_html_e( 'Configure Conditional Logic', 'kdnaforms' ); ?></span>
+								</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="conditional_logic_flyout_container" id="conditional_logic_flyout_container">
+						<div class="conditional_logic_flyout" data-js="cl-flyout">
+							<div class="conditional_logic_flyout__head">
+								<h4 class="conditional_logic_flyout__title"><?php esc_html_e( 'Configure Conditional Logic', 'kdnaforms' ); ?></h4>
+								<button type="button" class="conditional_logic_flyout__close" data-js="cl-close">
+									<span class="screen-reader-text"><?php esc_html_e( 'Close', 'kdnaforms' ); ?></span>
+								</button>
+								<p class="conditional_logic_flyout__desc"><?php esc_html_e( 'Conditional logic allows you to change what the user sees depending on the fields they select.', 'kdnaforms' ); ?></p>
+							</div>
+							<div class="conditional_logic_flyout__body">
 							<div class="conditional_logic_wrapper">
 								<?php
 								do_action( 'kdnaform_field_advanced_settings', 500, $form_id );
@@ -2803,50 +2873,9 @@ class KDNAFormDetail {
 									</div>
 								</div>
 							</div>
-							<?php
-							do_action( 'kdnaform_field_advanced_settings', - 1, $form_id );
-							?>
-						</ul>
-
-						<?php
-						/**
-						 * Filters custom setting tabs.
-						 *
-						 * @param array $field_setting_tabs Custom tabs array.
-						 * @param array $from The current form object.
-						 *
-						 * @since 2.5
-						 *
-						 */
-						$field_setting_tabs = gf_apply_filters( array( 'kdnaform_field_settings_tabs', $form_id ), array(), $form );
-						foreach ( $field_setting_tabs as $tab ) {
-						$tab_id = empty( $tab['id'] ) ? '' : $tab['id'];
-						$tab_title = empty( $tab['title'] ) ? '' : $tab['title'];
-						$tab_toggle_classes = empty( $tab['toggle_classes'] ) ? array() : $tab['toggle_classes'];
-						$tab_body_classes = empty( $tab['body_classes'] ) ? array() : $tab['body_classes'];
-						?>
-						<button tabindex="0" id="<?php echo esc_attr( $tab_id ) ?>_tab_toggle" class="panel-block-tabs__toggle <?php echo esc_attr( implode( ' ', $tab_toggle_classes ) ); ?>">
-							<?php echo $tab_title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						</button>
-						<ul id="<?php echo esc_attr( $tab_id ); ?>_tab" class="panel-block-tabs__body panel-block-tabs__body--settings <?php echo esc_attr( implode( ' ', $tab_body_classes ) ); ?>">
-							<?php
-							/**
-							 * Insert field settings for custom settings panel.
-							 *
-							 * @param array $form The current form object.
-							 * @param string $tab_id The current tab ID.
-							 *
-							 * @since 2.5
-							 *
-							 */
-							gf_do_action( array( 'kdnaform_field_settings_tab_content', $tab_id, $form_id ), $form, $tab_id );
-							?>
-						</ul>
-						<?php
-						}
-						?>
+							</div>
+						</div>
 					</div>
-					<div class="conditional_logic_flyout_container" id="conditional_logic_flyout_container"></div>
 					<div class="conditional_logic_flyout_container" id="conditional_logic_next_button_flyout_container"></div>
 					<div class="conditional_logic_flyout_container" id="conditional_logic_submit_flyout_container"></div>
 				</div>
