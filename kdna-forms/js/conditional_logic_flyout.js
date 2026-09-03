@@ -25,6 +25,63 @@
 	}
 
 	/**
+	 * Move the panel out of the sidebar and onto the body.
+	 *
+	 * .editor-sidebar is position:sticky with overflow:auto and z-index:1.
+	 * The overflow clips absolutely positioned descendants, and the z-index
+	 * makes it a stacking context that ties with the editor preview, so a
+	 * panel left inside it is both cut off and painted under the preview. No
+	 * amount of z-index on the panel itself can escape either. Reparenting to
+	 * the body sidesteps both, at the cost of having to position it ourselves.
+	 *
+	 * @returns {void}
+	 */
+	function detach() {
+		var $c = $container();
+
+		if ( ! $c.length || $c.parent().is( 'body' ) ) {
+			return;
+		}
+
+		$c.addClass( 'conditional_logic_flyout_container--detached' ).appendTo( 'body' );
+	}
+
+	/**
+	 * Pin the panel alongside the sidebar.
+	 *
+	 * Measured rather than derived from CSS: the sidebar is sticky and sized
+	 * by flow, so its edges are not knowable from the stylesheet alone.
+	 *
+	 * @returns {void}
+	 */
+	function position() {
+		var $c = $container(),
+			$fly = $c.find( '.conditional_logic_flyout' ),
+			sidebar = document.querySelector( '.editor-sidebar' );
+
+		if ( ! $fly.length || ! sidebar ) {
+			return;
+		}
+
+		var rect = sidebar.getBoundingClientRect(),
+			gap = 10,
+			// Sit on whichever side of the sidebar has more room, so this keeps
+			// working if the editor layout is ever flipped back.
+			toRight = ( window.innerWidth - rect.right ) >= rect.left,
+			width = Math.min( 650, ( toRight ? window.innerWidth - rect.right : rect.left ) - gap * 2 ),
+			top = Math.max( rect.top, 0 );
+
+		$fly.css( {
+			position: 'fixed',
+			top: top + 'px',
+			height: ( window.innerHeight - top ) + 'px',
+			width: width + 'px',
+			left: toRight ? ( rect.right + gap ) + 'px' : 'auto',
+			right: toRight ? 'auto' : ( window.innerWidth - rect.left + gap ) + 'px'
+		} );
+	}
+
+	/**
 	 * Whether the flyout is currently open.
 	 *
 	 * @returns {boolean}
@@ -46,11 +103,12 @@
 			return;
 		}
 
+		detach();
+		position();
+
+		$c = $container();
 		$c.removeClass( 'anim-out-ready anim-out-active' ).addClass( 'anim-in-ready' );
 
-		// .editor-sidebar is position:fixed with z-index:1, so it is its own
-		// stacking context and nothing inside it can out-rank the editor
-		// preview. Lift the sidebar itself for as long as the panel is out.
 		$( 'body' ).addClass( 'kdnaform-cl-flyout-open' );
 
 		window.requestAnimationFrame( function () {
@@ -143,6 +201,15 @@
 			window.setTimeout( syncStatus, 0 );
 		} );
 
+		// The panel is pinned to measured coordinates, so anything that moves
+		// the sidebar has to re-measure.
+		$( window ).on( 'resize scroll', function () {
+			if ( isOpen() ) {
+				position();
+			}
+		} );
+
+		detach();
 		syncStatus();
 	} );
 
