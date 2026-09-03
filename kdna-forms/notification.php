@@ -601,7 +601,7 @@ Class KDNANotification {
 		$notification_id = rgget( 'nid' );
 
 		if ( ! rgempty( 'kdnaform_notification_id' ) ) {
-			$notification_id = rgpost( 'kdnaform_notification_id' );
+			$notification_id = rgpost( 'kdnaform_notification_id' ) ?: rgpost( 'gform_notification_id' );
 		}
 
 		$form = KDNAFormsModel::get_form_meta( $form_id );

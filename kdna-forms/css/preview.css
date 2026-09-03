@@ -374,7 +374,7 @@ div#browser_size_info {
 	.gform_wrapper .gf_showme .gform_heading,
 	.gform_wrapper .gf_showme .gform_body,
 	.gform_wrapper .gf_showme .gform_footer,
-	.gform_wrapper .gf_showme .gform_page_footer,
+	.gform_wrapper .gf_showme .gform_page_footer,.kdnaform_page_footer,
 	.gform_wrapper .gf_showme .gform_page {
 	    border: 1px dashed #F60;
 	    padding: 16px;
@@ -412,13 +412,13 @@ div#browser_size_info {
 	.gform_wrapper .gf_showme table.gfield_list,
 	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_cell,
 	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_icons,
-	.gform_wrapper .gf_showme .gform_card_icon_container,
+	.gform_wrapper .gf_showme .gform_card_icon_container,.kdnaform_card_icon_container,
 	.gform_wrapper .gf_showme ul.gfield_checkbox,
 	.gform_wrapper .gf_showme ul.gfield_checkbox li,
 	.gform_wrapper .gf_showme ul.gfield_radio,
 	.gform_wrapper .gf_showme ul.gfield_radio li,
 	.gform_wrapper .gf_showme .gform_footer a.gform_save_link,
-	.gform_wrapper .gf_showme .gform_page_footer a.gform_save_link,
+	.gform_wrapper .gf_showme .gform_page_footer,.kdnaform_page_footer a.gform_save_link,
 	.gform_wrapper .gf_showme .chosen-container,
 	.gform_wrapper .gf_showme .gsection_description,
 	.gform_wrapper .gf_showme .gsection_title {
