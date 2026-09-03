@@ -20,13 +20,13 @@
 
 		if (!$popup || !$popup.length) return;
 
-		var $forms = $popup.find('.kdnaform_wrapper');
+		var $forms = $popup.find('.gform_wrapper');
 		if (!$forms.length) return;
 
 		$forms.each(function() {
 			var $wrapper = $(this);
 			var formIdAttr = $wrapper.attr('id') || '';
-			var numericId = formIdAttr.replace('kdnaform_wrapper_', '');
+			var numericId = formIdAttr.replace('gform_wrapper_', '');
 
 			if (!numericId) return;
 
@@ -63,11 +63,11 @@
 	if (typeof elementorFrontend !== 'undefined') {
 		$(window).on('elementor/frontend/init', function() {
 			elementorFrontend.hooks.addAction('frontend/element_ready/kdna-forms.default', function($scope) {
-				var $forms = $scope.find('.kdnaform_wrapper');
+				var $forms = $scope.find('.gform_wrapper');
 				$forms.each(function() {
 					var $wrapper = $(this);
 					var formIdAttr = $wrapper.attr('id') || '';
-					var numericId = formIdAttr.replace('kdnaform_wrapper_', '');
+					var numericId = formIdAttr.replace('gform_wrapper_', '');
 					if (numericId) {
 						$(document).trigger('kdnaform_post_render', [numericId, 0]);
 					}
