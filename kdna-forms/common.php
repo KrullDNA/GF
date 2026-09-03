@@ -5894,12 +5894,8 @@ Content-Type: text/html;
 			);
 		}
 
-		// Emitted under both names. The rename was only ever applied to the
-		// readers: conditional_flyout.js references kdna_vars 48 times and
-		// gf_vars not at all, while this has always written gf_vars — so the
-		// conditional logic component was reading an undefined global and
-		// throwing. Aliasing keeps every existing gf_vars reader working while
-		// the kdna_vars readers resolve.
+		// Emitted under both names: the rename reached the readers but never this
+		// writer, so conditional_flyout.js was reading an undefined kdna_vars.
 		$gf_vars_json = 'var gf_vars = ' . json_encode( $gf_vars ) . '; var kdna_vars = gf_vars;';
 
 		if ( ! $echo ) {

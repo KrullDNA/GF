@@ -2823,6 +2823,7 @@ class KDNAFormDetail {
 								<h4 class="conditional_logic_flyout__title"><?php esc_html_e( 'Configure Conditional Logic', 'kdnaforms' ); ?></h4>
 								<button type="button" class="conditional_logic_flyout__close" data-js="cl-close">
 									<span class="screen-reader-text"><?php esc_html_e( 'Close', 'kdnaforms' ); ?></span>
+									<i class="conditional_logic_flyout__close_icon" data-js="cl-close"></i>
 								</button>
 								<p class="conditional_logic_flyout__desc"><?php esc_html_e( 'Conditional logic allows you to change what the user sees depending on the fields they select.', 'kdnaforms' ); ?></p>
 							</div>

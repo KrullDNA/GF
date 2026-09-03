@@ -37,7 +37,7 @@ class Notification_Routing extends Base {
 	public function markup() {
 
 		// Get notification ID, current form.
-		$notification_id = rgempty( 'kdnaform_notification_id' ) ? rgget( 'nid' ) : rgpost( 'kdnaform_notification_id' );
+		$notification_id = rgempty( 'kdnaform_notification_id' ) ? rgget( 'nid' ) : ( rgpost( 'kdnaform_notification_id' ) ?: rgpost( 'gform_notification_id' ) );
 		$form            = $this->settings->get_current_form();
 		$form            = gf_apply_filters( array( 'kdnaform_form_notification_page', $form['id'] ), $form, $notification_id );
 

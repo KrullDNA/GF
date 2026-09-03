@@ -1316,22 +1316,17 @@ function LoadFieldSettings() {
  * @return {string} A comma-deliniated string of the settings values.
  */
 function getAllFieldSettings(field) {
-	// A field type is only present in fieldSettings if it declared a non-empty
-	// settings array; inline_scripts() skips the rest. Reading .length or
-	// .split() off a missing entry throws, and this runs inside ShowSettings
-	// before the sidebar switches to Field Settings — so one unmapped field
-	// type leaves the editor stuck on Add Fields reporting no field selected.
-	var allSettings = fieldSettings[field.type] || '';
+	var allSettings = fieldSettings[field.type];
 
 	if (field.inputType && field.type !== 'post_category') {
-		var additionalSettings = fieldSettings[field.inputType] || '';
+		var additionalSettings = fieldSettings[field.inputType];
 
 		if (additionalSettings.length > 0) {
-			allSettings += (allSettings ? ", " : "") + additionalSettings;
+			allSettings += ", " + additionalSettings;
 		}
 	}
 
-	var settingsArray = allSettings ? allSettings.split(', ') : [];
+	var settingsArray = allSettings.split(', ');
 
 	// Remove display_choices_columns_setting from the image choice and multiple choice fields
 	if (field.type === 'image_choice' || field.type === 'multi_choice') {
