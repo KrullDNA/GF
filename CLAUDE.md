@@ -122,6 +122,11 @@ Two traps that have already cost a release:
   lands on something else. The gate is what checks it without a browser.
 - Version lives in the `Version:` header and `KDNAForms::$version`. Both must match
   the zip filename.
+- **Numbering.** A fix or incremental change moves the third digit (3.4.2 → 3.4.3).
+  A new feature moves the second (3.4.3 → 3.5.0).
+- The gate cannot see a click landing on the wrong element, so a build that
+  touches editor CSS or the sidebar still needs the Save button pressed once in a
+  browser before it is called good.
 - Build to the repo root as `kdna-forms-X.Y.Z.zip`, containing the plugin folder.
 - Verify the shipped zip, not just the working tree — check the changed file inside it.
 - The site runs LiteSpeed. Inline scripts and CSS are cached in the page HTML, so a
