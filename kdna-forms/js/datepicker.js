@@ -68,7 +68,7 @@
 		var isThemeDatepicker = $element.closest( '.kform_wrapper' ).length > 0;
 		var isPreview = $( '#preview_form_container' ).length > 0;
 		var isRTL = window.getComputedStyle($element[0], null).getPropertyValue('direction') === 'rtl';
-		var formTheme = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).data( 'form-theme' ) : 'gravity-theme';
+		var formTheme = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).data( 'form-theme' ) : 'kdna-theme';
 		var formId = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).attr( 'id' ).replace( 'kform_wrapper_', '' ) : '';
 		var formPageInstance = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).attr( 'data-form-index' ) : '';
 
@@ -96,7 +96,7 @@
 
 				// Remove any classes that were added before as it could have been added to a different datepicker.
 				inst.dpDiv[0].classList.remove( 'kform-theme-datepicker' );
-				inst.dpDiv[0].classList.remove( 'gravity-theme' );
+				inst.dpDiv[0].classList.remove( 'kdna-theme' );
 				inst.dpDiv[0].classList.remove( 'kform-theme' );
 				inst.dpDiv[0].classList.remove( 'kform-legacy-datepicker' );
 				inst.dpDiv[0].classList.remove( 'kform-theme--framework' );
@@ -109,8 +109,8 @@
 					$( inst.dpDiv[ 0 ] ).attr( 'data-parent-form', formId + '_' + formPageInstance );
 				}
 
-				if ( formTheme === undefined || formTheme === 'gravity-theme' ) {
-					$( inst.dpDiv[0] ).addClass( 'gravity-theme' );
+				if ( formTheme === undefined || formTheme === 'kdna-theme' ) {
+					$( inst.dpDiv[0] ).addClass( 'kdna-theme' );
 				} else if ( formTheme === 'legacy' ) {
 					$( inst.dpDiv[0] ).addClass( 'kform-legacy-datepicker' );
 				} else {

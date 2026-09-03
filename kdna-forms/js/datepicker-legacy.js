@@ -18,7 +18,7 @@ gform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, form
 		showOtherMonths: false,
 		beforeShow: function( input, inst ) {
 			inst.dpDiv[0].classList.remove( 'kform-theme-datepicker' );
-			inst.dpDiv[0].classList.remove( 'gravity-theme' );
+			inst.dpDiv[0].classList.remove( 'kdna-theme' );
 			inst.dpDiv[0].classList.remove( 'kform-theme' );
 			inst.dpDiv[0].classList.remove( 'kform-legacy-datepicker' );
 			inst.dpDiv[0].classList.remove( 'kform-theme--framework' );

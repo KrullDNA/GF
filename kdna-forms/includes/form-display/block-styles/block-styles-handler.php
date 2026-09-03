@@ -170,7 +170,7 @@ class Block_Styles_Handler {
 			}
 		}
 
-		if ( in_array( 'gravity-theme', $themes ) ) {
+		if ( in_array( 'kdna-theme', $themes ) ) {
 
 			if ( KDNACommon::is_entry_detail() ) {
 				$styles['theme'][] = array( 'kdnaform_theme_admin' );

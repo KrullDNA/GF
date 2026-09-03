@@ -25,9 +25,9 @@ class Confirmation_View extends Form_View {
 			case 'orbital':
 				$classes = 'kdnaform_confirmation_wrapper kform_wrapper kform-theme kform-theme--foundation kform-theme--framework kform-theme--' . $theme_slug;
 				break;
-			case 'gravity-theme':
+			case 'kdna-theme':
 			default:
-				$classes = 'kdnaform_confirmation_wrapper gravity-theme kform-theme--no-framework';
+				$classes = 'kdnaform_confirmation_wrapper kdna-theme kform-theme--no-framework';
 				break;
 			case 'legacy':
 				$classes = 'kdnaform_confirmation_wrapper kdnaform_legacy_markup_wrapper kdnaform_legacy_confirmation_markup_wrapper kform-theme--no-framework';

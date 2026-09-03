@@ -237,11 +237,11 @@ abstract class KDNAAddOn {
 	 *
 	 * @param array  $form               The current form object to enqueue styles for.
 	 * @param string $field_type         The field type associated with the add-on. Styles will only be enqueued on the frontend if the form has a field with the specified field type.
-	 * @param string $gravity_theme_path The path to the gravity theme style. Optional. Only needed for add-ons that implement the gravity theme outside the default /assets/css/dist/theme.css path.
+	 * @param string $kdna_theme_path The path to the gravity theme style. Optional. Only needed for add-ons that implement the gravity theme outside the default /assets/css/dist/theme.css path.
 	 *
 	 * @return array Returns and array of styles to enqueue in the format accepted by the KDNA Forms theme layer set_styles() method.
 	 */
-	public function get_theme_layer_styles( $form, $field_type = '', $gravity_theme_path = '' ) {
+	public function get_theme_layer_styles( $form, $field_type = '', $kdna_theme_path = '' ) {
 
 		if ( KDNACommon::output_default_css() === false ) {
 			return array();
@@ -261,8 +261,8 @@ abstract class KDNAAddOn {
 		}
 
 		// Maybe enqueue gravity theme.
-		if ( in_array( 'gravity-theme', $themes ) ) {
-			$path = $gravity_theme_path ? $gravity_theme_path : $this->get_base_url() . "/assets/css/dist/theme{$this->_asset_min}.css";
+		if ( in_array( 'kdna-theme', $themes ) ) {
+			$path = $kdna_theme_path ? $kdna_theme_path : $this->get_base_url() . "/assets/css/dist/theme{$this->_asset_min}.css";
 			$styles['theme'] = array(
 				array( "{$this->_slug}_gravity_theme", $path ),
 			);

@@ -790,7 +790,7 @@ class KDNAEntryDetail {
 				<label for="name"><?php esc_html_e( 'Details', 'kdnaforms' ); ?></label>
 			</h3>
 
-			<div class="inside kform_wrapper gravity-theme kform_wrapper_edit_form_entry">
+			<div class="inside kform_wrapper kdna-theme kform_wrapper_edit_form_entry">
 				<table class="form-table entry-details">
 					<tbody>
 					<?php

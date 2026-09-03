@@ -484,7 +484,7 @@ class KDNASettings {
 					'choices'       => array(
 						array(
 							'label'   => esc_html__( 'KDNA Forms 2.5 Theme', 'kdnaforms' ),
-							'value'   => 'gravity-theme',
+							'value'   => 'kdna-theme',
 							'default' => ! self::is_orbital_default(),
 						),
 						array(
@@ -820,7 +820,7 @@ class KDNASettings {
 
 		$initial_values = array(
 			// 'license_key' removed - license functionality removed.
-			'default_theme'             => get_option( 'rg_gforms_default_theme', 'gravity-theme' ),
+			'default_theme'             => KDNAForms::get_default_theme(),
 			'currency'                  => KDNACommon::get_currency(),
 			'disable_css'               => ! (bool) get_option( 'rg_gforms_disable_css' ),
 			'enable_noconflict'         => (bool) get_option( 'kdnaform_enable_noconflict' ),

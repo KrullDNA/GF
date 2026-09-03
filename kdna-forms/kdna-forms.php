@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 3.1.0
+Version: 3.2.0
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '3.1.0';
+	public static $version = '3.2.0';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -2178,7 +2178,35 @@ class KDNAForms {
 	}
 
 	public static function get_default_theme() {
-		return get_option( 'rg_gforms_default_theme', 'gravity-theme' );
+		return self::normalize_theme_slug( get_option( 'rg_gforms_default_theme', 'kdna-theme' ) );
+	}
+
+	/**
+	 * Maps a stored theme slug onto the name this version uses.
+	 *
+	 * The default theme was renamed from gravity-theme to kdna-theme in 3.2.0.
+	 * The slug is not just a class name: it is saved per form in the form meta
+	 * and site-wide in the rg_gforms_default_theme option, and it is validated
+	 * against a fixed list before use. Without this mapping every form saved
+	 * before 3.2.0 fails that check and silently falls back to the default,
+	 * losing whatever theme was chosen for it.
+	 *
+	 * Anything unrecognised is handed back untouched, so the caller's own
+	 * validation still decides whether it is usable.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $slug The stored theme slug.
+	 *
+	 * @return string The slug this version knows.
+	 */
+	public static function normalize_theme_slug( $slug ) {
+		$renamed = array(
+			'gravity-theme' => 'kdna-theme',
+			'gravity'       => 'kdna-theme',
+		);
+
+		return isset( $renamed[ $slug ] ) ? $renamed[ $slug ] : $slug;
 	}
 
 	/**

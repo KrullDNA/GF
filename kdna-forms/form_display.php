@@ -800,12 +800,11 @@ class KDNAFormDisplay {
 			}
 		}
 
-		// allow using the short version in shortcodes.
-		if ( $slug == 'gravity' ) {
-			$slug = 'gravity-theme';
-		}
+		// Accept the short version used in shortcodes, and the slug forms saved
+		// before 3.2.0 still carry, before the list below is consulted.
+		$slug = KDNAForms::normalize_theme_slug( $slug );
 
-		if ( empty( $slug ) || ! in_array( $slug, array( 'legacy', 'gravity-theme', 'orbital' ) ) ) {
+		if ( empty( $slug ) || ! in_array( $slug, array( 'legacy', 'kdna-theme', 'orbital' ) ) ) {
 			$slug = KDNAForms::get_default_theme();
 		}
 
@@ -841,12 +840,12 @@ class KDNAFormDisplay {
 
 		// Enqueues Gravity and Theme Framework themes in the block editor
 		if ( KDNACommon::is_block_editor_page() ) {
-			return array( 'gravity-theme', 'orbital' );
+			return array( 'kdna-theme', 'orbital' );
 		}
 
 		// Enqueues Gravity theme in the entry detail views
 		if ( KDNACommon::is_entry_detail() ) {
-			return array( 'gravity-theme' );
+			return array( 'kdna-theme' );
 		}
 
 		// On pages other than the form editor and block editor, if a field type is specified, only enqueue a theme if the form has the specified field type.
@@ -1496,7 +1495,7 @@ class KDNAFormDisplay {
 				$default_spinner = KDNACommon::get_base_url() . '/images/spinner.svg';
 				$spinner_url     = kdna_apply_filters( array( 'kform_ajax_spinner_url', $form_id ), $default_spinner, $form );
 				$theme_slug      = self::get_form_theme_slug( $form );
-				$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'gravity-theme', 'legacy' ) );
+				$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'kdna-theme', 'legacy' ) );
 
 				$scroll_position = array( 'default' => '', 'confirmation' => '' );
 
@@ -5187,7 +5186,7 @@ class KDNAFormDisplay {
 			$default_spinner = KDNACommon::get_base_url() . '/images/spinner.svg';
 			$spinner_url     = kdna_apply_filters( array( 'kform_ajax_spinner_url', $form_id ), $default_spinner, $form );
 			$theme_slug      = self::get_form_theme_slug( $form );
-			$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'gravity-theme', 'legacy' ) );
+			$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'kdna-theme', 'legacy' ) );
 
 			$script = 'gform.initializeOnLoaded( function() {' .
 			          "gformInitSpinner( {$form_id}, '{$spinner_url}', " . ( $is_legacy ? 'true' : 'false' ) . " );" .

@@ -28,9 +28,9 @@ class Form_View extends View {
 			case 'orbital':
 				$classes = ' kform_wrapper kform-theme kform-theme--foundation kform-theme--framework kform-theme--' . $theme_slug;
 				break;
-			case 'gravity-theme':
+			case 'kdna-theme':
 			default:
-				$classes = ' kform_wrapper gravity-theme kform-theme--no-framework';
+				$classes = ' kform_wrapper kdna-theme kform-theme--no-framework';
 				break;
 			case 'legacy':
 				$classes = ' kform_wrapper kdnaform_legacy_markup_wrapper kform-theme--no-framework';
