@@ -37,7 +37,7 @@
 			if (typeof window['kdnaform_conditional_logic'] !== 'undefined' &&
 				typeof window['kdnaform_conditional_logic'][numericId] !== 'undefined') {
 				try {
-					window.kdnaform_apply_rules(numericId);
+					window.gf_apply_rules(numericId);
 				} catch(e) {}
 			}
 
