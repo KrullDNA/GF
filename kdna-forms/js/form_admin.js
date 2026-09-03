@@ -43,8 +43,8 @@ function initMergeTagSupport() {
 }
 
 function FormatCurrency(element){
-	if(kdna_vars.gf_currency_config){
-		var currency = new gform.Currency(kdna_vars.gf_currency_config);
+	if(kdna_vars.kdna_currency_config){
+		var currency = new gform.Currency(kdna_vars.kdna_currency_config);
 		var price = currency.toMoney(jQuery(element).val());
 		jQuery(element).val(price);
 	}
@@ -358,7 +358,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 			var placeholderName = inputName == false ? "gfield_ajax_placeholder_" + ruleIndex : inputName + "_placeholder";
 
 			//loading categories via AJAX
-			jQuery.post(ajaxurl,{   action:"gf_get_post_categories",
+			jQuery.post(ajaxurl,{   action:"kdna_get_post_categories",
 									objectType: objectType,
 									ruleIndex: ruleIndex,
 									inputName: inputName,
@@ -396,7 +396,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 
 		//loading categories via AJAX
 		jQuery.post( ajaxurl, {
-			action:       'gf_get_address_rule_values_select',
+			action:       'kdna_get_address_rule_values_select',
 			address_type: field.addressType ? field.addressType : kdna_vars.defaultAddressType,
 			value:        selectedValue,
 			id:           dropdownId,
@@ -2169,7 +2169,7 @@ document.addEventListener( 'gform_main_scripts_loaded', gform.components.alert.i
  * Inits any gform specific SimpleBar instances that can't be initialized by the data attribute, either on init,
  * by method call or by custom event. Stores instances with reference dom id for later manipulation if needed.
  *
- * Make sure to enqueue 'gform_simplebar' before using the techniques below.
+ * Make sure to enqueue 'kform_simplebar' before using the techniques below.
  *
  * You have 3 ways to trigger a render on your element:
  *

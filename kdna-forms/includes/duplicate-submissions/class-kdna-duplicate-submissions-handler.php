@@ -20,7 +20,7 @@ class KDNA_Duplicate_Submissions_Handler {
 	/**
 	 * The URL parameter used for redirect protection in Safari.
 	 */
-	const SAFARI_REDIRECT_PARAM = 'gf_protect_submission';
+	const SAFARI_REDIRECT_PARAM = 'kdna_protect_submission';
 
 	/**
 	 * The base URL for this plugin
@@ -60,7 +60,7 @@ class KDNA_Duplicate_Submissions_Handler {
 		 * @param bool       Passes a false value by default.
 		 * @param int|string Passes the current form ID.
 		 */
-		$is_disabled = gf_apply_filters( array( 'kdnaform_is_disabled_duplicate_submissions_protection', $form_id ), false, $form_id );
+		$is_disabled = kdna_apply_filters( array( 'kdnaform_is_disabled_duplicate_submissions_protection', $form_id ), false, $form_id );
 
 		return ! $is_disabled;
 
@@ -74,7 +74,7 @@ class KDNA_Duplicate_Submissions_Handler {
 		if ( $this->is_enabled() ) {
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || rgget( 'kdnaform_debug' ) ? '' : '.min';
 			wp_enqueue_script( 'kdnaform_duplicate_submissions', $this->base_url . "/js/duplicate-submissions{$min}.js", array(), true );
-			wp_localize_script( 'kdnaform_duplicate_submissions', 'gf_duplicate_submissions', $this->get_localized_script_data() );
+			wp_localize_script( 'kdnaform_duplicate_submissions', 'kdna_duplicate_submissions', $this->get_localized_script_data() );
 		}
 	}
 

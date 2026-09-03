@@ -1,8 +1,8 @@
 jQuery( function() {
-	gform_initialize_tooltips();
+	kdnaform_initialize_tooltips();
 } );
 
-function gform_initialize_tooltips() {
+function kdnaform_initialize_tooltips() {
 	var $tooltips = jQuery( '.gf_tooltip' );
 	if ( ! $tooltips.length ) {
 		return;
@@ -22,7 +22,7 @@ function gform_initialize_tooltips() {
 		items: '[aria-label]',
 		content: function () {
 			var content = jQuery( this ).attr( 'aria-label' );
-			return gform_strip_scripts( content );
+			return kform_strip_scripts( content );
 		},
 		open:         function ( event, ui ) {
 			if ( typeof ( event.originalEvent ) === 'undefined' ) {
@@ -59,7 +59,7 @@ function gform_initialize_tooltips() {
  *
  * @return {string}
  */
-function gform_strip_scripts( content ) {
+function kform_strip_scripts( content ) {
 	var tempWrapper = document.createElement( 'div' );
 
 	tempWrapper.innerHTML = content;
@@ -73,7 +73,7 @@ function gform_strip_scripts( content ) {
 	return tempWrapper.innerHTML;
 }
 
-function gform_system_shows_scrollbars() {
+function kform_system_shows_scrollbars() {
 	var parent = document.createElement("div");
 	parent.setAttribute("style", "width:30px;height:30px;");
 	parent.classList.add('scrollbar-test');

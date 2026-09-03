@@ -9,15 +9,15 @@ use KDNA_Forms\KDNA_Forms\Util\Colors\Color_Modifier;
 
 class KDNA_Util_Service_Provider extends KDNA_Service_Provider {
 
-	const GF_CACHE        = 'gf_cache';
-	const TRANSIENT_STRAT = 'gf_license_transient_strat';
-	const GF_COMMON       = 'gf_common';
+	const GF_CACHE        = 'kdna_cache';
+	const TRANSIENT_STRAT = 'kdna_license_transient_strat';
+	const GF_COMMON       = 'kdna_common';
 	const GF_FORMS_MODEL  = 'kdna_forms_model';
 	const RG_FORMS_MODEL  = 'rg_forms_model';
-	const GF_API          = 'gf_api';
+	const GF_API          = 'kdna_api';
 	const GF_FORMS        = 'kdna_forms';
 	const GF_FORM_DETAIL  = 'kdna_form_detail';
-	const GF_COLORS       = 'gf_colors';
+	const GF_COLORS       = 'kdna_colors';
 
 
 	public function register( KDNA_Service_Container $container ) {

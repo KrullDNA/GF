@@ -311,7 +311,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$card_number_field_input = KDNAFormsModel::get_input( $this, $this->id . '.1' );
 		$validation_helper       = ! is_admin() ? "pattern='[0-9]*' title='" . esc_attr__( 'Only digits are allowed', 'kdnaforms' ) . "'" : '';
 		$card_number_label       = rgar( $card_number_field_input, 'customLabel' ) != '' ? $card_number_field_input['customLabel'] : esc_html__( 'Card Number', 'kdnaforms' );
-		$card_number_label       = gf_apply_filters( array( 'kdnaform_card_number', $form_id ), $card_number_label, $form_id );
+		$card_number_label       = kdna_apply_filters( array( 'kdnaform_card_number', $form_id ), $card_number_label, $form_id );
 
 		$card_number_placeholder = $this->get_input_placeholder_attribute( $card_number_field_input );
 		if ( $is_sub_label_above ) {
@@ -335,7 +335,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$expiration_month_input       = KDNAFormsModel::get_input( $this, $this->id . '.2_month' );
 
 		$expiration_label             = rgar( $expiration_month_input, 'customLabel' ) != '' ? esc_html( $expiration_month_input['customLabel'] ) : esc_html__( 'Expiration Date', 'kdnaforms' );
-		$expiration_label             = gf_apply_filters( array( 'kdnaform_card_expiration', $form_id ), $expiration_label, $form_id );
+		$expiration_label             = kdna_apply_filters( array( 'kdnaform_card_expiration', $form_id ), $expiration_label, $form_id );
 
 		// Expiration Date: Month
 		$expiration_month_label       = $expiration_wrapper_tag === 'fieldset' ? "<label for='{$field_id}_2_month' class='gform-field-label gform-field-label--type-sub screen-reader-text'>" . esc_html__( 'Month', 'kdnaforms' ) . "</label>" : '';
@@ -402,7 +402,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$tabindex                  = $this->get_tabindex();
 		$security_code_field_input = KDNAFormsModel::get_input( $this, $this->id . '.3' );
 		$security_code_label       = rgar( $security_code_field_input, 'customLabel' ) != '' ? $security_code_field_input['customLabel'] : esc_html__( 'Security Code', 'kdnaforms' );
-		$security_code_label       = gf_apply_filters( array( 'kdnaform_card_security_code', $form_id ), $security_code_label, $form_id );
+		$security_code_label       = kdna_apply_filters( array( 'kdnaform_card_security_code', $form_id ), $security_code_label, $form_id );
 		$validation_helper         = "pattern='[0-9]*' title='" . esc_attr__( 'Only digits are allowed', 'kdnaforms' ) . "'";
 		$security_code_placeholder = $this->get_input_placeholder_attribute( $security_code_field_input );
 		if ( $is_sub_label_above ) {
@@ -424,7 +424,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$tabindex              = $this->get_tabindex();
 		$card_name_field_input = KDNAFormsModel::get_input( $this, $this->id . '.5' );
 		$card_name_label       = rgar( $card_name_field_input, 'customLabel' ) != '' ? $card_name_field_input['customLabel'] : esc_html__( 'Cardholder Name', 'kdnaforms' );
-		$card_name_label       = gf_apply_filters( array( 'kdnaform_card_name', $form_id ), $card_name_label, $form_id );
+		$card_name_label       = kdna_apply_filters( array( 'kdnaform_card_name', $form_id ), $card_name_label, $form_id );
 
 		$card_name_placeholder = $this->get_input_placeholder_attribute( $card_name_field_input );
 		if ( $is_sub_label_above ) {
@@ -544,7 +544,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		}
 
 		$card_rules = $this->get_credit_card_rules();
-		$script     = "if(!window['gf_cc_rules']){window['gf_cc_rules'] = new Array(); } window['gf_cc_rules'] = " . KDNACommon::json_encode( $card_rules ) . "; $script";
+		$script     = "if(!window['kdna_cc_rules']){window['kdna_cc_rules'] = new Array(); } window['kdna_cc_rules'] = " . KDNACommon::json_encode( $card_rules ) . "; $script";
 
 		return $script;
 	}

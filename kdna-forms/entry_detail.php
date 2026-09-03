@@ -246,7 +246,7 @@ class KDNAEntryDetail {
 		 * @param array $search_criteria An array containing the search criteria.
 		 * @param int   $form_id         The ID of the current form.
 		 */
-		$search_criteria = gf_apply_filters( array( 'kdnaform_search_criteria_entry_list', $form_id ), $search_criteria, $form_id );
+		$search_criteria = kdna_apply_filters( array( 'kdnaform_search_criteria_entry_list', $form_id ), $search_criteria, $form_id );
 
 		$paging = array( 'offset' => $position, 'page_size' => 1 );
 
@@ -312,7 +312,7 @@ class KDNAEntryDetail {
 		 *
 		 * @since 2.3.3.9
 		 */
-		gf_do_action( array( 'kdnaform_pre_entry_detail', $form_id ), $form, $lead );
+		kdna_do_action( array( 'kdnaform_pre_entry_detail', $form_id ), $form, $lead );
 
 		$total_count = self::get_total_count();
 		$position    = rgget( 'pos' ) ? rgget( 'pos' ) : 0;
@@ -334,7 +334,7 @@ class KDNAEntryDetail {
 
 		switch ( KDNAForms::post( 'action' ) ) {
 			case 'update' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 
 				$original_entry = $lead;
 
@@ -353,7 +353,7 @@ class KDNAEntryDetail {
 				 * @param integer $lead['id']     The entry ID.
 				 * @param array   $original_entry The entry object before being updated.
 				 */
-				gf_do_action( array( 'kdnaform_after_update_entry', $form['id'] ), $form, $lead['id'], $original_entry );
+				kdna_do_action( array( 'kdnaform_after_update_entry', $form['id'] ), $form, $lead['id'], $original_entry );
 
 				$lead = KDNAFormsModel::get_entry( $lead['id'] );
 				$lead = KDNAFormsModel::set_entry_meta( $lead, $form );
@@ -389,7 +389,7 @@ class KDNAEntryDetail {
 				break;
 
 			case 'add_note' :
-				check_admin_referer( 'gforms_update_note', 'gforms_update_note' );
+				check_admin_referer( 'kforms_update_note', 'kforms_update_note' );
 				$user_data = get_userdata( $current_user->ID );
 				KDNAFormsModel::add_note( $lead['id'], $current_user->ID, $user_data->display_name, isset( $_POST['new_note'] ) ? wp_unslash( $_POST['new_note'] ) : '' ); //  phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
@@ -432,13 +432,13 @@ class KDNAEntryDetail {
 				break;
 
 			case 'add_quick_note' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				$user_data = get_userdata( $current_user->ID );
 				KDNAFormsModel::add_note( $lead['id'], $current_user->ID, $user_data->display_name, isset( $_POST['quick_note'] ) ? wp_unslash( $_POST['quick_note'] ) : '' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				break;
 
 			case 'bulk' :
-				check_admin_referer( 'gforms_update_note', 'gforms_update_note' );
+				check_admin_referer( 'kforms_update_note', 'kforms_update_note' );
 				if ( rgpost( 'bulk_action' ) == 'delete' ) {
 					if ( ! KDNACommon::current_user_can_any( 'kdnaforms_edit_entry_notes' ) ) {
 						wp_die( esc_html__( "You don't have adequate permission to delete notes.", 'kdnaforms' ) );
@@ -448,7 +448,7 @@ class KDNAEntryDetail {
 				break;
 
 			case 'trash' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				if ( ! KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					wp_die( esc_html__( "You don't have adequate permission to trash entries.", 'kdnaforms' ) );
 				}
@@ -462,7 +462,7 @@ class KDNAEntryDetail {
 				break;
 
 			case 'restore' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				if ( ! KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					wp_die( esc_html__( "You don't have adequate permission to restore entries.", 'kdnaforms' ) );
 				}
@@ -472,21 +472,21 @@ class KDNAEntryDetail {
 				break;
 
 			case 'unspam' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				KDNAFormsModel::update_entry_property( $lead['id'], 'status', 'active' );
 				$lead = KDNAFormsModel::get_entry( $lead['id'] );
 				self::set_current_entry( $lead );
 				break;
 
 			case 'spam' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				KDNAFormsModel::update_entry_property( $lead['id'], 'status', 'spam' );
 				$lead = KDNAFormsModel::get_entry( $lead['id'] );
 				self::set_current_entry( $lead );
 				break;
 
 			case 'delete' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				if ( ! KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					wp_die( esc_html__( "You don't have adequate permission to delete entries.", 'kdnaforms' ) );
 				}
@@ -670,7 +670,7 @@ class KDNAEntryDetail {
 
 		?>
 		<form method="post" id="entry_form" enctype='multipart/form-data'>
-			<?php wp_nonce_field( 'gforms_save_entry', 'gforms_save_entry' ) ?>
+			<?php wp_nonce_field( 'kforms_save_entry', 'kforms_save_entry' ) ?>
 			<input type="hidden" name="action" id="action" value="" />
 			<input type="hidden" name="screen_mode" id="screen_mode" value="<?php echo esc_attr( rgpost( 'screen_mode' ) ) ?>" />
 
@@ -850,7 +850,7 @@ class KDNAEntryDetail {
 						 * @param int    $lead['id'] The entry ID.
 						 * @param int    $form['id'] The form ID.
 						 */
-						$content = gf_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
+						$content = kdna_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
 
 						echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
@@ -1129,7 +1129,7 @@ class KDNAEntryDetail {
 				 * @param int    $lead['id'] The entry ID.
 				 * @param int    $form['id'] The form ID.
 				 */
-				$content = gf_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
+				$content = kdna_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
 
 				echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
@@ -1151,7 +1151,7 @@ class KDNAEntryDetail {
 					 * @var array  $products        Current order summary object.
 					 * @var string $format          Format that should be used to display the summary ('html' or 'text').
 					 */
-					$order_summary_markup = gf_apply_filters( array( 'kdnaform_order_summary', $form['id'] ), trim( $order_summary_markup ), $form, $lead, $products, 'html' );
+					$order_summary_markup = kdna_apply_filters( array( 'kdnaform_order_summary', $form['id'] ), trim( $order_summary_markup ), $form, $lead, $products, 'html' );
 
 					echo $order_summary_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
@@ -1333,7 +1333,7 @@ class KDNAEntryDetail {
 		$form  = $args['form'];
 		?>
 		<form method="post">
-			<?php wp_nonce_field( 'gforms_update_note', 'gforms_update_note' ) ?>
+			<?php wp_nonce_field( 'kforms_update_note', 'kforms_update_note' ) ?>
 				<?php
 				$notes = KDNAFormsModel::get_lead_notes( $entry['id'] );
 

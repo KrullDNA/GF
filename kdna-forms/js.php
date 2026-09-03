@@ -4,8 +4,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 }
 ?>
 <script type="text/javascript">
-    var gforms_dragging = 0;
-	var gforms_original_json;
+    var kforms_dragging = 0;
+	var kforms_original_json;
 
 	function DeleteCustomChoice() {
         const confirmMessage = kdna_vars.DeleteCustomChoice;
@@ -16,11 +16,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
             if (!confirmed) return;
 
             //Sending AJAX request
-            jQuery.post( ajaxurl, {action: "kdna_delete_custom_choice", name: gform_selected_custom_choice, kdna_delete_custom_choice: "<?php echo wp_create_nonce( 'kdna_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+            jQuery.post( ajaxurl, {action: "kdna_delete_custom_choice", name: kform_selected_custom_choice, kdna_delete_custom_choice: "<?php echo wp_create_nonce( 'kdna_delete_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
             //Updating UI
-            delete gform_custom_choices[gform_selected_custom_choice];
-            gform_selected_custom_choice = '';
+            delete kform_custom_choices[kform_selected_custom_choice];
+            kform_selected_custom_choice = '';
 
             CloseCustomChoicesPanel();
             jQuery("#gfield_bulk_add_input").val('');
@@ -38,7 +38,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
             		gform.instances.dialogAlert( kdna_vars.MissingNameCustomChoicesTitle, kdna_vars.MissingNameCustomChoices );
 			return;
 		}
-		else if (gform_custom_choices[name] && name != gform_selected_custom_choice) {
+		else if (kform_custom_choices[name] && name != kform_selected_custom_choice) {
                     gform.instances.moveBulkChoicesBehind();
             		gform.instances.dialogAlert( kdna_vars.DuplicateNameCustomChoicesTitle, kdna_vars.DuplicateNameCustomChoices );
 			return;
@@ -47,14 +47,14 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var choices = jQuery('#gfield_bulk_add_input').val().split('\n');
 
 		//Sending AJAX request
-		jQuery.post(ajaxurl, {action: "kdna_save_custom_choice", previous_name: gform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), kdna_save_custom_choice: "<?php echo wp_create_nonce( 'kdna_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
+		jQuery.post(ajaxurl, {action: "kdna_save_custom_choice", previous_name: kform_selected_custom_choice, new_name: name, choices: jQuery.toJSON(choices), kdna_save_custom_choice: "<?php echo wp_create_nonce( 'kdna_save_custom_choice' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"});
 
 		//deleting existing custom choice
-		if (gform_selected_custom_choice.length > 0)
-			delete gform_custom_choices[gform_selected_custom_choice];
+		if (kform_selected_custom_choice.length > 0)
+			delete kform_custom_choices[kform_selected_custom_choice];
 
 		//saving new custom choice
-		gform_custom_choices[name] = choices;
+		kform_custom_choices[name] = choices;
 
 		InitBulkCustomPanel();
 		LoadCustomChoices();
@@ -650,7 +650,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		//updating original json. used when verifying if there has been any changes unsaved changed before leaving the page
 		var form_json = jQuery.toJSON(form);
-		gforms_original_json = form_json;
+		kforms_original_json = form_json;
 
 		jQuery("#gform_meta").val(form_json);
 		jQuery("#gform_update").submit();
@@ -841,32 +841,32 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				field.inputs = [
 					new Input(
 						field.id + 0.1,
-						<?php echo json_encode( gf_apply_filters( array( 'gform_address_street', rgget( 'id' ) ), esc_html__( 'Street Address', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( kdna_apply_filters( array( 'gform_address_street', rgget( 'id' ) ), esc_html__( 'Street Address', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-line1"
 					),
 					new Input(
 						field.id + 0.2,
-						<?php echo json_encode( gf_apply_filters( array( 'gform_address_street2', rgget( 'id' ) ), esc_html__( 'Address Line 2', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( kdna_apply_filters( array( 'gform_address_street2', rgget( 'id' ) ), esc_html__( 'Address Line 2', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-line2"
 					),
 					new Input(
 						field.id + 0.3,
-						<?php echo json_encode( gf_apply_filters( array( 'gform_address_city', rgget( 'id' ) ), esc_html__( 'City', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( kdna_apply_filters( array( 'gform_address_city', rgget( 'id' ) ), esc_html__( 'City', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-level2"
 					),
 					new Input(
 						field.id + 0.4,
-						<?php echo json_encode( gf_apply_filters( array( 'gform_address_state', rgget( 'id' ) ), __( 'State / Province', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( kdna_apply_filters( array( 'gform_address_state', rgget( 'id' ) ), __( 'State / Province', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"address-level1"
 					),
 					new Input(
 						field.id + 0.5,
-						<?php echo json_encode( gf_apply_filters( array( 'gform_address_zip', rgget( 'id' ) ), esc_html__( 'ZIP / Postal Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( kdna_apply_filters( array( 'gform_address_zip', rgget( 'id' ) ), esc_html__( 'ZIP / Postal Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"postal-code"
 					),
 					new Input(
 						field.id + 0.6,
-						<?php echo json_encode( gf_apply_filters( array( 'gform_address_country', rgget( 'id' ) ), esc_html__( 'Country', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+						<?php echo json_encode( kdna_apply_filters( array( 'gform_address_country', rgget( 'id' ) ), esc_html__( 'Country', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 						"country-name"
 					)
 				];
@@ -877,13 +877,13 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 					field.label = <?php echo json_encode( esc_html__( 'Credit Card', 'kdnaforms' ) ); ?>;
 				var ccNumber, ccExpirationMonth, ccExpirationYear, ccSecruityCode, ccCardType, ccName;
 
-				ccNumber = new Input(field.id + ".1", <?php echo json_encode( gf_apply_filters( array( 'gform_card_number', rgget( 'id' ) ), esc_html__( 'Card Number', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccExpirationMonth = new Input(field.id + ".2_month", <?php echo json_encode( gf_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccNumber = new Input(field.id + ".1", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_number', rgget( 'id' ) ), esc_html__( 'Card Number', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccExpirationMonth = new Input(field.id + ".2_month", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
 				ccExpirationMonth.defaultLabel = <?php echo json_encode( esc_html__( 'Expiration Date', 'kdnaforms' ) ); ?>;
-				ccExpirationYear = new Input(field.id + ".2_year", <?php echo json_encode( gf_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Year', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccSecruityCode = new Input(field.id + ".3", <?php echo json_encode( gf_apply_filters( array( 'gform_card_security_code', rgget( 'id' ) ), esc_html__( 'Security Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccCardType = new Input(field.id + ".4", <?php echo json_encode( gf_apply_filters( array( 'gform_card_type', rgget( 'id' ) ), __( 'Card Type', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
-				ccName = new Input(field.id + ".5", <?php echo json_encode( gf_apply_filters( array( 'gform_card_name', rgget( 'id' ) ), esc_html__( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccExpirationYear = new Input(field.id + ".2_year", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Year', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccSecruityCode = new Input(field.id + ".3", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_security_code', rgget( 'id' ) ), esc_html__( 'Security Code', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccCardType = new Input(field.id + ".4", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_type', rgget( 'id' ) ), __( 'Card Type', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+				ccName = new Input(field.id + ".5", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_name', rgget( 'id' ) ), esc_html__( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
 				field.inputs = [ccNumber, ccExpirationMonth, ccExpirationYear, ccSecruityCode, ccCardType, ccName];
 				break;
 			case "email" :
@@ -1121,7 +1121,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	function GetAdvancedNameFieldInputs(field, prefixHidden, middleHidden, suffixHidden) {
 		var prefixInput = new Input(
 			field.id + '.2',
-			<?php echo json_encode( gf_apply_filters( array( 'gform_name_prefix', rgget( 'id' ) ), esc_html__( 'Prefix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( kdna_apply_filters( array( 'gform_name_prefix', rgget( 'id' ) ), esc_html__( 'Prefix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'honorific-prefix'
 		);
 		prefixInput.choices = GetDefaultPrefixChoices();
@@ -1129,7 +1129,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		var firstInput = new Input(
 			field.id + '.3',
-			<?php echo json_encode( gf_apply_filters( array( 'gform_name_first', rgget( 'id' ) ), esc_html__( 'First', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( kdna_apply_filters( array( 'gform_name_first', rgget( 'id' ) ), esc_html__( 'First', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'given-name'
 		);
 
@@ -1141,19 +1141,19 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		 */
 		var middleInput = new Input(
 			field.id + '.4',
-			<?php echo json_encode( gf_apply_filters( array( 'gform_name_middle', rgget( 'id' ) ), esc_html__( 'Middle', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( kdna_apply_filters( array( 'gform_name_middle', rgget( 'id' ) ), esc_html__( 'Middle', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'additional-name'
 		);
 		middleInput.isHidden = middleHidden;
 
 		var lastInput = new Input(
 			field.id + '.6',
-			<?php echo json_encode( gf_apply_filters( array( 'gform_name_last', rgget( 'id' ) ), esc_html__( 'Last', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( kdna_apply_filters( array( 'gform_name_last', rgget( 'id' ) ), esc_html__( 'Last', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'family-name'
 		);
 		var suffixInput = new Input(
 			field.id + '.8',
-			<?php echo json_encode( gf_apply_filters( array( 'gform_name_suffix', rgget( 'id' ) ), esc_html__( 'Suffix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
+			<?php echo json_encode( kdna_apply_filters( array( 'gform_name_suffix', rgget( 'id' ) ), esc_html__( 'Suffix', 'kdnaforms' ), rgget( 'id' ) ) ); ?>,
 			'honorific-suffix'
 		);
 		suffixInput.isHidden = suffixHidden;
@@ -1238,12 +1238,12 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var legacyExpirationInput = GetInput(field, field.id + ".2");
 
 		if (legacyExpirationInput) {
-			var monthInput = new Input(field.id + ".2_month", <?php echo json_encode( gf_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
+			var monthInput = new Input(field.id + ".2_month", <?php echo json_encode( kdna_apply_filters( array( 'gform_card_expiration', rgget( 'id' ) ), esc_html__( 'Expiration Month', 'kdnaforms' ), rgget( 'id' ) ) ); ?>);
 			monthInput.defaultLabel = <?php echo json_encode( esc_html__( 'Expiration Date', 'kdnaforms' ) ); ?>;
 			var yearInput = new Input(field.id + ".2_year", <?php echo json_encode( esc_html__( 'Expiration Year', 'kdnaforms' ) ); ?>);
 			field.inputs.splice(1, 1, monthInput, yearInput);
 			var nameInput = GetInput(field, field.id + ".5");
-			nameInput.label = <?php echo json_encode( gf_apply_filters( array( 'gform_card_name', rgget( 'id' ) ), __( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>;
+			nameInput.label = <?php echo json_encode( kdna_apply_filters( array( 'gform_card_name', rgget( 'id' ) ), __( 'Cardholder Name', 'kdnaforms' ), rgget( 'id' ) ) ); ?>;
 		}
 
 		return field;
@@ -1343,7 +1343,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	function StartAddField(type, index) {
 
 		if (!CanFieldBeAdded(type)) {
-			jQuery('#gform_adding_field_spinner').remove();
+			jQuery('#kform_adding_field_spinner').remove();
 			return;
 		}
 
@@ -1823,7 +1823,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 	</script>
 
-<?php wp_print_scripts( array( 'gform_form_editor' ) ); ?>
+<?php wp_print_scripts( array( 'kform_form_editor' ) ); ?>
 
 <span id="gform_editor_js_action_output_wrapper">
 	<?php do_action( 'gform_editor_js' ); ?>

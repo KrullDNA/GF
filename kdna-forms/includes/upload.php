@@ -54,7 +54,7 @@ class KDNAAsyncUpload {
 		 * @param array    $form The current form object.
 		 * @param int      $field_id The field ID as passed via the $_POST. Used to fetch the current $field.
 		 */
-		$field = gf_apply_filters( array( 'kdnaform_multifile_upload_field', $form_id, $field_id ), KDNAFormsModel::get_field( $form, $field_id ), $form, $field_id );
+		$field = kdna_apply_filters( array( 'kdnaform_multifile_upload_field', $form_id, $field_id ), KDNAFormsModel::get_field( $form, $field_id ), $form, $field_id );
 
 		if ( empty( $field ) || KDNAFormsModel::get_input_type( $field ) !== 'fileupload' || ! $field->multipleFiles ) {
 			self::die_error();
@@ -231,7 +231,7 @@ class KDNAAsyncUpload {
 			}
 
 			self::send_headers( 200 );
-			gf_do_action( array( 'kdnaform_post_multifile_upload', $form['id'] ), $form, $field, $uploaded_filename, $tmp_file_name, $file_path );
+			kdna_do_action( array( 'kdnaform_post_multifile_upload', $form['id'] ), $form, $field, $uploaded_filename, $tmp_file_name, $file_path );
 
 			KDNACommon::log_debug( sprintf( 'KDNAAsyncUpload::upload(): File upload complete. temp_filename: %s  uploaded_filename: %s ', $tmp_file_name, $uploaded_filename ) );
 		} else {

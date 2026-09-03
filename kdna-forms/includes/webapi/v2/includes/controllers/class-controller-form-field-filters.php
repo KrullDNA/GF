@@ -43,7 +43,7 @@ class KDNA_REST_Form_Field_Filters_Controller extends KDNA_REST_Controller {
 		$form = KDNAAPI::get_form( $request['form_id'] );
 
 		if ( ! $form ) {
-			return new WP_Error( 'gf_not_found', __( 'Form not found', 'kdnaforms' ), array( 'status' => 404 ) );
+			return new WP_Error( 'kdna_not_found', __( 'Form not found', 'kdnaforms' ), array( 'status' => 404 ) );
 		}
 
 		if ( ! empty( $request['_admin_labels'] ) ) {

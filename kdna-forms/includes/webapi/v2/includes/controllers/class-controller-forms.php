@@ -113,7 +113,7 @@ class KDNA_REST_Forms_Controller extends KDNA_REST_Controller {
 				 * @var bool   $include_totals Whether to include totals; defaults to true.
 				 * @var object $form           The current form object.
 				 */
-				$include_totals = gf_apply_filters( array( 'kdnaform_rest_api_retrieve_form_totals', $form->id ), true, $form );
+				$include_totals = kdna_apply_filters( array( 'kdnaform_rest_api_retrieve_form_totals', $form->id ), true, $form );
 
 				$form_id   = $form->id;
 				$form_info = array(
@@ -149,7 +149,7 @@ class KDNA_REST_Forms_Controller extends KDNA_REST_Controller {
 		if ( $form ) {
 			return new WP_REST_Response( $form, 200 );
 		} else {
-			return new WP_Error( 'gf_not_found', __( 'Form not found', 'kdnaforms' ) );
+			return new WP_Error( 'kdna_not_found', __( 'Form not found', 'kdnaforms' ) );
 		}
 	}
 
@@ -245,7 +245,7 @@ class KDNA_REST_Forms_Controller extends KDNA_REST_Controller {
 
 			if ( is_wp_error( $result ) ) {
 				$message = $result->get_error_message();
-				return new WP_Error( 'gf_cannot_delete', $message, array( 'status' => 500 ) );
+				return new WP_Error( 'kdna_cannot_delete', $message, array( 'status' => 500 ) );
 			}
 
 			$previous = $this->prepare_item_for_response( $form, $request );
@@ -255,7 +255,7 @@ class KDNA_REST_Forms_Controller extends KDNA_REST_Controller {
 		} else {
 			if ( rgar( $form, 'is_trash' ) ) {
 				$message = __( 'The form has already been deleted.', 'kdnaforms' );
-				return new WP_Error( 'gf_already_trashed', $message, array( 'status' => 410 ) );
+				return new WP_Error( 'kdna_already_trashed', $message, array( 'status' => 410 ) );
 			}
 
 			// Trash the form

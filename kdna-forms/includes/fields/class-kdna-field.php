@@ -1298,7 +1298,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		 * @param KDNA_Field $this     The field currently being processed.
 		 * @param string   $input_id The ID of the input being processed from a multi-input field type or an empty string.
 		 */
-		return gf_apply_filters(
+		return kdna_apply_filters(
 			array(
 				'kdnaform_get_input_value',
 				$this->formId,
@@ -1384,7 +1384,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 	 *
 	 * @param string $event The event attribute which should be returned. Possible values: keyup, click, or change.
 	 *
-	 * @deprecated 2.4 Conditional Logic is now triggered based on .gfield class name. No need to hardcode calls to gf_apply_rules() to every field.
+	 * @deprecated 2.4 Conditional Logic is now triggered based on .gfield class name. No need to hardcode calls to kdnaform_apply_rules() to every field.
 	 *
 	 * @return string
 	 */
@@ -1398,15 +1398,15 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 
 		switch ( $event ) {
 			case 'keyup' :
-				return "onchange='gf_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");' onkeyup='clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(\"gf_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ")\", 300);'";
+				return "onchange='kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");' onkeyup='clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(\"kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ")\", 300);'";
 				break;
 
 			case 'click' :
-				return "onclick='gf_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");' onkeypress='gf_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");'";
+				return "onclick='kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");' onkeypress='kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");'";
 				break;
 
 			case 'change' :
-				return "onchange='gf_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");'";
+				return "onchange='kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");'";
 				break;
 		}
 	}
@@ -2901,7 +2901,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		 * @param int $form_id  The form ID.
 		 * @param int $field_id The field ID.
 		 */
-		return gf_apply_filters( array(
+		return kdna_apply_filters( array(
 			'kdnaform_product_quantity',
 			$form_id,
 			$this->id,

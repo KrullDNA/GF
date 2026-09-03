@@ -55,9 +55,23 @@ CSS_SEL = re.compile(r'[.#]([A-Za-z0-9_-]+)')
 JS_DEF = re.compile(r'function\s+([A-Za-z0-9_$]+)\s*\(|(?:var|let|const)\s+([A-Za-z0-9_$]+)\s*=')
 JS_WINDOW = re.compile(r"""window\[\s*['"]([^'"]+)['"]\s*\]""")
 
+# The JS side has its own hook system and its own jQuery events, and they are
+# every bit as public as a PHP filter — gform_post_render is what every custom
+# script on the site binds to. Miss this channel and a "purely internal" rename
+# silently breaks third-party JS.
+JS_HOOK = re.compile(
+    r"""gform\.(?:addAction|addFilter|doAction|applyFilters|removeAction|removeFilter)"""
+    r"""\s*\(\s*['"]([^'"]+)['"]"""
+)
+JS_EVENT = re.compile(
+    r"""(?:\.trigger|\.on|\.off|\.one|\.bind|\.unbind)\s*\(\s*['"]([A-Za-z0-9_ .]+)['"]"""
+)
+
 CHANNELS = [
     'db',            # table, option, meta or transient name  -> never rename
-    'hook',          # filter/action name                     -> dual fire
+    'hook',          # PHP filter/action name                 -> dual fire
+    'js_hook',       # gform.addAction / applyFilters name    -> public to JS
+    'js_event',      # jQuery event name                      -> public to JS
     'handle',        # script/style handle                    -> internal, but add-ons use them
     'post',          # POST field name                        -> dual read
     'get',           # GET field name                         -> dual read
@@ -134,6 +148,14 @@ def collect(root):
                 for m in JS_WINDOW.finditer(text):
                     mark(m.group(1), 'js_win', path)
 
+            # Both PHP and JS register JS hooks and trigger jQuery events.
+            if ext in ('.php', '.js'):
+                for m in JS_HOOK.finditer(text):
+                    mark(m.group(1), 'js_hook', path)
+                for m in JS_EVENT.finditer(text):
+                    for evt in m.group(1).split():
+                        mark(evt.split('.')[0], 'js_event', path)
+
             generic = 'php' if ext == '.php' else 'js' if ext == '.js' else None
             if generic:
                 for m in IDENT.finditer(text):
@@ -152,6 +174,10 @@ def verdict(name, channels):
         return 'FREEZE', 'part of a file or directory name'
     if 'hook' in channels:
         return 'DUAL', 'a filter or action third-party code can hook'
+    if 'js_hook' in channels:
+        return 'DUAL', 'a JS hook name custom scripts can register against'
+    if 'js_event' in channels:
+        return 'DUAL', 'a jQuery event name custom scripts can bind to'
     if 'html_class' in channels and 'css' in channels:
         return 'DUAL', 'a class in saved markup and customer CSS'
     if 'html_class' in channels:

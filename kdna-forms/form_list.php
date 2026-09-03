@@ -253,7 +253,7 @@ class KDNAFormList {
 				<?php endif; ?>
 
 				// form settings submenu support
-				$( '.gf_form_action_has_submenu' ).hover( function() {
+				$( '.kdna_form_action_has_submenu' ).hover( function() {
 					var $this = $( this );
 					var offset = $this.offset();
 					var docHeight = $( document ).height();
@@ -952,7 +952,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 
 		if ( $single_action ) {
 
-			check_admin_referer( 'gforms_update_forms', 'gforms_update_forms' );
+			check_admin_referer( 'kforms_update_forms', 'kforms_update_forms' );
 
 			$form_id = rgpost( 'single_action_argument' );
 			switch ( $single_action ) {
@@ -1032,7 +1032,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 
 		} elseif ( $bulk_action ) {
 
-			check_admin_referer( 'gforms_update_forms', 'gforms_update_forms' );
+			check_admin_referer( 'kforms_update_forms', 'kforms_update_forms' );
 
 			$form_ids   = is_array( rgpost( 'form' ) ) ? rgpost( 'form' ) : array();
 			$form_count = count( $form_ids );
@@ -1111,7 +1111,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 		if ( $which !== 'top' ) {
 			return;
 		}
-		wp_nonce_field( 'gforms_update_forms', 'gforms_update_forms' );
+		wp_nonce_field( 'kforms_update_forms', 'kforms_update_forms' );
 		?>
 		<input type="hidden" id="single_action" name="single_action" />
 		<input type="hidden" id="single_action_argument" name="single_action_argument" />

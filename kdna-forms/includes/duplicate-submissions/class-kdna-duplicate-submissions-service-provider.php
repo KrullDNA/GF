@@ -18,7 +18,7 @@ use KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider;
  */
 class KDNA_Duplicate_Submissions_Service_Provider extends KDNA_Service_Provider {
 
-	const GF_DUPLICATE_SUBMISSION_HANDLER = 'gf_duplicate_submission_handler';
+	const GF_DUPLICATE_SUBMISSION_HANDLER = 'kdna_duplicate_submission_handler';
 
 	/**
 	 * Includes all related files and adds all containers.

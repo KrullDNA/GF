@@ -210,10 +210,10 @@ class KDNA_Field_Password extends KDNA_Field {
 		$confirm_password_field_input = KDNAFormsModel::get_input( $this, $this->id . '.2' );
 
 		$enter_password_label = rgar( $enter_password_field_input, 'customLabel' ) != '' ? $enter_password_field_input['customLabel'] : esc_html__( 'Enter Password', 'kdnaforms' );
-		$enter_password_label = gf_apply_filters( array( 'kdnaform_password', $form_id ), $enter_password_label, $form_id );
+		$enter_password_label = kdna_apply_filters( array( 'kdnaform_password', $form_id ), $enter_password_label, $form_id );
 
 		$confirm_password_label = rgar( $confirm_password_field_input, 'customLabel' ) != '' ? $confirm_password_field_input['customLabel'] : esc_html__( 'Confirm Password', 'kdnaforms' );
-		$confirm_password_label = gf_apply_filters( array( 'kdnaform_password_confirm', $form_id ), $confirm_password_label, $form_id );
+		$confirm_password_label = kdna_apply_filters( array( 'kdnaform_password_confirm', $form_id ), $confirm_password_label, $form_id );
 
 		$required_attribute    = $this->isRequired ? 'aria-required="true"' : '';
 		$invalid_attribute     = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';

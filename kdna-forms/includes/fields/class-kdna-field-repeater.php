@@ -124,7 +124,7 @@ class KDNA_Field_Repeater extends KDNA_Field {
 				 * @param KDNA_Field $field   The field currently being validated.
 				 * @param string   $context The context for the current submission. Possible values: form-submit, api-submit, api-validate.
 				 */
-				$result = gf_apply_filters( array( 'kdnaform_field_validation', $form['id'], $field->id ), array(
+				$result = kdna_apply_filters( array( 'kdnaform_field_validation', $form['id'], $field->id ), array(
 					'is_valid' => $field->failed_validation ? false : true,
 					'message'  => $field->validation_message
 				), $field_value, $form, $field, $context );
@@ -661,7 +661,7 @@ class KDNA_Field_Repeater extends KDNA_Field {
 		}
 
 		$context = KDNAFormDisplay::get_submission_context();
-		$custom_validation_result = gf_apply_filters( array( 'kdnaform_field_validation', $form['id'], $field->id ), array(
+		$custom_validation_result = kdna_apply_filters( array( 'kdnaform_field_validation', $form['id'], $field->id ), array(
 			'is_valid' => $field->failed_validation ? false : true,
 			'message'  => $field->validation_message
 		), $field_value, $form, $field, $context );

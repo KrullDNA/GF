@@ -159,7 +159,7 @@ class KDNA_Field_Email extends KDNA_Field {
 		 * @param string         $email             The submitted value.
 		 * @param KDNA_Field_Email $field             The field being validated.
 		 */
-		$rejectable_values = gf_apply_filters( array( 'kdnaform_email_field_rejectable_values', $form_id, $field_id ), $rejectable_values, $email, $field );
+		$rejectable_values = kdna_apply_filters( array( 'kdnaform_email_field_rejectable_values', $form_id, $field_id ), $rejectable_values, $email, $field );
 
 		if ( empty( $rejectable_values ) || ! is_array( $rejectable_values ) ) {
 			return false;
@@ -214,9 +214,9 @@ class KDNA_Field_Email extends KDNA_Field {
 		$confirm_field_input     = KDNAFormsModel::get_input( $this, $this->id . '.2' );
 
 		$enter_email_label   = rgar( $enter_email_field_input, 'customLabel' ) != '' ? $enter_email_field_input['customLabel'] : esc_html__( 'Enter Email', 'kdnaforms' );
-		$enter_email_label   = gf_apply_filters( array( 'kdnaform_email', $form_id ), $enter_email_label, $form_id );
+		$enter_email_label   = kdna_apply_filters( array( 'kdnaform_email', $form_id ), $enter_email_label, $form_id );
 		$confirm_email_label = rgar( $confirm_field_input, 'customLabel' ) != '' ? $confirm_field_input['customLabel'] : esc_html__( 'Confirm Email', 'kdnaforms' );
-		$confirm_email_label = gf_apply_filters( array( 'kdnaform_email_confirm', $form_id ), $confirm_email_label, $form_id );
+		$confirm_email_label = kdna_apply_filters( array( 'kdnaform_email_confirm', $form_id ), $confirm_email_label, $form_id );
 
 		$single_placeholder_attribute        = $this->get_field_placeholder_attribute();
 		$enter_email_placeholder_attribute   = $this->get_input_placeholder_attribute( $enter_email_field_input );

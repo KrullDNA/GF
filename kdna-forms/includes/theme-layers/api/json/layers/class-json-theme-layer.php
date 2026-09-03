@@ -120,7 +120,7 @@ class Json_Theme_Layer extends GF_All_Access_Theme_Layer {
 
 	public function set_styles( $styles ) {
 		foreach( $styles as &$style ) {
-			$parsed = str_replace( '%gforms_plugin_url%', \KDNACommon::get_base_url(), $style['path'] );
+			$parsed = str_replace( '%kforms_plugin_url%', \KDNACommon::get_base_url(), $style['path'] );
 			$style['path'] = $parsed;
 		}
 

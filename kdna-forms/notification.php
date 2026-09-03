@@ -166,7 +166,7 @@ Class KDNANotification {
 		 *
 		 * @param bool $disable_from_warning Should the From Email warning be disabled?
 		 */
-		$disable_from_warning = gf_apply_filters( array( 'kdnaform_notification_disable_from_warning', $form['id'], rgar( $notification, 'id' ) ), false );
+		$disable_from_warning = kdna_apply_filters( array( 'kdnaform_notification_disable_from_warning', $form['id'], rgar( $notification, 'id' ) ), false );
 
 		$from_email_warning = '';
 
@@ -400,7 +400,7 @@ Class KDNANotification {
 							 * @param array $notification The current notification object.
 							 * @param array $from         The current form object.
 							 */
-							return gf_apply_filters( array( 'kdnaform_notification_enable_cc', $form['id'], rgar( $notification, 'id' ) ), false, $notification, $form );
+							return kdna_apply_filters( array( 'kdnaform_notification_enable_cc', $form['id'], rgar( $notification, 'id' ) ), false, $notification, $form );
 
 						},
 						'validation_callback' => function( $field, $value ) {
@@ -492,7 +492,7 @@ Class KDNANotification {
 		 * @param array $fields Form settings fields.
 		 * @param array $form   Form Object.
 		 */
-		$fields = gf_apply_filters( array( 'kdnaform_notification_settings_fields', $form['id'] ), $fields, $notification, $form );
+		$fields = kdna_apply_filters( array( 'kdnaform_notification_settings_fields', $form['id'] ), $fields, $notification, $form );
 
 		return $fields;
 
@@ -510,7 +510,7 @@ Class KDNANotification {
 	 * @return array
 	 */
 	public static function append_filtered_notification_email_fields( $fields, $form ) {
-		return gf_apply_filters( array( 'kdnaform_email_fields_notification_admin', $form['id'] ), $fields, $form );
+		return kdna_apply_filters( array( 'kdnaform_email_fields_notification_admin', $form['id'] ), $fields, $form );
 	}
 
 	/**
@@ -614,7 +614,7 @@ Class KDNANotification {
 		 * @param array $form            The Form Object
 		 * @param int   $notification_id The notification ID
 		 */
-		$form = gf_apply_filters( array( 'kdnaform_form_notification_page', $form_id ), $form, $notification_id );
+		$form = kdna_apply_filters( array( 'kdnaform_form_notification_page', $form_id ), $form, $notification_id );
 
 		$notification = ! $notification_id ? array() : self::get_notification( $form, $notification_id );
 
@@ -686,7 +686,7 @@ Class KDNANotification {
 					 *
 					 * @param array $notification        The Notification Object.
 					 */
-					$notification = gf_apply_filters( array(
+					$notification = kdna_apply_filters( array(
 						'kdnaform_pre_notification_save',
 						$form['id'],
 					), $notification, $form, $is_new_notification );
@@ -991,7 +991,7 @@ Class KDNANotification {
 		 *
 		 * @param array $services The services available.
 		 */
-		return gf_apply_filters( array( 'kdnaform_notification_services' ), $services );
+		return kdna_apply_filters( array( 'kdnaform_notification_services' ), $services );
 
 	}
 

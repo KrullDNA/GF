@@ -149,7 +149,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 		 *
 		 * @return string
 		 */
-		return gf_apply_filters( array( 'kdnaform_image_choice_label_visibility_default', $form_id ), 'show' );
+		return kdna_apply_filters( array( 'kdnaform_image_choice_label_visibility_default', $form_id ), 'show' );
 	}
 
 	/**
@@ -185,7 +185,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 		 * @param string $input_visibility The image choice inputs visibility.
 		 * @param object $field            The current field object.
 		 */
-		return gf_apply_filters( array( 'kdnaform_image_choice_input_visibility', $field->formId ), 'show', $field );
+		return kdna_apply_filters( array( 'kdnaform_image_choice_input_visibility', $field->formId ), 'show', $field );
 	}
 
 	public function get_form_editor_inline_script_on_page_render() {

@@ -1029,7 +1029,7 @@ class KDNAAPI {
 		$entry_meta_table = KDNAFormsModel::get_entry_meta_table_name();
 		$current_fields    = $wpdb->get_results( $wpdb->prepare( "SELECT id, meta_key, item_index FROM %i WHERE entry_id=%d", $entry_meta_table, $entry_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
 
-		$form = gf_apply_filters( array( 'kdnaform_form_pre_update_entry', $form_id ), $form, $entry, $entry_id );
+		$form = kdna_apply_filters( array( 'kdnaform_form_pre_update_entry', $form_id ), $form, $entry, $entry_id );
 
 		KDNAFormsModel::begin_batch_field_operations();
 
@@ -1094,7 +1094,7 @@ class KDNAAPI {
 		 * @param array $lead           The entry object after being updated.
 		 * @param array $original_entry The entry object before being updated.
 		 */
-		gf_do_action( array( 'kdnaform_post_update_entry', $form_id ), $entry, $original_entry );
+		kdna_do_action( array( 'kdnaform_post_update_entry', $form_id ), $entry, $original_entry );
 
 		return true;
 	}
@@ -1865,7 +1865,7 @@ class KDNAAPI {
 		}
 
 		$kdnaform_pre_validation_args = array( 'kdnaform_pre_validation', $form_id );
-		if ( gf_has_filter( $kdnaform_pre_validation_args ) ) {
+		if ( kdna_has_filter( $kdnaform_pre_validation_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_pre_validation.' );
 			/**
 			 * Allows the form to be modified before the submission is validated.
@@ -1875,7 +1875,7 @@ class KDNAAPI {
 			 *
 			 * @param array $form The form for the submission to be validated.
 			 */
-			$form = gf_apply_filters( $kdnaform_pre_validation_args, $form );
+			$form = kdna_apply_filters( $kdnaform_pre_validation_args, $form );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_pre_validation.' );
 		}
 
@@ -2567,7 +2567,7 @@ class KDNAAPI {
 				 * @param array $form  The Form Object that triggered the notification event.
 				 * @param array $entry The Entry Object that triggered the notification event.
 				 */
-				if ( rgar( $notification, 'type' ) == 'user' && gf_apply_filters( array( 'kdnaform_disable_user_notification', $form_id ), false, $form, $entry ) ) {
+				if ( rgar( $notification, 'type' ) == 'user' && kdna_apply_filters( array( 'kdnaform_disable_user_notification', $form_id ), false, $form, $entry ) ) {
 					KDNACommon::log_debug( __METHOD__ . "(): Notification is disabled by kdnaform_disable_user_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
 					// Skip user notification if it has been disabled by a hook.
 					continue;
@@ -2580,7 +2580,7 @@ class KDNAAPI {
 					 * @param array $form  The Form Object that triggered the notification event.
 					 * @param array $entry The Entry Object that triggered the notification event.
 					 */
-				} elseif ( rgar( $notification, 'type' ) == 'admin' && gf_apply_filters( array( 'kdnaform_disable_admin_notification', $form_id ), false, $form, $entry ) ) {
+				} elseif ( rgar( $notification, 'type' ) == 'admin' && kdna_apply_filters( array( 'kdnaform_disable_admin_notification', $form_id ), false, $form, $entry ) ) {
 					KDNACommon::log_debug( __METHOD__ . "(): Notification is disabled by kdnaform_disable_admin_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
 					// Skip admin notification if it has been disabled by a hook.
 					continue;
@@ -2598,7 +2598,7 @@ class KDNAAPI {
 			 * @param array $entry The Entry Object that triggered the notification event.
 			 * @param array $data  Array of data which can be used in the notifications via the generic {object:property} merge tag. Defaults to empty array.
 			 */
-			if ( gf_apply_filters( array( 'kdnaform_disable_notification', $form_id ), false, $notification, $form, $entry, $data ) ) {
+			if ( kdna_apply_filters( array( 'kdnaform_disable_notification', $form_id ), false, $notification, $form, $entry, $data ) ) {
 				KDNACommon::log_debug( __METHOD__ . "(): Notification is disabled by kdnaform_disable_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
 				// Skip notifications if it has been disabled by a hook
 				continue;

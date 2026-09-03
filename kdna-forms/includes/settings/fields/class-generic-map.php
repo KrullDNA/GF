@@ -656,7 +656,7 @@ class Generic_Map extends Base {
 			}
 
 			// Get value.
-			$mapping_value = $mapping['value'] === 'gf_custom' ? $mapping['custom_value'] : $mapping['value'];
+			$mapping_value = $mapping['value'] === 'kdna_custom' ? $mapping['custom_value'] : $mapping['value'];
 			$mapping_value = trim( $mapping_value );
 
 			// If mapping value is empty, flag choice.

@@ -101,7 +101,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 		}
 
 		$default_upload_root_info             = self::get_default_upload_roots( $form_id );
-		self::$forms_upload_roots[ $form_id ] = gf_apply_filters( array( 'kdnaform_upload_path', $form_id ), $default_upload_root_info, $form_id );
+		self::$forms_upload_roots[ $form_id ] = kdna_apply_filters( array( 'kdnaform_upload_path', $form_id ), $default_upload_root_info, $form_id );
 		return self::$forms_upload_roots[ $form_id ];
 	}
 
@@ -534,7 +534,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 				);
 			}
 
-			$plupload_init = gf_apply_filters( array( 'kdnaform_plupload_settings', $form_id ), $plupload_init, $form_id, $this );
+			$plupload_init = kdna_apply_filters( array( 'kdnaform_plupload_settings', $form_id ), $plupload_init, $form_id, $this );
 
 			$drop_files_here_text = esc_html__( 'Drop files here or', 'kdnaforms' );
 			$select_files_text    = esc_attr__( 'Select files', 'kdnaforms' );
@@ -737,7 +737,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 			 * @param array  $file            The file information.
 			 * @param object $field           The current field object.
 			*/
-			if ( ! gf_apply_filters(
+			if ( ! kdna_apply_filters(
 				array( 'kdnaform_validate_required_file_exists', $form_id, $this->id ),
 				isset( $file['temp_filename'] ),
 				$file,

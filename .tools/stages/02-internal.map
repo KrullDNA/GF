@@ -1,0 +1,209 @@
+# Stage 2 — internal PHP and JS identifiers.
+#
+# Everything here appears only in PHP and JS inside this plugin. None of it is
+# a database key, a PHP filter or action, a JS hook, a jQuery event, a request
+# field, a CSS selector, an element id, a class in emitted markup, or a file
+# name. .tools/rename-plan.py checks every one of those channels and these came
+# back with none of them. None of the eight add-ons references any of them.
+#
+# Deliberately excluded, each to the stage that owns its real channel:
+#
+#   * 44 identifiers ending in "_" are concatenation prefixes, and the name
+#     that reaches the runtime belongs elsewhere — 'gform_wrapper_' . $id is a
+#     DOM id, 'gform_submit_button_' . $id is a filter name, 'gf_dimissed_' .
+#     $key is an option key.
+#   * 78 that looked internal but are JS hook names (gform.addAction) or jQuery
+#     event names, including gform_post_render — the event every custom script
+#     on the site binds to. The classifier only knew about PHP hooks until this
+#     stage; it knows about both JS channels now.
+#   * gf_step_first/_last/_next/_pending/_previous, gform_card_icon_inactive,
+#     gform_legacy_markup and gform_validation_error_link, which JS adds with
+#     addClass, so they are markup.
+#
+# gform_ -> kform_, gforms_ -> kforms_, gf_ -> kdna_, except for four that the
+# audit already reports as live mismatches. For those the correct target is the
+# name the other side of the plugin is already using, so they are merged rather
+# than prefixed — renaming them to kform_ would only move the mismatch:
+#
+#   gf_apply_rules                  JS calls kdnaform_apply_rules()
+#   gform_initialize_tooltips       JS calls kdnaform_initialize_tooltips()
+#   gform_payment_method_creditcard PHP emits id=kdnaform_payment_method_creditcard
+#   gform_predefined_choices        PHP emits var kdnaform_predefined_choices
+
+gf_apply_filters                                     kdna_apply_filters
+gf_global                                            kdna_global
+gf_custom                                            kdna_custom
+gf_do_action                                         kdna_do_action
+gf_currency_config                                   kdna_currency_config
+gf_other_choice                                      kdna_other_choice
+gform_selected_custom_choice                         kform_selected_custom_choice
+gforms_save_entry                                    kforms_save_entry
+gf_apply_rules                                       kdnaform_apply_rules
+gf_api                                               kdna_api
+gf_field                                             kdna_field
+gf_common                                            kdna_common
+gform_custom_choices                                 kform_custom_choices
+gf_check_field_rule                                  kdna_check_field_rule
+gf_get_field_action                                  kdna_get_field_action
+gf_get_field_number_format                           kdna_get_field_number_format
+gform_gravityforms                                   kform_gravityforms
+gf_text                                              kdna_text
+gf_has_filter                                        kdna_has_filter
+gf_try_convert_float                                 kdna_try_convert_float
+gforms_original_json                                 kforms_original_json
+gf_address_field                                     kdna_address_field
+gf_get_ids_by_html_id                                kdna_get_ids_by_html_id
+gf_delete_entry                                      kdna_delete_entry
+gf_has_action                                        kdna_has_action
+gf_display                                           kdna_display
+gf_get_form_id_by_html_id                            kdna_get_form_id_by_html_id
+gf_get_input_id_by_html_id                           kdna_get_input_id_by_html_id
+gf_get_value                                         kdna_get_value
+gf_hide_button                                       kdna_hide_button
+gf_input_change                                      kdna_input_change
+gf_is_checkable_empty                                kdna_is_checkable_empty
+gf_is_hidden_pricing_input                           kdna_is_hidden_pricing_input
+gf_matches_operation                                 kdna_matches_operation
+gf_payment_gateway                                   kdna_payment_gateway
+gf_required_objects                                  kdna_required_objects
+gf_show_button                                       kdna_show_button
+gform_before_update                                  kform_before_update
+gform_initialize_tooltips                            kdnaform_initialize_tooltips
+gform_strip_scripts                                  kform_strip_scripts
+gforms_update_forms                                  kforms_update_forms
+gforms_update_note                                   kforms_update_note
+gf_ajax_actions                                      kdna_ajax_actions
+gf_cc_rules                                          kdna_cc_rules
+gf_field_checkbox                                    kdna_field_checkbox
+gf_format_number                                     kdna_format_number
+gf_get_submitted_fields                              kdna_get_submitted_fields
+gf_has_filters                                       kdna_has_filters
+gf_header                                            kdna_header
+gf_main                                              kdna_main
+gf_number_format                                     kdna_number_format
+gf_save_title                                        kdna_save_title
+gf_webapi_vars                                       kdna_webapi_vars
+gform_form_strings                                   kform_form_strings
+gforms_dragging                                      kforms_dragging
+gf_apply_field_rule                                  kdna_apply_field_rule
+gf_cannot_delete                                     kdna_cannot_delete
+gf_do_field_action                                   kdna_do_field_action
+gf_do_next_button_action                             kdna_do_next_button_action
+gf_do_shortcode                                      kdna_do_shortcode
+gf_duplicate_submissions_initialized                 kdna_duplicate_submissions_initialized
+gf_get_field_logic                                   kdna_get_field_logic
+gf_is_match                                          kdna_is_match
+gf_is_match_checkable                                kdna_is_match_checkable
+gf_is_match_default                                  kdna_is_match_default
+gf_raw_input_change                                  kdna_raw_input_change
+gf_reset_to_default                                  kdna_reset_to_default
+gf_toolbar_disabled                                  kdna_toolbar_disabled
+gf_upload_root                                       kdna_upload_root
+gform_card_fields_container                          kform_card_fields_container
+gform_format_option_label                            kform_format_option_label
+gforms_entry_list                                    kforms_entry_list
+gforms_trash_form                                    kforms_trash_form
+gf_conditional_logic                                 kdna_conditional_logic
+gf_duplicate_submissions                             kdna_duplicate_submissions
+gf_get_custom_fields                                 kdna_get_custom_fields
+gf_get_users                                         kdna_get_users
+gf_global_json                                       kdna_global_json
+gf_logging                                           kdna_logging
+gf_register_widget                                   kdna_register_widget
+gf_required_scripts                                  kdna_required_scripts
+gf_restapi_edit_key                                  kdna_restapi_edit_key
+gf_results                                           kdna_results
+gf_results_cache                                     kdna_results_cache
+gf_vars_json                                         kdna_vars_json
+gform_adding_field_spinner                           kform_adding_field_spinner
+gform_ajax_nonce                                     kform_ajax_nonce
+gforms_browsers_css                                  kforms_browsers_css
+gforms_datepicker_css                                kforms_datepicker_css
+gforms_formsmain_css                                 kforms_formsmain_css
+gforms_ready_class_css                               kforms_ready_class_css
+gforms_reset_css                                     kforms_reset_css
+gf_ajax_save                                         kdna_ajax_save
+gf_akismet                                           kdna_akismet
+gf_already_trashed                                   kdna_already_trashed
+gf_cap                                               kdna_cap
+gf_caps                                              kdna_caps
+gf_contacts                                          kdna_contacts
+gf_custom_fields                                     kdna_custom_fields
+gf_custom_fields_all                                 kdna_custom_fields_all
+gf_disable_logging_nonce                             kdna_disable_logging_nonce
+gf_dismissible_key                                   kdna_dismissible_key
+gf_embed_query_posts                                 kdna_embed_query_posts
+gf_export_forms                                      kdna_export_forms
+gf_export_forms_nonce                                kdna_export_forms_nonce
+gf_form_action_has_submenu                           kdna_form_action_has_submenu
+gf_get_address_rule_values_select                    kdna_get_address_rule_values_select
+gf_get_post_categories                               kdna_get_post_categories
+gf_global_script                                     kdna_global_script
+gf_import_forms                                      kdna_import_forms
+gf_import_forms_nonce                                kdna_import_forms_nonce
+gf_not_found                                         kdna_not_found
+gf_pages                                             kdna_pages
+gf_required_styles                                   kdna_required_styles
+gf_restore_entry                                     kdna_restore_entry
+gf_revoke_key                                        kdna_revoke_key
+gf_save_feed_order                                   kdna_save_feed_order
+gf_sizes                                             kdna_sizes
+gform_confirmation_message_6                         kform_confirmation_message_6
+gform_countries                                      kform_countries
+gform_form_settings_wrap                             kform_form_settings_wrap
+gform_media_link                                     kform_media_link
+gform_notification_message                           kform_notification_message
+gform_page_steps                                     kform_page_steps
+gform_payment_method_creditcard                      kdnaform_payment_method_creditcard
+gform_percentage_bar_text                            kform_percentage_bar_text
+gform_ppcp_smart_payment_buttons                     kform_ppcp_smart_payment_buttons
+gform_predefined_choices                             kdnaform_predefined_choices
+gform_system_shows_scrollbars                        kform_system_shows_scrollbars
+gform_title_close                                    kform_title_close
+gform_title_open                                     kform_title_open
+gforms_calendar_icon_input                           kforms_calendar_icon_input
+gforms_revoke_key                                    kforms_revoke_key
+gforms_rtl_css                                       kforms_rtl_css
+gforms_update_form                                   kforms_update_form
+gf_ajax_config                                       kdna_ajax_config
+gf_ajax_handler                                      kdna_ajax_handler
+gf_browser_ie6                                       kdna_browser_ie6
+gf_browser_ie7                                       kdna_browser_ie7
+gf_browser_ie8                                       kdna_browser_ie8
+gf_browser_ie9                                       kdna_browser_ie9
+gf_browser_lynx                                      kdna_browser_lynx
+gf_browser_ns4                                       kdna_browser_ns4
+gf_browser_opera                                     kdna_browser_opera
+gf_cache                                             kdna_cache
+gf_check_background_tasks                            kdna_check_background_tasks
+gf_colors                                            kdna_colors
+gf_disable_hooks_injection                           kdna_disable_hooks_injection
+gf_duplicate_submission_handler                      kdna_duplicate_submission_handler
+gf_embed_create_post_with_block                      kdna_embed_create_post_with_block
+gf_environment_config_handler                        kdna_environment_config_handler
+gf_global_script_deps                                kdna_global_script_deps
+gf_global_script_deps_theme                          kdna_global_script_deps_theme
+gf_global_style_deps                                 kdna_global_style_deps
+gf_honeypot_config                                   kdna_honeypot_config
+gf_license_transient_strat                           kdna_license_transient_strat
+gf_note_invalid_id                                   kdna_note_invalid_id
+gf_protect_submission                                kdna_protect_submission
+gf_rest_api                                          kdna_rest_api
+gf_save_editor_settings                              kdna_save_editor_settings
+gf_save_form_helper                                  kdna_save_form_helper
+gf_svg_options                                       kdna_svg_options
+gf_tables_auto_increment_settings                    kdna_tables_auto_increment_settings
+gform_confirmation_wrapper_6                         kform_confirmation_wrapper_6
+gform_custom_merge_tags                              kform_custom_merge_tags
+gform_form_args                                      kform_form_args
+gform_form_editor                                    kform_form_editor
+gform_get_config                                     kform_get_config
+gform_merge_tags_supported_input_types               kform_merge_tags_supported_input_types
+gform_percentage_bar                                 kform_percentage_bar
+gform_simplebar                                      kform_simplebar
+gform_submit_form                                    kform_submit_form
+gform_validate_config                                kform_validate_config
+gform_wrapper_123                                    kform_wrapper_123
+gforms_plugin_url                                    kforms_plugin_url
+gforms_register_theme_json                           kforms_register_theme_json
+gforms_zxcvbn                                        kforms_zxcvbn

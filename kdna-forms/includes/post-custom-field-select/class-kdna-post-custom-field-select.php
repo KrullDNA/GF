@@ -34,7 +34,7 @@ class KDNA_Post_Custom_Field_Select {
 			wp_send_json_error( array( 'message' => __( 'Access denied', 'kdnaforms' ) ) );
 		}
 
-		check_ajax_referer( 'gf_get_custom_fields', 'nonce' );
+		check_ajax_referer( 'kdna_get_custom_fields', 'nonce' );
 
 		$search = isset( $_POST['search'] ) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '';
 
@@ -69,11 +69,11 @@ class KDNA_Post_Custom_Field_Select {
 			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 			$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE %s AND meta_key LIKE %s ORDER BY meta_key ASC LIMIT 10", $not_like, $like ) );
 		} else {
-			$results = wp_cache_get( 'gf_custom_fields_all', 'gf_custom_fields' );
+			$results = wp_cache_get( 'kdna_custom_fields_all', 'kdna_custom_fields' );
 			if ( false === $results ) {
 				// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
 				$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE %s ORDER BY meta_key ASC LIMIT 10", $not_like ) );
-				wp_cache_set( 'gf_custom_fields_all', $results, 'gf_custom_fields', 300 );
+				wp_cache_set( 'kdna_custom_fields_all', $results, 'kdna_custom_fields', 300 );
 			}
 		}
 

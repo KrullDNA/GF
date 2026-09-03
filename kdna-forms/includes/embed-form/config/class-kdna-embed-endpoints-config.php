@@ -56,7 +56,7 @@ class KDNA_Embed_Endpoints_Config extends KDNA_Config {
 			// Endpoint to get posts for typeahead
 			'get_posts'              => array(
 				'action' => array(
-					'value'   => 'gf_embed_query_posts',
+					'value'   => 'kdna_embed_query_posts',
 					'default' => 'mock_endpoint',
 				),
 				'nonce'  => array(

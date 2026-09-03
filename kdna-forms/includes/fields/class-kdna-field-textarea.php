@@ -318,7 +318,7 @@ class KDNA_Field_Textarea extends KDNA_Field {
 		 *
 		 * Additional filters for specific form and fields IDs.
 		 */
-		$mce_buttons = gf_apply_filters( array( 'kdnaform_rich_text_editor_buttons' . $mce_filter, $this->formId, $this->id ), $mce_buttons, $editor_id, $this );
+		$mce_buttons = kdna_apply_filters( array( 'kdnaform_rich_text_editor_buttons' . $mce_filter, $this->formId, $this->id ), $mce_buttons, $editor_id, $this );
 
 		return $mce_buttons;
 	}

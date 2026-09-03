@@ -12,7 +12,7 @@ namespace KDNA_Forms\KDNA_Forms\Embed_Form\Endpoints;
 class KDNA_Embed_Endpoint_Create_With_Block {
 
 	// Strings
-	const ACTION_NAME = 'gf_embed_create_post_with_block';
+	const ACTION_NAME = 'kdna_embed_create_post_with_block';
 
 	// Request Params
 	const PARAM_FORM_ID    = 'form_id';

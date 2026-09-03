@@ -723,7 +723,7 @@ class KDNAFormSettings {
 		 * @param array $fields Form settings fields.
 		 * @param array $form   Form Object.
 		 */
-		$fields = gf_apply_filters( array( 'kdnaform_form_settings_fields', rgar( $form, 'id' ) ), $fields, $form );
+		$fields = kdna_apply_filters( array( 'kdnaform_form_settings_fields', rgar( $form, 'id' ) ), $fields, $form );
 
 		return $fields;
 
@@ -990,7 +990,7 @@ class KDNAFormSettings {
 
 					<script type="text/javascript">
 
-						<?php KDNACommon::gf_global(); ?>
+						<?php KDNACommon::kdna_global(); ?>
 
 						var form = <?php echo json_encode( $form ); ?>;
 						var fieldSettings = [];
@@ -1466,9 +1466,9 @@ class KDNAFormSettings {
 		$script_str = '';
 		$conditional_logic_fields = array();
 
-		foreach ( KDNA_Fields::get_all() as $gf_field ) {
-			if ( $gf_field->is_conditional_logic_supported() ) {
-				$conditional_logic_fields[] = $gf_field->type;
+		foreach ( KDNA_Fields::get_all() as $kdna_field ) {
+			if ( $kdna_field->is_conditional_logic_supported() ) {
+				$conditional_logic_fields[] = $kdna_field->type;
 			}
 		}
 
@@ -1594,7 +1594,7 @@ class KDNAFormSettings {
 	 */
 	public static function save_form_title() {
 
-		check_admin_referer( 'gf_save_title', 'gf_save_title' );
+		check_admin_referer( 'kdna_save_title', 'kdna_save_title' );
 
 		$form_title = json_decode( rgpost( 'title' ) );
 		$form_id = rgpost( 'formId' );

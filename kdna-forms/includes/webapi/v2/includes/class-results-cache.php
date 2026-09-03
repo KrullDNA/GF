@@ -873,8 +873,8 @@ class KDNA_Results_Cache {
 /**
  * @return KDNA_Results_Cache
  */
-function gf_results_cache() {
+function kdna_results_cache() {
 	return KDNA_Results_Cache::get_instance();
 }
 
-gf_results_cache();
+kdna_results_cache();

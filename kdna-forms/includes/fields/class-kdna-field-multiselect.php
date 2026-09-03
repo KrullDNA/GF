@@ -146,7 +146,7 @@ class KDNA_Field_MultiSelect extends KDNA_Field {
 		 * @param string  $placeholder The placeholder text.
 		 * @param integer $form_id     The ID of the current form.
 		 */
-		$placeholder = gf_apply_filters( array(
+		$placeholder = kdna_apply_filters( array(
 			'kdnaform_multiselect_placeholder',
 			$form_id,
 			$this->id

@@ -95,7 +95,7 @@ var KDNAFeedOrder = function( args ) {
 				method:   'POST',
 				dataType: 'JSON',
 				data:     {
-					action:     'gf_save_feed_order',
+					action:     'kdna_save_feed_order',
 					addon:      self.options.addon,
 					form_id:    self.options.formId,
 					feed_order: self.getFeedOrder(),

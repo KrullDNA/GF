@@ -9,7 +9,7 @@ window.addEventListener( 'load' , function() {
 
 		$select.addEventListener( 'change', function( e ) {
 
-			if ( e.target.value !== 'gf_custom' ) {
+			if ( e.target.value !== 'kdna_custom' ) {
 				return;
 			}
 

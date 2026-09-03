@@ -1084,7 +1084,7 @@ class KDNAFormsModel {
 		 *
 		 * @param array $form The Form object
 		 */
-		$form = gf_apply_filters( array( 'kdnaform_form_post_get_meta', $form_id ), $form );
+		$form = kdna_apply_filters( array( 'kdnaform_form_post_get_meta', $form_id ), $form );
 
 		// Cached form meta for cheaper retrieval on subsequent requests
 		self::$_current_forms[ $key ] = $form;
@@ -2211,7 +2211,7 @@ class KDNAFormsModel {
 	public static function update_form_meta( $form_id, $form_meta, $meta_name = 'display_meta' ) {
 		global $wpdb;
 
-		$form_meta = gf_apply_filters( array( 'kdnaform_form_update_meta', $form_id ), $form_meta, $form_id, $meta_name );
+		$form_meta = kdna_apply_filters( array( 'kdnaform_form_update_meta', $form_id ), $form_meta, $form_id, $meta_name );
 
 		$meta_table_name = self::get_meta_table_name();
 		$new_display_meta = $form_meta;
@@ -2236,7 +2236,7 @@ class KDNAFormsModel {
 		 * @param int    $form_id   The ID of the form data was updated
 		 * @param string $meta_name The name of the meta updated
 		 */
-		gf_do_action( array( 'kdnaform_post_update_form_meta', $form_id ), $form_meta, $form_id, $meta_name );
+		kdna_do_action( array( 'kdnaform_post_update_form_meta', $form_id ), $form_meta, $form_id, $meta_name );
 
 		return $result;
 	}
@@ -2380,7 +2380,7 @@ class KDNAFormsModel {
 		 * @param array $field_types Field types which contain file uploads
 		 * @param array $form The Form Object
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_types_delete_files', $form['id'] ), $field_types, $form );
+		return kdna_apply_filters( array( 'kdnaform_field_types_delete_files', $form['id'] ), $field_types, $form );
 	}
 
 	/**
@@ -3123,7 +3123,7 @@ class KDNAFormsModel {
 			 * @param array $form The form currently being processed.
 			 *
 			 */
-			$currency = gf_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form['id'] ), KDNACommon::get_submission_currency(), $form );
+			$currency = kdna_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form['id'] ), KDNACommon::get_submission_currency(), $form );
 
 			$ip        = rgars( $form, 'personalData/preventIP' ) ? '' : self::get_ip();
 			$source_id = self::get_source_id( $form );
@@ -3243,7 +3243,7 @@ class KDNAFormsModel {
 			 * @param array $form                The current form object.
 			 * @param array $entry               The current entry object.
 			 */
-			$read_value_from_post = gf_apply_filters( array( 'kdnaform_use_post_value_for_conditional_logic_save_entry', $form['id'] ), $is_new_lead || ! isset( $entry[ 'date_created' ] ), $form, $entry );
+			$read_value_from_post = kdna_apply_filters( array( 'kdnaform_use_post_value_for_conditional_logic_save_entry', $form['id'] ), $is_new_lead || ! isset( $entry[ 'date_created' ] ), $form, $entry );
 
 			// Only save fields that are not hidden (except when updating an entry)
 			if ( $is_entry_detail || ! KDNAFormsModel::is_field_hidden( $form, $field, array(), $read_value_from_post ? null : $entry ) ) {
@@ -3340,7 +3340,7 @@ class KDNAFormsModel {
 
 			if ( is_array( $inputs ) ) {
 				foreach ( $inputs as $input ) {
-					$entry[ (string) $input['id'] ] = gf_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id, $input['id'] ), rgar( $entry, (string) $input['id'] ), $entry, $field, $input['id'] );
+					$entry[ (string) $input['id'] ] = kdna_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id, $input['id'] ), rgar( $entry, (string) $input['id'] ), $entry, $field, $input['id'] );
 				}
 			} else {
 
@@ -3350,7 +3350,7 @@ class KDNAFormsModel {
 					$value = KDNACommon::openssl_decrypt( $value );
 				}
 
-				$entry[ (string) $field->id ] = gf_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id ), $value, $entry, $field, '' );
+				$entry[ (string) $field->id ] = kdna_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id ), $value, $entry, $field, '' );
 
 			}
 
@@ -3392,7 +3392,7 @@ class KDNAFormsModel {
 		 * @param int|null  $id     The ID of the post or page where the form submission originated.
 		 * @param array     $form   The form the entry is being created for.
 		 */
-		return gf_apply_filters( array( 'kdnaform_source_id_pre_save_entry', (int) rgar( $form, 'id' ) ), ! empty( $id ) ? $id : null, $form );
+		return kdna_apply_filters( array( 'kdnaform_source_id_pre_save_entry', (int) rgar( $form, 'id' ) ), ! empty( $id ) ? $id : null, $form );
 	}
 
 	/**
@@ -3534,7 +3534,7 @@ class KDNAFormsModel {
 		 * @param array $form The form currently being processed.
 		 *
 		 */
-		$lead['currency'] = gf_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form_id ), KDNACommon::get_submission_currency(), $form );
+		$lead['currency'] = kdna_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form_id ), KDNACommon::get_submission_currency(), $form );
 
 		foreach ( $form['fields'] as $field ) {
 			/* @var $field KDNA_Field */
@@ -3737,7 +3737,7 @@ class KDNAFormsModel {
 
 		}
 
-		return gf_apply_filters( array( 'kdnaform_save_field_value', $form_id, $field->id ), $value, $lead, $field, $form, $input_id );
+		return kdna_apply_filters( array( 'kdnaform_save_field_value', $form_id, $field->id ), $value, $lead, $field, $form, $input_id );
 	}
 
 	public static function refresh_product_cache( $form, $lead, $use_choice_text = false, $use_admin_label = false ) {
@@ -4679,7 +4679,7 @@ class KDNAFormsModel {
 			}
 		}
 
-		return gf_apply_filters( array( 'kdnaform_field_value', $name ), $value, $field, $name );
+		return kdna_apply_filters( array( 'kdnaform_field_value', $name ), $value, $field, $name );
 	}
 
 	public static function get_default_value( $field, $input_id ) {
@@ -4877,7 +4877,7 @@ class KDNAFormsModel {
 		 *
 		 * @param bool $disable_query Indicates if the custom field names query should be disabled. Default is false.
 		 */
-		$disable_query = gf_apply_filters( array( 'kdnaform_disable_custom_field_names_query', $form_id ), false );
+		$disable_query = kdna_apply_filters( array( 'kdnaform_disable_custom_field_names_query', $form_id ), false );
 
 		if ( $disable_query ) {
 			return array();
@@ -5181,7 +5181,7 @@ class KDNAFormsModel {
 		$post_data = self::get_post_fields( $form, $lead );
 
 		//allowing users to change post fields before post gets created
-		$post_data = gf_apply_filters( array( 'kdnaform_post_data', $form['id'] ), $post_data, $form, $lead );
+		$post_data = kdna_apply_filters( array( 'kdnaform_post_data', $form['id'] ), $post_data, $form, $lead );
 
 		//adding default title if none of the required post fields are in the form (will make sure wp_insert_post() inserts the post)
 		if ( empty( $post_data['post_title'] ) && empty( $post_data['post_content'] ) && empty( $post_data['post_excerpt'] ) ) {
@@ -5377,7 +5377,7 @@ class KDNAFormsModel {
 		self::update_lead_property( $lead['id'], 'post_id', $post_id );
 
 		$kdnaform_after_create_post_args = array( 'kdnaform_after_create_post', $form['id'] );
-		if ( gf_has_action( $kdnaform_after_create_post_args ) ) {
+		if ( kdna_has_action( $kdnaform_after_create_post_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_after_create_post.' );
 			/**
 			 * Fires after a post, from a form with post fields, is created
@@ -5387,7 +5387,7 @@ class KDNAFormsModel {
 			 * @param array $lead    The Lead Object
 			 * @param array $form    The Form Object for the form used to create the post
 			 */
-			gf_do_action( $kdnaform_after_create_post_args, $post_id, $lead, $form );
+			kdna_do_action( $kdnaform_after_create_post_args, $post_id, $lead, $form );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_after_create_post.' );
 		}
 
@@ -5482,7 +5482,7 @@ class KDNAFormsModel {
 		 * @param int $form_id The ID of the form currently being processed.
 		 * @param int $post_id The ID of the post created from the entry currently being processed.
 		 */
-		$upload_dir = gf_apply_filters( 'kdnaform_media_upload_path', $form_id, $upload_dir, $form_id, $post_id );
+		$upload_dir = kdna_apply_filters( 'kdnaform_media_upload_path', $form_id, $upload_dir, $form_id, $post_id );
 
 		if ( ! file_exists( $upload_dir['path'] ) ) {
 			if ( ! wp_mkdir_p( $upload_dir['path'] ) ) {
@@ -6079,7 +6079,7 @@ class KDNAFormsModel {
 			 * @param array $location An array containing the path and url of the temporary upload directory.
 			 * @param int   $form_id  The ID of the form.
 			 */
-			$locations[ $form_id ] = (array) gf_apply_filters( array( 'kdnaform_file_upload_tmp_dir', $form_id ), $location, $form_id );
+			$locations[ $form_id ] = (array) kdna_apply_filters( array( 'kdnaform_file_upload_tmp_dir', $form_id ), $location, $form_id );
 		}
 
 		return $locations[ $form_id ];
@@ -6284,7 +6284,7 @@ class KDNAFormsModel {
                 GROUP BY entry_id
                 ORDER BY match_count DESC";
 
-		$count = gf_apply_filters( array( 'kdnaform_is_duplicate', $form_id ), $wpdb->get_var( $sql ), $form_id, $field, $value ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$count = kdna_apply_filters( array( 'kdnaform_is_duplicate', $form_id ), $wpdb->get_var( $sql ), $form_id, $field, $value ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		return $count != null && $count >= $input_count;
 	}
@@ -6526,7 +6526,7 @@ class KDNAFormsModel {
 		if ( $apply_filter ) {
 			$field    = KDNAFormsModel::get_field( $form, $field_number );
 			$input_id = (string) $field_number == (string) $field->id ? '' : $field_number;
-			$val      = gf_apply_filters( array( 'kdnaform_get_input_value', $field->formId, $field->id, $input_id ), $val, $lead, $field, $input_id );
+			$val      = kdna_apply_filters( array( 'kdnaform_get_input_value', $field->formId, $field->id, $input_id ), $val, $lead, $field, $input_id );
 		}
 
 		return $val;

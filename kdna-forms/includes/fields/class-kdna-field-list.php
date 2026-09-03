@@ -486,7 +486,7 @@ class KDNA_Field_List extends KDNA_Field {
 		 * @param string $column['text'] The column text value.
 		 * @param int    $form_id        The form ID.
 		 */
-		$input_info = gf_apply_filters( array(
+		$input_info = kdna_apply_filters( array(
 			'kdnaform_column_input',
 			$form_id,
 			$this->id,
@@ -536,7 +536,7 @@ class KDNA_Field_List extends KDNA_Field {
 		 * @param string $column['text'] The column text value.
 		 * @param int    $form_id        The form ID.
 		 */
-		return gf_apply_filters( array(
+		return kdna_apply_filters( array(
 			'kdnaform_column_input_content',
 			$form_id,
 			$this->id,

@@ -165,7 +165,7 @@ class KDNA_Field_Submit extends KDNA_Field {
 		// Otherwise, the button will be added to the footer in form_display.php.
 		if ( $is_form_editor || 'inline' == $inline ) {
 			$submit = KDNAFormDisplay::get_form_button( $form_id, "kdnaform_submit_button_{$form_id}", $button, $default_text, $class, $default_text, 0 );
-			return gf_apply_filters( array( 'kdnaform_submit_button', $form_id ), $submit, $form );
+			return kdna_apply_filters( array( 'kdnaform_submit_button', $form_id ), $submit, $form );
 		}
 
 		return '';

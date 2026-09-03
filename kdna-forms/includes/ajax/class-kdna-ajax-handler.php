@@ -62,7 +62,7 @@ class KDNA_Ajax_Handler {
 		 *
 		 * @return array The filtered form validation result.
 		 */
-		$result = gf_apply_filters( array( 'kdnaform_ajax_validation_result', $form['id'] ), $result );
+		$result = kdna_apply_filters( array( 'kdnaform_ajax_validation_result', $form['id'] ), $result );
 
 		// Remove form from result.
 		unset( $result['form'] );
@@ -96,7 +96,7 @@ class KDNA_Ajax_Handler {
 		 *
 		 * @param int $form_id The form ID.
 		 */
-		gf_do_action( array( 'kdnaform_ajax_pre_submit_form', $form_id ), $form_id );
+		kdna_do_action( array( 'kdnaform_ajax_pre_submit_form', $form_id ), $form_id );
 
 		// Handling the save link submission.
 		if ( isset( $_POST['gform_send_resume_link'] ) ) {
@@ -158,7 +158,7 @@ class KDNA_Ajax_Handler {
 		 *
 		 * @return array The filtered form submission result.
 		 */
-		$result = gf_apply_filters( array( 'kdnaform_ajax_submission_result', $form_id ), $result );
+		$result = kdna_apply_filters( array( 'kdnaform_ajax_submission_result', $form_id ), $result );
 
 		// Remove form from result.
 		unset( $result['form'] );

@@ -656,7 +656,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		 * @param array  $entry           The Entry Object currently being processed.
 		 * @param array  $form            The Form Object currently being processed.
 		 */
-		$is_asynchronous = gf_apply_filters( array( 'kdnaform_is_feed_asynchronous', $form['id'], $feed['id'] ), $this->_async_feed_processing, $feed, $entry, $form );
+		$is_asynchronous = kdna_apply_filters( array( 'kdnaform_is_feed_asynchronous', $form['id'], $feed['id'] ), $this->_async_feed_processing, $feed, $entry, $form );
 
 		return $is_asynchronous;
 
@@ -1611,7 +1611,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	}
 
 	/**
-	 * Sets $gf_payment_gateway global for the current entry.
+	 * Sets $kdna_payment_gateway global for the current entry.
 	 *
 	 * @since 2.8.1
 	 *
@@ -1625,11 +1625,11 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			return;
 		}
 
-		global $gf_payment_gateway;
+		global $kdna_payment_gateway;
 		$entry_id = rgar( $entry, 'id' );
 
-		if ( ! empty( $gf_payment_gateway[ $entry_id ] ) ) {
-			$this->log_debug( __METHOD__ . '(): Already set to ' . $gf_payment_gateway[ $entry_id ] );
+		if ( ! empty( $kdna_payment_gateway[ $entry_id ] ) ) {
+			$this->log_debug( __METHOD__ . '(): Already set to ' . $kdna_payment_gateway[ $entry_id ] );
 
 			return;
 		}
@@ -1637,7 +1637,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$gateway = kdnaform_get_meta( $entry_id, 'payment_gateway' );
 		if ( ! empty( $gateway ) ) {
 			$this->log_debug( __METHOD__ . '(): Setting using payment_gateway entry meta to ' . $gateway );
-			$gf_payment_gateway[ $entry_id ] = $gateway;
+			$kdna_payment_gateway[ $entry_id ] = $gateway;
 
 			return;
 		}
@@ -1662,7 +1662,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 			$slug = $addon->get_slug();
 			$this->log_debug( __METHOD__ . '(): Setting to ' . $slug );
-			$gf_payment_gateway[ $entry_id ] = $slug;
+			$kdna_payment_gateway[ $entry_id ] = $slug;
 
 			return;
 		}
@@ -1827,7 +1827,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 					 * @param string $before_fields The content to be displayed before the feed settings fields.
 					 * @param array  $form          The form associated with the feed.
 					 */
-					return gf_apply_filters( array( 'kdnaform_feed_settings_before_fields', rgar( $form, 'id' ) ), $before_fields, $form );
+					return kdna_apply_filters( array( 'kdnaform_feed_settings_before_fields', rgar( $form, 'id' ) ), $before_fields, $form );
 				},
 			)
 		);
@@ -2624,7 +2624,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		 * @param array  $feed          The form which was being processed when the error occurred.
 		 * @param string $error_message The error message.
 		 */
-		gf_do_action( array( "kdnaform_{$slug}_error", $form['id'] ), $feed, $entry, $form, $error_message );
+		kdna_do_action( array( "kdnaform_{$slug}_error", $form['id'] ), $feed, $entry, $form, $error_message );
 
 	}
 

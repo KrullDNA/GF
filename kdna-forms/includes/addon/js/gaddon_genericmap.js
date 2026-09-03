@@ -23,7 +23,7 @@ var GFGenericMap = function( options ) {
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
 				$input     = $select.siblings( '.custom-key-container' );
 
-			if( $select.val() != 'gf_custom' ) {
+			if( $select.val() != 'kdna_custom' ) {
 				return;
 			}
 
@@ -39,7 +39,7 @@ var GFGenericMap = function( options ) {
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
 				$input     = $select.siblings( '.custom-value-container' );
 
-			if ( $select.val() != 'gf_custom' ) {
+			if ( $select.val() != 'kdna_custom' ) {
 				return;
 			}
 
@@ -126,7 +126,7 @@ var GFGenericMap = function( options ) {
 
 					var key_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]' );
 
-					if ( ! item.custom_key && ( key_select.length > 0 && key_select.val() !== 'gf_custom' ) ) {
+					if ( ! item.custom_key && ( key_select.length > 0 && key_select.val() !== 'kdna_custom' ) ) {
 						$elem.find( '.custom-key-container' ).hide();
 					} else {
 						$elem.find( '.key' ).hide();
@@ -134,7 +134,7 @@ var GFGenericMap = function( options ) {
 
 					var value_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.valueFieldName +'"]' );
 
-					if ( ! item.custom_value && ( value_select.length > 0 && value_select.val() !== 'gf_custom' ) ) {
+					if ( ! item.custom_value && ( value_select.length > 0 && value_select.val() !== 'kdna_custom' ) ) {
 						$elem.find( '.custom-value-container' ).hide();
 					} else {
 						$elem.find( '.value' ).hide();

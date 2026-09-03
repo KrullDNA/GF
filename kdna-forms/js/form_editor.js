@@ -90,7 +90,7 @@ function InitializeEditor() {
 		},
 	} );
 
-	if ( typeof gf_global[ 'view' ] == 'undefined' || gf_global[ 'view' ] != 'settings' )
+	if ( typeof kdna_global[ 'view' ] == 'undefined' || kdna_global[ 'view' ] != 'settings' )
 		InitializeForm( form );
 
 	//for backwards compatibility <1.7
@@ -167,7 +167,7 @@ function InitializeEditor() {
 	} );
 
 	// Prior to gravityformsppcp 2.3, the PayPal buttons show up in the editor instead of in the sidebar.
-	jQuery( '#field_submit #gform_ppcp_smart_payment_buttons' ).remove();
+	jQuery( '#field_submit #kform_ppcp_smart_payment_buttons' ).remove();
 }
 
 function InitializeFieldSettings(){
@@ -2112,10 +2112,10 @@ function UpdateFormObject(){
 	SortFields();
 
 	// allow users to update form with custom function before save
-	if(window["gform_before_update"]){
-		form = window["gform_before_update"](form);
+	if(window["kform_before_update"]){
+		form = window["kform_before_update"](form);
 		if(window.console)
-			console.log('"gform_before_update" is deprecated since version 1.7! Use the "gform_pre_form_editor_save" filter instead.');
+			console.log('"kform_before_update" is deprecated since version 1.7! Use the "gform_pre_form_editor_save" filter instead.');
 	}
 
 	// new method for filtering the form object before save
@@ -2621,7 +2621,7 @@ function EndAddField(field, fieldString, index){
 	// We just added a field. Let's hide the No Fields placeholder.
 	jQuery( '#no-fields' ).hide();
 
-	jQuery('#gform_adding_field_spinner').remove();
+	jQuery('#kform_adding_field_spinner').remove();
 
 	//sets up DOM for new field
 	if(typeof index != 'undefined'){
@@ -2847,8 +2847,8 @@ function InitializeFields(){
 function FieldClick( field ) {
 
 	//disable click that happens right after dragging ends
-	if ( gforms_dragging == field.id ) {
-		gforms_dragging = 0;
+	if ( kforms_dragging == field.id ) {
+		kforms_dragging = 0;
 		return;
 	}
 
@@ -3232,11 +3232,11 @@ function LoadCustomChoices(){
 
 	jQuery(".choice_section_header, .bulk_custom_choice").remove();
 
-	if(!IsEmpty(gform_custom_choices)){
+	if(!IsEmpty(kform_custom_choices)){
 		var str = "<li class='choice_section_header'>" + kdna_vars.customChoices + "</li>";
-		for(key in gform_custom_choices){
+		for(key in kform_custom_choices){
 
-			if(!gform_custom_choices.hasOwnProperty(key))
+			if(!kform_custom_choices.hasOwnProperty(key))
 				continue;
 
 			var selectChoiceAction = 'SelectCustomChoice( jQuery(this).data("key") );';
@@ -3250,19 +3250,19 @@ function LoadCustomChoices(){
 
 function SelectCustomChoice( name ){
 
-	jQuery("#gfield_bulk_add_input").val(gform_custom_choices[name].join("\n"));
-	gform_selected_custom_choice = name;
+	jQuery("#gfield_bulk_add_input").val(kform_custom_choices[name].join("\n"));
+	kform_selected_custom_choice = name;
 	InitBulkCustomPanel();
 }
 
 function SelectPredefinedChoice(name){
-	var list = gform_predefined_choices[name];
-	// Countries can also be an object if the gform_countries filter is used, so convert to array with just the values.
+	var list = kdnaform_predefined_choices[name];
+	// Countries can also be an object if the kform_countries filter is used, so convert to array with just the values.
 	if( name == "Countries" && Array.isArray( list ) !== true ) {
 		list = Object.values( list );
 	}
 	jQuery('#gfield_bulk_add_input').val(list.join('\n'));
-	gform_selected_custom_choice = "";
+	kform_selected_custom_choice = "";
 	InitBulkCustomPanel();
 }
 
@@ -3334,7 +3334,7 @@ function InsertBulkChoices(choices){
 }
 
 function InitBulkCustomPanel(){
-	if(gform_selected_custom_choice.length == 0){
+	if(kform_selected_custom_choice.length == 0){
 		CloseCustomChoicesPanel();
 	}
 	else{
@@ -3350,7 +3350,7 @@ function LoadCustomChoicesPanel(isNew, speed){
 		jQuery("#bulk_delete_link").hide();
 	}
 	else{
-		jQuery("#custom_choice_name").val(gform_selected_custom_choice);
+		jQuery("#custom_choice_name").val(kform_selected_custom_choice);
 		jQuery("#bulk_save_button").html(kdna_vars.update);
 		jQuery("#bulk_cancel_link").hide();
 		jQuery("#bulk_delete_link").show();
@@ -4500,7 +4500,7 @@ function SetCardType(elem, value) {
 }
 
 function SetFieldRequired( isRequired ) {
-	var required = gform_form_strings.requiredIndicator;
+	var required = kform_form_strings.requiredIndicator;
 	var requiredSelector = '.field_selected .gfield_required';
 	var appendRequired = false;
 
@@ -4620,11 +4620,11 @@ function SetupUnsavedChangesWarning() {
 	UpdateFormObject();
 
 	// store a json copy of original form to determine if user-made changes were made
-	gforms_original_json = jQuery.toJSON(form);
+	kforms_original_json = jQuery.toJSON(form);
 
 	window.onbeforeunload = function(){
 		UpdateFormObject();
-		var original = JSON.parse( JSON.stringify( JSON.parse( window.gforms_original_json ) ) );
+		var original = JSON.parse( JSON.stringify( JSON.parse( window.kforms_original_json ) ) );
 		var current = JSON.parse( JSON.stringify( window.form ) );
 		if ( legacyHtml ) {
 			original.fields.forEach( function( field, i ) {
@@ -4739,7 +4739,7 @@ function ToggleSubmitType( isInit ) {
 	}
 
 	if( 'text' === type || ( 'image' === type && ! $submitImageSettingValue ) ) {
-		var text = $submitTextSettingValue ? $submitTextSettingValue : gform_form_strings.defaultSubmit;
+		var text = $submitTextSettingValue ? $submitTextSettingValue : kform_form_strings.defaultSubmit;
 		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'gform_image_button' );
 		$submitTextSetting.val( text );
 	}
@@ -5115,7 +5115,7 @@ function setSidebarFieldMessage() {
 	types.forEach(
 		( { type, iconClasses } ) => {
 			$container = jQuery( '.field_selected .field-sidebar-message-content--type-' + type );
-			messageMarkup = $container && $container.length ? gform_strip_scripts( $container.html() ) : '';
+			messageMarkup = $container && $container.length ? kform_strip_scripts( $container.html() ) : '';
 			if ( messageMarkup ) {
 				jQuery( '#sidebar_field_message_container' ).html( '<div class="gform-alert gform-alert--theme-cosmos"><span class="gform-icon gform-icon--preset-active gform-alert__icon" aria-hidden="true"></span><div class="gform-alert__message-wrap"><div class="gform-alert__message"></div></div></div>' );
 				jQuery( '#sidebar_field_message_container .gform-alert__message' ).html( messageMarkup );

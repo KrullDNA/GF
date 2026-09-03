@@ -161,7 +161,7 @@
 
 		if ( $element.hasClass( 'gdatepicker_with_icon' ) ) {
 			optionsObj.showOn = 'both';
-			optionsObj.buttonImage = $element.parent().siblings( "[id^='gforms_calendar_icon_input']" ).val();
+			optionsObj.buttonImage = $element.parent().siblings( "[id^='kforms_calendar_icon_input']" ).val();
 			optionsObj.buttonImageOnly = true;
 			optionsObj.buttonText = i18n.iconText;
 		} else {

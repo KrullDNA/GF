@@ -23,7 +23,7 @@ var gfieldmap = function( options ) {
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
 				$input     = $select.siblings( '.custom-key-container' );
 
-			if( $select.val() != 'gf_custom' ) {
+			if( $select.val() != 'kdna_custom' ) {
 				return;
 			}
 

@@ -65,8 +65,8 @@ class KDNA_Author_Select_Config extends KDNA_Config {
 				'author_select' => array(
 					'endpoints' => array(
 						'get' => array(
-							'action' => 'gf_get_users',
-							'nonce'  => wp_create_nonce( 'gf_get_users' ),
+							'action' => 'kdna_get_users',
+							'nonce'  => wp_create_nonce( 'kdna_get_users' ),
 						),
 					),
 					'data'           => $this->get_initial_users( $form_id ),
@@ -99,7 +99,7 @@ class KDNA_Author_Select_Config extends KDNA_Config {
 		);
 
 		// Apply existing filter for backward compatibility
-		$args = gf_apply_filters( array( 'kdnaform_author_dropdown_args', $form_id ), $args );
+		$args = kdna_apply_filters( array( 'kdnaform_author_dropdown_args', $form_id ), $args );
 
 		$users = get_users( $args );
 

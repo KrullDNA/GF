@@ -42,7 +42,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 			 * @param int    $max_choices_visible_count The default number of choices visible is 8.
 			 * @param object $field                     The current field object.
 			 */
-			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
+			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
 
 			$choices .= sprintf( '<div class="gfield_radio" id="%s">', esc_attr( $field_id ) );
 
@@ -67,7 +67,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 			if ( $needs_other_choice ) {
 				$other_choice    = array(
 					'text'          => KDNACommon::get_other_choice_value( $this ),
-					'value'         => 'gf_other_choice',
+					'value'         => 'kdna_other_choice',
 					'isSelected'    => false,
 					'isOtherChoice' => true,
 				);
@@ -95,7 +95,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		 * @param string $choices The choices HTML.
 		 * @param object $field   The current field object.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
+		return kdna_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
 	}
 
 	public function get_choice_html( $choice, &$choice_id, $value, $disabled_text, $is_admin, $form = null ) {
@@ -134,11 +134,11 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		if ( $this->field->enableOtherChoice && rgar( $choice, 'isOtherChoice' ) ) {
 			$input_disabled_text = $disabled_text;
 
-			if ( $value == 'gf_other_choice' && rgpost( "input_{$this->field->id}_other" ) ) {
+			if ( $value == 'kdna_other_choice' && rgpost( "input_{$this->field->id}_other" ) ) {
 				$other_value = rgpost( "input_{$this->field->id}_other" );
 			} elseif ( ! empty( $value ) && ! KDNAFormsModel::choices_value_match( $this->field, $this->field->choices, $value ) ) {
 				$other_value = $value;
-				$value       = 'gf_other_choice';
+				$value       = 'kdna_other_choice';
 				$checked     = "checked='checked'";
 			} else {
 				if ( ! $input_disabled_text ) {
@@ -186,7 +186,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		 * @param KDNA_Field_Radio $field         The current field object.
 		 * @param string         $value         The current field value.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->field->formId, $this->field->id ), $choice_markup, $choice, $this->field, $value );
+		return kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->field->formId, $this->field->id ), $choice_markup, $choice, $this->field, $value );
 	}
 
 }

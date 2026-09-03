@@ -26,7 +26,7 @@ class KDNAFormDetail {
 		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
 		$update_result = '';
 		if ( rgpost( 'operation' ) == 'trash' ) {
-			check_admin_referer( 'gforms_trash_form', 'gforms_trash_form' );
+			check_admin_referer( 'kforms_trash_form', 'kforms_trash_form' );
 			KDNAFormsModel::trash_form( $form_id );
 			?>
 			<script type="text/javascript">
@@ -39,7 +39,7 @@ class KDNAFormDetail {
 			<?php
 			exit;
 		} elseif ( ! rgempty( 'gform_meta' ) && $save_form_helper->is_ajax_save_action() === false ) {
-			check_admin_referer( "gforms_update_form_{$form_id}", 'gforms_update_form' );
+			check_admin_referer( "gforms_update_form_{$form_id}", 'kforms_update_form' );
 
 			$update_result = self::save_form_info( $form_id, rgpost( 'gform_meta', false ) );
 
@@ -53,15 +53,15 @@ class KDNAFormDetail {
 
 		wp_print_styles( array( 'thickbox' ) );
 
-		/* @var KDNA_Field_Address $gf_address_field  */
-		$gf_address_field = KDNA_Fields::get( 'address' );
+		/* @var KDNA_Field_Address $kdna_address_field  */
+		$kdna_address_field = KDNA_Fields::get( 'address' );
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['kdnaform_debug'] ) ? '' : '.min';
 
 		?>
 
 		<script type="text/javascript">
-			<?php KDNACommon::gf_global(); ?>
+			<?php KDNACommon::kdna_global(); ?>
 			<?php KDNACommon::kdna_vars(); ?>
 		</script>
 
@@ -85,9 +85,9 @@ class KDNAFormDetail {
 
 			document.addEventListener('DOMContentLoaded', function() {
 				var formData = new FormData();
-				formData.append('action', 'gf_get_submitted_fields');
+				formData.append('action', 'kdna_get_submitted_fields');
 				formData.append('form_id', <?php echo intval( $form_id ); ?>);
-				formData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'gf_get_submitted_fields' ) ); ?>');
+				formData.append('nonce', '<?php echo esc_js( wp_create_nonce( 'kdna_get_submitted_fields' ) ); ?>');
 
 				fetch(ajaxurl, {
 					method: 'POST',
@@ -350,7 +350,7 @@ class KDNAFormDetail {
 			</div>
 		</div>
 		<form method="post" id="form_trash">
-			<?php wp_nonce_field( 'gforms_trash_form', 'gforms_trash_form' ); ?>
+			<?php wp_nonce_field( 'kforms_trash_form', 'kforms_trash_form' ); ?>
 			<input type="hidden" value="trash" name="operation" />
 		</form>
 
@@ -457,7 +457,7 @@ class KDNAFormDetail {
 			 * @param array $setting_panels        Custom panels array.
 			 * @param array $from                  The current form object.
 			 */
-			$setting_panels = gf_apply_filters( array( 'kdnaform_editor_sidebar_panels', $form_id ), array(), $form );
+			$setting_panels = kdna_apply_filters( array( 'kdnaform_editor_sidebar_panels', $form_id ), array(), $form );
 			?>
 
 			<aside class="sidebar ui-tabs" role="region" >
@@ -523,7 +523,7 @@ class KDNAFormDetail {
 					<input type="text" id="gform_force_focus" style="position:absolute;left:-9999em;" data-js="force-focus" />
 
 					<form method="post" id="gform_update">
-						<?php wp_nonce_field( "gforms_update_form_{$form_id}", 'gforms_update_form' ); ?>
+						<?php wp_nonce_field( "gforms_update_form_{$form_id}", 'kforms_update_form' ); ?>
 						<input type="hidden" id="gform_meta" name="gform_meta" />
 						<input type="hidden" id="gform_export" name="gform_export" value="false"/>
 					</form>
@@ -1311,7 +1311,7 @@ class KDNAFormDetail {
 							<li class="address_setting field_setting">
 								<?php
 
-								$addressTypes = $gf_address_field->get_address_types( rgar( $form, 'id' ) );
+								$addressTypes = $kdna_address_field->get_address_types( rgar( $form, 'id' ) );
 								?>
 								<label for="field_address_type" class="section_label">
 									<?php esc_html_e( 'Address Type', 'kdnaforms' ); ?>
@@ -1358,7 +1358,7 @@ class KDNAFormDetail {
 									</label>
 
 									<select id="field_address_default_state_<?php echo esc_attr( $key ); ?>" class="field_address_default_state" onchange="SetAddressProperties();">
-										<?php echo $gf_address_field->get_state_dropdown( $addressType['states'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+										<?php echo $kdna_address_field->get_state_dropdown( $addressType['states'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 									</select>
 										<?php
 										}
@@ -1369,7 +1369,7 @@ class KDNAFormDetail {
 											<?php kdnaform_tooltip( 'form_field_address_default_country' ); ?>
 										</label>
 										<select id="field_address_default_country_<?php echo esc_attr( $key ); ?>" class="field_address_default_country" onchange="SetAddressProperties();">
-											<?php echo $gf_address_field->get_country_dropdown(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+											<?php echo $kdna_address_field->get_country_dropdown(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 										</select>
 										<?php
 									}
@@ -1679,9 +1679,9 @@ class KDNAFormDetail {
 										$gender_choices = array_values( array_unique( $genders_array ) );
 
 										$predefined_choices = array(
-											__( 'Countries', 'kdnaforms' )                   => $gf_address_field->get_countries(),
-											__( 'U.S. States', 'kdnaforms' )                 => $gf_address_field->get_us_states(),
-											__( 'Canadian Province/Territory', 'kdnaforms' ) => $gf_address_field->get_canadian_provinces(),
+											__( 'Countries', 'kdnaforms' )                   => $kdna_address_field->get_countries(),
+											__( 'U.S. States', 'kdnaforms' )                 => $kdna_address_field->get_us_states(),
+											__( 'Canadian Province/Territory', 'kdnaforms' ) => $kdna_address_field->get_canadian_provinces(),
 											__( 'Continents', 'kdnaforms' )                  => array( __( 'Africa', 'kdnaforms' ), __( 'Antarctica', 'kdnaforms' ), __( 'Asia', 'kdnaforms' ), __( 'Australia', 'kdnaforms' ), __( 'Europe', 'kdnaforms' ), __( 'North America', 'kdnaforms' ), __( 'South America', 'kdnaforms' ) ),
 											__( 'Gender', 'kdnaforms' )                      => $gender_choices,
 											__( 'Age', 'kdnaforms' )                         => array( __( 'Under 18', 'kdnaforms' ), __( '18-24', 'kdnaforms' ), __( '25-34', 'kdnaforms' ), __( '35-44', 'kdnaforms' ), __( '45-54', 'kdnaforms' ), __( '55-64', 'kdnaforms' ), __( '65 or Above', 'kdnaforms' ), __( 'Prefer Not to Answer', 'kdnaforms' ) ),
@@ -1703,7 +1703,7 @@ class KDNAFormDetail {
 
 										);
 
-										$predefined_choices = gf_apply_filters( array( 'kdnaform_predefined_choices', rgar( $form, 'id' ) ), $predefined_choices );
+										$predefined_choices = kdna_apply_filters( array( 'kdnaform_predefined_choices', rgar( $form, 'id' ) ), $predefined_choices );
 
 										$custom_choices = KDNAFormsModel::get_custom_choices();
 
@@ -1760,8 +1760,8 @@ class KDNAFormDetail {
 										</div>
 
 										<script type="text/javascript">
-											var gform_selected_custom_choice = '';
-											var gform_custom_choices = <?php echo KDNACommon::json_encode( $custom_choices ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
+											var kform_selected_custom_choice = '';
+											var kform_custom_choices = <?php echo KDNACommon::json_encode( $custom_choices ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
 											var kdnaform_predefined_choices = <?php echo KDNACommon::json_encode( $predefined_choices ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
 										</script>
 
@@ -2770,7 +2770,7 @@ class KDNAFormDetail {
 						 * @since 2.5
 						 *
 						 */
-						$field_setting_tabs = gf_apply_filters( array( 'kdnaform_field_settings_tabs', $form_id ), array(), $form );
+						$field_setting_tabs = kdna_apply_filters( array( 'kdnaform_field_settings_tabs', $form_id ), array(), $form );
 						foreach ( $field_setting_tabs as $tab ) {
 						$tab_id = empty( $tab['id'] ) ? '' : $tab['id'];
 						$tab_title = empty( $tab['title'] ) ? '' : $tab['title'];
@@ -2791,7 +2791,7 @@ class KDNAFormDetail {
 							 * @since 2.5
 							 *
 							 */
-							gf_do_action( array( 'kdnaform_field_settings_tab_content', $tab_id, $form_id ), $form, $tab_id );
+							kdna_do_action( array( 'kdnaform_field_settings_tab_content', $tab_id, $form_id ), $form, $tab_id );
 							?>
 						</ul>
 						<?php
@@ -2898,7 +2898,7 @@ class KDNAFormDetail {
 					 * @since 2.5
 					 *
 					 */
-					gf_do_action( array( 'kdnaform_editor_sidebar_panel_content', $panel['id'], $form_id ), $panel, $form );
+					kdna_do_action( array( 'kdnaform_editor_sidebar_panel_content', $panel['id'], $form_id ), $panel, $form );
 					?>
 				</div>
 				<?php
@@ -3041,8 +3041,8 @@ class KDNAFormDetail {
 		$field_groups = array_values( $field_groups );
 
 		// Add buttons to fields.
-		foreach ( KDNA_Fields::get_all() as $gf_field ) {
-			$field_groups = $gf_field->add_button( $field_groups );
+		foreach ( KDNA_Fields::get_all() as $kdna_field ) {
+			$field_groups = $kdna_field->add_button( $field_groups );
 		}
 
 		/**
@@ -3440,21 +3440,21 @@ class KDNAFormDetail {
 		$script_str = '';
 		$conditional_logic_fields = array();
 		$field_settings = array();
-		foreach ( KDNA_Fields::get_all() as $gf_field ) {
-			$settings_arr = $gf_field->get_form_editor_field_settings();
+		foreach ( KDNA_Fields::get_all() as $kdna_field ) {
+			$settings_arr = $kdna_field->get_form_editor_field_settings();
 			if ( ! is_array( $settings_arr ) || empty( $settings_arr ) ) {
 				continue;
 			}
 
 			$settings = join( ', .', $settings_arr );
 			$settings = '.' . $settings;
-			$field_settings[ $gf_field->type ] = $settings;
+			$field_settings[ $kdna_field->type ] = $settings;
 
-			if ( $gf_field->is_conditional_logic_supported() ) {
-				$conditional_logic_fields[] = $gf_field->type;
+			if ( $kdna_field->is_conditional_logic_supported() ) {
+				$conditional_logic_fields[] = $kdna_field->type;
 			}
 
-			$field_script = $gf_field->get_form_editor_inline_script_on_page_render();
+			$field_script = $kdna_field->get_form_editor_inline_script_on_page_render();
 			if ( ! empty( $field_script ) ){
 				$script_str .= $field_script . PHP_EOL;
 			}

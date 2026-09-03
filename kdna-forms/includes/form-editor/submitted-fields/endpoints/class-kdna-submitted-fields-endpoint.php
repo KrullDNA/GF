@@ -24,7 +24,7 @@ class GF_Submitted_Fields_Endpoint {
 	 *
 	 * @var string
 	 */
-	const ACTION_NAME = 'gf_get_submitted_fields';
+	const ACTION_NAME = 'kdna_get_submitted_fields';
 
 	/**
 	 * The nonce action for this endpoint.
@@ -33,7 +33,7 @@ class GF_Submitted_Fields_Endpoint {
 	 *
 	 * @var string
 	 */
-	const NONCE_ACTION = 'gf_get_submitted_fields';
+	const NONCE_ACTION = 'kdna_get_submitted_fields';
 
 	/**
 	 * @var array

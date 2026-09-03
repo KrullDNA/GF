@@ -90,7 +90,7 @@ var KDNAFrontendFeeds = function( args ) {
 			return true;
 		}
 
-		return gf_get_field_action( formId, feed.conditionalLogic ) == 'show';
+		return kdna_get_field_action( formId, feed.conditionalLogic ) == 'show';
 	};
 
 	self.getTriggerInputIds = function() {

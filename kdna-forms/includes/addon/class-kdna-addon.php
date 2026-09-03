@@ -1676,8 +1676,8 @@ abstract class KDNAAddOn {
 	public function results_page_init( $results_page_config ) {
 		// Results module removed.
 		// require_once( 'class-kdna-results.php' );
-		// $gf_results = new KDNAResults( $this->get_slug(), $results_page_config );
-		// $gf_results->init();
+		// $kdna_results = new KDNAResults( $this->get_slug(), $results_page_config );
+		// $kdna_results->init();
 	}
 
 	//--------------  Logging integration  --------------------------------------
@@ -3004,7 +3004,7 @@ abstract class KDNAAddOn {
 		if ( empty( $select_field['choices'] ) ) {
 
 			// Set field value to custom key.
-			$select_field['value'] = 'gf_custom';
+			$select_field['value'] = 'kdna_custom';
 
 			// Display field row.
 			return sprintf(
@@ -3026,7 +3026,7 @@ abstract class KDNAAddOn {
 			foreach ( $select_field['choices'] as $choice ) {
 
 				// If choice name or value is the custom key, set custom key flag to true and exit loop.
-				if ( rgar( $choice, 'name' ) == 'gf_custom' || rgar( $choice, 'value' ) == 'gf_custom' ) {
+				if ( rgar( $choice, 'name' ) == 'kdna_custom' || rgar( $choice, 'value' ) == 'kdna_custom' ) {
 					$has_gf_custom = true;
 					break;
 				}
@@ -3038,7 +3038,7 @@ abstract class KDNAAddOn {
 					foreach ( $choice['choices'] as $subchoice ) {
 
 						// If sub-choice name or value is the custom key, set custom key flag to true and exit loop.
-						if ( rgar( $subchoice, 'name' ) == 'gf_custom' || rgar( $subchoice, 'value' ) == 'gf_custom' ) {
+						if ( rgar( $subchoice, 'name' ) == 'kdna_custom' || rgar( $subchoice, 'value' ) == 'kdna_custom' ) {
 							$has_gf_custom = true;
 							break;
 						}
@@ -3072,7 +3072,7 @@ abstract class KDNAAddOn {
 				if ( $enable_custom ) {
 					$select_field['choices'][] = array(
 						'label' => $label,
-						'value' => 'gf_custom'
+						'value' => 'kdna_custom'
 					);
 				}
 
@@ -3362,7 +3362,7 @@ abstract class KDNAAddOn {
 			foreach ( $dynamic_fields as $dynamic_field ) {
 
 				// Get mapped key or replace with custom value.
-				$field_key = 'gf_custom' === $dynamic_field['key'] ? $dynamic_field['custom_key'] : $dynamic_field['key'];
+				$field_key = 'kdna_custom' === $dynamic_field['key'] ? $dynamic_field['custom_key'] : $dynamic_field['key'];
 
 				// Add mapped field to return array.
 				$fields[ $field_key ] = $dynamic_field['value'];
@@ -3405,10 +3405,10 @@ abstract class KDNAAddOn {
 			foreach ( $generic_fields as $generic_field ) {
 
 				// Get mapped key or replace with custom value.
-				$field_key = 'gf_custom' === $generic_field['key'] ? $generic_field['custom_key'] : $generic_field['key'];
+				$field_key = 'kdna_custom' === $generic_field['key'] ? $generic_field['custom_key'] : $generic_field['key'];
 
 				// Get mapped field choice or replace with custom value.
-				if ( 'gf_custom' === $generic_field['value'] ) {
+				if ( 'kdna_custom' === $generic_field['value'] ) {
 
 					// If form isn't set, use custom value. Otherwise, replace merge tags.
 					$field_value = empty( $form ) ? $generic_field['custom_value'] : KDNACommon::replace_variables( $generic_field['custom_value'], $form, $entry, false, false, false, 'text' );
@@ -4367,7 +4367,7 @@ abstract class KDNAAddOn {
 				 *
 				 * @return array
 				 */
-				$sections = gf_apply_filters( array( 'kdnaform_addon_form_settings_fields', rgar( $form, 'id' ), $this->get_slug() ), $sections, $form );
+				$sections = kdna_apply_filters( array( 'kdnaform_addon_form_settings_fields', rgar( $form, 'id' ), $this->get_slug() ), $sections, $form );
 
 
 				$sections = $this->prepare_settings_sections( $sections, 'form_settings' );
@@ -5221,7 +5221,7 @@ abstract class KDNAAddOn {
 
 		<div class="wrap <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
 
-			<?php KDNACommon::gf_header(); ?>
+			<?php KDNACommon::kdna_header(); ?>
 
 			<?php if ( $message ) { ?>
 				<div id="message" class="updated"><p><?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
@@ -5823,8 +5823,8 @@ abstract class KDNAAddOn {
 	 *  array(
 	 *     "object_type" => 'contact',
 	 *     "capabilities" => array("kdnaforms_contacts_edit_contacts"),
-	 *     "redirect_url" => admin_url("admin.php?page=gf_contacts"),
-	 *     "edit_url" => admin_url(sprintf("admin.php?page=gf_contacts&id=%d", $contact_id)),
+	 *     "redirect_url" => admin_url("admin.php?page=kdna_contacts"),
+	 *     "edit_url" => admin_url(sprintf("admin.php?page=kdna_contacts&id=%d", $contact_id)),
 	 *     "strings" => $strings
 	 *     );
 	 *
@@ -6010,7 +6010,7 @@ abstract class KDNAAddOn {
 		 *
 		 * @return string
 		 */
-		$field_value = gf_apply_filters( array( 'kdnaform_addon_field_value', $form['id'], $field_id ), $field_value, $form, $entry, $field_id, $this->get_slug() );
+		$field_value = kdna_apply_filters( array( 'kdnaform_addon_field_value', $form['id'], $field_id ), $field_value, $form, $entry, $field_id, $this->get_slug() );
 
 		return $this->maybe_override_field_value( $field_value, $form, $entry, $field_id );
 	}
@@ -6029,7 +6029,7 @@ abstract class KDNAAddOn {
 		/* Get Add-On slug */
 		$slug = str_replace( 'kdnaforms', '', $this->get_slug() );
 
-		return gf_apply_filters( array(
+		return kdna_apply_filters( array(
 			"kdnaform_{$slug}_field_value",
 			$form['id'],
 			$field_id

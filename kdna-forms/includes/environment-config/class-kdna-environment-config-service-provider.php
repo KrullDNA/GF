@@ -15,7 +15,7 @@ use KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider;
  */
 class KDNA_Environment_Config_Service_Provider extends KDNA_Service_Provider {
 
-	const GF_ENVIRONMENT_CONFIG_HANDLER = 'gf_environment_config_handler';
+	const GF_ENVIRONMENT_CONFIG_HANDLER = 'kdna_environment_config_handler';
 
 	/**
 	 * Register services to the container.

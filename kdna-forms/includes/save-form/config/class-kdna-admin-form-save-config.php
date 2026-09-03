@@ -44,7 +44,7 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 *
 	 * @var \KDNAAPI
 	 */
-	protected $gf_api;
+	protected $kdna_api;
 
 	/**
 	 * GF_Admin_Form_Save_Config constructor.
@@ -56,7 +56,7 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 */
 	public function __construct( Config\KDNA_Config_Data_Parser $parser, $dependencies ) {
 		$this->kdna_forms = $dependencies['kdna_forms'];
-		$this->gf_api   = $dependencies['gf_api'];
+		$this->kdna_api   = $dependencies['kdna_api'];
 		parent::__construct( $parser );
 	}
 
@@ -91,10 +91,10 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 */
 	private function get_form() {
 		$kdna_forms = $this->kdna_forms;
-		$gf_api   = $this->gf_api;
+		$kdna_api   = $this->kdna_api;
 		$form_id  = $kdna_forms::get_page() === 'form_editor' ? rgget( 'id' ) : rgget( 'form_id' );
 		if ( $form_id ) {
-			return $gf_api::get_form( $form_id );
+			return $kdna_api::get_form( $form_id );
 		}
 
 		return false;

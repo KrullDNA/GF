@@ -4,10 +4,10 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	die();
 }
 
-add_action( 'widgets_init', 'gf_register_widget' );
+add_action( 'widgets_init', 'kdna_register_widget' );
 
-if ( ! function_exists( 'gf_register_widget' ) ) {
-	function gf_register_widget() {
+if ( ! function_exists( 'kdna_register_widget' ) ) {
+	function kdna_register_widget() {
 		register_widget( 'KDNAWidget' );
 	}
 }

@@ -119,7 +119,7 @@ class KDNA_Field_Text extends KDNA_Field {
 		// For Post Tags, Use the WordPress built-in class "howto" in the form editor.
 		$text_hint = '';
 		if ( $this->type === 'post_tags' ) {
-			$text_hint = '<p class="gfield_post_tags_hint gfield_description" id="' . $field_id . '_desc">' . gf_apply_filters( array(
+			$text_hint = '<p class="gfield_post_tags_hint gfield_description" id="' . $field_id . '_desc">' . kdna_apply_filters( array(
 					'kdnaform_post_tags_hint',
 					$form_id,
 					$this->id,

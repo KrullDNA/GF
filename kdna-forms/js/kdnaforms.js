@@ -92,7 +92,7 @@ gform.adminUtils = {
 
 		// Standalone logic for the web api settings page. Trigger unsaved changes if the setting doesn't match the checkbox state.
 		if ( this.getUrlParameter( 'subview' ) === 'gravityformswebapi' ) {
-			if ( gf_webapi_vars.api_enabled !== gf_webapi_vars.enable_api_checkbox_checked ) {
+			if ( kdna_webapi_vars.api_enabled !== kdna_webapi_vars.enable_api_checkbox_checked ) {
 				hasUnsavedChanges = true;
 			}
 		}
@@ -1002,9 +1002,9 @@ function gformGetProductQuantity(formId, productFieldId) {
             quantity = quantityInput.val();
 
             var htmlId = quantityInput.attr('id'),
-                fieldId = gf_get_input_id_by_html_id(htmlId);
+                fieldId = kdna_get_input_id_by_html_id(htmlId);
 
-            numberFormat = gf_get_field_number_format( fieldId, formId, 'value' );
+            numberFormat = kdna_get_field_number_format( fieldId, formId, 'value' );
         }
 
     }
@@ -1069,7 +1069,7 @@ function gformGetBasePrice(formId, productFieldId){
 
     }
 
-    var c = new gform.Currency(gf_global.gf_currency_config);
+    var c = new gform.Currency(kdna_global.kdna_currency_config);
     price = c.toNumber(price);
     return price === false ? 0 : price;
 }
@@ -1105,23 +1105,23 @@ function gformParseChoiceValue( value ) {
 }
 
 function gformFormatMoney(text, isNumeric){
-    if(!gf_global.gf_currency_config)
+    if(!kdna_global.kdna_currency_config)
         return text;
 
-    var currency = new gform.Currency(gf_global.gf_currency_config);
+    var currency = new gform.Currency(kdna_global.kdna_currency_config);
     return currency.toMoney(text, isNumeric);
 }
 
 function gformFormatPricingField(element){
-    if(gf_global.gf_currency_config){
-        var currency = new gform.Currency(gf_global.gf_currency_config);
+    if(kdna_global.kdna_currency_config){
+        var currency = new gform.Currency(kdna_global.kdna_currency_config);
         var price = currency.toMoney(jQuery(element).val());
         jQuery(element).val(price);
     }
 }
 
 function gformToNumber(text){
-    var currency = new gform.Currency(gf_global.gf_currency_config);
+    var currency = new gform.Currency(kdna_global.kdna_currency_config);
     return currency.toNumber(text);
 }
 
@@ -1151,8 +1151,8 @@ function gformGetOptionLabel(element, selected_value, current_price, form_id, fi
     var label = original_label + price_label;
 
     //calling hook to allow for custom option formatting
-    if(window["gform_format_option_label"])
-        label = gform_format_option_label(label, original_label, price_label, current_price, price, form_id, field_id);
+    if(window["kform_format_option_label"])
+        label = kform_format_option_label(label, original_label, price_label, current_price, price, form_id, field_id);
 
     return label;
 }
@@ -1177,7 +1177,7 @@ function gformGetPrice(text){
 
 function gformRoundPrice(price){
 
-	var currency = new gform.Currency(gf_global.gf_currency_config);
+	var currency = new gform.Currency(kdna_global.kdna_currency_config);
     var roundedPrice = currency.numberFormat( price, currency.currency['decimals'], '.', '' );
 
     return parseFloat( roundedPrice );
@@ -1245,7 +1245,7 @@ function gformShowPasswordStrength(fieldId){
         confirm = document.getElementById( fieldId + '_2' ) ? document.getElementById( fieldId + '_2' ).value : '';
 
     var result = gformPasswordStrength( password, confirm ),
-        text = window[ 'gf_text' ][ "password_" + result ],
+        text = window[ 'kdna_text' ][ "password_" + result ],
         resultClass = result === 'unknown' ? 'blank' : result;
 
     jQuery("#" + fieldId + "_strength").val(result);
@@ -1318,8 +1318,8 @@ function gformToggleCheckboxes( toggleElement ) {
         $toggle               = $toggleElement.parent(),
 	    $toggleLabel          = $toggle.find( 'label' ),
 	    $checkboxes           = $toggle.parent().find( '.gchoice:not( .gchoice_select_all )' ),
-	    formId         = gf_get_form_id_by_html_id( $toggle.parents( '.gfield' ).attr( 'id' ) ),
-	    calcObj               = rgars( window, 'gf_global/gfcalc/' + formId );
+	    formId         = kdna_get_form_id_by_html_id( $toggle.parents( '.gfield' ).attr( 'id' ) ),
+	    calcObj               = rgars( window, 'kdna_global/gfcalc/' + formId );
 
     // Determine checked state.
     if ( toggleElementCheckbox ) {
@@ -1356,7 +1356,7 @@ function gformToggleCheckboxes( toggleElement ) {
 	gformToggleSelectAll( toggleElement, checked ? 'deselect' : 'select' );
 
     // Announce change.
-    wp.a11y.speak( checked ? gf_field_checkbox.strings.selected : gf_field_checkbox.strings.deselected );
+    wp.a11y.speak( checked ? kdna_field_checkbox.strings.selected : kdna_field_checkbox.strings.deselected );
 
 	if ( calcObj ) {
 		calcObj.runCalcs( formId, calcObj.formulaFields );
@@ -1415,7 +1415,7 @@ function gformToggleRadioOther( radioElement ) {
     var $other = gform.tools.getClosest( radioElement, '.ginput_container_radio' ).querySelector( 'input.gchoice_other_control' );
 
     if ( $other ) {
-        $other.disabled = radioElement.value !== 'gf_other_choice';
+        $other.disabled = radioElement.value !== 'kdna_other_choice';
     }
 
 }
@@ -1453,7 +1453,7 @@ function gformAddListItem( addButton, max ) {
 
     gform.doAction( 'gform_list_post_item_add', $clone, $container );
 
-    wp.a11y.speak( window.gf_global.strings.newRowAdded );
+    wp.a11y.speak( window.kdna_global.strings.newRowAdded );
 
 }
 
@@ -1477,7 +1477,7 @@ function gformDeleteListItem( deleteButton, max ) {
 
     gform.doAction( 'gform_list_post_item_delete', $container );
 
-    wp.a11y.speak( window.gf_global.strings.rowRemoved );
+    wp.a11y.speak( window.kdna_global.strings.rowRemoved );
 
 }
 
@@ -1802,7 +1802,7 @@ function gformFindCardType(value) {
     if(value.length < 4)
         return false;
 
-    var rules = window['gf_cc_rules'];
+    var rules = window['kdna_cc_rules'];
     var validCardTypes = new Array();
 
     for(type in rules) {
@@ -1829,10 +1829,10 @@ function gformFindCardType(value) {
 }
 
 function gformToggleCreditCard(){
-    if(jQuery("#gform_payment_method_creditcard").is(":checked"))
-        jQuery(".gform_card_fields_container").slideDown();
+    if(jQuery("#kdnaform_payment_method_creditcard").is(":checked"))
+        jQuery(".kform_card_fields_container").slideDown();
     else
-        jQuery(".gform_card_fields_container").slideUp();
+        jQuery(".kform_card_fields_container").slideUp();
 }
 
 
@@ -2019,7 +2019,7 @@ var GFCalc = function(formId, formulaFields){
         // allow result to be custom formatted
         var formattedResult = gform.applyFilters( 'gform_calculation_format_result', false, result, formulaField, formId, calcObj );
 
-        var numberFormat = gf_get_field_number_format(formulaField.field_id, formId);
+        var numberFormat = kdna_get_field_number_format(formulaField.field_id, formId);
 
         //formatting number
         if( formattedResult !== false) {
@@ -2170,7 +2170,7 @@ var GFCalc = function(formId, formulaFields){
 				}
 			}
 
-			var isVisible = window['gf_check_field_rule'] ? gf_check_field_rule( formId, fieldId, true, '' ) == 'show' : true;
+			var isVisible = window['kdna_check_field_rule'] ? kdna_check_field_rule( formId, fieldId, true, '' ) == 'show' : true;
 
 			var value = isVisible ? GFMergeTag.getMergeTagValue( formId, inputId, modifier ) : 0;
 
@@ -2187,10 +2187,10 @@ var GFCalc = function(formId, formulaFields){
 
 	this.cleanNumber = function ( value, formId, fieldId, formulaField ) {
 
-		var numberFormat = gf_get_field_number_format( fieldId, formId );
+		var numberFormat = kdna_get_field_number_format( fieldId, formId );
 
 		if( ! numberFormat ) {
-			numberFormat = gf_get_field_number_format(formulaField.field_id, formId);
+			numberFormat = kdna_get_field_number_format(formulaField.field_id, formId);
 		}
 
 		var decimalSeparator = gform.Currency.getDecimalSeparator(numberFormat);
@@ -2210,8 +2210,8 @@ var GFCalc = function(formId, formulaFields){
 function gformFormatNumber(number, rounding, decimalSeparator, thousandSeparator){
 
     if(typeof decimalSeparator == "undefined"){
-        if(window['gf_global']){
-            var currency = new gform.Currency(gf_global.gf_currency_config);
+        if(window['kdna_global']){
+            var currency = new gform.Currency(kdna_global.kdna_currency_config);
             decimalSeparator = currency.currency["decimal_separator"];
         }
         else{
@@ -2220,8 +2220,8 @@ function gformFormatNumber(number, rounding, decimalSeparator, thousandSeparator
     }
 
     if(typeof thousandSeparator == "undefined"){
-        if(window['gf_global']){
-            var currency = new gform.Currency(gf_global.gf_currency_config);
+        if(window['kdna_global']){
+            var currency = new gform.Currency(kdna_global.kdna_currency_config);
             thousandSeparator = currency.currency["thousand_separator"];
         }
         else{
@@ -2254,9 +2254,9 @@ function getMatchGroups(expr, patt) {
     return matches;
 }
 
-function gf_get_field_number_format(fieldId, formId, context) {
+function kdna_get_field_number_format(fieldId, formId, context) {
 
-    var fieldNumberFormats = rgars(window, 'gf_global/number_formats/{0}/{1}'.gformFormat(formId, fieldId)),
+    var fieldNumberFormats = rgars(window, 'kdna_global/number_formats/{0}/{1}'.gformFormat(formId, fieldId)),
         format = false;
 
     if (fieldNumberFormats === '') {
@@ -2551,9 +2551,9 @@ function gformValidateFileSize( field, max_file_size ) {
 	if ( file && file.size > max_file_size ) {
 
 		// Set validation message.
-		validation_element.text(file.name + " - " + gform_gravityforms.strings.file_exceeds_limit);
+		validation_element.text(file.name + " - " + kform_gravityforms.strings.file_exceeds_limit);
 		// Announce error.
-		wp.a11y.speak( file.name + " - " + gform_gravityforms.strings.file_exceeds_limit );
+		wp.a11y.speak( file.name + " - " + kform_gravityforms.strings.file_exceeds_limit );
 
     } else {
 
@@ -2570,8 +2570,8 @@ function gformValidateFileSize( field, max_file_size ) {
 
 (function (gfMultiFileUploader, $) {
     gfMultiFileUploader.uploaders = {};
-    var strings = typeof gform_gravityforms != 'undefined' ? gform_gravityforms.strings : {};
-    var imagesUrl = typeof gform_gravityforms != 'undefined' ? gform_gravityforms.vars.images_url : "";
+    var strings = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.strings : {};
+    var imagesUrl = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.vars.images_url : "";
 
 	$(document).on('gform_post_render', function(e, formID){
 		$( "form#gform_" + formID + " .gform_fileupload_multifile" ).each( function(){
@@ -3022,7 +3022,7 @@ function gformInitSpinner(formId, spinnerUrl, isLegacy = true) {
 function gformShowSpinner( formId, spinnerUrl ) {
 
 	let filteredSpinner = gform.applyFilters('gform_spinner_url', spinnerUrl, formId);
-	let defaultSpinner = gform.applyFilters('gform_spinner_url', gf_global.spinnerUrl, formId);
+	let defaultSpinner = gform.applyFilters('gform_spinner_url', kdna_global.spinnerUrl, formId);
 
 	// Legacy spinner: this is not referring to Legacy Markup, but to the pre-2.7 spinner implementation.
 	const isLegacy = filteredSpinner !== defaultSpinner;
@@ -3079,7 +3079,7 @@ function gformRemoveSpinner( uniqId = 'gform-ajax-spinner' ) {
 function gformAddSpinner(formId, spinnerUrl) {
 
 	if (typeof spinnerUrl == 'undefined' || !spinnerUrl) {
-		spinnerUrl = gform.applyFilters('gform_spinner_url', gf_global.spinnerUrl, formId);
+		spinnerUrl = gform.applyFilters('gform_spinner_url', kdna_global.spinnerUrl, formId);
 	}
 
 	if (jQuery('#gform_ajax_spinner_' + formId).length == 0) {
@@ -3143,18 +3143,18 @@ function gformReInitTinymceInstance( formId, fieldId ) {
 var __gf_keyup_timeout;
 
 jQuery( document ).on( 'change keyup', '.gfield input, .gfield select, .gfield textarea', function( event ) {
-    gf_raw_input_change( event, this );
+    kdna_raw_input_change( event, this );
 } );
 
-function gf_raw_input_change( event, elem ) {
+function kdna_raw_input_change( event, elem ) {
 
     // clear regardless of event type for maximum efficiency ;)
     clearTimeout( __gf_keyup_timeout );
 
     var $input    = jQuery( elem ),
         htmlId    = $input.attr( 'id' ),
-        fieldId   = gf_get_input_id_by_html_id( htmlId ),
-        formId    = gf_get_form_id_by_html_id( htmlId ),
+        fieldId   = kdna_get_input_id_by_html_id( htmlId ),
+        formId    = kdna_get_form_id_by_html_id( htmlId ),
 	    /**
 	     * Filter the field meta generated by a raw input change.
 	     *
@@ -3184,10 +3184,10 @@ function gf_raw_input_change( event, elem ) {
 
     if( event.type == 'keyup' ) {
         __gf_keyup_timeout = setTimeout( function() {
-            gf_input_change( elem, formId, fieldId );
+            kdna_input_change( elem, formId, fieldId );
         }, 300 );
     } else {
-        gf_input_change( elem, formId, fieldId );
+        kdna_input_change( elem, formId, fieldId );
     }
 
 }
@@ -3199,9 +3199,9 @@ function gf_raw_input_change( event, elem ) {
  *
  * @returns {string} inputId The input id.
  */
-function gf_get_input_id_by_html_id( htmlId ) {
+function kdna_get_input_id_by_html_id( htmlId ) {
 
-    var ids = gf_get_ids_by_html_id( htmlId ),
+    var ids = kdna_get_ids_by_html_id( htmlId ),
         id  = ids[ ids.length - 1 ];
 
     if ( ids.length == 3 ) {
@@ -3219,8 +3219,8 @@ function gf_get_input_id_by_html_id( htmlId ) {
  *
  * @returns {string} formId The form id.
  */
-function gf_get_form_id_by_html_id( htmlId ) {
-    var ids = gf_get_ids_by_html_id( htmlId );
+function kdna_get_form_id_by_html_id( htmlId ) {
+    var ids = kdna_get_ids_by_html_id( htmlId );
     return ids[0];
 }
 
@@ -3233,7 +3233,7 @@ function gf_get_form_id_by_html_id( htmlId ) {
  *
  * @returns {array} ids An array contain the form, field and input id.
  */
-function gf_get_ids_by_html_id( htmlId ) {
+function kdna_get_ids_by_html_id( htmlId ) {
     var ids = htmlId ? htmlId.split( '_' ) : [];
     for( var i = ids.length - 1; i >= 0; i-- ) {
         if ( ! gform.utils.isNumber( ids[ i ] ) ) {
@@ -3243,7 +3243,7 @@ function gf_get_ids_by_html_id( htmlId ) {
     return ids;
 }
 
-function gf_input_change( elem, formId, fieldId ) {
+function kdna_input_change( elem, formId, fieldId ) {
     gform.doAction( 'gform_input_change', elem, formId, fieldId );
 }
 

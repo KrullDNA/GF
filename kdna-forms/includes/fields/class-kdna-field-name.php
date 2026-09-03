@@ -271,11 +271,11 @@ class KDNA_Field_Name extends KDNA_Field {
 				$last_tabindex   = KDNACommon::get_tabindex();
 				$suffix_tabindex = KDNACommon::get_tabindex();
 
-				$prefix_sub_label      = rgar( $prefix_input, 'customLabel' ) != '' ? $prefix_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_prefix', $form_id ), esc_html__( 'Prefix', 'kdnaforms' ), $form_id );
-				$first_name_sub_label  = rgar( $first_input, 'customLabel' ) != '' ? $first_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_first', $form_id ), esc_html__( 'First', 'kdnaforms' ), $form_id );
-				$middle_name_sub_label = rgar( $middle_input, 'customLabel' ) != '' ? $middle_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_middle', $form_id ), esc_html__( 'Middle', 'kdnaforms' ), $form_id );
-				$last_name_sub_label   = rgar( $last_input, 'customLabel' ) != '' ? $last_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_last', $form_id ), esc_html__( 'Last', 'kdnaforms' ), $form_id );
-				$suffix_sub_label      = rgar( $suffix_input, 'customLabel' ) != '' ? $suffix_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_suffix', $form_id ), esc_html__( 'Suffix', 'kdnaforms' ), $form_id );
+				$prefix_sub_label      = rgar( $prefix_input, 'customLabel' ) != '' ? $prefix_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_prefix', $form_id ), esc_html__( 'Prefix', 'kdnaforms' ), $form_id );
+				$first_name_sub_label  = rgar( $first_input, 'customLabel' ) != '' ? $first_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_first', $form_id ), esc_html__( 'First', 'kdnaforms' ), $form_id );
+				$middle_name_sub_label = rgar( $middle_input, 'customLabel' ) != '' ? $middle_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_middle', $form_id ), esc_html__( 'Middle', 'kdnaforms' ), $form_id );
+				$last_name_sub_label   = rgar( $last_input, 'customLabel' ) != '' ? $last_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_last', $form_id ), esc_html__( 'Last', 'kdnaforms' ), $form_id );
+				$suffix_sub_label      = rgar( $suffix_input, 'customLabel' ) != '' ? $suffix_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_suffix', $form_id ), esc_html__( 'Suffix', 'kdnaforms' ), $form_id );
 
 				$prefix_markup = '';
 				$first_markup  = '';
@@ -393,8 +393,8 @@ class KDNA_Field_Name extends KDNA_Field {
 			default :
 				$first_tabindex       = KDNACommon::get_tabindex();
 				$last_tabindex        = KDNACommon::get_tabindex();
-				$first_name_sub_label = rgar( $first_input, 'customLabel' ) != '' ? $first_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_first', $form_id ), esc_html__( 'First', 'kdnaforms' ), $form_id );
-				$last_name_sub_label  = rgar( $last_input, 'customLabel' ) != '' ? $last_input['customLabel'] : gf_apply_filters( array( 'kdnaform_name_last', $form_id ), esc_html__( 'Last', 'kdnaforms' ), $form_id );
+				$first_name_sub_label = rgar( $first_input, 'customLabel' ) != '' ? $first_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_first', $form_id ), esc_html__( 'First', 'kdnaforms' ), $form_id );
+				$last_name_sub_label  = rgar( $last_input, 'customLabel' ) != '' ? $last_input['customLabel'] : kdna_apply_filters( array( 'kdnaform_name_last', $form_id ), esc_html__( 'Last', 'kdnaforms' ), $form_id );
 				if ( $is_sub_label_above ) {
 					$first_markup = '';
 					$style        = ( $is_admin && rgar( $first_input, 'isHidden' ) ) ? "style='display:none;'" : '';

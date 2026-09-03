@@ -82,7 +82,7 @@ class KDNA_Field_Post_Tags extends KDNA_Field {
 		$aria_describedby      = $this->get_aria_describedby();
 
 		// Use the WordPress built-in class "howto" in the form editor.
-		$text_hint = '<p class="gfield_post_tags_hint gfield_description" id="' . $field_id . '_desc">' . gf_apply_filters( array(
+		$text_hint = '<p class="gfield_post_tags_hint gfield_description" id="' . $field_id . '_desc">' . kdna_apply_filters( array(
 				'kdnaform_post_tags_hint',
 				$form_id,
 				$this->id,

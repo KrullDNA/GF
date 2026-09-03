@@ -338,7 +338,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( !empty( $_GET['subview'] ) && $_GET['subview'] === 'kdnaformswebapi' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<script>
-				var gf_webapi_vars = {
+				var kdna_webapi_vars = {
 					"api_enabled": ' . $this->is_api_enabled() . ',
 					"enable_api_checkbox_checked": ' . $this->get_setting( "enabled" ) . ',
 				};</script>';
@@ -381,7 +381,7 @@ if ( class_exists( 'KDNAForms' ) ) {
                         <legend class="screen-reader-text"><?php esc_html__( 'Add New Key', 'kdnaforms' ); ?></legend>
 
 						<!-- Nonce -->
-						<?php wp_nonce_field( 'gf_restapi_edit_key' ); ?>
+						<?php wp_nonce_field( 'kdna_restapi_edit_key' ); ?>
 
 						<!-- Key ID -->
 						<input id="gform-webapi-key" type="hidden" />
@@ -695,7 +695,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		 * @return bool
 		 */
 		public function is_v2_enabled( $settings = null ) {
-			return $this->get_setting( 'enabled', '', $settings ) && ! is_callable( 'gf_rest_api' );
+			return $this->get_setting( 'enabled', '', $settings ) && ! is_callable( 'kdna_rest_api' );
 		}
 
 		public function settings_api_keys( $section, $is_first = false ) {
@@ -1071,7 +1071,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		public function ajax_delete_key() {
 
 			// Verify nonce.
-			check_ajax_referer( 'gf_revoke_key' );
+			check_ajax_referer( 'kdna_revoke_key' );
 
 			// Verify capabilities.
 			if ( ! KDNACommon::current_user_can_any( $this->_capabilities_settings_page ) ) {
@@ -1099,7 +1099,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( rgget( 'key_id' ) ) {
 
 				// Verify nonce.
-				if ( ! wp_verify_nonce( rgget( 'nonce' ), 'gf_restapi_edit_key' ) ) {
+				if ( ! wp_verify_nonce( rgget( 'nonce' ), 'kdna_restapi_edit_key' ) ) {
 					wp_send_json_error( array( 'message' => __( 'Access denied.', 'kdnaforms' ) ) );
 				}
 
@@ -1131,7 +1131,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( isset( $_POST['key_id'] ) ) {
 
 				// Verify nonce.
-				if ( ! wp_verify_nonce( rgpost( 'nonce' ), 'gf_restapi_edit_key' ) ) {
+				if ( ! wp_verify_nonce( rgpost( 'nonce' ), 'kdna_restapi_edit_key' ) ) {
 					wp_send_json_error( array( 'message' => __( 'Access denied.', 'kdnaforms' ) ) );
 				}
 
@@ -1844,7 +1844,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 					 * @var bool   $include_totals Whether to include totals; defaults to true.
 					 * @var object $form           The current form object.
 					 */
-					$include_totals = gf_apply_filters( array( 'kdnaform_web_api_retrieve_form_totals', $form->id ), true, $form );
+					$include_totals = kdna_apply_filters( array( 'kdnaform_web_api_retrieve_form_totals', $form->id ), true, $form );
 
 					$form_id   = $form->id;
 					$form_info = array(
@@ -2239,7 +2239,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( isset( $_REQUEST['_gf_json_nonce'] ) && is_user_logged_in() ) {
 				$this->log_debug( __METHOD__ . '(): Using WP cookie authentication.' );
 				// WordPress cookie authentication for plugins and themes on this server.
-				check_admin_referer( 'gf_api', '_gf_json_nonce' );
+				check_admin_referer( 'kdna_api', '_gf_json_nonce' );
 
 				return true;
 			}

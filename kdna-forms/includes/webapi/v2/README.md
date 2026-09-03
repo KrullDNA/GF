@@ -954,7 +954,7 @@ the entry permanently but the response code will be 410 (Gone). Use the 'force' 
 
   ```json
   {
-    "code":    "gf_cannot_delete",
+    "code":    "kdna_cannot_delete",
     "message": "Invalid entry id: 71",
     "data":    {
       "status": 500
@@ -1922,7 +1922,7 @@ Submits the specified form ID with the specified values.
   "is_valid":             true,
   "page_number":          0,
   "source_page_number":   1,
-  "confirmation_message": "<div id='gform_confirmation_wrapper_6' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_6' class='gform_confirmation_message_6 gform_confirmation_message'>Thanks for contacting us! We will get in touch with you shortly.<\/div><\/div>"
+  "confirmation_message": "<div id='kform_confirmation_wrapper_6' class='gform_confirmation_wrapper '><div id='kform_confirmation_message_6' class='kform_confirmation_message_6 gform_confirmation_message'>Thanks for contacting us! We will get in touch with you shortly.<\/div><\/div>"
 }
 ```
 

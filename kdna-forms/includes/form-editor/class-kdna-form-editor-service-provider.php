@@ -52,7 +52,7 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 	// Endpoint names, used as keys for the endpoint classes in the service container.
 	// keys are the same names for the ajax actions.
 	const ENDPOINT_FORM_EDITOR_SAVE  = 'form_editor_save_form';
-	const ENDPOINT_SUBMITTED_FIELDS  = 'gf_get_submitted_fields';
+	const ENDPOINT_SUBMITTED_FIELDS  = 'kdna_get_submitted_fields';
 
 	/**
 	 * The endpoint class names and their corresponding string keys in the service container.

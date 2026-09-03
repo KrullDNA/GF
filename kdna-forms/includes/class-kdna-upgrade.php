@@ -13,7 +13,7 @@ class KDNA_Upgrade {
 
 	private $versions = null;
 
-	private $auto_increment_tables_cache_key = 'gf_tables_auto_increment_settings';
+	private $auto_increment_tables_cache_key = 'kdna_tables_auto_increment_settings';
 	/**
 	 * Contains all DB versions that require a manual upgrade via the upgrade wizard.
 	 *

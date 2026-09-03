@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Libraries;
 
 class Dom_Parser {
 
-	const NO_PARSE_QUERY_ARG = 'gf_disable_hooks_injection';
+	const NO_PARSE_QUERY_ARG = 'kdna_disable_hooks_injection';
 
 	/**
 	 * The string representation of the current DOM.

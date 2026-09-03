@@ -233,8 +233,8 @@ class KDNASettings {
 			KDNACommon::delete_directory( KDNAFormsModel::get_upload_root() );
 
 			// Logging module removed.
-			// gf_logging()->delete_settings();
-			// gf_logging()->delete_log_files();
+			// kdna_logging()->delete_settings();
+			// kdna_logging()->delete_log_files();
 
 			delete_option( 'widget_kdnaform_widget' );
 			delete_option( 'rg_gforms_default_theme' );
@@ -1337,7 +1337,7 @@ class KDNASettings {
 		<div class="wrap <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
 
 		<?php
-		KDNACommon::gf_header();
+		KDNACommon::kdna_header();
 
 	}
 

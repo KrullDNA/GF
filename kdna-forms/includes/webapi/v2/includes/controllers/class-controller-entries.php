@@ -188,7 +188,7 @@ class KDNA_REST_Entries_Controller extends KDNA_REST_Form_Entries_Controller {
 
 			if ( is_wp_error( $result ) ) {
 				$message = $result->get_error_message();
-				return new WP_Error( 'gf_cannot_delete', $message, array( 'status' => 500 ) );
+				return new WP_Error( 'kdna_cannot_delete', $message, array( 'status' => 500 ) );
 			}
 
 			$previous = $this->prepare_item_for_response( $entry, $request );
@@ -197,7 +197,7 @@ class KDNA_REST_Entries_Controller extends KDNA_REST_Form_Entries_Controller {
 		} else {
 			if ( rgar( $entry, 'status' ) == 'trash' ) {
 				$message = __( 'The entry has already been deleted.', 'kdnaforms' );
-				return new WP_Error( 'gf_already_trashed', $message, array( 'status' => 410 ) );
+				return new WP_Error( 'kdna_already_trashed', $message, array( 'status' => 410 ) );
 			}
 
 			// Trash the entry

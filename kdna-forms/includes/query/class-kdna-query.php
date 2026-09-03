@@ -1534,7 +1534,7 @@ AND ( meta_key REGEXP '^[0-9|.]+$'
 				$inputs = $field->get_entry_inputs();
 				if ( is_array( $inputs ) ) {
 					foreach ( $inputs as $input ) {
-						$entries[ $entry['id'] ][ (string) $input['id'] ] = gf_apply_filters( array(
+						$entries[ $entry['id'] ][ (string) $input['id'] ] = kdna_apply_filters( array(
 							'kdnaform_get_input_value',
 							$form['id'],
 							$field->id,
@@ -1546,7 +1546,7 @@ AND ( meta_key REGEXP '^[0-9|.]+$'
 					if ( in_array( (string) $field->id, $openssl_encrypted_fields ) ) {
 						$value = KDNACommon::openssl_decrypt( $value );
 					}
-					$entries[ $entry['id'] ][ $field->id ] = gf_apply_filters( array(
+					$entries[ $entry['id'] ][ $field->id ] = kdna_apply_filters( array(
 						'kdnaform_get_input_value',
 						$form['id'],
 						$field->id

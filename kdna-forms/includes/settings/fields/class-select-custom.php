@@ -63,7 +63,7 @@ class Select_Custom extends Base {
 		foreach ( $this->inputs['select']['choices'] as $choice ) {
 
 			// If choice is a custom option, set flag and stop loop.
-			if ( 'gf_custom' === rgar( $choice, 'name' ) || 'gf_custom' === rgar( $choice, 'value' ) ) {
+			if ( 'kdna_custom' === rgar( $choice, 'name' ) || 'kdna_custom' === rgar( $choice, 'value' ) ) {
 				$has_custom_option = true;
 				break;
 			}
@@ -71,7 +71,7 @@ class Select_Custom extends Base {
 			// Check sub-choices, if present.
 			if ( rgar( $choice, 'choices' ) ) {
 				foreach ( $choice['choices'] as $subchoice ) {
-					if ( 'gf_custom' === rgar( $subchoice, 'name' ) || 'gf_custom' === rgar( $subchoice, 'value' ) ) {
+					if ( 'kdna_custom' === rgar( $subchoice, 'name' ) || 'kdna_custom' === rgar( $subchoice, 'value' ) ) {
 						$has_custom_option = true;
 						break;
 					}
@@ -97,7 +97,7 @@ class Select_Custom extends Base {
 			// Add custom option.
 			$this->inputs['select']['choices'][] = array(
 				'label' => $custom_label,
-				'value' => 'gf_custom',
+				'value' => 'kdna_custom',
 			);
 
 		}
@@ -133,7 +133,7 @@ class Select_Custom extends Base {
 		$custom_input_display = '';
 
 		// If selected option is the custom option or the only option is the custom option, hide select field.
-		if ( $selected_option === 'gf_custom' || ( 1 === count( $this->inputs['select']->choices ) && $this->inputs['select']->choices[0]['value'] === 'gf_custom' ) ) {
+		if ( $selected_option === 'kdna_custom' || ( 1 === count( $this->inputs['select']->choices ) && $this->inputs['select']->choices[0]['value'] === 'kdna_custom' ) ) {
 			$this->inputs['select']->style = 'display:none;';
 		} else {
 			$custom_input_display = 'style="display:none;"';
@@ -187,13 +187,13 @@ class Select_Custom extends Base {
 		}
 
 		// If field is required and no custom value was submitted, set field error.
-		if ( $this->required && $select_value === 'gf_custom' && rgblank( $custom_value ) ) {
+		if ( $this->required && $select_value === 'kdna_custom' && rgblank( $custom_value ) ) {
 			$this->inputs['select']->set_error();
 			return;
 		}
 
 		// If a custom choice was not selected, validate selected choice.
-		if ( $select_value === 'gf_custom' ) {
+		if ( $select_value === 'kdna_custom' ) {
 
 			// Loop through field choices, determine if valid.
 			foreach ( $this->inputs['select']->choices as $choice ) {

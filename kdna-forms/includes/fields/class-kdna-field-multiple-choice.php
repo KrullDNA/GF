@@ -98,7 +98,7 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		 * @param object $field         The field currently being processed.
 		 * @param string $value         The value to be selected if the field is being populated.
 		 */
-		$select_all = gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, array(), $this, $value );
+		$select_all = kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, array(), $this, $value );
 
 		return $select_all;
 	}
@@ -135,7 +135,7 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		 *
 		 * @return string
 		 */
-		return gf_apply_filters( array( 'kdnaform_default_choice_alignment', $field->formId ), 'vertical', $field );
+		return kdna_apply_filters( array( 'kdnaform_default_choice_alignment', $field->formId ), 'vertical', $field );
 	}
 
 	public function get_form_editor_inline_script_on_page_render() {

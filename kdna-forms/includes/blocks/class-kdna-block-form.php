@@ -134,7 +134,7 @@ class KDNA_Block_Form extends KDNA_Block {
 
 		// Add KDNA Forms styling if CSS is enabled.
 		if ( ! KDNACommon::is_frontend_default_css_disabled() ) {
-			$deps = array_merge( $deps, array( 'gforms_reset_css', 'kdnaform_basic', 'gforms_formsmain_css', 'gforms_ready_class_css', 'gforms_browsers_css', 'kdnaform_theme' ) );
+			$deps = array_merge( $deps, array( 'kforms_reset_css', 'kdnaform_basic', 'kforms_formsmain_css', 'kforms_ready_class_css', 'kforms_browsers_css', 'kdnaform_theme' ) );
 
 			/**
 			 * Allows users to disable the main theme.css file from being loaded on the Front End.

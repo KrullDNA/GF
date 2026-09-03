@@ -351,7 +351,7 @@ class KDNA_Field_Phone extends KDNA_Field {
 		 * @param array $phone_formats The phone formats.
 		 * @param int   $form_id       The ID of the current form.
 		 */
-		return gf_apply_filters( array( 'kdnaform_phone_formats', $form_id ), $phone_formats, $form_id );
+		return kdna_apply_filters( array( 'kdnaform_phone_formats', $form_id ), $phone_formats, $form_id );
 	}
 
 	/**

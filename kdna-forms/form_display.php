@@ -51,14 +51,14 @@ class KDNAFormDisplay {
 		$form = KDNAAPI::get_form( $form_id );
 
 		$kdnaform_pre_process_args = array( 'kdnaform_pre_process', $form_id );
-		if ( gf_has_filter( $kdnaform_pre_process_args ) ) {
+		if ( kdna_has_filter( $kdnaform_pre_process_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_pre_process.' );
 			/**
 			 * Filter the form before GF begins to process the submission.
 			 *
 			 * @param array $form The Form Object
 			 */
-			$filtered_form = gf_apply_filters( array( 'kdnaform_pre_process', $form['id'] ), $form );
+			$filtered_form = kdna_apply_filters( array( 'kdnaform_pre_process', $form['id'] ), $form );
 			if ( $filtered_form !== null ) {
 				$form = $filtered_form;
 			}
@@ -156,7 +156,7 @@ class KDNAFormDisplay {
 			 * @param bool   $do_abort  The value being filtered. True to abort submission and display the confirmation. False to continue with submission. Defaults to false.
 			 * @param array  $form         The current form object.
 			 */
-			$abort_with_confirmation = gf_apply_filters( array( 'kdnaform_abort_submission_with_confirmation', $form['id'] ), false, $form );
+			$abort_with_confirmation = kdna_apply_filters( array( 'kdnaform_abort_submission_with_confirmation', $form['id'] ), false, $form );
 
 			if ( $abort_with_confirmation ) {
 				if ( $saving_for_later ) {
@@ -174,7 +174,7 @@ class KDNAFormDisplay {
 				KDNACommon::log_debug( 'KDNAFormDisplay::process_form(): Submission is valid. Moving forward.' );
 
 				$kdnaform_pre_submission_args = array( 'kdnaform_pre_submission', $form_id );
-				if ( gf_has_action( $kdnaform_pre_submission_args ) ) {
+				if ( kdna_has_action( $kdnaform_pre_submission_args ) ) {
 					KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_pre_submission.' );
 					/**
 					 * Fires before form submission is handled
@@ -185,12 +185,12 @@ class KDNAFormDisplay {
 					 *
 					 * @param array $form The Form object
 					 */
-					gf_do_action( $kdnaform_pre_submission_args, $form );
+					kdna_do_action( $kdnaform_pre_submission_args, $form );
 					KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_pre_submission.' );
 				}
 
 				$kdnaform_pre_submission_filter_args = array( 'kdnaform_pre_submission_filter', $form_id );
-				if ( gf_has_filter( $kdnaform_pre_submission_filter_args ) ) {
+				if ( kdna_has_filter( $kdnaform_pre_submission_filter_args ) ) {
 					KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_pre_submission_filter.' );
 					/**
 					 * Allows the form object to be modified before the entry is saved.
@@ -199,14 +199,14 @@ class KDNAFormDisplay {
 					 *
 					 * @param array $form The form currently being processed.
 					 */
-					$form = gf_apply_filters( $kdnaform_pre_submission_filter_args, $form );
+					$form = kdna_apply_filters( $kdnaform_pre_submission_filter_args, $form );
 					KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_pre_submission_filter.' );
 				}
 
 				$confirmation = self::handle_submission( $form, $lead, $ajax );
 
 				$kdnaform_after_submission_args = array( 'kdnaform_after_submission', $form_id );
-				if ( gf_has_action( $kdnaform_after_submission_args ) ) {
+				if ( kdna_has_action( $kdnaform_after_submission_args ) ) {
 					KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_after_submission.' );
 					/**
 					 * Allows additional actions to be performed after successful form submission.
@@ -216,7 +216,7 @@ class KDNAFormDisplay {
 					 * @param array $lead The Entry object.
 					 * @param array $form The Form object.
 					 */
-					gf_do_action( $kdnaform_after_submission_args, $lead, $form );
+					kdna_do_action( $kdnaform_after_submission_args, $lead, $form );
 					KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_after_submission.' );
 				}
 
@@ -269,7 +269,7 @@ class KDNAFormDisplay {
 				header( "Location: {$confirmation["redirect"]}" );
 
 				$kdnaform_post_submission_args = array( 'kdnaform_post_submission', $form_id );
-				if ( gf_has_action( $kdnaform_post_submission_args ) ) {
+				if ( kdna_has_action( $kdnaform_post_submission_args ) ) {
 					KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_post_submission.' );
 					/**
 					 * Allows additional actions to be performed after form submission when the confirmation is a redirect.
@@ -277,7 +277,7 @@ class KDNAFormDisplay {
 					 * @param array $lead The Entry object.
 					 * @param array $form The Form object.
 					 */
-					gf_do_action( $kdnaform_post_submission_args, $lead, $form );
+					kdna_do_action( $kdnaform_post_submission_args, $lead, $form );
 					KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_post_submission.' );
 				}
 				KDNACommon::log_debug( __METHOD__ . sprintf( '(): Processing completed in %F seconds.', KDNACommon::timer_end( __METHOD__ ) ) );
@@ -293,7 +293,7 @@ class KDNAFormDisplay {
 		self::set_submission_if_null( $form_id, 'source_page_number', $source_page_number );
 
 		$kdnaform_post_process_args = array( 'kdnaform_post_process', $form_id );
-		if ( gf_has_action( $kdnaform_post_process_args ) ) {
+		if ( kdna_has_action( $kdnaform_post_process_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_post_process.' );
 			/**
 			 * Fires after the form processing is completed. Form processing happens when submitting a page on a multi-page form (i.e. going to the "Next" or "Previous" page), or
@@ -304,7 +304,7 @@ class KDNAFormDisplay {
 			 * @param int   $source_page_number In a multi-page form, this parameters contains the number of the page that the submission came from.
 			 *                                  For example, when clicking "Next" on page 1, this parameter will be set to 1. When clicking "Previous" on page 2, this parameter will be set to 2.
 			 */
-			gf_do_action( $kdnaform_post_process_args, $form, $page_number, $source_page_number );
+			kdna_do_action( $kdnaform_post_process_args, $form, $page_number, $source_page_number );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_post_process.' );
 		}
 
@@ -344,7 +344,7 @@ class KDNAFormDisplay {
 		);
 
 		$kdnaform_review_page_args = array( 'kdnaform_review_page', rgar( $form, 'id' ) );
-		if ( gf_has_filter( $kdnaform_review_page_args ) ) {
+		if ( kdna_has_filter( $kdnaform_review_page_args ) ) {
 
 			if ( empty( $partial_entry ) ) {
 				// Prepare partial entry for review page.
@@ -368,7 +368,7 @@ class KDNAFormDisplay {
 			 * @param array       $form          The current form object
 			 * @param array|false $partial_entry The partial entry for the form or false on initial form display.
 			 */
-			$review_page = gf_apply_filters( $kdnaform_review_page_args, $review_page, $form, $partial_entry );
+			$review_page = kdna_apply_filters( $kdnaform_review_page_args, $review_page, $form, $partial_entry );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_review_page.' );
 
 			if ( ! rgempty( 'button_text', $review_page ) ) {
@@ -673,7 +673,7 @@ class KDNAFormDisplay {
 		 * @param int   $current_page The page that was submitted.
 		 * @param array $field_values Dynamic population values that were provided when loading the form.
 		 */
-		return (int) gf_apply_filters( array( 'kdnaform_target_page', $form_id ), $page_number, $form, $current_page, $field_values );
+		return (int) kdna_apply_filters( array( 'kdnaform_target_page', $form_id ), $page_number, $form, $current_page, $field_values );
 	}
 
 	public static function get_source_page( $form_id ) {
@@ -934,7 +934,7 @@ class KDNAFormDisplay {
 	        }
 	    ';
 
-		$post_render_script = gf_apply_filters( array( 'kdnaform_post_render_script', $form_id ), $post_render_script, $form_id, $current_page );
+		$post_render_script = kdna_apply_filters( array( 'kdnaform_post_render_script', $form_id ), $post_render_script, $form_id, $current_page );
 
 		return str_replace( [ "\t", "\n", "\r" ], '', $post_render_script );
 	}
@@ -1088,7 +1088,7 @@ class KDNAFormDisplay {
 			 * @param int $form_id The Form ID to filter when disabling the form view counter
 			 * @param bool Default set to false (view counter enabled), can be set to true to disable the counter
 			 */
-			$view_counter_disabled = gf_apply_filters( array( 'kdnaform_disable_view_counter', $form_id ), false );
+			$view_counter_disabled = kdna_apply_filters( array( 'kdnaform_disable_view_counter', $form_id ), false );
 
 			if ( rgar( $submission_info, 'form' ) ) {
 				$submission_info['form']['page_instance'] = rgar( $form, 'page_instance', 0 );
@@ -1108,7 +1108,7 @@ class KDNAFormDisplay {
 						 * @param array $lead The Entry object
 						 * @param array $form The Form object
 						 */
-						gf_do_action( array( 'kdnaform_post_submission', $form_id ), $lead, $form );
+						kdna_do_action( array( 'kdnaform_post_submission', $form_id ), $lead, $form );
 					} else {
 						$source_page_number = (int) rgar( $submission_info, 'source_page_number' );
 						/**
@@ -1118,7 +1118,7 @@ class KDNAFormDisplay {
 						 * @param int   $source_page_number The page that was submitted
 						 * @param int   $page_number        The page that the user is being sent to
 						 */
-						gf_do_action( array( 'kdnaform_post_paging', $form_id ), $form, $source_page_number, $page_number );
+						kdna_do_action( array( 'kdnaform_post_paging', $form_id ), $form, $source_page_number, $page_number );
 					}
 				}
 			} elseif ( ! current_user_can( 'administrator' ) && ! $view_counter_disabled ) {
@@ -1136,7 +1136,7 @@ class KDNAFormDisplay {
 		$has_pages = self::has_pages( $form );
 
 		//calling tab index filter
-		KDNACommon::$tab_index = gf_apply_filters( array( 'kdnaform_tabindex', $form_id ), $tabindex, $form );
+		KDNACommon::$tab_index = kdna_apply_filters( array( 'kdnaform_tabindex', $form_id ), $tabindex, $form );
 
 		//Don't display inactive forms
 		if ( ! $force_display && ! $is_postback ) {
@@ -1228,13 +1228,13 @@ class KDNAFormDisplay {
 
 			// Conditional logic normally initialises through a long chain: three
 			// separate events gating gform.initializeOnLoaded, then
-			// kdnaform_post_render, then gf_apply_rules. That chain has proven
+			// kdnaform_post_render, then kdnaform_apply_rules. That chain has proven
 			// unreliable in the wild — when it stalls the rules never run, so a
 			// field configured to start hidden renders visible and the wrapper is
 			// never revealed.
 			//
 			// Rather than wait on it, drive the rules directly as soon as the
-			// conditional logic script is available. gf_apply_rules only reads the
+			// conditional logic script is available. kdnaform_apply_rules only reads the
 			// current field values and shows or hides accordingly, so it is safe to
 			// run twice if the normal path does complete.
 			if ( $should_render_hidden ) {
@@ -1270,7 +1270,7 @@ class KDNAFormDisplay {
 								&& window.kdna_form_conditional_logic[ %1$d ];
 
 							// Not ready yet — keep waiting.
-							if ( ! cfg || ! cfg.logic || typeof window.gf_apply_rules !== "function" ) {
+							if ( ! cfg || ! cfg.logic || typeof window.kdnaform_apply_rules !== "function" ) {
 								return false;
 							}
 
@@ -1283,7 +1283,7 @@ class KDNAFormDisplay {
 
 							try {
 								if ( ids.length ) {
-									window.gf_apply_rules( %1$d, ids, true );
+									window.kdnaform_apply_rules( %1$d, ids, true );
 								}
 							} catch ( e ) {
 								if ( window.console && window.console.error ) {
@@ -1336,7 +1336,7 @@ class KDNAFormDisplay {
 			 *
 			 * @return string
 			 */
-			$form_string .= gf_apply_filters( array( 'kdnaform_form_after_open', $form_id ), '', $form );
+			$form_string .= kdna_apply_filters( array( 'kdnaform_form_after_open', $form_id ), '', $form );
 
 			$anchor      = self::get_anchor( $form, $ajax );
 			$form_string .= $anchor['tag'];
@@ -1356,14 +1356,14 @@ class KDNAFormDisplay {
 			$display_required_legend = KDNACommon::has_required_field( $form ) && ! KDNACommon::is_legacy_markup_enabled( $form ) && 'text' !== $required_indicator_type;
 
 			if ( ( $display_title || $display_description ) || $display_required_legend ) {
-				$gform_title_open  = KDNACommon::is_legacy_markup_enabled( $form ) ? '<h3 class="gform_title">' : '<h2 class="gform_title">';
-				$gform_title_close = KDNACommon::is_legacy_markup_enabled( $form ) ? '</h3>' : '</h2>';
+				$kform_title_open  = KDNACommon::is_legacy_markup_enabled( $form ) ? '<h3 class="gform_title">' : '<h2 class="gform_title">';
+				$kform_title_close = KDNACommon::is_legacy_markup_enabled( $form ) ? '</h3>' : '</h2>';
 
 				$form_string .= "
                         <div class='gform_heading'>";
 				if ( $display_title ) {
 					$form_string .= "
-                            {$gform_title_open}" . rgar( $form, 'title' ) . $gform_title_close;
+                            {$kform_title_open}" . rgar( $form, 'title' ) . $kform_title_close;
 				}
 				if ( $display_description ) {
 					$form_string .= "
@@ -1379,7 +1379,7 @@ class KDNAFormDisplay {
 					 * @param string $message The required indicator legend.
 					 * @param array  $form    The current Form.
 					 */
-					$required_legend = gf_apply_filters(
+					$required_legend = kdna_apply_filters(
 						array( 'kdnaform_required_legend', $form['id'] ),
 						/* Translators: the text or symbol that indicates a field is required */
 						sprintf( esc_html__( '"%s" indicates required fields', 'kdnaforms' ), KDNAFormsModel::get_required_indicator( $form_id ) ),
@@ -1393,7 +1393,7 @@ class KDNAFormDisplay {
 			}
 
 			$action       = esc_url( $action );
-			$form_string .= gf_apply_filters( array( 'kdnaform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='gform_{$form_id}' {$form_css_class} action='{$action}' data-formid='{$form_id}' novalidate>", $form );
+			$form_string .= kdna_apply_filters( array( 'kdnaform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='gform_{$form_id}' {$form_css_class} action='{$action}' data-formid='{$form_id}' novalidate>", $form );
 
 			// If Save and Continue token was provided but expired/invalid, display error message.
 			if ( isset( $_GET['gf_token'] ) && ! is_array( $incomplete_submission_info ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -1406,7 +1406,7 @@ class KDNAFormDisplay {
 				 * @param string $message Save & Continue expired/invalid link error message.
 				 * @param array  $form    The current Form object.
 				 */
-				$savecontinue_expired_message = gf_apply_filters( array(
+				$savecontinue_expired_message = kdna_apply_filters( array(
 					'kdnaform_savecontinue_expired_message',
 					$form['id'],
 				), esc_html__( 'Save and Continue link used is expired or invalid.', 'kdnaforms' ), $form );
@@ -1488,13 +1488,13 @@ class KDNAFormDisplay {
 			 *
 			 * @return bool
 			 */
-			$always_show_spinner = gf_apply_filters( array( 'kdnaform_always_show_spinner', $form_id ), true );
+			$always_show_spinner = kdna_apply_filters( array( 'kdnaform_always_show_spinner', $form_id ), true );
 
 			$should_show_spinner = $ajax || $always_show_spinner;
 
 			if ( $should_show_spinner ) {
 				$default_spinner = KDNACommon::get_base_url() . '/images/spinner.svg';
-				$spinner_url     = gf_apply_filters( array( 'gform_ajax_spinner_url', $form_id ), $default_spinner, $form );
+				$spinner_url     = kdna_apply_filters( array( 'gform_ajax_spinner_url', $form_id ), $default_spinner, $form );
 				$theme_slug      = self::get_form_theme_slug( $form );
 				$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'gravity-theme', 'legacy' ) );
 
@@ -1607,7 +1607,7 @@ class KDNAFormDisplay {
 				}
 			}
 
-			$form_string = gf_apply_filters( array( 'kdnaform_get_form_filter', $form_id ), $form_string, $form );
+			$form_string = kdna_apply_filters( array( 'kdnaform_get_form_filter', $form_id ), $form_string, $form );
 
 			if ( isset( $_GET['kdnaform_debug'] ) || KDNACommon::is_preview() ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				KDNACommon::log_debug( __METHOD__ . sprintf( '(): Preparing form (#%d) markup completed in %F seconds.', $form_id, KDNACommon::timer_end( __METHOD__ ) ) );
@@ -1789,7 +1789,7 @@ class KDNAFormDisplay {
 		 * @param array $form The Form object to filter through
 		 * @param int $current_page The Current form page ID (If paging is enabled)
 		 */
-		$form_string = gf_apply_filters( array( 'gform_footer_init_scripts_filter', $form_id ), $form_string, $form, $current_page );
+		$form_string = kdna_apply_filters( array( 'gform_footer_init_scripts_filter', $form_id ), $form_string, $form, $current_page );
 
 		if ( ! isset( $_init_forms[ $form_id ] ) ) {
 			echo $form_string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -1892,7 +1892,7 @@ class KDNAFormDisplay {
 			$button_input = '';
 		} else {
 			$button_input = self::get_form_button( $form['id'], "gform_submit_button_{$form['id']}", $button, __( 'Submit', 'kdnaforms' ), 'gform_button', __( 'Submit', 'kdnaforms' ), 0 );
-			$button_input = gf_apply_filters( array( 'kdnaform_submit_button', $form_id ), $button_input, $form );
+			$button_input = kdna_apply_filters( array( 'kdnaform_submit_button', $form_id ), $button_input, $form );
 		}
 
 		$save_button = rgars( $form, 'save/enabled' ) ? self::get_form_button( $form_id, "kdnaform_save_{$form_id}_footer", $form['save']['button'], rgars( $form, 'save/button/text' ), 'kdnaform_save_link gform-theme-button gform-theme-button--secondary', rgars( $form, 'save/button/text' ), 0, "jQuery(\"#gform_save_{$form_id}\").val(1);" ) : '';
@@ -2053,7 +2053,7 @@ class KDNAFormDisplay {
 	public static function handle_submission( &$form, &$lead, $ajax = false ) {
 		$form_id = absint( rgar( $form, 'id' ) );
 
-		$lead_id = gf_apply_filters( array( 'kdnaform_entry_id_pre_save_lead', $form_id ), null, $form );
+		$lead_id = kdna_apply_filters( array( 'kdnaform_entry_id_pre_save_lead', $form_id ), null, $form );
 
 		if ( ! empty( $lead_id ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): The kdnaform_entry_id_pre_save_lead filter was used to set the entry ID to ' . var_export( $lead_id, true ) ); // phpcs:ignore QITStandard.PHP.DebugCode.DebugFunctionFound
@@ -2105,7 +2105,7 @@ class KDNAFormDisplay {
 		self::log_browser_session( $form_id, $lead['id'] );
 
 		$kdnaform_entry_post_save_args = array( 'kdnaform_entry_post_save', $form_id );
-		if ( gf_has_filter( $kdnaform_entry_post_save_args ) ) {
+		if ( kdna_has_filter( $kdnaform_entry_post_save_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_entry_post_save.' );
 			/**
 			 * Allows filtering of the entry after it has been saved to the database.
@@ -2115,7 +2115,7 @@ class KDNAFormDisplay {
 			 * @param array $lead The entry that was saved to the database.
 			 * @param array $form The form currently being processed.
 			 */
-			$lead = gf_apply_filters( $kdnaform_entry_post_save_args, $lead, $form );
+			$lead = kdna_apply_filters( $kdnaform_entry_post_save_args, $lead, $form );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_entry_post_save.' );
 		}
 
@@ -2329,7 +2329,7 @@ class KDNAFormDisplay {
 
 		$form_id = absint( $form['id'] );
 		$filter  = array( 'kdnaform_confirmation', $form_id );
-		if ( gf_has_filters( $filter ) ) {
+		if ( kdna_has_filters( $filter ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_confirmation.' );
 
 			/**
@@ -2342,7 +2342,7 @@ class KDNAFormDisplay {
 			 * @param array        $entry        The entry created from the form submission.
 			 * @param bool         $ajax         Indicates if ajax is enabled for the current form.
 			 */
-			$confirmation = gf_apply_filters( $filter, $confirmation, $form, $entry, $ajax );
+			$confirmation = kdna_apply_filters( $filter, $confirmation, $form, $entry, $ajax );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_confirmation.' );
 		}
 
@@ -2553,7 +2553,7 @@ class KDNAFormDisplay {
 		KDNACommon::log_debug( __METHOD__ . "(): Starting for form #{$form_id}." );
 
 		$kdnaform_pre_validation_args = array( 'kdnaform_pre_validation', $form_id );
-		if ( gf_has_filter( $kdnaform_pre_validation_args ) ) {
+		if ( kdna_has_filter( $kdnaform_pre_validation_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_pre_validation.' );
 			/**
 			 * Allows the form to be modified before the submission is validated.
@@ -2563,7 +2563,7 @@ class KDNAFormDisplay {
 			 *
 			 * @param array $form The form for the submission to be validated.
 			 */
-			$form = gf_apply_filters( $kdnaform_pre_validation_args, $form );
+			$form = kdna_apply_filters( $kdnaform_pre_validation_args, $form );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_pre_validation.' );
 		}
 
@@ -2665,7 +2665,7 @@ class KDNAFormDisplay {
 		KDNACommon::log_debug( __METHOD__ . sprintf( '(): Field validation completed in %F seconds.', KDNACommon::timer_end( 'field-validation' ) ) );
 
 		$kdnaform_validation_args = array( 'kdnaform_validation', $form_id );
-		if ( ! gf_has_filter( $kdnaform_validation_args ) ) {
+		if ( ! kdna_has_filter( $kdnaform_validation_args ) ) {
 			return $is_valid;
 		}
 
@@ -2692,7 +2692,7 @@ class KDNAFormDisplay {
 		 * }
 		 * @param string $context           The context for the current submission. Possible values: form-submit, api-submit, api-validate.
 		 */
-		$validation_result = gf_apply_filters( $kdnaform_validation_args, $validation_result, $context );
+		$validation_result = kdna_apply_filters( $kdnaform_validation_args, $validation_result, $context );
 		KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_validation.' );
 
 		$is_valid               = $validation_result['is_valid'];
@@ -2759,7 +2759,7 @@ class KDNAFormDisplay {
 				 *
 				 * @since 1.5
 				 */
-				$field->validation_message = gf_apply_filters( array(
+				$field->validation_message = kdna_apply_filters( array(
 					'kdnaform_duplicate_message',
 					$form['id']
 				), $message, $form, $field, $value );
@@ -2807,7 +2807,7 @@ class KDNAFormDisplay {
 		 * @param KDNA_Field $field    The field currently being validated.
 		 * @param string   $context  The context for the current submission. Possible values: form-submit, api-submit, api-validate.
 		 */
-		$result = gf_apply_filters( array( 'kdnaform_field_validation', $form['id'], $field->id ), $result, $value, $form, $field, $context );
+		$result = kdna_apply_filters( array( 'kdnaform_field_validation', $form['id'], $field->id ), $result, $value, $form, $field, $context );
 
 		$field->failed_validation = ! rgar( $result, 'is_valid' );
 		$field->validation_message = rgar( $result, 'message' );
@@ -3277,18 +3277,18 @@ class KDNAFormDisplay {
 
 				if ( ! $disable_legacy_css ) {
 
-					$assets[] = new KDNA_Style_Asset( 'gforms_reset_css' );
+					$assets[] = new KDNA_Style_Asset( 'kforms_reset_css' );
 
 					if ( self::has_datepicker_field( $form ) ) {
-						$assets[] = new KDNA_Style_Asset( 'gforms_datepicker_css' );
+						$assets[] = new KDNA_Style_Asset( 'kforms_datepicker_css' );
 					}
 
-					$assets[] = new KDNA_Style_Asset( 'gforms_formsmain_css' );
-					$assets[] = new KDNA_Style_Asset( 'gforms_ready_class_css' );
-					$assets[] = new KDNA_Style_Asset( 'gforms_browsers_css' );
+					$assets[] = new KDNA_Style_Asset( 'kforms_formsmain_css' );
+					$assets[] = new KDNA_Style_Asset( 'kforms_ready_class_css' );
+					$assets[] = new KDNA_Style_Asset( 'kforms_browsers_css' );
 
 					if ( is_rtl() ) {
-						$assets[] = new KDNA_Style_Asset( 'gforms_rtl_css' );
+						$assets[] = new KDNA_Style_Asset( 'kforms_rtl_css' );
 					}
 				}
 
@@ -3296,7 +3296,7 @@ class KDNAFormDisplay {
 				// Theme related styles will be enqueued by the theme layer process initiated by form-display/block-styles/block-styles-handler.php
 
 				if ( self::has_datepicker_field( $form ) ) {
-					$assets[] = new KDNA_Style_Asset( 'gforms_datepicker_css' );
+					$assets[] = new KDNA_Style_Asset( 'kforms_datepicker_css' );
 				}
 			}
 
@@ -3307,10 +3307,10 @@ class KDNAFormDisplay {
 
 		$assets[] = new KDNA_Script_Asset( 'wp-a11y' );
 
-		$gf_main = new KDNA_Script_Asset( 'kdnaform_kdnaforms' );
+		$kdna_main = new KDNA_Script_Asset( 'kdnaform_kdnaforms' );
 
 		if ( self::has_checkbox_field( $form, true ) ) {
-			$gf_main->add_localize_data( 'gf_field_checkbox', array(
+			$kdna_main->add_localize_data( 'kdna_field_checkbox', array(
 				'strings' => array(
 					'selected'   => wp_strip_all_tags( __( 'All choices are selected.', 'kdnaforms' ) ),
 					'deselected' => wp_strip_all_tags( __( 'All choices are unselected.', 'kdnaforms' ) ),
@@ -3319,7 +3319,7 @@ class KDNAFormDisplay {
 		}
 
 		if ( self::has_fileupload_field( $form ) ) {
-			$gf_main->add_localize_data( 'gf_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
+			$kdna_main->add_localize_data( 'gf_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
 
 			KDNACommon::localize_kdnaform_kdnaforms_multifile();
 
@@ -3328,9 +3328,9 @@ class KDNAFormDisplay {
 			}
 		}
 
-		$gf_main->add_localize_data( 'gf_global', KDNACommon::gf_global( false, true ) );
+		$kdna_main->add_localize_data( 'kdna_global', KDNACommon::kdna_global( false, true ) );
 
-		$assets[] = $gf_main;
+		$assets[] = $kdna_main;
 
 		$has_logic = false;
 
@@ -3351,9 +3351,9 @@ class KDNAFormDisplay {
 
 		// Conditional logic script is required for any type of conditional logic (page or field-level). Enqueue it if true.
 		if ( $has_logic ) {
-			$gf_conditional_logic = new KDNA_Script_Asset( 'kdnaform_conditional_logic' );
-			$gf_conditional_logic->add_localize_data( 'gf_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
-			$assets[] = $gf_conditional_logic;
+			$kdna_conditional_logic = new KDNA_Script_Asset( 'kdnaform_conditional_logic' );
+			$kdna_conditional_logic->add_localize_data( 'gf_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
+			$assets[] = $kdna_conditional_logic;
 		}
 
 		if ( self::has_datepicker_field( $form ) ) {
@@ -3366,7 +3366,7 @@ class KDNAFormDisplay {
 		}
 
 		if ( self::has_password_strength( $form ) ) {
-			$assets[] = new KDNA_Script_Asset( 'gforms_zxcvbn', includes_url( '/js/zxcvbn.min.js' ) );
+			$assets[] = new KDNA_Script_Asset( 'kforms_zxcvbn', includes_url( '/js/zxcvbn.min.js' ) );
 			$assets[] = new KDNA_Script_Asset( 'password-strength-meter' );
 		}
 
@@ -3425,7 +3425,7 @@ class KDNAFormDisplay {
 		 * @param array $form The Form Object
 		 * @param bool  $ajax Whether AJAX is on or off (True or False)
 		 */
-		gf_do_action( array( 'kdnaform_pre_enqueue_scripts', $form['id'] ), $form, $ajax );
+		kdna_do_action( array( 'kdnaform_pre_enqueue_scripts', $form['id'] ), $form, $ajax );
 
 		add_filter( 'script_loader_tag', array( 'KDNAFormDisplay', 'add_script_defer' ), 10, 2 );
 
@@ -3444,7 +3444,7 @@ class KDNAFormDisplay {
          * @param array $form The Form Object
          * @param bool  $ajax Whether AJAX is on or off (True or False)
          */
-		gf_do_action( array( 'kdnaform_enqueue_scripts', $form['id'] ), $form, $ajax );
+		kdna_do_action( array( 'kdnaform_enqueue_scripts', $form['id'] ), $form, $ajax );
 	}
 
 	/**
@@ -3495,7 +3495,7 @@ class KDNAFormDisplay {
 		 * @param array $form The Form Object
 		 * @param bool  $ajax Whether AJAX is on or off (True or False)
 		 */
-		gf_do_action( array( 'kdnaform_pre_print_scripts', $form['id'] ), $form, $ajax );
+		kdna_do_action( array( 'kdnaform_pre_print_scripts', $form['id'] ), $form, $ajax );
 
 		add_filter( 'script_loader_tag', array( 'KDNAFormDisplay', 'add_script_defer' ), 10, 2 );
 
@@ -3516,7 +3516,7 @@ class KDNAFormDisplay {
 		 * @param array $form The Form Object
 		 * @param bool  $ajax Whether AJAX is on or off (True or False)
 		 */
-		gf_do_action( array( 'kdnaform_print_scripts', $form['id'] ), $form, $ajax );
+		kdna_do_action( array( 'kdnaform_print_scripts', $form['id'] ), $form, $ajax );
 	}
 
 	/**
@@ -3801,13 +3801,13 @@ class KDNAFormDisplay {
 			"window['kdna_form_conditional_logic'] = new Array();" .
 		    "window['kdna_form_conditional_logic'][{$form['id']}] = { logic: { {$logics} }, dependents: { {$dependents} }, animation: {$animation}, defaults: " . json_encode( $default_values ) . ", fields: " . json_encode( $field_dependents ) . " }; " .
 
-			"if(!window['gf_number_format'])" .
-			"window['gf_number_format'] = '" . $number_format . "';" .
+			"if(!window['kdna_number_format'])" .
+			"window['kdna_number_format'] = '" . $number_format . "';" .
 
 			'jQuery(document).ready(function(){' .
 			"gform.utils.trigger({ event: 'gform/conditionalLogic/init/start', native: false, data: { formId: {$form['id']}, fields: null, isInit: true } });" .
             "window['gformInitPriceFields']();" .
-	        "gf_apply_rules({$form['id']}, " . json_encode( $fields_with_logic ) . ', true);' .
+	        "kdnaform_apply_rules({$form['id']}, " . json_encode( $fields_with_logic ) . ', true);' .
 			"jQuery('#gform_wrapper_{$form['id']}').show();" .
 			"jQuery('#gform_wrapper_{$form['id']} form').css('opacity', '');" .
 			"jQuery(document).trigger('kdnaform_post_conditional_logic', [{$form['id']}, null, true]);" .
@@ -3939,7 +3939,7 @@ class KDNAFormDisplay {
          * @param string $field_vale The current value of the selected field
          * @param bool   $is_ajax    Returns true if using AJAX.  Otherwise, false
          */
-		gf_do_action( array( 'kdnaform_register_init_scripts', $form['id'] ), $form, $field_values, $is_ajax );
+		kdna_do_action( array( 'kdnaform_register_init_scripts', $form['id'] ), $form, $field_values, $is_ajax );
 
 	}
 
@@ -3955,7 +3955,7 @@ class KDNAFormDisplay {
 		$init_scripts = rgar( self::$init_scripts, $form['id'] );
 
 		if ( ! empty( $init_scripts ) ) {
-			$script_body = isset( $gf_global_script ) ? $gf_global_script : '';
+			$script_body = isset( $kdna_global_script ) ? $kdna_global_script : '';
 
 			$script_body .=
 				"gform.initializeOnLoaded( function() { jQuery(document).on('kdnaform_post_render', function(event, formId, currentPage){" .
@@ -3993,7 +3993,7 @@ class KDNAFormDisplay {
 			}
 		}
 
-		return "gformInitChosenFields('" . implode( ',', $chosen_fields ) . "','" . esc_attr( gf_apply_filters( array( 'kdnaform_dropdown_no_results_text', $form['id'] ), __( 'No results matched', 'kdnaforms' ), $form['id'] ) ) . "');";
+		return "gformInitChosenFields('" . implode( ',', $chosen_fields ) . "','" . esc_attr( kdna_apply_filters( array( 'kdnaform_dropdown_no_results_text', $form['id'] ), __( 'No results matched', 'kdnaforms' ), $form['id'] ) ) . "');";
 	}
 
 	public static function get_currency_format_init_script( $form ) {
@@ -4050,7 +4050,7 @@ class KDNAFormDisplay {
 					"    'displayFormat' : '#input " . esc_js( __( 'of', 'kdnaforms' ) ) . ' #max ' . esc_js( __( 'max characters', 'kdnaforms' ) ) . "'" .
 					"    });" . "jQuery('#{$input_id}').next('.ginput_counter').attr('aria-live','polite');}";
 
-				$script .= gf_apply_filters( array( 'kdnaform_counter_script', $form['id'] ), $field_script, $form['id'], $input_id, $max_length, $field );
+				$script .= kdna_apply_filters( array( 'kdnaform_counter_script', $form['id'] ), $field_script, $form['id'], $input_id, $max_length, $field );
 			}
 		}
 
@@ -4064,7 +4064,7 @@ class KDNAFormDisplay {
 
 	public static function get_password_strength_init_script( $form ) {
 
-		$field_script = "if(!window['gf_text']){window['gf_text'] = new Array();} window['gf_text']['password_blank'] = '" . esc_js( __( 'Strength indicator', 'kdnaforms' ) ) . "'; window['gf_text']['password_mismatch'] = '" . esc_js( __( 'Mismatch', 'kdnaforms' ) ) . "';window['gf_text']['password_unknown'] = '" . esc_js( __( 'Password strength unknown', 'kdnaforms' ) ) . "';window['gf_text']['password_bad'] = '" . esc_js( __( 'Weak', 'kdnaforms' ) ) . "'; window['gf_text']['password_short'] = '" . esc_js( __( 'Very weak', 'kdnaforms' ) ) . "'; window['gf_text']['password_good'] = '" . esc_js( __( 'Medium', 'kdnaforms' ) ) . "'; window['gf_text']['password_strong'] = '" . esc_js( __( 'Strong', 'kdnaforms' ) ) . "';";
+		$field_script = "if(!window['kdna_text']){window['kdna_text'] = new Array();} window['kdna_text']['password_blank'] = '" . esc_js( __( 'Strength indicator', 'kdnaforms' ) ) . "'; window['kdna_text']['password_mismatch'] = '" . esc_js( __( 'Mismatch', 'kdnaforms' ) ) . "';window['kdna_text']['password_unknown'] = '" . esc_js( __( 'Password strength unknown', 'kdnaforms' ) ) . "';window['kdna_text']['password_bad'] = '" . esc_js( __( 'Weak', 'kdnaforms' ) ) . "'; window['kdna_text']['password_short'] = '" . esc_js( __( 'Very weak', 'kdnaforms' ) ) . "'; window['kdna_text']['password_good'] = '" . esc_js( __( 'Medium', 'kdnaforms' ) ) . "'; window['kdna_text']['password_strong'] = '" . esc_js( __( 'Strong', 'kdnaforms' ) ) . "';";
 
 		foreach ( $form['fields'] as $field ) {
 			if ( $field->type == 'password' && $field->passwordStrengthEnabled ) {
@@ -4101,10 +4101,10 @@ class KDNAFormDisplay {
 			 * @param int    $field_id The field ID.
 			 * @param string $mask     The input mask value.
 			 */
-			if ( gf_has_filter( array( 'kdnaform_input_mask_script', $form['id'] ) ) ) {
+			if ( kdna_has_filter( array( 'kdnaform_input_mask_script', $form['id'] ) ) ) {
 				trigger_error( 'kdnaform_input_mask_script is deprecated and will be removed in version 3.0.', E_USER_DEPRECATED ); // phpcs:ignore QITStandard.PHP.DebugCode.DebugFunctionFound
 			}
-			$script_str .= gf_apply_filters( array( 'kdnaform_input_mask_script', $form['id'] ), $script, $form['id'], $field->id, $mask );
+			$script_str .= kdna_apply_filters( array( 'kdnaform_input_mask_script', $form['id'] ), $script, $form['id'], $field->id, $mask );
 		}
 
 		return $script_str;
@@ -4126,7 +4126,7 @@ class KDNAFormDisplay {
 			return '';
 		}
 
-		$script = 'if( typeof window.gf_global["gfcalc"] == "undefined" ) { window.gf_global["gfcalc"] = {}; } window.gf_global["gfcalc"][' . $form['id'] . '] = new GFCalc(' . $form['id'] . ', ' . KDNACommon::json_encode( $formula_fields ) . ');';
+		$script = 'if( typeof window.kdna_global["gfcalc"] == "undefined" ) { window.kdna_global["gfcalc"] = {}; } window.kdna_global["gfcalc"][' . $form['id'] . '] = new GFCalc(' . $form['id'] . ', ' . KDNACommon::json_encode( $formula_fields ) . ');';
 
 		return $script;
 	}
@@ -4183,7 +4183,7 @@ class KDNAFormDisplay {
 
 		}
 
-		return 'gf_global["number_formats"][' . $form['id'] . '] = ' . json_encode( $number_formats ) . ';';
+		return 'kdna_global["number_formats"][' . $form['id'] . '] = ' . json_encode( $number_formats ) . ';';
 	}
 
 	private static function has_datepicker_field( $form ) {
@@ -4406,7 +4406,7 @@ class KDNAFormDisplay {
 		 * @param bool $has_js_merge_tags Value to be filtered. Return true to add support for Javascript merge tags. Return false to disable it.
 		 * @param array $form The current Form Object
 		 */
-		$has_js_merge_tags = gf_apply_filters( array( 'kdnaform_has_js_merge_tag', $form['id'] ), false, $form );
+		$has_js_merge_tags = kdna_apply_filters( array( 'kdnaform_has_js_merge_tag', $form['id'] ), false, $form );
 		return $has_js_merge_tags;
 	}
 
@@ -4482,12 +4482,12 @@ class KDNAFormDisplay {
 				$previous_button_alt = rgempty( 'imageAlt', $field->previousButton ) ? __( 'Previous Page', 'kdnaforms' ) : $field->previousButton['imageAlt'];
 				$previous_button = $field->pageNumber == 2 ? '' : self::get_form_button( $form_id, "gform_previous_button_{$form_id}_{$field->id}", $field->previousButton, __( 'Previous', 'kdnaforms' ), 'gform_previous_button gform-theme-button gform-theme-button--secondary', $previous_button_alt, $field->pageNumber - 2 );
 				if ( ! empty( $previous_button ) ) {
-					$previous_button = gf_apply_filters( array( 'gform_previous_button', $form_id ), $previous_button, $form );
+					$previous_button = kdna_apply_filters( array( 'gform_previous_button', $form_id ), $previous_button, $form );
 				}
 
 				$next_button_alt = rgempty( 'imageAlt', $field->nextButton ) ? __( 'Next Page', 'kdnaforms' ) : $field->nextButton['imageAlt'];
 				$next_button     = self::get_form_button( $form_id, "gform_next_button_{$form_id}_{$field->id}", $field->nextButton, __( 'Next', 'kdnaforms' ), 'gform_next_button gform-theme-button', $next_button_alt, $field->pageNumber );
-				$next_button     = gf_apply_filters( array( 'gform_next_button', $form_id ), $next_button, $form );
+				$next_button     = kdna_apply_filters( array( 'gform_next_button', $form_id ), $next_button, $form );
 
 				$save_button = rgars( $form, 'save/enabled' ) ? self::get_form_button( $form_id, "kdnaform_save_{$form_id}_{$field->pageNumber}", $form['save']['button'], rgars( $form, 'save/button/text' ), 'kdnaform_save_link gform-theme-button gform-theme-button--secondary', rgars( $form, 'save/button/text' ), 0, "jQuery(\"#gform_save_{$form_id}\").val(1);" ) : '';
 
@@ -4613,8 +4613,8 @@ class KDNAFormDisplay {
 		 * in a reliable way. As of 2.5, the $field_classes value is used by the Settings API to apply those classes
 		 * to the settings sidebar panel while a field is active.
 		 */
-		$field_classes = gf_apply_filters( array( 'kdnaform_field_css_class', $form_id ), '', $field, $form );
-		$css_class    = gf_apply_filters( array( 'kdnaform_field_css_class', $form_id ), trim( $css_class ), $field, $form );
+		$field_classes = kdna_apply_filters( array( 'kdnaform_field_css_class', $form_id ), '', $field, $form );
+		$css_class    = kdna_apply_filters( array( 'kdnaform_field_css_class', $form_id ), trim( $css_class ), $field, $form );
 
 		$style = '';
 
@@ -4648,7 +4648,7 @@ class KDNAFormDisplay {
 		 * @param string   $field_content   The markup for the field content: label, description, inputs, etc.
 		 */
 		if ( rgar( $field, 'type' ) !== 'submit' ) {
-			$field_container = gf_apply_filters( array( 'kdnaform_field_container', $form_id, $field->id ), $field_container, $field, $form, $css_class, $style, $field_content );
+			$field_container = kdna_apply_filters( array( 'kdnaform_field_container', $form_id, $field->id ), $field_container, $field, $form, $css_class, $style, $field_content );
 		}
 
 		$field_markup = str_replace( '{FIELD_CONTENT}', $field_content, $field_container );
@@ -4735,7 +4735,7 @@ class KDNAFormDisplay {
 
 		$field_content = str_replace( '{FIELD}', KDNACommon::get_field_input( $field, $value, 0, $form_id, $form ), $field_content );
 
-		$field_content = gf_apply_filters( array( 'kdnaform_field_content', $form_id, $field->id ), $field_content, $field, $value, 0, $form_id );
+		$field_content = kdna_apply_filters( array( 'kdnaform_field_content', $form_id, $field->id ), $field_content, $field, $value, 0, $form_id );
 
 		$admin_compact_view_menu = $is_form_editor ? sprintf( "<div id='dropdown_field_%s' data-js='gform-compact-view-overflow-menu' class='gform-compact-view-overflow-menu gform-theme__disable'></div>", $field->id ) : '';
 
@@ -4880,7 +4880,7 @@ class KDNAFormDisplay {
 		 * @param array $search_criteria An array containing the search criteria.
 		 * @param array $form            The form currently being validated.
 		 */
-		$search_criteria = gf_apply_filters( array(
+		$search_criteria = kdna_apply_filters( array(
 			'kdnaform_search_criteria_entry_limit_validation',
 			$form_id
 		), $search_criteria, $form );
@@ -5182,10 +5182,10 @@ class KDNAFormDisplay {
 		 *
 		 * @return bool
 		 */
-		$always_show_spinner = gf_apply_filters( array( 'kdnaform_always_show_spinner', $form_id ), true );
+		$always_show_spinner = kdna_apply_filters( array( 'kdnaform_always_show_spinner', $form_id ), true );
 		if ( ! $is_iframe_ajax && $always_show_spinner ) {
 			$default_spinner = KDNACommon::get_base_url() . '/images/spinner.svg';
-			$spinner_url     = gf_apply_filters( array( 'gform_ajax_spinner_url', $form_id ), $default_spinner, $form );
+			$spinner_url     = kdna_apply_filters( array( 'gform_ajax_spinner_url', $form_id ), $default_spinner, $form );
 			$theme_slug      = self::get_form_theme_slug( $form );
 			$is_legacy       = $default_spinner !== $spinner_url || in_array( $theme_slug, array( 'gravity-theme', 'legacy' ) );
 
@@ -5244,7 +5244,7 @@ class KDNAFormDisplay {
 		 * @param string  $save_email_confirmation Confirmation text to be filtered.
 		 * @param array $form The current form object
 		 */
-		return gf_apply_filters( array( 'kdnaform_get_form_save_email_confirmation_filter', $form['id'] ), $save_email_confirmation, $form );
+		return kdna_apply_filters( array( 'kdnaform_get_form_save_email_confirmation_filter', $form['id'] ), $save_email_confirmation, $form );
 	}
 
 	public static function handle_save_confirmation( $form, $resume_token, $confirmation_message, $ajax ) {
@@ -5275,7 +5275,7 @@ class KDNAFormDisplay {
 		 *
 		 * @return string
 		 */
-		$wrapper_open .= gf_apply_filters( array( 'kdnaform_form_after_open', $form_id ), '', $form );
+		$wrapper_open .= kdna_apply_filters( array( 'kdnaform_form_after_open', $form_id ), '', $form );
 
 		$confirmation_message = $wrapper_open . $confirmation_message . '</div>';
 
@@ -5295,7 +5295,7 @@ class KDNAFormDisplay {
 		 * @param string  $confirmation_message Confirmation text to be filtered.
 		 * @param array   $form The current form object
 		 */
-		return gf_apply_filters( array( 'kdnaform_get_form_save_confirmation_filter', $form_id ), $confirmation_message, $form );
+		return kdna_apply_filters( array( 'kdnaform_get_form_save_confirmation_filter', $form_id ), $confirmation_message, $form );
 	}
 
 	/**
@@ -5365,7 +5365,7 @@ class KDNAFormDisplay {
 		 * @param bool|int $anchor Is the form anchor enabled? True when ajax enabled or when the form has multiple pages.
 		 * @param array    $form   The current Form object.
 		 */
-		$anchor = gf_apply_filters( array( 'kdnaform_confirmation_anchor', $form_id ), $anchor, $form );
+		$anchor = kdna_apply_filters( array( 'kdnaform_confirmation_anchor', $form_id ), $anchor, $form );
 
 		return array(
 			'scroll' => $anchor,
@@ -5623,7 +5623,7 @@ class KDNAFormDisplay {
 		}
 
 		$validation_container_id = 'kdnaform_' . $form['id'] . '_validation_container';
-		$validation_message_markup = gf_apply_filters( array( 'kdnaform_validation_message', $form['id'] ), $validation_message_markup, $form );
+		$validation_message_markup = kdna_apply_filters( array( 'kdnaform_validation_message', $form['id'] ), $validation_message_markup, $form );
 
 		// If validation message markup already has a list of errors after being filtered, remove our list.
 		if ( $show_summary && preg_match( '/<\s*ul[^>]*>(.*?)<\s*\/\s*ul>/', $validation_message_markup ) || preg_match( '/<\s*ol[^>]*>(.*?)<\s*\/\s*ol>/', $validation_message_markup ) ) {
@@ -5648,7 +5648,7 @@ class KDNAFormDisplay {
 		 * @param string $validation_errors_markup Validation errors markup.
 		 * @param array  $form                     The current form object.
 		 */
-		return gf_apply_filters( array( 'kdnaform_form_validation_errors_markup', $form['id'] ), $validation_errors_markup, $form );
+		return kdna_apply_filters( array( 'kdnaform_form_validation_errors_markup', $form['id'] ), $validation_errors_markup, $form );
 
 	}
 
@@ -5692,7 +5692,7 @@ class KDNAFormDisplay {
 		* @param array $errors List of validation errors.
 		* @param array $form   The current form object.
 		*/
-		return gf_apply_filters( array( 'kdnaform_form_validation_errors', $form['id'] ), $errors, $form );
+		return kdna_apply_filters( array( 'kdnaform_form_validation_errors', $form['id'] ), $errors, $form );
 
 	}
 
@@ -5912,7 +5912,7 @@ class KDNAFormDisplay {
 			 * @param array|null $field_values  The field values to be used to populate the form. Only used when $context is 'form_display'.
 			 * @param string     $context       The context that the method is being called in. Possible values are 'form_display' and 'form_config'.
 			 */
-			self::$cached_forms[ $cache_key ] = gf_apply_filters( array( 'kdnaform_pre_render', $form_id ), $form, $ajax, $field_values, $context );
+			self::$cached_forms[ $cache_key ] = kdna_apply_filters( array( 'kdnaform_pre_render', $form_id ), $form, $ajax, $field_values, $context );
 		}
 
 		return self::$cached_forms[ $cache_key ];
@@ -5996,7 +5996,7 @@ class KDNAFormDisplay {
 		 * @since 2.5.15
 		 *
 		 */
-		$confirmation_markup = gf_apply_filters( array( 'kdnaform_get_form_confirmation_filter', $form['id'] ), $confirmation_markup, $form );
+		$confirmation_markup = kdna_apply_filters( array( 'kdnaform_get_form_confirmation_filter', $form['id'] ), $confirmation_markup, $form );
 
 		KDNACommon::log_debug(__METHOD__ . sprintf('(): Preparing form (#%d) confirmation completed in %F seconds.', $form['id'], KDNACommon::timer_end(__METHOD__)));
 		return $confirmation_markup;
@@ -6033,7 +6033,7 @@ class KDNAFormDisplay {
 		 * @param string $previous_button The HTML rendered button (rendered with the form ID and the function get_form_button)
 		 * @param array $form The Form object to filter through
 		 */
-		$previous_button = gf_apply_filters( array( 'gform_previous_button', $form['id'] ), $previous_button, $form );
+		$previous_button = kdna_apply_filters( array( 'gform_previous_button', $form['id'] ), $previous_button, $form );
 		return '</div>' . self::gform_footer( $form, 'gform-page-footer kdnaform_page_footer ' . $label_placement, $ajax, $field_values, $previous_button, $display_title, $display_description, $tabindex, $form_theme, $style_settings, $submission_method ) . '
              </div>'; //closes kdnaform_page
 	}

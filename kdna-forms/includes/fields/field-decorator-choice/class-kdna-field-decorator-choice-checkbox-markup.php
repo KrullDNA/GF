@@ -53,7 +53,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 			 * @param int    $max_choices_visible_count The default number of choices visible is 8.
 			 * @param object $field                     The current field object.
 			 */
-			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
+			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
 
 			$choices .= sprintf( '<div class="gfield_checkbox" id="%s">', esc_attr( $field_id ) );
 
@@ -118,7 +118,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 				 * @param object $field         The field currently being processed.
 				 * @param string $value         The value to be selected if the field is being populated.
 				 */
-				$choices .= gf_apply_filters( array(
+				$choices .= kdna_apply_filters( array(
 					'kdnaform_field_choice_markup_pre_render',
 					$this->field->formId,
 					$this->field->id
@@ -152,7 +152,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 		 * @param string $choices The string containing the choices to be filtered.
 		 * @param object $field   The field currently being processed.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
+		return kdna_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
 
 	}
 

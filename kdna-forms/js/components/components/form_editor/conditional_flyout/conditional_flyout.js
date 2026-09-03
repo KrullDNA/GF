@@ -268,7 +268,7 @@ function getAddressOptions( field, inputId, value ) {
 	var fieldAddressOptions = addressOptions[ field.addressType ];
 
 	// Associative arrays are expected to have alphanumeric keys (country codes).
-	// If asort() is used in the gform_countries filter, the resulting array will be
+	// If asort() is used in the kform_countries filter, the resulting array will be
 	// associative even if the original array was plain, we only need the values.
 	if ( ! Array.isArray( fieldAddressOptions ) ) {
 		var allNumericKeys = true;

@@ -75,7 +75,7 @@ class KDNA_REST_Notes_Controller extends KDNA_REST_Entry_Notes_Controller {
 		$note = KDNAAPI::get_note( $note_id );
 
 		if ( is_wp_error( $note ) ) {
-			return new WP_Error( 'gf_note_invalid_id', __( 'Invalid note id.', 'kdnaforms' ), array( 'status' => 404 ) );
+			return new WP_Error( 'kdna_note_invalid_id', __( 'Invalid note id.', 'kdnaforms' ), array( 'status' => 404 ) );
 		}
 
 		$data = $this->prepare_item_for_response( $note, $request );
@@ -229,7 +229,7 @@ class KDNA_REST_Notes_Controller extends KDNA_REST_Entry_Notes_Controller {
 
 		if ( is_wp_error( $result ) ) {
 			$message = $result->get_error_message();
-			return new WP_Error( 'gf_cannot_delete', $message, array( 'status' => 500 ) );
+			return new WP_Error( 'kdna_cannot_delete', $message, array( 'status' => 500 ) );
 		}
 
 		$previous = $this->prepare_item_for_response( $note, $request );

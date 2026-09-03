@@ -81,7 +81,7 @@ var GFPageConditionalLogic = function (args) {
             return true;
         }
 
-        return gf_get_field_action(formId, page.conditionalLogic) === 'show';
+        return kdna_get_field_action(formId, page.conditionalLogic) === 'show';
     };
 
     self.getTriggerInputIds = function () {

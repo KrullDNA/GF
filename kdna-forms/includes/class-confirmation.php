@@ -425,7 +425,7 @@ class KDNA_Confirmation {
 		 * @param array $confirmation Contains the Confirmation meta.
 		 * @param array $form         Form Object.
 		 */
-		$fields = gf_apply_filters( array(
+		$fields = kdna_apply_filters( array(
 			'kdnaform_confirmation_settings_fields',
 			$form['id'],
 		), $fields, $confirmation, $form );
@@ -596,7 +596,7 @@ class KDNA_Confirmation {
 					 * @param array $form                The Form Object.
 					 * @param bool  $is_new_confirmation True if this is a new confirmation. False if editing existing.
 					 */
-					$confirmation = gf_apply_filters( array(
+					$confirmation = kdna_apply_filters( array(
 						'kdnaform_pre_confirmation_save',
 						$form['id']
 					), $confirmation, $form, $is_new_confirmation );

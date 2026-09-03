@@ -19,8 +19,8 @@ use KDNA_Forms\KDNA_Forms\Ajax\Config\KDNA_Ajax_Config;
  */
 class KDNA_Ajax_Service_Provider extends KDNA_Service_Provider {
 
-	const GF_AJAX_HANDLER = 'gf_ajax_handler';
-	const GF_AJAX_CONFIG  = 'gf_ajax_config';
+	const GF_AJAX_HANDLER = 'kdna_ajax_handler';
+	const GF_AJAX_CONFIG  = 'kdna_ajax_config';
 
 	/**
 	 * Includes all related files and adds all containers.

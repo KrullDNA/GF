@@ -13,7 +13,7 @@ class KDNAExport {
 	 */
 	public static function maybe_export() {
 		if ( isset( $_POST['export_forms'] ) ) {
-			check_admin_referer( 'gf_export_forms', 'gf_export_forms_nonce' );
+			check_admin_referer( 'kdna_export_forms', 'kdna_export_forms_nonce' );
 			$selected_forms = rgpost( 'kdna_form_id' );
 			if ( empty( $selected_forms ) ) {
 				KDNACommon::add_error_message( __( 'Please select the forms to be exported', 'kdnaforms' ) );
@@ -452,7 +452,7 @@ class KDNAExport {
 	private static function process_forms_import() {
 		if ( isset( $_POST['import_forms'] ) ) {
 
-			check_admin_referer( 'gf_import_forms', 'gf_import_forms_nonce' );
+			check_admin_referer( 'kdna_import_forms', 'kdna_import_forms_nonce' );
 
 			if ( ! empty( $_FILES['gf_import_file']['tmp_name'][0] ) ) {
 
@@ -565,7 +565,7 @@ class KDNAExport {
 		?>
         <div class="gform-settings__content">
             <form method="post" enctype="multipart/form-data" class="kdnaform_settings_form">
-                <?php wp_nonce_field( 'gf_import_forms', 'gf_import_forms_nonce' ); ?>
+                <?php wp_nonce_field( 'kdna_import_forms', 'kdna_import_forms_nonce' ); ?>
                 <div class="gform-settings-panel gform-settings-panel--full">
                     <header class="gform-settings-panel__header"><legend class="gform-settings-panel__title"><?php esc_html_e('Import Forms', 'kdnaforms'); ?></legend></header>
                     <div class="gform-settings-panel__content">
@@ -638,7 +638,7 @@ class KDNAExport {
 
         <div class="gform-settings__content">
             <form method="post" id="gform_export" class="kdnaform_settings_form">
-	            <?php wp_nonce_field( 'gf_export_forms', 'gf_export_forms_nonce' ); ?>
+	            <?php wp_nonce_field( 'kdna_export_forms', 'kdna_export_forms_nonce' ); ?>
                 <div class="gform-settings-panel gform-settings-panel--full">
                     <header class="gform-settings-panel__header"><legend class="gform-settings-panel__title"><?php esc_html_e( 'Export Forms', 'kdnaforms' )?></legend></header>
                     <div class="gform-settings-panel__content">
@@ -745,7 +745,7 @@ class KDNAExport {
 
 			var gfSpinner;
 
-			<?php KDNACommon::gf_global(); ?>
+			<?php KDNACommon::kdna_global(); ?>
 			<?php KDNACommon::kdna_vars(); ?>
 
 			function SelectExportForm(formId) {
@@ -1098,7 +1098,7 @@ class KDNAExport {
 		$lines = '';
 
 		// Set the separator
-		$separator = gf_apply_filters( array( 'kdnaform_export_separator', $form_id ), ',', $form_id );
+		$separator = kdna_apply_filters( array( 'kdnaform_export_separator', $form_id ), ',', $form_id );
 
 		$field_rows = self::get_field_row_count( $form, $fields, $remaining_entry_count );
 
@@ -1123,7 +1123,7 @@ class KDNAExport {
 			$headers = array();
 			foreach ( $fields as $field_id ) {
 				$field = KDNAFormsModel::get_field( $form, $field_id );
-				$label = gf_apply_filters( array( 'kdnaform_entries_field_header_pre_export', $form_id, $field_id ), KDNACommon::get_label( $field, $field_id ), $form, $field );
+				$label = kdna_apply_filters( array( 'kdnaform_entries_field_header_pre_export', $form_id, $field_id ), KDNACommon::get_label( $field, $field_id ), $form, $field );
 				$value = str_replace( '"', '""', $label );
 
 				KDNACommon::log_debug( "KDNAExport::start_export(): Header for field ID {$field_id}: {$value}" );
@@ -1168,7 +1168,7 @@ class KDNAExport {
 
 			$leads = KDNAAPI::get_entries( $form_id, $search_criteria, $sorting, $paging );
 
-			$leads = gf_apply_filters( array( 'kdnaform_leads_before_export', $form_id ), $leads, $form, $paging );
+			$leads = kdna_apply_filters( array( 'kdnaform_leads_before_export', $form_id ), $leads, $form, $paging );
 
 			foreach ( $leads as $lead ) {
 				$line = self::get_entry_export_line( $lead, $form, $fields, $field_rows, $separator );
@@ -1634,7 +1634,7 @@ deny from all';
 			 *
 			 * @param array $form Assign which Gravity Form to change the export form for
 			 */
-			$form = gf_apply_filters( array( 'kdnaform_export_form', $form['id'] ), $form );
+			$form = kdna_apply_filters( array( 'kdnaform_export_form', $form['id'] ), $form );
 
 		}
 

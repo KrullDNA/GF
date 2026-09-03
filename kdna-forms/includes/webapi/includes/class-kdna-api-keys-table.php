@@ -45,7 +45,7 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 			return;
 		}
 
-		check_admin_referer( 'gforms_revoke_key' );
+		check_admin_referer( 'kforms_revoke_key' );
 
 		$this->delete_api_key( rgget( 'key_id' ) );
 	}
@@ -57,12 +57,12 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 	function column_description( $item ) {
 
 		// create a nonce
-		$revoke_nonce = wp_create_nonce( 'gforms_revoke_key' );
+		$revoke_nonce = wp_create_nonce( 'kforms_revoke_key' );
 
 		$description = $item['description'];
 
 		$confirm = "javascript: if( ! confirm('WARNING: You are about to revoke this API Key. \'Cancel\' to stop, \'OK\' to revoke.')){ event.stopPropagation(); return false } ";
-		$nonce_url = wp_nonce_url( '?page=kdna_settings&subview=kdnaformswebapi', 'gf_revoke_key' );
+		$nonce_url = wp_nonce_url( '?page=kdna_settings&subview=kdnaformswebapi', 'kdna_revoke_key' );
 
 		$actions = array(
 			'edit' => '<a href="#" class="rest-api-edit-key" data-id=" ' . esc_attr__( $item['key_id'] ) . ' " >' . esc_html__( 'Edit', 'kdnaforms' ) . '</a>',

@@ -60,7 +60,7 @@ class KDNA_Save_Form_Service_Provider extends KDNA_Service_Provider {
 
 	// The CRUD handler key in the service container.
 	const GF_FORM_CRUD_HANDLER = 'kdna_form_crud_handler';
-	const GF_SAVE_FROM_HELPER  = 'gf_save_form_helper';
+	const GF_SAVE_FROM_HELPER  = 'kdna_save_form_helper';
 
 	/**
 	 * Includes all related files and adds all containers.

@@ -251,7 +251,7 @@ class KDNA_Elementor_Loader {
 							return;
 						}
 
-						// Extract numeric form ID from wrapper ID (gform_wrapper_123).
+						// Extract numeric form ID from wrapper ID (kform_wrapper_123).
 						var numericId = formId.replace( 'gform_wrapper_', '' );
 
 						// Reinitialize conditional logic if available.

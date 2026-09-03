@@ -1570,13 +1570,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'progress_bar_bg', array(
 			'label'     => esc_html__( 'Bar Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gform_page_steps' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .gform_body .kform_page_steps' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'progress_bar_fill', array(
 			'label'     => esc_html__( 'Progress Fill Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gform_page_steps .gf_step_active, {{WRAPPER}} .gform_body .percentbar_blue' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .gform_body .kform_page_steps .gf_step_active, {{WRAPPER}} .gform_body .percentbar_blue' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_responsive_control( 'progress_bar_height', array(
@@ -1593,20 +1593,20 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body .percentbar_blue, {{WRAPPER}} .gform_body .gform_percentage_bar' => 'border-radius: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .gform_body .percentbar_blue, {{WRAPPER}} .gform_body .kform_percentage_bar' => 'border-radius: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'progress_step_typography',
 			'label'    => esc_html__( 'Step Text Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gf_step, {{WRAPPER}} .gform_body .gform_percentage_bar_text',
+			'selector' => '{{WRAPPER}} .gform_body .gf_step, {{WRAPPER}} .gform_body .kform_percentage_bar_text',
 		) );
 
 		$this->add_control( 'progress_step_color', array(
 			'label'     => esc_html__( 'Step Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gf_step, {{WRAPPER}} .gform_body .gform_percentage_bar_text' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .gform_body .gf_step, {{WRAPPER}} .gform_body .kform_percentage_bar_text' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'progress_active_step_color', array(
