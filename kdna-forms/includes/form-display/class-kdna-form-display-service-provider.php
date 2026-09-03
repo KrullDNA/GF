@@ -3,8 +3,8 @@
 namespace KDNA_Forms\KDNA_Forms\Form_Display;
 
 use KDNA_Forms\KDNA_Forms\Config\KDNA_Config_Service_Provider;
-use KDNA_Forms\KDNA_Forms\Form_Display\Config\KDNA_Product_Meta_Config;
-use KDNA_Forms\KDNA_Forms\Form_Display\Config\KDNA_Pagination_Config;
+use KDNA_Forms\KDNA_Forms\Form_Display\Config\GF_Product_Meta_Config;
+use KDNA_Forms\KDNA_Forms\Form_Display\Config\GF_Pagination_Config;
 use KDNA_Forms\KDNA_Forms\Form_Display\Full_Screen\Full_Screen_Handler;
 use KDNA_Forms\KDNA_Forms\Form_Display\Block_Styles\Block_Styles_Handler;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
@@ -17,13 +17,13 @@ use \KDNAForms;
 use \KDNAFormDisplay;
 
 /**
- * Class KDNA_Form_Display_Service_Provider
+ * Class GF_Form_Display_Service_Provider
  *
  * Service provider for the Form_Display Service.
  *
  * @package KDNA_Forms\KDNA_Forms\Form_Display;
  */
-class KDNA_Form_Display_Service_Provider extends KDNA_Service_Provider {
+class GF_Form_Display_Service_Provider extends KDNA_Service_Provider {
 
 	const FULL_SCREEN_HANDLER   = 'full_screen_handler';
 	const BLOCK_STYLES_HANDLER  = 'block_styles_handler';
@@ -89,13 +89,13 @@ class KDNA_Form_Display_Service_Provider extends KDNA_Service_Provider {
 
 		// Product meta config.
 		$container->add( self::PRODUCT_META_CONFIG, function () use ( $container ) {
-			return new KDNA_Product_Meta_Config( $container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
+			return new GF_Product_Meta_Config( $container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
 		});
 		$container->get( KDNA_Config_Service_Provider::CONFIG_COLLECTION )->add_config( $container->get( self::PRODUCT_META_CONFIG ) );
 
 		// Pagination config.
 		$container->add( self::PAGINATION_CONFIG, function () use ( $container ) {
-			return new KDNA_Pagination_Config( $container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
+			return new GF_Pagination_Config( $container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
 		});
 		$container->get( KDNA_Config_Service_Provider::CONFIG_COLLECTION )->add_config( $container->get( self::PAGINATION_CONFIG ) );
 

@@ -9,7 +9,7 @@ use \KDNACommon;
 class KDNA_Entry_Details_Order_Exporter extends KDNA_Order_Exporter {
 
 	/**
-	 * KDNA_Entry_Details_Order_Formatter constructor.
+	 * GF_Entry_Details_Order_Formatter constructor.
 	 *
 	 * @param KDNA_Order $order  The order to be formatted.
 	 * @param array    $config Any specific configurations required while formatting the order.

@@ -3,12 +3,12 @@
 namespace KDNA_Forms\KDNA_Forms\Query\JSON_Handlers;
 
 /**
- * KDNA_JSON_Handler implementation which uses a MySQL JSON query to gather data. More performant that string-based
+ * GF_JSON_Handler implementation which uses a MySQL JSON query to gather data. More performant that string-based
  * queries, but only available in MySQL 5.7+.
  *
  * @since 2.7
  */
-class KDNA_Query_JSON_Handler extends KDNA_JSON_Handler {
+class KDNA_Query_JSON_Handler extends GF_JSON_Handler {
 
 	/**
 	 * Perform the query against the DB.

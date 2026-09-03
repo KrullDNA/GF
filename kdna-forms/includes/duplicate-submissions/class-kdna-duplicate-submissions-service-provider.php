@@ -18,7 +18,7 @@ use KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider;
  */
 class KDNA_Duplicate_Submissions_Service_Provider extends KDNA_Service_Provider {
 
-	const KDNA_DUPLICATE_SUBMISSION_HANDLER = 'kdna_duplicate_submission_handler';
+	const GF_DUPLICATE_SUBMISSION_HANDLER = 'kdna_duplicate_submission_handler';
 
 	/**
 	 * Includes all related files and adds all containers.
@@ -31,7 +31,7 @@ class KDNA_Duplicate_Submissions_Service_Provider extends KDNA_Service_Provider 
 		require_once plugin_dir_path( __FILE__ ) . 'class-kdna-duplicate-submissions-handler.php';
 
 		$container->add(
-			self::KDNA_DUPLICATE_SUBMISSION_HANDLER,
+			self::GF_DUPLICATE_SUBMISSION_HANDLER,
 			function () {
 				return new KDNA_Duplicate_Submissions_Handler( \KDNACommon::get_base_url() );
 			}
@@ -46,7 +46,7 @@ class KDNA_Duplicate_Submissions_Service_Provider extends KDNA_Service_Provider 
 	public function init( KDNA_Service_Container $container ) {
 		parent::init( $container );
 
-		$duplicate_submission_handler = $container->get( self::KDNA_DUPLICATE_SUBMISSION_HANDLER );
+		$duplicate_submission_handler = $container->get( self::GF_DUPLICATE_SUBMISSION_HANDLER );
 
 		add_action( 'kdnaform_enqueue_scripts', array( $duplicate_submission_handler, 'maybe_enqueue_scripts' ) );
 		add_action( 'wp_loaded', array( $duplicate_submission_handler, 'maybe_handle_safari_redirect' ), 8, 0 );

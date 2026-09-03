@@ -91,8 +91,8 @@ var gfieldmap = function( options ) {
 
 			limit:              limit,
 			items:              self.data,
-			addButtonMarkup:    '<i class="kdnaicon-add"></i>',
-			removeButtonMarkup: '<i class="kdnaicon-subtract"></i>',
+			addButtonMarkup:    '<i class="kficon-add"></i>',
+			removeButtonMarkup: '<i class="kficon-subtract"></i>',
 			callbacks:          {
 				add:  function( obj, $elem, item ) {
 

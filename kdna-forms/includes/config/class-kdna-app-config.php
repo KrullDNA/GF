@@ -11,7 +11,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Configurator;
  *
  * @since 2.7.1
  */
-class KDNA_App_Config extends KDNA_Config {
+class GF_App_Config extends KDNA_Config {
 
 	/**
 	 * The name of the app, in slug form.

@@ -1,4 +1,4 @@
-var KDNAPageConditionalLogic = function (args) {
+var GFPageConditionalLogic = function (args) {
     var self = this,
         $ = jQuery;
 

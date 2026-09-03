@@ -623,7 +623,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			$entries = KDNA_Forms_Model_Legacy::search_leads( $form_ids, $search_criteria, $sorting, $paging );
+			$entries = GF_Forms_Model_Legacy::search_leads( $form_ids, $search_criteria, $sorting, $paging );
 			if ( ! is_null( $total_count ) ) {
 				$total_count = self::count_entries( $form_ids, $search_criteria );
 			}
@@ -655,7 +655,7 @@ class KDNAAPI {
 	public static function get_entry_ids( $form_id, $search_criteria = array(), $sorting = null, $paging = null, &$total_count = null ) {
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			$entry_ids = KDNA_Forms_Model_Legacy::search_lead_ids( $form_id, $search_criteria );
+			$entry_ids = GF_Forms_Model_Legacy::search_lead_ids( $form_id, $search_criteria );
 			return $entry_ids;
 		}
 
@@ -685,7 +685,7 @@ class KDNAAPI {
 	public static function count_entries( $form_ids, $search_criteria = array() ) {
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::count_search_leads( $form_ids, $search_criteria );
+			return GF_Forms_Model_Legacy::count_search_leads( $form_ids, $search_criteria );
 		}
 
 		$q = new KDNA_Query( $form_ids, $search_criteria );
@@ -834,7 +834,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::update_entry( $entry, $entry_id );
+			return GF_Forms_Model_Legacy::update_entry( $entry, $entry_id );
 		}
 
 		if ( empty( $entry_id ) ) {
@@ -1230,7 +1230,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::add_entry( $entry );
+			return GF_Forms_Model_Legacy::add_entry( $entry );
 		}
 
 		if ( ! is_array( $entry ) ) {
@@ -1411,7 +1411,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::update_entry_field( $entry_id, $input_id, $value );
+			return GF_Forms_Model_Legacy::update_entry_field( $entry_id, $input_id, $value );
 		}
 
 		$entry = self::get_entry( $entry_id );

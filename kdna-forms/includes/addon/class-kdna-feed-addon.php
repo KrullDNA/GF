@@ -2855,7 +2855,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	}
 
 	/***
-	 * Registers frontend feeds by rendering the KDNAFrontendFeeds() JS object.
+	 * Registers frontend feeds by rendering the GFFrontEndFeeds() JS object.
 	 *
 	 * @since 2.4
 	 *

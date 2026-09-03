@@ -1882,11 +1882,11 @@ function gformInitCurrencyFormatFields(fieldList){
 //----------------------------------------
 
 /**
- * @var {Object} KDNAMergeTag Handles MergeTag Operations.
+ * @var {Object} GFMergeTag Handles MergeTag Operations.
  * @remove-in 4.0
  * @deprecated Use gform.mergeTags instead.
  */
-var KDNAMergeTag = function() {
+var GFMergeTag = function() {
 	/**
      * Gets the merge tag value for the specified input Id
 	 * @param formId  The current form Id
@@ -1896,7 +1896,7 @@ var KDNAMergeTag = function() {
      * @remove-in 4.0
 	 * @deprecated Use gform.mergeTags.getFieldValue() instead.
 	 */
-	KDNAMergeTag.getMergeTagValue = function( formId, inputId, modifier ) {
+	GFMergeTag.getMergeTagValue = function( formId, inputId, modifier ) {
 
 		const mergeTagInfo = gform.mergeTags.getMergeTagInfo( formId, inputId, modifier );
 
@@ -1921,7 +1921,7 @@ var KDNAMergeTag = function() {
      * @remove-in 4.0
 	 * @deprecated Use gform.mergeTags.replaceMergeTags() instead.
 	 */
-	KDNAMergeTag.replaceMergeTags = function( formId, text ) {
+	GFMergeTag.replaceMergeTags = function( formId, text ) {
 		return gform.mergeTags.replaceMergeTags( formId, text );
 	}
 
@@ -1929,7 +1929,7 @@ var KDNAMergeTag = function() {
 	 * @deprecated Use gform.mergeTags.formatValue() instead.
      * @remove-in 4.0
 	 */
-	KDNAMergeTag.formatValue = function( value, modifier ) {
+	GFMergeTag.formatValue = function( value, modifier ) {
 		return gform.mergeTags.formatValue( value, modifier );
 	}
 
@@ -1943,19 +1943,19 @@ var KDNAMergeTag = function() {
 	 * @deprecated Use gform.mergeTags.parseMergeTags() instead.
      * @remove-in 4.0
 	 */
-	KDNAMergeTag.parseMergeTags = function( text, regEx ) {
+	GFMergeTag.parseMergeTags = function( text, regEx ) {
 		return gform.mergeTags.parseMergeTags( text, regEx );
 	}
 }
 
-new KDNAMergeTag();
+new GFMergeTag();
 
 
 //----------------------------------------
 //------ CALCULATION FUNCTIONS -----------
 //----------------------------------------
 
-var KDNACalc = function(formId, formulaFields){
+var GFCalc = function(formId, formulaFields){
 
 	this.formId = formId;
 	this.formulaFields = formulaFields;
@@ -2081,7 +2081,7 @@ var KDNACalc = function(formId, formulaFields){
 
         var calcObj = this;
         var formulaFieldId = formulaField.field_id;
-        var matches = KDNAMergeTag.parseMergeTags( formulaField.formula );
+        var matches = GFMergeTag.parseMergeTags( formulaField.formula );
 
         calcObj.isCalculating[formulaFieldId] = false;
 
@@ -2142,7 +2142,7 @@ var KDNACalc = function(formId, formulaFields){
 
     this.replaceFieldTags = function( formId, expr, formulaField ) {
 
-        var matches = KDNAMergeTag.parseMergeTags( expr );
+        var matches = GFMergeTag.parseMergeTags( expr );
 
         for(i in matches) {
 
@@ -2172,7 +2172,7 @@ var KDNACalc = function(formId, formulaFields){
 
 			var isVisible = window['kdna_check_field_rule'] ? kdna_check_field_rule( formId, fieldId, true, '' ) == 'show' : true;
 
-			var value = isVisible ? KDNAMergeTag.getMergeTagValue( formId, inputId, modifier ) : 0;
+			var value = isVisible ? GFMergeTag.getMergeTagValue( formId, inputId, modifier ) : 0;
 
             // allow users to modify value with their own function
             value = gform.applyFilters( 'kform_merge_tag_value_pre_calculation', value, matches[i], isVisible, formulaField, formId );
@@ -2234,12 +2234,12 @@ function gformFormatNumber(number, rounding, decimalSeparator, thousandSeparator
 }
 
 /**
- * @deprecated. Use KDNAMergeTags.parseMergeTag() instead
+ * @deprecated. Use GFMergeTags.parseMergeTag() instead
  * @remove-in 3.0
  */
 function getMatchGroups(expr, patt) {
 
-	console.log('getMatchGroups() has been deprecated and will be removed in version 3.0. Use KDNAMergeTags.parseMergeTag() instead.');
+	console.log('getMatchGroups() has been deprecated and will be removed in version 3.0. Use GFMergeTags.parseMergeTag() instead.');
 
 	var matches = new Array();
 
@@ -2280,7 +2280,7 @@ gform.recaptcha = {
 	/**
 	 * Callback function on the reCAPTCAH API script.
 	 *
-	 * @see KDNA_Field_CAPTCHA::get_field_input() in /includes/fields/class-kdna-field-catpcha.php
+	 * @see GF_Field_CAPTCHA::get_field_input() in /includes/fields/class-kdna-field-catpcha.php
 	 */
 	renderRecaptcha: function() {
 		jQuery( '.kinput_recaptcha:not(.kform-initialized)' ).each( function() {
@@ -2887,7 +2887,7 @@ function gformValidateFileSize( field, max_file_size ) {
 			 * @param {object} up        The uploader properties. See: https://www.plupload.com/docs/v2/Uploader.
 			 * @param {object} strings   Localized strings relating to file uploads.
 			 * @param {string} imagesURL The base URL to the KDNA Forms images directory.
-			 * @param {object} response  The response from KDNAAsyncUpload.
+			 * @param {object} response  The response from GFAsyncUpload.
 			 */
 			html = gform.applyFilters('kform_file_upload_markup', html, file, up, strings, imagesUrl, response);
 

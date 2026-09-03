@@ -127,6 +127,60 @@ def check_save_path():
     if 'SaveForm();' not in detail:
         fail('form_detail.php has no button wired to SaveForm()')
 
+    # Everything the editor's inline script calls has to exist in a file that is
+    # actually registered, not merely somewhere in the tree. v3.4.0 passed this
+    # gate with Save broken because the gate only looked at SaveForm itself.
+    registered = set()
+    for path in walk('.php'):
+        for m in re.finditer(r"""wp_register_script\([^)]*?["']([^"']+?\.js)""", read(path)):
+            base = os.path.basename(m.group(1))
+            # Registrations interpolate the .min suffix: "…/foo{$min}.js".
+            base = re.sub(r'\{?\$\w+\}?', '', base)
+            registered.add(base.replace('.min.js', '.js'))
+    enqueued_src = ''
+    for path in walk('.js'):
+        base = os.path.basename(path).replace('.min.js', '.js')
+        if base in registered:
+            enqueued_src += read(path)
+
+    # Globals the browser and WordPress provide.
+    HOST = {
+        'Array', 'Object', 'String', 'Number', 'Boolean', 'Date', 'RegExp', 'Error',
+        'Map', 'Set', 'WeakMap', 'Promise', 'Image', 'Option', 'FormData', 'Blob',
+        'File', 'FileReader', 'XMLHttpRequest', 'URLSearchParams', 'URL', 'Event',
+        'CustomEvent', 'MutationObserver', 'IntersectionObserver', 'Function',
+        'sack',  # WordPress bundles this one
+    }
+    inline = js_php + detail
+    for fn in sorted(set(re.findall(r'\bnew\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(', inline))):
+        if fn in HOST:
+            continue
+        defined_inline = re.search(rf'function\s+{re.escape(fn)}\s*\(|'
+                                   rf'(?:var|let|const)\s+{re.escape(fn)}\s*=', inline)
+        defined_file = re.search(rf'function\s+{re.escape(fn)}\s*\(|'
+                                 rf'(?:var|let|const)\s+{re.escape(fn)}\s*=', enqueued_src)
+        if not defined_inline and not defined_file:
+            fail(f'editor inline script does `new {fn}()` but nothing registered defines it')
+
+    # The PHP half of Save: the service keys the editor looks up must be
+    # declared, and the classes behind them must exist.
+    php_all = {p: read(p) for p in walk('.php')}
+    declared_consts = set()
+    declared_classes = set()
+    for text in php_all.values():
+        declared_consts.update(re.findall(r'\bconst\s+([A-Z][A-Z0-9_]*)\s*=', text))
+        declared_consts.update(re.findall(r"\bdefine\(\s*['\"]([A-Z][A-Z0-9_]*)['\"]", text))
+        declared_classes.update(re.findall(r'\b(?:class|interface|trait)\s+([A-Za-z_][A-Za-z0-9_]*)', text))
+    for m in re.finditer(r'\b([A-Za-z_][A-Za-z0-9_]*)::([A-Z][A-Z0-9_]{2,})\b', detail):
+        cls, const = m.groups()
+        if cls in declared_classes and const not in declared_consts:
+            fail(f'form_detail.php reads {cls}::{const} but no class declares that constant')
+    for m in re.finditer(r'get_service_container\(\)->get\(\s*([A-Za-z_][A-Za-z0-9_]*)::', detail):
+        if m.group(1) not in declared_classes:
+            fail(f'form_detail.php resolves a service through {m.group(1)}, '
+                 f'which is not declared anywhere')
+    notes.append('save chain: inline `new` targets resolve, service keys declared')
+
 
 # --------------------------------------------------------------------------
 def body_class_tokens():

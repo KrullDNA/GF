@@ -23,7 +23,7 @@ class KDNA_Honeypot_Service_Provider extends KDNA_Service_Provider {
 	const KDNA_HONEYPOT_HANDLER = 'kdna_honeypot_handler';
 
 	// configs
-	const KDNA_HONEYPOT_CONFIG = 'kdna_honeypot_config';
+	const GF_HONEYPOT_CONFIG = 'kdna_honeypot_config';
 
 	/**
 	 * Array mapping config class names to their container ID.
@@ -33,7 +33,7 @@ class KDNA_Honeypot_Service_Provider extends KDNA_Service_Provider {
 	 * @var string[]
 	 */
 	protected $configs = array(
-		self::KDNA_HONEYPOT_CONFIG => KDNA_Honeypot_Config::class,
+		self::GF_HONEYPOT_CONFIG => KDNA_Honeypot_Config::class,
 	);
 
 	/**

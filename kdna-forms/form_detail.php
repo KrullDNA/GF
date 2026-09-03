@@ -23,7 +23,7 @@ class KDNAFormDetail {
 		/**
 		* @var KDNA_Forms\KDNA_Forms\Save_Form\KDNA_Save_Form_Helper $save_form_helper
 		*/
-		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_SAVE_FROM_HELPER );
+		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
 		$update_result = '';
 		if ( rgpost( 'operation' ) == 'trash' ) {
 			check_admin_referer( 'kforms_trash_form', 'kforms_trash_form' );
@@ -346,7 +346,7 @@ class KDNAFormDetail {
 				 */
 				do_action( 'kdnaform_after_toolbar_buttons' );
 				?>
-				<span id="please_wait_container" style="display:none;"><i class='kdnaicon-kdnaforms-spinner-icon kdnaicon-spin'></i></span>
+				<span id="please_wait_container" style="display:none;"><i class='kficon-kdnaforms-spinner-icon kficon-spin'></i></span>
 			</div>
 		</div>
 		<form method="post" id="form_trash">
@@ -3369,7 +3369,7 @@ class KDNAFormDetail {
 	 * @return array
 	 */
 	public static function save_form_info( $id, $form_json ) {
-		$form_crud_handler = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_FORM_CRUD_HANDLER );
+		$form_crud_handler = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_FORM_CRUD_HANDLER );
 		$result            = $form_crud_handler->save( $id, $form_json );
 
 		// For backwards compatibility, status used to have the value of the form id if update was successful,
@@ -3380,7 +3380,7 @@ class KDNAFormDetail {
 			$result['status'] = $saved_form_id;
 		}
 
-		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_SAVE_FROM_HELPER );
+		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
 		if ( $save_form_helper->is_ajax_save_action() === false ) {
 
 			foreach ( $result['actions_markup'] as $action_name => $action_markup ) {

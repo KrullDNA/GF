@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || die();
 use KDNACommon;
 
 /**
- * Class KDNA_Submitted_Fields_Endpoint
+ * Class GF_Submitted_Fields_Endpoint
  *
  * Endpoint for retrieving submitted fields data for the form editor.
  *
@@ -15,7 +15,7 @@ use KDNACommon;
  *
  * @package KDNA_Forms\KDNA_Forms\Form_Editor\Submitted_Fields\Endpoints
  */
-class KDNA_Submitted_Fields_Endpoint {
+class GF_Submitted_Fields_Endpoint {
 
 	/**
 	 * The action name for this endpoint.

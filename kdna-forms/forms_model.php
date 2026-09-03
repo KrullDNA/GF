@@ -103,7 +103,7 @@ class KDNAFormsModel {
 		// KDNA Forms: Always return modern version to prevent legacy table fallback.
 		// The legacy tables (rg_form, rg_lead, etc.) are from KDNA Forms < 2.3
 		// and do not exist in KDNA Forms installations. Returning >= 2.3 keeps
-		// legacy code paths (e.g. KDNA_Forms_Model_Legacy) from ever being called.
+		// legacy code paths (e.g. GF_Forms_Model_Legacy) from ever being called.
 		// This is the DB schema version, not the plugin version.
 		return '2.3';
 	}
@@ -242,7 +242,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) table name.
 	 */
 	public static function get_lead_table_name() {
-		return KDNA_Forms_Model_Legacy::get_lead_table_name();
+		return GF_Forms_Model_Legacy::get_lead_table_name();
 	}
 
 	/**
@@ -255,7 +255,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) meta table name.
 	 */
 	public static function get_lead_meta_table_name() {
-		return KDNA_Forms_Model_Legacy::get_lead_meta_table_name();
+		return GF_Forms_Model_Legacy::get_lead_meta_table_name();
 	}
 
 	/**
@@ -268,7 +268,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) notes table name.
 	 */
 	public static function get_lead_notes_table_name() {
-		return KDNA_Forms_Model_Legacy::get_lead_notes_table_name();
+		return GF_Forms_Model_Legacy::get_lead_notes_table_name();
 	}
 
 	/**
@@ -281,7 +281,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) details table name.
 	 */
 	public static function get_lead_details_table_name() {
-		return KDNA_Forms_Model_Legacy::get_lead_details_table_name();
+		return GF_Forms_Model_Legacy::get_lead_details_table_name();
 	}
 
 	/**
@@ -294,7 +294,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) details long table name.
 	 */
 	public static function get_lead_details_long_table_name() {
-		return KDNA_Forms_Model_Legacy::get_lead_details_long_table_name();
+		return GF_Forms_Model_Legacy::get_lead_details_long_table_name();
 	}
 
 	/**
@@ -307,7 +307,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) view table name.
 	 */
 	public static function get_lead_view_name() {
-		return KDNA_Forms_Model_Legacy::get_lead_view_name();
+		return GF_Forms_Model_Legacy::get_lead_view_name();
 	}
 
 	/**
@@ -320,7 +320,7 @@ class KDNAFormsModel {
 	 * @return string he incomplete submissions table name.
 	 */
 	public static function get_incomplete_submissions_table_name() {
-		return KDNA_Forms_Model_Legacy::get_incomplete_submissions_table_name();
+		return GF_Forms_Model_Legacy::get_incomplete_submissions_table_name();
 	}
 
 	/**
@@ -586,7 +586,7 @@ class KDNAFormsModel {
 	public static function get_entry_count_per_form() {
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_entry_count_per_form();
+			return GF_Forms_Model_Legacy::get_entry_count_per_form();
 		}
 
 		global $wpdb;
@@ -705,7 +705,7 @@ class KDNAFormsModel {
 	public static function get_form_counts( $form_id ) {
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_form_counts( $form_id );
+			return GF_Forms_Model_Legacy::get_form_counts( $form_id );
 		}
 
 		global $wpdb;
@@ -1486,7 +1486,7 @@ class KDNAFormsModel {
 
 	public static function get_lead_detail_id( $current_fields, $field_number, $item_index = '' ) {
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_lead_detail_id( $current_fields, $field_number );
+			return GF_Forms_Model_Legacy::get_lead_detail_id( $current_fields, $field_number );
 		}
 
 		foreach ( $current_fields as $field ) {
@@ -1694,7 +1694,7 @@ class KDNAFormsModel {
 		global $wpdb, $current_user;
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::update_lead_property( $lead_id, $property_name, $property_value, $update_akismet, $disable_hook );
+			return GF_Forms_Model_Legacy::update_lead_property( $lead_id, $property_name, $property_value, $update_akismet, $disable_hook );
 		}
 
 		$entry_table = self::get_entry_table_name();
@@ -1811,7 +1811,7 @@ class KDNAFormsModel {
 		global $wpdb, $current_user;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::delete_leads_by_form( $form_id, $status );
+			GF_Forms_Model_Legacy::delete_leads_by_form( $form_id, $status );
 			return;
 		}
 
@@ -2431,7 +2431,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::delete_file( $entry_id, $field_id, $file_index );
+			GF_Forms_Model_Legacy::delete_file( $entry_id, $field_id, $file_index );
 			return;
 		}
 
@@ -2744,7 +2744,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::delete_field_values( $form_id, $field_id );
+			GF_Forms_Model_Legacy::delete_field_values( $form_id, $field_id );
 			return;
 		}
 
@@ -2787,7 +2787,7 @@ class KDNAFormsModel {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::delete_lead( $entry_id );
+			GF_Forms_Model_Legacy::delete_lead( $entry_id );
 			return;
 		}
 
@@ -2853,7 +2853,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::add_note( $entry_id, $user_id, $user_name, $note, $note_type );
+			GF_Forms_Model_Legacy::add_note( $entry_id, $user_id, $user_name, $note, $note_type );
 			return;
 		}
 
@@ -2933,7 +2933,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::delete_note( $note_id );
+			GF_Forms_Model_Legacy::delete_note( $note_id );
 			return;
 		}
 
@@ -3070,7 +3070,7 @@ class KDNAFormsModel {
 		global $wpdb, $current_user;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			KDNA_Forms_Model_Legacy::save_lead( $form, $entry );
+			GF_Forms_Model_Legacy::save_lead( $form, $entry );
 			$entry = KDNAAPI::get_entry( $entry['id'] );
 			return;
 		}
@@ -5740,7 +5740,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::update_lead_field_value( $form, $entry, $field, $entry_meta_id, $input_id, $value );
+			return GF_Forms_Model_Legacy::update_lead_field_value( $form, $entry, $field, $entry_meta_id, $input_id, $value );
 		}
 
 		/**
@@ -6173,7 +6173,7 @@ class KDNAFormsModel {
 
 	public static function drop_tables() {
 		global $wpdb;
-		foreach ( KDNA_Forms_Model_Legacy::get_legacy_tables() as $table ) {
+		foreach ( GF_Forms_Model_Legacy::get_legacy_tables() as $table ) {
 			$wpdb->query( $wpdb->prepare( "DROP TABLE IF EXISTS %i", $table ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		}
 		foreach ( self::get_tables() as $table ) {
@@ -6204,7 +6204,7 @@ class KDNAFormsModel {
 
 		$drop_tables = array_merge( $drop_tables, $core_tables );
 
-		$legacy_tables = KDNA_Forms_Model_Legacy::get_legacy_tables();
+		$legacy_tables = GF_Forms_Model_Legacy::get_legacy_tables();
 
 		$drop_tables = array_merge( $drop_tables, $legacy_tables );
 
@@ -6230,7 +6230,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::is_duplicate( $form_id, $field, $value );
+			return GF_Forms_Model_Legacy::is_duplicate( $form_id, $field, $value );
 		}
 
 		$entry_meta_table_name   = self::get_entry_meta_table_name();
@@ -6305,7 +6305,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_lead_notes( $lead_id );
+			return GF_Forms_Model_Legacy::get_lead_notes( $lead_id );
 		}
 
 		$notes_table = self::get_entry_notes_table_name();
@@ -6554,7 +6554,7 @@ class KDNAFormsModel {
 	 */
 	public static function get_entries_by_meta( $meta_key, $meta_value ) {
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_leads_by_meta( $meta_key, $meta_value );
+			return GF_Forms_Model_Legacy::get_leads_by_meta( $meta_key, $meta_value );
 		}
 
 		// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
@@ -6652,7 +6652,7 @@ class KDNAFormsModel {
 	public static function get_leads_where_sql( $args ) {
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_leads_where_sql( $args ) ;
+			return GF_Forms_Model_Legacy::get_leads_where_sql( $args ) ;
 		}
 
 		return self::get_entries_where_sql( $args );
@@ -6668,7 +6668,7 @@ class KDNAFormsModel {
 	 */
 	public static function build_lead_array( $results ) {
 		_deprecated_function(__METHOD__, '2.3');
-		return KDNA_Forms_Model_Legacy::build_lead_array( $results );
+		return GF_Forms_Model_Legacy::build_lead_array( $results );
 	}
 
 	/***
@@ -6707,7 +6707,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_lead_count( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
+			return GF_Forms_Model_Legacy::get_lead_count( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
 		}
 
 		if ( ! is_numeric( $form_id ) ) {
@@ -6820,7 +6820,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_lead_ids( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
+			return GF_Forms_Model_Legacy::get_lead_ids( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
 		}
 
 		if ( ! is_numeric( $form_id ) ) {
@@ -7112,7 +7112,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_submitted_fields( $form_id );
+			return GF_Forms_Model_Legacy::get_submitted_fields( $form_id );
 		}
 
 		$entry_meta_table_name = self::get_entry_meta_table_name();
@@ -7671,7 +7671,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_lead_count_all_forms( $status );
+			return GF_Forms_Model_Legacy::get_lead_count_all_forms( $status );
 		}
 
 		$entry_table_name   = self::get_entry_table_name();
@@ -7692,7 +7692,7 @@ class KDNAFormsModel {
 
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return KDNA_Forms_Model_Legacy::get_entry_meta_counts();
+			return GF_Forms_Model_Legacy::get_entry_meta_counts();
 		}
 
 		$meta_table_name = self::get_entry_meta_table_name();
@@ -8694,7 +8694,7 @@ $_kdnaform_lead_meta = array();
 function kdnaform_get_meta( $entry_id, $meta_key ) {
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		return KDNA_Forms_Model_Legacy::kdnaform_get_meta( $entry_id, $meta_key );
+		return GF_Forms_Model_Legacy::kdnaform_get_meta( $entry_id, $meta_key );
 	}
 
 	global $wpdb, $_kdnaform_lead_meta;
@@ -8718,7 +8718,7 @@ function kdnaform_get_meta_values_for_entries( $entry_ids, $meta_keys ) {
 	global $wpdb;
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		return KDNA_Forms_Model_Legacy::kdnaform_get_meta_values_for_entries( $entry_ids, $meta_keys );
+		return GF_Forms_Model_Legacy::kdnaform_get_meta_values_for_entries( $entry_ids, $meta_keys );
 	}
 
 	if ( empty( $meta_keys ) || empty( $entry_ids ) ) {
@@ -8782,7 +8782,7 @@ function kdnaform_update_meta( $entry_id, $meta_key, $meta_value, $form_id = nul
 	}
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		KDNA_Forms_Model_Legacy::kdnaform_update_meta( $entry_id, $meta_key, $meta_value, $form_id );
+		GF_Forms_Model_Legacy::kdnaform_update_meta( $entry_id, $meta_key, $meta_value, $form_id );
 		return;
 	}
 	$table_name = KDNAFormsModel::get_entry_meta_table_name();
@@ -8846,7 +8846,7 @@ function kdnaform_add_meta( $entry_id, $meta_key, $meta_value, $form_id = null )
 	}
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		KDNA_Forms_Model_Legacy::kdnaform_add_meta( $entry_id, $meta_key, $meta_value, $form_id );
+		GF_Forms_Model_Legacy::kdnaform_add_meta( $entry_id, $meta_key, $meta_value, $form_id );
 		return;
 	}
 
@@ -8893,7 +8893,7 @@ function kdnaform_delete_meta( $entry_id, $meta_key = '' ) {
 	}
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		KDNA_Forms_Model_Legacy::kdnaform_delete_meta( $entry_id, $meta_key );
+		GF_Forms_Model_Legacy::kdnaform_delete_meta( $entry_id, $meta_key );
 		return;
 	}
 

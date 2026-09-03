@@ -7,14 +7,14 @@ use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Factories\Definition_Engine_Fac
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Factories\Output_Engine_Factory;
 
 /**
- * KDNA_Theme_Layer
+ * GF_Theme_Layer
  *
  * Provides base functionality for any system which needs to implement a Theme Layer. Can either be
  * directly extended or used via the API.
  *
  * @since 2.7
  */
-abstract class KDNA_Theme_Layer {
+abstract class GF_Theme_Layer {
 
 	protected $name;
 	protected $icon;

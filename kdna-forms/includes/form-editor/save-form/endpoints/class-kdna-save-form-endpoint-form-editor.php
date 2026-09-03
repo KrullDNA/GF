@@ -33,7 +33,7 @@ class KDNA_Save_Form_Endpoint_Form_Editor extends KDNA_Save_Form_Endpoint_Admin 
 
 		$kdna_forms                 = $this->kdna_forms;
 		$editor_renderer          = $kdna_forms::get_service_container()->get( KDNA_Form_Editor_Service_Provider::FORM_EDITOR_RENDERER );
-		$form_detail              = $kdna_forms::get_service_container()->get( KDNA_Util_Service_Provider::KDNA_FORM_DETAIL );
+		$form_detail              = $kdna_forms::get_service_container()->get( KDNA_Util_Service_Provider::GF_FORM_DETAIL );
 		$result['updated_markup'] = $editor_renderer::render_form_editor( $this->form_id, $form_detail );
 
 		return  parent::get_success_status_response( $result );

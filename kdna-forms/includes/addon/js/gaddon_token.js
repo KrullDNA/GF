@@ -87,7 +87,7 @@ window.KDNAToken = null;
 
 		this.saveEntryData = function() {
 			
-			var KDNAPaymentObj = this,
+			var GFPaymentObj = this,
 				input_prefix = 'input_' + this.formId + '_';
 				
 			if ( ! this.entry_data )
@@ -97,8 +97,8 @@ window.KDNAToken = null;
 				
 				var input_id = $( this ).attr( 'id' ).replace( input_prefix, '' ).replace( '_', '.' ); 
 				
-				if ( $.inArray( input_id, KDNAPaymentObj.fields ) >= 0 )				
-					KDNAPaymentObj.entry_data[ input_id ] = $( this ).val();
+				if ( $.inArray( input_id, GFPaymentObj.fields ) >= 0 )				
+					GFPaymentObj.entry_data[ input_id ] = $( this ).val();
 				
 			} );
 		

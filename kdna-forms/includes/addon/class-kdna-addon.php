@@ -419,7 +419,7 @@ abstract class KDNAAddOn {
 		$meets_requirements = $this->meets_minimum_requirements();
 
 		// If saving form via AJAX initialize add-ons admin to catch any actions hooked to the after form save actions.
-		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_SAVE_FROM_HELPER );
+		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
 		if ( RG_CURRENT_PAGE == 'admin-ajax.php' && $save_form_helper->is_ajax_save_action() ) {
 			$this->init_admin();
 		}
@@ -6422,7 +6422,7 @@ abstract class KDNAAddOn {
 		/**
 		* @var KDNA_Forms\KDNA_Forms\Save_Form\KDNA_Save_Form_Helper $save_form_helper
 		*/
-		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_SAVE_FROM_HELPER );
+		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
 		if (
 				KDNAForms::get_page_query_arg() == 'kdna_edit_forms' && ! rgempty( 'id', $_GET ) && rgempty( 'view', $_GET )  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				|| $save_form_helper->is_ajax_save_action()

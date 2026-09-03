@@ -7,7 +7,7 @@ namespace KDNA_Forms\KDNA_Forms\Query\JSON_Handlers;
  *
  * @since 2.7
  */
-abstract class KDNA_JSON_Handler {
+abstract class GF_JSON_Handler {
 
 	const SETTING_NAME = 'form_full_screen_slug';
 	const SECTION_NAME = 'kdna_theme_layers';

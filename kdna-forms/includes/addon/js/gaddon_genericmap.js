@@ -1,4 +1,4 @@
-var KDNAGenericMap = function( options ) {
+var GFGenericMap = function( options ) {
 
 	var self = this;
 
@@ -119,8 +119,8 @@ var KDNAGenericMap = function( options ) {
 
 			limit:              limit,
 			items:              self.data,
-			addButtonMarkup:    '<i class="kdnaicon-add"></i>',
-			removeButtonMarkup: '<i class="kdnaicon-subtract"></i>',
+			addButtonMarkup:    '<i class="kficon-add"></i>',
+			removeButtonMarkup: '<i class="kficon-subtract"></i>',
 			callbacks:          {
 				add:  function( obj, $elem, item ) {
 

@@ -2,17 +2,17 @@
 
 namespace KDNA_Forms\KDNA_Forms\Theme_Layers\API\Fluent\Layers;
 
-use KDNA_Forms\KDNA_Forms\Theme_Layers\API\KDNA_All_Access_Theme_Layer;
+use KDNA_Forms\KDNA_Forms\Theme_Layers\API\GF_All_Access_Theme_Layer;
 
 /**
- * Theme Layer set up to be used in a fluent context. This layer extends KDNA_All_Access_Theme_Layer,
+ * Theme Layer set up to be used in a fluent context. This layer extends GF_All_Access_Theme_Layer,
  * which allows it to have access to all available traits and engines.
  *
  * This layer mostly acts as a middleware to pass values from the fluent builder to the layer.
  *
  * @since 2.7
  */
-class Fluent_Theme_Layer extends KDNA_All_Access_Theme_Layer {
+class Fluent_Theme_Layer extends GF_All_Access_Theme_Layer {
 
 	////////////////////////////////////////////////
 	/// Getters ////////////////////////////////////

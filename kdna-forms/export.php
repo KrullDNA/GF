@@ -939,7 +939,7 @@ class KDNAExport {
                                 <br /><br />
                                 <button id="submit_button" class="button large primary"><?php esc_attr_e( 'Download Export File', 'kdnaforms' ); ?></button>
                                 <span id="please_wait_container" style="display:none; margin-left:15px;">
-                                    <i class='kdnaicon-kdnaforms-spinner-icon kdnaicon-spin'></i> <?php esc_html_e( 'Exporting entries. Progress:', 'kdnaforms' ); ?>
+                                    <i class='kficon-kdnaforms-spinner-icon kficon-spin'></i> <?php esc_html_e( 'Exporting entries. Progress:', 'kdnaforms' ); ?>
                                     <span id="progress_container">0%</span>
                                 </span>
                             </li>

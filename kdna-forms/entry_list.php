@@ -2173,7 +2173,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 							<input type="button" name="notification_resend" id="notification_resend" value="<?php esc_attr_e( 'Resend Notifications', 'kdnaforms' ) ?>" class="button" style="" onclick="BulkResendNotifications();" />
 							<span id="please_wait_container" style="display:none; margin-left: 5px;">
-                                                <i class='kdnaicon-kdnaforms-spinner-icon kdnaicon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
+                                                <i class='kficon-kdnaforms-spinner-icon kficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
                                             </span>
 							<?php
 						}
