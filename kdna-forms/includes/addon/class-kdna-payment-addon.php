@@ -534,6 +534,154 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 	}
 
 	/**
+	 * Record a payment that the gateway rejected.
+	 *
+	 * The entry is kept rather than discarded: someone has filled the form in,
+	 * and a failed payment is something the site owner needs to see, not
+	 * something to lose quietly.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array $entry  The entry, by reference.
+	 * @param array $action The action describing the failure.
+	 *
+	 * @return bool
+	 */
+	public function fail_payment( &$entry, $action ) {
+		$entry['payment_status'] = 'Failed';
+		$entry['is_fulfilled']   = 0;
+
+		KDNAAPI::update_entry( $entry );
+
+		$note = rgar( $action, 'note' );
+
+		if ( empty( $note ) ) {
+			$note = esc_html__( 'The payment failed.', 'kdnaforms' );
+		}
+
+		$this->add_note( $entry['id'], $note, 'error' );
+
+		return true;
+	}
+
+	/**
+	 * Record a successful recurring payment against a subscription.
+	 *
+	 * Each renewal is its own transaction row, so the entry carries the whole
+	 * billing history rather than only the most recent charge.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array $entry  The entry, by reference.
+	 * @param array $action The action describing the payment.
+	 *
+	 * @return bool
+	 */
+	public function add_subscription_payment( &$entry, $action ) {
+		$entry['payment_status'] = 'Active';
+		$entry['is_fulfilled']   = 1;
+
+		KDNAAPI::update_entry( $entry );
+
+		$this->insert_transaction(
+			$entry['id'],
+			'payment',
+			rgar( $action, 'transaction_id' ),
+			rgar( $action, 'amount' ),
+			true
+		);
+
+		$note = rgar( $action, 'note' );
+
+		if ( empty( $note ) ) {
+			$note = sprintf(
+				/* translators: 1: formatted amount, 2: the subscription id. */
+				esc_html__( 'Subscription payment received. Amount: %1$s. Subscription: %2$s', 'kdnaforms' ),
+				KDNACommon::to_money( rgar( $action, 'amount' ), rgar( $entry, 'currency' ) ),
+				rgar( $action, 'subscription_id' )
+			);
+		}
+
+		$this->add_note( $entry['id'], $note, 'success' );
+
+		return true;
+	}
+
+	/**
+	 * Record a recurring payment the gateway could not take.
+	 *
+	 * The subscription itself is left alone. A card can fail once and succeed
+	 * on the gateway's retry, so cancelling here would end subscriptions that
+	 * are about to recover on their own.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array $entry  The entry, by reference.
+	 * @param array $action The action describing the failure.
+	 *
+	 * @return bool
+	 */
+	public function fail_subscription_payment( &$entry, $action ) {
+		$entry['payment_status'] = 'Failed';
+
+		KDNAAPI::update_entry( $entry );
+
+		$note = rgar( $action, 'note' );
+
+		if ( empty( $note ) ) {
+			$note = sprintf(
+				/* translators: 1: formatted amount, 2: the subscription id. */
+				esc_html__( 'Subscription payment failed. Amount: %1$s. Subscription: %2$s', 'kdnaforms' ),
+				KDNACommon::to_money( rgar( $action, 'amount' ), rgar( $entry, 'currency' ) ),
+				rgar( $action, 'subscription_id' )
+			);
+		}
+
+		$this->add_note( $entry['id'], $note, 'error' );
+
+		return true;
+	}
+
+	/**
+	 * Mark a subscription as cancelled.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array       $entry The entry, by reference.
+	 * @param array|false $feed  The feed the subscription belongs to.
+	 * @param string      $note  Optional note to record instead of the default.
+	 *
+	 * @return bool
+	 */
+	public function cancel_subscription( &$entry, $feed = false, $note = '' ) {
+		$entry['payment_status'] = 'Cancelled';
+
+		KDNAAPI::update_entry( $entry );
+
+		if ( empty( $note ) ) {
+			$note = sprintf(
+				/* translators: %s: the subscription id. */
+				esc_html__( 'Subscription cancelled. Subscription: %s', 'kdnaforms' ),
+				rgar( $entry, 'transaction_id' )
+			);
+		}
+
+		$this->add_note( $entry['id'], $note, 'success' );
+
+		/**
+		 * Fires once a subscription has been marked cancelled.
+		 *
+		 * @since 3.5.1
+		 *
+		 * @param array       $entry The entry.
+		 * @param array|false $feed  The feed the subscription belongs to.
+		 */
+		do_action( 'kdnaform_subscription_canceled', $entry, $feed );
+
+		return true;
+	}
+
+	/**
 	 * Create a subscription and write the result to the entry.
 	 *
 	 * @param array $authorization   The result of authorize()/subscribe().
