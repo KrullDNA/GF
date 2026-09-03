@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 2.3.0
+Version: 2.6.0
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.3.0';
+	public static $version = '2.6.0';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -2930,7 +2930,6 @@ class KDNAForms {
 			$layout_editor_deps[] = 'jquery-touch-punch';
 		}
 		wp_register_script( 'kdnaform_layout_editor', $base_url . "/js/layout_editor{$min}.js", $layout_editor_deps, $version, false );
-		wp_register_script( 'kdnaform_cl_flyout', $base_url . "/js/conditional_logic_flyout{$min}.js", array( 'jquery' ), $version, true );
 		wp_register_script( 'kdnaform_form_editor', $base_url . "/js/form_editor{$min}.js", array(
 			'jquery',
 			'kdnaform_json',
@@ -3213,7 +3212,6 @@ class KDNAForms {
 					'kdnaform_form_admin',
 					'kdnaform_form_editor',
 					'kdnaform_layout_editor',
-					'kdnaform_cl_flyout',
 					'kdnaform_placeholder',
 					'jquery-ui-autocomplete',
 					'sack',
@@ -3365,16 +3363,6 @@ class KDNAForms {
 				'defaultSubmit'     => __( 'Submit', 'kdnaforms' ),
 			);
 			wp_localize_script( 'kdnaform_form_editor', 'gform_form_strings', $form_strings );
-
-			// Badge text for the Conditional Logic accordion row.
-			wp_localize_script(
-				'kdnaform_cl_flyout',
-				'kdnaformClFlyoutStrings',
-				array(
-					'active'   => esc_html__( 'Active', 'kdnaforms' ),
-					'inactive' => esc_html__( 'Inactive', 'kdnaforms' ),
-				)
-			);
 			wp_enqueue_media();
 		}
 
@@ -6452,9 +6440,9 @@ class KDNAForms {
 		$return = false;
 		if ( $option == 'kdnaform_entries_screen_options' ) {
 			$return                   = array();
-			$return['default_filter'] = sanitize_key( rgpost( 'kdnaform_default_filter' ) );
+			$return['default_filter'] = sanitize_key( rgpost( 'kdnaform_default_filter' ) ?: rgpost( 'gform_default_filter' ) );
 			$return['per_page']       = sanitize_key( rgpost( 'kdnaform_per_page' ) );
-			$return['display_mode']   = sanitize_key( rgpost( 'kdnaform_entries_display_mode' ) );
+			$return['display_mode']   = sanitize_key( rgpost( 'kdnaform_entries_display_mode' ) ?: rgpost( 'gform_entries_display_mode' ) );
 		} elseif ( $option == 'kdnaform_forms_screen_options' ) {
 			$return = array();
 			$return['order_by']   = sanitize_key( rgpost( 'order_by' ) );

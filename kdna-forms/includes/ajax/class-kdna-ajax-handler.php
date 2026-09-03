@@ -108,9 +108,9 @@ class KDNA_Ajax_Handler {
 		$target_page       = absint( rgpost( 'gform_target_page_number_' . $form_id ) );
 		$source_page       = absint( rgpost( 'gform_source_page_number_' . $form_id ) );
 		$field_values      = rgpost( 'gform_field_values' );
-		$theme             = rgpost( 'kdnaform_theme' );
-		$style             = rgpost( 'kdnaform_style_settings' );
-		$submission_method = rgpost( 'kdnaform_submission_method' );
+		$theme             = rgpost( 'kdnaform_theme' ) ?: rgpost( 'gform_theme' );
+		$style             = rgpost( 'kdnaform_style_settings' ) ?: rgpost( 'gform_style_settings' );
+		$submission_method = rgpost( 'kdnaform_submission_method' ) ?: rgpost( 'gform_submission_method' );
 
 		require_once \KDNACommon::get_base_path() . '/form_display.php';
 
@@ -179,7 +179,7 @@ class KDNA_Ajax_Handler {
 	public function get_submission_type( $target_page, $source_page ) {
 		if ( isset( $_POST['gform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SEND_LINK;
-		} elseif ( rgpost( 'kdnaform_save') ) {
+		} elseif ( rgpost( 'kdnaform_save' ) || rgpost( 'gform_save' ) ) {
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SAVE_AND_CONTINUE;
 		} elseif ( $target_page === 0 ) {
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SUBMIT;

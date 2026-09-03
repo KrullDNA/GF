@@ -230,9 +230,9 @@ class KDNAEntryList {
             <fieldset class='screen-options'>
 			<h5>{$pagination_title}</h5>
 
-            	<label for='kdnaform_per_page%s'>{$entries_label}</label>
-            	<input type='number' step='1' min='1' max='100' class='screen-per-page' name='gform_per_page'
-					id='gform_per_page' maxlength='3' value='{$per_page}' />
+            	<label for='kdnaform_per_page'>{$entries_label}</label>
+            	<input type='number' step='1' min='1' max='100' class='screen-per-page' name='kdnaform_per_page'
+					id='kdnaform_per_page' maxlength='3' value='{$per_page}' />
             	<input type='hidden' name='wp_screen_options[option]' value='kdnaform_entries_screen_options' />
             	<input type='hidden' name='wp_screen_options[value]' value='yes' />
 			</fieldset>

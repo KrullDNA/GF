@@ -1226,6 +1226,106 @@ class KDNAFormDisplay {
 			$form_string .= "
                 <div class='{$wrapper_css_class}{$custom_wrapper_css_class}' data-form-theme='{$form_theme}' {$page_instance} id='gform_wrapper_$form_id' " . $style . '>';
 
+			// Conditional logic normally initialises through a long chain: three
+			// separate events gating gform.initializeOnLoaded, then
+			// kdnaform_post_render, then gf_apply_rules. That chain has proven
+			// unreliable in the wild — when it stalls the rules never run, so a
+			// field configured to start hidden renders visible and the wrapper is
+			// never revealed.
+			//
+			// Rather than wait on it, drive the rules directly as soon as the
+			// conditional logic script is available. gf_apply_rules only reads the
+			// current field values and shows or hides accordingly, so it is safe to
+			// run twice if the normal path does complete.
+			if ( $should_render_hidden ) {
+
+				// The conditional logic script — the one that assigns
+				// window['kdna_form_conditional_logic'], applies the rules and
+				// reveals the form — is normally emitted inside
+				// gform.initializeOnLoaded. When that gate never opens, the rule
+				// set is never even assigned, so nothing downstream can recover:
+				// there is nothing to recover from.
+				//
+				// Emit the same script again, ungated. It guards on jQuery and
+				// defers its own work to document ready, so it is safe here, and
+				// re-running it if the gated copy does fire is harmless: it
+				// reassigns the same config and re-evaluates the same rules.
+				$ungated = self::get_conditional_logic( $form, $field_values );
+
+				if ( ! empty( $ungated ) ) {
+					$form_string .= KDNACommon::get_inline_script_tag( 'try{' . $ungated . '}catch(e){}' );
+				}
+
+				$init = sprintf(
+					'( function() {
+						var tries = 0;
+
+						var run = function() {
+							var w = document.getElementById( "gform_wrapper_%1$d" );
+							if ( ! w ) {
+								return true;
+							}
+
+							var cfg = window.kdna_form_conditional_logic
+								&& window.kdna_form_conditional_logic[ %1$d ];
+
+							// Not ready yet — keep waiting.
+							if ( ! cfg || ! cfg.logic || typeof window.gf_apply_rules !== "function" ) {
+								return false;
+							}
+
+							var ids = [];
+							for ( var k in cfg.logic ) {
+								if ( Object.prototype.hasOwnProperty.call( cfg.logic, k ) ) {
+									ids.push( parseInt( k, 10 ) );
+								}
+							}
+
+							try {
+								if ( ids.length ) {
+									window.gf_apply_rules( %1$d, ids, true );
+								}
+							} catch ( e ) {
+								if ( window.console && window.console.error ) {
+									window.console.error( "KDNA Forms: conditional logic failed for form %1$d.", e );
+								}
+							}
+
+							w.style.display = "";
+							return true;
+						};
+
+						var poll = function() {
+							if ( run() ) {
+								return;
+							}
+							// Give the scripts a moment to land, then stop waiting and
+							// reveal regardless so the form is never left invisible.
+							if ( ++tries > 60 ) {
+								var w = document.getElementById( "gform_wrapper_%1$d" );
+								if ( w ) {
+									w.style.display = "";
+								}
+								if ( window.console && window.console.warn ) {
+									window.console.warn( "KDNA Forms: conditional logic script never loaded for form %1$d; revealed without applying rules." );
+								}
+								return;
+							}
+							window.setTimeout( poll, 50 );
+						};
+
+						if ( document.readyState === "loading" ) {
+							document.addEventListener( "DOMContentLoaded", poll );
+						} else {
+							poll();
+						}
+					} )();',
+					absint( $form_id )
+				);
+
+				$form_string .= KDNACommon::get_inline_script_tag( $init );
+			}
+
 			/**
 			 * Allows markup to be added directly after the opening form wrapper.
 			 *

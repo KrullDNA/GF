@@ -523,7 +523,7 @@ html[dir="rtl"] .gform_legacy_markup_wrapper .gfield_time_hour i {
 	float: left;
 }
 
-html[dir="rtl"] .gform_legacy_markup_wrapper .gform_card_icon_container div {
+html[dir="rtl"] .gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div {
 	float: right;
 }
 
@@ -556,8 +556,8 @@ html[dir="rtl"] .gform_legacy_markup_wrapper:not(.gf_browser_gecko):not(.gf_brow
 	background-position: 3.5% center;
 }
 
-html[dir="rtl"] .gform_legacy_markup_wrapper .gform_fileupload_multifile .gform_drop_area,
-html[dir="rtl"] .gform_legacy_markup_wrapper span.gform_drop_instructions {
+html[dir="rtl"] .gform_legacy_markup_wrapper .gform_fileupload_multifile,.kdnaform_fileupload_multifile .gform_drop_area,
+html[dir="rtl"] .gform_legacy_markup_wrapper span.gform_drop_instructions,.kdnaform_drop_instructions {
     text-align: center;
 }
 
@@ -647,7 +647,7 @@ html[dir="rtl"] .gform_legacy_markup_wrapper span.ginput_price {
 	}
 
 	html[dir="rtl"] .gform_legacy_markup_wrapper .gform_footer a.gform_save_link,
-	html[dir="rtl"] .gform_legacy_markup_wrapper .gform_page_footer a.gform_save_link {
+	html[dir="rtl"] .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer a.gform_save_link {
 		margin-right: 16px;
 	}
 
@@ -686,9 +686,9 @@ html[dir="rtl"] .gform_legacy_markup_wrapper span.ginput_price {
 	}
 
 	html[dir="rtl"] .gform_legacy_markup_wrapper .gform_footer input.button,
-    html[dir="rtl"] .gform_legacy_markup_wrapper .gform_page_footer input.button,
+    html[dir="rtl"] .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer input.button,
     html[dir="rtl"] .gform_legacy_markup_wrapper .gform_footer input[type=submit],
-    html[dir="rtl"] .gform_legacy_markup_wrapper .gform_page_footer input[type=submit] {
+    html[dir="rtl"] .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer input[type=submit] {
         margin: 0 0 0 16px;
     }
 
@@ -696,14 +696,14 @@ html[dir="rtl"] .gform_legacy_markup_wrapper span.ginput_price {
 
 @media only screen and (max-width: 641px) {
 
-	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer .button.gform_previous_button,
-	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer .button.gform_next_button,
+	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_previous_button,
+	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_next_button,
 	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_footer .button.gform_button,
-	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer .button.gform_button,
-	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,
-	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,
+	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_button,
+	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer,
+	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer,
 	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_footer a.gform_save_link,
-	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer a.gform_save_link,
+	html[dir="rtl"] body .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer a.gform_save_link,
 	html[dir="rtl"] body .gform_legacy_markup_wrapper table.gfield_list td.gfield_list_icons {
     	text-align: center !important;
 	}
@@ -719,7 +719,7 @@ html[dir="rtl"] .gform_legacy_markup_wrapper span.ginput_price {
 	}
 
 	html[dir="rtl"] .gform_footer,
-	html[dir="rtl"] .gform_page_footer {
+	html[dir="rtl"] .gform_page_footer,.kdnaform_page_footer {
 		padding-left: 16px;
 	}
 

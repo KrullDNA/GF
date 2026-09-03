@@ -131,8 +131,8 @@ to no.
         clear:both;
     }
 
-    .gform_wrapper.gform_validation_error .top_label li.gfield.gfield_error.gf_left_half,
-    .gform_wrapper.gform_validation_error .top_label li.gfield.gfield_error.gf_right_half {
+    .gform_wrapper.gform_validation_error,.kdnaform_validation_error .top_label li.gfield.gfield_error.gf_left_half,
+    .gform_wrapper.gform_validation_error,.kdnaform_validation_error .top_label li.gfield.gfield_error.gf_right_half {
         max-width: calc(50% - 16px);
         padding-right: 0;
     }
@@ -691,7 +691,7 @@ to no.
         color: #314475;
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_simple_yellow {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_simple_yellow {
         margin: 30px 0;
         max-width: 99%;
         border-top: 1px solid #E6DB55;
@@ -702,7 +702,7 @@ to no.
         font-size: 25px;
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_simple_gray {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_simple_gray {
         margin: 30px 0;
         max-width: 99%;
         border-top: 1px solid #CCC;
@@ -713,7 +713,7 @@ to no.
         font-size: 25px;
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_yellow_gradient {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_yellow_gradient {
         position: relative;
         background-color: #FFFBD2;
         margin: 30px 0;
@@ -723,7 +723,7 @@ to no.
         box-shadow: 0px 0px 5px rgba(221, 215, 131, 0.75);
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_yellow_gradient div.gform_confirmation_message {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_yellow_gradient div.gform_confirmation_message {
         margin: 0;
         padding: 40px;
         max-width: 99%;
@@ -741,7 +741,7 @@ to no.
         background: linear-gradient(to bottom,  #fffce5 0%,#fff9bf 100%);
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_green_gradient {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_green_gradient {
         position: relative;
         background-color: #f1fcdf;
         margin: 30px 0;
@@ -751,7 +751,7 @@ to no.
         box-shadow: 0px 0px 5px rgba(86, 122, 86, 0.4);
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_green_gradient div.gforms_confirmation_message {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_green_gradient div.gforms_confirmation_message {
         margin: 0;
         padding: 40px;
         max-width: 99%;
@@ -770,10 +770,10 @@ to no.
         background: linear-gradient(to bottom,  rgba(219,242,183,1) 0%,rgba(180,208,136,1) 100%);
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_yellow_gradient:before,
-    div.gform_confirmation_wrapper.gf_confirmation_yellow_gradient:after,
-    div.gform_confirmation_wrapper.gf_confirmation_green_gradient:before,
-    div.gform_confirmation_wrapper.gf_confirmation_green_gradient:after {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_yellow_gradient:before,
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_yellow_gradient:after,
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_green_gradient:before,
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_green_gradient:after {
         z-index: -1;
         position: absolute;
         content: "";
@@ -793,8 +793,8 @@ to no.
         transform: rotate(-3deg);
     }
 
-    div.gform_confirmation_wrapper.gf_confirmation_yellow_gradient:after,
-    div.gform_confirmation_wrapper.gf_confirmation_green_gradient:after {
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_yellow_gradient:after,
+    div.gform_confirmation_wrapper,.kdnaform_confirmation_wrapper.gf_confirmation_green_gradient:after {
         -webkit-transform: rotate(3deg);
         -moz-transform: rotate(3deg);
         -o-transform: rotate(3deg);

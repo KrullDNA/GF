@@ -1206,7 +1206,7 @@ class KDNAEntryDetail {
 					?>
 					<div id="gf_payment_status" class="gf_payment_detail">
 						<?php esc_html_e( 'Status', 'kdnaforms' ) ?>:
-						<span id="gform_payment_status"><?php echo $payment_status; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+						<span id="kdnaform_payment_status"><?php echo $payment_status; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 					</div>
 
 					<?php
