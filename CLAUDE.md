@@ -107,6 +107,22 @@ Two traps that have already cost a release:
   prefixes is a half-applied rename, i.e. a live bug, and merging the two is the
   fix. One that would collide with an unrelated name is not.
 
+## Add-ons
+
+Nine plugins sit on top of core: eight feed add-ons and Stripe. An add-on
+breaks silently — it calls a core method that no longer exists and the fatal
+only shows on the screen that uses it, or it hooks a filter core stopped firing
+and simply never runs. Neither is visible from inside core.
+
+```bash
+python3 .tools/check-addons.py
+```
+
+Checks the seam from the add-on side: every KDNA class and method they call,
+every `$this->` against the framework, every hook they listen for against the
+hooks core actually fires, and that none of them still carries a Gravity Forms
+name. Run it after anything in core that renames or removes something.
+
 ## Build and release
 
 - **Run the gate before every zip. Never skip it.**

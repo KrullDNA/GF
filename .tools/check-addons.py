@@ -1,0 +1,140 @@
+#!/usr/bin/env python3
+"""Verify every add-on still fits the core plugin.
+
+An add-on breaks silently. It calls a core method that no longer exists and the
+fatal only shows on the screen that uses it, or it hooks a filter core stopped
+firing and simply never runs. Neither is visible from the core plugin, so this
+checks the seam from the add-on side.
+
+Run it after any change to core that renames or removes something.
+
+Usage:  python3 .tools/check-addons.py
+"""
+
+import collections
+import glob
+import os
+import re
+import sys
+
+CORE = 'kdna-forms'
+
+
+def core_surface():
+    """What core offers: classes and their methods, functions, and hooks fired."""
+    classes = set()
+    methods = collections.defaultdict(set)
+    functions = set()
+    hooks = set()
+
+    for path in glob.glob(f'{CORE}/**/*.php', recursive=True):
+        text = open(path, errors='ignore').read()
+
+        for m in re.finditer(
+            r'\b(?:class|interface|trait)\s+([A-Za-z_][A-Za-z0-9_]*)(.*?)'
+            r'(?=\n\s*(?:class|interface|trait)\s|\Z)', text, re.S
+        ):
+            classes.add(m.group(1))
+            methods[m.group(1)] |= set(
+                re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', m.group(2))
+            )
+
+        functions |= set(re.findall(r'^\s*function\s+([a-z_][A-Za-z0-9_]*)\s*\(', text, re.M))
+
+        for m in re.finditer(
+            r"(?:apply_filters|do_action|kdna_apply_filters|kdna_do_action)"
+            r"\(\s*(?:array\(\s*)?['\"]([^'\"]+)['\"]", text
+        ):
+            hooks.add(m.group(1))
+
+    framework = set()
+    for path in glob.glob(f'{CORE}/includes/addon/*.php'):
+        framework |= set(
+            re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', open(path, errors='ignore').read())
+        )
+
+    return classes, methods, functions, hooks, framework
+
+
+def main():
+    classes, methods, functions, hooks, framework = core_surface()
+
+    addons = sorted(
+        d for d in glob.glob('kdna-forms-*')
+        if os.path.isdir(d)
+    )
+    if not addons:
+        print('no add-ons found')
+        return 0
+
+    print(f'core: {len(classes)} classes, {len(functions)} functions, '
+          f'{len(hooks)} hooks, {len(framework)} framework methods\n')
+
+    failures = 0
+    for addon in addons:
+        problems = set()
+
+        for path in glob.glob(f'{addon}/**/*.php', recursive=True):
+            # Bundled third-party libraries answer to themselves, not to core.
+            if 'stripe-php' in path or '/vendor/' in path:
+                continue
+
+            text = open(path, errors='ignore').read()
+            own = set(re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', text))
+
+            for m in re.finditer(r'\b([A-Z][A-Za-z0-9_]*)::([a-zA-Z_][A-Za-z0-9_]*)\s*\(', text):
+                cls, meth = m.groups()
+                if cls in ('self', 'static', 'parent') or not cls.startswith('KDNA'):
+                    continue
+                if cls not in classes:
+                    problems.add(f'{cls} does not exist in core')
+                elif meth not in methods[cls]:
+                    problems.add(f'{cls}::{meth}() does not exist')
+
+            for m in re.finditer(r'\$this->([a-z_][A-Za-z0-9_]*)\s*\(', text):
+                name = m.group(1)
+                if name not in own and name not in framework:
+                    problems.add(f'$this->{name}() is neither its own nor the framework\'s')
+
+            for m in re.finditer(r"add_(?:filter|action)\(\s*['\"]([^'\"]+)['\"]", text):
+                hook = m.group(1)
+                if hook.startswith(('kdnaform_', 'kdna_')) and hook not in hooks:
+                    problems.add(f'hooks "{hook}", which core never fires')
+
+            for m in re.finditer(r'(?<![\w>$:])([a-z_][a-z0-9_]{3,})\s*\(', text):
+                fn = m.group(1)
+                if fn.startswith(('kdna_', 'kdnaform_')) and fn not in functions and fn not in own:
+                    problems.add(f'calls {fn}(), which does not exist')
+
+        # Nothing carrying a Gravity Forms prefix should survive in an add-on.
+        stale = set()
+        for path in glob.glob(f'{addon}/**/*', recursive=True):
+            if not os.path.isfile(path) or 'stripe-php' in path:
+                continue
+            if not path.endswith(('.php', '.js', '.css')):
+                continue
+            stale |= set(re.findall(
+                r'\b(?:gform|gforms|gfield|ginput|gsection|gchoice|gresults|gaddon|gficon)'
+                r'[A-Za-z0-9_-]*|gravity[a-z]*',
+                open(path, errors='ignore').read()
+            ))
+        if stale:
+            problems.add(f'still carries Gravity Forms names: {", ".join(sorted(stale)[:4])}')
+
+        status = 'BROKEN ' if problems else 'OK     '
+        if problems:
+            failures += 1
+        print(f'{status} {addon}')
+        for p in sorted(problems)[:8]:
+            print(f'           - {p}')
+
+    print()
+    if failures:
+        print(f'{failures} add-on(s) will not work against this core.')
+        return 1
+    print('All add-ons resolve against this core.')
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
