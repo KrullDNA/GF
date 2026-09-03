@@ -1238,6 +1238,24 @@ class KDNAFormDisplay {
 			// current field values and shows or hides accordingly, so it is safe to
 			// run twice if the normal path does complete.
 			if ( $should_render_hidden ) {
+
+				// The conditional logic script — the one that assigns
+				// window['kdna_form_conditional_logic'], applies the rules and
+				// reveals the form — is normally emitted inside
+				// gform.initializeOnLoaded. When that gate never opens, the rule
+				// set is never even assigned, so nothing downstream can recover:
+				// there is nothing to recover from.
+				//
+				// Emit the same script again, ungated. It guards on jQuery and
+				// defers its own work to document ready, so it is safe here, and
+				// re-running it if the gated copy does fire is harmless: it
+				// reassigns the same config and re-evaluates the same rules.
+				$ungated = self::get_conditional_logic( $form, $field_values );
+
+				if ( ! empty( $ungated ) ) {
+					$form_string .= KDNACommon::get_inline_script_tag( 'try{' . $ungated . '}catch(e){}' );
+				}
+
 				$init = sprintf(
 					'( function() {
 						var tries = 0;

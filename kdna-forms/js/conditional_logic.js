@@ -2,10 +2,10 @@
 var __gf_timeout_handle;
 
 gform.addAction( 'gform_input_change', function( elem, formId, fieldId ) {
-	if( ! window.gf_form_conditional_logic ) {
+	if( ! window.kdna_form_conditional_logic ) {
 		return;
 	}
-	var dependentFieldIds = rgars( gf_form_conditional_logic, [ formId, 'fields', gformExtractFieldId( fieldId ) ].join( '/' ) );
+	var dependentFieldIds = rgars( kdna_form_conditional_logic, [ formId, 'fields', gformExtractFieldId( fieldId ) ].join( '/' ) );
 	if( dependentFieldIds ) {
 		gf_apply_rules( formId, dependentFieldIds );
 	}
@@ -26,7 +26,7 @@ function gf_apply_rules(formId, fields, isInit){
 
 				// Gather the fields that are dependents of the processed fields (inside pages/sections).
 				var dependentFields = [];
-				var dependents = window["gf_form_conditional_logic"][formId]["dependents"][fields[i]];
+				var dependents = window["kdna_form_conditional_logic"][formId]["dependents"][fields[i]];
 				if ( dependents ) {
 					dependents.forEach( function ( dependentFieldId ) {
 						if ( dependentFields.indexOf( dependentFieldId ) === -1 ) {
@@ -77,7 +77,7 @@ function gf_check_field_rule(formId, fieldId, isInit, callback){
  * @return {(boolean|object)} False or the field conditional logic properties.
  */
 function gf_get_field_logic(formId, fieldId) {
-	var formConditionalLogic = rgars( window, 'gf_form_conditional_logic/' + formId );
+	var formConditionalLogic = rgars( window, 'kdna_form_conditional_logic/' + formId );
 	if ( ! formConditionalLogic ) {
 		return false;
 	}
@@ -108,7 +108,7 @@ function gf_apply_field_rule(formId, fieldId, isInit, callback){
 
 	gf_do_field_action(formId, action, fieldId, isInit, callback);
 
-	var conditionalLogic = window["gf_form_conditional_logic"][formId]["logic"][fieldId];
+	var conditionalLogic = window["kdna_form_conditional_logic"][formId]["logic"][fieldId];
 	//perform conditional logic for the next button
 	if(conditionalLogic["nextButton"]){
 		action = gf_get_field_action(formId, conditionalLogic["nextButton"]);
@@ -366,7 +366,7 @@ function gf_get_value(val){
 }
 
 function gf_do_field_action(formId, action, fieldId, isInit, callback){
-	var conditional_logic = window["gf_form_conditional_logic"][formId];
+	var conditional_logic = window["kdna_form_conditional_logic"][formId];
 	var dependent_fields = conditional_logic["dependents"][fieldId];
 
 	for(var i=0; i < dependent_fields.length; i++){
@@ -402,7 +402,7 @@ function gf_do_field_action(formId, action, fieldId, isInit, callback){
 }
 
 function gf_do_next_button_action(formId, action, fieldId, isInit){
-	var conditional_logic = window["gf_form_conditional_logic"][formId];
+	var conditional_logic = window["kdna_form_conditional_logic"][formId];
 	var targetId = "#gform_next_button_" + formId + "_" + fieldId;
 
 	/**
