@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 3.3.0
+Version: 3.4.0
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '3.3.0';
+	public static $version = '3.4.0';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -321,7 +321,7 @@ class KDNAForms {
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Theme_Layers\KDNA_Theme_Layers_Provider( KDNACommon::get_base_url(), 'kdna_theme_layers' ) );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Blocks\KDNA_Blocks_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Query\KDNA_Query_Service_Provider() );
-		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Form_Display\GF_Form_Display_Service_Provider() );
+		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Form_Display\KDNA_Form_Display_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider() );
 		$container->add_provider( new \KDNA_Forms\KDNA_Forms\Form_Switcher\KDNA_Form_Switcher_Service_Provider() );
 	}
@@ -3684,7 +3684,7 @@ class KDNAForms {
 	 * @since  2.2
 	 * @access public
 	 *
-	 * @uses   GFSystemStatus::system_status_page()
+	 * @uses   KDNAForms::system_status_page()
 	 */
 	public static function system_status() {
 		// System status module removed.

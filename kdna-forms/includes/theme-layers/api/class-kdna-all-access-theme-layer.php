@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Theme_Layers\API;
 
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Factories\Definition_Engine_Factory;
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Factories\Output_Engine_Factory;
-use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\GF_Theme_Layer;
+use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\KDNA_Theme_Layer;
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Traits\Enqueues_Assets;
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Traits\Has_Block_Settings;
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Traits\Has_Settings_Fields;
@@ -12,11 +12,11 @@ use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Traits\Modifies_Markup;
 use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\Traits\Outputs_Form_CSS_Properties;
 
 /**
- * Implementation of GF_Theme_Layer which uses all available traits.
+ * Implementation of KDNA_Theme_Layer which uses all available traits.
  *
  * @since 2.7
  */
-abstract class GF_All_Access_Theme_Layer extends GF_Theme_Layer {
+abstract class KDNA_All_Access_Theme_Layer extends KDNA_Theme_Layer {
 
 	use Has_Settings_Fields;
 	use Has_Block_Settings;

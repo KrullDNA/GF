@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Transients;
 
-interface GF_Transient_Strategy {
+interface KDNA_Transient_Strategy {
 
 	public function get( $key );
 

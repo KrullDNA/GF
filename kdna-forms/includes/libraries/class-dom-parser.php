@@ -61,7 +61,7 @@ class Dom_Parser {
 	public $insert_position = 0;
 
 	/**
-	 * GF_Dom_Parser constructor.
+	 * KDNA_Dom_Parser constructor.
 	 *
 	 * @param string $content
 	 */

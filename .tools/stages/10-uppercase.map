@@ -1,0 +1,80 @@
+# Stage 10 — uppercase class names, constants and JS globals.
+#
+# 57 identifiers, the last GF-prefixed family in the tree. These are PHP and JS
+# class names (GFConditionalLogic, GF_Theme_Layer, GF_JSON_Handler), service
+# container constants (GF_FORMS, GF_COMMON, GF_API) and JS globals (GFMergeTag,
+# GFCalc, GFPaymentObj). None of the eight add-ons references any of them.
+#
+# Six are merges rather than renames, because the target already exists — the
+# same half-applied pattern seen throughout: GFAsyncUpload, GFFeedOrder,
+# GFFrontendFeeds, GFPageConditionalLogic, GFToken and GF_Field_CAPTCHA all
+# have a KDNA-prefixed twin already in the tree.
+#
+# GF_Forms_Model_Legacy is renamed but stays a class that does not exist here.
+# It is the legacy model the schema version gates, and reaching it fatals the
+# site either way; the rename neither helps nor hurts that, and the landmine is
+# documented in CLAUDE.md.
+#
+# Five more are handled in a separate pass because their correct target is not
+# the mechanical one and several would collide: GFcommon is a real fatal
+# (KDNACommon), GForms and GFSystemStatus are docblocks that both point at
+# KDNAForms, GFField_CAPTCHA is KDNA_Field_CAPTCHA, and GFFrontEndFeeds is a
+# misspelling of GFFrontendFeeds.
+
+GFConditionalLogic                           KDNAConditionalLogic
+GF_Forms_Model_Legacy                        KDNA_Forms_Model_Legacy
+GF_CONDITIONAL_INSTANCES_COLLECTION          KDNA_CONDITIONAL_INSTANCES_COLLECTION
+GF_CONDITIONAL_INSTANCE                      KDNA_CONDITIONAL_INSTANCE
+GFMergeTag                                   KDNAMergeTag
+GF_Admin_Form_Save_Config                    KDNA_Admin_Form_Save_Config
+GF_FORMS                                     KDNA_FORMS
+GF_Theme_Layer                               KDNA_Theme_Layer
+GF_JSON_Handler                              KDNA_JSON_Handler
+GF_FORMS_MODEL                               KDNA_FORMS_MODEL
+GF_API                                       KDNA_API
+GF_FORM_CRUD_HANDLER                         KDNA_FORM_CRUD_HANDLER
+GFORMS_DOING_MOCK                            KDNAORMS_DOING_MOCK
+GF_Dependencies                              KDNA_Dependencies
+GF_SAVE_FROM_HELPER                          KDNA_SAVE_FROM_HELPER
+GF_All_Access_Theme_Layer                    KDNA_All_Access_Theme_Layer
+GF_Submitted_Fields_Endpoint                 KDNA_Submitted_Fields_Endpoint
+GF_Form_Display_Service_Provider             KDNA_Form_Display_Service_Provider
+GF_ENVIRONMENT_CONFIG_HANDLER                KDNA_ENVIRONMENT_CONFIG_HANDLER
+GF_COLORS                                    KDNA_COLORS
+GFFrontendFeeds                              KDNAFrontendFeeds
+GFCalc                                       KDNACalc
+GF_COMMON                                    KDNA_COMMON
+GF_API_Response                              KDNA_API_Response
+GF_App_Config                                KDNA_App_Config
+GFPaymentObj                                 KDNAPaymentObj
+GF_CACHE                                     KDNA_CACHE
+GF_FORM_DETAIL                               KDNA_FORM_DETAIL
+GF_DUPLICATE_SUBMISSION_HANDLER              KDNA_DUPLICATE_SUBMISSION_HANDLER
+GF_Choices_UI_Config                         KDNA_Choices_UI_Config
+GF_Choices_UI_Config_I18N                    KDNA_Choices_UI_Config_I18N
+GF_Dialog_Config_I18N                        KDNA_Dialog_Config_I18N
+GF_API_Connector                             KDNA_API_Connector
+GF_Product_Meta_Config                       KDNA_Product_Meta_Config
+GF_Pagination_Config                         KDNA_Pagination_Config
+GF_AJAX_HANDLER                              KDNA_AJAX_HANDLER
+GF_AJAX_CONFIG                               KDNA_AJAX_CONFIG
+GFMergeTags                                  KDNAMergeTags
+GF_Late_Static_Binding                       KDNA_Late_Static_Binding
+GFFontAwesome                                KDNAFontAwesome
+GFGenericMap                                 KDNAGenericMap
+GFToken                                      KDNAToken
+GF_HONEYPOT_CONFIG                           KDNA_HONEYPOT_CONFIG
+GF_API_Response_Factory                      KDNA_API_Response_Factory
+GF_Transient_Strategy                        KDNA_Transient_Strategy
+GFPageConditionalLogic                       KDNAPageConditionalLogic
+GF_Cache                                     KDNA_Cache
+GFFeedOrder                                  KDNAFeedOrder
+GF_Default_Order_Formatter                   KDNA_Default_Order_Formatter
+GF_Entry_Details_Order_Formatter             KDNA_Entry_Details_Order_Formatter
+GFCF_Style_Layers_Provider                   KDNACF_Style_Layers_Provider
+GF_Conversational_Forms                      KDNA_Conversational_Forms
+GFORMS_SAVE_REQUEST_JSON_START               KDNAORMS_SAVE_REQUEST_JSON_START
+GFORMS_SAVE_REQUEST_JSON_END                 KDNAORMS_SAVE_REQUEST_JSON_END
+GF_Dom_Parser                                KDNA_Dom_Parser
+GF_Field_CAPTCHA                             KDNA_Field_CAPTCHA
+GFAsyncUpload                                KDNAAsyncUpload

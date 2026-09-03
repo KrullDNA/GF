@@ -3,12 +3,12 @@
 namespace KDNA_Forms\KDNA_Forms\Form_Editor;
 
 use KDNA_Forms\KDNA_Forms\Config\KDNA_Config_Service_Provider;
-use KDNA_Forms\KDNA_Forms\Form_Editor\Choices_UI\Config\GF_Choices_UI_Config;
-use KDNA_Forms\KDNA_Forms\Form_Editor\Choices_UI\Config\GF_Choices_UI_Config_I18N;
-use KDNA_Forms\KDNA_Forms\Form_Editor\Choices_UI\Config\GF_Dialog_Config_I18N;
+use KDNA_Forms\KDNA_Forms\Form_Editor\Choices_UI\Config\KDNA_Choices_UI_Config;
+use KDNA_Forms\KDNA_Forms\Form_Editor\Choices_UI\Config\KDNA_Choices_UI_Config_I18N;
+use KDNA_Forms\KDNA_Forms\Form_Editor\Choices_UI\Config\KDNA_Dialog_Config_I18N;
 use KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Config\KDNA_Form_Editor_Form_Save_Config;
 use KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Endpoints\KDNA_Save_Form_Endpoint_Form_Editor;
-use KDNA_Forms\KDNA_Forms\Form_Editor\Submitted_Fields\Endpoints\GF_Submitted_Fields_Endpoint;
+use KDNA_Forms\KDNA_Forms\Form_Editor\Submitted_Fields\Endpoints\KDNA_Submitted_Fields_Endpoint;
 use KDNA_Forms\KDNA_Forms\Form_Editor\Renderer\KDNA_Form_Editor_Renderer;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
@@ -39,9 +39,9 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 	 * @var string[]
 	 */
 	protected $configs = array(
-		self::CHOICES_UI_CONFIG       => GF_Choices_UI_Config::class,
-		self::CHOICES_UI_CONFIG_I18N  => GF_Choices_UI_Config_I18N::class,
-		self::DIALOG_CONFIG_I18N      => GF_Dialog_Config_I18N::class,
+		self::CHOICES_UI_CONFIG       => KDNA_Choices_UI_Config::class,
+		self::CHOICES_UI_CONFIG_I18N  => KDNA_Choices_UI_Config_I18N::class,
+		self::DIALOG_CONFIG_I18N      => KDNA_Dialog_Config_I18N::class,
 		self::FORM_EDITOR_SAVE_CONFIG => KDNA_Form_Editor_Form_Save_Config::class,
 	);
 
@@ -63,7 +63,7 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 	 */
 	protected $endpoints = array(
 		self::ENDPOINT_FORM_EDITOR_SAVE => KDNA_Save_Form_Endpoint_Form_Editor::class,
-		self::ENDPOINT_SUBMITTED_FIELDS => GF_Submitted_Fields_Endpoint::class,
+		self::ENDPOINT_SUBMITTED_FIELDS => KDNA_Submitted_Fields_Endpoint::class,
 	);
 
 	public function register( KDNA_Service_Container $container ) {
@@ -101,8 +101,8 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 	private function add_configs( KDNA_Service_Container $container ) {
 		$deps = array(
 			KDNA_Config_Service_Provider::DATA_PARSER => $container->get( KDNA_Config_Service_Provider::DATA_PARSER ),
-			KDNA_Util_Service_Provider::GF_FORMS      => $container->get( KDNA_Util_Service_Provider::GF_FORMS ),
-			KDNA_Util_Service_Provider::GF_API        => $container->get( KDNA_Util_Service_Provider::GF_API ),
+			KDNA_Util_Service_Provider::KDNA_FORMS      => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS ),
+			KDNA_Util_Service_Provider::KDNA_API        => $container->get( KDNA_Util_Service_Provider::KDNA_API ),
 		);
 		foreach ( $this->configs as $name => $class ) {
 			$container->add(
@@ -133,9 +133,9 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 				function () use ( $container, $class ) {
 					return new $class(
 						array(
-							KDNA_Save_Form_Service_Provider::GF_FORM_CRUD_HANDLER => $container->get( KDNA_Save_Form_Service_Provider::GF_FORM_CRUD_HANDLER ),
-							KDNA_Util_Service_Provider::GF_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::GF_FORMS_MODEL ),
-							KDNA_Util_Service_Provider::GF_FORMS => $container->get( KDNA_Util_Service_Provider::GF_FORMS ),
+							KDNA_Save_Form_Service_Provider::KDNA_FORM_CRUD_HANDLER => $container->get( KDNA_Save_Form_Service_Provider::KDNA_FORM_CRUD_HANDLER ),
+							KDNA_Util_Service_Provider::KDNA_FORMS_MODEL => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS_MODEL ),
+							KDNA_Util_Service_Provider::KDNA_FORMS => $container->get( KDNA_Util_Service_Provider::KDNA_FORMS ),
 						)
 					);
 				}
@@ -167,7 +167,7 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 			'kdnaform_ajax_actions',
 			function( $ajax_actions ) {
 				$ajax_actions[] = KDNA_Save_Form_Endpoint_Form_Editor::ACTION_NAME;
-				$ajax_actions[] = GF_Submitted_Fields_Endpoint::ACTION_NAME;
+				$ajax_actions[] = KDNA_Submitted_Fields_Endpoint::ACTION_NAME;
 
 				return $ajax_actions;
 			}
@@ -181,7 +181,7 @@ class KDNA_Form_Editor_Service_Provider extends KDNA_Service_Provider {
 		);
 
 		add_action(
-			'wp_ajax_' . GF_Submitted_Fields_Endpoint::ACTION_NAME,
+			'wp_ajax_' . KDNA_Submitted_Fields_Endpoint::ACTION_NAME,
 			function () use ( $container ) {
 				$container->get( self::ENDPOINT_SUBMITTED_FIELDS )->handle();
 			}

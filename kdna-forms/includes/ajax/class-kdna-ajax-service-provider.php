@@ -19,8 +19,8 @@ use KDNA_Forms\KDNA_Forms\Ajax\Config\KDNA_Ajax_Config;
  */
 class KDNA_Ajax_Service_Provider extends KDNA_Service_Provider {
 
-	const GF_AJAX_HANDLER = 'kdna_ajax_handler';
-	const GF_AJAX_CONFIG  = 'kdna_ajax_config';
+	const KDNA_AJAX_HANDLER = 'kdna_ajax_handler';
+	const KDNA_AJAX_CONFIG  = 'kdna_ajax_config';
 
 	/**
 	 * Includes all related files and adds all containers.
@@ -34,7 +34,7 @@ class KDNA_Ajax_Service_Provider extends KDNA_Service_Provider {
 
 		// Registering handler
 		$container->add(
-			self::GF_AJAX_HANDLER,
+			self::KDNA_AJAX_HANDLER,
 			function () {
 				return new KDNA_Ajax_Handler();
 			}
@@ -42,12 +42,12 @@ class KDNA_Ajax_Service_Provider extends KDNA_Service_Provider {
 
 		// Registering config
 		$container->add(
-			self::GF_AJAX_CONFIG,
+			self::KDNA_AJAX_CONFIG,
 			function () use ( $container ) {
 				return new KDNA_Ajax_Config( $container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
 			}
 		);
-		$container->get( KDNA_Config_Service_Provider::CONFIG_COLLECTION )->add_config( $container->get( self::GF_AJAX_CONFIG ) );
+		$container->get( KDNA_Config_Service_Provider::CONFIG_COLLECTION )->add_config( $container->get( self::KDNA_AJAX_CONFIG ) );
 
 	}
 
@@ -59,7 +59,7 @@ class KDNA_Ajax_Service_Provider extends KDNA_Service_Provider {
 	public function init( KDNA_Service_Container $container ) {
 		parent::init( $container );
 
-		$ajax_handler = $container->get( self::GF_AJAX_HANDLER );
+		$ajax_handler = $container->get( self::KDNA_AJAX_HANDLER );
 
 		// Register nonce lifespan hook.
 		add_filter( 'nonce_life', array( $ajax_handler, 'nonce_life' ), 10, 2 );

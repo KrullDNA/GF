@@ -71,7 +71,7 @@ class KDNA_Config_Data_Parser {
 	 * @return bool
 	 */
 	private function is_mock() {
-		return defined( 'GFORMS_DOING_MOCK' ) && GFORMS_DOING_MOCK;
+		return defined( 'KDNAORMS_DOING_MOCK' ) && KDNAORMS_DOING_MOCK;
 	}
 
 }

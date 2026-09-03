@@ -149,7 +149,7 @@ abstract class KDNA_Config {
 	 * @return array
 	 */
 	public function get_data() {
-		if ( ( ! defined( 'GFORMS_DOING_MOCK' ) || ! GFORMS_DOING_MOCK ) && ! $this->should_enqueue() ) {
+		if ( ( ! defined( 'KDNAORMS_DOING_MOCK' ) || ! KDNAORMS_DOING_MOCK ) && ! $this->should_enqueue() ) {
 			return false;
 		}
 

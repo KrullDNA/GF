@@ -1,4 +1,4 @@
-var GFGenericMap = function( options ) {
+var KDNAGenericMap = function( options ) {
 
 	var self = this;
 

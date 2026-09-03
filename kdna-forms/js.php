@@ -537,7 +537,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			obj.id = 'submit';
 		}
 
-		new generateGFConditionalLogic( obj.id, objectType );
+		new generateKDNAConditionalLogic( obj.id, objectType );
 	}
 
 	function GetCurrentCurrency() {

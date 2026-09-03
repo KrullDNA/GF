@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies;
 
-use KDNA_Forms\KDNA_Forms\Assets\GF_Dependencies;
+use KDNA_Forms\KDNA_Forms\Assets\KDNA_Dependencies;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
 
@@ -13,7 +13,7 @@ use KDNA_Forms\KDNA_Forms\KDNA_Service_Provider;
  *
  * @package KDNA_Forms\KDNA_Forms\Assets\Admin_Dependencies;
  */
-class KDNA_Admin_Style_Dependencies extends GF_Dependencies {
+class KDNA_Admin_Style_Dependencies extends KDNA_Dependencies {
 
 	/**
 	 * Items to enqueue globally in admin.
