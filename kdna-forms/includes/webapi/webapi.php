@@ -714,12 +714,12 @@ if ( class_exists( 'KDNAForms' ) ) {
 		public function settings_requirements_check() {
 			$permalinks_url = admin_url( 'options-permalink.php' );
 			?>
-			<i class="fa fa-exclamation-triangle gf_invalid"></i>
-			<span class="gf_invalid">
+			<i class="fa fa-exclamation-triangle kdna_invalid"></i>
+			<span class="kdna_invalid">
 					<?php esc_html_e( 'Permalinks are not in the correct format.', 'kdnaforms' ); ?>
 				</span>
 			<br/>
-			<span class='gf_settings_description'>
+			<span class='kdna_settings_description'>
 				<?php
 				printf( esc_html__( 'Change the %sWordPress Permalink Settings%s from default to any of the other options to get started.', 'kdnaforms' ), '<a href="' . esc_url( $permalinks_url ) . '">', '</a>' );
 				?>

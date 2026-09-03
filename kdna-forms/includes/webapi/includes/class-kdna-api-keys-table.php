@@ -142,7 +142,7 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 	public function output_styles() {
 		?>
 		<style>
-			table.gforms_form_settings .api_key_table td { padding-left: 10px; vertical-align: top; }
+			table.kforms_form_settings .api_key_table td { padding-left: 10px; vertical-align: top; }
 			#add_setting_button { margin-top: 10px; }
 			tr:hover .row-actions { position: relative; }
 			.api_key_table tr:hover .row-actions { position: static; }

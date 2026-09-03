@@ -3,7 +3,7 @@ jQuery( function() {
 } );
 
 function kdnaform_initialize_tooltips() {
-	var $tooltips = jQuery( '.gf_tooltip' );
+	var $tooltips = jQuery( '.kdna_tooltip' );
 	if ( ! $tooltips.length ) {
 		return;
 	}

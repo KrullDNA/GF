@@ -39,7 +39,7 @@ class KDNAFormDetail {
 			<?php
 			exit;
 		} elseif ( ! rgempty( 'kform_meta' ) && $save_form_helper->is_ajax_save_action() === false ) {
-			check_admin_referer( "gforms_update_form_{$form_id}", 'kforms_update_form' );
+			check_admin_referer( "kforms_update_form_{$form_id}", 'kforms_update_form' );
 
 			$update_result = self::save_form_info( $form_id, rgpost( 'kform_meta', false ) );
 
@@ -182,22 +182,22 @@ class KDNAFormDetail {
 			<div id="field_settings">
 				<ul>
 					<li style="width:100px; padding:0px;">
-						<a href="#gform_tab_1"><?php esc_html_e( 'General', 'kdnaforms' ); ?></a>
+						<a href="#kform_tab_1"><?php esc_html_e( 'General', 'kdnaforms' ); ?></a>
 					</li>
 					<li style="width:100px; padding:0px; ">
-						<a href="#gform_tab_3"><?php esc_html_e( 'Appearance', 'kdnaforms' ); ?></a>
+						<a href="#kform_tab_3"><?php esc_html_e( 'Appearance', 'kdnaforms' ); ?></a>
 					</li>
 					<li style="width:100px; padding:0px; ">
-						<a href="#gform_tab_2"><?php esc_html_e( 'Advanced', 'kdnaforms' ); ?></a>
+						<a href="#kform_tab_2"><?php esc_html_e( 'Advanced', 'kdnaforms' ); ?></a>
 					</li>
 				</ul>
-				<div id="gform_tab_1">
+				<div id="kform_tab_1">
 
 				</div>
-				<div id="gform_tab_3">
+				<div id="kform_tab_3">
 				</div>
 
-				<div id="gform_tab_2">
+				<div id="kform_tab_2">
 				</div>
 
 
@@ -212,15 +212,15 @@ class KDNAFormDetail {
 			#form_editor_fields_container .simplebar-mask { overflow: visible !important; }
 			#form_editor_fields_container .simplebar-offset { overflow: visible !important; }
 			/* Two-column layout: panel on left, form canvas on right */
-			.gforms_edit_form {
+			.kforms_edit_form {
 				display: grid !important;
 				grid-template-columns: 370px 1fr !important;
 				grid-template-rows: auto 1fr !important;
 			}
-			.gforms_edit_form > .gform-form-toolbar,
-			.gforms_edit_form > h1,
-			.gforms_edit_form > h2,
-			.gforms_edit_form > .gform-visually-hidden {
+			.kforms_edit_form > .gform-form-toolbar,
+			.kforms_edit_form > h1,
+			.kforms_edit_form > h2,
+			.kforms_edit_form > .gform-visually-hidden {
 				grid-column: 1 / -1 !important;
 			}
 			.editor-sidebar {
@@ -249,7 +249,7 @@ class KDNAFormDetail {
 				overflow: visible !important;
 			}
 		</style>
-		<div class="wrap gforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
+		<div class="wrap kforms_edit_form <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>" data-js="form-editor-wrapper">
 		<?php
 		$forms         = KDNAFormsModel::get_forms( null, 'title' );
 		$id            = rgempty( 'id', $_GET ) ? ( count( $forms ) > 0 ? $forms[0]->id : '0' ) : rgget( 'id' );
@@ -288,7 +288,7 @@ class KDNAFormDetail {
 				?>
 			</ul>
 
-			<div id="gf_toolbar_buttons_container" class="gf_toolbar_buttons_container">
+			<div id="kdna_toolbar_buttons_container" class="kdna_toolbar_buttons_container">
 
 
 				<?php
@@ -380,13 +380,13 @@ class KDNAFormDetail {
 		?>
 		<?php KDNAFormDetail::editor_notices( $form ); ?>
 
-			<div class="kdnaform_editor gform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--orbital<?php echo esc_attr( $form_wrapper_compact_view_class . $form_wrapper_compact_view_id_class . $form_wrapper_legacy_class ); ?>">
+			<div class="kdnaform_editor kform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--orbital<?php echo esc_attr( $form_wrapper_compact_view_class . $form_wrapper_compact_view_id_class . $form_wrapper_legacy_class ); ?>">
 
-				<div id="gform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
+				<div id="kform_pagination" data-title="<?php esc_attr_e('Pagination Options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage pagination options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
 					<div class="gf-pagebreak-first gf-pagebreak"><?php esc_html_e( 'Start Paging', 'kdnaforms' ) ?></div>
 				</div>
 
-				<<?php echo $wrapper_el; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?> id="gform_fields" class="<?php echo esc_attr( KDNACommon::get_ul_classes( $form ) ) ?>">
+				<<?php echo $wrapper_el; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?> id="kform_fields" class="<?php echo esc_attr( KDNACommon::get_ul_classes( $form ) ) ?>">
 					<?php
 					if ( is_array( rgar( $form, 'fields' ) ) ) {
 						require_once( KDNACommon::get_base_path() . '/form_display.php' );
@@ -404,7 +404,7 @@ class KDNAFormDetail {
 					<p><?php esc_html_e( 'Simply drag and drop the fields or elements you want in this form.', 'kdnaforms' ); ?></p>
 				</div>
 
-				<div id="gform_last_page_settings" data-title="<?php esc_attr_e('Last page options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage last page options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
+				<div id="kform_last_page_settings" data-title="<?php esc_attr_e('Last page options', 'kdnaforms');?>" data-description="<?php esc_attr_e('Manage last page options', 'kdnaforms');?>" class="selectable gform-theme__disable" style="display:<?php echo $has_pages ? 'block' : 'none' ?>;">
 					<div class="gf-pagebreak-end gf-pagebreak"><?php esc_html_e( 'End Paging', 'kdnaforms' ) ?></div>
 				</div>
 
@@ -520,10 +520,10 @@ class KDNAFormDetail {
 
 					<!-- this field allows us to force onblur events for field setting inputs that are otherwise not triggered
 									when closing the field settings UI -->
-					<input type="text" id="gform_force_focus" style="position:absolute;left:-9999em;" data-js="force-focus" />
+					<input type="text" id="kform_force_focus" style="position:absolute;left:-9999em;" data-js="force-focus" />
 
-					<form method="post" id="gform_update">
-						<?php wp_nonce_field( "gforms_update_form_{$form_id}", 'kforms_update_form' ); ?>
+					<form method="post" id="kform_update">
+						<?php wp_nonce_field( "kforms_update_form_{$form_id}", 'kforms_update_form' ); ?>
 						<input type="hidden" id="kform_meta" name="kform_meta" />
 						<input type="hidden" id="kform_export" name="kform_export" value="false"/>
 					</form>
@@ -1514,7 +1514,7 @@ class KDNAFormDetail {
 									<?php kdnaform_tooltip( 'form_field_multiple_files' ); ?>
 								</label>
 
-								<div id="gform_multiple_files_options">
+								<div id="kform_multiple_files_options">
 									<br/>
 
 									<div>
@@ -1539,7 +1539,7 @@ class KDNAFormDetail {
 								<input type="text" id="field_max_file_size" autocomplete="off" placeholder="<?php $max_upload_size = wp_max_upload_size() / 1048576;
 								echo esc_attr( $max_upload_size ); ?>MB"/>
 
-								<div id="gform_server_max_file_size_notice">
+								<div id="kform_server_max_file_size_notice">
 									<small><?php printf( esc_html__( 'Maximum allowed on this server: %sMB', 'kdnaforms' ), esc_html( $max_upload_size ) ); ?></small>
 								</div>
 							</li>
@@ -1972,7 +1972,7 @@ class KDNAFormDetail {
 									<?php kdnaform_tooltip( 'form_field_mask' ); ?>
 								</label><br/>
 
-								<div id="gform_input_mask">
+								<div id="kform_input_mask">
 									<fieldset>
 										<legend>
 											<?php esc_html_e( 'Mask Type', 'kdnaforms' ); ?>
@@ -2119,7 +2119,7 @@ class KDNAFormDetail {
 									</label>
 
 									<div>
-										<div class="gf_calculation_buttons">
+										<div class="kdna_calculation_buttons">
 											<?php foreach ( array( '+', '-', '/', '*', '(', ')', '.' ) as $button ) { ?>
 											<input type="button" value="<?php echo esc_attr( in_array( $button, array( '.' ) ) ? $button : " $button " ); ?>" onclick="InsertVariable('field_calculation_formula', 'FormulaContentCallback', this.value);" onkeypress="InsertVariable('field_calculation_formula', 'FormulaContentCallback', this.value);"/>
 											<?php } ?>
@@ -2137,7 +2137,7 @@ class KDNAFormDetail {
 											}
 										";
                                         				?>
-									<a class="gf_calculation_trigger" href="javascript:void(0)"
+									<a class="kdna_calculation_trigger" href="javascript:void(0)"
 									   onclick="<?php echo esc_attr($validateFormulaScript); ?>"
 									   onkeypress="<?php echo esc_attr($validateFormulaScript); ?>">
 									   <?php esc_html_e('Validate Formula', 'kdnaforms'); ?>
@@ -3583,7 +3583,7 @@ class KDNAFormDetail {
 			'kdna_alert_gray',
 			'kdna_alert_blue',
 			'kdna_simple_horizontal',
-			'gf_invisible',
+			'kdna_invisible',
 			'kdna_list_2col',
 			'kdna_list_3col',
 			'kdna_list_4col',

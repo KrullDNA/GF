@@ -66,7 +66,7 @@ class Form_CSS_Properties_Output_Engine extends Output_Engine {
 				self::$processed_tracker[] = $processed_hash;
 			}
 
-			$target = sprintf( "<div id='gform_confirmation_message_%d", $form_id );
+			$target = sprintf( "<div id='kform_confirmation_message_%d", $form_id );
 
 			return str_replace( $target, $props_block . $target, $markup );
 		}, 999, 2 );
@@ -120,7 +120,7 @@ class Form_CSS_Properties_Output_Engine extends Output_Engine {
 		if ( $custom_selector ) {
 			$props_block = $custom_selector;
 		} else {
-			$props_block = sprintf( '<style>#gform_wrapper_%d[data-form-index="%d"].gform-theme,[data-parent-form="%d_%d"]{', $form_id, $page_instance, $form_id, $page_instance );
+			$props_block = sprintf( '<style>#kform_wrapper_%d[data-form-index="%d"].gform-theme,[data-parent-form="%d_%d"]{', $form_id, $page_instance, $form_id, $page_instance );
 		}
 
 		foreach ( $properties as $rule => $property ) {

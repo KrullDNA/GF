@@ -194,7 +194,7 @@ class KDNA_Field_Password extends KDNA_Field {
 		$strength                 = $this->passwordStrengthEnabled || $is_admin ? "<div id='{$field_id}_strength_indicator' class='gfield_password_strength' {$strength_style} aria-live='assertive' aria-atomic='true'>
 																			{$strength_indicator_label}
 																		</div>
-																		<input type='hidden' class='gform_hidden' id='{$field_id}_strength' name='input_{$id}_strength' />" : '';
+																		<input type='hidden' class='kform_hidden' id='{$field_id}_strength' name='input_{$id}_strength' />" : '';
 
 		$action   = ! $is_admin ? "gformShowPasswordStrength(\"$field_id\");" : '';
 		$onchange = $this->passwordStrengthEnabled ? "onchange='{$action}'" : '';
@@ -251,7 +251,7 @@ class KDNA_Field_Password extends KDNA_Field {
 							{$confirm_password_toggle}
 							</span>
 						</span>
-						<div class='gf_clear gf_clear_complex'></div>
+						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 			} else {
 				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password gform-grid-row' id='{$field_id}_container'>
@@ -269,7 +269,7 @@ class KDNA_Field_Password extends KDNA_Field {
 							</span>
 							<label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
 						</span>
-						<div class='gf_clear gf_clear_complex'></div>
+						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 			}
 		}
@@ -292,7 +292,7 @@ class KDNA_Field_Password extends KDNA_Field {
 							{$confirm_password_toggle}
 							</span>
 						</span>
-						<div class='gf_clear gf_clear_complex'></div>
+						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 			} else {
 				return "<div class='ginput_complex$class_suffix ginput_container ginput_container_password gform-grid-row' id='{$field_id}_container'>
@@ -310,7 +310,7 @@ class KDNA_Field_Password extends KDNA_Field {
 							</span>
 							<label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_password_label}</label>
 						</span>
-						<div class='gf_clear gf_clear_complex'></div>
+						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 			}
 
@@ -324,7 +324,7 @@ class KDNA_Field_Password extends KDNA_Field {
 							{$enter_password_toggle}
 							</span>
 						</span>
-						<div class='gf_clear gf_clear_complex'></div>
+						<div class='kdna_clear kdna_clear_complex'></div>
 					</div>{$strength}";
 
 		}

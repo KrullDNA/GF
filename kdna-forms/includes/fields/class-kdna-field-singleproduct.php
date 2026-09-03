@@ -139,7 +139,7 @@ class KDNA_Field_SingleProduct extends KDNA_Field {
 			}
 
 			if ( ! $has_quantity ) {
-				$quantity_field .= "<input type='hidden' name='input_{$id}.3' value='{$quantity}' class='ginput_quantity_{$form_id}_{$this->id} gform_hidden' />";
+				$quantity_field .= "<input type='hidden' name='input_{$id}.3' value='{$quantity}' class='ginput_quantity_{$form_id}_{$this->id} kform_hidden' />";
 			}
 		}
 
@@ -148,7 +148,7 @@ class KDNA_Field_SingleProduct extends KDNA_Field {
 		if ( $has_quantity ) {
 			$product_aria_describedby = $this->get_aria_describedby();
 			return "<div class='ginput_container ginput_container_singleproduct'>
-					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='kform_hidden' />
 					$wrapper_open
 						<label for='ginput_base_price_{$form_id}_{$this->id}' class='gform-field-label gform-field-label--type-sub-large ginput_product_price_label'>" . kdna_apply_filters( array( 'kdnaform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'kdnaforms' ), $form_id ) . ":</label>
 							<input type='text' readonly name='input_{$id}.2' class='ginput_product_price gform-text-input-reset' id='ginput_base_price_{$form_id}_{$this->id}' value='" . esc_attr( $price ) . "' {$product_aria_describedby} />
@@ -158,7 +158,7 @@ class KDNA_Field_SingleProduct extends KDNA_Field {
 		} else if ( $this->disableQuantity ) {
 			$product_aria_describedby = $this->get_aria_describedby();
 			return "<div class='ginput_container ginput_container_singleproduct'>
-					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='kform_hidden' />
 					$wrapper_open
 						<label for='ginput_base_price_{$form_id}_{$this->id}' class='gform-field-label gform-field-label--type-sub-large ginput_product_price_label'>" . kdna_apply_filters( array( 'kdnaform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'kdnaforms' ), $form_id ) . ":</label>
 						<input type='text' readonly class='ginput_product_price gform-text-input-reset' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' value='" . esc_attr( $price ) . "' aria-label='{$product_name} " . esc_html__( 'Price', 'kdnaforms' ) . "' {$product_aria_describedby} />
@@ -167,12 +167,12 @@ class KDNA_Field_SingleProduct extends KDNA_Field {
 				</div>";
 		} else {
 			return "<div class='ginput_container ginput_container_singleproduct'>
-					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='kform_hidden' />
 					$wrapper_open
 						<span class='gform-field-label gform-field-label--type-sub-large ginput_product_price_label'>" . kdna_apply_filters( array( 'kdnaform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'kdnaforms' ), $form_id ) . ":</span>
 						<span class='gform-field-label gform-field-label--type-sub-large ginput_product_price' id='{$field_id}'>" . esc_html( KDNACommon::to_money( $price, $currency ) ) . "</span>
 					$wrapper_close
-					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='gform_hidden' value='" . esc_attr( $price ) . "'/>
+					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='kform_hidden' value='" . esc_attr( $price ) . "'/>
 					{$quantity_field}
 				</div>";
 		}

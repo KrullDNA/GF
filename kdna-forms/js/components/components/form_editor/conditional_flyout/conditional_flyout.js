@@ -382,7 +382,7 @@ function isValidFlyoutClick( e ) {
 		e.target.classList.contains( 'gform-field__toggle-input' ) ||
 		e.target.closest( '.gform-dialog__mask' ) !== null
 	);
-	return gform.applyFilters( 'gform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
+	return gform.applyFilters( 'kform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
 }
 
 /**
@@ -469,7 +469,7 @@ GFConditionalLogic.prototype.renderFlyout = function() {
 
 	renderView( html, this.els.flyouts[ this.objectType ], config, true );
 
-	gform.tools.trigger( 'gform_render_simplebars' );
+	gform.tools.trigger( 'kform_render_simplebars' );
 };
 
 /**
@@ -501,7 +501,7 @@ GFConditionalLogic.prototype.renderLogicDescription = function() {
 	var markup = renderView( html, this.els.flyouts[ this.objectType ], config, false );
 
 	/**
-	 * @filter gform_conditional_logic_description
+	 * @filter kform_conditional_logic_description
 	 *
 	 * Allows add-ons to modify the markup returned for the Conditional Logic description area.
 	 *
@@ -515,7 +515,7 @@ GFConditionalLogic.prototype.renderLogicDescription = function() {
 	 *
 	 * @return {string}
 	 */
-	return gform.applyFilters( 'gform_conditional_logic_description', markup, [], this.objectType, this );
+	return gform.applyFilters( 'kform_conditional_logic_description', markup, [], this.objectType, this );
 };
 
 /**
@@ -591,7 +591,7 @@ GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
 		}
 	}
 
-	options = gform.applyFilters( 'gform_conditional_logic_fields', options, form, rule.fieldId );
+	options = gform.applyFilters( 'kform_conditional_logic_fields', options, form, rule.fieldId );
 
 	for ( var i = 0; i < options.length; i++ ) {
 		var config = options[ i ];
@@ -626,7 +626,7 @@ GFConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
 		ends_with: kdna_vars.endsWith,
 	};
 
-	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
+	operators = gform.applyFilters( 'kform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
 
 	for ( key in operators ) {
 		var label  = operators[ key ];
@@ -748,7 +748,7 @@ GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 		html = this.renderSelect( rule, idx );
 	}
 
-	html = gform.applyFilters( 'gform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
+	html = gform.applyFilters( 'kform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
 
 	var el = gform.tools.htmlToElement( html );
 

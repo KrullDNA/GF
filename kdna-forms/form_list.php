@@ -35,11 +35,11 @@ class KDNAFormList {
 		</style>
 
 		<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) { ?>
-		<div id="gf_new_form_modal" style="display:none;">
+		<div id="kdna_new_form_modal" style="display:none;">
 				<div class="gform-settings__wrapper ">
 					<div class="gform-settings-panel__content">
-						<form class="gform_new_form_modal_container" onsubmit="saveNewForm();return false;">
-                            <div id="gf_new_form_error_message" ></div>
+						<form class="kform_new_form_modal_container" onsubmit="saveNewForm();return false;">
+                            <div id="kdna_new_form_error_message" ></div>
 							<div class="setting-row gform-settings-field gform-settings-field__text">
 								<label class="gform-settings-label" for="new_form_title"><?php esc_html_e( 'Form Title', 'kdnaforms' ); ?>
 									<span class="gfield_required">*</span></label>
@@ -59,7 +59,7 @@ class KDNAFormList {
 								 *
 								 * @param string The HTML rendered for the "New Form" button.
 								 */
-								echo apply_filters( 'gform_new_form_button', '<button type="submit" value="save" id="save_new_form" class="button large primary" tabindex="9002">' . esc_html__( 'Create Form', 'kdnaforms' ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								echo apply_filters( 'kform_new_form_button', '<button type="submit" value="save" id="save_new_form" class="button large primary" tabindex="9002">' . esc_html__( 'Create Form', 'kdnaforms' ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 							</div>
 						</form>
 					</div>
@@ -246,7 +246,7 @@ class KDNAFormList {
 		?>
 		<script type="text/javascript">
 			jQuery( document ).ready( function( $ ) {
-				$( 'body' ).addClass( 'gform_new_form' );
+				$( 'body' ).addClass( 'kform_new_form' );
 				// load new form modal on New Form page
 				<?php if ( KDNAForms::get_page_query_arg() == 'kdna_new_form' && ! rgget( 'paged' ) ) :    ?>
 					loadNewFormModal();
@@ -278,7 +278,7 @@ class KDNAFormList {
 
 				// enable form status icons
 				gfPageLoaded = true;
-				$( '.kform_active_icon' ).removeClass( 'gf_not_ready' );
+				$( '.kform_active_icon' ).removeClass( 'kdna_not_ready' );
 
 				$( '#current-page-selector' ).keyup( function( event ) {
 					if ( event.keyCode == 13 ) {
@@ -293,7 +293,7 @@ class KDNAFormList {
 
 			function loadNewFormModal() {
 				resetNewFormModal();
-				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=gf_new_form_modal');
+				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=kdna_new_form_modal');
 				jQuery('#new_form_title').focus();
 
 				return false;
@@ -325,8 +325,8 @@ class KDNAFormList {
 				}
 
 				// clear error message
-				jQuery('#gf_new_form_error_message').html('');
-				jQuery('#gf_new_form_error_message').removeClass( 'alert error' );
+				jQuery('#kdna_new_form_error_message').html('');
+				jQuery('#kdna_new_form_error_message').removeClass( 'alert error' );
 
 				var origVal = createButton.val();
 				createButton.val(<?php echo json_encode( esc_html__( 'Creating Form...', 'kdnaforms' ) ); ?>);
@@ -379,8 +379,8 @@ class KDNAFormList {
 
 					if(respData['error']) {
 						// adding class later otherwise WP moves box up to the top of the page
-						jQuery('#gf_new_form_error_message').addClass( 'alert error' );
-						jQuery('#gf_new_form_error_message').html( respData.error );
+						jQuery('#kdna_new_form_error_message').addClass( 'alert error' );
+						jQuery('#kdna_new_form_error_message').html( respData.error );
 
 						addInputErrorIcon( '#new_form_title' );
 						createButton.val(origVal);
@@ -396,10 +396,10 @@ class KDNAFormList {
 			function resetNewFormModal() {
 				jQuery('#new_form_title').val('');
 				jQuery('#new_form_description').val('');
-				jQuery('#gf_new_form_error_message').html('');
-				jQuery('#gf_new_form_error_message').html('');
-				jQuery('#gf_new_form_error_message').removeClass( 'error alert' );
-				removeInputErrorIcons( '.gform_new_form_modal_container' );
+				jQuery('#kdna_new_form_error_message').html('');
+				jQuery('#kdna_new_form_error_message').html('');
+				jQuery('#kdna_new_form_error_message').removeClass( 'error alert' );
+				removeInputErrorIcons( '.kform_new_form_modal_container' );
 			}
 
 			function addInputErrorIcon( elem ) {
@@ -1004,7 +1004,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 			switch ( $remote_action ) {
 				case 'trash' :
 
-					check_admin_referer( "gf_delete_form_{$form_id}" );
+					check_admin_referer( "kdna_delete_form_{$form_id}" );
 
 					if ( KDNACommon::current_user_can_any( 'kdnaforms_delete_forms' ) ) {
 						$trashed       = KDNAFormsModel::trash_form( $form_id );
@@ -1016,7 +1016,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 					}
 					break;
 				case 'duplicate' :
-					check_ajax_referer( "gf_duplicate_form_{$form_id}" );
+					check_ajax_referer( "kdna_duplicate_form_{$form_id}" );
 
 					if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) {
 						$duplicated    = KDNAFormsModel::duplicate_form( $form_id );

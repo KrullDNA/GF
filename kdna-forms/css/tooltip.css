@@ -19,7 +19,7 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 ----------------------------------------------------------------
 */
 
-.gf_tooltip {
+.kdna_tooltip {
 
 	background: #ECEDF8;
 	border: 1px solid transparent;;
@@ -34,14 +34,14 @@ AND ANY CHANGES MADE HERE WILL BE OVERWRITTEN.
 
 }
 
-.gf_tooltip svg {
+.kdna_tooltip svg {
 
 	margin-top: -4px;
 	vertical-align: middle;
 
 }
 
-.gf_tooltip:hover {
+.kdna_tooltip:hover {
 
 	border-color: #3E7DA6;
 

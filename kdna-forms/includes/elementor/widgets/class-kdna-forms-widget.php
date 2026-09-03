@@ -219,8 +219,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'        => \Elementor\Controls_Manager::COLOR,
 			'description' => esc_html__( 'Border and outline color when inputs are focused. Important for keyboard accessibility.', 'kdnaforms' ),
 			'selectors'   => array(
-				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3);',
-				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kform_wrapper' => '--gf-ctrl-border-color-focus: {{VALUE}}; --gf-ctrl-outline-color-focus: rgba({{VALUE}}, 0.3);',
+				'{{WRAPPER}} .kform_wrapper input:focus, {{WRAPPER}} .kform_wrapper textarea:focus, {{WRAPPER}} .kform_wrapper select:focus' => 'border-color: {{VALUE}} !important; outline-color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -232,8 +232,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'default'     => array( 'size' => 2, 'unit' => 'px' ),
 			'description' => esc_html__( 'Width of the focus outline. Minimum 2px for WCAG accessibility compliance.', 'kdnaforms' ),
 			'selectors'   => array(
-				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-outline-width-focus: {{SIZE}}{{UNIT}};',
-				'{{WRAPPER}} .gform_wrapper input:focus, {{WRAPPER}} .gform_wrapper textarea:focus, {{WRAPPER}} .gform_wrapper select:focus' => 'outline-width: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper' => '--gf-ctrl-outline-width-focus: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_wrapper input:focus, {{WRAPPER}} .kform_wrapper textarea:focus, {{WRAPPER}} .kform_wrapper select:focus' => 'outline-width: {{SIZE}}{{UNIT}} !important;',
 			),
 		) );
 
@@ -242,8 +242,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'        => \Elementor\Controls_Manager::COLOR,
 			'description' => esc_html__( 'Color for checked checkboxes, radio buttons, and selected image choices.', 'kdnaforms' ),
 			'selectors'   => array(
-				'{{WRAPPER}} .gform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
-				'{{WRAPPER}} .gform_wrapper input[type="checkbox"]:checked, {{WRAPPER}} .gform_wrapper input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kform_wrapper' => '--gf-color-primary: {{VALUE}}; --gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper input[type="checkbox"]:checked, {{WRAPPER}} .kform_wrapper input[type="radio"]:checked' => 'accent-color: {{VALUE}} !important;',
 				'{{WRAPPER}} .gfield--type-image_choice .gchoice:has(input:checked)::after' => 'background-color: {{VALUE}} !important;',
 			),
 		) );
@@ -264,14 +264,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'title_typography',
-			'selector' => '{{WRAPPER}} .gform_heading .gform_title',
+			'selector' => '{{WRAPPER}} .kform_heading .kform_title',
 		) );
 
 		$this->add_control( 'title_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_heading .gform_title' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_heading .kform_title' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -284,13 +284,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'right'  => array( 'title' => esc_html__( 'Right', 'kdnaforms' ), 'icon' => 'eicon-text-align-right' ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_heading .gform_title' => 'text-align: {{VALUE}};',
+				'{{WRAPPER}} .kform_heading .kform_title' => 'text-align: {{VALUE}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Text_Shadow::get_type(), array(
 			'name'     => 'title_text_shadow',
-			'selector' => '{{WRAPPER}} .gform_heading .gform_title',
+			'selector' => '{{WRAPPER}} .kform_heading .kform_title',
 		) );
 
 		$this->add_responsive_control( 'title_margin', array(
@@ -298,7 +298,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_heading .gform_title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_heading .kform_title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -307,7 +307,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_heading .gform_title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_heading .kform_title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -327,14 +327,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'description_typography',
-			'selector' => '{{WRAPPER}} .gform_heading .gform_description',
+			'selector' => '{{WRAPPER}} .kform_heading .kform_description',
 		) );
 
 		$this->add_control( 'description_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_heading .gform_description' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_heading .kform_description' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -347,7 +347,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'right'  => array( 'title' => esc_html__( 'Right', 'kdnaforms' ), 'icon' => 'eicon-text-align-right' ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_heading .gform_description' => 'text-align: {{VALUE}};',
+				'{{WRAPPER}} .kform_heading .kform_description' => 'text-align: {{VALUE}};',
 			),
 		) );
 
@@ -356,7 +356,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_heading .gform_description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_heading .kform_description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -427,14 +427,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'sub_label_typography',
-			'selector' => '{{WRAPPER}} .gform_body .ginput_complex label, {{WRAPPER}} .gform_body .gfield_description',
+			'selector' => '{{WRAPPER}} .kform_body .ginput_complex label, {{WRAPPER}} .kform_body .gfield_description',
 		) );
 
 		$this->add_control( 'sub_label_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .ginput_complex label, {{WRAPPER}} .gform_body .gfield_description' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .ginput_complex label, {{WRAPPER}} .kform_body .gfield_description' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -453,7 +453,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'input_typography',
-			'selector' => '{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])',
+			'selector' => '{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])',
 		) );
 
 		$this->start_controls_tabs( 'input_style_tabs' );
@@ -467,7 +467,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -475,13 +475,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'background-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'background-color: {{VALUE}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'input_border',
-			'selector' => '{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])',
+			'selector' => '{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])',
 		) );
 
 		$this->add_responsive_control( 'input_border_radius', array(
@@ -489,13 +489,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'input_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])',
+			'selector' => '{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])',
 		) );
 
 		$this->end_controls_tab();
@@ -509,7 +509,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"]):focus' => 'border-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"]):focus' => 'border-color: {{VALUE}};',
 			),
 		) );
 
@@ -517,13 +517,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"]):focus' => 'background-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"]):focus' => 'background-color: {{VALUE}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'input_focus_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"]):focus',
+			'selector' => '{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"]):focus',
 		) );
 
 		$this->end_controls_tab();
@@ -534,7 +534,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'separator' => 'before',
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input::placeholder' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input::placeholder' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -543,7 +543,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -556,7 +556,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 1, 'max' => 6 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'height: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'height: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -565,7 +565,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 1000, 'step' => 50 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'transition: all {{SIZE}}ms ease;',
+				'{{WRAPPER}} .kform_body input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):not([type="hidden"])' => 'transition: all {{SIZE}}ms ease;',
 			),
 		) );
 
@@ -584,7 +584,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'textarea_typography',
-			'selector' => '{{WRAPPER}} .gform_body textarea',
+			'selector' => '{{WRAPPER}} .kform_body textarea',
 		) );
 
 		$this->start_controls_tabs( 'textarea_style_tabs' );
@@ -594,30 +594,30 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'textarea_text_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body textarea' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body textarea' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'textarea_background', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body textarea' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body textarea' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'textarea_border',
-			'selector' => '{{WRAPPER}} .gform_body textarea',
+			'selector' => '{{WRAPPER}} .kform_body textarea',
 		) );
 
 		$this->add_responsive_control( 'textarea_border_radius', array(
 			'label'      => esc_html__( 'Border Radius', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body textarea' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body textarea' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'textarea_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body textarea',
+			'selector' => '{{WRAPPER}} .kform_body textarea',
 		) );
 
 		$this->end_controls_tab();
@@ -627,18 +627,18 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'textarea_focus_border_color', array(
 			'label'     => esc_html__( 'Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body textarea:focus' => 'border-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body textarea:focus' => 'border-color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'textarea_focus_background', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body textarea:focus' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body textarea:focus' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'textarea_focus_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body textarea:focus',
+			'selector' => '{{WRAPPER}} .kform_body textarea:focus',
 		) );
 
 		$this->end_controls_tab();
@@ -648,14 +648,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Placeholder Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'separator' => 'before',
-			'selectors' => array( '{{WRAPPER}} .gform_body textarea::placeholder' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body textarea::placeholder' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_responsive_control( 'textarea_padding', array(
 			'label'      => esc_html__( 'Padding', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body textarea' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'textarea_min_height', array(
@@ -663,7 +663,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 50, 'max' => 500 ) ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body textarea' => 'min-height: {{SIZE}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body textarea' => 'min-height: {{SIZE}}{{UNIT}};' ),
 		) );
 
 		$this->end_controls_section();
@@ -681,38 +681,38 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'select_typography',
-			'selector' => '{{WRAPPER}} .gform_body select',
+			'selector' => '{{WRAPPER}} .kform_body select',
 		) );
 
 		$this->add_control( 'select_text_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body select' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body select' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'select_background', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body select' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body select' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'select_border',
-			'selector' => '{{WRAPPER}} .gform_body select',
+			'selector' => '{{WRAPPER}} .kform_body select',
 		) );
 
 		$this->add_responsive_control( 'select_border_radius', array(
 			'label'      => esc_html__( 'Border Radius', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body select' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'select_padding', array(
 			'label'      => esc_html__( 'Padding', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body select' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'select_height', array(
@@ -720,18 +720,18 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 20, 'max' => 100 ) ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body select' => 'height: {{SIZE}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body select' => 'height: {{SIZE}}{{UNIT}};' ),
 		) );
 
 		$this->add_control( 'select_focus_border_color', array(
 			'label'     => esc_html__( 'Focus Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body select:focus' => 'border-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body select:focus' => 'border-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'select_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body select',
+			'selector' => '{{WRAPPER}} .kform_body select',
 		) );
 
 		$this->end_controls_section();
@@ -828,7 +828,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 10, 'max' => 40 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body input[type="checkbox"], {{WRAPPER}} .gform_body input[type="radio"]' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body input[type="checkbox"], {{WRAPPER}} .kform_body input[type="radio"]' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -836,7 +836,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Unchecked Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input[type="checkbox"], {{WRAPPER}} .gform_body input[type="radio"]' => 'accent-color: {{VALUE}}; border-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input[type="checkbox"], {{WRAPPER}} .kform_body input[type="radio"]' => 'accent-color: {{VALUE}}; border-color: {{VALUE}};',
 			),
 		) );
 
@@ -844,9 +844,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Checked Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}}; --gf-ctrl-choice-check-color: {{VALUE}}; --gf-color-primary: {{VALUE}};',
-				'{{WRAPPER}} .gform_wrapper input[type="checkbox"], {{WRAPPER}} .gform_wrapper input[type="radio"]' => 'accent-color: {{VALUE}} !important;',
-				'{{WRAPPER}} .gform_wrapper input[type="radio"]::before' => 'background-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kform_wrapper' => '--gf-ctrl-accent-color: {{VALUE}}; --gf-color-in-ctrl-primary: {{VALUE}}; --gf-ctrl-choice-check-color: {{VALUE}}; --gf-color-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper input[type="checkbox"], {{WRAPPER}} .kform_wrapper input[type="radio"]' => 'accent-color: {{VALUE}} !important;',
+				'{{WRAPPER}} .kform_wrapper input[type="radio"]::before' => 'background-color: {{VALUE}} !important;',
 			),
 		) );
 
@@ -854,7 +854,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body input[type="checkbox"], {{WRAPPER}} .gform_body input[type="radio"]' => 'outline-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body input[type="checkbox"], {{WRAPPER}} .kform_body input[type="radio"]' => 'outline-color: {{VALUE}};',
 			),
 		) );
 
@@ -864,21 +864,21 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px', '%' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ), '%' => array( 'min' => 0, 'max' => 50 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body input[type="checkbox"]' => 'border-radius: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body input[type="checkbox"]' => 'border-radius: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'checkbox_label_typography',
 			'label'    => esc_html__( 'Choice Label Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gchoice_label, {{WRAPPER}} .gform_body .gchoice label',
+			'selector' => '{{WRAPPER}} .kform_body .gchoice_label, {{WRAPPER}} .kform_body .gchoice label',
 		) );
 
 		$this->add_control( 'checkbox_label_color', array(
 			'label'     => esc_html__( 'Choice Label Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gchoice_label, {{WRAPPER}} .gform_body .gchoice label' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .gchoice_label, {{WRAPPER}} .kform_body .gchoice label' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -889,8 +889,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 40 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_wrapper .gfield_radio:not([class*="image-choice"]), {{WRAPPER}} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio, {{WRAPPER}} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio .gchoice, {{WRAPPER}} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .gfield_radio:not([class*="image-choice"]), {{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio, {{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio .gchoice, {{WRAPPER}} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox .gchoice' => 'margin-bottom: 0 !important;',
 			),
 		) );
 
@@ -979,8 +979,8 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'px' => array( 'min' => 0, 'max' => 50 ),
 			),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .gform_wrapper .gfield_radio--image-choice' => 'gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gform_wrapper .gfield--type-image_choice .gchoice' => 'margin: 0 !important; padding: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .gfield--type-image_choice .gfield_radio, {{WRAPPER}} .kform_wrapper .gfield--type-image_choice .gfield_checkbox, {{WRAPPER}} .kform_wrapper .gfield_radio--image-choice' => 'gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .gfield--type-image_choice .gchoice' => 'margin: 0 !important; padding: 0 !important;',
 			),
 		) );
 
@@ -1061,7 +1061,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'file_button_typography',
 			'label'    => esc_html__( 'Button Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gform_fileupload_rules, {{WRAPPER}} .gform_body .button.gform_button_select_files',
+			'selector' => '{{WRAPPER}} .kform_body .kform_fileupload_rules, {{WRAPPER}} .kform_body .button.kform_button_select_files',
 		) );
 
 		$this->start_controls_tabs( 'file_upload_tabs' );
@@ -1071,18 +1071,18 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'file_button_color', array(
 			'label'     => esc_html__( 'Button Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .button.gform_button_select_files' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .button.kform_button_select_files' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'file_button_bg', array(
 			'label'     => esc_html__( 'Button Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .button.gform_button_select_files' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .button.kform_button_select_files' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'file_button_border',
-			'selector' => '{{WRAPPER}} .gform_body .button.gform_button_select_files',
+			'selector' => '{{WRAPPER}} .kform_body .button.kform_button_select_files',
 		) );
 
 		$this->end_controls_tab();
@@ -1092,13 +1092,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'file_button_hover_color', array(
 			'label'     => esc_html__( 'Button Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .button.gform_button_select_files:hover' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .button.kform_button_select_files:hover' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'file_button_hover_bg', array(
 			'label'     => esc_html__( 'Button Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .button.gform_button_select_files:hover' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .button.kform_button_select_files:hover' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->end_controls_tab();
@@ -1108,13 +1108,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Drop Area Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'separator' => 'before',
-			'selectors' => array( '{{WRAPPER}} .gform_body .gform_drop_area' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .kform_drop_area' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'file_drop_area_border',
 			'label'    => esc_html__( 'Drop Area Border', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gform_drop_area',
+			'selector' => '{{WRAPPER}} .kform_body .kform_drop_area',
 		) );
 
 		$this->end_controls_section();
@@ -1133,50 +1133,50 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'section_title_typography',
 			'label'    => esc_html__( 'Title Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gsection_title',
+			'selector' => '{{WRAPPER}} .kform_body .gsection_title',
 		) );
 
 		$this->add_control( 'section_title_color', array(
 			'label'     => esc_html__( 'Title Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gsection_title' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .gsection_title' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'section_desc_typography',
 			'label'    => esc_html__( 'Description Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gsection_description',
+			'selector' => '{{WRAPPER}} .kform_body .gsection_description',
 		) );
 
 		$this->add_control( 'section_desc_color', array(
 			'label'     => esc_html__( 'Description Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gsection_description' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .gsection_description' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'section_break_border',
 			'label'    => esc_html__( 'Bottom Border', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gsection',
+			'selector' => '{{WRAPPER}} .kform_body .gsection',
 		) );
 
 		$this->add_responsive_control( 'section_break_padding', array(
 			'label'      => esc_html__( 'Padding', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body .gsection' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body .gsection' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'section_break_margin', array(
 			'label'      => esc_html__( 'Margin', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body .gsection' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body .gsection' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'section_break_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body .gsection',
+			'selector' => '{{WRAPPER}} .kform_body .gsection',
 		) );
 
 		$this->end_controls_section();
@@ -1189,9 +1189,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 	private function register_style_submit_button() {
 
 		// Use a short variable for the high-specificity button selector
-		// Selectors for submit button - covers BOTH "End of form" (.gform_footer) and "End of last row" (#field_submit)
-		$btn = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper .gform_footer .gform_button, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"], {{WRAPPER}} .gform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .gform_wrapper #field_submit .gform_button, {{WRAPPER}} .gform_wrapper .gfield--type-submit input[type="submit"], {{WRAPPER}} .gform_wrapper .gfield--type-submit .gform_button';
-		$btn_hover = '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper .gform_footer .gform_button:hover, {{WRAPPER}} .gform_wrapper .gform_footer input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper #field_submit input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper #field_submit .gform_button:hover, {{WRAPPER}} .gform_wrapper .gfield--type-submit input[type="submit"]:hover, {{WRAPPER}} .gform_wrapper .gfield--type-submit .gform_button:hover';
+		// Selectors for submit button - covers BOTH "End of form" (.kform_footer) and "End of last row" (#field_submit)
+		$btn = '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer input[type="submit"], {{WRAPPER}} .kform_wrapper .kform_footer .kform_button, {{WRAPPER}} .kform_wrapper .kform_footer input[type="submit"], {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .kform_wrapper #field_submit .kform_button, {{WRAPPER}} .kform_wrapper .gfield--type-submit input[type="submit"], {{WRAPPER}} .kform_wrapper .gfield--type-submit .kform_button';
+		$btn_hover = '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper .kform_footer .kform_button:hover, {{WRAPPER}} .kform_wrapper .kform_footer input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper #field_submit .kform_button:hover, {{WRAPPER}} .kform_wrapper .gfield--type-submit input[type="submit"]:hover, {{WRAPPER}} .kform_wrapper .gfield--type-submit .kform_button:hover';
 
 		$this->start_controls_section( 'section_style_submit', array(
 			'label' => esc_html__( 'Submit Button', 'kdnaforms' ),
@@ -1207,12 +1207,12 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 6 ),
 			),
 			'selectors' => array(
-				// The submit button area: both the inline #field_submit AND the .gform_footer
-				'{{WRAPPER}} .gform_wrapper .gform-footer, {{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .kform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
+				// The submit button area: both the inline #field_submit AND the .kform_footer
+				'{{WRAPPER}} .kform_wrapper .gform-footer, {{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer, {{WRAPPER}} .kform_wrapper.gform-theme--framework .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
 				// The hidden #field_submit gfield inside the grid - collapse it
-				'{{WRAPPER}} .gform_wrapper .gfield--type-submit, {{WRAPPER}} .gform_wrapper #field_submit' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .gfield--type-submit, {{WRAPPER}} .kform_wrapper #field_submit' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important;',
 				// Remove margin from the last visible field
-				'{{WRAPPER}} .gform_wrapper .gform_body .gform_fields > .gfield:nth-last-child(2)' => 'margin-bottom: 0 !important;',
+				'{{WRAPPER}} .kform_wrapper .kform_body .kform_fields > .gfield:nth-last-child(2)' => 'margin-bottom: 0 !important;',
 			),
 			'separator' => 'after',
 		) );
@@ -1237,7 +1237,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
 				$btn => 'background-color: {{VALUE}} !important; background-image: none !important;',
-				'{{WRAPPER}} .gform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-primary: {{VALUE}}; --gf-color-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-primary: {{VALUE}}; --gf-color-primary: {{VALUE}};',
 			),
 		) );
 
@@ -1273,7 +1273,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
 				$btn_hover => 'background-color: {{VALUE}} !important; background-image: none !important;',
-				'{{WRAPPER}} .gform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-hover-primary: {{VALUE}};',
+				'{{WRAPPER}} .kform_wrapper.gform-theme--framework' => '--gf-ctrl-btn-bg-color-hover-primary: {{VALUE}};',
 			),
 		) );
 
@@ -1318,7 +1318,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'center' => array( 'title' => esc_html__( 'Center', 'kdnaforms' ), 'icon' => 'eicon-text-align-center' ),
 				'right'  => array( 'title' => esc_html__( 'Right', 'kdnaforms' ), 'icon' => 'eicon-text-align-right' ),
 			),
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper #field_submit, {{WRAPPER}} .gform_wrapper .gfield--type-submit' => 'text-align: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer, {{WRAPPER}} .kform_wrapper #field_submit, {{WRAPPER}} .kform_wrapper .gfield--type-submit' => 'text-align: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'submit_transition', array(
@@ -1337,7 +1337,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'flex-end'   => array( 'title' => esc_html__( 'Bottom', 'kdnaforms' ), 'icon' => 'eicon-v-align-bottom' ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_wrapper #field_submit, {{WRAPPER}} .gform_wrapper .gfield--type-submit' => 'display: flex !important; align-items: {{VALUE}} !important;',
+				'{{WRAPPER}} .kform_wrapper #field_submit, {{WRAPPER}} .kform_wrapper .gfield--type-submit' => 'display: flex !important; align-items: {{VALUE}} !important;',
 			),
 			'description' => esc_html__( 'Align the inline submit button vertically within its grid cell. Use "Bottom" to align with input fields.', 'kdnaforms' ),
 		) );
@@ -1348,7 +1348,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => -50, 'max' => 50 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_wrapper #field_submit .gform_button, {{WRAPPER}} .gform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .gform_wrapper .gfield--type-submit .gform_button, {{WRAPPER}} .gform_wrapper .gfield--type-submit input[type="submit"]' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper #field_submit .kform_button, {{WRAPPER}} .kform_wrapper #field_submit input[type="submit"], {{WRAPPER}} .kform_wrapper .gfield--type-submit .kform_button, {{WRAPPER}} .kform_wrapper .gfield--type-submit input[type="submit"]' => 'margin-top: {{SIZE}}{{UNIT}} !important;',
 			),
 			'description' => esc_html__( 'Fine-tune the button position. Use negative values to move up.', 'kdnaforms' ),
 		) );
@@ -1381,50 +1381,50 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'prev_typography',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button',
+			'selector' => '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button',
 		) );
 
 		$this->add_control( 'prev_text_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'prev_bg_color', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'prev_border',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button',
+			'selector' => '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button',
 		) );
 
 		$this->add_responsive_control( 'prev_border_radius', array(
 			'label'      => esc_html__( 'Border Radius', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'prev_padding', array(
 			'label'      => esc_html__( 'Padding', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_control( 'prev_hover_text_color', array(
 			'label'     => esc_html__( 'Hover Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button:hover' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button:hover' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'prev_hover_bg', array(
 			'label'     => esc_html__( 'Hover Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_previous_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_previous_button:hover' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_previous_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_previous_button:hover' => 'background-color: {{VALUE}};' ),
 		) );
 
 		// Next button
@@ -1436,50 +1436,50 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'next_typography',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button',
+			'selector' => '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button',
 		) );
 
 		$this->add_control( 'next_text_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'next_bg_color', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'next_border',
-			'selector' => '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button',
+			'selector' => '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button',
 		) );
 
 		$this->add_responsive_control( 'next_border_radius', array(
 			'label'      => esc_html__( 'Border Radius', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'next_padding', array(
 			'label'      => esc_html__( 'Padding', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_control( 'next_hover_text_color', array(
 			'label'     => esc_html__( 'Hover Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button:hover' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button:hover' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'next_hover_bg', array(
 			'label'     => esc_html__( 'Hover Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer .gform_next_button, {{WRAPPER}} .gform_wrapper .gform_footer .gform_next_button:hover' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer .kform_next_button, {{WRAPPER}} .kform_wrapper .kform_footer .kform_next_button:hover' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->end_controls_section();
@@ -1498,14 +1498,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'validation_msg_typography',
 			'label'    => esc_html__( 'Message Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gform_validation_errors, {{WRAPPER}} .gform_body .validation_message',
+			'selector' => '{{WRAPPER}} .kform_body .kform_validation_errors, {{WRAPPER}} .kform_body .validation_message',
 		) );
 
 		$this->add_control( 'validation_msg_color', array(
 			'label'     => esc_html__( 'Message Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gform_validation_errors, {{WRAPPER}} .gform_body .validation_message' => 'color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .kform_validation_errors, {{WRAPPER}} .kform_body .validation_message' => 'color: {{VALUE}};',
 			),
 		) );
 
@@ -1513,7 +1513,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Message Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gform_validation_errors' => 'background-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .kform_validation_errors' => 'background-color: {{VALUE}};',
 			),
 		) );
 
@@ -1521,14 +1521,14 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'label'     => esc_html__( 'Error Field Border Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gfield_error input, {{WRAPPER}} .gform_body .gfield_error textarea, {{WRAPPER}} .gform_body .gfield_error select' => 'border-color: {{VALUE}};',
+				'{{WRAPPER}} .kform_body .gfield_error input, {{WRAPPER}} .kform_body .gfield_error textarea, {{WRAPPER}} .kform_body .gfield_error select' => 'border-color: {{VALUE}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'validation_container_border',
 			'label'    => esc_html__( 'Container Border', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gform_validation_errors',
+			'selector' => '{{WRAPPER}} .kform_body .kform_validation_errors',
 		) );
 
 		$this->add_responsive_control( 'validation_container_padding', array(
@@ -1536,7 +1536,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body .gform_validation_errors' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body .kform_validation_errors' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
@@ -1545,13 +1545,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body .gform_validation_errors' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body .kform_validation_errors' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'validation_box_shadow',
-			'selector' => '{{WRAPPER}} .gform_body .gform_validation_errors',
+			'selector' => '{{WRAPPER}} .kform_body .kform_validation_errors',
 		) );
 
 		$this->end_controls_section();
@@ -1570,13 +1570,13 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$this->add_control( 'progress_bar_bg', array(
 			'label'     => esc_html__( 'Bar Background', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .kform_page_steps' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .kform_page_steps' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'progress_bar_fill', array(
 			'label'     => esc_html__( 'Progress Fill Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .kform_page_steps .gf_step_active, {{WRAPPER}} .gform_body .percentbar_blue' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .kform_page_steps .kdna_step_active, {{WRAPPER}} .kform_body .percentbar_blue' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_responsive_control( 'progress_bar_height', array(
@@ -1584,7 +1584,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::SLIDER,
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 2, 'max' => 40 ) ),
-			'selectors'  => array( '{{WRAPPER}} .gform_body .percentbar_blue' => 'height: {{SIZE}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kform_body .percentbar_blue' => 'height: {{SIZE}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'progress_bar_border_radius', array(
@@ -1593,32 +1593,32 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'size_units' => array( 'px' ),
 			'range'      => array( 'px' => array( 'min' => 0, 'max' => 20 ) ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_body .percentbar_blue, {{WRAPPER}} .gform_body .kform_percentage_bar' => 'border-radius: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body .percentbar_blue, {{WRAPPER}} .kform_body .kform_percentage_bar' => 'border-radius: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'progress_step_typography',
 			'label'    => esc_html__( 'Step Text Typography', 'kdnaforms' ),
-			'selector' => '{{WRAPPER}} .gform_body .gf_step, {{WRAPPER}} .gform_body .kform_percentage_bar_text',
+			'selector' => '{{WRAPPER}} .kform_body .kdna_step, {{WRAPPER}} .kform_body .kform_percentage_bar_text',
 		) );
 
 		$this->add_control( 'progress_step_color', array(
 			'label'     => esc_html__( 'Step Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gf_step, {{WRAPPER}} .gform_body .kform_percentage_bar_text' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .kdna_step, {{WRAPPER}} .kform_body .kform_percentage_bar_text' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'progress_active_step_color', array(
 			'label'     => esc_html__( 'Active Step Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gf_step_active' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .kdna_step_active' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'progress_completed_step_color', array(
 			'label'     => esc_html__( 'Completed Step Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .gform_body .gf_step_completed' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kform_body .kdna_step_completed' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->end_controls_section();
@@ -1636,43 +1636,43 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 
 		$this->add_group_control( \Elementor\Group_Control_Typography::get_type(), array(
 			'name'     => 'confirmation_typography',
-			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message',
+			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message',
 		) );
 
 		$this->add_control( 'confirmation_color', array(
 			'label'     => esc_html__( 'Text Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message' => 'color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message' => 'color: {{VALUE}};' ),
 		) );
 
 		$this->add_control( 'confirmation_bg', array(
 			'label'     => esc_html__( 'Background Color', 'kdnaforms' ),
 			'type'      => \Elementor\Controls_Manager::COLOR,
-			'selectors' => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message' => 'background-color: {{VALUE}};' ),
+			'selectors' => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message' => 'background-color: {{VALUE}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Border::get_type(), array(
 			'name'     => 'confirmation_border',
-			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message',
+			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message',
 		) );
 
 		$this->add_responsive_control( 'confirmation_border_radius', array(
 			'label'      => esc_html__( 'Border Radius', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', '%' ),
-			'selectors'  => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_responsive_control( 'confirmation_padding', array(
 			'label'      => esc_html__( 'Padding', 'kdnaforms' ),
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
-			'selectors'  => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
+			'selectors'  => array( '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
 		) );
 
 		$this->add_group_control( \Elementor\Group_Control_Box_Shadow::get_type(), array(
 			'name'     => 'confirmation_box_shadow',
-			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .gform_confirmation_message',
+			'selector' => '{{WRAPPER}} .kdna-elementor-form-wrapper .kform_confirmation_message',
 		) );
 
 		$this->end_controls_section();
@@ -1697,9 +1697,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 4 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gfield' => 'margin-bottom: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gform_wrapper .gform_fields' => 'row-gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gform_wrapper' => '--gf-field-gap-y: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body .gfield' => 'margin-bottom: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .kform_fields' => 'row-gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper' => '--gf-field-gap-y: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -1712,9 +1712,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 				'em' => array( 'min' => 0, 'max' => 4 ),
 			),
 			'selectors' => array(
-				'{{WRAPPER}} .gform_body .gform_fields' => 'column-gap: {{SIZE}}{{UNIT}} !important;',
-				'{{WRAPPER}} .gform_body .gfield--width-half' => 'padding-right: {{SIZE}}{{UNIT}};',
-				'{{WRAPPER}} .gform_wrapper' => '--gf-field-gap-x: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_body .kform_fields' => 'column-gap: {{SIZE}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_body .gfield--width-half' => 'padding-right: {{SIZE}}{{UNIT}};',
+				'{{WRAPPER}} .kform_wrapper' => '--gf-field-gap-x: {{SIZE}}{{UNIT}};',
 			),
 		) );
 
@@ -1723,7 +1723,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 			),
 		) );
 
@@ -1732,7 +1732,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			'type'       => \Elementor\Controls_Manager::DIMENSIONS,
 			'size_units' => array( 'px', 'em' ),
 			'selectors'  => array(
-				'{{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+				'{{WRAPPER}} .kform_wrapper .kform_footer, {{WRAPPER}} .kform_wrapper.gravity-theme .kform_footer' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
 			),
 		) );
 
@@ -1772,30 +1772,30 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		// Checked color - override ALL theme CSS variables for radio/checkbox
 		$checked_color = $settings['checkbox_checked_color'] ?? '';
 		if ( ! empty( $checked_color ) ) {
-			$inline_css .= "{$widget_selector} .gform_wrapper { --gf-ctrl-accent-color: {$checked_color}; --gf-color-in-ctrl-primary: {$checked_color}; --gf-ctrl-choice-check-color: {$checked_color}; --gf-color-primary: {$checked_color}; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper input[type='checkbox'], {$widget_selector} .gform_wrapper input[type='radio'] { accent-color: {$checked_color} !important; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper input[type='radio']::before { background-color: {$checked_color} !important; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper input[type='checkbox']::before { color: {$checked_color} !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper { --gf-ctrl-accent-color: {$checked_color}; --gf-color-in-ctrl-primary: {$checked_color}; --gf-ctrl-choice-check-color: {$checked_color}; --gf-color-primary: {$checked_color}; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper input[type='checkbox'], {$widget_selector} .kform_wrapper input[type='radio'] { accent-color: {$checked_color} !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper input[type='radio']::before { background-color: {$checked_color} !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper input[type='checkbox']::before { color: {$checked_color} !important; }";
 		}
 
 		// Spacing between options - radio and checkbox only (NOT image choice)
 		$spacing = $settings['checkbox_spacing']['size'] ?? '';
 		if ( $spacing !== '' ) {
 			$unit = $settings['checkbox_spacing']['unit'] ?? 'px';
-			$inline_css .= "{$widget_selector} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio, {$widget_selector} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio .gchoice, {$widget_selector} .gform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio, {$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox { gap: {$spacing}{$unit} !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_radio .gchoice, {$widget_selector} .kform_wrapper .gfield:not(.gfield--type-image_choice) .gfield_checkbox .gchoice { margin-bottom: 0 !important; }";
 		}
 
 		// Focus color
 		$focus_color = $settings['global_focus_color'] ?? '';
 		if ( ! empty( $focus_color ) ) {
-			$inline_css .= "{$widget_selector} .gform_wrapper input:focus, {$widget_selector} .gform_wrapper textarea:focus, {$widget_selector} .gform_wrapper select:focus { border-color: {$focus_color} !important; box-shadow: 0 0 0 3px rgba(0,0,0,0.1) !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper input:focus, {$widget_selector} .kform_wrapper textarea:focus, {$widget_selector} .kform_wrapper select:focus { border-color: {$focus_color} !important; box-shadow: 0 0 0 3px rgba(0,0,0,0.1) !important; }";
 		}
 
 		// Accent color
 		$accent_color = $settings['global_accent_color'] ?? '';
 		if ( ! empty( $accent_color ) ) {
-			$inline_css .= "{$widget_selector} .gform_wrapper { --gf-color-primary: {$accent_color}; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper { --gf-color-primary: {$accent_color}; }";
 		}
 
 		// Layouts - output CSS with responsive media queries
@@ -1860,9 +1860,9 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		$submit_gap = $settings['submit_gap_above']['size'] ?? '';
 		if ( $submit_gap !== '' ) {
 			$submit_gap_unit = $settings['submit_gap_above']['unit'] ?? 'px';
-			$inline_css .= "{$widget_selector} .gform_wrapper .gform_footer, {$widget_selector} .gform_wrapper.gravity-theme .gform_footer { margin-top: {$submit_gap}{$submit_gap_unit} !important; padding: 0 !important; margin-bottom: 0 !important; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper .gfield--type-submit, {$widget_selector} .gform_wrapper #field_submit { margin-top: {$submit_gap}{$submit_gap_unit} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important; }";
-			$inline_css .= "{$widget_selector} .gform_wrapper .gform_body .gform_fields > .gfield:nth-last-child(2) { margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .kform_footer, {$widget_selector} .kform_wrapper.gravity-theme .kform_footer { margin-top: {$submit_gap}{$submit_gap_unit} !important; padding: 0 !important; margin-bottom: 0 !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .gfield--type-submit, {$widget_selector} .kform_wrapper #field_submit { margin-top: {$submit_gap}{$submit_gap_unit} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important; }";
+			$inline_css .= "{$widget_selector} .kform_wrapper .kform_body .kform_fields > .gfield:nth-last-child(2) { margin-bottom: 0 !important; }";
 		}
 
 		if ( ! empty( $inline_css ) ) {
@@ -1870,7 +1870,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 		}
 
 		// Always-on: collapse the empty sublabel span on the inline submit field so it doesn't reserve trailing space.
-		echo '<style>' . $widget_selector . ' .gform_wrapper #field_submit .gfield_label, ' . $widget_selector . ' .gform_wrapper #field_submit .field_sublabel_below, ' . $widget_selector . ' .gform_wrapper #field_submit .field_sublabel_above, ' . $widget_selector . ' .gform_wrapper #field_submit .gfield_description, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .gfield_label, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .field_sublabel_below, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .field_sublabel_above, ' . $widget_selector . ' .gform_wrapper .gfield--type-submit .gfield_description { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }</style>';
+		echo '<style>' . $widget_selector . ' .kform_wrapper #field_submit .gfield_label, ' . $widget_selector . ' .kform_wrapper #field_submit .field_sublabel_below, ' . $widget_selector . ' .kform_wrapper #field_submit .field_sublabel_above, ' . $widget_selector . ' .kform_wrapper #field_submit .gfield_description, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .gfield_label, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .field_sublabel_below, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .field_sublabel_above, ' . $widget_selector . ' .kform_wrapper .gfield--type-submit .gfield_description { display: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }</style>';
 
 		// Build shortcode attributes
 		$shortcode_atts = array(

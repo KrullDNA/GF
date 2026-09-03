@@ -4,7 +4,7 @@
 //----------------------------------------------------------
 
 if ( ! gform ) {
-	document.addEventListener( 'gform_main_scripts_loaded', function() { gform.scriptsLoaded = true; } );
+	document.addEventListener( 'kform_main_scripts_loaded', function() { gform.scriptsLoaded = true; } );
 	document.addEventListener( 'gform/theme/scripts_loaded', function() { gform.themeScriptsLoaded = true; } );
 	window.addEventListener( 'DOMContentLoaded', function() { gform.domLoaded = true; } );
 
@@ -38,7 +38,7 @@ if ( ! gform ) {
 		 */
 		initializeOnLoaded: function( fn ) {
 			if ( ! gform.callIfLoaded( fn ) ) {
-				document.addEventListener( 'gform_main_scripts_loaded', () => { gform.scriptsLoaded = true; gform.callIfLoaded( fn ); } );
+				document.addEventListener( 'kform_main_scripts_loaded', () => { gform.scriptsLoaded = true; gform.callIfLoaded( fn ); } );
 				document.addEventListener( 'gform/theme/scripts_loaded', () => { gform.themeScriptsLoaded = true; gform.callIfLoaded( fn ); } );
 				window.addEventListener( 'DOMContentLoaded', () => { gform.domLoaded = true; gform.callIfLoaded( fn ); } );
 			}

@@ -696,9 +696,9 @@ class KDNAFormSettings {
 							$form_id         = rgget( 'id' );
 							$form            = KDNAFormsModel::get_form_meta( $form_id );
 							$legacy_settings = apply_filters( 'kdnaform_form_settings', array(), $form );
-							$html            = '<table class="gforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
+							$html            = '<table class="kforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
 							foreach ( $legacy_settings as $title => $legacy_fields ) {
-								$html .= sprintf( '<tr><td colspan="2"><h4 class="gf_settings_subgroup_title">%s</h4></td>', esc_html( $title ) );
+								$html .= sprintf( '<tr><td colspan="2"><h4 class="kdna_settings_subgroup_title">%s</h4></td>', esc_html( $title ) );
 								if ( is_array( $legacy_fields ) ) {
 									foreach ( $legacy_fields as $field ) {
 										$html .= $field;
@@ -1216,7 +1216,7 @@ class KDNAFormSettings {
 
 		?>
 
-		<div class="wrap gforms_edit_form gforms_form_settings_wrap <?php echo esc_attr( KDNACommon::get_browser_class() ) ?>">
+		<div class="wrap kforms_edit_form kforms_form_settings_wrap <?php echo esc_attr( KDNACommon::get_browser_class() ) ?>">
 
 			<?php
 				KDNASettings::page_header_bar();

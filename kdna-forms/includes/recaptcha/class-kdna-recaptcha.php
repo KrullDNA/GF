@@ -49,7 +49,7 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 		add_filter( 'kdnaform_validation', array( $this, 'validate_recaptcha' ), 19 );
 		add_filter( 'kdnaform_entry_meta', array( $this, 'entry_meta' ), 10, 2 );
 		add_action( 'wp_ajax_kdna_recaptcha_verify_keys', array( $this, 'ajax_verify_keys' ) );
-		add_filter( 'gform_entry_detail_meta_boxes', array( $this, 'register_meta_box' ), 10, 3 );
+		add_filter( 'kform_entry_detail_meta_boxes', array( $this, 'register_meta_box' ), 10, 3 );
 	}
 
 	public function plugin_settings_fields() {
@@ -234,7 +234,7 @@ class KDNA_Recaptcha extends \KDNAAddOn {
 		$input_name = 'input_' . md5( 'recaptchav3' . $this->_version . rgar( $form, 'id' ) );
 
 		$recaptcha_input = sprintf(
-			'<div class="gf_invisible ginput_recaptchav3" data-sitekey="%s"><input type="hidden" name="%s" class="gfield_recaptcha_response" value=""/></div>',
+			'<div class="kdna_invisible ginput_recaptchav3" data-sitekey="%s"><input type="hidden" name="%s" class="gfield_recaptcha_response" value=""/></div>',
 			esc_attr( $site_key ),
 			esc_attr( $input_name )
 		);

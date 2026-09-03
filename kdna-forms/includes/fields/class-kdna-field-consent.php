@@ -231,8 +231,8 @@ class KDNA_Field_Consent extends KDNA_Field {
 		$aria_describedby      = $this->get_aria_describedby( $extra_describedby_ids );
 
 		$input  = "<input name='input_{$id}.1' id='{$target_input_id}' type='{$html_input_type}' value='1' {$tabindex} {$aria_describedby} {$required_attribute} {$invalid_attribute} {$disabled_text} {$checked} /> <label {$label_class_attribute} {$for_attribute} >{$checkbox_label}{$required_div}</label>";
-		$input .= "<input type='hidden' name='input_{$id}.2' value='" . esc_attr( $checkbox_label ) . "' class='gform_hidden' />";
-		$input .= "<input type='hidden' name='input_{$id}.3' value='" . esc_attr( $revision_id ) . "' class='gform_hidden' />";
+		$input .= "<input type='hidden' name='input_{$id}.2' value='" . esc_attr( $checkbox_label ) . "' class='kform_hidden' />";
+		$input .= "<input type='hidden' name='input_{$id}.3' value='" . esc_attr( $revision_id ) . "' class='kform_hidden' />";
 
 		if ( $is_entry_detail ) {
 			$input .= $this->get_description( $this->get_field_description_from_revision( $revision_id ), '' );

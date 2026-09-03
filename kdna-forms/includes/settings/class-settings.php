@@ -1425,7 +1425,7 @@ class Settings {
 		if ( isset( $props['tooltip'] ) ) {
 
 			// If tooltip has already been processed, use it.
-			if ( strpos( $props['tooltip'], 'class="gf_tooltip ' ) !== false ) {
+			if ( strpos( $props['tooltip'], 'class="kdna_tooltip ' ) !== false ) {
 				$html = $props['tooltip'];
 			} else {
 				$html = ' ' . kdnaform_tooltip( $props['tooltip'], rgar( $props, 'tooltip_class' ), true );

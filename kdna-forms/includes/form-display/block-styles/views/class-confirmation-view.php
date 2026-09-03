@@ -23,7 +23,7 @@ class Confirmation_View extends Form_View {
 
 		switch ( $theme_slug ) {
 			case 'orbital':
-				$classes = 'kdnaform_confirmation_wrapper gform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--' . $theme_slug;
+				$classes = 'kdnaform_confirmation_wrapper kform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--' . $theme_slug;
 				break;
 			case 'gravity-theme':
 			default:

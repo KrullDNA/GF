@@ -510,7 +510,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$clear = '';
 
 		if( $this->is_description_above( $form ) || $this->is_validation_above( $form ) ) {
-			$clear = $is_admin ? "<div class='gf_clear'></div>" : '';
+			$clear = $is_admin ? "<div class='kdna_clear'></div>" : '';
 		}
 
 		$field_content = sprintf(

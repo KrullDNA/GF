@@ -131,7 +131,7 @@ final class KDNA_Order_Factory {
 			 * @param array  $feed           The Form object to filter through
 			 * @param array  $entry          The entry object to filter through
 			 */
-			$trial_discount = kdna_apply_filters( array( 'gforms_order_trial_discount_item_price', $form['id'] ), $trial_discount, $form, $feed, $entry );
+			$trial_discount = kdna_apply_filters( array( 'kforms_order_trial_discount_item_price', $form['id'] ), $trial_discount, $form, $feed, $entry );
 
 			$trial_discount_description = __( 'Trial Discount', 'kdnaforms' );
 			/**
@@ -144,7 +144,7 @@ final class KDNA_Order_Factory {
 			 * @param array  $feed                       The Form object to filter through
 			 * @param array  $entry                      The entry object to filter through
 			 */
-			$trial_discount_description = kdna_apply_filters( array( 'gforms_order_trial_discount_item_description', $form['id'] ), $trial_discount_description, $form, $feed, $entry );
+			$trial_discount_description = kdna_apply_filters( array( 'kforms_order_trial_discount_item_description', $form['id'] ), $trial_discount_description, $form, $feed, $entry );
 			$order->add_item(
 				new KDNA_Order_Item(
 					'trial_discount',
@@ -183,7 +183,7 @@ final class KDNA_Order_Factory {
 				 * @param array  $feed              The Form object to filter through
 				 * @param array  $entry             The entry object to filter through
 				 */
-				$price = kdna_apply_filters( array( 'gforms_order_trial_item_price', $form['id'] ), $price, $form, $feed, $entry );
+				$price = kdna_apply_filters( array( 'kforms_order_trial_item_price', $form['id'] ), $price, $form, $feed, $entry );
 
 				$trial_description = $price ? ( rgars( $feed, 'meta/trial_amount' ) . ' ' . __( 'Trial', 'kdnaforms' ) ) : __( 'Free Trial', 'kdnaforms' );
 
@@ -197,7 +197,7 @@ final class KDNA_Order_Factory {
 				 * @param array  $feed              The Form object to filter through
 				 * @param array  $entry             The entry object to filter through
 				 */
-				$trial_description = kdna_apply_filters( array( 'gforms_order_trial_item_description', $form['id'] ), $trial_description, $form, $feed, $entry );
+				$trial_description = kdna_apply_filters( array( 'kforms_order_trial_item_description', $form['id'] ), $trial_description, $form, $feed, $entry );
 
 				$trial_item_name = $price ? __( 'Trial', 'kdnaforms' ) : __( 'Free Trial', 'kdnaforms' );
 
@@ -211,7 +211,7 @@ final class KDNA_Order_Factory {
 				 * @param array  $feed            The Form object to filter through
 				 * @param array  $entry           The entry object to filter through
 				 */
-				$trial_item_name = kdna_apply_filters( array( 'gforms_order_trial_discount_item_name', $form['id'] ), $trial_item_name, $form, $feed, $entry );
+				$trial_item_name = kdna_apply_filters( array( 'kforms_order_trial_discount_item_name', $form['id'] ), $trial_item_name, $form, $feed, $entry );
 
 				$order->add_item(
 					new KDNA_Order_Item(

@@ -555,11 +555,11 @@ Class KDNANotification {
 					'name' => 'legacy',
 					'type' => 'html',
 					'html' => function() use ( $legacy_settings ) {
-						$html = '<table class="gforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
+						$html = '<table class="kforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
 
 						foreach ( $legacy_settings as $title => $legacy_fields ) {
 							$html .= sprintf(
-								'<tr><td colspan="2"><h4 class="gf_settings_subgroup_title">%s</h4></td>',
+								'<tr><td colspan="2"><h4 class="kdna_settings_subgroup_title">%s</h4></td>',
 								esc_html( $title )
 							);
 

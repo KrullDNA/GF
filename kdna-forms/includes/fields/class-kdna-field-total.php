@@ -74,7 +74,7 @@ class KDNA_Field_Total extends KDNA_Field {
 			if ( KDNACommon::is_legacy_markup_enabled( $form ) ) {
 				return "<div class='ginput_container ginput_container_total'>
 							<span class='ginput_total ginput_total_{$form_id}'>" . KDNACommon::to_money( '0' ) . "</span>
-							<input type='hidden' name='input_{$id}' id='{$field_id}' class='gform_hidden'/>
+							<input type='hidden' name='input_{$id}' id='{$field_id}' class='kform_hidden'/>
 						</div>";
 			} else {
 				return "<div class='ginput_container ginput_container_total'>

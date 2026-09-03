@@ -233,7 +233,7 @@ class KDNA_Field_Email extends KDNA_Field {
 			if ( $is_sub_label_above ) {
 				return "<div class='ginput_container ginput_container_email ginput_single_email' {$single_style}>
                             <input name='input_{$id}' type='{$html_input_type}' class='" . esc_attr( $class ) . "' disabled='disabled' {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$single_autocomplete_attribute} />
-                            <div class='gf_clear gf_clear_complex'></div>
+                            <div class='kdna_clear kdna_clear_complex'></div>
                         </div>
                         <div class='ginput_complex ginput_container ginput_container_email ginput_confirm_email gform-grid-row' {$confirm_style} id='{$field_id}_container'>
                             <span id='{$field_id}_1_container' class='ginput_left gform-grid-col gform-grid-col--size-auto'>
@@ -244,12 +244,12 @@ class KDNA_Field_Email extends KDNA_Field {
                                 <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                                 <input class='{$class}' type='text' name='input_{$id}_2' id='{$field_id}_2' disabled='disabled' {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$confirm_email_autocomplete_attribute} />
                             </span>
-                            <div class='gf_clear gf_clear_complex'></div>
+                            <div class='kdna_clear kdna_clear_complex'></div>
                         </div>";
 			} else {
 				return "<div class='ginput_container ginput_container_email ginput_single_email' {$single_style}>
                             <input name='input_{$id}' type='{$html_input_type}' class='" . esc_attr( $class ) . "' disabled='disabled' {$single_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$single_autocomplete_attribute} />
-                            <div class='gf_clear gf_clear_complex'></div>
+                            <div class='kdna_clear kdna_clear_complex'></div>
                         </div>
                         <div class='ginput_complex ginput_container ginput_container_email ginput_confirm_email gform-grid-row' {$confirm_style} id='{$field_id}_container'>
                             <span id='{$field_id}_1_container' class='ginput_left gform-grid-col gform-grid-col--size-auto'>
@@ -260,7 +260,7 @@ class KDNA_Field_Email extends KDNA_Field {
                                 <input class='{$class}' type='text' name='input_{$id}_2' id='{$field_id}_2' disabled='disabled' {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$confirm_email_autocomplete_attribute} />
                                 <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                             </span>
-                            <div class='gf_clear gf_clear_complex'></div>
+                            <div class='kdna_clear kdna_clear_complex'></div>
                         </div>";
 			}
 		} else {
@@ -283,7 +283,7 @@ class KDNA_Field_Email extends KDNA_Field {
                                     <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                                     <input class='{$class}' type='{$html_input_type}' name='input_{$id}_2' id='{$field_id}_2' value='{$confirmation_value}' {$last_tabindex} {$confirmation_disabled} {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$confirm_email_autocomplete_attribute}/>
                                 </span>
-                                <div class='gf_clear gf_clear_complex'></div>
+                                <div class='kdna_clear kdna_clear_complex'></div>
                             </div>";
 				} else {
 					return "<div class='ginput_complex ginput_container ginput_container_email gform-grid-row' id='{$field_id}_container'>
@@ -295,7 +295,7 @@ class KDNA_Field_Email extends KDNA_Field {
                                     <input class='{$class}' type='{$html_input_type}' name='input_{$id}_2' id='{$field_id}_2' value='{$confirmation_value}' {$last_tabindex} {$confirmation_disabled} {$confirm_email_placeholder_attribute} {$required_attribute} {$invalid_attribute} {$aria_describedby} {$confirm_email_autocomplete_attribute}/>
                                     <label for='{$field_id}_2' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$confirm_email_label}</label>
                                 </span>
-                                <div class='gf_clear gf_clear_complex'></div>
+                                <div class='kdna_clear kdna_clear_complex'></div>
                             </div>";
 				}
 			} else {

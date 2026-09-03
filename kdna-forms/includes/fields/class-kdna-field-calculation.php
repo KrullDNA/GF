@@ -94,7 +94,7 @@ class KDNA_Field_Calculation extends KDNA_Field {
 			}
 
 			if ( ! $has_quantity ) {
-				$quantity_field .= "<input type='hidden' name='input_{$id}.3' value='{$quantity}' class='ginput_quantity_{$form_id}_{$this->id} gform_hidden' />";
+				$quantity_field .= "<input type='hidden' name='input_{$id}.3' value='{$quantity}' class='ginput_quantity_{$form_id}_{$this->id} kform_hidden' />";
 			}
 		}
 
@@ -102,12 +102,12 @@ class KDNA_Field_Calculation extends KDNA_Field {
 		$wrapper_close = $is_legacy_markup ? '' : '</div>';
 
 		return "<div class='ginput_container ginput_container_product_calculation'>
-					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='gform_hidden' />
+					<input type='hidden' name='input_{$id}.1' value='{$product_name}' class='kform_hidden' />
 					$wrapper_open
 						<span class='gform-field-label gform-field-label--type-sub-large ginput_product_price_label'>" . kdna_apply_filters( array( 'kdnaform_product_price', $form_id, $this->id ), esc_html__( 'Price', 'kdnaforms' ), $form_id ) . ":</span>
 						<span class='gform-field-label gform-field-label--type-sub-large ginput_product_price' id='{$field_id}'>" . esc_html( KDNACommon::to_money( $price, $currency ) ) . "</span>
 					$wrapper_close
-					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='gform_hidden ginput_calculated_price' value='" . esc_attr( $price ) . "'/>
+					<input type='hidden' name='input_{$id}.2' id='ginput_base_price_{$form_id}_{$this->id}' class='kform_hidden ginput_calculated_price' value='" . esc_attr( $price ) . "'/>
 					{$quantity_field}
 				</div>";
 	}

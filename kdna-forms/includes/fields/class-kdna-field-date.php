@@ -552,7 +552,7 @@ class KDNA_Field_Date extends KDNA_Field {
                             <input name='input_{$id}' id='{$field_id}' type='text' value='{$picker_value}' class='datepicker gform-datepicker {$format} {$icon_class}' {$tabindex} {$disabled_text} {$date_picker_placeholder} {$describedby_attribute} {$invalid_attribute} {$required_attribute}/>
                             <span id='{$field_id}_date_format' class='screen-reader-text'>{$date_format_sr_text}</span>
                         </div>
-                        <input type='hidden' id='gforms_calendar_icon_$field_id' class='gform_hidden' value='$icon_url'/>";
+                        <input type='hidden' id='kforms_calendar_icon_$field_id' class='kform_hidden' value='$icon_url'/>";
 			}
 		}
 	}

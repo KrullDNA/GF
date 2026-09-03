@@ -25,14 +25,14 @@ class KDNAHelp {
 
 		?>
         <link rel="stylesheet" href="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/assets/css/dist/admin<?php echo esc_html( $dev_min ); ?>.css" />
-		<div class="wrap gforms_help <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
+		<div class="wrap kforms_help <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
 
             <?php
             KDNACommon::admin_screen_reader_title();
             ?>
             <h2><?php esc_html_e( 'How can we help you?', 'kdnaforms' ); ?></h2>
 
-            <div class="gf_help_content">
+            <div class="kdna_help_content">
 				<p>
 					<?php printf(
 						esc_html__( "Please review the %sdocumentation%s first. If you still can't find the answer %sopen a support ticket%s and we will be happy to answer your questions and assist you with any problems.", 'kdnaforms' ),
@@ -44,10 +44,10 @@ class KDNAHelp {
 				</p>
             </div>
 
-            <form id="gf_help_page_search" action="https://docs.kdnaforms.com" target="_blank">
+            <form id="kdna_help_page_search" action="https://docs.kdnaforms.com" target="_blank">
                 <div class="search_box">
-                    <label for="gf_help_search" class="screen-reader-text"><?php esc_html_e( 'Search Our Documentation', 'kdnaforms' ) ?></label>
-                    <input type="text" id="gf_help_search" name="s" placeholder="<?php esc_attr_e( 'Search Our Documentation', 'kdnaforms' ) ?>"/>
+                    <label for="kdna_help_search" class="screen-reader-text"><?php esc_html_e( 'Search Our Documentation', 'kdnaforms' ) ?></label>
+                    <input type="text" id="kdna_help_search" name="s" placeholder="<?php esc_attr_e( 'Search Our Documentation', 'kdnaforms' ) ?>"/>
                     <button class="gform-button gform-button--size-r gform-button--white gform-button--width-auto gform-button--active-type-loader gform-button--loader-after gform-button--icon-trailing button_focus">
                         <span class="gform-button__text gform-button__text--inactive"><?php esc_html_e( 'Search', 'kdnaforms' ) ?></span>
                         <span class="screen-reader-text"><?php esc_html_e( '(opens in a new tab)', 'kdnaforms' ) ?></span>
@@ -56,8 +56,8 @@ class KDNAHelp {
                 </div>
             </form>
 
-            <div id="gforms_helpboxes">
-                <div class="gforms_helpbox user_documentation">
+            <div id="kforms_helpboxes">
+                <div class="kforms_helpbox user_documentation">
                     <div class="helpbox_header"></div>
                     <div class="resource_list">
                         <h3><?php esc_html_e( 'User Documentation', 'kdnaforms' ); ?></h3>
@@ -101,7 +101,7 @@ class KDNAHelp {
                     </div>
                 </div>
 
-                <div class="gforms_helpbox developer_documentation">
+                <div class="kforms_helpbox developer_documentation">
                     <div class="helpbox_header"></div>
                     <div class="resource_list">
                         <h3><?php esc_html_e( 'Developer Documentation', 'kdnaforms' ); ?></h3>
@@ -145,7 +145,7 @@ class KDNAHelp {
                     </div>
                 </div>
 
-                <div class="gforms_helpbox designer_documentation">
+                <div class="kforms_helpbox designer_documentation">
                     <div class="helpbox_header"></div>
                     <div class="resource_list">
                         <h3><?php esc_html_e( 'Designer Documentation', 'kdnaforms' ); ?></h3>

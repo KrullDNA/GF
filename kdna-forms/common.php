@@ -1333,7 +1333,7 @@ class KDNACommon {
 			 * @param array $form The current Form object.
 			 * @param array $lead The current Entry object.
 			 */
-			$entry_url = esc_url( apply_filters( 'gform_entry_detail_url', $entry_url, $form, $lead ) );
+			$entry_url = esc_url( apply_filters( 'kform_entry_detail_url', $entry_url, $form, $lead ) );
 			$text      = str_replace( '{entry_url}', $url_encode ? urlencode( $entry_url ) : $entry_url, $text );
 		}
 
@@ -1439,7 +1439,7 @@ class KDNACommon {
 		$validation_class  = rgar( $form, 'validationPlacement' ) == 'above' ? 'validation_above' : 'validation_below';
 		$sublabel_class    = rgar( $form, 'subLabelPlacement' ) == 'above' ? 'form_sublabel_above' : 'form_sublabel_below';
 
-		$css_class = preg_replace( '/\s+/', ' ', "gform_fields {$label_class} {$sublabel_class} {$description_class} {$validation_class}" ); //removing extra spaces
+		$css_class = preg_replace( '/\s+/', ' ', "kform_fields {$label_class} {$sublabel_class} {$description_class} {$validation_class}" ); //removing extra spaces
 
 		return $css_class;
 	}
@@ -3017,7 +3017,7 @@ Content-Type: text/html;
 	 *
 	 * @since 2.6.9
 	 *
-	 * @param string $name The env variable name (without the "gf_env_" prefix. i.e. support_url).
+	 * @param string $name The env variable name (without the "kdna_env_" prefix. i.e. support_url).
 	 *
 	 * @return string Returns the environment variable.
 	 */
@@ -3697,7 +3697,7 @@ Content-Type: text/html;
 
 			if ( ! rgblank( $placeholder ) ) {
 				$selected = empty( $value ) ? "selected='selected'" : '';
-				$choices .= sprintf( "<option value='' %s class='gf_placeholder'>%s</option>", $selected, esc_html( $placeholder) );
+				$choices .= sprintf( "<option value='' %s class='kdna_placeholder'>%s</option>", $selected, esc_html( $placeholder) );
 			}
 
 			foreach ( $field->choices as $choice ) {
@@ -3876,7 +3876,7 @@ Content-Type: text/html;
 		<h1>
 			<span id='kdnaform_settings_page_title' class='kdnaform_settings_page_title<?php echo esc_attr( $editable_class ); ?>' onclick='KDNA_ShowEditTitle()'><?php echo esc_html( rgar( $form, 'title' ) ); ?></span>
 			<?php KDNAForms::form_switcher(); ?>
-			<span class="gf_admin_page_formid">ID: <?php echo absint( $form['id'] ); ?></span>
+			<span class="kdna_admin_page_formid">ID: <?php echo absint( $form['id'] ); ?></span>
 		</h1>
 		<?php KDNAForms::edit_form_title( $form ); ?>
 		<?php
@@ -3967,13 +3967,13 @@ Content-Type: text/html;
 						$value = json_encode( $value );
 					}
 
-					return sprintf( "<input name='input_%d' id='%s' class='gform_hidden' type='hidden' value='%s'/>", $id, esc_attr( $field_id ), esc_attr( $value ) );
+					return sprintf( "<input name='input_%d' id='%s' class='kform_hidden' type='hidden' value='%s'/>", $id, esc_attr( $field_id ), esc_attr( $value ) );
 				}
 
 
 				$fields = '';
 				foreach ( $inputs as $input ) {
-					$fields .= sprintf( "<input name='input_%s' class='gform_hidden' type='hidden' value='%s'/>", $input['id'], esc_attr( rgar( $value, strval( $input['id'] ) ) ) );
+					$fields .= sprintf( "<input name='input_%s' class='kform_hidden' type='hidden' value='%s'/>", $input['id'], esc_attr( rgar( $value, strval( $input['id'] ) ) ) );
 				}
 
 				return $fields;

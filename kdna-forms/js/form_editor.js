@@ -94,7 +94,7 @@ function InitializeEditor() {
 		InitializeForm( form );
 
 	//for backwards compatibility <1.7
-	jQuery( document ).trigger( 'gform_load_form_settings', [ form ] );
+	jQuery( document ).trigger( 'kform_load_form_settings', [ form ] );
 
 	SetupUnsavedChangesWarning();
 
@@ -103,7 +103,7 @@ function InitializeEditor() {
 		var doc = jQuery( document )[ 0 ];
 		var data = jQuery.hasData( doc ) && jQuery._data( doc );
 		if ( data ){
-			var deprecatedEvents = new Array( 'gform_load_form_settings' );
+			var deprecatedEvents = new Array( 'kform_load_form_settings' );
 			for ( var e in data.events ) {
 				if ( jQuery.inArray( e, deprecatedEvents ) !== -1 ) {
 					console.log( 'Gravity Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
@@ -172,7 +172,7 @@ function InitializeEditor() {
 
 function InitializeFieldSettings(){
 
-	gform.addFilter( 'gform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
+	gform.addFilter( 'kform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
 
 	jQuery('#field_max_file_size').on('input propertychange', function(){
 		var $this = jQuery(this),
@@ -358,7 +358,7 @@ function InitializeFieldSettings(){
 		} );
 
 	jQuery('#submit_text').on('input propertychange', function(){
-		jQuery('#gform_submit_button_' + form.id ).val( this.value );
+		jQuery('#kform_submit_button_' + form.id ).val( this.value );
 	});
 
 	jQuery('#submit_image').on('input propertychange', function(){
@@ -636,12 +636,12 @@ function InitializeForm(form){
 	}
 	TogglePostTitleTemplate(true);
 
-	jQuery('#gform_pagination, #gform_last_page_settings').on('click', function ( event ) {
+	jQuery('#kform_pagination, #kform_last_page_settings').on('click', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
 
-	jQuery('#gform_fields').on('click', '.gfield', function ( event ) {
+	jQuery('#kform_fields').on('click', '.gfield', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
@@ -1283,9 +1283,9 @@ function LoadFieldSettings() {
 
 	ToggleSubmitType( true );
 
-	jQuery(document).trigger('gform_load_field_settings', [field, form]);
+	jQuery(document).trigger('kform_load_field_settings', [field, form]);
 
-	gform.doAction('gform_post_load_field_settings', [field, form]);
+	gform.doAction('kform_post_load_field_settings', [field, form]);
 
 	if (field.choiceAlignment == "horizontal") {
 		jQuery( "#choice_alignment_horizontal" ).prop( "checked", true );
@@ -1336,7 +1336,7 @@ function getAllFieldSettings(field) {
 	}
 
 	/**
-	 * gform_editor_field_settings
+	 * kform_editor_field_settings
 	 *
 	 * Modify the editor settings that are used for the current field, including those inherited from the inputType.
 	 *
@@ -1347,7 +1347,7 @@ function getAllFieldSettings(field) {
 	 *
 	 * @return {array} The modified array of settings values.
 	 */
-	settingsArray = gform.applyFilters( 'gform_editor_field_settings', settingsArray, field );
+	settingsArray = gform.applyFilters( 'kform_editor_field_settings', settingsArray, field );
 
 	return settingsArray.join( ', ' );
 }
@@ -1422,13 +1422,13 @@ function ToggleNamePrefixUI(isActive){
 
 function TogglePageBreakSettings(){
 	if(HasPageBreak()){
-		jQuery("#gform_last_page_settings").show();
-		jQuery("#gform_pagination").show();
+		jQuery("#kform_last_page_settings").show();
+		jQuery("#kform_pagination").show();
 	}
 	else
 	{
-		jQuery("#gform_last_page_settings").hide();
-		jQuery("#gform_pagination").hide();
+		jQuery("#kform_last_page_settings").hide();
+		jQuery("#kform_pagination").hide();
 	}
 }
 
@@ -1867,7 +1867,7 @@ function ToggleCustomField( isInit ){
 function ToggleInputMask(isInit){
 
 	if(jQuery("#field_input_mask").is(":checked")){
-		jQuery("#gform_input_mask").show();
+		jQuery("#kform_input_mask").show();
 		jQuery(".maxlen_setting").hide();
 
 		SetFieldProperty('inputMask', true);
@@ -1877,7 +1877,7 @@ function ToggleInputMask(isInit){
 		SetFieldProperty('maxLength', "");
 	}
 	else{
-		jQuery("#gform_input_mask").hide();
+		jQuery("#kform_input_mask").hide();
 		jQuery(".maxlen_setting").show();
 		SetFieldProperty('inputMask', false);
 		SetFieldProperty('inputMaskValue', '');
@@ -1910,16 +1910,16 @@ function ToggleAutoresponder(){
 function ToggleMultiFile(isInit){
 
 	if(jQuery("#field_multiple_files").prop("checked")) {
-		jQuery("#gform_multiple_files_options").show();
+		jQuery("#kform_multiple_files_options").show();
 		var $uploadField = jQuery('.kform_fileupload_multifile');
 		var pluploadSettings = $uploadField.data('settings');
 		if ( pluploadSettings && typeof pluploadSettings.chunk_size != 'undefined' ) {
-			jQuery('#gform_server_max_file_size_notice').hide();
+			jQuery('#kform_server_max_file_size_notice').hide();
 		}
 		SetFieldProperty('multipleFiles', true);
 	}
 	else {
-		jQuery("#gform_multiple_files_options").hide();
+		jQuery("#kform_multiple_files_options").hide();
 		SetFieldProperty('multipleFiles', false);
 		jQuery("#field_max_files").val("");
 		SetFieldProperty('maxFiles', "");
@@ -2061,7 +2061,7 @@ function UpdateFormObject(){
 		form.postTitleTemplate = jQuery("#field_post_title_template").val();
 	}
 
-	if(jQuery("#gform_last_page_settings").is(":visible")){
+	if(jQuery("#kform_last_page_settings").is(":visible")){
 		form.lastPageButton = new Button();
 		form.lastPageButton.type = jQuery("#last_page_button_text").is(":checked") ? "text" : "image";
 		if(form.lastPageButton.type == "image"){
@@ -2077,12 +2077,12 @@ function UpdateFormObject(){
 		form.lastPageButton = null;
 	}
 
-	if(jQuery("#gform_pagination").is(":visible")){
+	if(jQuery("#kform_pagination").is(":visible")){
 		form["pagination"] = new Object();
 		var type = jQuery("input[name=\"pagination_type\"]:checked").val();
 		form["pagination"]["type"] = type;
 
-		var pageNames = jQuery(".gform_page_names input");
+		var pageNames = jQuery(".kform_page_names input");
 		form["pagination"]["pages"] = new Array();
 		for(var i=0; i<pageNames.length; i++){
 			form["pagination"]["pages"].push(jQuery(pageNames[i]).val());
@@ -2115,11 +2115,11 @@ function UpdateFormObject(){
 	if(window["kform_before_update"]){
 		form = window["kform_before_update"](form);
 		if(window.console)
-			console.log('"kform_before_update" is deprecated since version 1.7! Use the "gform_pre_form_editor_save" filter instead.');
+			console.log('"kform_before_update" is deprecated since version 1.7! Use the "kform_pre_form_editor_save" filter instead.');
 	}
 
 	// new method for filtering the form object before save
-	form = gform.applyFilters('gform_pre_form_editor_save', form);
+	form = gform.applyFilters('kform_pre_form_editor_save', form);
 	return form;
 
 }
@@ -2127,7 +2127,7 @@ function UpdateFormObject(){
 function SortFields(){
 	var fields = new Array();
 	jQuery(".gfield").each(function(){
-		if( jQuery(this).hasClass('spacer') || 'gform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
+		if( jQuery(this).hasClass('spacer') || 'kform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
 			return;
 		}
 		id = this.id.substr(6);
@@ -2237,7 +2237,7 @@ function proceedWithDeletion(fieldId) {
 				 * @param object form    The current form object.
 				 * @param int    fieldId The ID of the current field.
 				 */
-				gform.doAction( 'gform_after_field_removed', form, fieldId );
+				gform.doAction( 'kform_after_field_removed', form, fieldId );
 
 			} );
 
@@ -2255,7 +2255,7 @@ function proceedWithDeletion(fieldId) {
 	TogglePageBreakSettings();
 
 	// Run field deleted action.
-	jQuery( document ).trigger( 'gform_field_deleted', [ form, fieldId ] );
+	jQuery( document ).trigger( 'kform_field_deleted', [ form, fieldId ] );
 }
 
 /**
@@ -2358,7 +2358,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 */
 async function HasConditionalLogicDependency(fieldId, value) {
 	var result = await HasConditionalLogicDependencyLegwork(fieldId, value);
-	return gform.applyFilters('gform_has_conditional_logic_dependency', result, fieldId, value);
+	return gform.applyFilters('kform_has_conditional_logic_dependency', result, fieldId, value);
 }
 
 /**
@@ -2519,7 +2519,7 @@ function StartDuplicateField(element) {
 
 	var sourcefieldId = jQuery(element)[0].id.split("_")[2];
 
-	gform.doAction( 'gform_before_field_duplicated', sourcefieldId );
+	gform.doAction( 'kform_before_field_duplicated', sourcefieldId );
 
 	for(fieldIndex in form.fields){
 
@@ -2555,8 +2555,8 @@ function StartDuplicateField(element) {
 			 *
 			 * @since @todo
 			 */
-			field = gform.applyFilters( 'gform_duplicate_field', field, form );
-			field = gform.applyFilters( 'gform_duplicate_field_{0}'.gformFormat( GetInputType( field ) ), field, form );
+			field = gform.applyFilters( 'kform_duplicate_field', field, form );
+			field = gform.applyFilters( 'kform_duplicate_field_{0}'.gformFormat( GetInputType( field ) ), field, form );
 
 			form.fields.splice(fieldIndex, 0, field);
 
@@ -2568,7 +2568,7 @@ function StartDuplicateField(element) {
 
 function EndDuplicateField(field, fieldString, sourceFieldId) {
 
-	gform.doAction( 'gform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
+	gform.doAction( 'kform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
 
 	var nativeEvent = new Event('gform/form_editor/field-duplicated-native');
 	document.dispatchEvent(nativeEvent);
@@ -2627,15 +2627,15 @@ function EndAddField(field, fieldString, index){
 	if(typeof index != 'undefined'){
 		form.fields.splice(index, 0, field);
 		if (index === 0) {
-			jQuery('#gform_fields').prepend(fieldString);
+			jQuery('#kform_fields').prepend(fieldString);
 		} else {
-			jQuery('#gform_fields').children().eq(index - 1).after(fieldString);
+			jQuery('#kform_fields').children().eq(index - 1).after(fieldString);
 		}
 	} else {
 		if ( jQuery( '#field_submit' ).length ) {
 			jQuery( fieldString ).insertBefore ( jQuery( '#field_submit' ) );
 		} else {
-			jQuery('#gform_fields').append(fieldString);
+			jQuery('#kform_fields').append(fieldString);
 		}
 		//creates new javascript field
 		form.fields.push(field);
@@ -2673,7 +2673,7 @@ function EndAddField(field, fieldString, index){
 		wp.a11y.speak( fieldType + kdna_vars.FieldAdded );
 	}
 
-	jQuery(document).trigger('gform_field_added', [form, field]);
+	jQuery(document).trigger('kform_field_added', [form, field]);
 }
 
 function StartChangeNameFormat(format) {
@@ -2792,7 +2792,7 @@ function EndChangeInputType(params){
 	 *
 	 * @param int fieldId The ID of the field for which the input type changed.
 	 */
-	gform.doAction( 'gform_after_change_input_type', fieldId );
+	gform.doAction( 'kform_after_change_input_type', fieldId );
 }
 
 function InitializeFields(){
@@ -2853,7 +2853,7 @@ function FieldClick( field ) {
 	}
 
 	// force focus to ensure onblur events fire for field setting inputs
-	jQuery( 'input#gform_force_focus' ).focus();
+	jQuery( 'input#kform_force_focus' ).focus();
 
 	//unselects all fields
 	jQuery( '.selectable' ).removeClass( 'field_selected' );
@@ -2878,7 +2878,7 @@ function FieldClick( field ) {
 }
 
 function ShowSettings( element ) {
-	if ( element.id === 'gform_last_page_settings' ) {
+	if ( element.id === 'kform_last_page_settings' ) {
 		//hide field and form pagination setting fields
 		jQuery( '.field_setting' ).hide();
 		jQuery( '.pagination_setting' ).hide();
@@ -2887,10 +2887,10 @@ function ShowSettings( element ) {
 		// Show last pagination setting fields
 		fieldObject = GetSelectedField();
 		jQuery( '.last_pagination_setting' ).show();
-		var label = jQuery( '#gform_last_page_settings' ).data( 'title' );
-		var description = jQuery( '#gform_last_page_settings' ).data( 'description' );
+		var label = jQuery( '#kform_last_page_settings' ).data( 'title' );
+		var description = jQuery( '#kform_last_page_settings' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
-	} else if ( element.id === 'gform_pagination' ) {
+	} else if ( element.id === 'kform_pagination' ) {
 		//hide field and last pagination setting fields
 		fieldObject = typeof fieldObject !== 'undefined' ? fieldObject : GetFirstField();
 		jQuery( '.field_setting' ).hide();
@@ -2900,8 +2900,8 @@ function ShowSettings( element ) {
 		jQuery("#gfield_post_category_initial_item_container").hide();
 		jQuery("#gfield_min_strength_container").hide();
 		InitPaginationOptions();
-		var label = jQuery( '#gform_pagination' ).data( 'title' );
-		var description = jQuery( '#gform_pagination' ).data( 'description' );
+		var label = jQuery( '#kform_pagination' ).data( 'title' );
+		var description = jQuery( '#kform_pagination' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
 	} else if ( element.id === 'field_submit' ) {
 		// Hide form pagination and last pagination setting fields
@@ -3027,9 +3027,9 @@ function LoadFieldChoices(field){
 	//loading bulk input
 	LoadBulkChoices(field);
 	ToggleClearDefaultChoicesButton();
-	jQuery(document).trigger('gform_load_field_choices', [field]);
+	jQuery(document).trigger('kform_load_field_choices', [field]);
 
-	gform.doAction('gform_load_field_choices', [field]);
+	gform.doAction('kform_load_field_choices', [field]);
 }
 
 function LoadInputChoices($ul, input){
@@ -3060,7 +3060,7 @@ function LoadBulkChoices(field){
 		/**
 		 * Filter each individual choice as it is loaded.
 		 *
-		 * This filter is generally used in combination with gform_insert_bulk_choices_choice, and is useful
+		 * This filter is generally used in combination with kform_insert_bulk_choices_choice, and is useful
 		 * for generating unique text patterns for adding arbitrary data to a choice.
 		 *
 		 * @since 2.5
@@ -3071,7 +3071,7 @@ function LoadBulkChoices(field){
 		 *
 		 * @return {string} The updated text pattern, e.g. Label|Value|Meta|Other
 		 */
-		choice = gform.applyFilters( 'gform_load_bulk_choices_choice', choice, field.choices[i], field );
+		choice = gform.applyFilters( 'kform_load_bulk_choices_choice', choice, field.choices[i], field );
 
 		choices.push(choice);
 	}
@@ -3086,7 +3086,7 @@ function LoadBulkChoices(field){
 	 * @param array bulkChoices The formatted choices.
 	 * @param array choices     The choice objects from the current field.
 	 */
-	choices = gform.applyFilters( 'gform_choices_post_bulk_load', choices, field.choices );
+	choices = gform.applyFilters( 'kform_choices_post_bulk_load', choices, field.choices );
 
 	jQuery("#gfield_bulk_add_input").val(choices.join("\n"));
 }
@@ -3291,7 +3291,7 @@ function InsertBulkChoices(choices){
 		/**
 		 * Filter each individual Choice object as it is inserted into the UI.
 		 *
-		 * This filter is generally used in combination with gform_load_bulk_choices_choice, and is useful
+		 * This filter is generally used in combination with kform_load_bulk_choices_choice, and is useful
 		 * for parsing a unique text pattern (e.g., Label|Value|Other) and adding the additional data to
 		 * the resulting Choice object.
 		 *
@@ -3303,7 +3303,7 @@ function InsertBulkChoices(choices){
 		 *
 		 * @return {Choice} The updated Choice object containing any additional data needed.
 		 */
-		choice = gform.applyFilters( 'gform_insert_bulk_choices_choice', choice, choices[i], field );
+		choice = gform.applyFilters( 'kform_insert_bulk_choices_choice', choice, choices[i], field );
 
 		if ( FieldIsChoiceType( field ) ) {
 			InsertFieldForChoice( choice, field );
@@ -3321,7 +3321,7 @@ function InsertBulkChoices(choices){
 	 *
 	 * @param array field The currently selected field object.
 	 */
-	gform.doAction( 'gform_bulk_insert_choices', field );
+	gform.doAction( 'kform_bulk_insert_choices', field );
 
 	if(enableValue){
 		field["enableChoiceValue"] = true;
@@ -3571,8 +3571,8 @@ function InsertFieldChoice( index ) {
 
 	var newChoice = new Choice( text, value, price );
 
-	if ( window[ "gform_new_choice_" + field.type ] ) {
-		newChoice = window[ "gform_new_choice_" + field.type ]( field, newChoice );
+	if ( window[ "kform_new_choice_" + field.type ] ) {
+		newChoice = window[ "kform_new_choice_" + field.type ]( field, newChoice );
 	}
 
 	if ( typeof field.choices !== 'object' ) {
@@ -3810,7 +3810,7 @@ function LoadTimeInputs(){
 		jQuery(".field_selected .gfield_time_ampm").show();
 	}
 	jQuery('#input_placeholder_row_input_' + field.id +'_3').hide(); // No support for placeholder.
-	// AM/PM Sub label is hidden in the time field class after `gform_post_load_field_settings` is fired.
+	// AM/PM Sub label is hidden in the time field class after `kform_post_load_field_settings` is fired.
 }
 
 /**
@@ -4027,7 +4027,7 @@ function SetFieldProperty(name, value){
 	 * @param {(string|number|boolean|array)} value         The current value of the specified property.
 	 * @param {(string|number|boolean|array)} previousValue The previous value of the specified property.
 	 */
-	window.gform.doAction( 'gform_post_set_field_property', name, field, value, previousValue );
+	window.gform.doAction( 'kform_post_set_field_property', name, field, value, previousValue );
 }
 
 function SetInputName(value, inputId){
@@ -4481,7 +4481,7 @@ function SetCardType(elem, value) {
 	if(jQuery(elem).is(':checked')) {
 
 		if(jQuery.inArray(value, cards) == -1) {
-			jQuery('.gform_card_icon_' + value).fadeIn();
+			jQuery('.kform_card_icon_' + value).fadeIn();
 			cards[cards.length] = value;
 		}
 
@@ -4490,7 +4490,7 @@ function SetCardType(elem, value) {
 		var index = jQuery.inArray(value, cards);
 
 		if(index != -1) {
-			jQuery('.gform_card_icon_' + value).fadeOut();
+			jQuery('.kform_card_icon_' + value).fadeOut();
 			cards.splice(index, 1);
 		}
 
@@ -4680,7 +4680,7 @@ function SetSubmitLocation( location ) {
 		jQuery( '#field_submit' ).next( '.spacer' ).remove();
 
 		// Assign the correct position property.
-		jQuery( '*[data-field-class="gform_editor_submit_container"]' ).attr( 'data-field-position', 'inline' );
+		jQuery( '*[data-field-class="kform_editor_submit_container"]' ).attr( 'data-field-position', 'inline' );
 	} else {
 		// Move the submit button out of the group and make it full-width.
 		var groupID = jQuery( '#field_submit' ).attr( 'data-groupid' );
@@ -4691,7 +4691,7 @@ function SetSubmitLocation( location ) {
 			.resizeGroup( groupID );
 
 		// Assign the correct position property.
-		jQuery( '*[data-field-class="gform_editor_submit_container"]' ).attr( 'data-field-position', 'bottom' );
+		jQuery( '*[data-field-class="kform_editor_submit_container"]' ).attr( 'data-field-position', 'bottom' );
 	}
 
 }
@@ -4715,7 +4715,7 @@ function ToggleSubmitType( isInit ) {
 		form.button.type = type;
 	}
 
-	var $formSubmitButton        = jQuery( '#gform_submit_button_' + form.id );
+	var $formSubmitButton        = jQuery( '#kform_submit_button_' + form.id );
 	var $submitImageSetting      = jQuery( '#submit_image' );
 	var $submitImageSettingValue = $submitImageSetting.val();
 	var $submitTextSetting       = jQuery( '#submit_text' );
@@ -4740,14 +4740,14 @@ function ToggleSubmitType( isInit ) {
 
 	if( 'text' === type || ( 'image' === type && ! $submitImageSettingValue ) ) {
 		var text = $submitTextSettingValue ? $submitTextSettingValue : kform_form_strings.defaultSubmit;
-		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'gform_image_button' );
+		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'kform_image_button' );
 		$submitTextSetting.val( text );
 	}
 
 	if( 'image' === type && $submitImageSettingValue ) {
 		ResetFieldNotice( 'submit_image_setting' );
 		var src = $submitImageSettingValue ? $submitImageSettingValue : '';
-		$formSubmitButton.attr( 'type', 'image' ).attr( 'src', src ).removeAttr( 'value' ).addClass( 'gform_image_button' );
+		$formSubmitButton.attr( 'type', 'image' ).attr( 'src', src ).removeAttr( 'value' ).addClass( 'kform_image_button' );
 		$submitImageSetting.val( src );
 	}
 }
@@ -4983,7 +4983,7 @@ jQuery.fn.gfSlide = function(direction) {
  * Form Editor conditional logic should not allow adminOnly fields to be selectable. Also exclude the current field from being
  * set in conditional logic for itself.
  */
-gform.addFilter( 'gform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
+gform.addFilter( 'kform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
 
 	if( field.visibility == 'administrative' ) {
 		isConditionalLogicField = false;
@@ -5036,7 +5036,7 @@ function IsValidFormula(formula) {
 	 * @param result The validation result.
 	 * @param formula The calculation formula being validated.
 	 */
-	return gform.applyFilters( 'gform_is_valid_formula_form_editor', result, formula );
+	return gform.applyFilters( 'kform_is_valid_formula_form_editor', result, formula );
 }
 
 /**
@@ -5109,7 +5109,7 @@ function setSidebarFieldMessage() {
 	 *
 	 * @param Object types The types of sidebar messages, each with a type and iconClasses property.
 	 */
-	types = gform.applyFilters( 'gform_field_sidebar_messages_types', types );
+	types = gform.applyFilters( 'kform_field_sidebar_messages_types', types );
 
 	let showSidebarMessage = false;
 	types.forEach(

@@ -60,7 +60,7 @@ class KDNA_Field_Hidden extends KDNA_Field {
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 
 		$field_type         = $is_entry_detail || $is_form_editor ? 'text' : 'hidden';
-		$class_attribute    = $is_entry_detail || $is_form_editor ? '' : "class='gform_hidden'";
+		$class_attribute    = $is_entry_detail || $is_form_editor ? '' : "class='kform_hidden'";
 		$required_attribute = $this->isRequired ? 'aria-required="true"' : '';
 		$invalid_attribute  = $this->failed_validation ? 'aria-invalid="true"' : 'aria-invalid="false"';
 

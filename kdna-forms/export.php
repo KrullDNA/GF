@@ -454,13 +454,13 @@ class KDNAExport {
 
 			check_admin_referer( 'kdna_import_forms', 'kdna_import_forms_nonce' );
 
-			if ( ! empty( $_FILES['gf_import_file']['tmp_name'][0] ) ) {
+			if ( ! empty( $_FILES['kdna_import_file']['tmp_name'][0] ) ) {
 
 				$count       = 0;
 				$all_results = []; // Store the results of each import.
 
 				// Loop through each uploaded file.
-				foreach ( $_FILES['gf_import_file']['tmp_name'] as $import_file ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				foreach ( $_FILES['kdna_import_file']['tmp_name'] as $import_file ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 					$result = self::import_file( $import_file, $forms );
 					$count += ( $result === -1 ) ? -1 : ( ( $result === 0 ) ? 0 : count( $result['form_ids'] ) );
 					$all_results[] = $result;
@@ -582,9 +582,9 @@ class KDNAExport {
                             <tr valign="top">
 
                                 <th scope="row">
-                                    <label for="gf_import_file"><?php esc_html_e( 'Select Files', 'kdnaforms' ); ?></label> <?php kdnaform_tooltip( 'import_select_file' ) ?>
+                                    <label for="kdna_import_file"><?php esc_html_e( 'Select Files', 'kdnaforms' ); ?></label> <?php kdnaform_tooltip( 'import_select_file' ) ?>
                                 </th>
-                                <td><input type="file" name="gf_import_file[]" id="gf_import_file" multiple /></td>
+                                <td><input type="file" name="kdna_import_file[]" id="kdna_import_file" multiple /></td>
 							</tr>
 							<tr valign="top">
 								<th scope="row">
@@ -618,10 +618,10 @@ class KDNAExport {
 
 			( function( $, window, undefined ) {
 
-				$( document ).on( 'click keypress', '#gf_export_forms_all', function( e ) {
+				$( document ).on( 'click keypress', '#kdna_export_forms_all', function( e ) {
 
 					var checked  = e.target.checked,
-					    label    = $( 'label[for="gf_export_forms_all"]' ),
+					    label    = $( 'label[for="kdna_export_forms_all"]' ),
 					    formList = $( '#export_form_list' );
 
 					// Set label.
@@ -653,8 +653,8 @@ class KDNAExport {
                                 <td>
                                     <ul id="export_form_list">
                                         <li>
-                                            <input type="checkbox" id="gf_export_forms_all" />
-                                            <label for="gf_export_forms_all" data-deselect="<?php esc_attr_e( 'Deselect All', 'kdnaforms' ); ?>" data-select="<?php esc_attr_e( 'Select All', 'kdnaforms' ); ?>"><?php esc_html_e( 'Select All', 'kdnaforms' ); ?></label>
+                                            <input type="checkbox" id="kdna_export_forms_all" />
+                                            <label for="kdna_export_forms_all" data-deselect="<?php esc_attr_e( 'Deselect All', 'kdnaforms' ); ?>" data-select="<?php esc_attr_e( 'Select All', 'kdnaforms' ); ?>"><?php esc_html_e( 'Select All', 'kdnaforms' ); ?></label>
                                         </li>
 					                    <?php
 					                    $forms = KDNAFormsModel::get_forms( null, 'title' );
@@ -777,7 +777,7 @@ class KDNAExport {
 					return;
 				}
 
-				var fieldList = "<li><input id='select_all' type='checkbox' onclick=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#gform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \" onkeypress=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#gform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \"> <label id='gform_export_check_all' for='select_all'><strong><?php esc_html_e( 'Select All', 'kdnaforms' ) ?></strong></label></li>";
+				var fieldList = "<li><input id='select_all' type='checkbox' onclick=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#kform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \" onkeypress=\"jQuery('.kdnaform_export_field').prop('checked', this.checked); jQuery('#kform_export_check_all').html(this.checked ? '<strong><?php echo esc_js( __( 'Deselect All', 'kdnaforms' ) ); ?></strong>' : '<strong><?php echo esc_js( __( 'Select All', 'kdnaforms' ) ); ?></strong>'); \"> <label id='kform_export_check_all' for='select_all'><strong><?php esc_html_e( 'Select All', 'kdnaforms' ) ?></strong></label></li>";
 				for (var i = 0; i < aryFields.length; i++) {
 					fieldList += "<li><input type='checkbox' id='export_field_" + i + "' name='export_field[]' value='" + aryFields[i][0] + "' class='kdnaform_export_field'> <label for='export_field_" + i + "'>" + aryFields[i][1] + "</label></li>";
 				}

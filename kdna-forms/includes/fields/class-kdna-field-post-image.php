@@ -109,7 +109,7 @@ class KDNA_Field_Post_Image extends KDNA_Field_Fileupload {
 		// Prepare accepted extensions message.
 		$extensions_message_id = 'extensions_message_' . $form_id . '_' . $id;
 		$extensions_message    = sprintf(
-			"<span id='%s' class='gfield_description gform_fileupload_rules'>%s</span>",
+			"<span id='%s' class='gfield_description kform_fileupload_rules'>%s</span>",
 			$extensions_message_id,
 			esc_attr( sprintf( __( 'Accepted file types: %s.', 'kdnaforms' ), implode( ', ', $this->get_clean_allowed_extensions() ) ) )
 		);
@@ -123,7 +123,7 @@ class KDNA_Field_Post_Image extends KDNA_Field_Fileupload {
 		$file_info    = rgar( $this->get_submission_files_for_preview(), 0 );
 
 		if ( ! empty( $file_info ) ) {
-			$hidden_class     = ' gform_hidden';
+			$hidden_class     = ' kform_hidden';
 			$file_label_style = $hidden_style;
 			$preview          = "<span class='ginput_preview'><strong>" . esc_html( $file_info['uploaded_filename'] ) . "</strong> | <a href='javascript:;' onclick='gformDeleteUploadedFile({$form_id}, {$id});' onkeypress='gformDeleteUploadedFile({$form_id}, {$id});'>" . __( 'delete', 'kdnaforms' ) . '</a></span>';
 		}

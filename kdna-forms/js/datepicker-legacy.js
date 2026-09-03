@@ -1,7 +1,7 @@
 /**
  * Apply legacy options to DatePickers within Legacy Forms.
  */
-gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
+gform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
 	var kdna_legacy = window.kdna_legacy_multi;
 
 	if ( ! kdna_legacy ) {

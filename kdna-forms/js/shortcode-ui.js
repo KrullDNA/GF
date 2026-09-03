@@ -411,7 +411,7 @@ var GformShortcodeUI;
                 $.post(ajaxurl, data).done(function(response) {
                     self.content = response;
                 }).fail(function () {
-                    self.content = '<span class="gf_shortcode_ui_error">' + gfShortcodeUIData.strings.errorLoadingPreview + '</span>';
+                    self.content = '<span class="kdna_shortcode_ui_error">' + gfShortcodeUIData.strings.errorLoadingPreview + '</span>';
                 }).always(function () {
                     delete self.fetching;
                     self.render();

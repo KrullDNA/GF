@@ -7,7 +7,7 @@ use \KDNAFormDisplay;
 
 class Form_View extends View {
 
-	protected $string_search = ' gform_wrapper';
+	protected $string_search = ' kform_wrapper';
 
 	public function should_override( $form, $form_id, $block_settings = array() ) {
 		return true;
@@ -26,14 +26,14 @@ class Form_View extends View {
 
 		switch ( $theme_slug ) {
 			case 'orbital':
-				$classes = ' gform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--' . $theme_slug;
+				$classes = ' kform_wrapper gform-theme gform-theme--foundation gform-theme--framework gform-theme--' . $theme_slug;
 				break;
 			case 'gravity-theme':
 			default:
-				$classes = ' gform_wrapper gravity-theme gform-theme--no-framework';
+				$classes = ' kform_wrapper gravity-theme gform-theme--no-framework';
 				break;
 			case 'legacy':
-				$classes = ' gform_wrapper kdnaform_legacy_markup_wrapper gform-theme--no-framework';
+				$classes = ' kform_wrapper kdnaform_legacy_markup_wrapper gform-theme--no-framework';
 				break;
 		}
 

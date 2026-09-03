@@ -8,7 +8,7 @@ if( typeof jQuery.fn.prop === 'undefined' ) {
 }
 
 //Formatting free form currency fields to currency
-jQuery( document ).on( 'gform_post_render', gformBindFormatPricingFields );
+jQuery( document ).on( 'kform_post_render', gformBindFormatPricingFields );
 
 function gformBindFormatPricingFields(){
 	// Namespace the event and remove before adding to prevent double binding.
@@ -710,8 +710,8 @@ function gformDeleteUploadedFile(formId, fieldId, deleteButton){
     var fileId = filePreview.id;
     filePreview.remove();
 
-    //removing the gform_hidden class
-    parent.find('.validation_message,#extensions_message_' + formId + '_' + fieldId).removeClass("gform_hidden");
+    //removing the kform_hidden class
+    parent.find('.validation_message,#extensions_message_' + formId + '_' + fieldId).removeClass("kform_hidden");
 
     //displaying post image label
     parent.find(".ginput_post_image_file").show();
@@ -720,13 +720,13 @@ function gformDeleteUploadedFile(formId, fieldId, deleteButton){
     parent.find("input[type=\"text\"]").val('');
 
     //removing file from uploaded meta
-    var filesJson = jQuery('#gform_uploaded_files_' + formId).val();
+    var filesJson = jQuery('#kform_uploaded_files_' + formId).val();
 
     if(filesJson){
         var files = jQuery.secureEvalJSON(filesJson);
         if(files) {
             var inputName = "input_" + fieldId;
-            var $multfile = parent.find("#gform_multifile_upload_" + formId + "_" + fieldId );
+            var $multfile = parent.find("#kform_multifile_upload_" + formId + "_" + fieldId );
             if( $multfile.length > 0 ) {
                 files[inputName].splice(fileIndex, 1);
                 var settings = $multfile.data('settings');
@@ -745,7 +745,7 @@ function gformDeleteUploadedFile(formId, fieldId, deleteButton){
                 files[inputName] = null;
             }
 
-            jQuery('#gform_uploaded_files_' + formId).val(jQuery.toJSON(files));
+            jQuery('#kform_uploaded_files_' + formId).val(jQuery.toJSON(files));
         }
     }
 }
@@ -768,7 +768,7 @@ function gformIsHidden(element){
 	 * @param bool            Whether or not the field is hidden.
 	 * @param object $element jQuery object for field input.
 	 */
-	return gform.applyFilters('gform_is_hidden', isHidden, element);
+	return gform.applyFilters('kform_is_hidden', isHidden, element);
 
 }
 
@@ -796,11 +796,11 @@ var gformCalculateTotalPrice =  gform.tools.debounce(function(formId){
 		price += shipping;
 	}
 
-	//gform_product_total filter. Allows users to perform custom price calculation
-	if(window["gform_product_total"])
-		price = window["gform_product_total"](formId, price);
+	//kform_product_total filter. Allows users to perform custom price calculation
+	if(window["kform_product_total"])
+		price = window["kform_product_total"](formId, price);
 
-	price = gform.applyFilters('gform_product_total', price, formId);
+	price = gform.applyFilters('kform_product_total', price, formId);
 
 	gformUpdateTotalFieldPrice( formId, price );
 }, 50, false );
@@ -836,7 +836,7 @@ function gformUpdateTotalFieldPrice( formId, price ) {
 	}
 
 	// Check whether this form is in legacy mode.
-	var isLegacy = document.querySelector( '#gform_wrapper_' + formId + '.gform_legacy_markup_wrapper' );
+	var isLegacy = document.querySelector( '#kform_wrapper_' + formId + '.kform_legacy_markup_wrapper' );
 	// Input is hidden in legacy mode and comes after span that displays value, currently only the input is present and visible.
 	var $totalInput = isLegacy ? $totalElement.next() : $totalElement;
 	// Contains current value (numeric or currency formatted), new numeric value and newFormatted value
@@ -1224,11 +1224,11 @@ function gformInitPriceFields(){
 }
 
 function bindProductChangeEvent() {
-	// For backwards compatibility, fire jQuery gform_price_change event.
+	// For backwards compatibility, fire jQuery kform_price_change event.
 	document.addEventListener( 'gform/products/product_field_changed', function( event ) {
 		const productIds = { formId : event.detail.formId, productFieldId : event.detail.productFieldId }
 
-		jQuery( document ).trigger( 'gform_price_change', [ productIds, event.detail.htmlInput, this ] );
+		jQuery( document ).trigger( 'kform_price_change', [ productIds, event.detail.htmlInput, this ] );
 	} );
 }
 
@@ -1443,7 +1443,7 @@ function gformAddListItem( addButton, max ) {
         .not( ':checkbox, :radio' ).val( '' ).attr( 'value', '' );
     $clone.find( ':checkbox, :radio' ).prop( 'checked', false );
 
-    $clone = gform.applyFilters( 'gform_list_item_pre_add', $clone, $group );
+    $clone = gform.applyFilters( 'kform_list_item_pre_add', $clone, $group );
 
     $group.after( $clone );
 
@@ -1451,7 +1451,7 @@ function gformAddListItem( addButton, max ) {
     gformAdjustClasses( $container );
     gformAdjustRowAttributes( $container );
 
-    gform.doAction( 'gform_list_post_item_add', $clone, $container );
+    gform.doAction( 'kform_list_post_item_add', $clone, $container );
 
     wp.a11y.speak( window.kdna_global.strings.newRowAdded );
 
@@ -1475,7 +1475,7 @@ function gformDeleteListItem( deleteButton, max ) {
     gformAdjustClasses( $container );
     gformAdjustRowAttributes( $container );
 
-    gform.doAction( 'gform_list_post_item_delete', $container );
+    gform.doAction( 'kform_list_post_item_delete', $container );
 
     wp.a11y.speak( window.kdna_global.strings.rowRemoved );
 
@@ -1498,7 +1498,7 @@ function gformAdjustClasses( $container ) {
 
 function gformAdjustRowAttributes( $container ) {
 
-    if( $container.parents( '.gform_wrapper' ).hasClass( 'gform_legacy_markup_wrapper' ) ) {
+    if( $container.parents( '.kform_wrapper' ).hasClass( 'kform_legacy_markup_wrapper' ) ) {
         return;
     }
 
@@ -1588,7 +1588,7 @@ function gformAddRepeaterItem( addButton, max ) {
 	$clone.find('.validation_message').remove();
 	$clone.find('.gform-datepicker.initialized').removeClass('initialized');
 
-	$clone = gform.applyFilters( 'gform_repeater_item_pre_add', $clone, $item );
+	$clone = gform.applyFilters( 'kform_repeater_item_pre_add', $clone, $item );
 
 	$item.after( $clone );
 
@@ -1624,7 +1624,7 @@ function gformAddRepeaterItem( addButton, max ) {
 
 	gformToggleRepeaterButtons( $container, max );
 
-	gform.doAction('gform_repeater_post_item_add', $clone, $container);
+	gform.doAction('kform_repeater_post_item_add', $clone, $container);
 
 }
 
@@ -1639,7 +1639,7 @@ function gformDeleteRepeaterItem(deleteButton, max) {
 	gformResetRepeaterAttributes($container);
 	gformToggleRepeaterButtons($container, max);
 
-	gform.doAction('gform_repeater_post_item_delete', $container);
+	gform.doAction('kform_repeater_post_item_delete', $container);
 
 }
 
@@ -1788,12 +1788,12 @@ function gformMatchCard(id) {
 
     if(!cardType) {
 
-        jQuery(cardContainer).find('.kform_card_icon').removeClass('gform_card_icon_selected gform_card_icon_inactive');
+        jQuery(cardContainer).find('.kform_card_icon').removeClass('kform_card_icon_selected kform_card_icon_inactive');
 
     } else {
 
-        jQuery(cardContainer).find('.kform_card_icon').removeClass('gform_card_icon_selected').addClass('gform_card_icon_inactive');
-        jQuery(cardContainer).find('.gform_card_icon_' + cardType).removeClass('gform_card_icon_inactive').addClass('gform_card_icon_selected');
+        jQuery(cardContainer).find('.kform_card_icon').removeClass('kform_card_icon_selected').addClass('kform_card_icon_inactive');
+        jQuery(cardContainer).find('.kform_card_icon_' + cardType).removeClass('kform_card_icon_inactive').addClass('kform_card_icon_selected');
     }
 }
 
@@ -1856,7 +1856,7 @@ function gformInitChosenFields( fieldList, noResultsText ) {
 			if ( isConvoForm ) {
 				chosenOptions.width = element.css( 'inline-size' );
 			}
-            var options = gform.applyFilters( 'gform_chosen_options', chosenOptions, element );
+            var options = gform.applyFilters( 'kform_chosen_options', chosenOptions, element );
             element.chosen( options );
         }
     });
@@ -1905,7 +1905,7 @@ var GFMergeTag = function() {
 		}
 
 		const inputForFilter = jQuery( mergeTagInfo.input );
-		let value = window.gform.applyFilters( 'gform_value_merge_tag_' + formId + '_' + mergeTagInfo.fieldId, false, inputForFilter, mergeTagInfo.modifier );
+		let value = window.gform.applyFilters( 'kform_value_merge_tag_' + formId + '_' + mergeTagInfo.fieldId, false, inputForFilter, mergeTagInfo.modifier );
 		if ( value !== false ) {
 			return value;
 		}
@@ -1969,8 +1969,8 @@ var GFCalc = function(formId, formulaFields){
 
         // @since 2.5.10 - namespace event to avoid multiple bindings.
 	    jQuery(document)
-		    .off("gform_post_conditional_logic.gfCalc_{0}".gformFormat(formId))
-		    .on("gform_post_conditional_logic.gfCalc_{0}".gformFormat(formId), function(){
+		    .off("kform_post_conditional_logic.gfCalc_{0}".gformFormat(formId))
+		    .on("kform_post_conditional_logic.gfCalc_{0}".gformFormat(formId), function(){
 			    calc.runCalcs( formId, formulaFields );
 	    } );
 
@@ -1987,7 +1987,7 @@ var GFCalc = function(formId, formulaFields){
             field        = jQuery('#field_' + formId + '_' + formulaField.field_id),
             formulaInput = field.hasClass( 'gfield_price' ) ? jQuery( '#ginput_base_price_' + formId + '_' + formulaField.field_id ) : jQuery( '#input_' + formId + '_' + formulaField.field_id ),
             previous_val = formulaInput.val(),
-            formula      = gform.applyFilters( 'gform_calculation_formula', formulaField.formula, formulaField, formId, calcObj ),
+            formula      = gform.applyFilters( 'kform_calculation_formula', formulaField.formula, formulaField, formId, calcObj ),
             expr         = calcObj.replaceFieldTags( formId, formula, formulaField ).replace(/(\r\n|\n|\r)/gm,""),
             result       = '';
 
@@ -2007,17 +2007,17 @@ var GFCalc = function(formId, formulaFields){
             result = 0;
 
         // allow users to modify result with their own function
-        if( window["gform_calculation_result"] ) {
-            result = window["gform_calculation_result"](result, formulaField, formId, calcObj);
+        if( window["kform_calculation_result"] ) {
+            result = window["kform_calculation_result"](result, formulaField, formId, calcObj);
             if( window.console )
-                console.log( '"gform_calculation_result" function is deprecated since version 1.8! Use "gform_calculation_result" JS hook instead.' );
+                console.log( '"kform_calculation_result" function is deprecated since version 1.8! Use "kform_calculation_result" JS hook instead.' );
         }
 
         // allow users to modify result with their own function
-        result = gform.applyFilters( 'gform_calculation_result', result, formulaField, formId, calcObj );
+        result = gform.applyFilters( 'kform_calculation_result', result, formulaField, formId, calcObj );
 
         // allow result to be custom formatted
-        var formattedResult = gform.applyFilters( 'gform_calculation_format_result', false, result, formulaField, formId, calcObj );
+        var formattedResult = gform.applyFilters( 'kform_calculation_format_result', false, result, formulaField, formId, calcObj );
 
         var numberFormat = kdna_get_field_number_format(formulaField.field_id, formId);
 
@@ -2118,7 +2118,7 @@ var GFCalc = function(formId, formulaFields){
             }
 
             // allow users to add custom methods for triggering calculations
-            gform.doAction( 'gform_post_calculation_events', matches[i], formulaField, formId, calcObj );
+            gform.doAction( 'kform_post_calculation_events', matches[i], formulaField, formId, calcObj );
 
         }
 
@@ -2175,7 +2175,7 @@ var GFCalc = function(formId, formulaFields){
 			var value = isVisible ? GFMergeTag.getMergeTagValue( formId, inputId, modifier ) : 0;
 
             // allow users to modify value with their own function
-            value = gform.applyFilters( 'gform_merge_tag_value_pre_calculation', value, matches[i], isVisible, formulaField, formId );
+            value = gform.applyFilters( 'kform_merge_tag_value_pre_calculation', value, matches[i], isVisible, formulaField, formId );
 
             value = this.cleanNumber( value, formId, fieldId, formulaField );
 
@@ -2308,7 +2308,7 @@ gform.recaptcha = {
 			 * @param string|false|object   The name of the callback function or the function object itself to be executed when the user successfully submits the captcha.
 			 * @param object       $elem    The jQuery object containing the div element with the ginput_recaptcha class for the current reCaptcha field.
 			 */
-			const callback = gform.applyFilters( 'gform_recaptcha_callback', false, $elem );
+			const callback = gform.applyFilters( 'kform_recaptcha_callback', false, $elem );
 			if ( callback ) {
 				parameters.callback = callback;
 			}
@@ -2323,7 +2323,7 @@ gform.recaptcha = {
 
 			$elem.addClass( 'gform-initialized' );
 
-			gform.doAction( 'gform_post_recaptcha_render', $elem );
+			gform.doAction( 'kform_post_recaptcha_render', $elem );
 		} );
 
 		gform.recaptcha.bindRecaptchaSubmissionEvents();
@@ -2519,7 +2519,7 @@ gform.recaptcha = {
 	}
 };
 
-jQuery( document ).on( 'gform_post_render', gform.recaptcha.renderOnRecaptchaLoaded );
+jQuery( document ).on( 'kform_post_render', gform.recaptcha.renderOnRecaptchaLoaded );
 
 window.renderRecaptcha = gform.recaptcha.renderRecaptcha;
 window.gformIsRecaptchaPending = gform.recaptcha.gformIsRecaptchaPending;
@@ -2573,7 +2573,7 @@ function gformValidateFileSize( field, max_file_size ) {
     var strings = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.strings : {};
     var imagesUrl = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.vars.images_url : "";
 
-	$(document).on('gform_post_render', function(e, formID){
+	$(document).on('kform_post_render', function(e, formID){
 		$( "form#gform_" + formID + " .kform_fileupload_multifile" ).each( function(){
 			setup( this );
 		} );
@@ -2581,7 +2581,7 @@ function gformValidateFileSize( field, max_file_size ) {
 		bindFileUploadSubmissionEvents();
 	});
 
-	$(document).on("gform_post_conditional_logic", function(e,formID, fields, isInit){
+	$(document).on("kform_post_conditional_logic", function(e,formID, fields, isInit){
 		if(!isInit){
 			$.each(gfMultiFileUploader.uploaders, function(i, uploader){
 				uploader.refresh();
@@ -2591,7 +2591,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
     $(document).ready(function () {
         if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_gf_edit_forms')|| typeof plupload == 'undefined'){
-            $(".gform_button_select_files").prop("disabled", true);
+            $(".kform_button_select_files").prop("disabled", true);
         } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_gf_entries') > -1) {
             $(".kform_fileupload_multifile").each(function(){
                 setup(this);
@@ -2682,7 +2682,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
 	    function setFieldAccessibility( container ) {
 		    var input = container.querySelectorAll( 'input[type="file"]' )[ 0 ];
-		    var button = container.querySelectorAll( '.gform_button_select_files' )[ 0 ];
+		    var button = container.querySelectorAll( '.kform_button_select_files' )[ 0 ];
 		    var label = $( uploadElement ).closest( '.gfield' ).find( '.gfield_label' )[ 0 ];
 		    if ( ! input || ! label || ! button ) {
 			    return;
@@ -2768,7 +2768,7 @@ function gformValidateFileSize( field, max_file_size ) {
                  *  @param {string}            removeFileJs JS used to remove the file when the "Cancel" link is click/pressed.
                  *  @param {plupload.Uploader} up           Instance of Uploader responsible for uploading current file. See: https://www.plupload.com/docs/v2/Uploader.
                  */
-                statusMarkup = gform.applyFilters( 'gform_file_upload_status_markup', statusMarkup, file, size, strings, removeFileJs, up )
+                statusMarkup = gform.applyFilters( 'kform_file_upload_status_markup', statusMarkup, file, size, strings, removeFileJs, up )
 	                .gformFormat( file.id, htmlEncode( file.name ), size, strings.cancel_upload, removeFileJs, strings.cancel );
 
                 $( '#' + up.settings.filelist ).prepend( statusMarkup );
@@ -2864,7 +2864,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
 			if (typeof kdna_legacy !== 'undefined' && kdna_legacy.is_legacy) {
 				html = "<img "
-					+ "class='gform_delete' "
+					+ "class='kform_delete' "
 					+ "src='" + imagesUrl + "/delete.png' "
 					+ "onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);' "
 					+ "onkeypress='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);' "
@@ -2873,7 +2873,7 @@ function gformValidateFileSize( field, max_file_size ) {
 					+ "' /> "
 					+ html;
 			} else {
-				html = html + "<button class='gform_delete_file gform-theme-button gform-theme-button--simple' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + htmlEncode(uploadedName) + "</span></button>";
+				html = html + "<button class='kform_delete_file gform-theme-button gform-theme-button--simple' onclick='gformDeleteUploadedFile(" + formId + "," + fieldId + ", this);'><span class='dashicons dashicons-trash' aria-hidden='true'></span><span class='screen-reader-text'>" + strings.delete_file + ': ' + htmlEncode(uploadedName) + "</span></button>";
 			}
 
 			/**
@@ -2889,7 +2889,7 @@ function gformValidateFileSize( field, max_file_size ) {
 			 * @param {string} imagesURL The base URL to the Gravity Forms images directory.
 			 * @param {object} response  The response from GFAsyncUpload.
 			 */
-			html = gform.applyFilters('gform_file_upload_markup', html, file, up, strings, imagesUrl, response);
+			html = gform.applyFilters('kform_file_upload_markup', html, file, up, strings, imagesUrl, response);
 
 			$('#' + file.id).html(html);
 			$('#' + file.id + ' span.gfield_fileupload_progressbar_progress').css('width', file.percent + '%');
@@ -2910,7 +2910,7 @@ function gformValidateFileSize( field, max_file_size ) {
 		});
 
 		function getAllFiles(){
-			var selector = '#gform_uploaded_files_' + formID,
+			var selector = '#kform_uploaded_files_' + formID,
 				$uploadedFiles = $(selector), files;
 
 			files = $uploadedFiles.val();
@@ -2943,7 +2943,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
         function setUploadedFiles(fieldID, files){
             var allFiles = getAllFiles();
-            var $uploadedFiles = $('#gform_uploaded_files_' + formID);
+            var $uploadedFiles = $('#kform_uploaded_files_' + formID);
             var inputName = getInputName(fieldID);
             allFiles[inputName] = files;
             $uploadedFiles.val($.toJSON(allFiles));
@@ -3006,7 +3006,7 @@ function gformInitSpinner(formId, spinnerUrl, isLegacy = true) {
 		gformRemoveSpinner();
 
 		// Removing legacy spinner.
-		jQuery( '#gform_ajax_spinner_' + event.detail.form.dataset.formid ).remove();
+		jQuery( '#kform_ajax_spinner_' + event.detail.form.dataset.formid ).remove();
 	} );
 }
 
@@ -3021,8 +3021,8 @@ function gformInitSpinner(formId, spinnerUrl, isLegacy = true) {
  */
 function gformShowSpinner( formId, spinnerUrl ) {
 
-	let filteredSpinner = gform.applyFilters('gform_spinner_url', spinnerUrl, formId);
-	let defaultSpinner = gform.applyFilters('gform_spinner_url', kdna_global.spinnerUrl, formId);
+	let filteredSpinner = gform.applyFilters('kform_spinner_url', spinnerUrl, formId);
+	let defaultSpinner = gform.applyFilters('kform_spinner_url', kdna_global.spinnerUrl, formId);
 
 	// Legacy spinner: this is not referring to Legacy Markup, but to the pre-2.7 spinner implementation.
 	const isLegacy = filteredSpinner !== defaultSpinner;
@@ -3031,7 +3031,7 @@ function gformShowSpinner( formId, spinnerUrl ) {
 		return;
 	}
 
-	let $spinnerTarget = gform.applyFilters('gform_spinner_target_elem', jQuery('#gform_submit_button_' + formId + ', #gform_wrapper_' + formId + ' .gform_next_button, #gform_send_resume_link_button_' + formId), formId);
+	let $spinnerTarget = gform.applyFilters('kform_spinner_target_elem', jQuery('#kform_submit_button_' + formId + ', #kform_wrapper_' + formId + ' .kform_next_button, #kform_send_resume_link_button_' + formId), formId);
 
 	gformInitializeSpinner( formId, $spinnerTarget );
 }
@@ -3047,8 +3047,8 @@ function gformShowSpinner( formId, spinnerUrl ) {
  * @return void
  */
 function gformInitializeSpinner( formId, target, uniqId = 'gform-ajax-spinner' ) {
-	if (jQuery('#gform_ajax_spinner_' + formId).length == 0) {
-		var loaderHTML = '<span data-js-spinner-id="' + uniqId + '" id="gform_ajax_spinner_' + formId + '" class="gform-loader"></span>';
+	if (jQuery('#kform_ajax_spinner_' + formId).length == 0) {
+		var loaderHTML = '<span data-js-spinner-id="' + uniqId + '" id="kform_ajax_spinner_' + formId + '" class="gform-loader"></span>';
 		var $spinnerTarget = target instanceof jQuery ? target : jQuery( target );
 		$spinnerTarget.after( loaderHTML );
 	}
@@ -3079,10 +3079,10 @@ function gformRemoveSpinner( uniqId = 'gform-ajax-spinner' ) {
 function gformAddSpinner(formId, spinnerUrl) {
 
 	if (typeof spinnerUrl == 'undefined' || !spinnerUrl) {
-		spinnerUrl = gform.applyFilters('gform_spinner_url', kdna_global.spinnerUrl, formId);
+		spinnerUrl = gform.applyFilters('kform_spinner_url', kdna_global.spinnerUrl, formId);
 	}
 
-	if (jQuery('#gform_ajax_spinner_' + formId).length == 0) {
+	if (jQuery('#kform_ajax_spinner_' + formId).length == 0) {
 		/**
 		 * Filter the element after which the AJAX spinner will be inserted.
 		 *
@@ -3091,8 +3091,8 @@ function gformAddSpinner(formId, spinnerUrl) {
 		 * @param object $targetElem jQuery object containing all of the elements after which the AJAX spinner will be inserted.
 		 * @param int    formId      ID of the current form.
 		 */
-		var $spinnerTarget = gform.applyFilters('gform_spinner_target_elem', jQuery('#gform_submit_button_' + formId + ', #gform_wrapper_' + formId + ' .gform_next_button, #gform_send_resume_link_button_' + formId), formId);
-		$spinnerTarget.after('<img id="gform_ajax_spinner_' + formId + '"  class="gform_ajax_spinner" src="' + spinnerUrl + '" alt="" />');
+		var $spinnerTarget = gform.applyFilters('kform_spinner_target_elem', jQuery('#kform_submit_button_' + formId + ', #kform_wrapper_' + formId + ' .kform_next_button, #kform_send_resume_link_button_' + formId), formId);
+		$spinnerTarget.after('<img id="kform_ajax_spinner_' + formId + '"  class="kform_ajax_spinner" src="' + spinnerUrl + '" alt="" />');
 	}
 
 }
@@ -3164,7 +3164,7 @@ function kdna_raw_input_change( event, elem ) {
 	     * @param object $input    The jQuery object for the triggering field element.
 	     * @param object event     The raw JS event.
 	     */
-        fieldMeta = gform.applyFilters( 'gform_field_meta_raw_input_change', { fieldId: fieldId, formId: formId }, $input, event );
+        fieldMeta = gform.applyFilters( 'kform_field_meta_raw_input_change', { fieldId: fieldId, formId: formId }, $input, event );
 
     fieldId = fieldMeta.fieldId;
     formId = fieldMeta.formId;
@@ -3244,7 +3244,7 @@ function kdna_get_ids_by_html_id( htmlId ) {
 }
 
 function kdna_input_change( elem, formId, fieldId ) {
-    gform.doAction( 'gform_input_change', elem, formId, fieldId );
+    gform.doAction( 'kform_input_change', elem, formId, fieldId );
 }
 
 function gformExtractFieldId( inputId ) {
@@ -3333,5 +3333,5 @@ jQuery( document ).ready( function() {
 } );
 
 jQuery( function() {
-	gform.tools.trigger( 'gform_main_scripts_loaded' );
+	gform.tools.trigger( 'kform_main_scripts_loaded' );
 } );

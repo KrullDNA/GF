@@ -438,7 +438,7 @@ class KDNA_Field_Name extends KDNA_Field {
 				return "<div class='ginput_complex{$class_suffix} ginput_container ginput_container--name {$css_class} gform-grid-row' id='{$field_id}'>
                             {$first_markup}
                             {$last_markup}
-                            <div class='gf_clear gf_clear_complex'></div>
+                            <div class='kdna_clear kdna_clear_complex'></div>
                         </div>";
 		}
 	}
@@ -500,7 +500,7 @@ class KDNA_Field_Name extends KDNA_Field {
 			$css_class .= 'no_suffix ';
 		}
 
-		$css_class .= "gf_name_has_{$visible_input_count} ginput_container_name ";
+		$css_class .= "kdna_name_has_{$visible_input_count} ginput_container_name ";
 
 		return trim( $css_class );
 	}

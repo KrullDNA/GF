@@ -599,7 +599,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 			$value = '';
 
 			if ( ! rgblank( $this->is_checkbox_checked( $field_id, $columns[ $field_id ]['label'], $entry ) ) ) {
-				$value = "<i class='fa fa-check gf_valid'></i>";
+				$value = "<i class='fa fa-check kdna_valid'></i>";
 			}
 
 		}

@@ -238,7 +238,7 @@ class KDNA_Elementor_Loader {
 						return;
 					}
 
-					var $forms = $popup.find( '.gform_wrapper' );
+					var $forms = $popup.find( '.kform_wrapper' );
 					if ( ! $forms.length ) {
 						return;
 					}
@@ -252,7 +252,7 @@ class KDNA_Elementor_Loader {
 						}
 
 						// Extract numeric form ID from wrapper ID (kform_wrapper_123).
-						var numericId = formId.replace( 'gform_wrapper_', '' );
+						var numericId = formId.replace( 'kform_wrapper_', '' );
 
 						// Reinitialize conditional logic if available.
 						if ( typeof window[ 'kdnaform_conditional_logic_' + numericId ] === 'function' ) {

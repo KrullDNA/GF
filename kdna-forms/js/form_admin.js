@@ -102,7 +102,7 @@ function GetConditionalObject(objectType){
 		break;
 	}
 
-	object = gform.applyFilters( 'gform_conditional_object', object, objectType );
+	object = gform.applyFilters( 'kform_conditional_object', object, objectType );
 
 	return object;
 }
@@ -150,11 +150,11 @@ function CreateConditionalLogic(objectType, obj){
 	var descPiecesArr = makeArray( descPieces );
 
 	var str = descPiecesArr.join(' ');
-	str = gform.applyFilters( 'gform_conditional_logic_description', str, descPieces, objectType, obj );
+	str = gform.applyFilters( 'kform_conditional_logic_description', str, descPieces, objectType, obj );
 	var i, rule;
 	for(i=0; i < obj.conditionalLogic.rules.length; i++){
 		rule = obj.conditionalLogic.rules[i];
-		str += "<div width='100%' class='gf_conditional_logic_rules_container'>";
+		str += "<div width='100%' class='kdna_conditional_logic_rules_container'>";
 		str += GetRuleFields(objectType, i, obj.conditionalLogic.rules[i].fieldId);
 		str += GetRuleOperators(objectType, i, obj.conditionalLogic.rules[i].fieldId, rule.operator);
 		str += GetRuleValues(objectType, i, obj.conditionalLogic.rules[i].fieldId, rule.value);
@@ -194,7 +194,7 @@ function GetRuleOperators( objectType, i, fieldId, selectedOperator ) {
 	str = "<select id='" + objectType + "_rule_operator_" + i + "' class='gfield_rule_select' onchange='SetRuleProperty(\"" + objectType + "\", " + i + ", \"operator\", jQuery(this).val());var valueSelector=\"#" + objectType + "_rule_value_" + i + "\"; jQuery(valueSelector).replaceWith(GetRuleValues(\"" + objectType + "\", " + i + ",\"" + fieldId + "\", \"\"));jQuery(valueSelector).change();'>";
 	operators = IsEntryMeta(fieldId) ? GetOperatorsForMeta(supportedOperators, fieldId) : supportedOperators;
 
-	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, objectType, fieldId );
+	operators = gform.applyFilters( 'kform_conditional_logic_operators', operators, objectType, fieldId );
 
 	jQuery.each(operators,function(operator, stringKey){
 		var operatorText = kdna_vars[stringKey];
@@ -258,7 +258,7 @@ function GetRuleFields( objectType, ruleIndex, selectedFieldId ) {
 	// get entry meta fields and append to existing fields
 	jQuery.merge(options, GetEntryMetaFields( selectedFieldId ) );
 
-	options = gform.applyFilters( 'gform_conditional_logic_fields', options, form, selectedFieldId );
+	options = gform.applyFilters( 'kform_conditional_logic_fields', options, form, selectedFieldId );
 
 	str += GetRuleFieldsOptions( options, selectedFieldId );
 
@@ -313,7 +313,7 @@ function IsConditionalLogicField(field){
 
 	var index = jQuery.inArray(inputType, supported_fields);
 	var isConditionalLogicField = index >= 0 ? true : false;
-	isConditionalLogicField = gform.applyFilters( 'gform_is_conditional_logic_field', isConditionalLogicField, field );
+	isConditionalLogicField = gform.applyFilters( 'kform_is_conditional_logic_field', isConditionalLogicField, field );
 	return isConditionalLogicField;
 }
 
@@ -424,7 +424,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		str = "<input type='text' placeholder='" + kdna_vars["enterValue"] + "' class='gfield_rule_select gfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
 	}
 
-	str = gform.applyFilters( 'gform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
+	str = gform.applyFilters( 'kform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
 
 	return str;
 }
@@ -874,7 +874,7 @@ function ConfirmationObj() {
 		var is_active = jQuery( btn ).hasClass( 'gform-status--active' );
 
 		jQuery.post( ajaxurl, {
-			action: "gf_feed_is_active_" + addon_slug,
+			action: "kdna_feed_is_active_" + addon_slug,
 			feed_id: feed_id,
 			is_active: is_active ? 0 : 1,
 			nonce: jQuery( '#feed_list' ).val()
@@ -963,7 +963,7 @@ var gfMergeTagsObj = function( form, element ) {
 		}
 
 		// Get merge tag list element.
-		self.mergeTagList      = jQuery( '<ul id="gf_merge_tag_list" class=""></ul>' );
+		self.mergeTagList      = jQuery( '<ul id="kdna_merge_tag_list" class=""></ul>' );
 		self.mergeTagListHover = false;
 
 		// Bind keydown event.
@@ -1342,7 +1342,7 @@ var gfMergeTagsObj = function( form, element ) {
 			}
 		};
 
-		mergeTags = gform.applyFilters('gform_merge_tags', mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option, this );
+		mergeTags = gform.applyFilters('kform_merge_tags', mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option, this );
 
 		return mergeTags;
 	};
@@ -1676,8 +1676,8 @@ var FeedConditionObj = function( args ) {
 
 		var fcobj = this;
 
-		gform.addFilter( 'gform_conditional_object', 'FeedConditionConditionalObject' );
-		gform.addFilter( 'gform_conditional_logic_description', 'FeedConditionConditionalDescription' );
+		gform.addFilter( 'kform_conditional_object', 'FeedConditionConditionalObject' );
+		gform.addFilter( 'kform_conditional_logic_description', 'FeedConditionConditionalDescription' );
 
 		jQuery(document).ready(function(){
 			ToggleConditionalLogic( true,"feed_condition" );
@@ -2046,7 +2046,7 @@ gform.components.dropdown.prototype.bindEvents = function() {
  * the dismiss button (plus data-gform-alert-cookie="cookieName" on the el if you want a 24 hour cookie based
  * dismissal vs. only a display none dismissal).
  * 2) Calling gform.components.alert.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
- * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'gform_init_alerts' ) making
+ * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'kform_init_alerts' ) making
  * sure to add the various data attributes as outlined in the component documentation and in #1 above to the
  * injected HTML'S container.
  *
@@ -2143,7 +2143,7 @@ gform.components.alert = {
 	 * @since 2.5.8
 	 */
 	bindEvents: function() {
-		document.addEventListener( 'gform_init_alerts', gform.components.alert.initializeInstances );
+		document.addEventListener( 'kform_init_alerts', gform.components.alert.initializeInstances );
 		gform.tools.delegate( 'body', 'click', '[data-js="gform-alert-dismiss-trigger"]', gform.components.alert.dismissAlert );
 	},
 
@@ -2159,7 +2159,7 @@ gform.components.alert = {
 	}
 };
 
-document.addEventListener( 'gform_main_scripts_loaded', gform.components.alert.init );
+document.addEventListener( 'kform_main_scripts_loaded', gform.components.alert.init );
 
 //------------------------------------------------
 //---------- SIMPLEBAR ---------------------------
@@ -2175,7 +2175,7 @@ document.addEventListener( 'gform_main_scripts_loaded', gform.components.alert.i
  *
  * 1) Place an attribute of data-simplebar (plus data-simplebar-direction="rtl" if in rtl) on the el.
  * 2) Calling gform.simplebar.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
- * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'gform_render_simplebars' ) making
+ * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'kform_render_simplebars' ) making
  * sure to add data-js="gform-simplebar" to the injected HTML'S container.
  *
  * You will find your instances on the object gform.simplebar.instances. Each instance has an id which relates to the dom
@@ -2290,7 +2290,7 @@ gform.simplebar = {
 	 * @since 2.5.6
 	 */
 	bindEvents: function() {
-		document.addEventListener( 'gform_render_simplebars', gform.simplebar.initializeInstances );
+		document.addEventListener( 'kform_render_simplebars', gform.simplebar.initializeInstances );
 	},
 
 	/**
@@ -2308,4 +2308,4 @@ gform.simplebar = {
 	}
 };
 
-document.addEventListener( 'gform_main_scripts_loaded', gform.simplebar.init );
+document.addEventListener( 'kform_main_scripts_loaded', gform.simplebar.init );

@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 2.11.0
+Version: 3.0.0
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.11.0';
+	public static $version = '3.0.0';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -2722,14 +2722,14 @@ class KDNAForms {
 
 		if ( sizeof( $forms ) > 0 ) {
 			?>
-			<table class="widefat gf_dashboard_view" cellspacing="0" style="border:0px;">
+			<table class="widefat kdna_dashboard_view" cellspacing="0" style="border:0px;">
 				<thead>
 				<tr>
-					<td class="gf_dashboard_form_title_header" style="text-align:left; padding:8px 18px!important; font-weight:bold;">
+					<td class="kdna_dashboard_form_title_header" style="text-align:left; padding:8px 18px!important; font-weight:bold;">
 						<i><?php esc_html_e( 'Title', 'kdnaforms' ) ?></i></td>
-					<td class="gf_dashboard_entries_unread_header" style="text-align:center; padding:8px 18px!important; font-weight:bold;">
+					<td class="kdna_dashboard_entries_unread_header" style="text-align:center; padding:8px 18px!important; font-weight:bold;">
 						<i><?php esc_html_e( 'Unread', 'kdnaforms' ) ?></i></td>
-					<td class="gf_dashboard_entries_total_header" style="text-align:center; padding:8px 18px!important; font-weight:bold;">
+					<td class="kdna_dashboard_entries_total_header" style="text-align:center; padding:8px 18px!important; font-weight:bold;">
 						<i><?php esc_html_e( 'Total', 'kdnaforms' ) ?></i></td>
 				</tr>
 				</thead>
@@ -2746,13 +2746,13 @@ class KDNAForms {
 
 						?>
 						<tr class='author-self status-inherit' valign="top">
-							<td class="gf_dashboard_form_title column-title" style="padding:8px 18px;">
+							<td class="kdna_dashboard_form_title column-title" style="padding:8px 18px;">
 								<a <?php echo $form['unread_count'] > 0 ? "class='form_title_unread' style='font-weight:bold;'" : '' ?> href="admin.php?page=kdna_entries&view=entries&id=<?php echo absint( $form['id'] ) ?>"><?php echo esc_html( $form['title'] ) ?></a>
 							</td>
-							<td class="gf_dashboard_entries_unread column-date" style="padding:8px 18px; text-align:center;">
+							<td class="kdna_dashboard_entries_unread column-date" style="padding:8px 18px; text-align:center;">
 								<a <?php echo $form['unread_count'] > 0 ? "class='form_entries_unread' style='font-weight:bold;'" : '' ?> href="admin.php?page=kdna_entries&view=entries&filter=unread&id=<?php echo absint( $form['id'] ) ?>" aria-label="<?php printf( esc_attr__( 'Last Entry: %s', 'kdnaforms' ), esc_attr( $date_display ) ); ?>"><?php echo esc_html( absint( $form['unread_count'] ) ) ?></a>
 							</td>
-							<td class="gf_dashboard_entries_total column-date" style="padding:8px 18px; text-align:center;">
+							<td class="kdna_dashboard_entries_total column-date" style="padding:8px 18px; text-align:center;">
 								<a href="admin.php?page=kdna_entries&view=entries&id=<?php echo absint( $form['id'] ) ?>" aria-label="<?php esc_attr_e( 'View All Entries', 'kdnaforms' ) ?>"><?php echo absint( $form['total_entries'] ) ?></a>
 							</td>
 						</tr>
@@ -2765,13 +2765,13 @@ class KDNAForms {
 
 			<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_edit_forms' ) ) : ?>
 				<p class="textright">
-				<a class="gf_dashboard_button button" href="admin.php?page=kdna_edit_forms"><?php esc_html_e( 'View All Forms', 'kdnaforms' ) ?></a>
+				<a class="kdna_dashboard_button button" href="admin.php?page=kdna_edit_forms"><?php esc_html_e( 'View All Forms', 'kdnaforms' ) ?></a>
 			<?php endif; ?>
 			</p>
 			<?php
 		} else {
 			?>
-			<div class="gf_dashboard_noforms_notice">
+			<div class="kdna_dashboard_noforms_notice">
 				<?php echo sprintf( esc_html__( "You don't have any forms. Let's go %screate one %s!", 'kdnaforms' ), '<a href="admin.php?page=kdna_new_form">', '</a>' ); ?>
 			</div>
 			<?php
@@ -2807,12 +2807,12 @@ class KDNAForms {
 		if ( version_compare( KDNAForms::$version, rgar( $version_info, 'version' ), '<' ) ) {
 			$message = sprintf( esc_html__( 'There is an update available for KDNA Forms. %sView Details%s', 'kdnaforms' ), "<a href='admin.php?page=kdna_system_status&subview=updates'>", '</a>' );
 			?>
-			<div class='updated' style='padding:15px; position:relative;' id='gf_dashboard_message'><?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<div class='updated' style='padding:15px; position:relative;' id='kdna_dashboard_message'><?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<a href="javascript:void(0);" onclick="KDNADismissUpgrade();" onkeypress="KDNADismissUpgrade();" style='float:right;'><?php esc_html_e( 'Dismiss', 'kdnaforms' ) ?></a>
 			</div>
 			<script type="text/javascript">
 				function KDNADismissUpgrade() {
-					jQuery("#gf_dashboard_message").slideUp();
+					jQuery("#kdna_dashboard_message").slideUp();
 					jQuery.post(ajaxurl, {
 						action : 'rg_dismiss_upgrade',
 						version: <?php echo json_encode( rgar( $version_info, 'version' ) ); ?>});
@@ -4878,7 +4878,7 @@ class KDNAForms {
 		?>
 
 		<div id="edit-title-container" class="add_field_button_container">
-			<div class="button-title-link gf_button_title_active">
+			<div class="button-title-link kdna_button_title_active">
 				<div id="edit-title-header">
 					<?php esc_html_e( 'Form Title', 'kdnaforms' ); ?>
 					<span id="edit-title-close" onclick="KDNA_CloseEditTitle();"><i class="fa fa-times"></i></span>
@@ -5080,7 +5080,7 @@ class KDNAForms {
 		<script type="text/javascript">
 
 			function ToggleFormSettings() {
-				FieldClick(jQuery('#gform_heading')[0]);
+				FieldClick(jQuery('#kform_heading')[0]);
 			}
 
 			jQuery(document).ready(function () {
@@ -5205,7 +5205,7 @@ class KDNAForms {
 			}
 		}
 		?>
-		<div class="wrap gforms_edit_form gforms_form_settings_wrap <?php echo esc_attr( KDNACommon::get_browser_class() . $view_class ); ?>">
+		<div class="wrap kforms_edit_form kforms_form_settings_wrap <?php echo esc_attr( KDNACommon::get_browser_class() . $view_class ); ?>">
 
 		<?php KDNACommon::kdna_header(); ?>
 
@@ -5360,7 +5360,7 @@ class KDNAForms {
 					}
 					?>
 				</ul>
-				<div id="gf_toolbar_buttons_container" class="gform-form-toolbar__buttons gf_toolbar_buttons_container">
+				<div id="kdna_toolbar_buttons_container" class="gform-form-toolbar__buttons kdna_toolbar_buttons_container">
 					<?php
 					$preview_args = array(
 						'form_id' => $id,
@@ -5692,7 +5692,7 @@ class KDNAForms {
 				$page = self::get_page_query_arg();
 				if ( $page == 'kdna_new_form' ) {
 					return 'kdna_toolbar_disabled';
-				} else if ( $page == 'kdna_entries' && strpos( rgget( 'view' ), 'gf_results_' ) === false ) {
+				} else if ( $page == 'kdna_entries' && strpos( rgget( 'view' ), 'kdna_results_' ) === false ) {
 					return 'kdna_toolbar_active';
 				}
 
@@ -6115,7 +6115,7 @@ class KDNAForms {
 		// Disable the elements on the form
 		?>
 		<script type="text/javascript">
-			jQuery('.gform_wrapper input, .gform_wrapper select, .gform_wrapper textarea').prop('disabled', true);
+			jQuery('.kform_wrapper input, .kform_wrapper select, .kform_wrapper textarea').prop('disabled', true);
 			jQuery('a img').each(function () {
 				var image = this.src;
 				var img = jQuery('<img>', {src: image});

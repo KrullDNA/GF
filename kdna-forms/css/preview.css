@@ -141,7 +141,7 @@ div#preview_form_container .gfield input[type="checkbox"] {
 
 @media only screen and (min-width: 641px)  {
 
-	div#preview_form_container.showgrid .gform_wrapper form {
+	div#preview_form_container.showgrid .kform_wrapper form {
 		z-index: 50 !important;
 		position: relative;
 	}
@@ -258,13 +258,13 @@ div#preview_form_container .gfield input[type="checkbox"] {
 
 }
 
-.gform_wrapper {
+.kform_wrapper {
 	color: #000;
 	font-size: 1em;
 	margin: 16px auto;
 }
 
-.gform_legacy_markup_wrapper .gform_footer input.button:disabled {
+.kform_legacy_markup_wrapper .kform_footer input.button:disabled {
 	height: 0;
 	padding: 0;
 }
@@ -342,7 +342,7 @@ div#browser_size_info {
 		border: 2px solid #73e600;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield:before {
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield:before {
 	      content:"\25bc  " attr(id);
 	      line-height: 2.5;
 	      display: block;
@@ -356,8 +356,8 @@ div#browser_size_info {
 	      font-family: monospace;
 	}
 
-	.gform_wrapper .gf_showme ul.gfield_checkbox li label:before,
-	.gform_wrapper .gf_showme ul.gfield_radio li label:before {
+	.kform_wrapper .kdna_showme ul.gfield_checkbox li label:before,
+	.kform_wrapper .kdna_showme ul.gfield_radio li label:before {
 	      content:"\25bc  " attr(id);
 	      line-height: 2.5;
 	      display: block;
@@ -371,146 +371,146 @@ div#browser_size_info {
 	      font-family: monospace;
 	}
 
-	.gform_wrapper .gf_showme .gform_heading,
-	.gform_wrapper .gf_showme .gform_body,
-	.gform_wrapper .gf_showme .gform_footer,
-	.gform_wrapper .gf_showme .kform_page_footer,
-	.gform_wrapper .gf_showme .gform_page {
+	.kform_wrapper .kdna_showme .kform_heading,
+	.kform_wrapper .kdna_showme .kform_body,
+	.kform_wrapper .kdna_showme .kform_footer,
+	.kform_wrapper .kdna_showme .kform_page_footer,
+	.kform_wrapper .kdna_showme .kform_page {
 	    border: 1px dashed #F60;
 	    padding: 16px;
 	}
 
-	.gform_wrapper .gf_showme .gform_heading .gform_title,
-	.gform_wrapper .gf_showme .gform_heading .gform_description {
+	.kform_wrapper .kdna_showme .kform_heading .kform_title,
+	.kform_wrapper .kdna_showme .kform_heading .kform_description {
 	    border: 1px dashed #060;
 	    padding: 16px;
 	    margin-top: 8px;
 	    display: block;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield {
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield {
 	    border: 1px dashed #060;
 	    margin-top: 32px !important;
 	    padding: 16px;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields label.gfield_label {
+	.kform_wrapper .kdna_showme ul.kform_fields label.gfield_label {
 	    border: 1px dashed #060;
 	    padding: 16px;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields label.gfield_label span.gfield_required {
+	.kform_wrapper .kdna_showme ul.kform_fields label.gfield_label span.gfield_required {
 	    border: 1px dashed #060;
 	    padding: 8px;
 	    display: -moz-inline-stack;
 	    display: inline-block;
 	    vertical-align: middle;
 	}
-	.gform_wrapper .gf_showme ul.gform_fields,
-	.gform_wrapper .gf_showme ul.gform_fields .ginput_container,
-	.gform_wrapper .gf_showme ul.gform_fields li .gfield_description,
-	.gform_wrapper .gf_showme table.gfield_list,
-	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_cell,
-	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_icons,
-	.gform_wrapper .gf_showme .kform_card_icon_container,
-	.gform_wrapper .gf_showme ul.gfield_checkbox,
-	.gform_wrapper .gf_showme ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme ul.gfield_radio,
-	.gform_wrapper .gf_showme ul.gfield_radio li,
-	.gform_wrapper .gf_showme .gform_footer a.kform_save_link,
-	.gform_wrapper .gf_showme .kform_page_footer a.kform_save_link,
-	.gform_wrapper .gf_showme .chosen-container,
-	.gform_wrapper .gf_showme .gsection_description,
-	.gform_wrapper .gf_showme .gsection_title {
+	.kform_wrapper .kdna_showme ul.kform_fields,
+	.kform_wrapper .kdna_showme ul.kform_fields .ginput_container,
+	.kform_wrapper .kdna_showme ul.kform_fields li .gfield_description,
+	.kform_wrapper .kdna_showme table.gfield_list,
+	.kform_wrapper .kdna_showme table.gfield_list td.gfield_list_cell,
+	.kform_wrapper .kdna_showme table.gfield_list td.gfield_list_icons,
+	.kform_wrapper .kdna_showme .kform_card_icon_container,
+	.kform_wrapper .kdna_showme ul.gfield_checkbox,
+	.kform_wrapper .kdna_showme ul.gfield_checkbox li,
+	.kform_wrapper .kdna_showme ul.gfield_radio,
+	.kform_wrapper .kdna_showme ul.gfield_radio li,
+	.kform_wrapper .kdna_showme .kform_footer a.kform_save_link,
+	.kform_wrapper .kdna_showme .kform_page_footer a.kform_save_link,
+	.kform_wrapper .kdna_showme .chosen-container,
+	.kform_wrapper .kdna_showme .gsection_description,
+	.kform_wrapper .kdna_showme .gsection_title {
 	    border: 1px dashed #060;
 	    padding: 16px;
 	    margin-top: 8px;
 	}
 
-	.gform_wrapper .gf_showme ul.gfield_checkbox li {
+	.kform_wrapper .kdna_showme ul.gfield_checkbox li {
 	    display: block;
 	    margin-bottom: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.kdna_list_2col ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme li.kdna_list_3col ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme li.kdna_list_4col ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme li.kdna_list_5col ul.gfield_checkbox li {
+	.kform_wrapper .kdna_showme li.kdna_list_2col ul.gfield_checkbox li,
+	.kform_wrapper .kdna_showme li.kdna_list_3col ul.gfield_checkbox li,
+	.kform_wrapper .kdna_showme li.kdna_list_4col ul.gfield_checkbox li,
+	.kform_wrapper .kdna_showme li.kdna_list_5col ul.gfield_checkbox li {
 	    margin-bottom: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.kdna_list_2col ul li {
+	.kform_wrapper .kdna_showme li.kdna_list_2col ul li {
 	    width: 49% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.kdna_list_3col ul li {
+	.kform_wrapper .kdna_showme li.kdna_list_3col ul li {
 	    width: 32.3% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.kdna_list_4col ul li {
+	.kform_wrapper .kdna_showme li.kdna_list_4col ul li {
 	    width: 24% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.kdna_list_5col ul li {
+	.kform_wrapper .kdna_showme li.kdna_list_5col ul li {
 	    width: 19% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.kdna_list_inline ul li {
+	.kform_wrapper .kdna_showme li.kdna_list_inline ul li {
 	    margin-right: 8px !important;
 	}
 
-	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_cell {
+	.kform_wrapper .kdna_showme table.gfield_list td.gfield_list_cell {
 	    position: relative;
 	}
 
-	.gform_wrapper .gf_showme table.gfield_list {
+	.kform_wrapper .kdna_showme table.gfield_list {
 	    display: -moz-inline-stack;
 	    display: inline-block;
 	    width: 100%;
 	}
-	.gform_wrapper .gf_showme table.gfield_list thead,
-	.gform_wrapper .gf_showme table.gfield_list tbody,
-	.gform_wrapper .gf_showme table.gfield_list tfoot {
+	.kform_wrapper .kdna_showme table.gfield_list thead,
+	.kform_wrapper .kdna_showme table.gfield_list tbody,
+	.kform_wrapper .kdna_showme table.gfield_list tfoot {
 	    width: 100%;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_name span,
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_address span {
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_name span,
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_address span {
 	    border: 1px dashed #060;
 	    padding: 16px;
 	    margin-top: 8px;
 	    margin-right: 8px;
 	}
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_address span.ginput_full {
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_address span.ginput_full {
 	    width: 100%;
 	    display: -moz-inline-stack;
 	    display: inline-block;
 	}
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_address span.ginput_left,
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_address span.ginput_right {
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_address span.ginput_left,
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_address span.ginput_right {
 	    width: 49%;
 	}
 
 
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_name span:last-child,
-	.gform_wrapper .gf_showme ul.gform_fields li .ginput_container_address span:last-child {
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_name span:last-child,
+	.kform_wrapper .kdna_showme ul.kform_fields li .ginput_container_address span:last-child {
 	    margin-right: 0;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_left_half,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_right_half {
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_left_half,
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_right_half {
 	    width: 49%;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_left_half,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_left_third,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_middle_third {
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_left_half,
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_left_third,
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_middle_third {
 	    margin-right:16px;
 	}
-	.gform_wrapper .gf_showme *:not(label):after,
-	.gform_wrapper .gf_showme *:not(option):after,
-	.gform_wrapper .gf_showme label.gfield_label:after,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield:after,
-	.gform_wrapper .gf_showme ul.gfield_checkbox li label:after,
-	.gform_wrapper .gf_showme .gform_footer input[type='submit'].gform_button.button:after {
+	.kform_wrapper .kdna_showme *:not(label):after,
+	.kform_wrapper .kdna_showme *:not(option):after,
+	.kform_wrapper .kdna_showme label.gfield_label:after,
+	.kform_wrapper .kdna_showme ul.kform_fields li.gfield:after,
+	.kform_wrapper .kdna_showme ul.gfield_checkbox li label:after,
+	.kform_wrapper .kdna_showme .kform_footer input[type='submit'].kform_button.button:after {
 		content: "\25b2  " attr(class);
 		line-height: 2.5;
 		display: block;
@@ -526,27 +526,27 @@ div#browser_size_info {
 		font-family: monospace;
 	}
 
-	.gform_wrapper .gf_showme .gform_footer input[type='submit'].gform_button.button {
+	.kform_wrapper .kdna_showme .kform_footer input[type='submit'].kform_button.button {
 	    display: -moz-inline-stack;
 	    display: inline-block;
 	}
 
-	.gform_wrapper .gf_showme li.gfield_html *:after,
-	.gform_wrapper .gf_showme table thead:after,
-	.gform_wrapper .gf_showme table tbody:after,
-	.gform_wrapper .gf_showme table th:after,
-	.gform_wrapper .gf_showme table tr:after,
-	.gform_wrapper .gf_showme table tfoot:after,
-	.gform_wrapper .gf_showme .ginput_full label:after,
-	.gform_wrapper .gf_showme .ginput_left label:after,
-	.gform_wrapper .gf_showme .ginput_right label:after,
-	.gform_wrapper .gf_showme .gf_clear:after,
-	.gform_wrapper .gf_showme .ginput_container_multiselect option:after,
-	.gform_wrapper .gf_showme ul.gfield_checkbox li label:after,
-	.gform_wrapper .gf_showme ul.gfield_radio li label:after,
-	.gform_wrapper .gf_showme .ginput_container_name label:after,
-	.gform_wrapper .gf_showme .ginput_container_select option:after,
-	.gform_wrapper .gf_showme option:after  {
+	.kform_wrapper .kdna_showme li.gfield_html *:after,
+	.kform_wrapper .kdna_showme table thead:after,
+	.kform_wrapper .kdna_showme table tbody:after,
+	.kform_wrapper .kdna_showme table th:after,
+	.kform_wrapper .kdna_showme table tr:after,
+	.kform_wrapper .kdna_showme table tfoot:after,
+	.kform_wrapper .kdna_showme .ginput_full label:after,
+	.kform_wrapper .kdna_showme .ginput_left label:after,
+	.kform_wrapper .kdna_showme .ginput_right label:after,
+	.kform_wrapper .kdna_showme .kdna_clear:after,
+	.kform_wrapper .kdna_showme .ginput_container_multiselect option:after,
+	.kform_wrapper .kdna_showme ul.gfield_checkbox li label:after,
+	.kform_wrapper .kdna_showme ul.gfield_radio li label:after,
+	.kform_wrapper .kdna_showme .ginput_container_name label:after,
+	.kform_wrapper .kdna_showme .ginput_container_select option:after,
+	.kform_wrapper .kdna_showme option:after  {
 	    content: none !important;
 	}
 

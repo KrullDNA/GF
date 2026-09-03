@@ -366,7 +366,7 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 		$description = $this->get_description( $this->description, 'gfield_description' );
 		if ( $this->is_description_above( $form ) ) {
-			$clear         = $is_admin ? "<div class='gf_clear'></div>" : '';
+			$clear         = $is_admin ? "<div class='kdna_clear'></div>" : '';
 			$field_content = sprintf( "%s%s{FIELD}$clear", $admin_buttons, $description );
 		} else {
 			$field_content = sprintf( "%s{FIELD}%s", $admin_buttons, $description );

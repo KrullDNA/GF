@@ -208,7 +208,7 @@ class KDNAEntryList {
 			$id           = esc_attr( $filter['id'] );
 			$label        = esc_attr( $filter['label'] );
 			$checked      = checked( $filter['id'], $selected_filter, false );
-			$radios_arr[] = sprintf( '<div><input type="radio" name="kdnaform_default_filter" value="%s" id="gform_default_filter_%s" %s /><label for="kdnaform_default_filter_%s">%s</label></div>', $id, $id, $checked, $id, $label );
+			$radios_arr[] = sprintf( '<div><input type="radio" name="kdnaform_default_filter" value="%s" id="kform_default_filter_%s" %s /><label for="kdnaform_default_filter_%s">%s</label></div>', $id, $id, $checked, $id, $label );
 		}
 
 		$radios_str = join( "\n", $radios_arr );

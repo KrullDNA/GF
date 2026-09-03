@@ -541,13 +541,13 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 			$plupload_init_json = htmlspecialchars( json_encode( $plupload_init ), ENT_QUOTES, 'UTF-8' );
 			$upload             = "<div id='{$container_id}' data-settings='{$plupload_init_json}' class='kdnaform_fileupload_multifile'>
-										<div id='{$drag_drop_id}' class='gform_drop_area gform-theme-field-control'>
+										<div id='{$drag_drop_id}' class='kform_drop_area gform-theme-field-control'>
 											<span class='kdnaform_drop_instructions'>{$drop_files_here_text} </span>
-											<button type='button' id='{$browse_button_id}' class='button gform_button_select_files gform-theme-button gform-theme-button--control' {$describedby} {$tabindex} {$disabled_text}>{$select_files_text}</button>
+											<button type='button' id='{$browse_button_id}' class='button kform_button_select_files gform-theme-button gform-theme-button--control' {$describedby} {$tabindex} {$disabled_text}>{$select_files_text}</button>
 										</div>
 									</div>";
 
-			$upload .= $rules_messages ? "<span class='gfield_description gform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
+			$upload .= $rules_messages ? "<span class='gfield_description kform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
 
 			$messages       = '';
 			$messages_array = $this->get_context_property( 'multifile_messages' );
@@ -574,7 +574,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 			$upload .= sprintf( "<input name='input_%d' id='%s' type='file' class='%s' %s onchange='javascript:gformValidateFileSize( this, %s );' {$tabindex} %s/>", $id, $field_id, esc_attr( $class ), $describedby, esc_attr( $max_upload_size ), $disabled_text );
 
-			$upload .= $rules_messages ? "<span class='gfield_description gform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
+			$upload .= $rules_messages ? "<span class='gfield_description kform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
 			$upload .= "<div class='gfield_description validation_message gfield_validation_message validation_message--hidden-on-empty' id='{$live_validation_message_id}'></div>";
 		}
 

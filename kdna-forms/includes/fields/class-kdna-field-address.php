@@ -320,7 +320,7 @@ class KDNA_Field_Address extends KDNA_Field {
                                       </span>";
 				}
 			} else {
-				$state = sprintf( "<input type='hidden' class='gform_hidden' name='input_%d.4' id='%s_4' value='%s'/>", $id, $field_id, $state_value );
+				$state = sprintf( "<input type='hidden' class='kform_hidden' name='input_%d.4' id='%s_4' value='%s'/>", $id, $field_id, $state_value );
 			}
 		} else {
 
@@ -359,7 +359,7 @@ class KDNA_Field_Address extends KDNA_Field {
                                       </span>";
 				}
 			} else {
-				$state = sprintf( "<input type='hidden' class='gform_hidden' name='input_%d.4' id='%s_4' value='%s'/>", $id, $field_id, $state_value );
+				$state = sprintf( "<input type='hidden' class='kform_hidden' name='input_%d.4' id='%s_4' value='%s'/>", $id, $field_id, $state_value );
 			}
 
 			// Zip field.
@@ -396,7 +396,7 @@ class KDNA_Field_Address extends KDNA_Field {
                                     </span>";
 			}
 		} else {
-			$country = sprintf( "<input type='hidden' class='gform_hidden' name='input_%d.6' id='%s_6' value='%s' {$this->maybe_add_aria_describedby( $address_country_field_input, $field_id, $this['formId'] )}/>", $id, $field_id, $country_value );
+			$country = sprintf( "<input type='hidden' class='kform_hidden' name='input_%d.6' id='%s_6' value='%s' {$this->maybe_add_aria_describedby( $address_country_field_input, $field_id, $this['formId'] )}/>", $id, $field_id, $country_value );
 		}
 
 		$inputs = $address_display_format == 'zip_before_city' ? $street_address . $street_address2 . $zip . $city . $state . $country : $street_address . $street_address2 . $city . $state . $zip . $country;
@@ -422,7 +422,7 @@ class KDNA_Field_Address extends KDNA_Field {
 		return "    {$copy_values_option}
                     <div class='ginput_complex{$class_suffix} ginput_container {$css_class} gform-grid-row' id='$field_id' {$input_style}>
                         {$inputs}
-                    <div class='gf_clear gf_clear_complex'></div>
+                    <div class='kdna_clear kdna_clear_complex'></div>
                 </div>";
 	}
 

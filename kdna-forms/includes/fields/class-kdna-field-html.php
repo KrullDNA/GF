@@ -52,7 +52,7 @@ class KDNA_Field_HTML extends KDNA_Field {
 		$is_entry_detail = $this->is_entry_detail();
 		$is_form_editor  = $this->is_form_editor();
 
-		$content = $is_entry_detail || $is_form_editor ? "<div class='gf-html-container'><span class='gf_blockheader'>
+		$content = $is_entry_detail || $is_form_editor ? "<div class='gf-html-container'><span class='kdna_blockheader'>
 															<i class='fa fa-code fa-lg'></i> " . esc_html__( 'HTML Content', 'kdnaforms' ) .
 															'</span><span>' . esc_html__( 'This is a content placeholder. HTML content is not displayed in the form admin. Preview this form to view the content.', 'kdnaforms' ) . '</span></div>'
 														: $this->content;

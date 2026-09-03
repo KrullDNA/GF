@@ -1121,7 +1121,7 @@ class KDNASettings {
 
 		// Add setup message.
 		$html = sprintf(
-			'<p id="gforms_checkbox_recaptcha_message" style="margin-bottom:10px;">%s</p>',
+			'<p id="kforms_checkbox_recaptcha_message" style="margin-bottom:10px;">%s</p>',
 			esc_html__( 'Please complete the reCAPTCHA widget to validate your reCAPTCHA keys:', 'kdnaforms' )
 		);
 

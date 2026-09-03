@@ -626,7 +626,7 @@ abstract class KDNAAddOn {
 	 */
 	public function init_ajax() {
 		// Results and locking removed.
-		// if ( rgpost( 'view' ) == 'gf_results_' . $this->get_slug() ) {
+		// if ( rgpost( 'view' ) == 'kdna_results_' . $this->get_slug() ) {
 		// 	require_once( 'class-kdna-results.php' );
 		// 	...
 		// } elseif ( $this->method_is_overridden( 'get_locking_config' ) ) {
@@ -2070,7 +2070,7 @@ abstract class KDNAAddOn {
 			>
 
 			<?php if ( $title ): ?>
-				<h4 class="gaddon-section-title gf_settings_subgroup_title">
+				<h4 class="gaddon-section-title kdna_settings_subgroup_title">
 					<?php echo $title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php if( $tooltip ): ?>
 						<?php kdnaform_tooltip( $tooltip, $tooltip_class ); ?>
@@ -2082,7 +2082,7 @@ abstract class KDNAAddOn {
 				<div class="gaddon-section-description"><?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></div>
 			<?php endif; ?>
 
-			<table class="form-table gforms_form_settings">
+			<table class="form-table kforms_form_settings">
 
 				<?php
 				foreach ( $section_fields as $field ) {
@@ -2131,7 +2131,7 @@ abstract class KDNAAddOn {
 		$display = rgar( $field, 'hidden' ) || rgar( $field, 'type' ) == 'hidden' ? 'style="display:none;"' : '';
 
 		// Prepare setting description.
-		$description = rgar( $field, 'description' ) ? '<span class="gf_settings_description">' . $field['description'] . '</span>' : null;
+		$description = rgar( $field, 'description' ) ? '<span class="kdna_settings_description">' . $field['description'] . '</span>' : null;
 
 		?>
 
@@ -3957,10 +3957,10 @@ abstract class KDNAAddOn {
 		$error = $this->get_field_errors( $field );
 
 		return '<span
-			class="gf_tooltip tooltip"
+			class="kdna_tooltip tooltip"
 			title="<h6>' . esc_html__( 'Validation Error', 'kdnaforms' ) . '</h6>' . $error . '"
 			style="display:inline-block;position:relative;right:-3px;top:1px;font-size:14px;">
-				<i class="fa fa-exclamation-circle icon-exclamation-sign gf_invalid"></i>
+				<i class="fa fa-exclamation-circle icon-exclamation-sign kdna_invalid"></i>
 			</span>';
 	}
 
@@ -4584,7 +4584,7 @@ abstract class KDNAAddOn {
 			}
 			?>
 
-			<h2 class="gf_admin_page_title"><?php echo $this->plugin_page_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+			<h2 class="kdna_admin_page_title"><?php echo $this->plugin_page_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 			<?php
 
 			$this->plugin_page();
@@ -5185,10 +5185,10 @@ abstract class KDNAAddOn {
 					<div class="delete-alert alert_red">
 
 						<h3>
-							<i class="fa fa-exclamation-triangle gf_invalid"></i> <?php esc_html_e( 'Warning', 'kdnaforms' ); ?>
+							<i class="fa fa-exclamation-triangle kdna_invalid"></i> <?php esc_html_e( 'Warning', 'kdnaforms' ); ?>
 						</h3>
 
-						<div class="gf_delete_notice">
+						<div class="kdna_delete_notice">
 							<?php echo $this->uninstall_warning_message(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 
@@ -6565,7 +6565,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the current page is the results page. Otherwise, returns FALSE
 	 */
 	public function is_results() {
-		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'gf_results_' . $this->get_slug() ) {
+		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'kdna_results_' . $this->get_slug() ) {
 			return true;
 		}
 

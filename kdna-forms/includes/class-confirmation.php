@@ -395,7 +395,7 @@ class KDNA_Confirmation {
 		if ( ! empty( $legacy_settings ) ) {
 
 			// Prepare HTML.
-			$html = '<table class="gforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
+			$html = '<table class="kforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
 			foreach ( $legacy_settings as $legacy_field ) {
 				$html .= $legacy_field;
 			}
