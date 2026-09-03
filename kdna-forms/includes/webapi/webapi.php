@@ -79,7 +79,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 			parent::init();
 
-			global $_gaddon_posted_settings;
+			global $_kaddon_posted_settings;
 
 			if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
 				add_action( 'kdnaforms_results_cron_' . $this->get_slug(), array( $this, 'results_cron' ), 10, 3 );
@@ -100,7 +100,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			}
 
 			// Clear the settings cache because it was checked very early before other add-ons have a chance to make adjustments.
-			$_gaddon_posted_settings = null;
+			$_kaddon_posted_settings = null;
 
 		}
 
@@ -274,7 +274,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		}
 
 		public function load_text_domain() {
-			KDNACommon::load_gf_text_domain();
+			KDNACommon::load_kdna_text_domain();
 		}
 
 		// Scripts
@@ -2236,10 +2236,10 @@ if ( class_exists( 'KDNAForms' ) ) {
 		private function authenticate() {
 			$this->log_debug( __METHOD__ . '(): Running.' );
 
-			if ( isset( $_REQUEST['_gf_json_nonce'] ) && is_user_logged_in() ) {
+			if ( isset( $_REQUEST['_kdna_json_nonce'] ) && is_user_logged_in() ) {
 				$this->log_debug( __METHOD__ . '(): Using WP cookie authentication.' );
 				// WordPress cookie authentication for plugins and themes on this server.
-				check_admin_referer( 'kdna_api', '_gf_json_nonce' );
+				check_admin_referer( 'kdna_api', '_kdna_json_nonce' );
 
 				return true;
 			}

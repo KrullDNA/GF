@@ -1,6 +1,6 @@
 
 //----------------------------------------------------------
-//------ JAVASCRIPT HOOK FUNCTIONS FOR GRAVITY FORMS -------
+//------ JAVASCRIPT HOOK FUNCTIONS FOR KDNA Forms -------
 //----------------------------------------------------------
 
 if ( ! gform ) {
@@ -21,7 +21,7 @@ if ( ! gform ) {
 		callIfLoaded: function ( fn ) {
 			if ( gform.domLoaded && gform.scriptsLoaded && ( gform.themeScriptsLoaded || gform.isFormEditor() ) ) {
 				if ( gform.isFormEditor() ) {
-					console.warn( 'The use of gform.initializeOnLoaded() is deprecated in the form editor context and will be removed in Gravity Forms 3.1.' );
+					console.warn( 'The use of gform.initializeOnLoaded() is deprecated in the form editor context and will be removed in KDNA Forms 3.1.' );
 				}
 				fn();
 				return true;

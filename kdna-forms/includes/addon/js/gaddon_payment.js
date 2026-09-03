@@ -18,7 +18,7 @@ function loadBillingLength(setting_name){
 
 function cancel_subscription( entryId ) {
 
-	if ( !confirm( gaddon_payment_strings.subscriptionCancelWarning ) )
+	if ( !confirm( kaddon_payment_strings.subscriptionCancelWarning ) )
 		return;
 
 	jQuery( "#subscription_cancel_spinner" ).show();
@@ -26,19 +26,19 @@ function cancel_subscription( entryId ) {
 	jQuery.post(
 		ajaxurl,
 		{
-			action:                     "gaddon_cancel_subscription",
+			action:                     "kaddon_cancel_subscription",
 			entry_id:                   entryId,
-			gaddon_cancel_subscription: gaddon_payment_strings.subscriptionCancelNonce
+			kaddon_cancel_subscription: kaddon_payment_strings.subscriptionCancelNonce
 		},
 		function ( response ) {
 			jQuery( "#subscription_cancel_spinner" ).hide();
 			if ( response.success === true ) {
-				jQuery( "#kdnaform_payment_status" ).html( gform.utils.escapeHtml( gaddon_payment_strings.subscriptionCanceled ) );
+				jQuery( "#kdnaform_payment_status" ).html( gform.utils.escapeHtml( kaddon_payment_strings.subscriptionCanceled ) );
 				jQuery( "#cancelsub" ).hide();
 			} else {
 				jQuery( "#cancelsub" ).prop( "disabled", false );
 				if ( response.success === false ) {
-					alert( gaddon_payment_strings.subscriptionError );
+					alert( kaddon_payment_strings.subscriptionError );
 				}
 			}
 		}

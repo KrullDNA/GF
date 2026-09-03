@@ -974,7 +974,7 @@ var gfMergeTagsObj = function( form, element ) {
 
 		self.addMergeTagIcon();
 
-		self.mergeTagIcon.find( '.open-list' ).on( 'click.gravityforms', function(e) {
+		self.mergeTagIcon.find( '.open-list' ).on( 'click.kdnaforms', function(e) {
 
 			e.preventDefault();
 
@@ -1018,7 +1018,7 @@ var gfMergeTagsObj = function( form, element ) {
 		element = self.elem ? self.elem : element;
 
 		element.next( '.all-merge-tags' ).remove();
-		element.off( 'keydown.gravityforms' );
+		element.off( 'keydown.kdnaforms' );
 		element.autocomplete( 'destroy' );
 		element.data( 'mergeTags', null );
 
@@ -1035,7 +1035,7 @@ var gfMergeTagsObj = function( form, element ) {
 	*/
 	self.bindKeyDown = function() {
 
-		self.elem.on( 'keydown.gravityforms', function( event ) {
+		self.elem.on( 'keydown.kdnaforms', function( event ) {
 			var menuActive = self.elem.data( 'autocomplete' ) && self.elem.data( 'autocomplete' ).menu ? self.elem.data( 'autocomplete' ).menu.active : false;
 
 			if ( event.keyCode === jQuery.ui.keyCode.TAB && menuActive ) {
@@ -1512,7 +1512,7 @@ var gfMergeTagsObj = function( form, element ) {
 				var label = gform.tools.stripSlashes( tag.label );
 
 				var tagHTML = jQuery( '<a class="" data-value="' + escapeAttr( tag.tag ) + '">' + escapeHtml( label ) + '</a>' );
-				tagHTML.on( 'click.gravityforms', self.bindMergeTagListClick );
+				tagHTML.on( 'click.kdnaforms', self.bindMergeTagListClick );
 
 				optionsHTML.push( jQuery( '<li></li>' ).html( tagHTML ) );
 

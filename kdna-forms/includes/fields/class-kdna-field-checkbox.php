@@ -1029,7 +1029,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<{$tag} class='gchoice gchoice_{$id}'>
+				$choice_markup = "<{$tag} class='gchoice kchoice_{$id}'>
 								<input class='kfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
 								<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>{$choice['text']}</label>
 							</{$tag}>";

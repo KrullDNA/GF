@@ -308,7 +308,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		}
 
 		$choice_markup = sprintf( "
-			<div class='gchoice gchoice_$id'>
+			<div class='gchoice kchoice_$id'>
 					<input class='kfield-choice-input' name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='gformToggleRadioOther( this )' %s $tabindex %s />
 					%s
 			</div>",
@@ -393,7 +393,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		}
 
 		$choice_markup = sprintf( "
-			<li class='gchoice gchoice_$id'>
+			<li class='gchoice kchoice_$id'>
 				<input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s %s />
 				%s
 			</li>",

@@ -17,7 +17,7 @@ var GFGenericMap = function( options ) {
 
 	self.bindEvents = function() {
 
-		self.UI.on( 'change', 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]', function() {
+		self.UI.on( 'change', 'select[name="_kaddon_setting_'+ self.options.keyFieldName +'"]', function() {
 
 			var $select    = jQuery( this ),
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
@@ -33,7 +33,7 @@ var GFGenericMap = function( options ) {
 
 		} );
 
-		self.UI.on( 'change', 'select[name="_gaddon_setting_'+ self.options.valueFieldName +'"]', function() {
+		self.UI.on( 'change', 'select[name="_kaddon_setting_'+ self.options.valueFieldName +'"]', function() {
 
 			var $select    = jQuery( this ),
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
@@ -85,7 +85,7 @@ var GFGenericMap = function( options ) {
 
 		self.UI.closest( 'form' ).on( 'submit', function( event ) {
 
-			jQuery( '[name^="_gaddon_setting_'+ self.options.fieldName +'_"]' ).each( function( i ) {
+			jQuery( '[name^="_kaddon_setting_'+ self.options.fieldName +'_"]' ).each( function( i ) {
 
 				jQuery( this ).removeAttr( 'name' );
 
@@ -124,7 +124,7 @@ var GFGenericMap = function( options ) {
 			callbacks:          {
 				add:  function( obj, $elem, item ) {
 
-					var key_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]' );
+					var key_select = $elem.find( 'select[name="_kaddon_setting_'+ self.options.keyFieldName +'"]' );
 
 					if ( ! item.custom_key && ( key_select.length > 0 && key_select.val() !== 'kdna_custom' ) ) {
 						$elem.find( '.custom-key-container' ).hide();
@@ -132,7 +132,7 @@ var GFGenericMap = function( options ) {
 						$elem.find( '.key' ).hide();
 					}
 
-					var value_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.valueFieldName +'"]' );
+					var value_select = $elem.find( 'select[name="_kaddon_setting_'+ self.options.valueFieldName +'"]' );
 
 					if ( ! item.custom_value && ( value_select.length > 0 && value_select.val() !== 'kdna_custom' ) ) {
 						$elem.find( '.custom-value-container' ).hide();

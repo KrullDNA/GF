@@ -284,7 +284,7 @@ class KDNA_Upgrade {
 		$versions = $this->get_versions();
 
 		$lock_params = array(
-			'from_gf_version' => $versions['current_version'],
+			'from_kdna_version' => $versions['current_version'],
 			'to_version' => $versions['version'],
 			'from_db_version' => $from_db_version,
 			'force_upgrade' => $force_upgrade,
@@ -2049,7 +2049,7 @@ HAVING count(*) > 1;" );
 		// Remove dismissible messages
 		$lock_params = $this->get_upgrade_lock();
 		if ( $lock_params ) {
-			$to_version = rgar( $lock_params, 'to_gf_version' );
+			$to_version = rgar( $lock_params, 'to_kdna_version' );
 			$key        = sanitize_key( 'kdnaforms_upgrading_' . $to_version );
 			KDNACommon::remove_dismissible_message( $key );
 		}

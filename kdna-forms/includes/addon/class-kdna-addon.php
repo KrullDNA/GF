@@ -38,7 +38,7 @@ abstract class KDNAAddOn {
 	 * The minimum KDNA Forms version required to support all the features of an add-on.
 	 *
 	 * Failing to meet this version won't prevent the add-on from loading, but some features of the add-on will not work as expected or will be disabled,
-	 * A notice will be displayed in the admin asking the user to upgrade to the latest Gravity Form version.
+	 * A notice will be displayed in the admin asking the user to upgrade to the latest KDNA Form version.
 	 *
 	 * @var string KDNA Forms minimum version for supporting all features.
 	 *
@@ -237,7 +237,7 @@ abstract class KDNAAddOn {
 	 *
 	 * @param array  $form               The current form object to enqueue styles for.
 	 * @param string $field_type         The field type associated with the add-on. Styles will only be enqueued on the frontend if the form has a field with the specified field type.
-	 * @param string $kdna_theme_path The path to the gravity theme style. Optional. Only needed for add-ons that implement the gravity theme outside the default /assets/css/dist/theme.css path.
+	 * @param string $kdna_theme_path The path to the KDNA theme style. Optional. Only needed for add-ons that implement the KDNA theme outside the default /assets/css/dist/theme.css path.
 	 *
 	 * @return array Returns and array of styles to enqueue in the format accepted by the KDNA Forms theme layer set_styles() method.
 	 */
@@ -260,11 +260,11 @@ abstract class KDNAAddOn {
 			);
 		}
 
-		// Maybe enqueue gravity theme.
+		// Maybe enqueue KDNA theme.
 		if ( in_array( 'kdna-theme', $themes ) ) {
 			$path = $kdna_theme_path ? $kdna_theme_path : $this->get_base_url() . "/assets/css/dist/theme{$this->_asset_min}.css";
 			$styles['theme'] = array(
-				array( "{$this->_slug}_gravity_theme", $path ),
+				array( "{$this->_slug}_kdna_theme", $path ),
 			);
 		}
 
@@ -447,7 +447,7 @@ abstract class KDNAAddOn {
 	 * Override this function to add initialization code (i.e. hooks) for the admin site (WP dashboard)
 	 */
 	public function init_admin() {
-		$this->maybe_cache_gravityapi_oauth_response();
+		$this->maybe_cache_kdnaapi_oauth_response();
 
 		// enqueues admin scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10, 0 );
@@ -583,13 +583,13 @@ abstract class KDNAAddOn {
 	}
 
 	/**
-	 * Check for a response from the Gravity API and temporarily cache the value to a transient.
+	 * Check for a response from the KDNA API and temporarily cache the value to a transient.
 	 *
 	 * This method cannot be extended because it's intended for use only by first-party KDNA Forms add-ons.
 	 *
 	 * @since 2.4.23
 	 */
-	private function maybe_cache_gravityapi_oauth_response() {
+	private function maybe_cache_kdnaapi_oauth_response() {
 		// OAuth caching removed - KDNA Forms is a free plugin.
 		return;
 
@@ -612,13 +612,13 @@ abstract class KDNAAddOn {
 		if (
 			// Couldn't determine the add-on, no request was cached, or the response doesn't contain what we expect.
 			! $addon
-			|| ! get_transient( "gravityapi_request_{$addon}" )
+			|| ! get_transient( "kdnaapi_request_{$addon}" )
 			|| count( $data ) !== 2
 		) {
 			return;
 		}
 
-		set_transient( "gravityapi_response_{$addon}", $data, 10 * MINUTE_IN_SECONDS );
+		set_transient( "kdnaapi_response_{$addon}", $data, 10 * MINUTE_IN_SECONDS );
 	}
 
 	/**
@@ -982,16 +982,16 @@ abstract class KDNAAddOn {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['kdnaform_debug'] ) ? '' : '.min'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return array(
 			array(
-				'handle'  => 'gaddon_form_settings_css',
-				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/gaddon_settings{$min}.css",
+				'handle'  => 'kaddon_form_settings_css',
+				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/kaddon_settings{$min}.css",
 				'version' => KDNACommon::$version,
 				'enqueue' => array(
 					array( 'admin_page' => array( 'form_settings', 'plugin_settings', 'plugin_page', 'app_settings' ) ),
 				)
 			),
 			array(
-				'handle'  => 'gaddon_results_css',
-				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/gaddon_results{$min}.css",
+				'handle'  => 'kaddon_results_css',
+				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/kaddon_results{$min}.css",
 				'version' => KDNACommon::$version,
 				'enqueue' => array(
 					array( 'admin_page' => array( 'results' ) ),
@@ -1090,8 +1090,8 @@ abstract class KDNAAddOn {
 				)
 			),
 			array(
-				'handle'   => 'gaddon_results_js',
-				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_results{$min}.js",
+				'handle'   => 'kaddon_results_js',
+				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/kaddon_results{$min}.js",
 				'version'  => KDNACommon::$version,
 				'deps'     => array( 'jquery', 'sack', 'jquery-ui-resizable', 'kdnaform_datepicker_init', 'google_charts', 'kdnaform_field_filter' ),
 				'callback' => class_exists( 'KDNAResults' ) ? array( 'KDNAResults', 'localize_results_scripts' ) : null,
@@ -1100,7 +1100,7 @@ abstract class KDNAAddOn {
 				)
 			),
 			array(
-				'handle'  => 'gaddon_repeater',
+				'handle'  => 'kaddon_repeater',
 				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/js/repeater{$min}.js",
 				'version' => KDNACommon::$version,
 				'deps'    => array( 'jquery' ),
@@ -1111,19 +1111,19 @@ abstract class KDNAAddOn {
 				),
 			),
 			array(
-				'handle'   => 'gaddon_fieldmap_js',
-				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_fieldmap{$min}.js",
+				'handle'   => 'kaddon_fieldmap_js',
+				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/kaddon_fieldmap{$min}.js",
 				'version'  => KDNACommon::$version,
-				'deps'     => array( 'jquery', 'gaddon_repeater' ),
+				'deps'     => array( 'jquery', 'kaddon_repeater' ),
 				'enqueue'  => array(
 					array( 'admin_page' => array( 'form_settings' ) ),
 				)
 			),
 			array(
-				'handle'   => 'gaddon_genericmap_js',
-				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_genericmap{$min}.js",
+				'handle'   => 'kaddon_genericmap_js',
+				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/kaddon_genericmap{$min}.js",
 				'version'  => KDNACommon::$version,
-				'deps'     => array( 'jquery', 'gaddon_repeater' ),
+				'deps'     => array( 'jquery', 'kaddon_repeater' ),
 				'enqueue'  => array(
 					array( 'admin_page' => array( 'form_settings' ) ),
 				)
@@ -2247,22 +2247,22 @@ abstract class KDNAAddOn {
 			return $this->get_settings_renderer()->get_posted_values();
 		}
 
-		global $_gaddon_posted_settings;
+		global $_kaddon_posted_settings;
 
-		if ( isset( $_gaddon_posted_settings ) ) {
-			return $_gaddon_posted_settings;
+		if ( isset( $_kaddon_posted_settings ) ) {
+			return $_kaddon_posted_settings;
 		}
 
-		$_gaddon_posted_settings = array();
+		$_kaddon_posted_settings = array();
 		if ( count( $_POST ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			foreach ( $_POST as $key => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-				if ( preg_match( '|_gaddon_setting_(.*)|', $key, $matches ) ) {
-					$_gaddon_posted_settings[ $matches[1] ] = self::maybe_decode_json( stripslashes_deep( $value ) );
+				if ( preg_match( '|_kaddon_setting_(.*)|', $key, $matches ) ) {
+					$_kaddon_posted_settings[ $matches[1] ] = self::maybe_decode_json( stripslashes_deep( $value ) );
 				}
 			}
 		}
 
-		return $_gaddon_posted_settings;
+		return $_kaddon_posted_settings;
 	}
 
 	public static function maybe_decode_json( $value ) {
@@ -2626,7 +2626,7 @@ abstract class KDNAAddOn {
 		$icon_class         = rgar( $choice, 'icon' ) ? ' kaddon-setting-choice-visual' : '';
 
 		$checkbox_item  = '<div id="kaddon-setting-checkbox-choice-' . $choice['id'] . '" class="kaddon-setting-checkbox' . $horizontal_class . $icon_class . '">';
-		$checkbox_item .= '<input type=hidden name="_gaddon_setting_' . esc_attr( $choice['name'] ) . '" value="' . $hidden_field_value . '" />';
+		$checkbox_item .= '<input type=hidden name="_kaddon_setting_' . esc_attr( $choice['name'] ) . '" value="' . $hidden_field_value . '" />';
 
 		if ( is_callable( array( $this, "checkbox_input_{$choice['name']}" ) ) ) {
 			$markup = call_user_func( array( $this, "checkbox_input_{$choice['name']}" ), $choice, $attributes, $value, $tooltip );
@@ -3020,14 +3020,14 @@ abstract class KDNAAddOn {
 			$additional_classes = array();
 
 			// Set has custom key flag.
-			$has_gf_custom = false;
+			$has_kdna_custom = false;
 
 			// Loop through key field choices.
 			foreach ( $select_field['choices'] as $choice ) {
 
 				// If choice name or value is the custom key, set custom key flag to true and exit loop.
 				if ( rgar( $choice, 'name' ) == 'kdna_custom' || rgar( $choice, 'value' ) == 'kdna_custom' ) {
-					$has_gf_custom = true;
+					$has_kdna_custom = true;
 					break;
 				}
 
@@ -3039,7 +3039,7 @@ abstract class KDNAAddOn {
 
 						// If sub-choice name or value is the custom key, set custom key flag to true and exit loop.
 						if ( rgar( $subchoice, 'name' ) == 'kdna_custom' || rgar( $subchoice, 'value' ) == 'kdna_custom' ) {
-							$has_gf_custom = true;
+							$has_kdna_custom = true;
 							break;
 						}
 					}
@@ -3049,7 +3049,7 @@ abstract class KDNAAddOn {
 			}
 
 			// If custom key option is not found and we're allowed to add it, add it.
-			if ( ! $has_gf_custom ) {
+			if ( ! $has_kdna_custom ) {
 
 				if ( $type == 'key' ) {
 
@@ -6740,7 +6740,7 @@ abstract class KDNAAddOn {
 	 * @since 2.0.7
 	 */
 	public function load_text_domain() {
-		KDNACommon::load_gf_text_domain( $this->get_slug(), plugin_basename( dirname( $this->_full_path ) ) );
+		KDNACommon::load_kdna_text_domain( $this->get_slug(), plugin_basename( dirname( $this->_full_path ) ) );
 	}
 
 	/**

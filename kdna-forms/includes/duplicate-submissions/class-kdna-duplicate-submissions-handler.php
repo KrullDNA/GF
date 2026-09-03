@@ -85,7 +85,7 @@ class KDNA_Duplicate_Submissions_Handler {
 	 */
 	private function get_localized_script_data() {
 		return array(
-			'is_gf_submission'      => (int) $this->is_valid_submission(),
+			'is_kdna_submission'      => (int) $this->is_valid_submission(),
 			'safari_redirect_param' => self::SAFARI_REDIRECT_PARAM,
 		);
 	}

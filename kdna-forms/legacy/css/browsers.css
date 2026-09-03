@@ -2,13 +2,13 @@
 ----------------------------------------------------------------
 
 browsers.css
-Gravity Forms Browser-Specific CSS
-http://www.gravityforms.com
+KDNA Forms Browser-Specific CSS
+https://kdnaforms.com
 updated: May 22, 2018 03:13 PM US Eastern Time
 
-Gravity Forms is a Rocketgenius project
-copyright 2008-2026 Rocketgenius Inc.
-http: //www.rocketgenius.com
+KDNA Forms is a KrullDNA project
+copyright 2008-2026 KrullDNA
+https://kdnaforms.com
 this may not be redistributed without the
 express written permission of the author.
 
@@ -155,12 +155,12 @@ to no.
     margin-right: 1px;
 }
 
-.kform_legacy_markup_wrappergf_browser_gecko .chosen-container-single .chosen-single {
+.kform_legacy_markup_wrapperkdna_browser_gecko .chosen-container-single .chosen-single {
     height: 32px;
     line-height: 2.4;
 }
 
-.kform_legacy_markup_wrappergf_browser_gecko .chosen-container-single .chosen-single div b {
+.kform_legacy_markup_wrapperkdna_browser_gecko .chosen-container-single .chosen-single div b {
     position: relative;
     top: 5px;
 }

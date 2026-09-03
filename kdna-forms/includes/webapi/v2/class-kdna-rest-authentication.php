@@ -104,10 +104,10 @@ class KDNA_REST_Authentication {
 		$rest_prefix = trailingslashit( rest_get_url_prefix() );
 
 		// Check if our endpoint.
-		$is_gf_endpoint = ( strpos( $_SERVER['REQUEST_URI'], $rest_prefix . 'gf/' ) !== false ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$is_kdna_endpoint = ( strpos( $_SERVER['REQUEST_URI'], $rest_prefix . 'gf/' ) !== false ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		// Allow third party plugins use our authentication methods.
-		$third_party = ( false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix . 'gf-' ) );  // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$third_party = ( false !== strpos( $_SERVER['REQUEST_URI'], $rest_prefix . 'kdna-' ) );  // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( has_filter( 'kdnaform_is_request_to_rest_api' ) ) {
 			$this->log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_is_request_to_rest_api.' );
@@ -118,7 +118,7 @@ class KDNA_REST_Authentication {
 		 *
 		 * @param bool $is_rest_api_request True if this is a request to the KDNA Forms REST API. False if not.
 		 */
-		return apply_filters( 'kdnaform_is_request_to_rest_api', $is_gf_endpoint || $third_party );
+		return apply_filters( 'kdnaform_is_request_to_rest_api', $is_kdna_endpoint || $third_party );
 	}
 
 	/**
@@ -736,7 +736,7 @@ class KDNA_REST_Authentication {
 	 * @return bool|WP_Error
 	 */
 	private function check_permissions( $method ) {
-		if ( ! $this->is_gf_auth_method() ) {
+		if ( ! $this->is_kdna_auth_method() ) {
 			return true;
 		}
 
@@ -774,7 +774,7 @@ class KDNA_REST_Authentication {
 	 *
 	 */
 	private function update_last_access() {
-		if ( ! $this->is_gf_auth_method() ) {
+		if ( ! $this->is_kdna_auth_method() ) {
 			return;
 		}
 
@@ -887,7 +887,7 @@ class KDNA_REST_Authentication {
 	 *
 	 * @return bool
 	 */
-	private function is_gf_auth_method() {
+	private function is_kdna_auth_method() {
 		return in_array( $this->auth_method, array( 'basic_auth', 'oauth1' ) );
 	}
 

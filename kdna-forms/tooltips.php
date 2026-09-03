@@ -4,8 +4,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	die();
 }
 
-global $__gf_tooltips;
-$__gf_tooltips = array(
+global $__kdna_tooltips;
+$__kdna_tooltips = array(
 	'notification_send_to_email'                  => '<strong>' . __( 'Send To Email Address', 'kdnaforms' ) . '</strong>' . __( 'Enter the email address you would like the notification email sent to.', 'kdnaforms' ),
 	'notification_autoformat'                     => '<strong>' . __( 'Disable Auto-Formatting', 'kdnaforms' ) . '</strong>' . __( 'When enabled, auto-formatting will insert paragraph breaks automatically. Disable auto-formatting when using HTML to create email notification content.', 'kdnaforms' ),
 	'notification_send_to_routing'                => '<strong>' . __( 'Routing', 'kdnaforms' ) . '</strong>' . __( 'Allows notification to be sent to different email addresses depending on values selected in the form.', 'kdnaforms' ),
@@ -159,7 +159,7 @@ $__gf_tooltips = array(
 	'settings_currency'                           => '<strong>' . __( 'Currency', 'kdnaforms' ) . '</strong>' . __( 'Please select the currency for your location.  Currency is used for pricing fields and price calculations.', 'kdnaforms' ),
 	'settings_akismet'                            => '<strong>' . __( 'Akismet Integration', 'kdnaforms' ) . '</strong>' . __( 'Protect your form entries from spam using Akismet.', 'kdnaforms' ),
 	'entries_conversion'                          => '<strong>' . __( 'Entries Conversion', 'kdnaforms' ) . '</strong>' . __( 'Conversion is the percentage of form views that generated an entry. If a form was viewed twice, and one entry was generated, the conversion will be 50%.', 'kdnaforms' ),
-	'widget_tabindex'                             => '<strong>' . __( 'Tab Index Start Value', 'kdnaforms' ) . '</strong>' . __( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your Gravity Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ),
+	'widget_tabindex'                             => '<strong>' . __( 'Tab Index Start Value', 'kdnaforms' ) . '</strong>' . __( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your KDNA Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ),
 	'notification_override_email'                 => '<strong>' . __( 'Override Notifications', 'kdnaforms' ) . '</strong>' . __( 'Enter a comma separated list of email addresses you would like to receive the selected notification emails.', 'kdnaforms' ),
 	'form_percentage_confirmation_display'        => '<strong>' . __( 'Progress Bar Confirmation Display', 'kdnaforms' ) . '</strong>' . __( 'Check this box if you would like the progress bar to display with the confirmation text.', 'kdnaforms' ),
 	'percentage_confirmation_page_name'           => '<strong>' . __( 'Progress Bar Completion Text', 'kdnaforms' ) . '</strong>' . __( 'Enter text to display at the top of the progress bar.', 'kdnaforms' ),
@@ -176,7 +176,7 @@ $__gf_tooltips = array(
 /**
  * Displays the tooltip
  *
- * @global $__gf_tooltips
+ * @global $__kdna_tooltips
  *
  * @param string $name      The name of the tooltip to be displayed
  * @param string $css_class Optional. The CSS class to apply toi the element. Defaults to empty string.
@@ -185,21 +185,21 @@ $__gf_tooltips = array(
  * @return string
  */
 function kdnaform_tooltip( $name, $css_class = '', $return = false ) {
-	global $__gf_tooltips; //declared as global to improve WPML performance
+	global $__kdna_tooltips; //declared as global to improve WPML performance
 
 	$css_class     = empty( $css_class ) ? 'tooltip' : $css_class;
 	/**
 	 * Filters the tooltips available
 	 *
-	 * @param array $__gf_tooltips Array containing the available tooltips
+	 * @param array $__kdna_tooltips Array containing the available tooltips
 	 */
-	$__gf_tooltips = apply_filters( 'kdnaform_tooltips', $__gf_tooltips );
+	$__kdna_tooltips = apply_filters( 'kdnaform_tooltips', $__kdna_tooltips );
 
 	//AC: the $name parameter is a key when it has only one word. Maybe try to improve this later.
 	$parameter_is_key = count( explode( ' ', $name ) ) == 1;
 
-	$tooltip_text  = $parameter_is_key ? rgar( $__gf_tooltips, $name ) : $name;
-	$tooltip_class = isset( $__gf_tooltips[ $name ] ) ? "tooltip_{$name}" : '';
+	$tooltip_text  = $parameter_is_key ? rgar( $__kdna_tooltips, $name ) : $name;
+	$tooltip_class = isset( $__kdna_tooltips[ $name ] ) ? "tooltip_{$name}" : '';
 
 	if ( empty( $tooltip_text ) ) {
 		return '';

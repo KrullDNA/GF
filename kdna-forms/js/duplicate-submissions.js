@@ -102,7 +102,7 @@
 	 * Initialize.
 	 */
 	var init = function() {
-		if ( window.kdna_duplicate_submissions_initialized || config.is_gf_submission !== '1' || !window.history.replaceState ) {
+		if ( window.kdna_duplicate_submissions_initialized || config.is_kdna_submission !== '1' || !window.history.replaceState ) {
 			return;
 		}
 

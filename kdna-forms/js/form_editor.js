@@ -106,7 +106,7 @@ function InitializeEditor() {
 			var deprecatedEvents = new Array( 'kform_load_form_settings' );
 			for ( var e in data.events ) {
 				if ( jQuery.inArray( e, deprecatedEvents ) !== -1 ) {
-					console.log( 'Gravity Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
+					console.log( 'KDNA Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
 				}
 			}
 		}
@@ -3457,7 +3457,7 @@ function SetInputChoice(inputId, index, value, text){
  * Deprecated in 2.9.0
  */
 function UpdateFieldChoices(fieldType){
-	console.log( 'UpdateFieldChoices is deprecated as of Gravity Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
+	console.log( 'UpdateFieldChoices is deprecated as of KDNA Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
 	var choices = '';
 	var selector = '';
 	var inputContainer = ( "1" === kdna_legacy.is_legacy ) ? 'li' : 'div';
@@ -3537,7 +3537,7 @@ function UpdateFieldChoices(fieldType){
 			break;
 	}
 
-	selector = '.gfield_' + fieldType;
+	selector = '.kfield_' + fieldType;
 
 	jQuery(".field_selected " + selector).html(choices);
 }

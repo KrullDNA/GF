@@ -1374,7 +1374,7 @@ function initLayoutEditor( $ ) {
 	}
 
 	/**
-	 * Get the Gravity Forms field object based on the given element.
+	 * Get the KDNA Forms field object based on the given element.
 	 *
 	 * @param {jQuery} $elem The element to be used to fetch the field object.
 	 *

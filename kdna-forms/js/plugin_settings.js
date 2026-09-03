@@ -5,15 +5,15 @@
 	});
 
 	var $container  = $( 'div[id="kform_setting_reset"]' ),
-		$publicKey  = $( 'input[name="_gform_setting_public_key"]' ),
-		$privateKey = $( 'input[name="_gform_setting_private_key"]' ),
-		$reset      = $( 'input[name="_gform_setting_reset"]' );
+		$publicKey  = $( 'input[name="_kform_setting_public_key"]' ),
+		$privateKey = $( 'input[name="_kform_setting_private_key"]' ),
+		$reset      = $( 'input[name="_kform_setting_reset"]' );
 
 	window.loadRecaptcha = function () {
 
 		var $recaptcha = $( '#recaptcha' ),
 			$save      = $( '#kform-settings-save' ),
-			type       = $( 'input[name="_gform_setting_type"]:checked' ).val();
+			type       = $( 'input[name="_kform_setting_type"]:checked' ).val();
 
 		// Flush existing state.
 		window.___grecaptcha_cfg.clients = {};
@@ -71,7 +71,7 @@
 	$publicKey.on( 'change', loadRecaptcha );
 	$privateKey.on( 'change', loadRecaptcha );
 
-	$( 'input[name="_gform_setting_type"]' ).on( 'change', function () {
+	$( 'input[name="_kform_setting_type"]' ).on( 'change', function () {
 		loadRecaptcha();
 	} );
 

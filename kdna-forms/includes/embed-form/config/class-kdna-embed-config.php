@@ -81,7 +81,7 @@ class KDNA_Embed_Config extends KDNA_Config {
 		return [
 			'edit_post'      => [
 				'value'   => $edit_link,
-				'default' => 'https://gravity.loc/wp-admin/post.php?post=%1$s&action=edit',
+				'default' => 'https://KDNA.loc/wp-admin/post.php?post=%1$s&action=edit',
 			],
 			'shortcode_docs' => 'https://docs.kdnaforms.com/shortcodes/',
 		];

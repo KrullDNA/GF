@@ -1398,7 +1398,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 
 		switch ( $event ) {
 			case 'keyup' :
-				return "onchange='kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");' onkeyup='clearTimeout(__gf_timeout_handle); __gf_timeout_handle = setTimeout(\"kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ")\", 300);'";
+				return "onchange='kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ");' onkeyup='clearTimeout(__kdna_timeout_handle); __kdna_timeout_handle = setTimeout(\"kdnaform_apply_rules(" . $this->formId . ',' . KDNACommon::json_encode( $this->conditionalLogicFields ) . ")\", 300);'";
 				break;
 
 			case 'click' :
@@ -1811,7 +1811,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 		$field_id = '<span class="kfield-compact-icon--id">' . sprintf( esc_html__( 'ID: %s', 'kdnaforms' ), $this->id ) . '</span>';
 
 		$conditional_display = rgars( $this, 'conditionalLogic/enabled' ) && $this->conditionalLogic['enabled'] ? 'block' : 'none';
-		$conditional         = "<span class='kfield-compact-icon--conditional' id='gfield_{$this->id}-conditional-logic-icon' title='" . esc_attr( 'Conditional Logic', 'kdnaforms' ) . "' style='display: {$conditional_display}' aria-label=" . esc_html( 'Conditional Logic', 'kdnaforms' ) . ">" . KDNACommon::get_icon_markup( array( 'icon' => 'kform-icon--conditional-logic' ) ) . "<span class='screen-reader-text'>" . esc_attr( 'This field has conditional logic enabled.', 'kdnaforms' ) . "</span></span>";
+		$conditional         = "<span class='kfield-compact-icon--conditional' id='kfield_{$this->id}-conditional-logic-icon' title='" . esc_attr( 'Conditional Logic', 'kdnaforms' ) . "' style='display: {$conditional_display}' aria-label=" . esc_html( 'Conditional Logic', 'kdnaforms' ) . ">" . KDNACommon::get_icon_markup( array( 'icon' => 'kform-icon--conditional-logic' ) ) . "<span class='screen-reader-text'>" . esc_attr( 'This field has conditional logic enabled.', 'kdnaforms' ) . "</span></span>";
 
 		$field_sidebar_messages    = $this->get_field_sidebar_messages();
 		$field_sidebar_messages    = KDNACommon::is_form_editor() ? apply_filters( 'kdnaform_field_sidebar_messages', $field_sidebar_messages, $this ) : $field_sidebar_messages;

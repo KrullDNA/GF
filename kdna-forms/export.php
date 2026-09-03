@@ -1632,7 +1632,7 @@ deny from all';
 			/**
 			 * Allows you to filter and modify the Export Form
 			 *
-			 * @param array $form Assign which Gravity Form to change the export form for
+			 * @param array $form Assign which KDNA Form to change the export form for
 			 */
 			$form = kdna_apply_filters( array( 'kdnaform_export_form', $form['id'] ), $form );
 

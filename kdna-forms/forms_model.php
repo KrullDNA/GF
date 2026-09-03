@@ -101,7 +101,7 @@ class KDNAFormsModel {
 	 */
 	public static function get_database_version() {
 		// KDNA Forms: Always return modern version to prevent legacy table fallback.
-		// The legacy tables (rg_form, rg_lead, etc.) are from Gravity Forms < 2.3
+		// The legacy tables (rg_form, rg_lead, etc.) are from KDNA Forms < 2.3
 		// and do not exist in KDNA Forms installations. Returning >= 2.3 keeps
 		// legacy code paths (e.g. GF_Forms_Model_Legacy) from ever being called.
 		// This is the DB schema version, not the plugin version.
@@ -177,7 +177,7 @@ class KDNAFormsModel {
 	public static function get_form_table_name() {
 		global $wpdb;
 
-		// KDNA Forms always uses the modern gf_ table prefix.
+		// KDNA Forms always uses the modern kdna_ table prefix.
 		return $wpdb->prefix . 'gf_form';
 	}
 
@@ -5023,17 +5023,17 @@ class KDNAFormsModel {
 	 */
 	public static function get_fileupload_value( $form_id, $input_name ) {
 		_deprecated_function( 'KDNAFormsModel::get_fileupload_value', '1.9', 'KDNA_Field_Fileupload::get_fileupload_value' );
-		global $_gf_uploaded_files;
+		global $_kdna_uploaded_files;
 
 		KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Starting.' );
 
-		if ( empty( $_gf_uploaded_files ) ) {
+		if ( empty( $_kdna_uploaded_files ) ) {
 			KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): No files uploaded. Exiting.' );
-			$_gf_uploaded_files = array();
+			$_kdna_uploaded_files = array();
 		}
 
 
-		if ( ! isset( $_gf_uploaded_files[ $input_name ] ) ) {
+		if ( ! isset( $_kdna_uploaded_files[ $input_name ] ) ) {
 
 			//check if file has already been uploaded by previous step
 			$file_info     = self::get_temp_filename( $form_id, $input_name );
@@ -5042,14 +5042,14 @@ class KDNAFormsModel {
 			KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Temp file path: ' . $temp_filepath );
 			if ( $file_info && file_exists( $temp_filepath ) ) {
 				KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Moving temp file: ' . $temp_filepath );
-				$_gf_uploaded_files[ $input_name ] = self::move_temp_file( $form_id, $file_info );
+				$_kdna_uploaded_files[ $input_name ] = self::move_temp_file( $form_id, $file_info );
 			} else if ( ! empty( $_FILES[ $input_name ]['name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Uploading file: ' . $_FILES[ $input_name ]['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$_gf_uploaded_files[ $input_name ] = self::upload_file( $form_id, $_FILES[ $input_name ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$_kdna_uploaded_files[ $input_name ] = self::upload_file( $form_id, $_FILES[ $input_name ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			}
 		}
 
-		return rgget( $input_name, $_gf_uploaded_files );
+		return rgget( $input_name, $_kdna_uploaded_files );
 	}
 
 	public static function get_form_unique_id( $form_id ) {
@@ -5209,8 +5209,8 @@ class KDNAFormsModel {
 		$lead['post_id'] = $post_id;
 
 		//adding form id and entry id hidden custom fields
-		add_post_meta( $post_id, '_gform-form-id', $form['id'] );
-		add_post_meta( $post_id, '_gform-entry-id', $lead['id'] );
+		add_post_meta( $post_id, '_kform-form-id', $form['id'] );
+		add_post_meta( $post_id, '_kform-entry-id', $lead['id'] );
 
 		$post_images = array();
 		if ( ! empty( $post_data['images'] ) ) {
@@ -5473,7 +5473,7 @@ class KDNAFormsModel {
 			return false;
 		}
 
-		$form_id = get_post_meta( $post_id, '_gform-form-id', true );
+		$form_id = get_post_meta( $post_id, '_kform-form-id', true );
 
 		/**
 		 * Filter the media upload location.

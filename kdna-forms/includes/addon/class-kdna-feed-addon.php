@@ -281,8 +281,8 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		if ( $this->_supports_feed_ordering ) {
 			$scripts[] = array(
-				'handle'    => 'gaddon_feedorder',
-				'src'       => $this->get_gfaddon_base_url() . "/js/gaddon_feedorder{$min}.js",
+				'handle'    => 'kaddon_feedorder',
+				'src'       => $this->get_gfaddon_base_url() . "/js/kaddon_feedorder{$min}.js",
 				'version'   => KDNACommon::$version,
 				'deps'      => array( 'jquery', 'jquery-ui-sortable' ),
 				'in_footer' => false,
@@ -296,8 +296,8 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		if( $this->_supports_frontend_feeds ) {
 			$scripts[] = array(
-				'handle'  => 'gaddon_frontend',
-				'src'     => $this->get_gfaddon_base_url() . "/js/gaddon_frontend{$min}.js",
+				'handle'  => 'kaddon_frontend',
+				'src'     => $this->get_gfaddon_base_url() . "/js/kaddon_frontend{$min}.js",
 				'deps'    => array( 'jquery', 'kdnaform_conditional_logic' ),
 				'version' => KDNACommon::$version,
 				'enqueue' => array( array( $this, 'has_frontend_feeds' ) ),
@@ -2875,7 +2875,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		$script = sprintf( '; new KDNAFrontendFeeds( %s );', json_encode( $args ) );
 
-		KDNAFormDisplay::add_init_script( $form['id'], 'gaddon_frontend_feeds', KDNAFormDisplay::ON_PAGE_RENDER, $script );
+		KDNAFormDisplay::add_init_script( $form['id'], 'kaddon_frontend_feeds', KDNAFormDisplay::ON_PAGE_RENDER, $script );
 
 	}
 

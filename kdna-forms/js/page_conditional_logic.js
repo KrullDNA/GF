@@ -136,7 +136,7 @@ var GFPageConditionalLogic = function (args) {
         }
 
         page.isVisible = true;
-        $('#gform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'visible');
+        $('#kform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'visible');
         /**
          * Fires after the conditional logic on the form has been evaluated and the page has been found to be visible.
          *
@@ -159,7 +159,7 @@ var GFPageConditionalLogic = function (args) {
         }
 
         page.isVisible = false;
-        $('#gform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'hidden');
+        $('#kform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'hidden');
 
         /**
          * Fires after the conditional logic on the form has been evaluated and the page has become hidden.

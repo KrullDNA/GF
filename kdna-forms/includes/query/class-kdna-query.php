@@ -810,7 +810,7 @@ class KDNA_Query {
 		 *
 		 * @param array $sql An array with all the SQL fragments: select, from, join, where, order, paginate.
 		 */
-		$sql = apply_filters( 'kdnaform_gf_query_sql', compact( 'select', 'from', 'join', 'where', 'order', 'paginate' ) );
+		$sql = apply_filters( 'kdnaform_kdna_query_sql', compact( 'select', 'from', 'join', 'where', 'order', 'paginate' ) );
 		$sql = implode( ' ', array_filter( $sql, 'strlen' ) );
 
 		KDNACommon::log_debug( __METHOD__ . '(): sql => ' . $sql );

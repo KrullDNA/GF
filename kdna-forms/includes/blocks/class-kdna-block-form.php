@@ -205,7 +205,7 @@ class KDNA_Block_Form extends KDNA_Block {
 			}
 
 			// Get form output string.
-			$form_string = gravity_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) );
+			$form_string = kdna_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) );
 
 			// Get output buffer contents.
 			$buffer_contents = ob_get_contents();
@@ -227,7 +227,7 @@ class KDNA_Block_Form extends KDNA_Block {
 			$field_values = '';
 		}
 
-		return gravity_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) ); // nosemgrep audit.php.wp.security.xss.block-attr
+		return kdna_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) ); // nosemgrep audit.php.wp.security.xss.block-attr
 
 	}
 

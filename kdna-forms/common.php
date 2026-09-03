@@ -2474,7 +2474,7 @@ class KDNACommon {
 		), $source_header, $notification, $entry );
 
 		if ( ! empty( $source_header ) ) {
-			$headers['X-Gravity-Forms-Source'] = 'X-Gravity-Forms-Source: ' . $source_header;
+			$headers['X-KDNA-Forms-Source'] = 'X-KDNA-Forms-Source: ' . $source_header;
 		}
 
 		$abort_email = false;
@@ -3292,7 +3292,7 @@ Content-Type: text/html;
 			$message = $raw_response['body'];
 		}
 
-		//validating that message is a valid Gravity Form message. If message is invalid, don't display anything
+		//validating that message is a valid KDNA Form message. If message is invalid, don't display anything
 		if ( substr( $message, 0, 10 ) != '<!--KDNAM-->' ) {
 			$message = '';
 		}
@@ -3301,10 +3301,10 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Post request to Gravity Manager.
+	 * Post request to KDNA Manager.
 	 *
 	 * @since unknown
-	 * @since 2.5     Remove Gravity Manager Proxy.
+	 * @since 2.5     Remove KDNA Manager Proxy.
 	 *
 	 * @param string $file    The file.
 	 * @param string $query   The query string.
@@ -3317,10 +3317,10 @@ Content-Type: text/html;
 		if ( ! isset( $options['headers'] ) ) {
 			$options['headers'] = array();
 		}
-		// Forcing Referer to the unfiltered home url when sending requests to gravity manager.
+		// Forcing Referer to the unfiltered home url when sending requests to KDNA manager.
 		$options['headers']['Referer'] = get_option( 'home' );
 
-		// Sending filtered version of URL so that gravity manager can remove duplicate URLs when filtered and unfiltered URLs are different.
+		// Sending filtered version of URL so that KDNA manager can remove duplicate URLs when filtered and unfiltered URLs are different.
 		$options['headers']['Filtered-Site-URL'] = get_bloginfo( 'url' );
 
 		$manager_url = defined( 'KDNA_MANAGER_URL' ) ? KDNA_MANAGER_URL : '';
@@ -4856,7 +4856,7 @@ Content-Type: text/html;
 
 		// Gathering Akismet information
 		$akismet_fields                         = array();
-		$akismet_fields['comment_type']         = 'gravity_form';
+		$akismet_fields['comment_type']         = 'kdna_form';
 		$akismet_fields['comment_author']       = self::get_akismet_field( 'name', $form, $entry );
 		$akismet_fields['comment_author_email'] = self::get_akismet_field( 'email', $form, $entry );
 		$akismet_fields['comment_author_url']   = self::get_akismet_field( 'website', $form, $entry );
@@ -6042,7 +6042,7 @@ Content-Type: text/html;
 		_deprecated_function( __FUNCTION__, '2.5.7', 'Dismissable_Messages::get_db_key()' );
 	}
 
-	private static function requires_gf_vars() {
+	private static function requires_kdna_vars() {
 		$dependent_scripts = array(
 			'kdnaform_form_admin',
 			'kdnaform_kdnaforms',
@@ -6065,7 +6065,7 @@ Content-Type: text/html;
 	 *
 	 * @return bool
 	 */
-	public static function requires_gf_hooks_javascript() {
+	public static function requires_kdna_hooks_javascript() {
 		require_once self::get_base_path() . '/form_display.php';
 
 		// Script has already been output; bail to avoid duplicating it.
@@ -6240,8 +6240,8 @@ Content-Type: text/html;
 	 *
 	 * @return void
 	 */
-	public static function maybe_output_gf_vars() {
-		if ( self::requires_gf_vars() ) {
+	public static function maybe_output_kdna_vars() {
+		if ( self::requires_kdna_vars() ) {
 			echo self::get_inline_script_tag( self::kdna_vars( false ), false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
@@ -6255,7 +6255,7 @@ Content-Type: text/html;
 	 *
 	 * @return void
 	 */
-	public static function check_for_gf_widgets( $sidebar_index ) {
+	public static function check_for_kdna_widgets( $sidebar_index ) {
 		require_once self::get_base_path() . '/form_display.php';
 		$sidebars = wp_get_sidebars_widgets();
 
@@ -6280,7 +6280,7 @@ Content-Type: text/html;
 	 * @since 2.5
 	 */
 	public static function output_hooks_javascript() {
-		if ( ! self::requires_gf_hooks_javascript() ) {
+		if ( ! self::requires_kdna_hooks_javascript() ) {
 			return;
 		}
 
@@ -6288,7 +6288,7 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Get the Javascript code from the gforms_hooks file and return it.
+	 * Get the Javascript code from the kdna_hooks file and return it.
 	 *
 	 * @since 2.5
 	 * @since 2.9.19 Added the $set_printed_prop param.
@@ -6305,7 +6305,7 @@ Content-Type: text/html;
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['kdnaform_debug'] ) ? '' : '.min'; // phpcs:ignoreWordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Recommended
 
-		return file_get_contents( KDNACommon::get_base_path() . '/js/gforms_hooks' . $min . '.js' );
+		return file_get_contents( KDNACommon::get_base_path() . '/js/kdna_hooks' . $min . '.js' );
 	}
 
 	/**
@@ -6704,9 +6704,9 @@ Content-Type: text/html;
 	 * @deprecated since 2.6
 	 * @remove-in 3.0
 	 * @see        class-kdna-config-service-provider.php::register_config_items()
-	 * @see        kdnaform_gf_legacy_multi
+	 * @see        kdnaform_kdna_legacy_multi
 	 */
-	public static function localize_gf_legacy_multi() {
+	public static function localize_kdna_legacy_multi() {
 		return; // as of 2.6, we no longer directly localize our data.
 	}
 
@@ -7118,7 +7118,7 @@ Content-Type: text/html;
 	 *
 	 * @return string
 	 */
-	public static function load_gf_text_domain( $domain = 'kdnaforms', $basename = '' ) {
+	public static function load_kdna_text_domain( $domain = 'kdnaforms', $basename = '' ) {
 		$current_locale = version_compare( get_bloginfo( 'version', 'display' ), '5.0', '>=' ) ? determine_locale() : self::legacy_determine_locale();
 		$locale         = apply_filters( 'plugin_locale', $current_locale, $domain );
 

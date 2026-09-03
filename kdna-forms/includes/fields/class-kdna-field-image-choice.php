@@ -93,7 +93,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 						// get the image to check if it has already been resized or not
 						$image = wp_get_attachment_image_src(
 							$choice['attachment_id'],
-							'gform-' .  key( $image_sizes )
+							'kform-' .  key( $image_sizes )
 						);
 
 						if ( is_array( $image ) && $image[3] === false ) {

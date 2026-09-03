@@ -1479,7 +1479,7 @@ class Settings {
 	 */
 	public function process_postback() {
 
-		global $_gf_settings_posted_values;
+		global $_kdna_settings_posted_values;
 
 		// If postback has already been processed, exit.
 		if ( $this->processed_postback ) {
@@ -1523,7 +1523,7 @@ class Settings {
 			$this->set_values( $values );
 
 			// Reset postback values.
-			$_gf_settings_posted_values = array();
+			$_kdna_settings_posted_values = array();
 
 			// Set validation message.
 			$this->postback_message = $this->get_save_success_message();
@@ -2508,32 +2508,32 @@ class Settings {
 	 */
 	public function get_posted_values() {
 
-		global $_gf_settings_posted_values;
+		global $_kdna_settings_posted_values;
 
 		// If posted values have already been retrieved, return.
-		if ( isset( $_gf_settings_posted_values ) ) {
-			return $_gf_settings_posted_values;
+		if ( isset( $_kdna_settings_posted_values ) ) {
+			return $_kdna_settings_posted_values;
 		}
 
 		// Initialize posted values array.
-		$_gf_settings_posted_values = array();
+		$_kdna_settings_posted_values = array();
 
 		// If no values have been posted, return.
 		if ( count( $_POST ) <= 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			return $_gf_settings_posted_values;
+			return $_kdna_settings_posted_values;
 		}
 
 		// Strip input name prefix from keys.
 		foreach ( $_POST as $key => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( preg_match( '|' . $this->input_name_prefix . '_(.*)|', $key, $matches ) ) {
-				$_gf_settings_posted_values[ $matches[1] ] = KDNACommon::maybe_decode_json( stripslashes_deep( $value ) );
-				if ( is_string( $_gf_settings_posted_values[ $matches[1] ] ) ) {
-					$_gf_settings_posted_values[ $matches[1] ] = trim( $_gf_settings_posted_values[ $matches[1] ] );
+				$_kdna_settings_posted_values[ $matches[1] ] = KDNACommon::maybe_decode_json( stripslashes_deep( $value ) );
+				if ( is_string( $_kdna_settings_posted_values[ $matches[1] ] ) ) {
+					$_kdna_settings_posted_values[ $matches[1] ] = trim( $_kdna_settings_posted_values[ $matches[1] ] );
 				}
 			}
 		}
 
-		return $_gf_settings_posted_values;
+		return $_kdna_settings_posted_values;
 
 	}
 

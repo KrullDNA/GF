@@ -820,7 +820,7 @@ GFConditionalLogic.prototype.updateCompactView = function() {
 		return;
 	}
 
-	const icon = document.querySelector( '#gfield_' + this.fieldId + '-conditional-logic-icon' );
+	const icon = document.querySelector( '#kfield_' + this.fieldId + '-conditional-logic-icon' );
 	if ( ! icon ) {
 		return;
 	}

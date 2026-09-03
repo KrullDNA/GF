@@ -838,12 +838,12 @@ class KDNAFormDisplay {
 			return array( 'orbital' );
 		}
 
-		// Enqueues Gravity and Theme Framework themes in the block editor
+		// Enqueues KDNA and Theme Framework themes in the block editor
 		if ( KDNACommon::is_block_editor_page() ) {
 			return array( 'kdna-theme', 'orbital' );
 		}
 
-		// Enqueues Gravity theme in the entry detail views
+		// Enqueues KDNA theme in the entry detail views
 		if ( KDNACommon::is_entry_detail() ) {
 			return array( 'kdna-theme' );
 		}
@@ -1392,7 +1392,7 @@ class KDNAFormDisplay {
 			}
 
 			$action       = esc_url( $action );
-			$form_string .= kdna_apply_filters( array( 'kdnaform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='gform_{$form_id}' {$form_css_class} action='{$action}' data-formid='{$form_id}' novalidate>", $form );
+			$form_string .= kdna_apply_filters( array( 'kdnaform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='kform_{$form_id}' {$form_css_class} action='{$action}' data-formid='{$form_id}' novalidate>", $form );
 
 			// If Save and Continue token was provided but expired/invalid, display error message.
 			if ( isset( $_GET['kdna_token'] ) && ! is_array( $incomplete_submission_info ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -1553,7 +1553,7 @@ class KDNAFormDisplay {
 						"wp.a11y.speak(jQuery('#kform_confirmation_message_{$form_id}').text());" .
 						'}' .
 						'else{' .
-						"jQuery('#gform_{$form_id}').append(contents);" .
+						"jQuery('#kform_{$form_id}').append(contents);" .
 						"if(window['gformRedirect']) {gformRedirect();}" .
 						'}' .
 						self::post_render_script( $form_id ) .
@@ -1629,7 +1629,7 @@ class KDNAFormDisplay {
 	 * @param int    $form_id            The form ID.
 	 * @param int    $page_number        The page number to render.
 	 * @param array  $field_values       An array of field values to populate the form with.
-	 * @param string $theme              The current form theme (i.e. orbital or gravity).
+	 * @param string $theme              The current form theme (i.e. orbital or KDNA).
 	 * @param array  $style_settings     An array of block or shortcode style settings.
 	 * @param string $submission_method  The submission method (i.e. ajax or postback).
 	 *
@@ -2959,13 +2959,13 @@ class KDNAFormDisplay {
 
 	public static function failed_state_validation( $form_id, $field, $value ) {
 
-		global $_gf_state;
+		global $_kdna_state;
 
 		if ( ! $field->is_state_validation_supported() ) {
 			return false;
 		}
 
-		if ( ! isset( $_gf_state ) ) {
+		if ( ! isset( $_kdna_state ) ) {
 
 			if ( empty( $_POST["state_{$form_id}"] ) || ! is_string( $_POST["state_{$form_id}"] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				return true;
@@ -2984,7 +2984,7 @@ class KDNAFormDisplay {
 				return true;
 			}
 
-			$_gf_state = json_decode( $state[0], true );
+			$_kdna_state = json_decode( $state[0], true );
 		}
 
 		if ( ! is_array( $value ) ) {
@@ -2992,7 +2992,7 @@ class KDNAFormDisplay {
 		}
 
 		foreach ( $value as $key => $input_value ) {
-			$state = isset( $_gf_state[ $key ] ) ? $_gf_state[ $key ] : false;
+			$state = isset( $_kdna_state[ $key ] ) ? $_kdna_state[ $key ] : false;
 
 			//converting price to a number for single product fields and single shipping fields
 			if ( ( in_array( $field->inputType, array( 'singleproduct', 'hiddenproduct' ) ) && $key == $field->id . '.2' ) || $field->inputType == 'singleshipping' ) {
@@ -3174,7 +3174,7 @@ class KDNAFormDisplay {
 			return;
 		}
 
-		if ( preg_match_all( '/\[gravityform[s]? +.*?((id=.+?)|(name=.+?))\]/is', $post_content, $matches, PREG_SET_ORDER ) ) {
+		if ( preg_match_all( '/\[kdnaform[s]? +.*?((id=.+?)|(name=.+?))\]/is', $post_content, $matches, PREG_SET_ORDER ) ) {
 			foreach ( $matches as $match ) {
 				$attr    = shortcode_parse_atts( $match[1] );
 				$form_id = rgar( $attr, 'id' );
@@ -3333,7 +3333,7 @@ class KDNAFormDisplay {
 
 		$has_logic = false;
 
-		add_filter( 'kdnaform_gf_legacy_multi', function( $data ) use ( $form ) {
+		add_filter( 'kdnaform_kdna_legacy_multi', function( $data ) use ( $form ) {
 			$data[ $form['id'] ] = KDNACommon::is_legacy_markup_enabled( $form );
 
 			return $data;
@@ -5130,11 +5130,11 @@ class KDNAFormDisplay {
 								   <input type='hidden' class='kform_hidden' name='is_submit_{$form_id}' value='1' />
 								   <input type='hidden' class='kform_hidden' name='kform_submit' value='{$form_id}' />";
 
-		$ajax_submit = $is_iframe_ajax ? "onclick='jQuery(\"#gform_{$form_id}\").trigger(\"submit\",[true]);'" : '';
+		$ajax_submit = $is_iframe_ajax ? "onclick='jQuery(\"#kform_{$form_id}\").trigger(\"submit\",[true]);'" : '';
 
 		if ( KDNACommon::is_legacy_markup_enabled( $form ) ) {
 			$resume_form = "<div class='form_saved_message_emailform'>
-							<form action='{$action}' method='POST' id='gform_{$form_id}' data-formid='{$form_id}' {$target}>
+							<form action='{$action}' method='POST' id='kform_{$form_id}' data-formid='{$form_id}' {$target}>
 								{$iframe_ajax_fields}
 								<label for='kdnaform_resume_email' class='kdnaform_resume_email_label kfield_label' aria-describedby='email-validation-error'>{$email_input_label}</label>
 								<input type='email' name='kform_resume_email' value='{$email_esc}' id='kform_resume_email' placeholder='{$email_input_label}' aria-describedby='email-validation-error'/>
@@ -5148,7 +5148,7 @@ class KDNAFormDisplay {
 	                    </div>";
 		} else {
 			$resume_form = "<div class='form_saved_message_emailform'>
-						<form action='{$action}' method='POST' id='gform_{$form_id}' data-formid='{$form_id}' {$target}>
+						<form action='{$action}' method='POST' id='kform_{$form_id}' data-formid='{$form_id}' {$target}>
 							<div class='kform-body kform_body'>
 								<div id='kform_fields_{$form_id}' class='kform_fields top_label form_sublabel_below description_below'>
 									{$iframe_ajax_fields}
@@ -5368,8 +5368,8 @@ class KDNAFormDisplay {
 
 		return array(
 			'scroll' => $anchor,
-			'tag'    => $anchor !== false ? "<div id='gf_{$form_id}' class='kdnaform_anchor' tabindex='-1'></div>" : '',
-			'id'     => $anchor !== false ? "#gf_{$form_id}" : ''
+			'tag'    => $anchor !== false ? "<div id='kdna_{$form_id}' class='kdnaform_anchor' tabindex='-1'></div>" : '',
+			'id'     => $anchor !== false ? "#kdna_{$form_id}" : ''
 		);
 	}
 

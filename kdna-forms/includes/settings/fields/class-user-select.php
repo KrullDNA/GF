@@ -36,7 +36,7 @@ class User_Select extends Select {
 
 		$html .= sprintf(
 			'<article class="kform-dropdown" data-js="kform-settings-field-user-select">
-			    <span class="kform-visually-hidden" id="gform-%1$s-label">
+			    <span class="kform-visually-hidden" id="kform-%1$s-label">
 					%2$s
 			    </span>
 			
@@ -44,10 +44,10 @@ class User_Select extends Select {
 					type="button"
 					aria-expanded="false"
 					aria-haspopup="listbox"
-					aria-labelledby="gform-%1$s-label gform-%1$s-control"
+					aria-labelledby="kform-%1$s-label kform-%1$s-control"
 					class="kform-dropdown__control %1$s"
 					data-js="kform-dropdown-control"
-					id="gform-%1$s-control"
+					id="kform-%1$s-control"
 			    >
 					<span
 						class="kform-dropdown__control-text"
@@ -59,7 +59,7 @@ class User_Select extends Select {
 					<span class="kform-icon kform-icon--chevron kform-dropdown__chevron"></span>
 			    </button>
 			    <div
-					aria-labelledby="gform-%1$s-label"
+					aria-labelledby="kform-%1$s-label"
 					class="kform-dropdown__container"
 					role="listbox"
 					data-js="kform-dropdown-container"

@@ -90,9 +90,9 @@ class KDNA_Fields {
 		 * @param  KDNA_Field $field      A KDNA_Field object.
 		 * @param  array    $properties An array of field properties used to generate the KDNA_Field object.
 		 *
-		 * @see    https://docs.kdnaforms.com/kdnaform_gf_field_create/
+		 * @see    https://docs.kdnaforms.com/kdnaform_kdna_field_create/
 		 */
-		return apply_filters( 'kdnaform_gf_field_create', $field, $properties );
+		return apply_filters( 'kdnaform_kdna_field_create', $field, $properties );
 
 	}
 }

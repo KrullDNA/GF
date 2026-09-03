@@ -60,8 +60,8 @@ var gresults = {
         var results = jQuery("#kresults-results");
         var filterButtons = jQuery("#kresults-results-filter-buttons input");
         var viewSlug = jQuery("#kresults-view-slug").val();
-		var nonce = jQuery("#_gf_results_nonce").val()
-        var data_str = "action=gresults_get_results_" + viewSlug + "&" + gresultsData + '&_gf_results_nonce' + nonce ;
+		var nonce = jQuery("#_kdna_results_nonce").val()
+        var data_str = "action=kresults_get_results_" + viewSlug + "&" + gresultsData + '&_kdna_results_nonce' + nonce ;
         if (serverStateObject)
             data_str += "&state=" + serverStateObject + "&checkSum=" + checkSum;
 
@@ -132,20 +132,20 @@ var gresults = {
             offset = jQuery(container).data('offset'),
             viewSlug = jQuery("#kresults-view-slug").val(),
             searchCriteria = results.data('searchcriteria'),
-            nonce = jQuery("#_gf_results_nonce").val();
+            nonce = jQuery("#_kdna_results_nonce").val();
 
         jQuery.ajax({
             url     : ajaxurl,
             type    : 'POST',
             dataType: 'json',
             data    : {
-                action: 'gresults_get_more_results_' + viewSlug,
+                action: 'kresults_get_more_results_' + viewSlug,
                 view: viewSlug,
                 form_id: formId,
                 field_id: fieldId,
                 offset: offset,
                 search_criteria: searchCriteria,
-                _gf_results_nonce: nonce
+                _kdna_results_nonce: nonce
             },
             success : function (response) {
                 if (response === -1) {

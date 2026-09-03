@@ -1,13 +1,13 @@
 /*
 ----------------------------------------------------------------
 
-Gravity Forms Front End Form Styles
-http: //www.gravityforms.com
+KDNA Forms Front End Form Styles
+https://kdnaforms.com
 updated: May 22, 2018 03:17 PM US Eastern Time
 
-Gravity Forms is a Rocketgenius project
-copyright 2008-2026 Rocketgenius Inc.
-http: //www.rocketgenius.com
+KDNA Forms is a KrullDNA project
+copyright 2008-2026 KrullDNA
+https://kdnaforms.com
 this may not be redistributed without the
 express written permission of the author.
 
@@ -2436,7 +2436,7 @@ body .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfiel
 
 /* @end */
 
-/* updated chosen 1.8.5 styles - gravityforms specific  */
+/* updated chosen 1.8.5 styles - kdnaforms specific  */
 
 body .kform_legacy_markup_wrapper .chosen-container a.chosen-single {
     border-radius: inherit;
@@ -3093,7 +3093,7 @@ body .kform_legacy_markup_wrapper ul.chosen-results li {
         margin-right: 10px;
     }
 
-    /* updated chosen 1.8.5 styles - gravityforms specific  */
+    /* updated chosen 1.8.5 styles - kdnaforms specific  */
 
     body .kform_legacy_markup_wrapper select.medium.kfield_select + div.chosen-container-single[style],
     body .kform_legacy_markup_wrapper select.medium.kfield_select + div.chosen-container-multi[style] {

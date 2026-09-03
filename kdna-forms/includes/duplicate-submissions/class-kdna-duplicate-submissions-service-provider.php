@@ -26,7 +26,7 @@ class KDNA_Duplicate_Submissions_Service_Provider extends KDNA_Service_Provider 
 	 * @param KDNA_Service_Container $container Container singleton object.
 	 */
 	public function register( KDNA_Service_Container $container ) {
-		\KDNAForms::include_gravity_api();
+		\KDNAForms::include_kdna_api();
 
 		require_once plugin_dir_path( __FILE__ ) . 'class-kdna-duplicate-submissions-handler.php';
 

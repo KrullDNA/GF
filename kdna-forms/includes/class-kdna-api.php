@@ -1,6 +1,6 @@
 <?php
 /**
- * Minimal stub for the removed Gravity API / KDNA API class.
+ * Minimal stub for the removed KDNA API / KDNA API class.
  *
  * Provides a no-op gapi() function so that any remaining calls
  * do not produce fatal errors.
@@ -8,8 +8,8 @@
  * @package KDNAForms
  */
 
-if ( ! defined( 'GRAVITY_API_URL' ) ) {
-	define( 'GRAVITY_API_URL', '' );
+if ( ! defined( 'KDNA_API_URL' ) ) {
+	define( 'KDNA_API_URL', '' );
 }
 
 if ( ! class_exists( 'KDNA_Api_Stub' ) ) {

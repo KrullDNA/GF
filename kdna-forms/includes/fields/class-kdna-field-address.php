@@ -273,12 +273,12 @@ class KDNA_Field_Address extends KDNA_Field {
 			$style    = ( $is_admin && rgar( $address_zip_field_input, 'isHidden' ) ) ? "style='display:none;'" : '';
 			if ( $is_admin || ! rgar( $address_zip_field_input, 'isHidden' ) ) {
 				if ( $is_sub_label_above ) {
-					$zip = "<span class='ginput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
+					$zip = "<span class='kinput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
                                     <label for='{$field_id}_5' id='{$field_id}_5_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_zip_sub_label}</label>
                                     <input type='text' name='input_{$id}.5' id='{$field_id}_5' value='{$zip_value}' {$tabindex} {$disabled_text} {$zip_placeholder_attribute} {$zip_aria_attributes} {$address_zip_autocomplete} {$this->maybe_add_aria_describedby( $address_zip_field_input, $field_id, $this['formId'] )}/>
                                 </span>";
 				} else {
-					$zip = "<span class='ginput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
+					$zip = "<span class='kinput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
                                     <input type='text' name='input_{$id}.5' id='{$field_id}_5' value='{$zip_value}' {$tabindex} {$disabled_text} {$zip_placeholder_attribute} {$zip_aria_attributes} {$address_zip_autocomplete} {$this->maybe_add_aria_describedby( $address_zip_field_input, $field_id, $this['formId'] )}/>
                                     <label for='{$field_id}_5' id='{$field_id}_5_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_zip_sub_label}</label>
                                 </span>";
@@ -291,12 +291,12 @@ class KDNA_Field_Address extends KDNA_Field {
 			$style    = ( $is_admin && rgar( $address_city_field_input, 'isHidden' ) ) ? "style='display:none;'" : '';
 			if ( $is_admin || ! rgar( $address_city_field_input, 'isHidden' ) ) {
 				if ( $is_sub_label_above ) {
-					$city = "<span class='ginput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
+					$city = "<span class='kinput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
                                     <label for='{$field_id}_3' id='{$field_id}_3_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_city_sub_label}</label>
                                     <input type='text' name='input_{$id}.3' id='{$field_id}_3' value='{$city_value}' {$tabindex} {$disabled_text} {$city_placeholder_attribute} {$city_aria_attributes} {$address_city_autocomplete} {$this->maybe_add_aria_describedby( $address_city_field_input, $field_id, $this['formId'] )}/>
                                  </span>";
 				} else {
-					$city = "<span class='ginput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
+					$city = "<span class='kinput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
                                     <input type='text' name='input_{$id}.3' id='{$field_id}_3' value='{$city_value}' {$tabindex} {$disabled_text} {$city_placeholder_attribute} {$city_aria_attributes} {$address_city_autocomplete} {$this->maybe_add_aria_describedby( $address_city_field_input, $field_id, $this['formId'] )}/>
                                     <label for='{$field_id}_3' id='{$field_id}_3_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_city_sub_label}</label>
                                  </span>";
@@ -309,12 +309,12 @@ class KDNA_Field_Address extends KDNA_Field {
 				$aria_attributes = $this->get_aria_attributes( $value, '4' );
 				$state_field = $this->get_state_field( $id, $field_id, $state_value, $disabled_text, $form_id, $aria_attributes, $address_state_field_input );
 				if ( $is_sub_label_above ) {
-					$state = "<span class='ginput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
+					$state = "<span class='kinput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
                                            <label for='{$field_id}_4' id='{$field_id}_4_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_state_sub_label}</label>
                                            $state_field
                                       </span>";
 				} else {
-					$state = "<span class='ginput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
+					$state = "<span class='kinput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
                                            $state_field
                                            <label for='{$field_id}_4' id='{$field_id}_4_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_state_sub_label} </label>
                                       </span>";
@@ -330,12 +330,12 @@ class KDNA_Field_Address extends KDNA_Field {
 			$style    = ( $is_admin && rgar( $address_city_field_input, 'isHidden' ) ) ? "style='display:none;'" : '';
 			if ( $is_admin || ! rgar( $address_city_field_input, 'isHidden' ) ) {
 				if ( $is_sub_label_above ) {
-					$city = "<span class='ginput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
+					$city = "<span class='kinput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
                                     <label for='{$field_id}_3' id='{$field_id}_3_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_city_sub_label}</label>
                                     <input type='text' name='input_{$id}.3' id='{$field_id}_3' value='{$city_value}' {$tabindex} {$disabled_text} {$city_placeholder_attribute} {$city_aria_attributes} {$address_city_autocomplete} {$this->maybe_add_aria_describedby( $address_city_field_input, $field_id, $this['formId'] )}/>
                                  </span>";
 				} else {
-					$city = "<span class='ginput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
+					$city = "<span class='kinput_{$city_location}{$class_suffix} address_city kinput_address_city kform-grid-col' id='{$field_id}_3_container' {$style}>
                                     <input type='text' name='input_{$id}.3' id='{$field_id}_3' value='{$city_value}' {$tabindex} {$disabled_text} {$city_placeholder_attribute} {$city_aria_attributes} {$address_city_autocomplete} {$this->maybe_add_aria_describedby( $address_city_field_input, $field_id, $this['formId'] )}/>
                                     <label for='{$field_id}_3' id='{$field_id}_3_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_city_sub_label}</label>
                                  </span>";
@@ -348,12 +348,12 @@ class KDNA_Field_Address extends KDNA_Field {
 				$aria_attributes = $this->get_aria_attributes( $value, '4' );
 				$state_field = $this->get_state_field( $id, $field_id, $state_value, $disabled_text, $form_id, $aria_attributes, $address_state_field_input );
 				if ( $is_sub_label_above ) {
-					$state = "<span class='ginput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
+					$state = "<span class='kinput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
                                         <label for='{$field_id}_4' id='{$field_id}_4_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>$address_state_sub_label</label>
                                         $state_field
                                       </span>";
 				} else {
-					$state = "<span class='ginput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
+					$state = "<span class='kinput_{$state_location}{$class_suffix} address_state kinput_address_state kform-grid-col' id='{$field_id}_4_container' {$style}>
                                         $state_field
                                         <label for='{$field_id}_4' id='{$field_id}_4_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>$address_state_sub_label</label>
                                       </span>";
@@ -368,12 +368,12 @@ class KDNA_Field_Address extends KDNA_Field {
 			$style    = ( $is_admin && rgar( $address_zip_field_input, 'isHidden' ) ) ? "style='display:none;'" : '';
 			if ( $is_admin || ! rgar( $address_zip_field_input, 'isHidden' ) ) {
 				if ( $is_sub_label_above ) {
-					$zip = "<span class='ginput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
+					$zip = "<span class='kinput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
                                     <label for='{$field_id}_5' id='{$field_id}_5_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_zip_sub_label}</label>
                                     <input type='text' name='input_{$id}.5' id='{$field_id}_5' value='{$zip_value}' {$tabindex} {$disabled_text} {$zip_placeholder_attribute} {$zip_aria_attributes} {$address_zip_autocomplete} {$this->maybe_add_aria_describedby( $address_zip_field_input, $field_id, $this['formId'] )}/>
                                 </span>";
 				} else {
-					$zip = "<span class='ginput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
+					$zip = "<span class='kinput_{$zip_location}{$class_suffix} address_zip kinput_address_zip kform-grid-col' id='{$field_id}_5_container' {$style}>
                                     <input type='text' name='input_{$id}.5' id='{$field_id}_5' value='{$zip_value}' {$tabindex} {$disabled_text} {$zip_placeholder_attribute} {$zip_aria_attributes} {$address_zip_autocomplete} {$this->maybe_add_aria_describedby( $address_zip_field_input, $field_id, $this['formId'] )}/>
                                     <label for='{$field_id}_5' id='{$field_id}_5_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_zip_sub_label}</label>
                                 </span>";
@@ -385,12 +385,12 @@ class KDNA_Field_Address extends KDNA_Field {
 			$style    = $hide_country ? "style='display:none;'" : '';
 			$tabindex = $this->get_tabindex();
 			if ( $is_sub_label_above ) {
-				$country = "<span class='ginput_{$country_location}{$class_suffix} address_country kinput_address_country kform-grid-col' id='{$field_id}_6_container' {$style}>
+				$country = "<span class='kinput_{$country_location}{$class_suffix} address_country kinput_address_country kform-grid-col' id='{$field_id}_6_container' {$style}>
                                         <label for='{$field_id}_6' id='{$field_id}_6_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_country_sub_label}</label>
                                         <select name='input_{$id}.6' id='{$field_id}_6' {$tabindex} {$disabled_text} {$country_aria_attributes} {$address_country_autocomplete} {$this->maybe_add_aria_describedby( $address_country_field_input, $field_id, $this['formId'] )}>{$country_list} </select>
                                     </span>";
 			} else {
-				$country = "<span class='ginput_{$country_location}{$class_suffix} address_country kinput_address_country kform-grid-col' id='{$field_id}_6_container' {$style}>
+				$country = "<span class='kinput_{$country_location}{$class_suffix} address_country kinput_address_country kform-grid-col' id='{$field_id}_6_container' {$style}>
                                         <select name='input_{$id}.6' id='{$field_id}_6' {$tabindex} {$disabled_text} {$country_aria_attributes} {$address_country_autocomplete} {$this->maybe_add_aria_describedby( $address_country_field_input, $field_id, $this['formId'] )}>{$country_list}</select>
                                         <label for='{$field_id}_6' id='{$field_id}_6_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$address_country_sub_label}</label>
                                     </span>";

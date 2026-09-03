@@ -251,11 +251,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			const autoCompleteAttribute = field?.autocompleteAttribute || ''
 			field_str = "<label for='field_autocomplete_attribute' class='inline'>" + <?php echo json_encode( esc_html__( 'Autocomplete Attribute:', 'kdnaforms' ) ); ?> + "&nbsp;</label>";
 			field_str += "<input type='text' value='" + autoCompleteAttribute + "' id='field_autocomplete_attribute' class='field_autocomplete_attribute' aria-describedby='autocomplete_attributes_list'/>";
-			field_str += "<a href='https://docs.gravityforms.com/accessibility-for-developers/#h-autocomplete' target='_blank' id='autocomplete_attributes_list' style='display: inline-block; margin-top: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a><br>';
+			field_str += "<a href='https://kdnaforms.com#h-autocomplete' target='_blank' id='autocomplete_attributes_list' style='display: inline-block; margin-top: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a><br>';
 
 			SetFieldProperty( 'autocompleteAttribute', autoCompleteAttribute );
 		} else {
-			field_str = "<a href='https://docs.gravityforms.com/accessibility-for-developers/#h-autocomplete' target='_blank' style='display: inline-block; margin-bottom: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
+			field_str = "<a href='https://kdnaforms.com#h-autocomplete' target='_blank' style='display: inline-block; margin-bottom: 13px;'>" + <?php echo json_encode( esc_html__( 'List of valid attributes', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
 			field_str += "<fieldset class='input_autocomplete'><legend class='screen-reader-text'>" + <?php echo json_encode( esc_html__( 'Autocomplete Attributes', 'kdnaforms' ) ); ?> + "</legend><div class='kform-sidebar-setting-grid-wrapper kform-sidebar-setting-grid-wrapper__two-column'><div class='kform-sidebar-setting-grid-header'><span>" + <?php echo json_encode( esc_html__( 'Field', 'kdnaforms' ) ); ?> + "</span><span>" + <?php echo json_encode( esc_html__( 'Attribute', 'kdnaforms' ) ); ?> + "</span></div>";
 			for ( var i = 0; i < field["inputs"].length; i++ ) {
 				if ( field["inputs"][i]["isHidden"] ) {
@@ -470,7 +470,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var message = '<div id="kfield-warning-deprecated" class="kform-alert kform-alert--notice kform-alert--inline" role="alert">';
 			message += '<span class="kform-alert__icon kform-icon kform-icon--circle-notice-fine" aria-hidden="true"></span>';
 			message += '<div class="kform-alert__message-wrap">';
-			message += '<p class="kform-alert__message">' + deprecatedClass + ' ' + <?php echo json_encode( esc_html__( 'is no longer necessary.', 'kdnaforms' ) ); ?> + ' <a href="https://docs.gravityforms.com/migrating-your-forms-from-ready-classes/" target="_blank" title="' + <?php echo json_encode( esc_attr__( 'Deprecation of Ready Classes in Gravity Forms 4.0', 'kdnaforms' ) ); ?> + '">' + <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a></p>';
+			message += '<p class="kform-alert__message">' + deprecatedClass + ' ' + <?php echo json_encode( esc_html__( 'is no longer necessary.', 'kdnaforms' ) ); ?> + ' <a href="https://kdnaforms.com" target="_blank" title="' + <?php echo json_encode( esc_attr__( 'Deprecation of Ready Classes in KDNA Forms 4.0', 'kdnaforms' ) ); ?> + '">' + <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?> + '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a></p>';
 			message += '</div>';
 			message += '</div>';
 
@@ -1592,10 +1592,10 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			if ( field.type == 'image_choice' ) {
 				str += "<div class='kform-choice__image-choice-file-upload' data-js='kform-image-choice-upload' data-js-props='" + JSON.stringify( {
 					allowedFileTypes: [ 'gif', 'jpg', 'jpeg', 'png' ],
-					id:               'choices_ui_image_choice_enabled_gform_setting_' + i,
+					id:               'choices_ui_image_choice_enabled_kform_setting_' + i,
 					maxHeight:        '500',
 					maxWidth:         '500',
-					name:             'choices_ui_image_choice_enabled_gform_setting_' + i,
+					name:             'choices_ui_image_choice_enabled_kform_setting_' + i,
 					fileURL:         field.choices[i].file_url,
 					fileID:	  field.choices[i].attachment_id,
 					externalManager:  true,
@@ -1723,11 +1723,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		if ( message === undefined ) {
 			if ( predefinedMessages.hasOwnProperty( fieldSetting ) ) {
 				message = '<p class="kform-alert__message">' + predefinedMessages[ fieldSetting ] + '</p>';
-				message += '<a class="kform-alert__cta kform-button kform-button--white kform-button--size-xs" href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
+				message += '<a class="kform-alert__cta kform-button kform-button--white kform-button--size-xs" href="https://kdnaforms.com" target="_blank">';
 				message += <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?>;
 				message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
 			} else {
-				message = '<p class="kform-alert__message"><a href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
+				message = '<p class="kform-alert__message"><a href="https://kdnaforms.com" target="_blank">';
 				message += <?php echo json_encode( esc_html__( 'This field has accessibility issues.', 'kdnaforms' ) ); ?>;
 				message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a></p>';
 			}
@@ -1772,11 +1772,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		if ( predefinedMessages.hasOwnProperty( fieldSetting ) ) {
 			message += '<p class="kform-alert__message">' + predefinedMessages[ fieldSetting ] + '</p>';
-			message += '<a class="kform-alert__cta kform-button kform-button--white kform-button--size-xs" href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
+			message += '<a class="kform-alert__cta kform-button kform-button--white kform-button--size-xs" href="https://kdnaforms.com" target="_blank">';
 			message += <?php echo json_encode( esc_html__( 'Learn more', 'kdnaforms' ) ); ?>;
 			message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
 		} else {
-			message += '<a href="https://docs.gravityforms.com/field-accessibility-warning" target="_blank">';
+			message += '<a href="https://kdnaforms.com" target="_blank">';
 			message += <?php echo json_encode( esc_html__( 'This field has errors.', 'kdnaforms' ) ); ?>;
 			message += '<span class="screen-reader-text">' + <?php echo json_encode( esc_html__( '(opens in a new tab)', 'kdnaforms' ) ); ?> + '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
 		}

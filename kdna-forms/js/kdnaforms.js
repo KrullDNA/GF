@@ -91,7 +91,7 @@ gform.adminUtils = {
 		} );
 
 		// Standalone logic for the web api settings page. Trigger unsaved changes if the setting doesn't match the checkbox state.
-		if ( this.getUrlParameter( 'subview' ) === 'gravityformswebapi' ) {
+		if ( this.getUrlParameter( 'subview' ) === 'kdnaformswebapi' ) {
 			if ( kdna_webapi_vars.api_enabled !== kdna_webapi_vars.enable_api_checkbox_checked ) {
 				hasUnsavedChanges = true;
 			}
@@ -648,7 +648,7 @@ gform.options = {
 //------------------------------------------------
 
 function Currency(currency){
-	console.warn( 'Currency has been deprecated since Gravity Forms 2.9. Use gform.Currency instead.' );
+	console.warn( 'Currency has been deprecated since KDNA Forms 2.9. Use gform.Currency instead.' );
 	return new gform.Currency( currency );
 }
 
@@ -668,17 +668,17 @@ function Currency(currency){
  * @return float The unformatted numerical value.
  */
 function gformCleanNumber(text, symbol_right, symbol_left, decimal_separator){
-	console.warn( 'gformCleanNumber() has been deprecated since Gravity Forms 2.9. Use gform.Currency.cleanNumber() instead.' );
+	console.warn( 'gformCleanNumber() has been deprecated since KDNA Forms 2.9. Use gform.Currency.cleanNumber() instead.' );
 	return gform.Currency.cleanNumber( text, symbol_right, symbol_left, decimal_separator );
 }
 
 function gformGetDecimalSeparator(numberFormat){
-	console.warn( 'gformGetDecimalSeparator() has been deprecated since Gravity Forms 2.9. Use gform.Currency.getDecimalSeparator() instead.' );
+	console.warn( 'gformGetDecimalSeparator() has been deprecated since KDNA Forms 2.9. Use gform.Currency.getDecimalSeparator() instead.' );
 	return gform.Currency.getDecimalSeparator( numberFormat );
 }
 
 function gformIsNumber(n) {
-	console.warn( 'gformIsNumber() has been deprecated since Gravity Forms 2.9. Use gform.utils.isNumber() instead.' );
+	console.warn( 'gformIsNumber() has been deprecated since KDNA Forms 2.9. Use gform.utils.isNumber() instead.' );
 	return gform.utils.isNumber( n );
 }
 
@@ -2290,7 +2290,7 @@ gform.recaptcha = {
 					'theme':          $elem.data( 'theme' ),
 					'tabindex':       $elem.data( 'tabindex' ),
 					'error-callback': () => {
-						console.error( 'Gravity Forms: There was an error initializing reCAPTCHA v2. Please ensure your reCAPTCHA API keys are valid.' );
+						console.error( 'KDNA Forms: There was an error initializing reCAPTCHA v2. Please ensure your reCAPTCHA API keys are valid.' );
 						$elem.attr( 'data-recaptcha-error', '1' );
 					}
 				};
@@ -2551,9 +2551,9 @@ function gformValidateFileSize( field, max_file_size ) {
 	if ( file && file.size > max_file_size ) {
 
 		// Set validation message.
-		validation_element.text(file.name + " - " + kform_gravityforms.strings.file_exceeds_limit);
+		validation_element.text(file.name + " - " + kdnaform_upload_strings.strings.file_exceeds_limit);
 		// Announce error.
-		wp.a11y.speak( file.name + " - " + kform_gravityforms.strings.file_exceeds_limit );
+		wp.a11y.speak( file.name + " - " + kdnaform_upload_strings.strings.file_exceeds_limit );
 
     } else {
 
@@ -2570,11 +2570,11 @@ function gformValidateFileSize( field, max_file_size ) {
 
 (function (gfMultiFileUploader, $) {
     gfMultiFileUploader.uploaders = {};
-    var strings = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.strings : {};
-    var imagesUrl = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.vars.images_url : "";
+    var strings = typeof kdnaform_upload_strings != 'undefined' ? kdnaform_upload_strings.strings : {};
+    var imagesUrl = typeof kdnaform_upload_strings != 'undefined' ? kdnaform_upload_strings.vars.images_url : "";
 
 	$(document).on('kform_post_render', function(e, formID){
-		$( "form#gform_" + formID + " .kform_fileupload_multifile" ).each( function(){
+		$( "form#kform_" + formID + " .kform_fileupload_multifile" ).each( function(){
 			setup( this );
 		} );
 
@@ -2592,7 +2592,7 @@ function gformValidateFileSize( field, max_file_size ) {
     $(document).ready(function () {
         if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_gf_edit_forms')|| typeof plupload == 'undefined'){
             $(".kform_button_select_files").prop("disabled", true);
-        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_gf_entries') > -1) {
+        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_kdna_entries') > -1) {
             $(".kform_fileupload_multifile").each(function(){
                 setup(this);
             });
@@ -2779,7 +2779,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
             up.refresh(); // Reposition Flash
 
-            var formElementID = "form#gform_" + formID;
+            var formElementID = "form#kform_" + formID;
             var uidElementID = "input:hidden[name='kform_unique_id']";
             var uidSelector = formElementID + " " + uidElementID;
             var $uid = $(uidSelector);
@@ -2886,7 +2886,7 @@ function gformValidateFileSize( field, max_file_size ) {
 			 * @param {object} file      The file upload properties. See: https://www.plupload.com/docs/v2/File.
 			 * @param {object} up        The uploader properties. See: https://www.plupload.com/docs/v2/Uploader.
 			 * @param {object} strings   Localized strings relating to file uploads.
-			 * @param {string} imagesURL The base URL to the Gravity Forms images directory.
+			 * @param {string} imagesURL The base URL to the KDNA Forms images directory.
 			 * @param {object} response  The response from GFAsyncUpload.
 			 */
 			html = gform.applyFilters('kform_file_upload_markup', html, file, up, strings, imagesUrl, response);
@@ -3140,7 +3140,7 @@ function gformReInitTinymceInstance( formId, fieldId ) {
 //------ EVENT FUNCTIONS -----------------
 //----------------------------------------
 
-var __gf_keyup_timeout;
+var __kdna_keyup_timeout;
 
 jQuery( document ).on( 'change keyup', '.gfield input, .gfield select, .gfield textarea', function( event ) {
     kdna_raw_input_change( event, this );
@@ -3149,7 +3149,7 @@ jQuery( document ).on( 'change keyup', '.gfield input, .gfield select, .gfield t
 function kdna_raw_input_change( event, elem ) {
 
     // clear regardless of event type for maximum efficiency ;)
-    clearTimeout( __gf_keyup_timeout );
+    clearTimeout( __kdna_keyup_timeout );
 
     var $input    = jQuery( elem ),
         htmlId    = $input.attr( 'id' ),
@@ -3160,7 +3160,7 @@ function kdna_raw_input_change( event, elem ) {
 	     *
 	     * @since 2.4.1
 	     *
-	     * @param object fieldMeta An object containing the field ID and form ID of the triggering Gravity Forms field.
+	     * @param object fieldMeta An object containing the field ID and form ID of the triggering KDNA Forms field.
 	     * @param object $input    The jQuery object for the triggering field element.
 	     * @param object event     The raw JS event.
 	     */
@@ -3183,7 +3183,7 @@ function kdna_raw_input_change( event, elem ) {
     }
 
     if( event.type == 'keyup' ) {
-        __gf_keyup_timeout = setTimeout( function() {
+        __kdna_keyup_timeout = setTimeout( function() {
             kdna_input_change( elem, formId, fieldId );
         }, 300 );
     } else {

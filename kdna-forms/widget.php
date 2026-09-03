@@ -29,7 +29,7 @@ if ( ! class_exists( 'KDNAWidget' ) ) {
 		function __construct() {
 
 			//load text domains
-			KDNACommon::load_gf_text_domain();
+			KDNACommon::load_kdna_text_domain();
 
 			$description = esc_html__( 'KDNA Forms Widget', 'kdnaforms' );
 
@@ -169,7 +169,7 @@ if ( ! class_exists( 'KDNAWidget' ) ) {
 				<label for="<?php echo esc_attr( $this->get_field_id( 'disable_scripts' ) ); ?>"><?php esc_html_e( 'Disable script output', 'kdnaforms' ); ?></label><br />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'tabindex' ) ); ?>"><?php esc_html_e( 'Tab Index Start', 'kdnaforms' ); ?>: </label>
 				<input id="<?php echo esc_attr( $this->get_field_id( 'tabindex' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'tabindex' ) ); ?>" value="<?php echo esc_attr( rgar( $instance, 'tabindex', 0 ) ); ?>" style="width:15%;" /><br />
-				<small><?php esc_html_e( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your Gravity Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ); ?></small>
+				<small><?php esc_html_e( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your KDNA Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ); ?></small>
 			</p>
 
 		<?php

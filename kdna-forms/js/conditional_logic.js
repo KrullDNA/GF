@@ -1,5 +1,5 @@
 
-var __gf_timeout_handle;
+var __kdna_timeout_handle;
 
 gform.addAction( 'kform_input_change', function( elem, formId, fieldId ) {
 	if( ! window.kdna_form_conditional_logic ) {

@@ -56,7 +56,7 @@ class Post_Select extends Select {
 
 			$html .= sprintf(
 				'<article class="kform-dropdown" data-js="kform-settings-field-select" data-post-type="%1$s">
-				    <span class="kform-visually-hidden" id="gform-%2$s-label">
+				    <span class="kform-visually-hidden" id="kform-%2$s-label">
 						%3$s
 				    </span>
 
@@ -64,10 +64,10 @@ class Post_Select extends Select {
 						type="button"
 						aria-expanded="false"
 						aria-haspopup="listbox"
-						aria-labelledby="gform-%2$s-label gform-%2$s-control"
+						aria-labelledby="kform-%2$s-label kform-%2$s-control"
 						class="kform-dropdown__control %6$s"
 						data-js="kform-dropdown-control"
-						id="gform-%2$s-control"
+						id="kform-%2$s-control"
 				    >
 						<span
 							class="kform-dropdown__control-text"
@@ -79,7 +79,7 @@ class Post_Select extends Select {
 						<span class="kform-icon kform-icon--chevron kform-dropdown__chevron"></span>
 				    </button>
 				    <div
-						aria-labelledby="gform-%2$s-label"
+						aria-labelledby="kform-%2$s-label"
 						class="kform-dropdown__container"
 						role="listbox"
 						data-js="kform-dropdown-container"

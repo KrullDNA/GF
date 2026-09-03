@@ -805,7 +805,7 @@ class KDNAEntryDetail {
 								<tr valign="top">
 									<td class="detail-view">
 										<div style="margin-bottom:10px; border-bottom:1px dotted #ccc;">
-											<h2 class="detail_gsection_title">' . esc_html( KDNACommon::get_label( $field ) ) . '</h2>
+											<h2 class="detail_ksection_title">' . esc_html( KDNACommon::get_label( $field ) ) . '</h2>
 										</div>
 									</td>
 								</tr>';

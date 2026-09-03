@@ -833,13 +833,13 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 	 * @return string
 	 */
 	public function get_multifile_value( $form_id, $input_name, $value, $entry_id = null ) {
-		global $_gf_uploaded_files;
+		global $_kdna_uploaded_files;
 
-		if ( empty( $_gf_uploaded_files ) ) {
-			$_gf_uploaded_files = array();
-		} elseif ( isset( $_gf_uploaded_files[ $input_name ] ) ) {
-			KDNACommon::log_debug( __METHOD__ . sprintf( '(): Using $_gf_uploaded_files global for field #%d.', $this->id ) );
-			$value = $_gf_uploaded_files[ $input_name ];
+		if ( empty( $_kdna_uploaded_files ) ) {
+			$_kdna_uploaded_files = array();
+		} elseif ( isset( $_kdna_uploaded_files[ $input_name ] ) ) {
+			KDNACommon::log_debug( __METHOD__ . sprintf( '(): Using $_kdna_uploaded_files global for field #%d.', $this->id ) );
+			$value = $_kdna_uploaded_files[ $input_name ];
 
 			if ( ! KDNACommon::is_json( $value ) ) {
 				$value = $this->get_parsed_list_of_files( $value );
@@ -927,7 +927,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 			$value = json_encode( $uploaded_files );
 		}
 
-		$_gf_uploaded_files[ $input_name ] = $value;
+		$_kdna_uploaded_files[ $input_name ] = $value;
 
 		return $this->sanitize_entry_value( $value, $form_id );
 	}
@@ -1028,14 +1028,14 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 	 * @return string
 	 */
 	public function get_single_file_value( $form_id, $input_name ) {
-		global $_gf_uploaded_files;
+		global $_kdna_uploaded_files;
 
-		if ( empty( $_gf_uploaded_files ) ) {
-			$_gf_uploaded_files = array();
-		} elseif ( isset( $_gf_uploaded_files[ $input_name ] ) ) {
-			KDNACommon::log_debug( __METHOD__ . sprintf( '(): Using $_gf_uploaded_files global for field #%d.', $this->id ) );
+		if ( empty( $_kdna_uploaded_files ) ) {
+			$_kdna_uploaded_files = array();
+		} elseif ( isset( $_kdna_uploaded_files[ $input_name ] ) ) {
+			KDNACommon::log_debug( __METHOD__ . sprintf( '(): Using $_kdna_uploaded_files global for field #%d.', $this->id ) );
 
-			return $this->sanitize_entry_value( $_gf_uploaded_files[ $input_name ], $form_id );
+			return $this->sanitize_entry_value( $_kdna_uploaded_files[ $input_name ], $form_id );
 		}
 
 		KDNACommon::log_debug( __METHOD__ . sprintf( '(): Running for field #%d.', $this->id ) );
@@ -1096,7 +1096,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 			return '';
 		}
 
-		$_gf_uploaded_files[ $input_name ] = $value;
+		$_kdna_uploaded_files[ $input_name ] = $value;
 
 		return $this->sanitize_entry_value( $value, $form_id );
 	}
