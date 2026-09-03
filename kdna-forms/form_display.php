@@ -1226,29 +1226,63 @@ class KDNAFormDisplay {
 			$form_string .= "
                 <div class='{$wrapper_css_class}{$custom_wrapper_css_class}' data-form-theme='{$form_theme}' {$page_instance} id='gform_wrapper_$form_id' " . $style . '>';
 
-			// The hide above is only meant to last until the conditional logic
-			// rules have run. If that never happens — a JS error anywhere in the
-			// chain is enough — the form stays invisible with nothing on screen
-			// to say why. Reveal it regardless after a grace period so a hiccup
-			// costs the correct initial field visibility, not the whole form.
+			// The hide above lasts until the conditional logic rules have run.
+			// Reaching that point depends on a long chain — three separate
+			// events gating gform.initializeOnLoaded, then kdnaform_post_render,
+			// then gf_apply_rules — and a throw anywhere in it leaves the form
+			// hidden forever with nothing on screen to explain why.
+			//
+			// The wrapper still being hidden is itself the signal that the chain
+			// did not complete, so use it: apply the rules directly, then
+			// reveal. Without applying the rules first, a field that should
+			// start hidden would render visible.
 			if ( $should_render_hidden ) {
 				$failsafe = sprintf(
 					'( function() {
-						var reveal = function() {
+						var recover = function() {
 							window.setTimeout( function() {
 								var w = document.getElementById( "gform_wrapper_%1$d" );
-								if ( w && w.style.display === "none" ) {
-									w.style.display = "";
-									if ( window.console && window.console.warn ) {
-										window.console.warn( "KDNA Forms: conditional logic did not finish initialising for form %1$d, so the form was revealed by the failsafe. Field visibility may be wrong until the cause is fixed." );
+
+								// Not hidden means the normal path already ran.
+								if ( ! w || w.style.display !== "none" ) {
+									return;
+								}
+
+								var applied = false;
+								try {
+									var cfg = window.kdna_form_conditional_logic
+										&& window.kdna_form_conditional_logic[ %1$d ];
+
+									if ( cfg && cfg.logic && typeof window.gf_apply_rules === "function" ) {
+										var ids = [];
+										for ( var k in cfg.logic ) {
+											if ( Object.prototype.hasOwnProperty.call( cfg.logic, k ) ) {
+												ids.push( parseInt( k, 10 ) );
+											}
+										}
+										if ( ids.length ) {
+											window.gf_apply_rules( %1$d, ids, true );
+											applied = true;
+										}
 									}
+								} catch ( e ) {}
+
+								w.style.display = "";
+
+								if ( window.console && window.console.warn ) {
+									window.console.warn(
+										"KDNA Forms: conditional logic did not initialise for form %1$d. "
+										+ ( applied
+											? "The failsafe applied the rules and revealed the form."
+											: "The failsafe revealed the form but could not apply the rules, so field visibility may be wrong." )
+									);
 								}
 							}, 2000 );
 						};
 						if ( document.readyState === "loading" ) {
-							document.addEventListener( "DOMContentLoaded", reveal );
+							document.addEventListener( "DOMContentLoaded", recover );
 						} else {
-							reveal();
+							recover();
 						}
 					} )();',
 					absint( $form_id )

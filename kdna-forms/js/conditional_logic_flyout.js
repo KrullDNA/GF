@@ -117,6 +117,8 @@
 			} );
 		} );
 
+		syncStatus();
+
 		$( '[data-js="cl-toggle"]' ).attr( 'aria-expanded', 'true' );
 	}
 
@@ -144,6 +146,8 @@
 			$c.removeClass( 'anim-out-ready anim-out-active' );
 			$( 'body' ).removeClass( 'kdnaform-cl-flyout-open' );
 		}, 220 );
+
+		syncStatus();
 
 		$( '[data-js="cl-toggle"]' ).attr( 'aria-expanded', 'false' );
 	}
@@ -194,9 +198,22 @@
 			window.gform.tools.addAction( 'gform/flyout/close-all', close, 10, 'kdnaformClFlyout' );
 		}
 
+		// The badge has to follow the toggle. Bind change AND click: the toggle
+		// is a styled checkbox and the editor also flips it programmatically
+		// when a different field is selected, which does not always surface as
+		// a change event. Delegated from the document because the panel is
+		// reparented to the body at runtime.
+		$doc.on( 'change click', '#field_conditional_logic', function () {
+			window.setTimeout( syncStatus, 0 );
+		} );
+
+		// Any edit inside the panel can turn logic on or off.
+		$doc.on( 'change', '#' + CONTAINER_ID, function () {
+			window.setTimeout( syncStatus, 0 );
+		} );
+
 		// Selecting a different field swaps which settings the panel is
 		// showing, so the badge has to be recalculated.
-		$doc.on( 'change', '#field_conditional_logic', syncStatus );
 		$doc.on( 'click', '.gfield', function () {
 			window.setTimeout( syncStatus, 0 );
 		} );
