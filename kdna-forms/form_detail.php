@@ -2758,51 +2758,72 @@ class KDNAFormDetail {
 							<?php
 							do_action( 'kdnaform_field_advanced_settings', - 1, $form_id );
 							?>
-						<div class="conditional_logic_wrapper">
-							<?php
-							do_action( 'kdnaform_field_advanced_settings', 500, $form_id );
-							?>
-							<div class="conditional_logic_field_setting field_setting">
-								<input type="checkbox" id="field_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );"/>
-								<label for="field_conditional_logic" class="inline"><?php esc_html_e( 'Enable Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_field_conditional_logic' ); ?></label>
-								<br/>
-								<div id="field_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
-								</div>
-							</div>
+						</ul>
+						<?php
+						/*
+						 * Conditional logic gets its own accordion section rather than being
+						 * appended to Advanced. Upstream leaves this block outside every tab
+						 * body and reveals it with a React flyout that did not survive the
+						 * fork, so with no flyout it renders nowhere. Injecting it into an
+						 * existing tab is not an option either: a div is not a valid child
+						 * of a ul, and this panel is measured by simplebar, which is what made
+						 * the sidebar scroll past its own end.
+						 *
+						 * A fourth button/ul pair matching the other three is valid markup and
+						 * leaves the existing sections untouched.
+						 */
+						?>
+						<button tabindex="0" id="conditional_logic_tab_toggle" class="panel-block-tabs__toggle">
+							<?php esc_html_e( 'Conditional Logic', 'kdnaforms' ); ?>
+						</button>
+						<ul id="conditional_logic_tab" class="panel-block-tabs__body panel-block-tabs__body--settings">
+							<li class="conditional_logic_setting field_setting">
+								<div class="conditional_logic_wrapper">
+									<?php
+									do_action( 'kdnaform_field_advanced_settings', 500, $form_id );
+									?>
+									<div class="conditional_logic_field_setting field_setting">
+										<input type="checkbox" id="field_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'field' );"/>
+										<label for="field_conditional_logic" class="inline"><?php esc_html_e( 'Enable Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_field_conditional_logic' ); ?></label>
+										<br/>
+										<div id="field_conditional_logic_container" style="display:none; padding-top:10px;">
+											<!-- content dynamically created from js.php -->
+										</div>
+									</div>
 
-							<?php
-							do_action( 'kdnaform_field_advanced_settings', 525, $form_id );
-							?>
-							<div class="conditional_logic_page_setting field_setting">
-								<input type="checkbox" id="page_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );"/>
-								<label for="page_conditional_logic" class="inline"><?php esc_html_e( 'Enable Page Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_page_conditional_logic' ); ?></label>
-								<br/>
-								<div id="page_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
-								</div>
-							</div>
+									<?php
+									do_action( 'kdnaform_field_advanced_settings', 525, $form_id );
+									?>
+									<div class="conditional_logic_page_setting field_setting">
+										<input type="checkbox" id="page_conditional_logic" onclick="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );" onkeypress="SetFieldProperty('conditionalLogic', this.checked ? new ConditionalLogic() : null); ToggleConditionalLogic( false, 'page' );"/>
+										<label for="page_conditional_logic" class="inline"><?php esc_html_e( 'Enable Page Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_page_conditional_logic' ); ?></label>
+										<br/>
+										<div id="page_conditional_logic_container" style="display:none; padding-top:10px;">
+											<!-- content dynamically created from js.php -->
+										</div>
+									</div>
 
-							<?php
-							do_action( 'kdnaform_field_advanced_settings', 550, $form_id );
-							?>
-							<div class="conditional_logic_submit_setting field_setting">
-								<input type="checkbox" id="submit_conditional_logic" onclick="SetSubmitConditionalLogic(this.checked); ToggleConditionalLogic( false, 'button' );" onkeypress="SetSubmitConditionalLogic(this.checked); ToggleConditionalLogic( false, 'button' );"/>
-								<label for="submit_conditional_logic" class="inline"><?php esc_html_e( 'Enable Submit Button Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_submit_conditional_logic' ); ?></label>
-								<br/>
-								<div id="submit_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
+									<?php
+									do_action( 'kdnaform_field_advanced_settings', 550, $form_id );
+									?>
+									<div class="conditional_logic_submit_setting field_setting">
+										<input type="checkbox" id="submit_conditional_logic" onclick="SetSubmitConditionalLogic(this.checked); ToggleConditionalLogic( false, 'button' );" onkeypress="SetSubmitConditionalLogic(this.checked); ToggleConditionalLogic( false, 'button' );"/>
+										<label for="submit_conditional_logic" class="inline"><?php esc_html_e( 'Enable Submit Button Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_submit_conditional_logic' ); ?></label>
+										<br/>
+										<div id="submit_conditional_logic_container" style="display:none; padding-top:10px;">
+											<!-- content dynamically created from js.php -->
+										</div>
+									</div>
+									<div class="conditional_logic_nextbutton_setting field_setting">
+										<input type="checkbox" id="next_button_conditional_logic" onclick="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );" onkeypress="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );"/>
+										<label for="next_button_conditional_logic" class="inline"><?php esc_html_e( 'Enable Next Button Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_nextbutton_conditional_logic' ); ?></label>
+										<br/>
+										<div id="next_button_conditional_logic_container" style="display:none; padding-top:10px;">
+											<!-- content dynamically created from js.php -->
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="conditional_logic_nextbutton_setting field_setting">
-								<input type="checkbox" id="next_button_conditional_logic" onclick="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );" onkeypress="SetNextButtonConditionalLogic(this.checked); ToggleConditionalLogic( false, 'next_button' );"/>
-								<label for="next_button_conditional_logic" class="inline"><?php esc_html_e( 'Enable Next Button Conditional Logic', 'kdnaforms' ) ?><?php kdnaform_tooltip( 'form_nextbutton_conditional_logic' ); ?></label>
-								<br/>
-								<div id="next_button_conditional_logic_container" style="display:none; padding-top:10px;">
-									<!-- content dynamically created from js.php -->
-								</div>
-							</div>
-						</div>
+							</li>
 						</ul>
 
 						<?php
