@@ -454,8 +454,8 @@ class KDNA_Upgrade {
 			$wpdb->prefix . 'gf_entry_notes',
 			$wpdb->prefix . 'gf_entry_meta',
 			$wpdb->prefix . 'gf_addon_feed',
-			$wpdb->prefix . 'gf_addon_payment_transaction',
-			$wpdb->prefix . 'gf_addon_payment_callback',
+			$wpdb->prefix . 'kdna_addon_payment_transaction',
+			$wpdb->prefix . 'kdna_addon_payment_callback',
 		);
 
 		// create a string of %s - one for each array value.

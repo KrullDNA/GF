@@ -10,10 +10,11 @@
 	$(document).on('elementor/popup/show', function(event, id, instance) {
 		if (!instance) return;
 
-		var $popup;
-		try {
+		var $popup = null;
+		if (typeof instance.getElements === 'function') {
 			$popup = instance.getElements('$element');
-		} catch(e) {
+		}
+		if (!$popup) {
 			$popup = instance.$element || null;
 		}
 

@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 1.2.0
+Version: 2.1.0
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '1.2.0';
+	public static $version = '2.1.0';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -2298,10 +2298,16 @@ class KDNAForms {
 	 * @access public
 	 */
 	public static function include_payment_addon_framework() {
-		// Payment addon removed; load feed addon as base fallback.
-		if ( file_exists( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' ) ) {
-			require_once( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' );
+		if ( ! file_exists( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' ) ) {
+			return;
 		}
+
+		require_once( KDNACommon::get_base_path() . '/includes/addon/class-kdna-payment-addon.php' );
+
+		// The payment tables are owned by the framework, not the core schema,
+		// so they are installed the first time a payment add-on loads. The
+		// method short-circuits on an autoloaded option once installed.
+		KDNAPaymentAddOn::maybe_install_payment_tables();
 	}
 
 	/**
