@@ -104,6 +104,13 @@ function initLayoutEditor( $ ) {
 		fieldButtonsSelector = '.add-buttons button';
 
 
+	// Nothing to lay out if the fields container is not on the page. Without
+	// this the getComputedStyle call below throws on undefined and takes every
+	// script that runs after it down with it.
+	if ( ! $container.length ) {
+		return;
+	}
+
 	/**
 	 * The max column count determined by the fields container's grid CSS.
 	 * @type {number}
@@ -1431,4 +1438,8 @@ function initLayoutEditor( $ ) {
 
 }
 
-initLayoutEditor( jQuery );
+// The script is registered with $in_footer = false, so it parses in the head
+// before the editor markup exists. Wait for the DOM rather than running now.
+jQuery( function () {
+	initLayoutEditor( jQuery );
+} );
