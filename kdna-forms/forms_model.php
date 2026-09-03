@@ -6194,8 +6194,8 @@ class KDNAFormsModel {
 
 		$addon_tables = array(
 			self::get_addon_feed_table_name(),
-			$wpdb->prefix . 'gf_addon_payment_callback',
-			$wpdb->prefix . 'gf_addon_payment_transaction',
+			$wpdb->prefix . 'kdna_addon_payment_callback',
+			$wpdb->prefix . 'kdna_addon_payment_transaction',
 		);
 
 		$drop_tables = array_merge( $drop_tables, $addon_tables );
@@ -7763,8 +7763,8 @@ class KDNAFormsModel {
 			KDNAFormsModel::get_lead_meta_table_name(),
 			KDNAFormsModel::get_incomplete_submissions_table_name(),
 			self::get_addon_feed_table_name(),
-			"{$wpdb->prefix}gf_addon_payment_transaction",
-			"{$wpdb->prefix}gf_addon_payment_callback",
+			"{$wpdb->prefix}kdna_addon_payment_transaction",
+			"{$wpdb->prefix}kdna_addon_payment_callback",
 
 			KDNAFormsModel::get_entry_table_name(),
 			KDNAFormsModel::get_entry_notes_table_name(),

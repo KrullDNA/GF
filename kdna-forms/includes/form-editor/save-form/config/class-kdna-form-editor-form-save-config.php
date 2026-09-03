@@ -25,7 +25,7 @@ class KDNA_Form_Editor_Form_Save_Config extends GF_Admin_Form_Save_Config {
 						GF_Admin_Form_Save_Config::JSON_END_STRING,
 					),
 					'urls'             => array(
-						'formPreview' => trailingslashit( site_url() ) . '?gf_page=preview&id=%s',
+						'formPreview' => trailingslashit( site_url() ) . '?kdna_page=preview&id=%s',
 					),
 					'registeredAddons' => \KDNAAddOn::get_registered_addons(),
 				),

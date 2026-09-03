@@ -746,7 +746,7 @@ class KDNAExport {
 			var gfSpinner;
 
 			<?php KDNACommon::gf_global(); ?>
-			<?php KDNACommon::gf_vars(); ?>
+			<?php KDNACommon::kdna_vars(); ?>
 
 			function SelectExportForm(formId) {
 
@@ -786,7 +786,7 @@ class KDNAExport {
 
 				jQuery("#export_field_container, #export_filter_container, #export_date_container, #export_submit_container").hide().show();
 
-				gf_vars.filterAndAny = <?php echo json_encode( esc_html__( 'Export entries if {0} of the following match:', 'kdnaforms' ) ); ?>;
+				kdna_vars.filterAndAny = <?php echo json_encode( esc_html__( 'Export entries if {0} of the following match:', 'kdnaforms' ) ); ?>;
 				jQuery("#export_filters").gfFilterUI(filterSettings);
 			}
 
@@ -823,7 +823,7 @@ class KDNAExport {
 
 					var data = $('#gform_export').serialize();
 
-					data += '&action=gf_process_export';
+					data += '&action=kdna_process_export';
 					data += '&offset=' + offset;
 					data += '&exportId='+ exportId;
 					$.ajax({
@@ -839,7 +839,7 @@ class KDNAExport {
 								$('#progress_container').text('0%');
 								$('#please_wait_container').hide();
 								var formId = parseInt( $('#export_form').val() );
-								var url = ajaxurl + '?action=gf_download_export&_wpnonce=<?php echo esc_js( wp_create_nonce( 'kdnaform_download_export' ) ); ?>&export-id=' + response.exportId + '&form-id=' + formId;
+								var url = ajaxurl + '?action=kdna_download_export&_wpnonce=<?php echo esc_js( wp_create_nonce( 'kdnaform_download_export' ) ); ?>&export-id=' + response.exportId + '&form-id=' + formId;
 								$('#submit_button').fadeIn();
 								document.location.href = url;
 							}

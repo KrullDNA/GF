@@ -231,7 +231,7 @@ class KDNA_Upgrade {
 		// Setting the version of KDNA Forms that was installed initially
 		update_option( 'rg_form_original_version', KDNAForms::$version, false );
 
-		// Auto-setting and auto-validating license key based on value configured via the KDNA_LICENSE_KEY constant or the gf_license_key variable
+		// Auto-setting and auto-validating license key based on value configured via the KDNA_LICENSE_KEY constant or the kdna_license_key variable
 		// Auto-populating reCAPTCHA keys base on constant
 		$this->maybe_populate_keys();
 

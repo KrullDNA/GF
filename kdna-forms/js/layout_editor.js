@@ -451,7 +451,7 @@ function initLayoutEditor( $ ) {
 					if ( gf_legacy.is_legacy === '1' ) {
 						$element.resizable( 'option', 'minWidth', ui.size.width );
 						$element.resizable( 'option', 'maxWidth', ui.size.width );
-						alert( gf_vars.alertLegacyMode );
+						alert( kdna_vars.alertLegacyMode );
 						return;
 					}
 					max = null;
@@ -674,7 +674,7 @@ function initLayoutEditor( $ ) {
 
 					$editorContainer.addClass( 'droppable' );
 
-					if ( gf_vars[ 'currentlyAddingField' ] == true ) {
+					if ( kdna_vars[ 'currentlyAddingField' ] == true ) {
 						return false;
 					}
 

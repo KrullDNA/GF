@@ -527,8 +527,8 @@ async function conditionalLogicWarningDependency( field ) {
 
 	if (hasDependency) {
 		const confirmed = await gform.instances.dialogConfirmAsync(
-			gf_vars.conditionalLogicWarningTitle,
-			gf_vars.conditionalLogicRichTextEditorWarning
+			kdna_vars.conditionalLogicWarningTitle,
+			kdna_vars.conditionalLogicRichTextEditorWarning
 		)
 		if ( ! confirmed ) {
 			jQuery( '#field_rich_text_editor' ).prop( 'checked', false );
@@ -594,7 +594,7 @@ function InitializeForm(form){
 	else if(!form.lastPageButton || form.lastPageButton.type !== 'image')
 		jQuery('#last_page_button_text').prop('checked', true);
 
-	jQuery('#last_page_button_text_input').val(form.lastPageButton ? form.lastPageButton.text : gf_vars['previousLabel']);
+	jQuery('#last_page_button_text_input').val(form.lastPageButton ? form.lastPageButton.text : kdna_vars['previousLabel']);
 	jQuery('#last_page_button_image_url').val(form.lastPageButton ? form.lastPageButton.imageUrl : '');
 	TogglePageButton('last_page', true);
 
@@ -781,7 +781,7 @@ function LoadFieldSettings() {
 	//Creating blank item for number format to existing number fields so that user is not force into a format (for backwards compatibility)
 	if (!field.numberFormat) {
 		if (jQuery("#field_number_format #field_number_format_blank").length == 0) {
-			jQuery("#field_number_format").prepend("<option id='field_number_format_blank' value=''>" + gf_vars["selectFormat"] + "</option>");
+			jQuery("#field_number_format").prepend("<option id='field_number_format_blank' value=''>" + kdna_vars["selectFormat"] + "</option>");
 		}
 	} else
 		jQuery("#field_number_format_blank").remove();
@@ -2169,19 +2169,19 @@ async function DeleteField( element ) {
 	// Get field ID from element.
 	var fieldId = jQuery( element )[0].id.split( '_' )[2];
 	var field = GetFieldById( fieldId );
-	var confirmDeleteMessage = field.displayOnly ? gf_vars.confirmationDeleteDisplayField : gf_vars.confirmationDeleteField;
+	var confirmDeleteMessage = field.displayOnly ? kdna_vars.confirmationDeleteDisplayField : kdna_vars.confirmationDeleteField;
 
 	var conditionalLogicDependency = await HasConditionalLogicDependency(fieldId);
 	if (!conditionalLogicDependency) {
-		gform.instances.dialogConfirmAsync( gf_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
+		gform.instances.dialogConfirmAsync( kdna_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
 			proceedWithDeletion(fieldId);
 		});
 	} else {
-		var message = gf_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
-		gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
+		var message = kdna_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
+		gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
@@ -2281,7 +2281,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 
 	// check form button conditional logic
 	if(completeForm.button && ObjectHasConditionalLogicDependency(completeForm.button, fieldId, value) ) {
-		return gf_vars.conditionalLogicTypeButton;
+		return kdna_vars.conditionalLogicTypeButton;
 	}
 
 
@@ -2292,7 +2292,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.confirmations[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeConfirmation;
+			return kdna_vars.conditionalLogicTypeConfirmation;
 		}
 
 	}
@@ -2304,11 +2304,11 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.notifications[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeNotification;
+			return kdna_vars.conditionalLogicTypeNotification;
 		}
 
 		if( ObjectHasRoutingDependency(completeForm.notifications[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeNoficationRouting;
+			return kdna_vars.conditionalLogicTypeNoficationRouting;
 		}
 	}
 
@@ -2321,12 +2321,12 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 		var field = completeForm.fields[i];
 
 		if( ObjectHasConditionalLogicDependency(field, fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeField;
+			return kdna_vars.conditionalLogicTypeField;
 		}
 
 		// if this is a page field, check the next button conditional logic as well
 		if( GetInputType(field) == 'page' && ObjectHasConditionalLogicDependency(field.nextButton, fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeField;
+			return kdna_vars.conditionalLogicTypeField;
 		}
 
 	}
@@ -2338,7 +2338,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.feeds_conditions[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeFeed;
+			return kdna_vars.conditionalLogicTypeFeed;
 		}
 
 	}
@@ -2498,11 +2498,11 @@ async function CheckChoiceConditionalLogicDependency(input) {
 			return;
 		}
 
-		var message = gf_vars.conditionalLogicDependencyChoiceEdit.replace('{type}', hasDependency);
+		var message = kdna_vars.conditionalLogicDependencyChoiceEdit.replace('{type}', hasDependency);
 
 		// confirm that the user wants to make the modification.
 		setTimeout( ()=>
-			gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
+			gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
 				if ( ! confirmed ) {
 					// if user does not want to make modification, replace with original value.
 					jQuery( input ).val( previousValue ).trigger( 'blur' );
@@ -2616,7 +2616,7 @@ function GetFirstField() {
 }
 
 function EndAddField(field, fieldString, index){
-	gf_vars['currentlyAddingField'] = false;
+	kdna_vars['currentlyAddingField'] = false;
 
 	// We just added a field. Let's hide the No Fields placeholder.
 	jQuery( '#no-fields' ).hide();
@@ -2670,7 +2670,7 @@ function EndAddField(field, fieldString, index){
 	var focusedElement = document.activeElement;
 	if ( focusedElement.tagName === 'BUTTON' ) {
 		var fieldType = focusedElement.value;
-		wp.a11y.speak( fieldType + gf_vars.FieldAdded );
+		wp.a11y.speak( fieldType + kdna_vars.FieldAdded );
 	}
 
 	jQuery(document).trigger('gform_field_added', [form, field]);
@@ -2910,8 +2910,8 @@ function ShowSettings( element ) {
 		// Load and show field setting fields
 		LoadFieldSettings();
 		fieldObject = GetSubmitField();
-		var label = gf_vars.button;
-		var description = gf_vars.buttonDescription;
+		var label = kdna_vars.button;
+		var description = kdna_vars.buttonDescription;
 		var icon_classes = 'gform-icon gform-icon--smart-button';
 	} else {
 		// Hide form pagination and last pagination setting fields
@@ -2934,7 +2934,7 @@ function ShowSettings( element ) {
 	jQuery( '#sidebar_field_label' )
 		.removeClass( 'no-id' )
 		.text( label )
-		.attr( 'data-fieldId-label', gf_vars.idString )
+		.attr( 'data-fieldId-label', kdna_vars.idString )
 		.attr( 'data-fieldId', fieldObject.id );
 	if( 'submit' === fieldObject.type ) {
 		jQuery( '#sidebar_field_label' ).addClass( 'no-id' );
@@ -3233,7 +3233,7 @@ function LoadCustomChoices(){
 	jQuery(".choice_section_header, .bulk_custom_choice").remove();
 
 	if(!IsEmpty(gform_custom_choices)){
-		var str = "<li class='choice_section_header'>" + gf_vars.customChoices + "</li>";
+		var str = "<li class='choice_section_header'>" + kdna_vars.customChoices + "</li>";
 		for(key in gform_custom_choices){
 
 			if(!gform_custom_choices.hasOwnProperty(key))
@@ -3243,7 +3243,7 @@ function LoadCustomChoices(){
 
 			str += "<li class='bulk_custom_choice'><a href='javascript:void(0);' data-key='" + escapeAttr( key ) + "' onclick='" + selectChoiceAction + "' onkeypress='" + selectChoiceAction + "' class='bulk-choice bulk_custom_choice'>" + escapeHtml( key ) + "</a></li>";
 		}
-		str += "<li class='choice_section_header'>" + gf_vars.predefinedChoices + "</li>";
+		str += "<li class='choice_section_header'>" + kdna_vars.predefinedChoices + "</li>";
 		jQuery("#bulk_items").prepend(str);
 	}
 }
@@ -3345,13 +3345,13 @@ function InitBulkCustomPanel(){
 function LoadCustomChoicesPanel(isNew, speed){
 	if(isNew){
 		jQuery("#custom_choice_name").val("");
-		jQuery("#bulk_save_button").html(gf_vars.save);
+		jQuery("#bulk_save_button").html(kdna_vars.save);
 		jQuery("#bulk_cancel_link").show();
 		jQuery("#bulk_delete_link").hide();
 	}
 	else{
 		jQuery("#custom_choice_name").val(gform_selected_custom_choice);
-		jQuery("#bulk_save_button").html(gf_vars.update);
+		jQuery("#bulk_save_button").html(kdna_vars.update);
 		jQuery("#bulk_cancel_link").hide();
 		jQuery("#bulk_delete_link").show();
 	}
@@ -3505,10 +3505,10 @@ function UpdateFieldChoices(fieldType){
 
 			}
 			if(field.choices.length > 5)
-				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='gchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 
 			if ( field.enableSelectAll ) {
-				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + gf_vars["selectAll"] + '</button>';
+				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + kdna_vars["selectAll"] + '</button>';
 			}
 			break;
 
@@ -3524,10 +3524,10 @@ function UpdateFieldChoices(fieldType){
 
 			}
 
-			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + gf_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
+			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + kdna_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
 
 			if(field.choices.length > 5) {
-				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='gchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 			}
 
 			break;
@@ -3565,8 +3565,8 @@ function InsertFieldChoice( index ) {
 	var file_url = "";
 
 	if ( inputType === 'list' ) {
-		text = window.gf_vars.column + " " + (index + 1);
-		value = window.gf_vars.column + " " + (index + 1);
+		text = window.kdna_vars.column + " " + (index + 1);
+		value = window.kdna_vars.column + " " + (index + 1);
 	}
 
 	var newChoice = new Choice( text, value, price );
@@ -3669,8 +3669,8 @@ async function DeleteFieldChoice(index){
 
 	var hasDependency = await HasConditionalLogicDependency(field.id, value);
 	if( hasDependency ) {
-		var message = gf_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
+		var message = kdna_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
+		gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
 			if ( ! confirmed ) {
 				return;
 			}
@@ -4232,7 +4232,7 @@ function SetFieldLabel(label){
 function SetAriaLabel(label){
 	var fieldId   = jQuery( ".field_selected" )[0].id.split( '_' )[1];
 	var field     = GetFieldById( fieldId );
-	var ariaLabel = window.gf_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
+	var ariaLabel = window.kdna_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
 	jQuery( ".field_selected .gfield-edit" ).attr( 'aria-label', ariaLabel );
 }
 
@@ -4328,8 +4328,8 @@ function SetFieldSubLabelPlacement( subLabelPlacement ) {
 async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 	var hasDependency = await HasConditionalLogicDependency(field.id);
 	if (!isInit && visibility === 'administrative' && hasDependency) {
-		var message =  gf_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync(gf_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
+		var message =  kdna_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
+		gform.instances.dialogConfirmAsync(kdna_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
 			if (confirmed) {
 				proceedWithVisibilityChange(visibility, handleInputs);
 			} else {
@@ -4342,7 +4342,7 @@ async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 }
 
 function proceedWithVisibilityChange( visibility, handleInputs ) {
-	const isWhitelisted = gf_vars.visibilityOptions.some(option => option.value === visibility);
+	const isWhitelisted = kdna_vars.visibilityOptions.some(option => option.value === visibility);
 
 	if( ! isWhitelisted ) {
 		visibility = 'visible';
@@ -4634,7 +4634,7 @@ function SetupUnsavedChangesWarning() {
 				delete current.fields[ i ].layoutGroupId;
 			} );
 		}
-		if ( JSON.stringify( original ) !== JSON.stringify( current ) && ! gf_vars.isFormTrash ) {
+		if ( JSON.stringify( original ) !== JSON.stringify( current ) && ! kdna_vars.isFormTrash ) {
 			return "You have unsaved changes.";
 		}
 	}

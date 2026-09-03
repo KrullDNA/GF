@@ -8,8 +8,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	var gforms_original_json;
 
 	function DeleteCustomChoice() {
-        const confirmMessage = gf_vars.DeleteCustomChoice;
-        const confirmTitle = gf_vars.DeleteFormTitle;
+        const confirmMessage = kdna_vars.DeleteCustomChoice;
+        const confirmTitle = kdna_vars.DeleteFormTitle;
         gform.instances.moveBulkChoicesBehind();
 
         gform.instances.dialogConfirmAsync( confirmTitle, confirmMessage ).then((confirmed) => {
@@ -35,12 +35,12 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var name = jQuery('#custom_choice_name').val();
 		if (name.length == 0) {
                     gform.instances.moveBulkChoicesBehind();
-            		gform.instances.dialogAlert( gf_vars.MissingNameCustomChoicesTitle, gf_vars.MissingNameCustomChoices );
+            		gform.instances.dialogAlert( kdna_vars.MissingNameCustomChoicesTitle, kdna_vars.MissingNameCustomChoices );
 			return;
 		}
 		else if (gform_custom_choices[name] && name != gform_selected_custom_choice) {
                     gform.instances.moveBulkChoicesBehind();
-            		gform.instances.dialogAlert( gf_vars.DuplicateNameCustomChoicesTitle, gf_vars.DuplicateNameCustomChoices );
+            		gform.instances.dialogAlert( kdna_vars.DuplicateNameCustomChoicesTitle, kdna_vars.DuplicateNameCustomChoices );
 			return;
 		}
 
@@ -570,15 +570,15 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 	function DuplicateTitleMessage() {
 		jQuery("#please_wait_container").hide();
-        gform.instances.dialogAlert( gf_vars.DuplicateTitleMessageTitle, gf_vars.DuplicateTitleMessage );
+        gform.instances.dialogAlert( kdna_vars.DuplicateTitleMessageTitle, kdna_vars.DuplicateTitleMessage );
 	}
 
 	function ValidateForm() {
 		let error = '';
         let errorTitle = '';
 		if (jQuery.trim(form.title).length == 0) {
-            errorTitle = gf_vars.ValidateFormMissingFormTitleTitle;
-			error = gf_vars.ValidateFormMissingFormTitle;
+            errorTitle = kdna_vars.ValidateFormMissingFormTitleTitle;
+			error = kdna_vars.ValidateFormMissingFormTitle;
 		}
 		else {
 			var last_page_break = -1;
@@ -589,8 +589,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				switch (field["type"]) {
 					case "page" :
 						if (i === last_page_break + 1 || i === form["fields"].length - 1) {
-                            errorTitle = gf_vars.ValidateFormEmptyPageTitle;
-                            error = gf_vars.ValidateFormEmptyPage;
+                            errorTitle = kdna_vars.ValidateFormEmptyPageTitle;
+                            error = kdna_vars.ValidateFormEmptyPage;
                             last_page_break = i;
                         }
 						break;
@@ -598,8 +598,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 					case "product" :
 						has_product = true;
 						if (jQuery.trim(field["label"]).length === 0) {
-                            errorTitle = gf_vars.ValidateFormMissingProductLabelTitle;
-                            error = gf_vars.ValidateFormMissingProductLabel;
+                            errorTitle = kdna_vars.ValidateFormMissingProductLabelTitle;
+                            error = kdna_vars.ValidateFormMissingProductLabel;
                         }
 						break;
 
@@ -609,8 +609,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				}
 			}
 			if (has_option && !has_product) {
-                errorTitle = gf_vars.ValidateFormMissingProductFieldTitle;
-                error = gf_vars.ValidateFormMissingProductField;
+                errorTitle = kdna_vars.ValidateFormMissingProductFieldTitle;
+                error = kdna_vars.ValidateFormMissingProductField;
 			}
 
 			/**
@@ -666,7 +666,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	 */
 	function DeleteForm() {
 		if ( confirm( <?php echo wp_json_encode( __( "You are about to move this form to the trash. 'Cancel' to stop, 'OK' to move to trash.", "gravityforms" ) ); ?> ) ) {
-			gf_vars.isFormTrash = true; jQuery('#form_trash')[0].submit();
+			kdna_vars.isFormTrash = true; jQuery('#form_trash')[0].submit();
 		}
 	}
 
@@ -1250,7 +1250,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	}
 
 	function GetDefaultPrefixChoices() {
-		return gf_vars.nameFieldDefaultPrefixes;
+		return kdna_vars.nameFieldDefaultPrefixes;
 	}
 
 	function CreateField( id, type, index ) {
@@ -1278,58 +1278,58 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		switch (type) {
 			case "captcha" :
 				if (GetFieldsByType(["captcha"]).length > 0) {
-		                    gform.instances.dialogAlert( gf_vars.fieldCanBeAddedTitle, gf_vars.fieldCanBeAddedCaptcha );
+		                    gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedCaptcha );
 		                    return false;
 				}
 				break;
 
 			case "shipping" :
 				if (GetFieldsByType(["shipping"]).length > 0) {
-                    			gform.instances.dialogAlert( gf_vars.fieldCanBeAddedTitle, gf_vars.fieldCanBeAddedShipping );
+                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedShipping );
 					return false;
 				}
 				break;
 
 			case "post_content" :
 				if (GetFieldsByType(["post_content"]).length > 0) {
-                    			gform.instances.dialogAlert( gf_vars.fieldCanBeAddedTitle, gf_vars.fieldCanBeAddedPostContent );
+                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostContent );
 					return false;
 				}
 				break;
 			case "post_title" :
 				if (GetFieldsByType(["post_title"]).length > 0) {
-                    			gform.instances.dialogAlert( gf_vars.fieldCanBeAddedTitle, gf_vars.fieldCanBeAddedPostTitle );
+                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostTitle );
 					return false;
 				}
 				break;
 			case "post_excerpt" :
 				if (GetFieldsByType(["post_excerpt"]).length > 0) {
-                    			gform.instances.dialogAlert( gf_vars.fieldCanBeAddedTitle, gf_vars.fieldCanBeAddedPostExcerpt );
+                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostExcerpt );
 					return false;
 				}
 				break;
 			case "creditcard" :
 				if (GetFieldsByType(["creditcard"]).length > 0) {
-                    			gform.instances.dialogAlert( gf_vars.fieldCanBeAddedTitle, gf_vars.fieldCanBeAddedCreditCard );
+                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedCreditCard );
 					return false;
 				}
 				break;
 			case "quantity" :
 			case "option" :
 				if (GetFieldsByType(["product"]).length <= 0) {
-					gform.instances.dialogAlert( gf_vars.fieldCanBeAddedProductTitle, gf_vars.fieldCanBeAddedProduct );
+					gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedProductTitle, kdna_vars.fieldCanBeAddedProduct );
 					return false;
 				}
 				break;
 			case "multi_choice" :
 				if (GetFieldsByType(["choice"]).length <= 0 && form.markupVersion && form.markupVersion == 1) {
-					gform.instances.dialogAlert( gf_vars.legacyMarkupTitle, gf_vars.fieldCanBeAddedMultipleChoice );
+					gform.instances.dialogAlert( kdna_vars.legacyMarkupTitle, kdna_vars.fieldCanBeAddedMultipleChoice );
 					return false;
 				}
 				break;
 			case "image_choice" :
 				if (GetFieldsByType(["image_choice"]).length <= 0 && form.markupVersion && form.markupVersion == 1) {
-					gform.instances.dialogAlert( gf_vars.legacyMarkupTitle, gf_vars.fieldCanBeAddedImageChoice );
+					gform.instances.dialogAlert( kdna_vars.legacyMarkupTitle, kdna_vars.fieldCanBeAddedImageChoice );
 					return false;
 				}
 				break;
@@ -1348,10 +1348,10 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		}
 
 
-		if (gf_vars["currentlyAddingField"] == true)
+		if (kdna_vars["currentlyAddingField"] == true)
 			return;
 
-		gf_vars["currentlyAddingField"] = true;
+		kdna_vars["currentlyAddingField"] = true;
 
 		var nextId = GetNextFieldId();
 		var field = CreateField( nextId, type, index );
@@ -1365,7 +1365,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		mysack.setVar("field", jQuery.toJSON(field));
 		mysack.setVar('form_id', form.id);
 		mysack.onError = function () {
-            		gform.instances.dialogAlert( gf_vars.FieldAjaxonErrorTitle, gf_vars.StartAddFieldAjaxonError );
+            		gform.instances.dialogAlert( kdna_vars.FieldAjaxonErrorTitle, kdna_vars.StartAddFieldAjaxonError );
 		};
 
 		mysack.onCompletion = function() {
@@ -1523,7 +1523,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
         mysack.setVar("field", jQuery.toJSON(field));
         mysack.setVar('form_id', form.id);
         mysack.onError = function () {
-            gform.instances.dialogAlert( gf_vars.FieldAjaxonErrorTitle, gf_vars.StartChangeInputTypeAjaxonError );
+            gform.instances.dialogAlert( kdna_vars.FieldAjaxonErrorTitle, kdna_vars.StartChangeInputTypeAjaxonError );
         };
 
         // Define the onCompletion callback

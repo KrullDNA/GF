@@ -607,8 +607,8 @@ class KDNAEntryDetail {
 				jQuery('#please_wait_container').fadeIn();
 
 				jQuery.post(ajaxurl, {
-						action                 : "gf_resend_notifications",
-						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
+						action                 : "kdna_resend_notifications",
+						kdna_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
 						notifications          : jQuery.toJSON(selectedNotifications),
 						sendTo                 : sendTo,
 						leadIds                : '<?php echo absint( $lead['id'] ); ?>',
@@ -1322,7 +1322,7 @@ class KDNAEntryDetail {
 
 			<?php } ?>
 			<br><br>
-			<a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?gf_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
+			<a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?kdna_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
 		</div>
 		<!-- end print button -->
 		<?php

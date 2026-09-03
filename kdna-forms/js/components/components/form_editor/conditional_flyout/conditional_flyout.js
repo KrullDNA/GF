@@ -189,7 +189,7 @@ function useFieldId( field ) {
 function getOptionsFromSelect( field, value ) {
 	var options = [];
 
-	var emptyLabel = gf_vars.emptyChoice;
+	var emptyLabel = kdna_vars.emptyChoice;
 
 	if ( field.placeholder ) {
 		emptyLabel = field.placeholder;
@@ -227,7 +227,7 @@ function getOptionsFromSelect( field, value ) {
  * @return {[]}
  */
 function getCategoryOptions( field, value ) {
-	var cats    = gf_vars.conditionalLogic.categories;
+	var cats    = kdna_vars.conditionalLogic.categories;
 	var options = [];
 
 	for ( var i = 0; i < cats.length; i++ ) {
@@ -255,7 +255,7 @@ function getCategoryOptions( field, value ) {
  */
 function getAddressOptions( field, inputId, value ) {
 	var options        = [];
-	var addressOptions = gf_vars.conditionalLogic.addressOptions;
+	var addressOptions = kdna_vars.conditionalLogic.addressOptions;
 
 	if ( !field.inputs ) {
 		return options;
@@ -435,15 +435,15 @@ function GFConditionalLogic( fieldId, objectType ) {
 GFConditionalLogic.prototype.renderSidebar = function() {
 	var config = {
 		title: this.getAccordionTitle(),
-		toggleText: gf_vars.configure + ' ' + gf_vars.conditional_logic_text,
+		toggleText: kdna_vars.configure + ' ' + kdna_vars.conditional_logic_text,
 		active_class: this.isEnabled() ? 'gform-status--active' : '',
 		active_text: this.isEnabled() ? 'Active' : 'Inactive',
 		desc_class: GetFirstRuleField() <= 0 ? 'active' : '',
 		toggle_class: GetFirstRuleField() <= 0 ? '' : 'active',
-		desc: gf_vars.conditionalLogic.conditionalLogicHelperText,
+		desc: kdna_vars.conditionalLogic.conditionalLogicHelperText,
 	}
 
-	var html = gf_vars.conditionalLogic.views.sidebar;
+	var html = kdna_vars.conditionalLogic.views.sidebar;
 
 	renderView( html, this.els[ this.objectType ], config, true );
 };
@@ -457,15 +457,15 @@ GFConditionalLogic.prototype.renderFlyout = function() {
 		fieldId: this.fieldId,
 		checked: this.state.enabled ? 'checked' : '',
 		activeClass: this.visible ? 'active' : 'inactive',
-		enabledText: this.state.enabled ? gf_vars.enabled : gf_vars.disabled,
-		configure: gf_vars.configure,
-		conditionalLogic: gf_vars.conditional_logic_text,
-		enable: gf_vars.enable,
-		desc: gf_vars.conditional_logic_desc,
+		enabledText: this.state.enabled ? kdna_vars.enabled : kdna_vars.disabled,
+		configure: kdna_vars.configure,
+		conditionalLogic: kdna_vars.conditional_logic_text,
+		enable: kdna_vars.enable,
+		desc: kdna_vars.conditional_logic_desc,
 		main: this.renderMainControls( false ),
 	};
 
-	var html = gf_vars.conditionalLogic.views.flyout;
+	var html = kdna_vars.conditionalLogic.views.flyout;
 
 	renderView( html, this.els.flyouts[ this.objectType ], config, true );
 
@@ -487,16 +487,16 @@ GFConditionalLogic.prototype.renderLogicDescription = function() {
 		objectTypeText: this.getObjectTypeText(),
 		objectShowText: this.getObjectShowText(),
 		objectHideText: this.getObjectHideText(),
-		matchText: gf_vars.ofTheFollowingMatch,
-		allText: gf_vars.all,
-		anyText: gf_vars.any,
+		matchText: kdna_vars.ofTheFollowingMatch,
+		allText: kdna_vars.all,
+		anyText: kdna_vars.any,
 		hideSelected: this.state.actionType === 'hide' ? 'selected="selected"' : '',
 		showSelected: this.state.actionType === 'show' ? 'selected="selected"' : '',
 		allSelected: this.state.logicType === 'all' ? 'selected="selected"' : '',
 		anySelected: this.state.logicType === 'any' ? 'selected="selected"' : '',
 	};
 
-	var html = gf_vars.conditionalLogic.views.logicDescription;
+	var html = kdna_vars.conditionalLogic.views.logicDescription;
 
 	var markup = renderView( html, this.els.flyouts[ this.objectType ], config, false );
 
@@ -530,11 +530,11 @@ GFConditionalLogic.prototype.renderMainControls = function( echo ) {
 	var config = {
 		enabledClass: this.state.enabled ? 'active' : '',
 		logicDescription: this.renderLogicDescription(),
-		a11yWarning: this.objectType === 'button' ? gf_vars.conditionalLogic.views.a11yWarning : '',
-		a11yWarningText: gf_vars.conditional_logic_a11y,
+		a11yWarning: this.objectType === 'button' ? kdna_vars.conditionalLogic.views.a11yWarning : '',
+		a11yWarningText: kdna_vars.conditional_logic_a11y,
 	};
 
-	var html = gf_vars.conditionalLogic.views.main;
+	var html = kdna_vars.conditionalLogic.views.main;
 
 	if ( ! echo ) {
 		return renderView( html, this.els.flyouts[ this.objectType ], config, false );
@@ -552,7 +552,7 @@ GFConditionalLogic.prototype.renderMainControls = function( echo ) {
  */
 GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
 	var html     = '';
-	var template = gf_vars.conditionalLogic.views.option;
+	var template = kdna_vars.conditionalLogic.views.option;
 	var options  = [];
 
 	for ( var i = 0; i < form.fields.length; i++ ) {
@@ -615,15 +615,15 @@ GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
  */
 GFConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
 	var html      = '';
-	var template  = gf_vars.conditionalLogic.views.option;
+	var template  = kdna_vars.conditionalLogic.views.option;
 	var operators = {
-		is: gf_vars.is,
-		isnot: gf_vars.isNot,
-		'>': gf_vars.greaterThan,
-		'<': gf_vars.lessThan,
-		contains: gf_vars.contains,
-		starts_with: gf_vars.startsWith,
-		ends_with: gf_vars.endsWith,
+		is: kdna_vars.is,
+		isnot: kdna_vars.isNot,
+		'>': kdna_vars.greaterThan,
+		'<': kdna_vars.lessThan,
+		contains: kdna_vars.contains,
+		starts_with: kdna_vars.startsWith,
+		ends_with: kdna_vars.endsWith,
 	};
 
 	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
@@ -652,7 +652,7 @@ GFConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
 GFConditionalLogic.prototype.renderValueOptions = function( rule, idx ) {
 	var field    = getFieldById( rule.fieldId );
 	var html     = '';
-	var template = gf_vars.conditionalLogic.views.option;
+	var template = kdna_vars.conditionalLogic.views.option;
 	var options  = [];
 
 	// Field is actually a sub-field (such as the First Name or Country field), get the correct field from its ID.
@@ -704,7 +704,7 @@ GFConditionalLogic.prototype.renderInput = function( rule, idx ) {
 		value: rule.value,
 	};
 
-	var html = gf_vars.conditionalLogic.views.input;
+	var html = kdna_vars.conditionalLogic.views.input;
 
 	return renderView( html, null, config, false );
 };
@@ -723,7 +723,7 @@ GFConditionalLogic.prototype.renderSelect = function( rule, idx ) {
 		fieldValueOptions: this.renderValueOptions( rule, idx ),
 	};
 
-	var html = gf_vars.conditionalLogic.views.select;
+	var html = kdna_vars.conditionalLogic.views.select;
 
 	return renderView( html, null, config, false );
 };
@@ -787,11 +787,11 @@ GFConditionalLogic.prototype.renderRule = function( rule, idx ) {
 		deleteClass: this.state.rules.length > 1 ? 'active' : '',
 		value: rule.value,
 		valueMarkup: this.renderRuleValue( rule, idx ),
-		addRuleText: gf_vars.conditionalLogic.addRuleText,
-		removeRuleText: gf_vars.conditionalLogic.removeRuleText,
+		addRuleText: kdna_vars.conditionalLogic.addRuleText,
+		removeRuleText: kdna_vars.conditionalLogic.removeRuleText,
 	};
 
-	var html = gf_vars.conditionalLogic.views.rule;
+	var html = kdna_vars.conditionalLogic.views.rule;
 
 	return renderView( html, null, config, false );
 }
@@ -936,19 +936,19 @@ GFConditionalLogic.prototype.getAccordionTitle = function() {
 	var prefix = '';
 	switch ( this.objectType ) {
 		case 'page':
-			prefix = gf_vars.page + ' ';
+			prefix = kdna_vars.page + ' ';
 			break;
 		case 'next_button':
-			prefix = gf_vars.next_button + ' ';
+			prefix = kdna_vars.next_button + ' ';
 			break;
 		case 'button':
-			prefix = gf_vars.button + ' ';
+			prefix = kdna_vars.button + ' ';
 		case 'field':
 		default:
 			break;
 	}
 
-	return prefix + gf_vars.conditional_logic_text;
+	return prefix + kdna_vars.conditional_logic_text;
 };
 
 /**
@@ -959,17 +959,17 @@ GFConditionalLogic.prototype.getAccordionTitle = function() {
 GFConditionalLogic.prototype.getObjectTypeText = function() {
 	switch ( this.objectType ) {
 		case 'section':
-			return gf_vars.thisSectionIf;
+			return kdna_vars.thisSectionIf;
 		case 'field':
-			return gf_vars.thisFieldIf;
+			return kdna_vars.thisFieldIf;
 		case 'page':
-			return gf_vars.thisPage;
+			return kdna_vars.thisPage;
 		case 'confirmation':
-			return gf_vars.thisConfirmation;
+			return kdna_vars.thisConfirmation;
 		case 'notification':
-			return gf_vars.thisNotification;
+			return kdna_vars.thisNotification;
 		default:
-			return gf_vars.thisFormButton;
+			return kdna_vars.thisFormButton;
 	}
 }
 
@@ -980,9 +980,9 @@ GFConditionalLogic.prototype.getObjectTypeText = function() {
  */
 GFConditionalLogic.prototype.getObjectShowText = function() {
 	if ( this.objectType === "next_button" ) {
-		return gf_vars.enable;
+		return kdna_vars.enable;
 	} else {
-		return gf_vars.show;
+		return kdna_vars.show;
 	}
 }
 
@@ -993,9 +993,9 @@ GFConditionalLogic.prototype.getObjectShowText = function() {
  */
 GFConditionalLogic.prototype.getObjectHideText = function() {
 	if ( this.objectType === "next_button" ) {
-		return gf_vars.disable;
+		return kdna_vars.disable;
 	} else {
-		return gf_vars.hide;
+		return kdna_vars.hide;
 	}
 }
 

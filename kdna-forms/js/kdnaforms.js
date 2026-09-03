@@ -732,11 +732,11 @@ function gformDeleteUploadedFile(formId, fieldId, deleteButton){
                 var settings = $multfile.data('settings');
                 var count = files[ inputName ].length;
                 if ( count === 0 ) {
-                    jQuery( '#' + settings.gf_vars.message_id ).html('');
+                    jQuery( '#' + settings.kdna_vars.message_id ).html('');
                     gfMultiFileUploader.toggleDisabled( settings, false );
                 } else {
                     jQuery( '#error_' + fileId ).remove(); // Removing the file-specific validation message.
-                    var max = settings.gf_vars.max_files;
+                    var max = settings.kdna_vars.max_files;
                     if ( count < max )
                         gfMultiFileUploader.toggleDisabled( settings, false );
                 }
@@ -2590,9 +2590,9 @@ function gformValidateFileSize( field, max_file_size ) {
 	});
 
     $(document).ready(function () {
-        if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_gf_edit_forms')|| typeof plupload == 'undefined'){
+        if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_kdna_edit_forms')|| typeof plupload == 'undefined'){
             $(".gform_button_select_files").prop("disabled", true);
-        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_gf_entries') > -1) {
+        } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_kdna_entries') > -1) {
             $(".gform_fileupload_multifile").each(function(){
                 setup(this);
             });
@@ -2707,14 +2707,14 @@ function gformValidateFileSize( field, max_file_size ) {
 	    }
 
 	    function toggleLimitReached(settings) {
-		    var limit = parseInt(settings.gf_vars.max_files, 10);
+		    var limit = parseInt(settings.kdna_vars.max_files, 10);
 		    if (limit > 0) {
 			    var totalCount = countFiles(settings.multipart_params.field_id),
 				    limitReached = totalCount >= limit;
 
 			    gfMultiFileUploader.toggleDisabled(settings, limitReached);
 			    if (!limitReached) {
-				    removeMessage(settings.gf_vars.message_id, strings.max_reached);
+				    removeMessage(settings.kdna_vars.message_id, strings.max_reached);
 			    }
 		    }
 	    }
@@ -2726,10 +2726,10 @@ function gformValidateFileSize( field, max_file_size ) {
 		});
 
         uploader.bind('FilesAdded', function(up, files) {
-            var max = parseInt(up.settings.gf_vars.max_files,10),
+            var max = parseInt(up.settings.kdna_vars.max_files,10),
                 fieldID = up.settings.multipart_params.field_id,
                 totalCount = countFiles(fieldID),
-                disallowed = up.settings.gf_vars.disallowed_extensions,
+                disallowed = up.settings.kdna_vars.disallowed_extensions,
                 extension;
 
             if( max > 0 && totalCount >= max){
@@ -2744,7 +2744,7 @@ function gformValidateFileSize( field, max_file_size ) {
                 extension = file.name.split('.').pop();
 
                 if($.inArray(extension, disallowed) > -1){
-                    addMessage(up.settings.gf_vars.message_id, file.name + " - " + strings.illegal_extension);
+                    addMessage(up.settings.kdna_vars.message_id, file.name + " - " + strings.illegal_extension);
                     up.removeFile(file);
                     return;
                 }
@@ -2796,7 +2796,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
             if(max > 0 && totalCount >= max){
                 gfMultiFileUploader.toggleDisabled(up.settings, true);
-                addMessage(up.settings.gf_vars.message_id, strings.max_reached)
+                addMessage(up.settings.kdna_vars.message_id, strings.max_reached)
             }
 
 
@@ -2814,9 +2814,9 @@ function gformValidateFileSize( field, max_file_size ) {
         uploader.bind('Error', function(up, err) {
             if(err.code === plupload.FILE_EXTENSION_ERROR){
                 var extensions = typeof up.settings.filters.mime_types != 'undefined' ? up.settings.filters.mime_types[0].extensions /* plupoad 2 */ : up.settings.filters[0].extensions;
-                addMessage(up.settings.gf_vars.message_id, err.file.name + " - " + strings.invalid_file_extension + " " + extensions);
+                addMessage(up.settings.kdna_vars.message_id, err.file.name + " - " + strings.invalid_file_extension + " " + extensions);
             } else if (err.code === plupload.FILE_SIZE_ERROR) {
-                addMessage(up.settings.gf_vars.message_id, err.file.name + " - " + strings.file_exceeds_limit);
+                addMessage(up.settings.kdna_vars.message_id, err.file.name + " - " + strings.file_exceeds_limit);
             } else {
                 const errorResponse = JSON.parse( err.response );
                 const errorCode = errorResponse?.error?.code || err.code;
@@ -2824,7 +2824,7 @@ function gformValidateFileSize( field, max_file_size ) {
                 const filePart = err.file?.name ? `${ err.file.name } - ` : '';
                 const m = `${ filePart }${ strings.error }: ${ errorCode }, ${ strings.message }: ${ errorMessage }`;
 
-                addMessage(up.settings.gf_vars.message_id, m);
+                addMessage(up.settings.kdna_vars.message_id, m);
             }
             $('#' + err.file.id ).html('');
             up.removeFile( err.file );
@@ -2835,7 +2835,7 @@ function gformValidateFileSize( field, max_file_size ) {
 			var response = $.secureEvalJSON(result.response);
 			if(response.status == "error"){
 				up.removeFile(file);
-				addMessage(up.settings.gf_vars.message_id, file.name + " - " + response.error.message);
+				addMessage(up.settings.kdna_vars.message_id, file.name + " - " + response.error.message);
 				$('#' + file.id ).html('');
 			} else {
 				up.settings.multipart_params[file.target_name] = response.data;
@@ -2850,7 +2850,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
 			var response = $.secureEvalJSON(result.response);
 			if (response.status == "error") {
-				addMessage(up.settings.gf_vars.message_id, file.name + " - " + response.error.message);
+				addMessage(up.settings.kdna_vars.message_id, file.name + " - " + response.error.message);
 				$('#' + file.id).html('');
 				toggleLimitReached(up.settings);
 				return;
@@ -2899,7 +2899,7 @@ function gformValidateFileSize( field, max_file_size ) {
 					response.data.id = file.id;
 					addFile(fieldId, response.data);
 				} else {
-					addMessage(up.settings.gf_vars.message_id, strings.unknown_error + ': ' + file.name);
+					addMessage(up.settings.kdna_vars.message_id, strings.unknown_error + ': ' + file.name);
 				}
 			}
 

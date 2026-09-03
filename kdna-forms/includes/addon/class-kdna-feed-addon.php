@@ -1992,7 +1992,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 					?>
 
 					<!--Needed to save state after bulk operations-->
-					<input type="hidden" value="gf_edit_forms" name="page">
+					<input type="hidden" value="kdna_edit_forms" name="page">
 					<input type="hidden" value="settings" name="view">
 					<input type="hidden" value="<?php echo esc_attr( $this->get_slug() ); ?>" name="subview">
 					<input type="hidden" value="<?php echo esc_attr( rgar( $form, 'id' ) ); ?>" name="id">
@@ -2006,7 +2006,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		<script type="text/javascript">
 			<?php
 
-				KDNACommon::gf_vars();
+				KDNACommon::kdna_vars();
 
 				if ( $this->_supports_feed_ordering ) {
 

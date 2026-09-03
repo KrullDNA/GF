@@ -1798,8 +1798,8 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				jQuery('#please_wait_container').fadeIn();
 
 				jQuery.post(ajaxurl, {
-						action                 : "gf_resend_notifications",
-						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
+						action                 : "kdna_resend_notifications",
+						kdna_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
 						notifications          : jQuery.toJSON(selectedNotifications),
 						sendTo                 : sendTo,
 						leadIds                : leadIds,

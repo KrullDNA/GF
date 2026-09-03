@@ -336,7 +336,7 @@ class Notification_Routing extends Base {
 					}
 					else {
 						// Loading categories via AJAX.
-						jQuery.post(ajaxurl, {   action: "gf_get_notification_post_categories",
+						jQuery.post(ajaxurl, {   action: "kdna_get_notification_post_categories",
 								ruleIndex              : index,
 								selectedValue          : selectedValue},
 							function (dropdown_string) {

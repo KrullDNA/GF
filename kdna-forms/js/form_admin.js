@@ -43,8 +43,8 @@ function initMergeTagSupport() {
 }
 
 function FormatCurrency(element){
-	if(gf_vars.gf_currency_config){
-		var currency = new gform.Currency(gf_vars.gf_currency_config);
+	if(kdna_vars.gf_currency_config){
+		var currency = new gform.Currency(kdna_vars.gf_currency_config);
 		var price = currency.toMoney(jQuery(element).val());
 		jQuery(element).val(price);
 	}
@@ -118,34 +118,34 @@ function CreateConditionalLogic(objectType, obj){
 
 	var objText;
 	if (obj['type'] == "section")
-		objText = gf_vars.thisSectionIf;
+		objText = kdna_vars.thisSectionIf;
 	else if(objectType == "field")
-		objText = gf_vars.thisFieldIf;
+		objText = kdna_vars.thisFieldIf;
 	else if(objectType == "page")
-		objText = gf_vars.thisPage;
+		objText = kdna_vars.thisPage;
 	else if(objectType == "confirmation")
-		objText = gf_vars.thisConfirmation;
+		objText = kdna_vars.thisConfirmation;
 	else if(objectType == "notification")
-		objText = gf_vars.thisNotification;
+		objText = kdna_vars.thisNotification;
 	else
-		objText = gf_vars.thisFormButton;
+		objText = kdna_vars.thisFormButton;
 
 	// Some elements are shown/hidden, and some elements are enabled/disabled.
 	var showText;
 	var hideText;
 	if( objectType == "next_button" ) {
-		showText = gf_vars.enable;
-		hideText = gf_vars.disable;
+		showText = kdna_vars.enable;
+		hideText = kdna_vars.disable;
 	} else {
-		showText = gf_vars.show;
-		hideText = gf_vars.hide;
+		showText = kdna_vars.show;
+		hideText = kdna_vars.hide;
 	}
 
 	var descPieces = {};
 	descPieces.actionType = "<select id='" + objectType + "_action_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"actionType\", jQuery(this).val());'><option value='show' " + showSelected + ">" + showText + "</option><option value='hide' " + hideSelected + ">" + hideText + "</option></select>";
 	descPieces.objectDescription = objText;
-	descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + gf_vars.all + "</option><option value='any' " + anySelected + ">" + gf_vars.any + "</option></select>";
-	descPieces.ofTheFollowingMatch = gf_vars.ofTheFollowingMatch;
+	descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + kdna_vars.all + "</option><option value='any' " + anySelected + ">" + kdna_vars.any + "</option></select>";
+	descPieces.ofTheFollowingMatch = kdna_vars.ofTheFollowingMatch;
 
 	var descPiecesArr = makeArray( descPieces );
 
@@ -197,9 +197,9 @@ function GetRuleOperators( objectType, i, fieldId, selectedOperator ) {
 	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, objectType, fieldId );
 
 	jQuery.each(operators,function(operator, stringKey){
-		var operatorText = gf_vars[stringKey];
+		var operatorText = kdna_vars[stringKey];
 		if ( undefined === operatorText ) {
-			// If the operator text has been filtered, it may not be in the gf_vars array.
+			// If the operator text has been filtered, it may not be in the kdna_vars array.
 			operatorText = stringKey;
 		}
 		selected = selectedOperator == operator ? "selected='selected'" : "";
@@ -373,7 +373,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 						);
 
 			//will be replaced by real drop down during the ajax callback
-			str = "<select id='" + placeholderName + "' class='gfield_rule_select'><option>" + gf_vars["loading"] + "</option></select>";
+			str = "<select id='" + placeholderName + "' class='gfield_rule_select'><option>" + kdna_vars["loading"] + "</option></select>";
 		}
 	}
 	else if(field && field.choices && jQuery.inArray(operator, ["is", "isnot"]) > -1){
@@ -381,7 +381,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 			ruleChoices;
 
 		if (GetInputType(field) === 'multiselect') {
-			emptyChoice = gf_vars.emptyChoice;
+			emptyChoice = kdna_vars.emptyChoice;
 		} else if (field.placeholder) {
 			emptyChoice = field.placeholder;
 		}
@@ -397,7 +397,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		//loading categories via AJAX
 		jQuery.post( ajaxurl, {
 			action:       'gf_get_address_rule_values_select',
-			address_type: field.addressType ? field.addressType : gf_vars.defaultAddressType,
+			address_type: field.addressType ? field.addressType : kdna_vars.defaultAddressType,
 			value:        selectedValue,
 			id:           dropdownId,
 			form_id:      field.formId
@@ -411,7 +411,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		} );
 
 		// will be replaced by real drop down during the ajax callback
-		str = "<select id='" + dropdownId + "' class='gfield_rule_select'><option>" + gf_vars['loading'] + "</option></select>";
+		str = "<select id='" + dropdownId + "' class='gfield_rule_select'><option>" + kdna_vars['loading'] + "</option></select>";
 
 	}
 	else if (isEntryMeta && entry_meta && entry_meta[selectedFieldId] &&  entry_meta[selectedFieldId].filter && typeof entry_meta[selectedFieldId].filter.choices != 'undefined') {
@@ -421,7 +421,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		selectedValue = selectedValue ? selectedValue.replace(/'/g, "&#039;") : "";
 
 		//create a text field for fields that don't have choices (i.e text, textarea, number, email, etc...)
-		str = "<input type='text' placeholder='" + gf_vars["enterValue"] + "' class='gfield_rule_select gfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
+		str = "<input type='text' placeholder='" + kdna_vars["enterValue"] + "' class='gfield_rule_select gfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
 	}
 
 	str = gform.applyFilters( 'gform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
@@ -441,13 +441,13 @@ function IsAddressSelect( inputId, field ) {
 		return false;
 	}
 
-	var addressType = field.addressType ? field.addressType : gf_vars.defaultAddressType;
+	var addressType = field.addressType ? field.addressType : kdna_vars.defaultAddressType;
 
-	if( ! gf_vars.addressTypes[ addressType ] ) {
+	if( ! kdna_vars.addressTypes[ addressType ] ) {
 		return false;
 	}
 
-	var addressTypeObj = gf_vars.addressTypes[ addressType ],
+	var addressTypeObj = kdna_vars.addressTypes[ addressType ],
 		isCountryInput = inputId == field.id + '.6',
 		isStateInput   = inputId == field.id + '.4';
 
@@ -569,7 +569,7 @@ function TruncateRuleText(text){
 
 function gfAjaxSpinner(elem, imageSrc, inlineStyles) {
 
-	imageSrc     = typeof imageSrc == 'undefined' || ! imageSrc ? gf_vars.baseUrl + '/images/spinner.svg': imageSrc;
+	imageSrc     = typeof imageSrc == 'undefined' || ! imageSrc ? kdna_vars.baseUrl + '/images/spinner.svg': imageSrc;
 	inlineStyles = typeof inlineStyles != 'undefined' ? inlineStyles : '';
 
 	this.elem = elem;
@@ -841,9 +841,9 @@ function StashConditionalLogic() {
 
 function ConfirmationObj() {
 	this.id = false;
-	this.name = gf_vars.confirmationDefaultName;
+	this.name = kdna_vars.confirmationDefaultName;
 	this.type = 'message';
-	this.message = gf_vars.confirmationDefaultMessage;
+	this.message = kdna_vars.confirmationDefaultMessage;
 	this.isDefault = 0;
 }
 
@@ -1104,7 +1104,7 @@ var gfMergeTagsObj = function( form, element ) {
 		var inputType     = self.elem.is( 'input' ) ? 'input' : 'textarea',
 			positionClass = self.getClassProperty( self.elem, 'position' );
 
-		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag gform-button gform-button--unstyled" title="' + gf_vars.mergeTagsText + '"><i class="gform-icon gform-icon--merge-tag gform-button__icon" aria-hidden="true"></i>' + gf_vars.mergeTagsText + '</button></span>' );
+		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag gform-button gform-button--unstyled" title="' + kdna_vars.mergeTagsText + '"><i class="gform-icon gform-icon--merge-tag gform-button__icon" aria-hidden="true"></i>' + kdna_vars.mergeTagsText + '</button></span>' );
 
 		// Add the target element to the merge tag icon data for reference later when determining where the selected merge tag should be inserted.
 		self.mergeTagIcon.data( 'targetElement', self.elem.attr( 'id' ) );
@@ -1349,12 +1349,12 @@ var gfMergeTagsObj = function( form, element ) {
 
 	this.getMergeTagLabel = function(tag) {
 
-		for(groupName in gf_vars.mergeTags) {
+		for(groupName in kdna_vars.mergeTags) {
 
-			if(!gf_vars.mergeTags.hasOwnProperty(groupName))
+			if(!kdna_vars.mergeTags.hasOwnProperty(groupName))
 				continue;
 
-			var tags = gf_vars.mergeTags[groupName].tags;
+			var tags = kdna_vars.mergeTags[groupName].tags;
 			for(i in tags) {
 
 				if(!tags.hasOwnProperty(i))
@@ -1369,7 +1369,7 @@ var gfMergeTagsObj = function( form, element ) {
 	};
 
 	this.getMergeGroupLabel = function(group) {
-		return gf_vars.mergeTags[group].label;
+		return kdna_vars.mergeTags[group].label;
 	};
 
 	this.getFieldMergeTags = function(field, option) {
@@ -1422,14 +1422,14 @@ var gfMergeTagsObj = function( form, element ) {
 	*/
 	self.getCustomMergeTags = function() {
 
-		for ( groupName in gf_vars.mergeTags ) {
+		for ( groupName in kdna_vars.mergeTags ) {
 
-			if ( ! gf_vars.mergeTags.hasOwnProperty( groupName ) ) {
+			if ( ! kdna_vars.mergeTags.hasOwnProperty( groupName ) ) {
 				continue;
 			}
 
 			if ( groupName == 'custom' ) {
-				return gf_vars.mergeTags[ groupName ];
+				return kdna_vars.mergeTags[ groupName ];
 			}
 
 		}

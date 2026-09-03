@@ -60,7 +60,7 @@ The WP-API will envelope the response if the \_envelope param is included in the
     "payment_method":   null,
     "payment_status":   null,
     "post_id":          null,
-    "source_url":       "http://localhost?gf_page=preview&id=1",
+    "source_url":       "http://localhost?kdna_page=preview&id=1",
     "status":           "active",
     "transaction_id":   null,
     "transaction_type": null,
@@ -87,7 +87,7 @@ The WP-API will envelope the response if the \_envelope param is included in the
         "payment_method":   null,
         "payment_status":   null,
         "post_id":          null,
-        "source_url":       "http://localhost?gf_page=preview&id=1",
+        "source_url":       "http://localhost?kdna_page=preview&id=1",
         "status":           "active",
         "transaction_id":   null,
         "transaction_type": null,
@@ -1121,7 +1121,7 @@ the form permanently but the response code will be 410 (Gone). Use the 'force' p
 
   ```json
   {
-    "code":    "gf_form_invalid_id",
+    "code":    "kdna_form_invalid_id",
     "message": "Invalid form id.",
     "data": {
     "status": 404

@@ -487,7 +487,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 		$describedby       = $this->get_aria_describedby( array( $rules_messages_id ) );
 
 		if ( $multiple_files ) {
-			$upload_action_url = trailingslashit( site_url() ) . '?gf_page=' . KDNACommon::get_upload_page_slug();
+			$upload_action_url = trailingslashit( site_url() ) . '?kdna_page=' . KDNACommon::get_upload_page_slug();
 
 			$browse_button_id  = 'kdnaform_browse_button_' . $form_id . '_' . $id;
 			$container_id      = 'kdnaform_multifile_upload_' . $form_id . '_' . $id;
@@ -526,7 +526,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 						'field_id'                                  => $id,
 						"_kdnaform_file_upload_nonce_{$form_id}_{$id}" => wp_create_nonce( "kdnaform_file_upload_{$form_id}_{$id}" ),
 					),
-					'gf_vars'             => array(
+					'kdna_vars'             => array(
 						'max_files'             => $max_files,
 						'message_id'            => $messages_id,
 						'disallowed_extensions' => $disallowed_extensions,

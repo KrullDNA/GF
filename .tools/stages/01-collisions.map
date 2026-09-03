@@ -1,0 +1,55 @@
+# Stage 1 — identifiers that exist under BOTH gf_ and kdna_ names.
+#
+# Every pair here is a rename that was applied to one side of the plugin and
+# not the other, so each one is a live fault, not a cosmetic change:
+#
+#   * the entry-detail pagination widget emits kdna_* class names while the
+#     whole stylesheet still defines .gf_* — the widget renders unstyled;
+#   * the admin menu slug is kdna_edit_forms, but a feed add-on settings form
+#     posts page=gf_edit_forms and every toplevel_page_gf_* hook is dead;
+#   * conditional_flyout.js reads kdna_vars while common.php writes gf_vars;
+#   * the payment framework creates wp_kdna_addon_payment_* while forms_model
+#     queries and drops wp_gf_addon_payment_*.
+#
+# Deliberately NOT here: gf_entry and gf_entry_meta are live database tables
+# holding this site's forms and entries, and gf_field_filter is a file name.
+
+# --- JS/PHP globals ---------------------------------------------------------
+gf_vars                                 kdna_vars
+
+# --- admin page slugs, and the screen hooks WordPress derives from them ------
+gf_edit_forms                           kdna_edit_forms
+gf_entries                              kdna_entries
+gf_new_form                             kdna_new_form
+gf_page                                 kdna_page
+toplevel_page_gf_edit_forms             toplevel_page_kdna_edit_forms
+toplevel_page_gf_splash                 toplevel_page_kdna_splash
+forms_page_gf_entries                   forms_page_kdna_entries
+forms_page_gf_help                      forms_page_kdna_help
+forms_page_gf_addons                    forms_page_kdna_addons
+
+# --- ajax actions and nonces ------------------------------------------------
+gf_resend_notifications                 kdna_resend_notifications
+gf_dismissible_nonce                    kdna_dismissible_nonce
+gf_download_export                      kdna_download_export
+gf_process_export                       kdna_process_export
+gf_get_notification_post_categories     kdna_get_notification_post_categories
+gf_form_invalid_id                      kdna_form_invalid_id
+gf_license_key                          kdna_license_key
+gf_upgrade_license                      kdna_upgrade_license
+
+# --- entry-detail pagination: stylesheet catches up with the markup ---------
+gf_entry_detail_pagination              kdna_entry_detail_pagination
+gf_entry_pagination                     kdna_entry_pagination
+gf_entry_pagination_link                kdna_entry_pagination_link
+gf_entry_pagination_link_active         kdna_entry_pagination_link_active
+gf_entry_pagination_link_inactive       kdna_entry_pagination_link_inactive
+gf_entry_count                          kdna_entry_count
+gf_entry_next                           kdna_entry_next
+gf_entry_prev                           kdna_entry_prev
+gf_entry_next_link                      kdna_entry_next_link
+gf_entry_prev_link                      kdna_entry_prev_link
+
+# --- payment tables: one name, not two (both are empty on this install) -----
+gf_addon_payment_transaction            kdna_addon_payment_transaction
+gf_addon_payment_callback               kdna_addon_payment_callback

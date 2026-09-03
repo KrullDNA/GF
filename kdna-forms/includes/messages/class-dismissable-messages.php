@@ -168,7 +168,7 @@ class Dismissable_Messages {
 				?>
 				<div class="notice below-h1 notice-<?php echo esc_attr( $class ); ?> is-dismissible gf-notice"
 				     data-gf_dismissible_key="<?php echo esc_attr( $message['key'] ) ?>"
-				     data-gf_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'kdna_dismissible_nonce' ) ) ?>">
+				     data-kdna_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'kdna_dismissible_nonce' ) ) ?>">
 					<p>
 						<?php echo $message['text']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</p>

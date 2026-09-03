@@ -16,7 +16,7 @@
         height = h;
         isResizable = typeof height != 'undefined' && height > 0;
         operatorStrings = {"is":"is","isnot":"isNot", ">":"greaterThan", "<":"lessThan", "contains":"contains", "starts_with":"startsWith", "ends_with":"endsWith"};
-        imagesURL = gf_vars.baseUrl + "/images";
+        imagesURL = kdna_vars.baseUrl + "/images";
         settings = s;
         filters = initVars && initVars.filters ? initVars.filters : [];
         mode = initVars && initVars.mode ? initVars.mode : "all";
@@ -187,7 +187,7 @@
         if (filter) {
             for (i = 0; i < filter.operators.length; i++) {
                 operator = filter.operators[i];
-                str += '<option value="{0}">{1}</option>'.gformFormat(operator, gf_vars[operatorStrings[operator]] );
+                str += '<option value="{0}">{1}</option>'.gformFormat(operator, kdna_vars[operatorStrings[operator]] );
             }
         }
         str += "</select>";
@@ -258,10 +258,10 @@
         str += "<button " +
 	        "class='gform-add add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
 	        "title='{0}'" +
-	        "></button>".gformFormat(gf_vars.addFieldFilter);
+	        "></button>".gformFormat(kdna_vars.addFieldFilter);
         str += "<button " +
 	        "class='gform-remove delete_field_choice gform-st-icon gform-st-icon--circle-minus' " +
-	        "title='" + gf_vars.removeFieldFilter + "'" +
+	        "title='" + kdna_vars.removeFieldFilter + "'" +
 	        "></button>";
         return str;
     }
@@ -296,11 +296,11 @@
 
     function displayNoFiltersMessage () {
         var str = "";
-        str += "<div id='gform-no-filters' >" + gf_vars.addFieldFilter;
+        str += "<div id='gform-no-filters' >" + kdna_vars.addFieldFilter;
         str += "<button " +
 	        "class='gform-add add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
 	        "title='{0}'" +
-	        "></div>".gformFormat(gf_vars.addFieldFilter);
+	        "></div>".gformFormat(kdna_vars.addFieldFilter);
         $("#gform-field-filters").html(str);
         if(isResizable){
             $container.css({'min-height': '', 'border-bottom': ''});
@@ -323,8 +323,8 @@
 
     function getFilterMode(mode){
         var html;
-        html = '<select name="mode"><option value="all" {0}>{1}</option><option value="any" {2}>{3}</option></select>'.gformFormat(selected("all", mode), gf_vars.all, selected("any", mode), gf_vars.any);
-        html = gf_vars.filterAndAny.gformFormat(html);
+        html = '<select name="mode"><option value="all" {0}>{1}</option><option value="any" {2}>{3}</option></select>'.gformFormat(selected("all", mode), kdna_vars.all, selected("any", mode), kdna_vars.any);
+        html = kdna_vars.filterAndAny.gformFormat(html);
         return html
     }
 

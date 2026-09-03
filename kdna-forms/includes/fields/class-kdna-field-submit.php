@@ -20,7 +20,7 @@ class KDNA_Field_Submit extends KDNA_Field {
 	/**
 	 * Returns the field title.
 	 *
-	 * The submit button editor field title is declared in gf_vars['button'] instead of here.
+	 * The submit button editor field title is declared in kdna_vars['button'] instead of here.
 	 *
 	 * @since 2.6
 	 */
@@ -31,7 +31,7 @@ class KDNA_Field_Submit extends KDNA_Field {
 	/**
 	 * Returns the field description.
 	 *
-	 * The submit button editor field description is declared in gf_vars['buttonDescription'] instead of here.
+	 * The submit button editor field description is declared in kdna_vars['buttonDescription'] instead of here.
 	 *
 	 * @since 2.6
 	 */

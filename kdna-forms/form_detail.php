@@ -62,7 +62,7 @@ class KDNAFormDetail {
 
 		<script type="text/javascript">
 			<?php KDNACommon::gf_global(); ?>
-			<?php KDNACommon::gf_vars(); ?>
+			<?php KDNACommon::kdna_vars(); ?>
 		</script>
 
 
@@ -418,7 +418,7 @@ class KDNAFormDetail {
 					<p><?php esc_html_e( 'What would you like to do next?', 'kdnaforms' ); ?></p>
 
 					<div class="new-form-option">
-						<a id="preview_form_link" href="<?php echo esc_url_raw( trailingslashit( site_url() ) ); ?>?gf_page=preview&id={formid}" target="_blank">
+						<a id="preview_form_link" href="<?php echo esc_url_raw( trailingslashit( site_url() ) ); ?>?kdna_page=preview&id={formid}" target="_blank">
 						<?php esc_html_e( 'Preview this Form', 'kdnaforms' ); ?>
 						<span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;
 						<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span>
@@ -2131,9 +2131,9 @@ class KDNAFormDetail {
 										$validateFormulaScript = "
 											var field = GetSelectedField();
 											if (IsValidFormula(field.calculationFormula)) {
-												gform.instances.dialogAlert(gf_vars.FormulaIsValidTitle, gf_vars.FormulaIsValid, true);
+												gform.instances.dialogAlert(kdna_vars.FormulaIsValidTitle, kdna_vars.FormulaIsValid, true);
 											} else {
-												gform.instances.dialogAlert(gf_vars.FieldAjaxonErrorTitle, gf_vars.FormulaIsInvalid);
+												gform.instances.dialogAlert(kdna_vars.FieldAjaxonErrorTitle, kdna_vars.FormulaIsInvalid);
 											}
 										";
                                         				?>
