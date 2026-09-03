@@ -510,7 +510,7 @@ class KDNAEntryDetail {
 
 			jQuery(document).ready(function () {
 				toggleNotificationOverride(true);
-				jQuery('#gform_update_button').prop('disabled', false);
+				jQuery('#kform_update_button').prop('disabled', false);
 				if(typeof postboxes != 'undefined'){
 					jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 					postboxes.add_postbox_toggles( <?php echo json_encode( $screen->id ); ?>);
@@ -568,11 +568,11 @@ class KDNAEntryDetail {
 
 			function ToggleShowEmptyFields() {
 				if (jQuery("#gentry_display_empty_fields").is(":checked")) {
-					createCookie("gf_display_empty_fields", true, 10000);
+					createCookie("kdna_display_empty_fields", true, 10000);
 					document.location = document.location.href;
 				}
 				else {
-					eraseCookie("gf_display_empty_fields");
+					eraseCookie("kdna_display_empty_fields");
 					document.location = document.location.href;
 				}
 			}
@@ -860,8 +860,8 @@ class KDNAEntryDetail {
 				<br />
 
 				<div class="gform_footer">
-					<input type="hidden" name="gform_unique_id" value="" />
-					<input type="hidden" name="gform_uploaded_files" id='gform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
+					<input type="hidden" name="kform_unique_id" value="" />
+					<input type="hidden" name="kform_uploaded_files" id='gform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
 				</div>
 			</div>
 		</div>
@@ -1317,12 +1317,12 @@ class KDNAEntryDetail {
 		<div class="detail-view-print">
 			<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_view_entry_notes' ) ) { ?>
 
-				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="gform_print_notes" />
+				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="kform_print_notes" />
 				<label for="print_notes"><?php esc_html_e( 'Include Notes', 'kdnaforms' ); ?></label>
 
 			<?php } ?>
 			<br><br>
-			<a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?kdna_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
+			<a href="javascript:;" onclick="var notes_qs = jQuery('#kform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?kdna_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
 		</div>
 		<!-- end print button -->
 		<?php
@@ -1546,7 +1546,7 @@ class KDNAEntryDetail {
 	public static function maybe_display_empty_fields( $allow_display_empty_fields, $form, $lead = false ) {
 		$display_empty_fields = false;
 		if ( $allow_display_empty_fields ) {
-			$display_empty_fields = (bool) rgget( 'gf_display_empty_fields', $_COOKIE );
+			$display_empty_fields = (bool) rgget( 'kdna_display_empty_fields', $_COOKIE );
 		}
 
 		if ( ! $lead ) {

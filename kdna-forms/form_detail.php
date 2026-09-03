@@ -38,10 +38,10 @@ class KDNAFormDetail {
 			</script>
 			<?php
 			exit;
-		} elseif ( ! rgempty( 'gform_meta' ) && $save_form_helper->is_ajax_save_action() === false ) {
+		} elseif ( ! rgempty( 'kform_meta' ) && $save_form_helper->is_ajax_save_action() === false ) {
 			check_admin_referer( "gforms_update_form_{$form_id}", 'kforms_update_form' );
 
-			$update_result = self::save_form_info( $form_id, rgpost( 'gform_meta', false ) );
+			$update_result = self::save_form_info( $form_id, rgpost( 'kform_meta', false ) );
 
 			?>
 			<script type="text/javascript">
@@ -524,8 +524,8 @@ class KDNAFormDetail {
 
 					<form method="post" id="gform_update">
 						<?php wp_nonce_field( "gforms_update_form_{$form_id}", 'kforms_update_form' ); ?>
-						<input type="hidden" id="gform_meta" name="gform_meta" />
-						<input type="hidden" id="gform_export" name="gform_export" value="false"/>
+						<input type="hidden" id="kform_meta" name="kform_meta" />
+						<input type="hidden" id="kform_export" name="kform_export" value="false"/>
 					</form>
 				</div>
 				<div class="sidebar__panel sidebar__panel--settings" id="field_settings_container" data-active-field-class="">
@@ -3564,40 +3564,40 @@ class KDNAFormDetail {
 		}
 
 		$deprecated_classes = array(
-			'gf_inline',
-			'gf_left_half',
-			'gf_right_half',
-			'gf_left_third',
-			'gf_middle_third',
-			'gf_right_third',
-			'gf_first_quarter',
-			'gf_second_quarter',
-			'gf_third_quarter',
-			'gf_fourth_quarter',
-			'gf_scroll_text',
-			'gf_hide_ampm',
-			'gf_hide_charleft',
-			'gf_alert_green',
-			'gf_alert_red',
-			'gf_alert_yellow',
-			'gf_alert_gray',
-			'gf_alert_blue',
-			'gf_simple_horizontal',
+			'kdna_inline',
+			'kdna_left_half',
+			'kdna_right_half',
+			'kdna_left_third',
+			'kdna_middle_third',
+			'kdna_right_third',
+			'kdna_first_quarter',
+			'kdna_second_quarter',
+			'kdna_third_quarter',
+			'kdna_fourth_quarter',
+			'kdna_scroll_text',
+			'kdna_hide_ampm',
+			'kdna_hide_charleft',
+			'kdna_alert_green',
+			'kdna_alert_red',
+			'kdna_alert_yellow',
+			'kdna_alert_gray',
+			'kdna_alert_blue',
+			'kdna_simple_horizontal',
 			'gf_invisible',
-			'gf_list_2col',
-			'gf_list_3col',
-			'gf_list_4col',
-			'gf_list_5col',
-			'gf_list_2col_vertical',
-			'gf_list_3col_vertical',
-			'gf_list_4col_vertical',
-			'gf_list_5col_vertical',
-			'gf_list_height_25',
-			'gf_list_height_50',
-			'gf_list_height_75',
-			'gf_list_height_100',
-			'gf_list_height_125',
-			'gf_list_height_150',
+			'kdna_list_2col',
+			'kdna_list_3col',
+			'kdna_list_4col',
+			'kdna_list_5col',
+			'kdna_list_2col_vertical',
+			'kdna_list_3col_vertical',
+			'kdna_list_4col_vertical',
+			'kdna_list_5col_vertical',
+			'kdna_list_height_25',
+			'kdna_list_height_50',
+			'kdna_list_height_75',
+			'kdna_list_height_100',
+			'kdna_list_height_125',
+			'kdna_list_height_150',
 		);
 
 		foreach ( $form['fields'] as $field ) {

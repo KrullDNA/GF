@@ -20,7 +20,7 @@ jQuery(document).ready(function($){
 	}
 
 	$(document).ready(function(){
-		$(".gform_currency").bind("change", function(){
+		$(".kform_currency").bind("change", function(){
 			FormatCurrency(this);
 		}).each(function(){
 			FormatCurrency(this);
@@ -862,7 +862,7 @@ function ConfirmationObj() {
 	};
 
 	gaddon.toggleFeedSwitch = function( btn, is_active ) {
-		var i18n = window.gform_admin_config.i18n;
+		var i18n = window.kform_admin_config.i18n;
 		if ( is_active ) {
 			jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_inactive );
 		} else {

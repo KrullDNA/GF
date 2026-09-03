@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || die();
  */
 class KDNA_Post_Custom_Field_Select_Config extends KDNA_Config {
 
-	protected $name               = 'gform_admin_config';
+	protected $name               = 'kform_admin_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
 	/**

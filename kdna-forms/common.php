@@ -3709,7 +3709,7 @@ Content-Type: text/html;
 					$field_value .= '|' . $price;
 				}
 
-				if ( ! isset( $_GET['gf_token'] ) && empty( $_POST ) && self::is_empty_array( $value ) && rgget('view') != 'entry' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+				if ( ! isset( $_GET['kdna_token'] ) && empty( $_POST ) && self::is_empty_array( $value ) && rgget('view') != 'entry' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
 					$selected = rgar( $choice, 'isSelected' ) ? "selected='selected'" : '';
 				} else {
 					if ( is_array( $value ) ) {
@@ -4029,7 +4029,7 @@ Content-Type: text/html;
 		$url_info  = parse_url( KDNAFormsModel::get_current_page_url() );
 		$file_name = basename( rgar( $url_info, 'path' ) );
 
-		return $file_name == 'preview.php' || rgget( 'kdna_page', $_GET ) == 'preview' || rgget( 'gf_ajax_page', $_GET ) == 'preview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return $file_name == 'preview.php' || rgget( 'kdna_page', $_GET ) == 'preview' || rgget( 'kdna_ajax_page', $_GET ) == 'preview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -4302,11 +4302,11 @@ Content-Type: text/html;
 	 * @return string The currency code.
 	 */
 	public static function get_submission_currency() {
-		// The hidden input is still emitted as gform_currency, so accept both
+		// The hidden input is still emitted as kform_currency, so accept both
 		// names rather than silently reading nothing.
 		$posted_currency = rgpost( 'kdnaform_currency' );
 		if ( empty( $posted_currency ) ) {
-			$posted_currency = rgpost( 'gform_currency' );
+			$posted_currency = rgpost( 'kform_currency' );
 		}
 
 		if ( ! $posted_currency || ! is_string( $posted_currency ) ) {
@@ -4934,19 +4934,19 @@ Content-Type: text/html;
 		if ( $is_lynx ) {
 			$classes[] = 'kdna_browser_lynx';
 		} else if ( $is_gecko ) {
-			$classes[] = 'gf_browser_gecko';
+			$classes[] = 'kdna_browser_gecko';
 		} else if ( $is_opera ) {
 			$classes[] = 'kdna_browser_opera';
 		} else if ( $is_NS4 ) {
 			$classes[] = 'kdna_browser_ns4';
 		} else if ( $is_safari ) {
-			$classes[] = 'gf_browser_safari';
+			$classes[] = 'kdna_browser_safari';
 		} else if ( $is_chrome ) {
-			$classes[] = 'gf_browser_chrome';
+			$classes[] = 'kdna_browser_chrome';
 		} else if ( $is_IE ) {
-			$classes[] = 'gf_browser_ie';
+			$classes[] = 'kdna_browser_ie';
 		} else {
-			$classes[] = 'gf_browser_unknown';
+			$classes[] = 'kdna_browser_unknown';
 		}
 
 
@@ -4969,7 +4969,7 @@ Content-Type: text/html;
 		}
 
 		if ( $is_iphone ) {
-			$classes[] = 'gf_browser_iphone';
+			$classes[] = 'kdna_browser_iphone';
 		}
 
 		return implode( ' ', $classes );
@@ -5230,7 +5230,7 @@ Content-Type: text/html;
 	public static function add_categories_as_choices( $field, $value ) {
 
 		$choices         = $inputs = array();
-		$is_post         = isset( $_POST['gform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$is_post         = isset( $_POST['kform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$has_placeholder = $field->categoryInitialItemEnabled && KDNAFormsModel::get_input_type( $field ) == 'select';
 
 		if ( $has_placeholder ) {
@@ -6717,7 +6717,7 @@ Content-Type: text/html;
 
 		$message_format = 'multipart';
 
-		$resume_url  = add_query_arg( array( 'gf_token' => $resume_token ), $embed_url );
+		$resume_url  = add_query_arg( array( 'kdna_token' => $resume_token ), $embed_url );
 		$resume_url  = esc_url( $resume_url );
 		$resume_link = "<a href='{$resume_url}'>{$resume_url}</a>";
 		$message .= $resume_link;

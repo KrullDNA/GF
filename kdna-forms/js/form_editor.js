@@ -1911,7 +1911,7 @@ function ToggleMultiFile(isInit){
 
 	if(jQuery("#field_multiple_files").prop("checked")) {
 		jQuery("#gform_multiple_files_options").show();
-		var $uploadField = jQuery('.gform_fileupload_multifile');
+		var $uploadField = jQuery('.kform_fileupload_multifile');
 		var pluploadSettings = $uploadField.data('settings');
 		if ( pluploadSettings && typeof pluploadSettings.chunk_size != 'undefined' ) {
 			jQuery('#gform_server_max_file_size_notice').hide();
@@ -3460,7 +3460,7 @@ function UpdateFieldChoices(fieldType){
 	console.log( 'UpdateFieldChoices is deprecated as of Gravity Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
 	var choices = '';
 	var selector = '';
-	var inputContainer = ( "1" === gf_legacy.is_legacy ) ? 'li' : 'div';
+	var inputContainer = ( "1" === kdna_legacy.is_legacy ) ? 'li' : 'div';
 	var inputContainerClass;
 
 	if(field.inputType == "checkbox")
@@ -4615,7 +4615,7 @@ function FormulaContentCallback() {
 
 function SetupUnsavedChangesWarning() {
 	// check if form is in legacy mode
-	var legacyHtml = window.gf_legacy && window.gf_legacy.is_legacy === '1';
+	var legacyHtml = window.kdna_legacy && window.kdna_legacy.is_legacy === '1';
 	// apply system changes to the form, unsaved notification should only apply for user-made changes
 	UpdateFormObject();
 

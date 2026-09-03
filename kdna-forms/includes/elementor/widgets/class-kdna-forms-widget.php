@@ -1208,7 +1208,7 @@ class KDNA_Forms_Widget extends \Elementor\Widget_Base {
 			),
 			'selectors' => array(
 				// The submit button area: both the inline #field_submit AND the .gform_footer
-				'{{WRAPPER}} .gform_wrapper .gform-footer, {{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
+				'{{WRAPPER}} .gform_wrapper .gform-footer, {{WRAPPER}} .gform_wrapper .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .gform_footer, {{WRAPPER}} .gform_wrapper.gform-theme--framework .gform_footer, {{WRAPPER}} .gform_wrapper.gravity-theme .kform_page_footer' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important;',
 				// The hidden #field_submit gfield inside the grid - collapse it
 				'{{WRAPPER}} .gform_wrapper .gfield--type-submit, {{WRAPPER}} .gform_wrapper #field_submit' => 'margin-top: {{SIZE}}{{UNIT}} !important; margin-bottom: 0 !important; padding: 0 !important; min-height: 0 !important;',
 				// Remove margin from the last visible field

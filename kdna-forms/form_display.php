@@ -99,7 +99,7 @@ class KDNAFormDisplay {
 
 		$lead = array();
 
-		$field_values = KDNAForms::post( 'gform_field_values' );
+		$field_values = KDNAForms::post( 'kform_field_values' );
 
 		$confirmation_message = '';
 
@@ -109,7 +109,7 @@ class KDNAFormDisplay {
 
 		KDNACommon::log_debug( "KDNAFormDisplay::process_form(): Source page number: {$source_page_number}. Target page number: {$target_page}." );
 
-		$saving_for_later = rgpost( 'gform_save' ) ? true : false;
+		$saving_for_later = rgpost( 'kform_save' ) ? true : false;
 
 		$is_valid = true;
 
@@ -144,7 +144,7 @@ class KDNAFormDisplay {
 
 		$confirmation = '';
 		if ( ( $is_valid && $page_number === 0 ) || $saving_for_later ) {
-			$ajax = isset( $_POST['gform_ajax'] );
+			$ajax = isset( $_POST['kform_ajax'] );
 
 			/**
 			 * Adds support for aborting submission, displaying the confirmation page/text to the user. This filter is useful for Spam Filters that want to abort submissions that flagged as spam.
@@ -233,7 +233,7 @@ class KDNAFormDisplay {
 				$ip             = rgars( $form, 'personalData/preventIP' ) ? '' : KDNAFormsModel::get_ip();
 				$source_url     = KDNAFormsModel::get_current_page_url();
 				$source_url     = esc_url_raw( $source_url );
-				$resume_token   = rgpost( 'gform_resume_token' );
+				$resume_token   = rgpost( 'kform_resume_token' );
 				$resume_token   = sanitize_key( $resume_token );
 				$resume_token   = KDNAFormsModel::save_draft_submission( $form, $lead, $field_values, $page_number, $files, $form_unique_id, $ip, $source_url, $resume_token );
 
@@ -707,7 +707,7 @@ class KDNAFormDisplay {
 	public static function is_last_page( $form, $mode = 'submit' ) {
 
 		$page_number  = self::get_source_page( $form['id'] );
-		$field_values = KDNAForms::post( 'gform_field_values' );
+		$field_values = KDNAForms::post( 'kform_field_values' );
 		$target_page  = self::get_target_page( $form, $page_number, $field_values );
 
 		if ( $mode == 'render' ) {
@@ -1012,12 +1012,12 @@ class KDNAFormDisplay {
 		// Setting form style and theme
 		$form = self::set_form_styles( $form, $style_settings, $form_theme );
 
-		$action = wp_doing_ajax() ? remove_query_arg( 'gf_token', wp_get_referer() ) : remove_query_arg( 'gf_token' );
+		$action = wp_doing_ajax() ? remove_query_arg( 'kdna_token', wp_get_referer() ) : remove_query_arg( 'kdna_token' );
 
-		if ( rgpost( 'gform_send_resume_link' ) == $form_id ) {
+		if ( rgpost( 'kform_send_resume_link' ) == $form_id ) {
 			$save_email_confirmation = self::handle_save_email_confirmation( $form, $ajax );
 			if ( is_wp_error( $save_email_confirmation ) ) { // Failed email validation
-				$resume_token               = rgpost( 'gform_resume_token' );
+				$resume_token               = rgpost( 'kform_resume_token' );
 				$resume_token = sanitize_key( $resume_token );
 				$incomplete_submission_info = KDNAFormsModel::get_draft_submission_values( $resume_token );
 				if ( $incomplete_submission_info['form_id'] == $form_id ) {
@@ -1051,15 +1051,15 @@ class KDNAFormDisplay {
 		}
 
 		$partial_entry = $submitted_values = $review_page_done = false;
-		if ( isset( $_GET['gf_token'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$incomplete_submission_info = KDNAFormsModel::get_draft_submission_values( sanitize_text_field( wp_unslash( $_GET['gf_token'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['kdna_token'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$incomplete_submission_info = KDNAFormsModel::get_draft_submission_values( sanitize_text_field( wp_unslash( $_GET['kdna_token'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			if ( rgar( $incomplete_submission_info, 'form_id' ) == $form_id ) {
 				$submission_details_json                  = $incomplete_submission_info['submission'];
 				$submission_details                       = json_decode( $submission_details_json, true );
 				$partial_entry                            = $submission_details['partial_entry'];
 				$submitted_values                         = $submission_details['submitted_values'];
 				$field_values                             = $submission_details['field_values'];
-				KDNAFormsModel::$unique_ids[ $form_id ]     = $submission_details['gform_unique_id'];
+				KDNAFormsModel::$unique_ids[ $form_id ]     = $submission_details['kform_unique_id'];
 				KDNAFormsModel::$uploaded_files[ $form_id ] = $submission_details['files'];
 				self::set_submission_if_null( $form_id, 'resuming_incomplete_submission', true );
 				self::set_submission_if_null( $form_id, 'form_id', $form_id );
@@ -1396,7 +1396,7 @@ class KDNAFormDisplay {
 			$form_string .= kdna_apply_filters( array( 'kdnaform_form_tag', $form_id ), "<form method='post' enctype='multipart/form-data' {$target} id='gform_{$form_id}' {$form_css_class} action='{$action}' data-formid='{$form_id}' novalidate>", $form );
 
 			// If Save and Continue token was provided but expired/invalid, display error message.
-			if ( isset( $_GET['gf_token'] ) && ! is_array( $incomplete_submission_info ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( isset( $_GET['kdna_token'] ) && ! is_array( $incomplete_submission_info ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 				/**
 				 * Modify the error message displayed when an expired/invalid Save and Continue link is used.
@@ -1537,7 +1537,7 @@ class KDNAFormDisplay {
 						"setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ {$scroll_position['default']} }, 50 );" .
 						"if(window['gformInitDatepicker']) {gformInitDatepicker();}" .
 						"if(window['gformInitPriceFields']) {gformInitPriceFields();}" .
-						"var current_page = jQuery('#gform_source_page_number_{$form_id}').val();" .
+						"var current_page = jQuery('#kform_source_page_number_{$form_id}').val();" .
 						"gformInitSpinner( {$form_id}, '{$spinner_url}', " . ( $is_legacy ? 'true' : 'false' ) . " );" .
 						"jQuery(document).trigger('kdnaform_page_loaded', [{$form_id}, current_page]);" .
 						"window['gf_submitting_{$form_id}'] = false;" .
@@ -1919,7 +1919,7 @@ class KDNAFormDisplay {
 
 		if ( $ajax ) {
 			$ajax_value = self::prepare_ajax_input_value( $form_id, $display_title, $display_description, $tabindex, $theme, $is_valid_json ? $style_settings : null );
-			$footer     .= "<input type='hidden' name='gform_ajax' value='" . esc_attr( $ajax_value ) . "' />";
+			$footer     .= "<input type='hidden' name='kform_ajax' value='" . esc_attr( $ajax_value ) . "' />";
 		}
 
 		$current_page     = self::get_current_page( $form_id );
@@ -1929,14 +1929,14 @@ class KDNAFormDisplay {
 		$files_input      = '';
 		if ( KDNACommon::has_multifile_fileupload_field( $form ) || ! empty( KDNAFormsModel::$uploaded_files[ $form_id ] ) ) {
 			$files       = ! empty( KDNAFormsModel::$uploaded_files[ $form_id ] ) ? json_encode( KDNAFormsModel::$uploaded_files[ $form_id ], JSON_UNESCAPED_UNICODE ) : '';
-			$files_input = "<input type='hidden' name='gform_uploaded_files' id='gform_uploaded_files_{$form_id}' value='" . str_replace( "'", '&#039;', $files ) . "' />";
+			$files_input = "<input type='hidden' name='kform_uploaded_files' id='gform_uploaded_files_{$form_id}' value='" . str_replace( "'", '&#039;', $files ) . "' />";
 		}
 		$save_inputs = '';
 		if ( rgars( $form, 'save/enabled' ) ) {
-			$resume_token = isset( $_POST['gform_resume_token'] ) ? wp_unslash( $_POST['gform_resume_token'] ) : rgget( 'gf_token' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$resume_token = isset( $_POST['kform_resume_token'] ) ? wp_unslash( $_POST['kform_resume_token'] ) : rgget( 'kdna_token' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			$resume_token = sanitize_key( $resume_token );
-			$save_inputs  = "<input type='hidden' class='gform_hidden' name='gform_save' id='gform_save_{$form_id}' value='' />
-                             <input type='hidden' class='gform_hidden' name='gform_resume_token' id='gform_resume_token_{$form_id}' value='{$resume_token}' />";
+			$save_inputs  = "<input type='hidden' class='gform_hidden' name='kform_save' id='gform_save_{$form_id}' value='' />
+                             <input type='hidden' class='gform_hidden' name='kform_resume_token' id='gform_resume_token_{$form_id}' value='{$resume_token}' />";
 		}
 
 		if ( KDNACommon::form_requires_login( $form ) ) {
@@ -1950,25 +1950,25 @@ class KDNAFormDisplay {
 		$honeypot_handler = KDNAForms::get_service_container()->get( Honeypot\KDNA_Honeypot_Service_Provider::KDNA_HONEYPOT_HANDLER );
 
 		if ( $honeypot_handler->is_speed_check_enabled( $form ) ) {
-			$footer .= "<input type='hidden' class='gform_hidden' name='gform_submission_speeds' value='" . esc_attr( $honeypot_handler->get_submission_speeds_json( $form_id ) ) . "' />";
+			$footer .= "<input type='hidden' class='gform_hidden' name='kform_submission_speeds' value='" . esc_attr( $honeypot_handler->get_submission_speeds_json( $form_id ) ) . "' />";
 		}
 
 		$currency_code      = KDNACommon::get_currency();
 		$encrypted_currency = KDNACommon::openssl_encrypt( $currency_code );
 
 		$footer .= "
-            <input type='hidden' class='gform_hidden' name='gform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='" . self::get_submission_method( $submission_method ) . "' />
-            <input type='hidden' class='gform_hidden' name='gform_theme' data-js='kdnaform_theme_{$form_id}' id='gform_theme_{$form_id}' value='" . esc_attr( $theme ) . "' />
-            <input type='hidden' class='gform_hidden' name='gform_style_settings' data-js='kdnaform_style_settings_{$form_id}' id='gform_style_settings_{$form_id}' value='" . $style_settings . "' />
+            <input type='hidden' class='gform_hidden' name='kform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='" . self::get_submission_method( $submission_method ) . "' />
+            <input type='hidden' class='gform_hidden' name='kform_theme' data-js='kdnaform_theme_{$form_id}' id='gform_theme_{$form_id}' value='" . esc_attr( $theme ) . "' />
+            <input type='hidden' class='gform_hidden' name='kform_style_settings' data-js='kdnaform_style_settings_{$form_id}' id='gform_style_settings_{$form_id}' value='" . $style_settings . "' />
             <input type='hidden' class='gform_hidden' name='is_submit_{$form_id}' value='1' />
-            <input type='hidden' class='gform_hidden' name='gform_submit' value='{$form_id}' />
+            <input type='hidden' class='gform_hidden' name='kform_submit' value='{$form_id}' />
             {$save_inputs}
-            <input type='hidden' class='gform_hidden' name='gform_currency' data-currency='{$currency_code}' value='{$encrypted_currency}' />
-            <input type='hidden' class='gform_hidden' name='gform_unique_id' value='" . esc_attr( $unique_id ) . "' />
+            <input type='hidden' class='gform_hidden' name='kform_currency' data-currency='{$currency_code}' value='{$encrypted_currency}' />
+            <input type='hidden' class='gform_hidden' name='kform_unique_id' value='" . esc_attr( $unique_id ) . "' />
             <input type='hidden' class='gform_hidden' name='state_{$form_id}' value='" . self::get_state( $form, $field_values ) . "' />
-            <input type='hidden' autocomplete='off' class='gform_hidden' name='gform_target_page_number_{$form_id}' id='gform_target_page_number_{$form_id}' value='" . esc_attr( $next_page ) . "' />
-            <input type='hidden' autocomplete='off' class='gform_hidden' name='gform_source_page_number_{$form_id}' id='gform_source_page_number_{$form_id}' value='" . esc_attr( $current_page ) . "' />
-            <input type='hidden' name='gform_field_values' value='" . esc_attr( $field_values_str ) . "' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='kform_target_page_number_{$form_id}' id='kform_target_page_number_{$form_id}' value='" . esc_attr( $next_page ) . "' />
+            <input type='hidden' autocomplete='off' class='gform_hidden' name='kform_source_page_number_{$form_id}' id='kform_source_page_number_{$form_id}' value='" . esc_attr( $current_page ) . "' />
+            <input type='hidden' name='kform_field_values' value='" . esc_attr( $field_values_str ) . "' />
             {$files_input}
         </div>";
 
@@ -2135,7 +2135,7 @@ class KDNAFormDisplay {
 
 		// remove incomplete submission and purge expired
 		if ( rgars( $form, 'save/enabled' ) ) {
-			KDNAFormsModel::delete_draft_submission( rgpost( 'gform_resume_token' ) );
+			KDNAFormsModel::delete_draft_submission( rgpost( 'kform_resume_token' ) );
 			KDNAFormsModel::purge_expired_draft_submissions();
 		}
 
@@ -2246,7 +2246,7 @@ class KDNAFormDisplay {
 		$target_path   = $tmp_location['path'];
 
 		if ( $is_submission ) {
-			$unique_form_id = rgpost( 'gform_unique_id' );
+			$unique_form_id = rgpost( 'kform_unique_id' );
 			if ( ! ctype_alnum( $unique_form_id ) ) {
 				return false;
 			}
@@ -2449,7 +2449,7 @@ class KDNAFormDisplay {
 	 * @return string The confirmation message.
 	 */
 	public static function get_confirmation_message( $confirmation, $form, $entry, $aux_data = array() ) {
-		$ajax   = isset( $_POST['gform_ajax'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$ajax   = isset( $_POST['kform_ajax'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$anchor = self::get_anchor( $form, $ajax );
 		$anchor = $anchor['tag'];
 
@@ -3319,7 +3319,7 @@ class KDNAFormDisplay {
 		}
 
 		if ( self::has_fileupload_field( $form ) ) {
-			$kdna_main->add_localize_data( 'gf_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
+			$kdna_main->add_localize_data( 'kdna_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
 
 			KDNACommon::localize_kdnaform_kdnaforms_multifile();
 
@@ -3352,7 +3352,7 @@ class KDNAFormDisplay {
 		// Conditional logic script is required for any type of conditional logic (page or field-level). Enqueue it if true.
 		if ( $has_logic ) {
 			$kdna_conditional_logic = new KDNA_Script_Asset( 'kdnaform_conditional_logic' );
-			$kdna_conditional_logic->add_localize_data( 'gf_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
+			$kdna_conditional_logic->add_localize_data( 'kdna_legacy', array( 'is_legacy' => KDNACommon::is_legacy_markup_enabled( $form ) ) );
 			$assets[] = $kdna_conditional_logic;
 		}
 
@@ -5000,10 +5000,10 @@ class KDNAFormDisplay {
 
 	public static function process_send_resume_link() {
 
-		$form_id      = rgpost( 'gform_send_resume_link' );
+		$form_id      = rgpost( 'kform_send_resume_link' );
 		$form_id      = absint( $form_id );
-		$email        = rgpost( 'gform_resume_email' );
-		$resume_token = rgpost( 'gform_resume_token' );
+		$email        = rgpost( 'kform_resume_email' );
+		$resume_token = rgpost( 'kform_resume_token' );
 		$resume_token = sanitize_key( $resume_token );
 
 		if ( empty( $form_id ) || ! KDNAFormDisplay::is_submit_form_id_valid( $form_id ) || empty( $email ) || empty( $resume_token ) || ! KDNACommon::is_valid_email( $email ) ) {
@@ -5063,7 +5063,7 @@ class KDNAFormDisplay {
 		 * @param string $resume_token The token that is used within the URL.
 		 * @param string $email        The email address associated with the partial entry.
 		 */
-		$resume_url  = apply_filters( 'kdnaform_save_and_continue_resume_url', add_query_arg( array( 'gf_token' => $resume_token ), $page_url ), $form, $resume_token, $email );
+		$resume_url  = apply_filters( 'kdnaform_save_and_continue_resume_url', add_query_arg( array( 'kdna_token' => $resume_token ), $page_url ), $form, $resume_token, $email );
 		$resume_url  = esc_url( $resume_url );
 		$resume_link = "<a href=\"{$resume_url}\" class='resume_form_link'>{$resume_url}</a>";
 		$text        = str_replace( '{save_link}', $resume_link, $text );
@@ -5099,7 +5099,7 @@ class KDNAFormDisplay {
 			$text     = str_replace( $full_tag, '{save_email_input}', $text );
 		}
 
-		$action = esc_url( remove_query_arg( 'gf_token' ) );
+		$action = esc_url( remove_query_arg( 'kdna_token' ) );
 
 		$submission_method = self::get_submission_method();
 		$is_iframe_ajax    = self::is_iframe_submission_method();
@@ -5123,13 +5123,13 @@ class KDNAFormDisplay {
 		$iframe_ajax_fields = '';
 		if ( $is_iframe_ajax ) {
 			$ajax_value         = self::prepare_ajax_input_value( $form_id, true, true, 1 );
-			$iframe_ajax_fields = "<input type='hidden' name='gform_ajax' value='" . esc_attr( $ajax_value ) . "' />";
-			$iframe_ajax_fields .= "<input type='hidden' name='gform_field_values' value='' />";
+			$iframe_ajax_fields = "<input type='hidden' name='kform_ajax' value='" . esc_attr( $ajax_value ) . "' />";
+			$iframe_ajax_fields .= "<input type='hidden' name='kform_field_values' value='' />";
 		}
 
-		$form_submission_inputs = "<input type='hidden' class='gform_hidden' name='gform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='{$submission_method}' />
+		$form_submission_inputs = "<input type='hidden' class='gform_hidden' name='kform_submission_method' data-js='kdnaform_submission_method_{$form_id}' value='{$submission_method}' />
 								   <input type='hidden' class='gform_hidden' name='is_submit_{$form_id}' value='1' />
-								   <input type='hidden' class='gform_hidden' name='gform_submit' value='{$form_id}' />";
+								   <input type='hidden' class='gform_hidden' name='kform_submit' value='{$form_id}' />";
 
 		$ajax_submit = $is_iframe_ajax ? "onclick='jQuery(\"#gform_{$form_id}\").trigger(\"submit\",[true]);'" : '';
 
@@ -5138,11 +5138,11 @@ class KDNAFormDisplay {
 							<form action='{$action}' method='POST' id='gform_{$form_id}' data-formid='{$form_id}' {$target}>
 								{$iframe_ajax_fields}
 								<label for='kdnaform_resume_email' class='kdnaform_resume_email_label gfield_label' aria-describedby='email-validation-error'>{$email_input_label}</label>
-								<input type='email' name='gform_resume_email' value='{$email_esc}' id='gform_resume_email' placeholder='{$email_input_label}' aria-describedby='email-validation-error'/>
-								<input type='hidden' name='gform_resume_token' value='{$resume_token}' />
-								<input type='hidden' name='gform_send_resume_link' value='{$form_id}' />
+								<input type='email' name='kform_resume_email' value='{$email_esc}' id='kform_resume_email' placeholder='{$email_input_label}' aria-describedby='email-validation-error'/>
+								<input type='hidden' name='kform_resume_token' value='{$resume_token}' />
+								<input type='hidden' name='kform_send_resume_link' value='{$form_id}' />
 								{$form_submission_inputs}
-	                            <input type='submit' name='gform_send_resume_link_button' id='gform_send_resume_link_button_{$form_id}' onclick='gform.submission.handleButtonClick(this);' data-submission-type='send-link' value='{$resume_submit_button_text}' {$ajax_submit}/>
+	                            <input type='submit' name='kform_send_resume_link_button' id='gform_send_resume_link_button_{$form_id}' onclick='gform.submission.handleButtonClick(this);' data-submission-type='send-link' value='{$resume_submit_button_text}' {$ajax_submit}/>
 	                            {$validation_output}
 	                            {$nonce_input}
 							</form>
@@ -5156,17 +5156,17 @@ class KDNAFormDisplay {
 									<div class='gfield gfield--type-email gfield--width-full field_sublabel_below field_description_below gfield_visibility_visible'>
 										<label for='kdnaform_resume_email' class='kdnaform_resume_email_label gfield_label gform-field-label'>{$email_input_label}{$email_input_label_required}</label>
 										<div class='ginput_container ginput_container_text'>
-											<input type='email' name='gform_resume_email' class='large' id='gform_resume_email' value='{$email_esc}' aria-describedby='email-validation-error' />
+											<input type='email' name='kform_resume_email' class='large' id='kform_resume_email' value='{$email_esc}' aria-describedby='email-validation-error' />
 											{$validation_output}
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class='gform-footer gform_footer top_label'>
-								<input type='hidden' name='gform_resume_token' value='{$resume_token}' />
-								<input type='hidden' name='gform_send_resume_link' value='{$form_id}' />
+								<input type='hidden' name='kform_resume_token' value='{$resume_token}' />
+								<input type='hidden' name='kform_send_resume_link' value='{$form_id}' />
 								{$form_submission_inputs}
-								<input type='submit' name='gform_send_resume_link_button' id='gform_send_resume_link_button_{$form_id}' onclick='gform.submission.handleButtonClick(this);' data-submission-type='send-link' value='{$resume_submit_button_text}' {$ajax_submit}/>
+								<input type='submit' name='kform_send_resume_link_button' id='gform_send_resume_link_button_{$form_id}' onclick='gform.submission.handleButtonClick(this);' data-submission-type='send-link' value='{$resume_submit_button_text}' {$ajax_submit}/>
                                 {$nonce_input}
                             </div>
 						</form>
@@ -5201,13 +5201,13 @@ class KDNAFormDisplay {
 	}
 
 	public static function handle_save_email_confirmation( $form, $ajax ) {
-		$resume_email = rgpost( 'gform_resume_email' );
+		$resume_email = rgpost( 'kform_resume_email' );
 		if ( ! KDNACommon::is_valid_email( $resume_email ) ) {
 			KDNACommon::log_debug( 'KDNAFormDisplay::handle_save_email_confirmation(): Invalid email address: ' . $resume_email );
 
 			return new WP_Error( 'invalid_email' );
 		}
-		$resume_token       = rgpost( 'gform_resume_token' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,
+		$resume_token       = rgpost( 'kform_resume_token' ); // phpcs:ignore WordPress.Security.NonceVerification.Missing,
 		$submission_details = KDNAFormsModel::get_draft_submission_values( $resume_token );
 		$submission_json    = $submission_details['submission'];
 		$submission         = json_decode( $submission_json, true );
@@ -5384,11 +5384,11 @@ class KDNAFormDisplay {
 	 * @return bool|int False or the ID of the form being processed.
 	 */
 	public static function is_submit_form_id_valid( $ajax_form_id = null ) {
-		if ( empty( $_POST['gform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( empty( $_POST['kform_submit'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return false;
 		}
 
-		$form_id = absint( $_POST['gform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$form_id = absint( $_POST['kform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		if ( $form_id === 0 || rgpost( 'is_submit_' . $form_id ) !== '1' ) {
 			return false;
@@ -5423,7 +5423,7 @@ class KDNAFormDisplay {
 	 */
 	public static function get_submission_method( $method = '' ) {
 		if ( empty( $method ) ) {
-			$method = rgpost( 'gform_submission_method' );
+			$method = rgpost( 'kform_submission_method' );
 		}
 
 		return KDNACommon::whitelist( $method, array(
@@ -5461,12 +5461,12 @@ class KDNAFormDisplay {
 		}
 
 		$args = false;
-		if ( ! self::is_iframe_submission_method() || ! isset( $_POST['gform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( ! self::is_iframe_submission_method() || ! isset( $_POST['kform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return false;
 		}
 
 		$args  = array();
-		$value = rgpost( 'gform_ajax' );
+		$value = rgpost( 'kform_ajax' );
 		if ( empty( $value ) || ! is_string( $value ) ) {
 			return array();
 		}
@@ -5712,15 +5712,15 @@ class KDNAFormDisplay {
 		}
 
 		$upgraded_classes = array(
-			'gf_left_half'      => 'gfield--width-half',
-			'gf_right_half'     => 'gfield--width-half',
-			'gf_left_third'     => 'gfield--width-third',
-			'gf_middle_third'   => 'gfield--width-third',
-			'gf_right_third'    => 'gfield--width-third',
-			'gf_first_quarter'  => 'gfield--width-quarter',
-			'gf_second_quarter' => 'gfield--width-quarter',
-			'gf_third_quarter'  => 'gfield--width-quarter',
-			'gf_fourth_quarter' => 'gfield--width-quarter',
+			'kdna_left_half'      => 'gfield--width-half',
+			'kdna_right_half'     => 'gfield--width-half',
+			'kdna_left_third'     => 'gfield--width-third',
+			'kdna_middle_third'   => 'gfield--width-third',
+			'kdna_right_third'    => 'gfield--width-third',
+			'kdna_first_quarter'  => 'gfield--width-quarter',
+			'kdna_second_quarter' => 'gfield--width-quarter',
+			'kdna_third_quarter'  => 'gfield--width-quarter',
+			'kdna_fourth_quarter' => 'gfield--width-quarter',
 		);
 
 		$class_list = explode( ' ', $classes );

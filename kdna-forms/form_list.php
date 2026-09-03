@@ -278,7 +278,7 @@ class KDNAFormList {
 
 				// enable form status icons
 				gfPageLoaded = true;
-				$( '.gform_active_icon' ).removeClass( 'gf_not_ready' );
+				$( '.kform_active_icon' ).removeClass( 'gf_not_ready' );
 
 				$( '#current-page-selector' ).keyup( function( event ) {
 					if ( event.keyCode == 13 ) {

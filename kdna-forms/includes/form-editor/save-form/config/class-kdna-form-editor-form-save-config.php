@@ -8,7 +8,7 @@ use KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Endpoints\KDNA_Save_Form_Endpoin
 
 class KDNA_Form_Editor_Form_Save_Config extends GF_Admin_Form_Save_Config {
 
-	protected $name = 'gform_admin_config';
+	protected $name = 'kform_admin_config';
 
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
@@ -58,8 +58,8 @@ class KDNA_Form_Editor_Form_Save_Config extends GF_Admin_Form_Save_Config {
 	 */
 	private function get_selectors() {
 		return array(
-			'successNotification'  => '.gf_editor_status',
-			'failureNotification'  => '.gf_editor_error',
+			'successNotification'  => '.kdna_editor_status',
+			'failureNotification'  => '.kdna_editor_error',
 			'saveInProgress'       => '.save-in-progress',
 			'stateElements'        => array(
 				'.update-form-ajax',

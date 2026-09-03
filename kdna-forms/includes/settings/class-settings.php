@@ -599,7 +599,7 @@ class Settings {
 
 			printf(
 				'<div class="alert %s" role="alert">%s</div>',
-				empty( $field_errors ) ? 'gforms_note_success' : 'gforms_note_error',
+				empty( $field_errors ) ? 'kforms_note_success' : 'kforms_note_error',
 				$this->postback_message // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			);
 

@@ -421,40 +421,40 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		}
 
 		var deprecatedClasses = [
-			'gf_inline',
-			'gf_left_half',
-			'gf_right_half',
-			'gf_left_third',
-			'gf_middle_third',
-			'gf_right_third',
-			'gf_first_quarter',
-			'gf_second_quarter',
-			'gf_third_quarter',
-			'gf_fourth_quarter',
-			'gf_scroll_text',
-			'gf_hide_ampm',
-			'gf_hide_charleft',
-			'gf_alert_green',
-			'gf_alert_red',
-			'gf_alert_yellow',
-			'gf_alert_gray',
-			'gf_alert_blue',
-			'gf_simple_horizontal',
+			'kdna_inline',
+			'kdna_left_half',
+			'kdna_right_half',
+			'kdna_left_third',
+			'kdna_middle_third',
+			'kdna_right_third',
+			'kdna_first_quarter',
+			'kdna_second_quarter',
+			'kdna_third_quarter',
+			'kdna_fourth_quarter',
+			'kdna_scroll_text',
+			'kdna_hide_ampm',
+			'kdna_hide_charleft',
+			'kdna_alert_green',
+			'kdna_alert_red',
+			'kdna_alert_yellow',
+			'kdna_alert_gray',
+			'kdna_alert_blue',
+			'kdna_simple_horizontal',
 			'gf_invisible',
-			'gf_list_2col',
-			'gf_list_3col',
-			'gf_list_4col',
-			'gf_list_5col',
-			'gf_list_2col_vertical',
-			'gf_list_3col_vertical',
-			'gf_list_4col_vertical',
-			'gf_list_5col_vertical',
-			'gf_list_height_25',
-			'gf_list_height_50',
-			'gf_list_height_75',
-			'gf_list_height_100',
-			'gf_list_height_125',
-			'gf_list_height_150',
+			'kdna_list_2col',
+			'kdna_list_3col',
+			'kdna_list_4col',
+			'kdna_list_5col',
+			'kdna_list_2col_vertical',
+			'kdna_list_3col_vertical',
+			'kdna_list_4col_vertical',
+			'kdna_list_5col_vertical',
+			'kdna_list_height_25',
+			'kdna_list_height_50',
+			'kdna_list_height_75',
+			'kdna_list_height_100',
+			'kdna_list_height_125',
+			'kdna_list_height_150',
 		];
 
 		var classes = field.cssClass.split(/\s+/);
@@ -652,7 +652,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		var form_json = jQuery.toJSON(form);
 		kforms_original_json = form_json;
 
-		jQuery("#gform_meta").val(form_json);
+		jQuery("#kform_meta").val(form_json);
 		jQuery("#gform_update").submit();
 
 		return true;

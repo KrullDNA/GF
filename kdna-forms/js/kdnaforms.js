@@ -1521,7 +1521,7 @@ function gformToggleIcons( $container, max ) {
 
     var groupCount  = $container.find( '.gfield_list_group' ).length,
         $addButtons = $container.find( '.add_list_item' ),
-        isLegacy    =  typeof gf_legacy !== 'undefined' && gf_legacy.is_legacy;
+        isLegacy    =  typeof kdna_legacy !== 'undefined' && kdna_legacy.is_legacy;
 
 	if ( groupCount === 1 ) {
 		$container.find( '.delete_list_item' ).prop( 'disabled', true ).css( 'visibility', 'hidden' );
@@ -1784,15 +1784,15 @@ function gformToggleRepeaterButtons($container) {
 function gformMatchCard(id) {
 
     var cardType = gformFindCardType(jQuery('#' + id).val());
-    var cardContainer = jQuery('#' + id).parents('.gfield').find('.gform_card_icon_container');
+    var cardContainer = jQuery('#' + id).parents('.gfield').find('.kform_card_icon_container');
 
     if(!cardType) {
 
-        jQuery(cardContainer).find('.gform_card_icon').removeClass('gform_card_icon_selected gform_card_icon_inactive');
+        jQuery(cardContainer).find('.kform_card_icon').removeClass('gform_card_icon_selected gform_card_icon_inactive');
 
     } else {
 
-        jQuery(cardContainer).find('.gform_card_icon').removeClass('gform_card_icon_selected').addClass('gform_card_icon_inactive');
+        jQuery(cardContainer).find('.kform_card_icon').removeClass('gform_card_icon_selected').addClass('gform_card_icon_inactive');
         jQuery(cardContainer).find('.gform_card_icon_' + cardType).removeClass('gform_card_icon_inactive').addClass('gform_card_icon_selected');
     }
 }
@@ -2574,7 +2574,7 @@ function gformValidateFileSize( field, max_file_size ) {
     var imagesUrl = typeof kform_gravityforms != 'undefined' ? kform_gravityforms.vars.images_url : "";
 
 	$(document).on('gform_post_render', function(e, formID){
-		$( "form#gform_" + formID + " .gform_fileupload_multifile" ).each( function(){
+		$( "form#gform_" + formID + " .kform_fileupload_multifile" ).each( function(){
 			setup( this );
 		} );
 
@@ -2593,7 +2593,7 @@ function gformValidateFileSize( field, max_file_size ) {
         if((typeof adminpage !== 'undefined' && adminpage === 'toplevel_page_gf_edit_forms')|| typeof plupload == 'undefined'){
             $(".gform_button_select_files").prop("disabled", true);
         } else if (typeof adminpage !== 'undefined' && adminpage.indexOf('_page_gf_entries') > -1) {
-            $(".gform_fileupload_multifile").each(function(){
+            $(".kform_fileupload_multifile").each(function(){
                 setup(this);
             });
         }
@@ -2658,7 +2658,7 @@ function gformValidateFileSize( field, max_file_size ) {
 
 	    uploader.bind( 'Init', function( up, params ) {
 		    if ( ! up.features.dragdrop ) {
-			    $( ".gform_drop_instructions" ).hide();
+			    $( ".kform_drop_instructions" ).hide();
 		    }
 
 		    setFieldAccessibility( up.settings.container );
@@ -2780,7 +2780,7 @@ function gformValidateFileSize( field, max_file_size ) {
             up.refresh(); // Reposition Flash
 
             var formElementID = "form#gform_" + formID;
-            var uidElementID = "input:hidden[name='gform_unique_id']";
+            var uidElementID = "input:hidden[name='kform_unique_id']";
             var uidSelector = formElementID + " " + uidElementID;
             var $uid = $(uidSelector);
             if($uid.length==0){
@@ -2800,7 +2800,7 @@ function gformValidateFileSize( field, max_file_size ) {
             }
 
 
-            up.settings.multipart_params.gform_unique_id = uniqueID;
+            up.settings.multipart_params.kform_unique_id = uniqueID;
             up.start();
 
         });
@@ -2862,7 +2862,7 @@ function gformValidateFileSize( field, max_file_size ) {
 			var formId = up.settings.multipart_params.form_id;
 			var fieldId = up.settings.multipart_params.field_id;
 
-			if (typeof gf_legacy !== 'undefined' && gf_legacy.is_legacy) {
+			if (typeof kdna_legacy !== 'undefined' && kdna_legacy.is_legacy) {
 				html = "<img "
 					+ "class='gform_delete' "
 					+ "src='" + imagesUrl + "/delete.png' "

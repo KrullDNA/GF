@@ -93,7 +93,7 @@ function initLayoutEditor( $ ) {
 	}
 
 	var $editorContainer = $( '#form_editor_fields_container' ),
-		$editor = $( '.gform_editor' ),
+		$editor = $( '.kform_editor' ),
 		$container = $( '#gform_fields' ),
 		$noFields = $( '#no-fields' ),
 		$noFieldsDropzone = $( '#no-fields-drop' ),
@@ -448,7 +448,7 @@ function initLayoutEditor( $ ) {
 			.resizable( {
 				handles: 'e, w',
 				start: function( event, ui ) {
-					if ( gf_legacy.is_legacy === '1' ) {
+					if ( kdna_legacy.is_legacy === '1' ) {
 						$element.resizable( 'option', 'minWidth', ui.size.width );
 						$element.resizable( 'option', 'maxWidth', ui.size.width );
 						alert( kdna_vars.alertLegacyMode );
@@ -458,7 +458,7 @@ function initLayoutEditor( $ ) {
 					$container.addClass( 'resizing' );
 				},
 				resize: function( event, ui ) {
-					if ( gf_legacy.is_legacy === '1' ) {
+					if ( kdna_legacy.is_legacy === '1' ) {
 						return;
 					}
 					var columnWidth = $container.outerWidth() / columnCount,
@@ -528,7 +528,7 @@ function initLayoutEditor( $ ) {
 					}
 				},
 				stop: function() {
-					if ( gf_legacy.is_legacy === '1' ) {
+					if ( kdna_legacy.is_legacy === '1' ) {
 						return;
 					}
 					$container.removeClass( 'resizing' );
@@ -600,7 +600,7 @@ function initLayoutEditor( $ ) {
 
 	function validateGroupIds() {
 		// no need to run in legacy mode or if no fields
-		if ( window.gf_legacy.is_legacy === '1' || ! $fields.length ) {
+		if ( window.kdna_legacy.is_legacy === '1' || ! $fields.length ) {
 			return;
 		}
 		var rows = getFieldsAsRows();

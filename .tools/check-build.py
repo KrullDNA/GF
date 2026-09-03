@@ -32,7 +32,11 @@ import subprocess
 import sys
 
 ROOT = 'kdna-forms'
-BODY_CLASS = re.compile(r'\b(?:toplevel|[a-z][a-z0-9]*)_page_[a-z][a-z0-9_]*')
+# An admin body class is <page type>_page_<menu slug>, and this plugin's menu
+# slugs all begin gf_ or kdna_. Anchoring on that keeps ordinary class names
+# that merely contain "_page_" -- gform_page_footer, gform_page_fields -- from
+# being mistaken for body classes.
+BODY_CLASS = re.compile(r'\b(?:toplevel|[a-z][a-z0-9]*)_page_(?:gf|kdna)_[a-z0-9_]+')
 
 failures = []
 notes = []

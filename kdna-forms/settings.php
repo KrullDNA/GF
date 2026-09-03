@@ -1395,7 +1395,7 @@ class KDNASettings {
 	 */
 	public static function get_posted_akismet_setting() {
 
-		$akismet_setting = rgpost( 'gforms_enable_akismet' );
+		$akismet_setting = rgpost( 'kforms_enable_akismet' );
 
 		if ( $akismet_setting ) {
 			$akismet_setting = '1';

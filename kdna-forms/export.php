@@ -149,7 +149,7 @@ class KDNAExport {
 				$forms[ $key ] = KDNAAPI::get_form( $form_id );
 			}
 
-			if ( rgpost( 'gf_import_media' ) ) {
+			if ( rgpost( 'kdna_import_media' ) ) {
 				$forms = self::import_form_media( $form_ids, $forms );
 			}
 			/**
@@ -588,9 +588,9 @@ class KDNAExport {
 							</tr>
 							<tr valign="top">
 								<th scope="row">
-									<label for="gf_import_media"><?php esc_html_e( 'Import Images', 'kdnaforms' ); ?></label> <?php kdnaform_tooltip( 'import_media' ) ?>
+									<label for="kdna_import_media"><?php esc_html_e( 'Import Images', 'kdnaforms' ); ?></label> <?php kdnaform_tooltip( 'import_media' ) ?>
 								</th>
-								<td><input type="checkbox" name="gf_import_media" id="gf_import_media" /><?php esc_html_e( 'Import images used in this form into your media library.', 'kdnaforms' ); ?></td>
+								<td><input type="checkbox" name="kdna_import_media" id="kdna_import_media" /><?php esc_html_e( 'Import images used in this form into your media library.', 'kdnaforms' ); ?></td>
                             </tr>
                         </table>
                         <br /><br />
@@ -637,7 +637,7 @@ class KDNAExport {
 		</script>
 
         <div class="gform-settings__content">
-            <form method="post" id="gform_export" class="kdnaform_settings_form">
+            <form method="post" id="kform_export" class="kdnaform_settings_form">
 	            <?php wp_nonce_field( 'kdna_export_forms', 'kdna_export_forms_nonce' ); ?>
                 <div class="gform-settings-panel gform-settings-panel--full">
                     <header class="gform-settings-panel__header"><legend class="gform-settings-panel__title"><?php esc_html_e( 'Export Forms', 'kdnaforms' )?></legend></header>
@@ -683,7 +683,7 @@ class KDNAExport {
                         </table>
 
                         <br /><br />
-						<input type="hidden" name="gform_automatic_submit" id="gform_automatic_submit" value="false" />
+						<input type="hidden" name="kdnaform_automatic_submit" id="kdnaform_automatic_submit" value="false" />
                         <input type="submit" value="<?php esc_attr_e( 'Download Export File', 'kdnaforms' ) ?>" name="export_forms" class="button large primary" />
                     </div>
                 </div>
@@ -722,8 +722,8 @@ class KDNAExport {
 					});
 
 					if ( clickSubmit ) {
-						jQuery( '#gform_automatic_submit' ).val( true );
-						jQuery( '#gform_export input[type="submit"]' ).click();
+						jQuery( '#kdnaform_automatic_submit' ).val( true );
+						jQuery( '#kform_export input[type="submit"]' ).click();
 					}
 				})
 			</script>
@@ -821,7 +821,7 @@ class KDNAExport {
 						exportId = 0;
 					}
 
-					var data = $('#gform_export').serialize();
+					var data = $('#kform_export').serialize();
 
 					data += '&action=kdna_process_export';
 					data += '&offset=' + offset;
@@ -853,7 +853,7 @@ class KDNAExport {
 		</script>
 
         <div class="gform-settings__content">
-            <form method="post" id="gform_export" class="kdnaform_settings_form" data-js="page-loader">
+            <form method="post" id="kform_export" class="kdnaform_settings_form" data-js="page-loader">
 	            <?php echo wp_nonce_field( 'rg_start_export', 'rg_start_export_nonce' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_nonce_field is safe ?>
                 <div class="gform-settings-panel gform-settings-panel--full">
                     <header class="gform-settings-panel__header"><legend class="gform-settings-panel__title"><?php esc_html_e( 'Export Entries', 'kdnaforms' ) ;?></legend></header>

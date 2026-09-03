@@ -423,7 +423,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				$input_id = $this->id . '.' . $choice_number;
 			}
 
-			if ( ( $this->is_form_editor() || ( ! isset( $_GET['gf_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+			if ( ( $this->is_form_editor() || ( ! isset( $_GET['kdna_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 				$checkboxes_selected++;
 			} else if ( is_array( $value ) && KDNAFormsModel::choice_value_match( $this, $choice, rgget( $input_id, $value ) ) ) {
 				$checkboxes_selected++;
@@ -1079,7 +1079,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 	public function get_checked_attribute( $choice, $value, $input_id, $form_id ) {
 		$is_form_editor  = $this->is_form_editor();
 
-		if ( ( $is_form_editor || ( ! isset( $_GET['gf_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+		if ( ( $is_form_editor || ( ! isset( $_GET['kdna_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 			$checked = "checked='checked'";
 		} elseif ( is_array( $value ) && KDNAFormsModel::choice_value_match( $this, $choice, rgget( $input_id, $value ) ) ) {
 			$checked = "checked='checked'";

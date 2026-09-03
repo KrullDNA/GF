@@ -2,7 +2,7 @@
 var GformShortcodeUI;
 
 ( function (gfShortCodeUI, $) {
-    var i18n = window.gform_admin_config.i18n;
+    var i18n = window.kform_admin_config.i18n;
     var sui = window.GformShortcodeUI = {
         models: {},
         collections: {},

@@ -113,10 +113,10 @@ class KDNAFormSettings {
 			}
 
 			$deprecated_confirmation_classes = [
-				'gf_confirmation_simple_yellow',
-				'gf_confirmation_simple_gray',
-				'gf_confirmation_yellow_gradient',
-				'gf_confirmation_green_gradient',
+				'kdna_confirmation_simple_yellow',
+				'kdna_confirmation_simple_gray',
+				'kdna_confirmation_yellow_gradient',
+				'kdna_confirmation_green_gradient',
 			];
 
 			if ( in_array( $value, $deprecated_confirmation_classes ) ) {
@@ -833,10 +833,10 @@ class KDNAFormSettings {
 		}
 
 		$deprecated_confirmation_classes = [
-			'gf_confirmation_simple_yellow',
-			'gf_confirmation_simple_gray',
-			'gf_confirmation_yellow_gradient',
-			'gf_confirmation_green_gradient',
+			'kdna_confirmation_simple_yellow',
+			'kdna_confirmation_simple_gray',
+			'kdna_confirmation_yellow_gradient',
+			'kdna_confirmation_green_gradient',
 		];
 
 		if ( isset( $form['cssClass'] ) ) {

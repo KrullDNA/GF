@@ -119,7 +119,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 	 * @param array $forms The forms being imported.
 	 */
 	public static function resize_images_after_import( $forms ) {
-		if ( ! rgpost( 'gf_import_media' ) ) {
+		if ( ! rgpost( 'kdna_import_media' ) ) {
 			return;
 		}
 

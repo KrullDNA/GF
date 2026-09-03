@@ -466,7 +466,7 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 
 			// set display if previous (saved) display isn't set for any reason
 			if ( display == '' || display == 'none' ){
-				display = '1' === gf_legacy.is_legacy ? 'list-item' : 'block';
+				display = '1' === kdna_legacy.is_legacy ? 'list-item' : 'block';
 			}
 			$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false ).attr( 'data-conditional-logic', 'visible' );
 
@@ -540,7 +540,7 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 function kdna_show_button( $target ) {
 	$target.prop( 'disabled', false ).css( 'display', '' );
 	$target.attr( 'data-conditional-logic', 'visible' );
-	if ( '1' == gf_legacy.is_legacy ) {
+	if ( '1' == kdna_legacy.is_legacy ) {
 		// for legacy markup, remove screen reader class.
 		$target.removeClass( 'screen-reader-text' );
 	}
@@ -556,7 +556,7 @@ function kdna_show_button( $target ) {
 function kdna_hide_button( $target ) {
 	$target.attr( 'disabled', 'disabled' ).hide();
 	$target.attr( 'data-conditional-logic', 'hidden' );
-	if ( '1' === gf_legacy.is_legacy ) {
+	if ( '1' === kdna_legacy.is_legacy ) {
 		// for legacy markup, let screen readers read the button.
 		$target.addClass( 'screen-reader-text' );
 	}

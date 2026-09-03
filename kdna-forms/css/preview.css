@@ -374,7 +374,7 @@ div#browser_size_info {
 	.gform_wrapper .gf_showme .gform_heading,
 	.gform_wrapper .gf_showme .gform_body,
 	.gform_wrapper .gf_showme .gform_footer,
-	.gform_wrapper .gf_showme .gform_page_footer,
+	.gform_wrapper .gf_showme .kform_page_footer,
 	.gform_wrapper .gf_showme .gform_page {
 	    border: 1px dashed #F60;
 	    padding: 16px;
@@ -412,13 +412,13 @@ div#browser_size_info {
 	.gform_wrapper .gf_showme table.gfield_list,
 	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_cell,
 	.gform_wrapper .gf_showme table.gfield_list td.gfield_list_icons,
-	.gform_wrapper .gf_showme .gform_card_icon_container,
+	.gform_wrapper .gf_showme .kform_card_icon_container,
 	.gform_wrapper .gf_showme ul.gfield_checkbox,
 	.gform_wrapper .gf_showme ul.gfield_checkbox li,
 	.gform_wrapper .gf_showme ul.gfield_radio,
 	.gform_wrapper .gf_showme ul.gfield_radio li,
-	.gform_wrapper .gf_showme .gform_footer a.gform_save_link,
-	.gform_wrapper .gf_showme .gform_page_footer a.gform_save_link,
+	.gform_wrapper .gf_showme .gform_footer a.kform_save_link,
+	.gform_wrapper .gf_showme .kform_page_footer a.kform_save_link,
 	.gform_wrapper .gf_showme .chosen-container,
 	.gform_wrapper .gf_showme .gsection_description,
 	.gform_wrapper .gf_showme .gsection_title {
@@ -431,29 +431,29 @@ div#browser_size_info {
 	    display: block;
 	    margin-bottom: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.gf_list_2col ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme li.gf_list_3col ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme li.gf_list_4col ul.gfield_checkbox li,
-	.gform_wrapper .gf_showme li.gf_list_5col ul.gfield_checkbox li {
+	.gform_wrapper .gf_showme li.kdna_list_2col ul.gfield_checkbox li,
+	.gform_wrapper .gf_showme li.kdna_list_3col ul.gfield_checkbox li,
+	.gform_wrapper .gf_showme li.kdna_list_4col ul.gfield_checkbox li,
+	.gform_wrapper .gf_showme li.kdna_list_5col ul.gfield_checkbox li {
 	    margin-bottom: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.gf_list_2col ul li {
+	.gform_wrapper .gf_showme li.kdna_list_2col ul li {
 	    width: 49% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.gf_list_3col ul li {
+	.gform_wrapper .gf_showme li.kdna_list_3col ul li {
 	    width: 32.3% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.gf_list_4col ul li {
+	.gform_wrapper .gf_showme li.kdna_list_4col ul li {
 	    width: 24% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.gf_list_5col ul li {
+	.gform_wrapper .gf_showme li.kdna_list_5col ul li {
 	    width: 19% !important;
 	    margin-right: 8px !important;
 	}
-	.gform_wrapper .gf_showme li.gf_list_inline ul li {
+	.gform_wrapper .gf_showme li.kdna_list_inline ul li {
 	    margin-right: 8px !important;
 	}
 
@@ -495,14 +495,14 @@ div#browser_size_info {
 	    margin-right: 0;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.gf_left_half,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.gf_right_half {
+	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_left_half,
+	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_right_half {
 	    width: 49%;
 	}
 
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.gf_left_half,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.gf_left_third,
-	.gform_wrapper .gf_showme ul.gform_fields li.gfield.gf_middle_third {
+	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_left_half,
+	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_left_third,
+	.gform_wrapper .gf_showme ul.gform_fields li.gfield.kdna_middle_third {
 	    margin-right:16px;
 	}
 	.gform_wrapper .gf_showme *:not(label):after,

@@ -38,12 +38,12 @@ class KDNA_Ajax_Handler {
 		}
 
 		$form_id     = absint( rgpost( 'form_id' ) );
-		$target_page = absint( rgpost( 'gform_target_page_number_' . $form_id ) );
-		$source_page = absint( rgpost( 'gform_source_page_number_' . $form_id ) );
+		$target_page = absint( rgpost( 'kform_target_page_number_' . $form_id ) );
+		$source_page = absint( rgpost( 'kform_source_page_number_' . $form_id ) );
 
 		$this->hydrate_get_from_current_page_url();
 
-		$result = \KDNAAPI::validate_form( $form_id, array(), rgpost( 'gform_field_values' ), $target_page, $source_page );
+		$result = \KDNAAPI::validate_form( $form_id, array(), rgpost( 'kform_field_values' ), $target_page, $source_page );
 		if ( is_wp_error( $result ) ) {
 			wp_send_json_error( $result->get_error_message() );
 		}
@@ -99,18 +99,18 @@ class KDNA_Ajax_Handler {
 		kdna_do_action( array( 'kdnaform_ajax_pre_submit_form', $form_id ), $form_id );
 
 		// Handling the save link submission.
-		if ( isset( $_POST['gform_send_resume_link'] ) ) {
+		if ( isset( $_POST['kform_send_resume_link'] ) ) {
 			$this->submit_save_link();
 			return;
 		}
 
 		// Getting posted values.
-		$target_page       = absint( rgpost( 'gform_target_page_number_' . $form_id ) );
-		$source_page       = absint( rgpost( 'gform_source_page_number_' . $form_id ) );
-		$field_values      = rgpost( 'gform_field_values' );
-		$theme             = rgpost( 'kdnaform_theme' ) ?: rgpost( 'gform_theme' );
-		$style             = rgpost( 'kdnaform_style_settings' ) ?: rgpost( 'gform_style_settings' );
-		$submission_method = rgpost( 'kdnaform_submission_method' ) ?: rgpost( 'gform_submission_method' );
+		$target_page       = absint( rgpost( 'kform_target_page_number_' . $form_id ) );
+		$source_page       = absint( rgpost( 'kform_source_page_number_' . $form_id ) );
+		$field_values      = rgpost( 'kform_field_values' );
+		$theme             = rgpost( 'kdnaform_theme' ) ?: rgpost( 'kform_theme' );
+		$style             = rgpost( 'kdnaform_style_settings' ) ?: rgpost( 'kform_style_settings' );
+		$submission_method = rgpost( 'kdnaform_submission_method' ) ?: rgpost( 'kform_submission_method' );
 
 		require_once \KDNACommon::get_base_path() . '/form_display.php';
 
@@ -177,9 +177,9 @@ class KDNA_Ajax_Handler {
 	 * @return string The submission type. Possible values are SUBMISSION_TYPE_SUBMIT, SUBMISSION_TYPE_NEXT, SUBMISSION_TYPE_PREVIOUS, and SUBMISSION_TYPE_SAVE_AND_CONTINUE.
 	 */
 	public function get_submission_type( $target_page, $source_page ) {
-		if ( isset( $_POST['gform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( isset( $_POST['kform_send_resume_link'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SEND_LINK;
-		} elseif ( rgpost( 'kdnaform_save' ) || rgpost( 'gform_save' ) ) {
+		} elseif ( rgpost( 'kdnaform_save' ) || rgpost( 'kform_save' ) ) {
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SAVE_AND_CONTINUE;
 		} elseif ( $target_page === 0 ) {
 			return \KDNAFormDisplay::SUBMISSION_TYPE_SUBMIT;
@@ -202,7 +202,7 @@ class KDNA_Ajax_Handler {
 
 		\KDNAFormDisplay::process_send_resume_link();
 
-		$confirmation = \KDNAFormDisplay::get_form( $form_id, false, false, false, rgpost( 'gform_field_values' ) );
+		$confirmation = \KDNAFormDisplay::get_form( $form_id, false, false, false, rgpost( 'kform_field_values' ) );
 
 		KDNACommon::send_json_success(
 			array(
@@ -292,7 +292,7 @@ class KDNA_Ajax_Handler {
 		}
 
 		parse_str( $query_string, $query );
-		unset( $query['kdna_page'] ); // Removing so it doesn't conflict with gf_ajax_page=preview.
+		unset( $query['kdna_page'] ); // Removing so it doesn't conflict with kdna_ajax_page=preview.
 		$_GET = array_merge( $_GET, $query ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 

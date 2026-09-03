@@ -15,8 +15,8 @@ from collections import defaultdict
 
 ROOT = sys.argv[1] if len(sys.argv) > 1 else "."
 SKIP = {".git", "node_modules", "vendor"}
-PREFIX = re.compile(r"^(gform|gforms|gf|kdna|kdnaform)_")
-SIBLINGS = ("gform_", "gforms_", "gf_", "kdnaform_", "kdna_")
+PREFIX = re.compile(r"^(gform|gforms|gf|kdna|kdnaform|kform|kforms)_")
+SIBLINGS = ("gform_", "gforms_", "gf_", "kdnaform_", "kdna_", "kform_", "kforms_")
 
 
 def walk(exts, skip_min=False):
