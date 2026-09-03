@@ -1829,7 +1829,7 @@ function gformFindCardType(value) {
 }
 
 function gformToggleCreditCard(){
-    if(jQuery("#kdnaform_payment_method_creditcard").is(":checked"))
+    if(jQuery("#gform_payment_method_creditcard").is(":checked"))
         jQuery(".gform_card_fields_container").slideDown();
     else
         jQuery(".gform_card_fields_container").slideUp();

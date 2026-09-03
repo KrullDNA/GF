@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 2.8.0
+Version: 2.8.1
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '2.8.0';
+	public static $version = '2.8.1';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -6452,9 +6452,9 @@ class KDNAForms {
 		$return = false;
 		if ( $option == 'kdnaform_entries_screen_options' ) {
 			$return                   = array();
-			$return['default_filter'] = sanitize_key( rgpost( 'kdnaform_default_filter' ) ?: rgpost( 'gform_default_filter' ) );
+			$return['default_filter'] = sanitize_key( rgpost( 'kdnaform_default_filter' ) );
 			$return['per_page']       = sanitize_key( rgpost( 'kdnaform_per_page' ) );
-			$return['display_mode']   = sanitize_key( rgpost( 'kdnaform_entries_display_mode' ) ?: rgpost( 'gform_entries_display_mode' ) );
+			$return['display_mode']   = sanitize_key( rgpost( 'kdnaform_entries_display_mode' ) );
 		} elseif ( $option == 'kdnaform_forms_screen_options' ) {
 			$return = array();
 			$return['order_by']   = sanitize_key( rgpost( 'order_by' ) );

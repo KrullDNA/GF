@@ -918,16 +918,16 @@ body .gform_legacy_markup_wrapper ul li.field_description_below div.ginput_conta
 }
 
 .gform_legacy_markup_wrapper .gform_footer input.button,
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer input.button,
+.gform_legacy_markup_wrapper .gform_page_footer input.button,
 .gform_legacy_markup_wrapper .gform_footer input[type=submit],
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer input[type=submit] {
+.gform_legacy_markup_wrapper .gform_page_footer input[type=submit] {
     font-size: 1em;
     width: 100%;
     margin: 0 0 16px 0;
 }
 
 .gform_legacy_markup_wrapper .gform_footer a.gform_save_link,
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer a.gform_save_link {
+.gform_legacy_markup_wrapper .gform_page_footer a.gform_save_link {
     font-size: 1em;
     display: block;
     text-align: center;
@@ -1192,7 +1192,7 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
     width: 4rem;
 }
 
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer {
+.gform_legacy_markup_wrapper .gform_page_footer {
     margin: 14px 0;
     width: 100%;
     border-top: 1px dotted #CCC;
@@ -1200,17 +1200,17 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
     clear: both;
 }
 
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer.left_label,
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer.right_label {
+.gform_legacy_markup_wrapper .gform_page_footer.left_label,
+.gform_legacy_markup_wrapper .gform_page_footer.right_label {
     padding: 16px 0 0 29%;
 }
 
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_previous_button, .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_next_button {
+.gform_legacy_markup_wrapper .gform_page_footer .button.gform_previous_button, .gform_legacy_markup_wrapper .gform_page_footer .button.gform_next_button {
     display: -moz-inline-stack;
     display: inline-block;
 }
 
-.gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_previous_button {
+.gform_legacy_markup_wrapper .gform_page_footer .button.gform_previous_button {
     margin-bottom: 8px;
 }
 
@@ -1579,13 +1579,13 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
     vertical-align: middle;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container {
+.gform_legacy_markup_wrapper .gform_card_icon_container {
     display: flex;
     height: 32px;
     margin: 8px 0 6px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon {
     background-image: url(../../images/gf-creditcards.svg);
     background-repeat: no-repeat;
     height: 32px;
@@ -1594,35 +1594,35 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
     width: 40px;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_amex {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_amex {
     background-position: -167px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_discover {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_discover {
     background-position: -221px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_mastercard {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_mastercard {
     background-position: -275px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_visa {
+.gform_legacy_markup_wrapper .gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_visa {
     background-position: -59px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_jcb {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_jcb {
     background-position: -329px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_maestro {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_maestro {
     background-position: -5px 0;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_selected {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_selected {
     position: relative;
 }
 
-.gform_legacy_markup_wrapper .gform_card_icon_container,.kdnaform_card_icon_container div.gform_card_icon,.kdnaform_card_icon.gform_card_icon_selected:after {
+.gform_legacy_markup_wrapper .gform_card_icon_container div.gform_card_icon.gform_card_icon_selected:after {
     display: block;
     content: '';
     position: absolute;
@@ -1644,7 +1644,7 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
     top: -3.5px;
 }
 
-.gform_legacy_markup_wrapper .gform_fileupload_multifile,.kdnaform_fileupload_multifile .gform_drop_area {
+.gform_legacy_markup_wrapper .gform_fileupload_multifile .gform_drop_area {
     padding: 24px;
     border: 1px dashed #CCC;
     text-align: center;
@@ -1656,12 +1656,12 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
     border-radius: 4px;
 }
 
-.gform_legacy_markup_wrapper span.gform_drop_instructions,.kdnaform_drop_instructions {
+.gform_legacy_markup_wrapper span.gform_drop_instructions {
     display: block;
     margin-bottom: 8px;
 }
 
-.gform_legacy_markup_wrapper .gform_delete,.kdnaform_delete {
+.gform_legacy_markup_wrapper .gform_delete {
     vertical-align: middle;
     cursor: pointer;
 }
@@ -1722,7 +1722,7 @@ body .gform_legacy_markup_wrapper ul.gform_fields li.gfield.gform_validation_con
   margin-bottom: .25em;
 }
 
-.gform_legacy_markup_wrapper div.form_saved_message div.form_saved_message_emailform form label.gform_resume_email_label,.kdnaform_resume_email_label {
+.gform_legacy_markup_wrapper div.form_saved_message div.form_saved_message_emailform form label.gform_resume_email_label {
     font-size: 1em;
     display: block;
 }
@@ -2600,7 +2600,7 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
     }
 
     .gform_legacy_markup_wrapper .gform_footer a.gform_save_link,
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer a.gform_save_link {
+    .gform_legacy_markup_wrapper .gform_page_footer a.gform_save_link {
         margin-left: 0;
     }
 
@@ -2620,7 +2620,7 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
         width: 100%;
     }
 
-    .gform_legacy_markup_wrapper.gform_validation_error,.kdnaform_validation_error .gform_body ul li.gfield.gfield_error:not(.gf_left_half):not(.gf_right_half) {
+    .gform_legacy_markup_wrapper.gform_validation_error .gform_body ul li.gfield.gfield_error:not(.gf_left_half):not(.gf_right_half) {
         max-width: calc(100% - 16px) !important;
     }
 
@@ -2759,8 +2759,8 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
         width: calc(50% - 8px);
     }
 
-    .gform_legacy_markup_wrapper.gform_validation_error,.kdnaform_validation_error .top_label input.medium,
-    .gform_legacy_markup_wrapper.gform_validation_error,.kdnaform_validation_error .top_label select.medium {
+    .gform_legacy_markup_wrapper.gform_validation_error .top_label input.medium,
+    .gform_legacy_markup_wrapper.gform_validation_error .top_label select.medium {
         width: 50%;
     }
 
@@ -2857,7 +2857,7 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
     }
 
     .gform_legacy_markup_wrapper .gform_footer a.gform_save_link,
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer a.gform_save_link {
+    .gform_legacy_markup_wrapper .gform_page_footer a.gform_save_link {
         font-size: 1em;
         margin-left: 16px;
         display: -moz-inline-stack;
@@ -2865,9 +2865,9 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
     }
 
     .gform_legacy_markup_wrapper .gform_footer input.button,
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer input.button,
+    .gform_legacy_markup_wrapper .gform_page_footer input.button,
     .gform_legacy_markup_wrapper .gform_footer input[type=submit],
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer input[type=submit] {
+    .gform_legacy_markup_wrapper .gform_page_footer input[type=submit] {
         font-size: 1em;
         width: auto;
         margin: 0 16px 0 0;
@@ -3068,7 +3068,7 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
         width: calc(100% - 16px);
     }
 
-    .gform_legacy_markup_wrapper ul.gform_fields:not(.top_label) .gform_fileupload_multifile,.kdnaform_fileupload_multifile .gform_drop_area {
+    .gform_legacy_markup_wrapper ul.gform_fields:not(.top_label) .gform_fileupload_multifile .gform_drop_area {
         margin-left: 29%;
         width: 70%
     }
@@ -3084,12 +3084,12 @@ body .gform_legacy_markup_wrapper ul.chosen-results li {
         margin-left: 29% !important;
     }
 
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_previous_button {
+    .gform_legacy_markup_wrapper .gform_page_footer .button.gform_previous_button {
         margin-bottom: 0;
     }
 
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_next_button,
-    .gform_legacy_markup_wrapper .gform_page_footer,.kdnaform_page_footer .button.gform_button {
+    .gform_legacy_markup_wrapper .gform_page_footer .button.gform_next_button,
+    .gform_legacy_markup_wrapper .gform_page_footer .button.gform_button {
         margin-right: 10px;
     }
 

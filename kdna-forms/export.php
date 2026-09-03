@@ -706,7 +706,7 @@ class KDNAExport {
 	 */
 	public static function maybe_process_automated_export() {
 		$export_ids       = rgget( 'export_form_ids' );
-		$automatic_submit = rgpost( 'kdnaform_automatic_submit' ) ?: rgpost( 'gform_automatic_submit' );
+		$automatic_submit = rgpost( 'kdnaform_automatic_submit' );
 		if ( $export_ids && ! $automatic_submit ) {
 			?>
 			<script>

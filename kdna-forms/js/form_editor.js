@@ -3256,7 +3256,7 @@ function SelectCustomChoice( name ){
 }
 
 function SelectPredefinedChoice(name){
-	var list = kdnaform_predefined_choices[name];
+	var list = gform_predefined_choices[name];
 	// Countries can also be an object if the gform_countries filter is used, so convert to array with just the values.
 	if( name == "Countries" && Array.isArray( list ) !== true ) {
 		list = Object.values( list );

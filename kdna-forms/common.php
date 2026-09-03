@@ -5894,9 +5894,7 @@ Content-Type: text/html;
 			);
 		}
 
-		// Emitted under both names: the rename reached the readers but never this
-		// writer, so conditional_flyout.js was reading an undefined kdna_vars.
-		$gf_vars_json = 'var gf_vars = ' . json_encode( $gf_vars ) . '; var kdna_vars = gf_vars;';
+		$gf_vars_json = 'var gf_vars = ' . json_encode( $gf_vars ) . ';';
 
 		if ( ! $echo ) {
 			return $gf_vars_json;

@@ -100,8 +100,8 @@ var gresults = {
                         }
                     }
                     gresults.drawCharts();
-                    if (window["gform_initialize_tooltips"])
-                        gform_initialize_tooltips();
+                    if (window["kdnaform_initialize_tooltips"])
+                        kdnaform_initialize_tooltips();
                 } else if (response.status === "incomplete") {
                     serverStateObject = response.stateObject;
                     gresults.sendRequest(gresultsData, serverStateObject, response.checkSum);
@@ -258,8 +258,8 @@ jQuery( window ).on( 'load', function () {
             gresults.getResults();
         }
 
-        if (window["gform_initialize_tooltips"])
-            gform_initialize_tooltips();
+        if (window["kdnaform_initialize_tooltips"])
+            kdnaform_initialize_tooltips();
 
     }
 });
