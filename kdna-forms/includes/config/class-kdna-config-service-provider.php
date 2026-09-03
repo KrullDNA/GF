@@ -219,7 +219,7 @@ class KDNA_Config_Service_Provider extends KDNA_Service_Provider {
 	 * @return array
 	 */
 	public function config_mocks_endpoint() {
-		define( 'KDNAORMS_DOING_MOCK', true );
+		define( 'KFORMS_DOING_MOCK', true );
 		$container = \KDNAForms::get_service_container();
 		$data      = $container->get( self::CONFIG_COLLECTION )->handle( false );
 

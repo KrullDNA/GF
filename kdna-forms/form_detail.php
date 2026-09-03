@@ -346,7 +346,7 @@ class KDNAFormDetail {
 				 */
 				do_action( 'kdnaform_after_toolbar_buttons' );
 				?>
-				<span id="please_wait_container" style="display:none;"><i class='kficon-kdnaforms-spinner-icon kficon-spin'></i></span>
+				<span id="please_wait_container" style="display:none;"><i class='kdnaicon-kdnaforms-spinner-icon kdnaicon-spin'></i></span>
 			</div>
 		</div>
 		<form method="post" id="form_trash">

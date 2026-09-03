@@ -1523,7 +1523,7 @@ class KDNAEntryDetail {
 
 				<input type="button" name="notification_resend" value="<?php esc_attr_e( 'Resend', 'kdnaforms' ) ?>" class="button" style="" onclick="ResendNotifications();" />
 				<span id="please_wait_container" style="display:none; margin-left: 5px;">
-							<i class='kficon-kdnaforms-spinner-icon kficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
+							<i class='kdnaicon-kdnaforms-spinner-icon kdnaicon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
                         </span>
 				<?php
 			}
