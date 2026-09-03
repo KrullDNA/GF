@@ -259,9 +259,9 @@ class KDNA_Field_Textarea extends KDNA_Field {
 
 			list( $search, $open_tag, $guts, $close_tag ) = $match;
 
-			$custom  = "\tif ( typeof current_page === 'undefined' ) { return; }\n\twindow.gformInitTinymce = function(){\n\tfor( var id in tinymce.editors ) { tinymce.EditorManager.remove( tinymce.editors[id] ); }";
+			$custom  = "\tif ( typeof current_page === 'undefined' ) { return; }\n\twindow.kformInitTinymce = function(){\n\tfor( var id in tinymce.editors ) { tinymce.EditorManager.remove( tinymce.editors[id] ); }";
 			$replace = sprintf(
-				"%s\nfunction gformInitMCEInstances() { jQuery( document ).on( 'kdnaform_post_render%s', function( event, form_id, current_page ) { \n%s\n%s\n\t}\n\tgformInitTinymce();\n} );}; gform.initializeOnLoaded( gformInitMCEInstances );\n%s",
+				"%s\nfunction kformInitMCEInstances() { jQuery( document ).on( 'kdnaform_post_render%s', function( event, form_id, current_page ) { \n%s\n%s\n\t}\n\tgformInitTinymce();\n} );}; kform.initializeOnLoaded( kformInitMCEInstances );\n%s",
 				$open_tag,
 				$height_issue_fix,
 				$custom,

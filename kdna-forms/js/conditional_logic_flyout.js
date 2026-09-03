@@ -194,8 +194,8 @@
 
 		// The editor fires this when a drag starts or a field is clicked.
 		// Nothing was listening for it before, so honour it here.
-		if ( window.gform && window.gform.tools && window.gform.tools.addAction ) {
-			window.gform.tools.addAction( 'gform/flyout/close-all', close, 10, 'kdnaformClFlyout' );
+		if ( window.kform && window.kform.tools && window.kform.tools.addAction ) {
+			window.kform.tools.addAction( 'kform/flyout/close-all', close, 10, 'kdnaformClFlyout' );
 		}
 
 		// The badge has to follow the toggle. Bind change AND click: the toggle
@@ -214,7 +214,7 @@
 
 		// Selecting a different field swaps which settings the panel is
 		// showing, so the badge has to be recalculated.
-		$doc.on( 'click', '.gfield', function () {
+		$doc.on( 'click', '.kfield', function () {
 			window.setTimeout( syncStatus, 0 );
 		} );
 

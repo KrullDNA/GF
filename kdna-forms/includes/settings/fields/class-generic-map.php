@@ -264,7 +264,7 @@ class Generic_Map extends Base {
 		$html .= sprintf(
 			'<span class="%1$s"><input type="hidden" name="%2$s" id="%2$s" value=\'%3$s\' />
 				<div id="%4$s" class="kform-settings-field-map__container"></div>%5$s</span>
-				<script type="text/javascript">document.addEventListener( "gform/admin/scripts_loaded", function() { window.gform.initializeFieldMap( \'%4$s\', %6$s ); } );</script></span>',
+				<script type="text/javascript">document.addEventListener( "kform/admin/scripts_loaded", function() { window.kform.initializeFieldMap( \'%4$s\', %6$s ); } );</script></span>',
 			esc_attr( $this->get_container_classes() ),
 			$input_name, // Input name
 			esc_attr( wp_json_encode( $this->get_value() ? $this->get_value() : array() ) ), // Input value

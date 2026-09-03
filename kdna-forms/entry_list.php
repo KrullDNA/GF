@@ -1615,8 +1615,8 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 		<script type="text/javascript">
 
 			var messageTimeout = false,
-				gformFieldFilters = <?php echo json_encode( $field_filters ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>,
-				gformInitFilter = <?php echo json_encode( $init_filter_vars ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>;
+				kformFieldFilters = <?php echo json_encode( $field_filters ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>,
+				kformInitFilter = <?php echo json_encode( $init_filter_vars ); // nosemgrep scanner.php.lang.security.xss.direct-reflected ?>;
 
 			function ChangeColumns(columns) {
 				jQuery("#single_action").val("change_columns");
@@ -1722,7 +1722,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 					paging_total_header.html(total_change + "");
 					paging_total_footer.html(total_change + "");
 				}
-				gformVars.countAllEntries = gformVars.countAllEntries - change;
+				kformVars.countAllEntries = kformVars.countAllEntries - change;
 				setSelectAllText();
 			}
 
@@ -1817,7 +1817,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 							displayMessage(response, 'error', '#notifications_container');
 						} else {
 							var message = <?php echo json_encode( __( 'Notifications for %s were resent successfully.', 'kdnaforms' ) ); ?>;
-							var c = leadIds == 0 ? gformVars.countAllEntries : leadIds.length;
+							var c = leadIds == 0 ? kformVars.countAllEntries : leadIds.length;
 							displayMessage(message.replace('%s', c + ' ' + getPlural(c, <?php echo json_encode( __( 'entry', 'kdnaforms' ) ); ?>, <?php echo json_encode( __( 'entries', 'kdnaforms' ) ); ?>)), "success", "#entry_list_form");
 							closeModal(true);
 						}
@@ -1937,14 +1937,14 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 			// Select All
 
-			var gformStrings = {
+			var kformStrings = {
 				"allEntriesOnPageAreSelected": <?php echo json_encode( sprintf( esc_html__( 'All %s{0}%s entries on this page are selected.', 'kdnaforms' ), '<strong>', '</strong>' ) ); ?>,
 				"selectAll"                  : <?php echo json_encode( sprintf( esc_html__( 'Select all %s{0}%s entries.', 'kdnaforms' ), '<strong>', '</strong>' ) ); ?>,
 				"allEntriesSelected"         : <?php echo json_encode( sprintf( esc_html__( 'All %s{0}%s entries have been selected.', 'kdnaforms' ), '<strong>', '</strong>' ) ); ?>,
 				"clearSelection"             : <?php echo json_encode( __( 'Clear selection', 'kdnaforms' ) ); ?>
 			};
 
-			var gformVars = {
+			var kformVars = {
 				"countAllEntries": <?php echo intval( $this->get_pagination_arg( 'total_items' ) ); ?>,
 				"perPage"        : <?php echo intval( $this->get_pagination_arg( 'per_page' ) ); ?>
 			};
@@ -1957,16 +1957,16 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 			function getSelectAllText() {
 				var count;
 				count = jQuery("#the-list tr.entry_row:visible:not('#kform-select-all-message')").length;
-				return gformStrings.allEntriesOnPageAreSelected.gformFormat(count) + " <a href='javascript:void(0)' onclick='selectAllEntriesOnAllPages();'>" + gformStrings.selectAll.gformFormat(gformVars.countAllEntries) + "</a>";
+				return kformStrings.allEntriesOnPageAreSelected.kformFormat(count) + " <a href='javascript:void(0)' onclick='selectAllEntriesOnAllPages();'>" + kformStrings.selectAll.kformFormat(kformVars.countAllEntries) + "</a>";
 			}
 
 			function getSelectAllTr() {
 				var t = getSelectAllText();
 				var colspan = jQuery("#the-list").find("tr:first td").length + 2;
-				return "<tr id='kform-select-all-message' class='no-items' style='display:none;background-color:lightyellow;text-align:center;'><td colspan='{0}'>{1}</td></tr>".gformFormat(colspan, t);
+				return "<tr id='kform-select-all-message' class='no-items' style='display:none;background-color:lightyellow;text-align:center;'><td colspan='{0}'>{1}</td></tr>".kformFormat(colspan, t);
 			}
 			function toggleSelectAll(visible) {
-				if (gformVars.countAllEntries <= gformVars.perPage) {
+				if (kformVars.countAllEntries <= kformVars.perPage) {
 					jQuery('#kform-select-all-message').hide();
 					return;
 				}
@@ -1990,14 +1990,14 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 			function selectAllEntriesOnAllPages() {
 				var trHtmlClearSelection;
-				trHtmlClearSelection = gformStrings.allEntriesSelected.gformFormat(gformVars.countAllEntries) + " <a href='javascript:void(0);' onclick='clearSelectAllEntries();'>" + gformStrings.clearSelection + "</a>";
+				trHtmlClearSelection = kformStrings.allEntriesSelected.kformFormat(kformVars.countAllEntries) + " <a href='javascript:void(0);' onclick='clearSelectAllEntries();'>" + kformStrings.clearSelection + "</a>";
 				jQuery("#all_entries").val("1");
 				jQuery("#kform-select-all-message td").html(trHtmlClearSelection);
 			}
 
 			function initSelectAllEntries() {
 
-				if (gformVars.countAllEntries > gformVars.perPage) {
+				if (kformVars.countAllEntries > kformVars.perPage) {
 					var tr = getSelectAllTr();
 					jQuery("#the-list").prepend(tr);
 					jQuery(".column-cb input").click(function () {
@@ -2016,8 +2016,8 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 				});
 			}
 
-			if ( ! String.prototype.gformFormat ) {
-				String.prototype.gformFormat = function() {
+			if ( ! String.prototype.kformFormat ) {
+				String.prototype.kformFormat = function() {
 					var args = arguments;
 					return this.replace( /{(\d+)}/g, function( match, number ) {
 						return typeof args[ number ] != 'undefined' ? args[ number ] : match;
@@ -2066,7 +2066,7 @@ final class KDNA_Entry_List_Table extends WP_List_Table {
 
 				initSelectAllEntries();
 
-				jQuery('#entry_filters').gfFilterUI(gformFieldFilters, gformInitFilter, false);
+				jQuery('#entry_filters').kdnaFilterUI(kformFieldFilters, kformInitFilter, false);
 				jQuery("#entry_filters").on("keypress", ".kform-filter-value", (function (event) {
 					if (event.keyCode == 13) {
 						var urlParams = new URLSearchParams(window.location.search);

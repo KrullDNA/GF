@@ -185,8 +185,8 @@ class KDNA_Field_List extends KDNA_Field {
 		$maxRow              = intval( $this->maxRows );
 		$disabled_icon_class = ! empty( $maxRow ) && count( $value ) >= $maxRow ? 'kfield_icon_disabled' : '';
 		
-		$add_events    = $is_form_editor ? '' : "onclick='gformAddListItem(this, {$maxRow})'";
-		$delete_events = $is_form_editor ? '' : "onclick='gformDeleteListItem(this, {$maxRow})'";
+		$add_events    = $is_form_editor ? '' : "onclick='kformAddListItem(this, {$maxRow})'";
+		$delete_events = $is_form_editor ? '' : "onclick='kformDeleteListItem(this, {$maxRow})'";
 
 		$list .= '<div class="kfield_list_groups">';
 		$rownum = 1;
@@ -380,8 +380,8 @@ class KDNA_Field_List extends KDNA_Field {
 		$add_icon    = ! empty( $this->addIconUrl ) ? $this->addIconUrl : KDNACommon::get_base_url() . '/images/list-add.svg';
 		$delete_icon = ! empty( $this->deleteIconUrl ) ? $this->deleteIconUrl : KDNACommon::get_base_url() . '/images/list-remove.svg';
 
-		$add_events    = $is_form_editor ? '' : "onclick='gformAddListItem(this, {$maxRow})' onkeypress='gformAddListItem(this, {$maxRow})'";
-		$delete_events = $is_form_editor ? '' : "onclick='gformDeleteListItem(this, {$maxRow})' onkeypress='gformDeleteListItem(this, {$maxRow})'";
+		$add_events    = $is_form_editor ? '' : "onclick='kformAddListItem(this, {$maxRow})' onkeypress='kformAddListItem(this, {$maxRow})'";
+		$delete_events = $is_form_editor ? '' : "onclick='kformDeleteListItem(this, {$maxRow})' onkeypress='kformDeleteListItem(this, {$maxRow})'";
 
 		$list .= '<tbody>';
 		$rownum = 1;

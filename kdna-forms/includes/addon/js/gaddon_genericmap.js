@@ -141,12 +141,12 @@ var KDNAGenericMap = function( options ) {
 					}
 
 					if ( self.options.mergeTags ) {
-						new gfMergeTagsObj( form, $elem.find( '.custom-value-container input' ) );
+						new kdnaMergeTagsObj( form, $elem.find( '.custom-value-container input' ) );
 						$elem.find( '.custom-value-container' ).addClass( 'supports-merge-tags' );
 					}
 
-					if ( window.hasOwnProperty( 'gform' ) ) {
-						gform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
+					if ( window.hasOwnProperty( 'kform' ) ) {
+						kform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
 					}
 
 				},

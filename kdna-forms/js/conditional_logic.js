@@ -1,11 +1,11 @@
 
 var __kdna_timeout_handle;
 
-gform.addAction( 'kform_input_change', function( elem, formId, fieldId ) {
+kform.addAction( 'kform_input_change', function( elem, formId, fieldId ) {
 	if( ! window.kdna_form_conditional_logic ) {
 		return;
 	}
-	var dependentFieldIds = rgars( kdna_form_conditional_logic, [ formId, 'fields', gformExtractFieldId( fieldId ) ].join( '/' ) );
+	var dependentFieldIds = rgars( kdna_form_conditional_logic, [ formId, 'fields', kformExtractFieldId( fieldId ) ].join( '/' ) );
 	if( dependentFieldIds ) {
 		kdnaform_apply_rules( formId, dependentFieldIds );
 	}
@@ -14,8 +14,8 @@ gform.addAction( 'kform_input_change', function( elem, formId, fieldId ) {
 function kdnaform_apply_rules(formId, fields, isInit){
 
 	jQuery(document).trigger( 'kform_pre_conditional_logic', [ formId, fields, isInit ] );
-	gform.utils.trigger( {
-		event: 'gform/conditionalLogic/applyRules/start',
+	kform.utils.trigger( {
+		event: 'kform/conditionalLogic/applyRules/start',
 		native: false,
 		data: { formId: formId, fields: fields, isInit: isInit },
 	} );
@@ -36,13 +36,13 @@ function kdnaform_apply_rules(formId, fields, isInit){
 				}
 
 				jQuery(document).trigger('kform_post_conditional_logic', [formId, fields, isInit]);
-				gform.utils.trigger( {
-					event: 'gform/conditionalLogic/applyRules/end',
+				kform.utils.trigger( {
+					event: 'kform/conditionalLogic/applyRules/end',
 					native: false,
 					data: { formId: formId, fields: fields, dependentFields: dependentFields, isInit: isInit },
 				} );
-				if( window.gformCalculateTotalPrice ) {
-					window.gformCalculateTotalPrice( formId );
+				if( window.kformCalculateTotalPrice ) {
+					window.kformCalculateTotalPrice( formId );
 				}
 			}
 		});
@@ -132,7 +132,7 @@ function kdna_get_field_action(formId, conditionalLogic){
 		 *
 		 * @since 2.4.22
 		 */
-		var rule = gform.applyFilters( 'kform_rule_pre_evaluation', jQuery.extend( {}, conditionalLogic["rules"][i] ), formId, conditionalLogic );
+		var rule = kform.applyFilters( 'kform_rule_pre_evaluation', jQuery.extend( {}, conditionalLogic["rules"][i] ), formId, conditionalLogic );
 		if(kdna_is_match(formId, rule))
 			matches++;
 	}
@@ -150,21 +150,21 @@ function kdna_is_match( formId, rule ) {
 
 	var $               = jQuery,
 		inputId         = rule['fieldId'],
-		fieldId         = gformExtractFieldId( inputId ),
-		inputIndex      = gformExtractInputIndex( inputId ),
+		fieldId         = kformExtractFieldId( inputId ),
+		inputIndex      = kformExtractInputIndex( inputId ),
 		isInputSpecific = inputIndex !== false,
 		$inputs;
 
 	if( isInputSpecific ) {
-		$inputs = $( '#input_{0}_{1}_{2}, #choice_{0}_{1}_{2}'.gformFormat( formId, fieldId, inputIndex ) );
+		$inputs = $( '#input_{0}_{1}_{2}, #choice_{0}_{1}_{2}'.kformFormat( formId, fieldId, inputIndex ) );
 	} else {
-		$inputs = $( 'input[id="input_{0}_{1}"], input[id^="input_{0}_{1}_"], input[id^="choice_{0}_{1}_"], select#input_{0}_{1}, textarea#input_{0}_{1}'.gformFormat( formId, fieldId ) );
+		$inputs = $( 'input[id="input_{0}_{1}"], input[id^="input_{0}_{1}_"], input[id^="choice_{0}_{1}_"], select#input_{0}_{1}, textarea#input_{0}_{1}'.kformFormat( formId, fieldId ) );
 	}
 
 	var isCheckable = $.inArray( $inputs.attr( 'type' ), [ 'checkbox', 'radio' ] ) !== -1;
 	var isMatch     = isCheckable ? kdna_is_match_checkable( $inputs, rule, formId, fieldId ) : kdna_is_match_default( $inputs.eq( 0 ), rule, formId, fieldId );
 
-	return gform.applyFilters( 'kform_is_value_match', isMatch, formId, rule );
+	return kform.applyFilters( 'kform_is_value_match', isMatch, formId, rule );
 }
 
 function kdna_is_match_checkable( $inputs, rule, formId, fieldId ) {
@@ -194,7 +194,7 @@ function kdna_is_match_checkable( $inputs, rule, formId, fieldId ) {
 		}
 		// if the 'other' choice is selected, get the value from the 'other' text input
 		else if ( fieldValue == 'kdna_other_choice' ) {
-			fieldValue = jQuery( '#input_{0}_{1}_other'.gformFormat( formId, fieldId ) ).val();
+			fieldValue = jQuery( '#input_{0}_{1}_other'.kformFormat( formId, fieldId ) ).val();
 		}
 
 		if( kdna_matches_operation( fieldValue, rule.value, rule.operator ) ) {
@@ -267,7 +267,7 @@ function kdna_format_number( value, fieldNumberFormat ) {
 	decimalSeparator = '.';
 
 	if( fieldNumberFormat == 'currency' ) {
-		decimalSeparator = gform.Currency.getDecimalSeparator( 'currency' );
+		decimalSeparator = kform.Currency.getDecimalSeparator( 'currency' );
 	} else if( fieldNumberFormat == 'decimal_comma' ) {
 		decimalSeparator = ',';
 	} else if( fieldNumberFormat == 'decimal_dot' ) {
@@ -275,14 +275,14 @@ function kdna_format_number( value, fieldNumberFormat ) {
 	}
 
 	// transform to a decimal dot number
-	value = gform.Currency.cleanNumber( value, '', '', decimalSeparator );
+	value = kform.Currency.cleanNumber( value, '', '', decimalSeparator );
 
 	/**
 	 * Looking at format specified by wp locale creates issues. When performing conditional logic, all numbers will be formatted to decimal dot and then compared that way. AC
 	 */
 	// now transform to number specified by locale
 	// if( window['kdna_number_format'] && window['kdna_number_format'] == 'decimal_comma' ) {
-	//     value = gformFormatNumber( value, -1, ',', '.' );
+	//     value = kformFormatNumber( value, -1, ',', '.' );
 	// }
 
 	if( ! value ) {
@@ -302,9 +302,9 @@ function kdna_try_convert_float(text){
 	 */
 
 	var format = 'decimal_dot';
-	if( gformIsNumeric( text, format ) ) {
+	if( kformIsNumeric( text, format ) ) {
 		var decimal_separator = format == "decimal_comma" ? "," : ".";
-		return gform.Currency.cleanNumber( text, "", "", decimal_separator );
+		return kform.Currency.cleanNumber( text, "", "", decimal_separator );
 	}
 
 	return text;
@@ -327,14 +327,14 @@ function kdna_matches_operation(val1, val2, operation){
 			val1 = kdna_try_convert_float(val1);
 			val2 = kdna_try_convert_float(val2);
 
-			return gform.utils.isNumber(val1) && gform.utils.isNumber(val2) ? val1 > val2 : false;
+			return kform.utils.isNumber(val1) && kform.utils.isNumber(val2) ? val1 > val2 : false;
 			break;
 
 		case "<" :
 			val1 = kdna_try_convert_float(val1);
 			val2 = kdna_try_convert_float(val2);
 
-			return gform.utils.isNumber(val1) && gform.utils.isNumber(val2) ? val1 < val2 : false;
+			return kform.utils.isNumber(val1) && kform.utils.isNumber(val2) ? val1 < val2 : false;
 			break;
 
 		case "contains" :
@@ -390,14 +390,14 @@ function kdna_do_field_action(formId, action, fieldId, isInit, callback){
 		 * @param array  $formId       The current form ID.
 		 * @param func   $do_callback   Callback function to be executed after conditional logic is executed.
 		 */
-		let abort = gform.applyFilters( 'kform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, formId, do_callback );
+		let abort = kform.applyFilters( 'kform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, formId, do_callback );
 		if ( ! abort ) {
 			kdna_do_action( action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, do_callback, formId );
 		} else if ( do_callback ) {
 			do_callback();
 		}
 
-		gform.doAction('kform_post_conditional_logic_field_action', formId, action, targetId, defaultValues, isInit);
+		kform.doAction('kform_post_conditional_logic_field_action', formId, action, targetId, defaultValues, isInit);
 	}
 }
 
@@ -419,7 +419,7 @@ function kdna_do_next_button_action(formId, action, fieldId, isInit){
 	 * @param array  $formId       The current form ID.
 	 * @param func   $do_callback   Callback function to be executed after conditional logic is executed.
 	 */
-	let abort = gform.applyFilters( 'kform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], null, isInit, formId, null );
+	let abort = kform.applyFilters( 'kform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], null, isInit, formId, null );
 	if ( ! abort ) {
 		kdna_do_action( action, targetId, conditional_logic[ "animation" ], null, isInit, null, formId );
 	}
@@ -492,9 +492,9 @@ function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, c
 		//if field is not already hidden, reset its values to the default
 		var child = $target.children().first();
 		if (child.length > 0){
-			var reset = gform.applyFilters('kform_reset_pre_conditional_logic_field_action', true, formId, targetId, defaultValues, isInit);
+			var reset = kform.applyFilters('kform_reset_pre_conditional_logic_field_action', true, formId, targetId, defaultValues, isInit);
 
-			if(reset && !gformIsHidden(child)){
+			if(reset && !kformIsHidden(child)){
 				kdna_reset_to_default(targetId, defaultValues);
 			}
 		}
@@ -625,7 +625,7 @@ function kdna_reset_to_default(targetId, defaultValue){
 	// single row. Add enough rows/inputs to satisfy the default value.
 	if( defaultValue && target.parents( '.kinput_list' ).length > 0 && target.length < defaultValue.length ) {
 		while( target.length < defaultValue.length ) {
-			gformAddListItem( target.eq( 0 ), 0 );
+			kformAddListItem( target.eq( 0 ), 0 );
 			target = jQuery(targetId).find( 'select, input[type="text"]:not([id*="_shim"]), input[type="number"], textarea' );
 		}
 	}
@@ -677,9 +677,9 @@ function kdna_reset_to_default(targetId, defaultValue){
 			}
 			// Check for Single Product & Shipping input and force visual price update.
 			if( kdna_is_hidden_pricing_input( element ) ) {
-				var ids = kdna_get_ids_by_html_id( element.parents( '.gfield' ).attr( 'id' ) );
-				jQuery( '#input_' + ids[0] + '_' + ids[1] ).text( gformFormatMoney( element.val() ) );
-				element.val( gformFormatMoney( element.val() ) );
+				var ids = kdna_get_ids_by_html_id( element.parents( '.kfield' ).attr( 'id' ) );
+				jQuery( '#input_' + ids[0] + '_' + ids[1] ).text( kformFormatMoney( element.val() ) );
+				element.val( kformFormatMoney( element.val() ) );
 			}
 		}
 		else{

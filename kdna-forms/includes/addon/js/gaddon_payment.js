@@ -4,8 +4,8 @@ function loadBillingLength(setting_name){
         return;
 
     var unit = jQuery("#" + setting_name + "_unit").val();
-    var min =  gform.utils.escapeHtml( intervals[unit]["min"] );
-    var max =  gform.utils.escapeHtml( intervals[unit]["max"] );
+    var min =  kform.utils.escapeHtml( intervals[unit]["min"] );
+    var max =  kform.utils.escapeHtml( intervals[unit]["max"] );
     var lengthField = jQuery("#" + setting_name + "_length");
     var length = lengthField.val();
     var str = "";
@@ -33,7 +33,7 @@ function cancel_subscription( entryId ) {
 		function ( response ) {
 			jQuery( "#subscription_cancel_spinner" ).hide();
 			if ( response.success === true ) {
-				jQuery( "#kdnaform_payment_status" ).html( gform.utils.escapeHtml( kaddon_payment_strings.subscriptionCanceled ) );
+				jQuery( "#kdnaform_payment_status" ).html( kform.utils.escapeHtml( kaddon_payment_strings.subscriptionCanceled ) );
 				jQuery( "#cancelsub" ).hide();
 			} else {
 				jQuery( "#cancelsub" ).prop( "disabled", false );

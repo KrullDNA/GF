@@ -1,4 +1,4 @@
-(function ($, gform, kdnaform_i18n) {
+(function ($, kform, kdnaform_i18n) {
 
 	/**
 	 * @function getDatepickerI18n
@@ -123,7 +123,7 @@
 
 				// If the form is in preview mode and the site is RTL, adjust the datepicker position.
 				if ( isRTL && isPreview ) {
-					var $inputContainer = $( input ).closest( '.gfield' );
+					var $inputContainer = $( input ).closest( '.kfield' );
 					var rightOffset = $( document ).outerWidth() - ( $inputContainer.offset().left + $inputContainer.outerWidth() );
 					inst.dpDiv[ 0 ].style.right = rightOffset + 'px';
 				}
@@ -171,7 +171,7 @@
 		inputId = inputId.split( '_' );
 
 		// allow the user to override the datepicker options object
-		optionsObj = gform.applyFilters( 'kform_datepicker_options_pre_init', optionsObj, inputId[ 1 ], inputId[ 2 ], $element );
+		optionsObj = kform.applyFilters( 'kform_datepicker_options_pre_init', optionsObj, inputId[ 1 ], inputId[ 2 ], $element );
 
 		$element.datepicker( optionsObj );
 
@@ -186,7 +186,7 @@
 
 	/**
 	 * @function initDatepickers
-	 * @description Iterate over uninitialized datepickers and init. Exposed on window as gformInitDatepicker.
+	 * @description Iterate over uninitialized datepickers and init. Exposed on window as kformInitDatepicker.
 	 * Note: this function powers both admin and theme datepickers.
 	 * @since 2.4
 	 */
@@ -203,7 +203,7 @@
 
 	// Make all and single init functions public for add-ons.
 	// Naming is done in the 2.4 backwards compatible way.
-	window.gformInitDatepicker = initDatepickers;
-	window.gformInitSingleDatepicker = initSingleDatepicker;
+	window.kformInitDatepicker = initDatepickers;
+	window.kformInitSingleDatepicker = initSingleDatepicker;
 
-})(jQuery, gform, kdnaform_i18n);
+})(jQuery, kform, kdnaform_i18n);

@@ -107,7 +107,7 @@ class KDNAHelp {
                         <h3><?php esc_html_e( 'Developer Documentation', 'kdnaforms' ); ?></h3>
                         <ul class="resource_list">
                             <li>
-                                <a target="_blank" href="https://docs.kdnaforms.com/getting-started-kdna-forms-api-gfapi/">
+                                <a target="_blank" href="https://docs.kdnaforms.com/getting-started-kdna-forms-api-kdnaapi/">
 									<?php esc_html_e( 'Discover the KDNA Forms API', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
 									<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span>
@@ -135,7 +135,7 @@ class KDNAHelp {
                                 </a>
                             </li>
                             <li>
-                                <a target="_blank" href="https://docs.kdnaforms.com/gfaddon/">
+                                <a target="_blank" href="https://docs.kdnaforms.com/kdnaaddon/">
 									<?php esc_html_e( 'KDNAAddOn', 'kdnaforms' ); ?>
 									<span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'kdnaforms' ); ?></span>
 									<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span>

@@ -729,9 +729,9 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 		public function settings_qrcode() {
 			?>
-			<button type="button" class="kform-button kform-button--white" id="gfwebapi-qrbutton"><?php esc_html_e( 'Show/hide QR Code', 'kdnaforms' ); ?></button>
-			<div id="gfwebapi-qrcode-container" style="display:none; padding-left: unset">
-				<img id="gfwebapi-qrcode" alt="API QR code" src="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/images/spinner.svg"/>
+			<button type="button" class="kform-button kform-button--white" id="kdnawebapi-qrbutton"><?php esc_html_e( 'Show/hide QR Code', 'kdnaforms' ); ?></button>
+			<div id="kdnawebapi-qrcode-container" style="display:none; padding-left: unset">
+				<img id="kdnawebapi-qrcode" alt="API QR code" src="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/images/spinner.svg"/>
 			</div>
 
 			<?php
@@ -2067,7 +2067,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			global $blog_id;
 
 			$key = is_multisite() ? $blog_id . '-' : '';
-			$key .= 'gfresults-cache-meta-form-' . $form_id;
+			$key .= 'kdnaresults-cache-meta-form-' . $form_id;
 
 			return $key;
 		}

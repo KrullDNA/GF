@@ -25,28 +25,28 @@
 }
 
 /* Fix radio/checkbox input + label alignment */
-.kdna-elementor-form-wrapper .kfield_radio .gchoice,
-.kdna-elementor-form-wrapper .kfield_checkbox .gchoice {
+.kdna-elementor-form-wrapper .kfield_radio .kchoice,
+.kdna-elementor-form-wrapper .kfield_checkbox .kchoice {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 }
 
-.kdna-elementor-form-wrapper .kfield_radio .gchoice input[type="radio"],
-.kdna-elementor-form-wrapper .kfield_checkbox .gchoice input[type="checkbox"] {
+.kdna-elementor-form-wrapper .kfield_radio .kchoice input[type="radio"],
+.kdna-elementor-form-wrapper .kfield_checkbox .kchoice input[type="checkbox"] {
 	margin: 0;
 	flex-shrink: 0;
 }
 
-.kdna-elementor-form-wrapper .kfield_radio .gchoice label,
-.kdna-elementor-form-wrapper .kfield_checkbox .gchoice label {
+.kdna-elementor-form-wrapper .kfield_radio .kchoice label,
+.kdna-elementor-form-wrapper .kfield_checkbox .kchoice label {
 	margin: 0;
 	cursor: pointer;
 }
 
 /* When using grid/flex layouts, reset choice margins */
-.kdna-elementor-form-wrapper .kfield_radio .gchoice,
-.kdna-elementor-form-wrapper .kfield_checkbox .gchoice {
+.kdna-elementor-form-wrapper .kfield_radio .kchoice,
+.kdna-elementor-form-wrapper .kfield_checkbox .kchoice {
 	margin-bottom: 0 !important;
 }
 
@@ -101,18 +101,18 @@
 }
 
 /* Image choice - make images clickable and styled */
-.kdna-elementor-form-wrapper .gchoice .kfield-choice-image-label {
+.kdna-elementor-form-wrapper .kchoice .kfield-choice-image-label {
 	cursor: pointer;
 	display: block;
 }
 
-.kdna-elementor-form-wrapper .gchoice .kfield-choice-image-label img {
+.kdna-elementor-form-wrapper .kchoice .kfield-choice-image-label img {
 	display: block;
 }
 
 /* Image choice - remove default bounding box styles and padding */
-.kdna-elementor-form-wrapper .kfield--type-image_choice .gchoice,
-.kdna-elementor-form-wrapper .kfield_radio--image-choice .gchoice {
+.kdna-elementor-form-wrapper .kfield--type-image_choice .kchoice,
+.kdna-elementor-form-wrapper .kfield_radio--image-choice .kchoice {
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
@@ -128,8 +128,8 @@
     inline-size: auto !important;
 }
 
-.kdna-elementor-form-wrapper .kfield--type-image_choice .gchoice::before,
-.kdna-elementor-form-wrapper .kfield_radio--image-choice .gchoice::before {
+.kdna-elementor-form-wrapper .kfield--type-image_choice .kchoice::before,
+.kdna-elementor-form-wrapper .kfield_radio--image-choice .kchoice::before {
     border: none !important;
     display: none !important;
 }
@@ -152,7 +152,7 @@
 }
 
 /* Remove left padding/margin so radio aligns with image left edge */
-.kdna-elementor-form-wrapper .kfield--type-image_choice .gchoice .kfield-choice-input {
+.kdna-elementor-form-wrapper .kfield--type-image_choice .kchoice .kfield-choice-input {
     margin-left: 0 !important;
     padding-left: 0 !important;
 }
@@ -164,7 +164,7 @@
 	align-items: end !important;
 	column-gap: 16px !important;
 }
-.kdna-shrink-submit-yes .kform_wrapper .kform_body .kform_fields > .gfield {
+.kdna-shrink-submit-yes .kform_wrapper .kform_body .kform_fields > .kfield {
 	flex: 1 1 200px !important;
 	min-width: 0 !important;
 }

@@ -30,12 +30,12 @@ html[dir="rtl"] .kform_legacy_markup_wrapper *,
 html[dir="rtl"] .kform_legacy_markup_wrapper form,
 html[dir="rtl"] .kform_legacy_markup_wrapper .kform_body,
 html[dir="rtl"] .kform_legacy_markup_wrapper ul li,
-html[dir="rtl"] .kform_legacy_markup_wrapper ul li.gfield,
-html[dir="rtl"] .kform_legacy_markup_wrapper ul li.gfield.kfield_html,
-html[dir="rtl"] .kform_legacy_markup_wrapper ul li.gfield input,
-html[dir="rtl"] .kform_legacy_markup_wrapper ul li.gfield textarea,
+html[dir="rtl"] .kform_legacy_markup_wrapper ul li.kfield,
+html[dir="rtl"] .kform_legacy_markup_wrapper ul li.kfield.kfield_html,
+html[dir="rtl"] .kform_legacy_markup_wrapper ul li.kfield input,
+html[dir="rtl"] .kform_legacy_markup_wrapper ul li.kfield textarea,
 html[dir="rtl"] .kform_legacy_markup_wrapper textarea,
-html[dir="rtl"] .kform_legacy_markup_wrapper ul li.gfield select,
+html[dir="rtl"] .kform_legacy_markup_wrapper ul li.kfield select,
 html[dir="rtl"] .kform_legacy_markup_wrapper select,
 html[dir="rtl"] .kform_legacy_markup_wrapper input[type="text"],
 html[dir="rtl"] .kform_legacy_markup_wrapper input[type="email"],
@@ -59,16 +59,16 @@ html[dir="rtl"] .kform_legacy_markup_wrapper ul li {
 	padding-right: 0 !important;
 }
 
-html[dir="rtl"] .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
-html[dir="rtl"] .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
-html[dir="rtl"] .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ul li,
-html[dir="rtl"] .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ul li {
+html[dir="rtl"] .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html ol li,
+html[dir="rtl"] .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.kfield.kfield_html ol li,
+html[dir="rtl"] .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html ul li,
+html[dir="rtl"] .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.kfield.kfield_html ul li {
     margin: 0 0 0 0 !important;
     direction: rtl !important;
 }
 
 
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html table {
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html table {
 	direction: rtl !important;
 }
 
@@ -111,12 +111,12 @@ body.rtl .kform_legacy_markup_wrapper *,
 body.rtl .kform_legacy_markup_wrapper form,
 body.rtl .kform_legacy_markup_wrapper .kform_body,
 body.rtl .kform_legacy_markup_wrapper ul li,
-body.rtl .kform_legacy_markup_wrapper ul li.gfield,
-body.rtl .kform_legacy_markup_wrapper ul li.gfield.kfield_html,
-body.rtl .kform_legacy_markup_wrapper ul li.gfield input,
-body.rtl .kform_legacy_markup_wrapper ul li.gfield textarea,
+body.rtl .kform_legacy_markup_wrapper ul li.kfield,
+body.rtl .kform_legacy_markup_wrapper ul li.kfield.kfield_html,
+body.rtl .kform_legacy_markup_wrapper ul li.kfield input,
+body.rtl .kform_legacy_markup_wrapper ul li.kfield textarea,
 body.rtl .kform_legacy_markup_wrapper textarea,
-body.rtl .kform_legacy_markup_wrapper ul li.gfield select,
+body.rtl .kform_legacy_markup_wrapper ul li.kfield select,
 body.rtl .kform_legacy_markup_wrapper select,
 body.rtl .kform_legacy_markup_wrapper input[type="text"],
 body.rtl .kform_legacy_markup_wrapper input[type="email"],
@@ -131,12 +131,12 @@ body.rtl .kform_legacy_markup_wrapper h3.kform_title,
 body.rtl .kform_legacy_markup_wrapper span.kform_description,
 body.rtl .kform_legacy_markup_wrapper .kform_footer,
 body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.gfield,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.gfield.kfield_html,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.gfield input,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.gfield textarea,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.kfield,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.kfield.kfield_html,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.kfield input,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.kfield textarea,
 body .kform_legacy_markup_wrapper.kdna_rtl_wrapper textarea,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.gfield select,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper ul li.kfield select,
 body .kform_legacy_markup_wrapper.kdna_rtl_wrapper select,
 body .kform_legacy_markup_wrapper.kdna_rtl_wrapper input[type="text"],
 body .kform_legacy_markup_wrapper.kdna_rtl_wrapper input[type="email"],
@@ -172,27 +172,27 @@ body .kform_legacy_markup_wrapper.kdna_rtl_wrapper .kfield_checkbox li input {
     float: right !important;
 }
 
-body.rtl .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
-body.rtl .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
-body.rtl .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ul li,
-body.rtl .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ul li,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ol li,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html ul li,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper form div.kform_body ul.kform_fields li.gfield.kfield_html ul li {
+body.rtl .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html ol li,
+body.rtl .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.kfield.kfield_html ol li,
+body.rtl .kform_legacy_markup_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html ul li,
+body.rtl .kform_legacy_markup_wrapper form div.kform_body ul.kform_fields li.kfield.kfield_html ul li,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html ol li,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper form div.kform_body ul.kform_fields li.kfield.kfield_html ol li,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html ul li,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper form div.kform_body ul.kform_fields li.kfield.kfield_html ul li {
     margin: 0 24px 0 0 !important;
     direction: rtl !important;
 }
 
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html table {
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html table {
 	direction: rtl !important;
 }
 
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html table th,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html table td,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html p,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html span,
-body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.gfield.kfield_html blockquote {
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html table th,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html table td,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html p,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html span,
+body .kform_legacy_markup_wrapper.kdna_rtl_wrapper div.kform_body ul.kform_fields li.kfield.kfield_html blockquote {
 	text-align: right !important;
 	direction: rtl !important;
 }
@@ -470,12 +470,12 @@ html[dir="rtl"] .kform_legacy_markup_wrapper .kinput_complex.kinput_container_ad
 }
 
 html[dir="rtl"] .kform_legacy_markup_wrapper span.kinput_left,
-html[dir="rtl"] .kform_legacy_markup_wrapper ul.kform_fields li.gfield {
+html[dir="rtl"] .kform_legacy_markup_wrapper ul.kform_fields li.kfield {
     padding-left: 16px;
     padding-right: 0;
 }
 
-html[dir="rtl"] .kform_legacy_markup_wrapper ul.kform_fields li.gfield.kfield_error {
+html[dir="rtl"] .kform_legacy_markup_wrapper ul.kform_fields li.kfield.kfield_error {
     padding-right: 16px !important;
 }
 
@@ -515,7 +515,7 @@ html[dir="rtl"] .kform_legacy_markup_wrapper span.kfield_required {
     margin-right: 4px;
 }
 
-html[dir="rtl"] .kform_legacy_markup_wrapper li.gfield.kfield_creditcard_warning div.kfield_creditcard_warning_message span {
+html[dir="rtl"] .kform_legacy_markup_wrapper li.kfield.kfield_creditcard_warning div.kfield_creditcard_warning_message span {
     padding: 0 24px 14px 0;
 }
 
@@ -538,7 +538,7 @@ html[dir="rtl"] .kform_legacy_markup_wrapper .kinput_complex .kinput_cardinfo_ri
     width: 32px;
 }
 
-html[dir="rtl"] .kform_legacy_markup_wrapper li.gfield.kfield_creditcard_warning div.kfield_creditcard_warning_message span {
+html[dir="rtl"] .kform_legacy_markup_wrapper li.kfield.kfield_creditcard_warning div.kfield_creditcard_warning_message span {
 	background-position: 100% top;
 }
 
@@ -655,8 +655,8 @@ html[dir="rtl"] .kform_legacy_markup_wrapper span.kinput_price {
     	float: right !important;
 	}
 
-    html[dir="rtl"] .kform_legacy_markup_wrapper .left_label li.gfield .kfield_password_strength,
-    html[dir="rtl"] .kform_legacy_markup_wrapper .right_label li.gfield .kfield_password_strength {
+    html[dir="rtl"] .kform_legacy_markup_wrapper .left_label li.kfield .kfield_password_strength,
+    html[dir="rtl"] .kform_legacy_markup_wrapper .right_label li.kfield .kfield_password_strength {
 	    margin-left: 0;
 	    margin-right: 29%;
 	    width: 70%;

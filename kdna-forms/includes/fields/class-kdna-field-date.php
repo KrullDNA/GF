@@ -736,7 +736,7 @@ class KDNA_Field_Date extends KDNA_Field {
 			return '';
 		}
 
-		return "gform.addFilter( 'kdnaform_value_merge_tag_{$form['id']}_{$this->id}', function( value, input, modifier ) { if( modifier === 'label' ) { return false; } return input.length == 1 ? input.val() : jQuery(input[0]).val() + '/' + jQuery(input[1]).val() + '/' + jQuery(input[2]).val(); } );";
+		return "kform.addFilter( 'kdnaform_value_merge_tag_{$form['id']}_{$this->id}', function( value, input, modifier ) { if( modifier === 'label' ) { return false; } return input.length == 1 ? input.val() : jQuery(input[0]).val() + '/' + jQuery(input[1]).val() + '/' + jQuery(input[2]).val(); } );";
 
 	}
 

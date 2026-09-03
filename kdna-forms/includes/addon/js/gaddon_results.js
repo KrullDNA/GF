@@ -1,6 +1,6 @@
-var gresultsAjaxRequest;
+var kresultsAjaxRequest;
 
-var gresults = {
+var kresults = {
 
     drawCharts: function () {
         var containers = jQuery('.kresults-chart-wrapper');
@@ -39,7 +39,7 @@ var gresults = {
         jQuery("#kresults-results-filter").html(state.filterUI);
         results.css('opacity', 0);
         results.html(state.html);
-        gresults.drawCharts();
+        kresults.drawCharts();
         results.fadeTo("slow", 1);
 
         var filterContainer = jQuery("#kresults-results-field-filters-container");
@@ -51,21 +51,21 @@ var gresults = {
     },
 
     getResults: function () {
-        gresults.recordFormState();
-        var gresultsData = jQuery('#kresults-results-filter-form').serialize();
-        gresults.sendRequest(gresultsData)
+        kresults.recordFormState();
+        var kresultsData = jQuery('#kresults-results-filter-form').serialize();
+        kresults.sendRequest(kresultsData)
     },
 
-    sendRequest: function (gresultsData, serverStateObject, checkSum) {
+    sendRequest: function (kresultsData, serverStateObject, checkSum) {
         var results = jQuery("#kresults-results");
         var filterButtons = jQuery("#kresults-results-filter-buttons input");
         var viewSlug = jQuery("#kresults-view-slug").val();
 		var nonce = jQuery("#_kdna_results_nonce").val()
-        var data_str = "action=kresults_get_results_" + viewSlug + "&" + gresultsData + '&_kdna_results_nonce' + nonce ;
+        var data_str = "action=kresults_get_results_" + viewSlug + "&" + kresultsData + '&_kdna_results_nonce' + nonce ;
         if (serverStateObject)
             data_str += "&state=" + serverStateObject + "&checkSum=" + checkSum;
 
-        gresultsAjaxRequest = jQuery.ajax({
+        kresultsAjaxRequest = jQuery.ajax({
             url       : ajaxurl,
             type      : 'POST',
             dataType  : 'json',
@@ -73,42 +73,42 @@ var gresults = {
             beforeSend: function (xhr, opts) {
                 results.fadeTo("slow", 0.33);
                 results.html('');
-                gform.utils.trigger( { event: 'gform/page_loader/show' } );
+                kform.utils.trigger( { event: 'kform/page_loader/show' } );
                 filterButtons.attr('disabled', 'disabled');
             }
         })
         .done(function (response) {
             if (!response || response === -1) {
-                gform.utils.trigger( { event: 'gform/page_loader/hide' } );
-                results.html(gresultsStrings.ajaxError);
+                kform.utils.trigger( { event: 'kform/page_loader/hide' } );
+                results.html(kresultsStrings.ajaxError);
             } else {
                 if (response.status === "complete") {
                     filterButtons.removeAttr('disabled');
-                    gform.utils.trigger( { event: 'gform/page_loader/hide' } );
+                    kform.utils.trigger( { event: 'kform/page_loader/hide' } );
                     results.html(response.html);
                     jQuery("#kresults-results").data('searchcriteria', response.searchCriteria); //used in 'more' links
 
                     var filterUI = jQuery("#kresults-results-filter").html();
 
-                    gresults.drawCharts();
+                    kresults.drawCharts();
                     results.fadeTo("slow", 1);
                     if (window.history.replaceState) {
                         if (!history.state) {
-                            history.replaceState({"html": response.html, "filterUI": filterUI, "searchCriteria": response.searchCriteria}, "", "?" + gresultsData);
+                            history.replaceState({"html": response.html, "filterUI": filterUI, "searchCriteria": response.searchCriteria}, "", "?" + kresultsData);
                         } else {
-                            history.pushState({"html": response.html, "filterUI": filterUI, "searchCriteria": response.searchCriteria}, "", "?" + gresultsData);
+                            history.pushState({"html": response.html, "filterUI": filterUI, "searchCriteria": response.searchCriteria}, "", "?" + kresultsData);
                         }
                     }
-                    gresults.drawCharts();
+                    kresults.drawCharts();
                     if (window["kdnaform_initialize_tooltips"])
                         kdnaform_initialize_tooltips();
                 } else if (response.status === "incomplete") {
                     serverStateObject = response.stateObject;
-                    gresults.sendRequest(gresultsData, serverStateObject, response.checkSum);
+                    kresults.sendRequest(kresultsData, serverStateObject, response.checkSum);
                     results.html(response.html);
                 } else {
-                    gform.utils.trigger( { event: 'gform/page_loader/hide' } );
-                    results.html(gresultsStrings.ajaxError);
+                    kform.utils.trigger( { event: 'kform/page_loader/hide' } );
+                    results.html(kresultsStrings.ajaxError);
                 }
             }
         })
@@ -116,11 +116,11 @@ var gresults = {
             filterButtons.removeAttr('disabled');
             results.fadeTo("fast", 1);
             var msg = error.statusText;
-            gform.utils.trigger( { event: 'gform/page_loader/hide' } );
+            kform.utils.trigger( { event: 'kform/page_loader/hide' } );
             if (msg == "abort") {
                 msg = "Request cancelled";
             } else {
-                msg = gresultsStrings.ajaxError;
+                msg = kresultsStrings.ajaxError;
             }
             results.html(msg);
         })
@@ -167,7 +167,7 @@ var gresults = {
     },
 
     clearFilterForm: function () {
-        jQuery("#kresults-results-field-filters-container").off('click', '.kform-add').gfFilterUI(gresultsFilterSettings, [], true);
+        jQuery("#kresults-results-field-filters-container").off('click', '.kform-add').kdnaFilterUI(kresultsFilterSettings, [], true);
         jQuery('#kresults-results-filter-form').find('input, select').each(function () {
             switch (this.type) {
                 case 'text':
@@ -215,25 +215,25 @@ var gresults = {
 };
 
 google.load('visualization', '1', {packages: ['corechart']});
-google.setOnLoadCallback(gresults.drawCharts);
+google.setOnLoadCallback(kresults.drawCharts);
 
 
 jQuery( window ).on( 'load', function () {
 
     if (jQuery("#kresults-results").length > 0) {
 
-        jQuery("#kresults-results-field-filters-container").gfFilterUI(gresultsFilterSettings, gresultsInitVars, true);
+        jQuery("#kresults-results-field-filters-container").kdnaFilterUI(kresultsFilterSettings, kresultsInitVars, true);
         var $window = jQuery(window);
 
          $window.resize(function (e) {
          if (e.target === window) {
-             gresults.drawCharts();
+             kresults.drawCharts();
              }
          });
 
         window.onpopstate = function (e) {
             if (e.state)
-                gresults.renderStateData(e.state)
+                kresults.renderStateData(e.state)
         };
 
 
@@ -244,7 +244,7 @@ jQuery( window ).on( 'load', function () {
         });
 
         jQuery("#kresults-results-filter-form").submit(function (e) {
-            gresults.getResults();
+            kresults.getResults();
             return false;
         });
 
@@ -253,9 +253,9 @@ jQuery( window ).on( 'load', function () {
         const hasGResultsState = initialState && typeof initialState === 'object' && ( 'html' in initialState ) && ( 'searchCriteria' in initialState );
 
         if ( hasGResultsState ) {
-            gresults.renderStateData( initialState );
+            kresults.renderStateData( initialState );
         } else {
-            gresults.getResults();
+            kresults.getResults();
         }
 
         if (window["kdnaform_initialize_tooltips"])

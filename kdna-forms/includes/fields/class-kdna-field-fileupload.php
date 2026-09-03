@@ -572,7 +572,7 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 
 			$live_validation_message_id = 'live_validation_message_' . $form_id . '_' . $id;
 
-			$upload .= sprintf( "<input name='input_%d' id='%s' type='file' class='%s' %s onchange='javascript:gformValidateFileSize( this, %s );' {$tabindex} %s/>", $id, $field_id, esc_attr( $class ), $describedby, esc_attr( $max_upload_size ), $disabled_text );
+			$upload .= sprintf( "<input name='input_%d' id='%s' type='file' class='%s' %s onchange='javascript:kformValidateFileSize( this, %s );' {$tabindex} %s/>", $id, $field_id, esc_attr( $class ), $describedby, esc_attr( $max_upload_size ), $disabled_text );
 
 			$upload .= $rules_messages ? "<span class='kfield_description kform_fileupload_rules' id='{$rules_messages_id}'>{$rules_messages}</span>" : '';
 			$upload .= "<div class='kfield_description validation_message kfield_validation_message validation_message--hidden-on-empty' id='{$live_validation_message_id}'></div>";
@@ -640,13 +640,13 @@ class KDNA_Field_FileUpload extends KDNA_Field {
 				foreach ( $files as $file_info ) {
 
 					if ( KDNACommon::is_legacy_markup_enabled( $form ) ) {
-						$file_upload_markup = "<img alt='" . esc_attr__( 'Delete file', 'kdnaforms' ) . "' class='kdnaform_delete' src='" . KDNACommon::get_base_url() . "/images/delete.png' onclick='gformDeleteUploadedFile({$form_id}, {$id}, this);' onkeypress='gformDeleteUploadedFile({$form_id}, {$id}, this);' /> <strong>" . esc_html( $file_info['uploaded_filename'] ) . '</strong>';
+						$file_upload_markup = "<img alt='" . esc_attr__( 'Delete file', 'kdnaforms' ) . "' class='kdnaform_delete' src='" . KDNACommon::get_base_url() . "/images/delete.png' onclick='kformDeleteUploadedFile({$form_id}, {$id}, this);' onkeypress='kformDeleteUploadedFile({$form_id}, {$id}, this);' /> <strong>" . esc_html( $file_info['uploaded_filename'] ) . '</strong>';
 					} else {
 						$file_upload_markup = sprintf( '<span class="kfield_fileupload_filename">%s</span>', esc_html( $file_info['uploaded_filename'] ) );
 						// TODO: get file size $file_upload_markup .= sprintf( '<span class="kfield_fileupload_filesize">%s</span>', esc_html( $file_info['uploaded_filesize'] ) );
 						$file_upload_markup .= '<span class="kfield_fileupload_progress kfield_fileupload_progress_complete"><span class="kfield_fileupload_progressbar"><span class="kfield_fileupload_progressbar_progress" style="width: 100%;"></span></span><span class="kfield_fileupload_percent">100%</span></span>';
 						$file_upload_markup .= sprintf(
-							'<button class="kdnaform_delete_file kform-theme-button kform-theme-button--simple" onclick="gformDeleteUploadedFile( %d, %d, this );"><span class="dashicons dashicons-trash" aria-hidden="true"></span><span class="screen-reader-text">%s: %s</span></button>',
+							'<button class="kdnaform_delete_file kform-theme-button kform-theme-button--simple" onclick="kformDeleteUploadedFile( %d, %d, this );"><span class="dashicons dashicons-trash" aria-hidden="true"></span><span class="screen-reader-text">%s: %s</span></button>',
 							$form_id,
 							$id,
 							esc_html__( 'Delete this file', 'kdnaforms' ),

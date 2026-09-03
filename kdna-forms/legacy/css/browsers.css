@@ -34,7 +34,7 @@ to no.
     content: none;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_safari .kform_body ul.kform_fields li.gfield .kinput_container #recaptcha_widget_div #recaptcha_area {
+.kform_legacy_markup_wrapper.kdna_browser_safari .kform_body ul.kform_fields li.kfield .kinput_container #recaptcha_widget_div #recaptcha_area {
     width: 99% !important;
 }
 
@@ -70,7 +70,7 @@ to no.
     content: none;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_chrome .kform_body ul.kform_fields li.gfield .kinput_container #recaptcha_widget_div #recaptcha_area {
+.kform_legacy_markup_wrapper.kdna_browser_chrome .kform_body ul.kform_fields li.kfield .kinput_container #recaptcha_widget_div #recaptcha_area {
     width: 99% !important;
 }
 
@@ -93,19 +93,19 @@ to no.
     margin-top: 6px;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield div.kinput_complex span.kinput_left select,
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield div.kinput_complex span.kinput_right select,
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield select {
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield div.kinput_complex span.kinput_left select,
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield div.kinput_complex span.kinput_right select,
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield select {
     margin-left: 1px;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield input[type=radio] {
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield input[type=radio] {
     margin-left: 1px;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield span.name_first,
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield span.name_middle,
-.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.gfield span.name_last {
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield span.name_first,
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield span.name_middle,
+.kform_legacy_markup_wrapper.kdna_browser_chrome ul.kform_fields li.kfield span.name_last {
     padding-top: 2px;
 }
 
@@ -211,11 +211,11 @@ to no.
     padding: 2px 0 2px 0;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_ie .kform_body ul.kform_fields li.gfield .kinput_container #recaptcha_widget_div #recaptcha_area {
+.kform_legacy_markup_wrapper.kdna_browser_ie .kform_body ul.kform_fields li.kfield .kinput_container #recaptcha_widget_div #recaptcha_area {
     width: 99% !important;
 }
 
-.kform_legacy_markup_wrapper.kdna_browser_ie .kform_body ul.kform_fields li.gfield .kinput_container #recaptcha_widget_div #recaptcha_area {
+.kform_legacy_markup_wrapper.kdna_browser_ie .kform_body ul.kform_fields li.kfield .kinput_container #recaptcha_widget_div #recaptcha_area {
     width: 99% !important;
 }
 

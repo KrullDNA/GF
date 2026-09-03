@@ -1386,14 +1386,14 @@ abstract class KDNAAddOn {
 			return $markup;
 		}
 
-		$base_identifier = sprintf( 'gform.extensions.styles.%s', $this->get_slug() );
-		$form_identifier = sprintf( 'gform.extensions.styles.%s[%s]', $this->get_slug(), $form_id );
-		$full_identifier = sprintf( 'gform.extensions.styles.%s[%s][%s]', $this->get_slug(), $form_id, $page_instance );
+		$base_identifier = sprintf( 'kform.extensions.styles.%s', $this->get_slug() );
+		$form_identifier = sprintf( 'kform.extensions.styles.%s[%s]', $this->get_slug(), $form_id );
+		$full_identifier = sprintf( 'kform.extensions.styles.%s[%s][%s]', $this->get_slug(), $form_id, $page_instance );
 
 		ob_start(); ?>
-			if ( typeof gform !== 'undefined' ) {
-				gform.extensions = gform.extensions || {};
-				gform.extensions.styles = gform.extensions.styles || {};
+			if ( typeof kform !== 'undefined' ) {
+				kform.extensions = kform.extensions || {};
+				kform.extensions.styles = kform.extensions.styles || {};
 				<?php echo $base_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> = <?php echo $base_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> || {};
 				<?php echo $form_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> = <?php echo $form_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> || {};
 				<?php echo $full_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> = <?php echo json_encode( $properties ); ?>;
@@ -3574,7 +3574,7 @@ abstract class KDNAAddOn {
 
 		$field['type']  = 'submit';
 		$field['name']  = 'kform-settings-save';
-		$field['class'] = 'button-primary gfbutton';
+		$field['class'] = 'button-primary kdnabutton';
 
 		if ( ! rgar( $field, 'value' ) ) {
 			$field['value'] = esc_html__( 'Update Settings', 'kdnaforms' );
@@ -4263,7 +4263,7 @@ abstract class KDNAAddOn {
 
 			jQuery(document).ready(
 				function(){
-					gform.addFilter( 'kdnaform_conditional_object', 'SimpleConditionObject' );
+					kform.addFilter( 'kdnaform_conditional_object', 'SimpleConditionObject' );
 
 					jQuery('#" . esc_attr( $setting_name_root ) . "_container').html(
 											GetRuleValues('{$object_type}', 0, {$field_id_attribute}, '" . esc_attr( $value ) . "', '_kdnaform_setting_" . esc_attr( $setting_name_root ) . "_value'));

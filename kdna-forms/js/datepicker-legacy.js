@@ -1,7 +1,7 @@
 /**
  * Apply legacy options to DatePickers within Legacy Forms.
  */
-gform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
+kform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
 	var kdna_legacy = window.kdna_legacy_multi;
 
 	if ( ! kdna_legacy ) {
@@ -27,7 +27,7 @@ gform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, form
 			inst.dpDiv[0].classList.add( 'kform-legacy-datepicker' );
 
 			if ( isRTL && isPreview ) {
-				var $inputContainer = $( input ).closest( '.gfield' );
+				var $inputContainer = $( input ).closest( '.kfield' );
 				var rightOffset = $( document ).outerWidth() - ( $inputContainer.offset().left + $inputContainer.outerWidth() );
 				inst.dpDiv[ 0 ].style.right = rightOffset + 'px';
 			}

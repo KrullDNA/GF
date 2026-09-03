@@ -253,7 +253,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 			$security_code = esc_attr( rgget( $this->id . '.3', $value ) );
 		}
 
-		$action = ! ( $is_entry_detail || $is_form_editor ) ? "gformMatchCard(\"{$field_id}_1\");" : '';
+		$action = ! ( $is_entry_detail || $is_form_editor ) ? "kformMatchCard(\"{$field_id}_1\");" : '';
 
 		$onchange = "onchange='{$action}'";
 		$onkeyup  = "onkeyup='{$action}'";
@@ -285,11 +285,11 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		if ( is_array( $payment_methods ) ) {
 			foreach ( $payment_methods as $payment_method ) {
 				$checked = rgpost( 'kdnaform_payment_method' ) == $payment_method['key'] ? "checked='checked'" : '';
-				$payment_options .= "<div class='kdnaform_payment_option kdnaform_payment_{$payment_method['key']}'><input type='radio' name='kdnaform_payment_method' value='{$payment_method['key']}' id='kdnaform_payment_method_{$payment_method['key']}' onclick='gformToggleCreditCard();' onkeypress='gformToggleCreditCard();' {$checked}/> {$payment_method['label']}</div>";
+				$payment_options .= "<div class='kdnaform_payment_option kdnaform_payment_{$payment_method['key']}'><input type='radio' name='kdnaform_payment_method' value='{$payment_method['key']}' id='kdnaform_payment_method_{$payment_method['key']}' onclick='kformToggleCreditCard();' onkeypress='kformToggleCreditCard();' {$checked}/> {$payment_method['label']}</div>";
 			}
 		}
 		$checked           = rgpost( 'kdnaform_payment_method' ) == 'creditcard' || rgempty( 'kdnaform_payment_method' ) ? "checked='checked'" : '';
-		$card_radio_button = empty( $payment_options ) ? '' : "<input type='radio' name='kdnaform_payment_method' id='kdnaform_payment_method_creditcard' value='creditcard' onclick='gformToggleCreditCard();' onkeypress='gformToggleCreditCard();' {$checked}/>";
+		$card_radio_button = empty( $payment_options ) ? '' : "<input type='radio' name='kdnaform_payment_method' id='kdnaform_payment_method_creditcard' value='creditcard' onclick='kformToggleCreditCard();' onkeypress='kformToggleCreditCard();' {$checked}/>";
 		$card_describer    = sprintf(
 			"<span class='screen-reader-text' id='field_%d_%d_supported_creditcards'>%s %s</span>",
 			$form_id,
@@ -540,7 +540,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		if ( $this->forceSSL && ! KDNACommon::is_ssl() && ! KDNACommon::is_preview() ) {
 			$script = "document.location.href='" . esc_js( KDNAFormsModel::get_current_page_url( true ) ) . "';";
 		} else {
-			$script = "jQuery(document).ready(function(){ { gformMatchCard(\"{$field_id}_1\"); } } );";
+			$script = "jQuery(document).ready(function(){ { kformMatchCard(\"{$field_id}_1\"); } } );";
 		}
 
 		$card_rules = $this->get_credit_card_rules();

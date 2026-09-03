@@ -743,7 +743,7 @@ class KDNAExport {
 
 		<script type="text/javascript">
 
-			var gfSpinner;
+			var kdnaSpinner;
 
 			<?php KDNACommon::kdna_global(); ?>
 			<?php KDNACommon::kdna_vars(); ?>
@@ -753,7 +753,7 @@ class KDNAExport {
 				if (!formId)
 					return;
 
-				gform.utils.trigger( { event: 'gform/page_loader/show' } );
+				kform.utils.trigger( { event: 'kform/page_loader/show' } );
 
 				var mysack = new sack("<?php echo esc_js( esc_url_raw( admin_url( 'admin-ajax.php' ) ) )?>");
 				mysack.execute = 1;
@@ -770,7 +770,7 @@ class KDNAExport {
 			}
 
 			function EndSelectExportForm(aryFields, filterSettings) {
-				gform.utils.trigger( { event: 'gform/page_loader/hide' } );
+				kform.utils.trigger( { event: 'kform/page_loader/hide' } );
 
 				if (aryFields.length == 0) {
 					jQuery("#export_field_container, #export_date_container, #export_submit_container").hide()
@@ -787,7 +787,7 @@ class KDNAExport {
 				jQuery("#export_field_container, #export_filter_container, #export_date_container, #export_submit_container").hide().show();
 
 				kdna_vars.filterAndAny = <?php echo json_encode( esc_html__( 'Export entries if {0} of the following match:', 'kdnaforms' ) ); ?>;
-				jQuery("#export_filters").gfFilterUI(filterSettings);
+				jQuery("#export_filters").kdnaFilterUI(filterSettings);
 			}
 
 			( function( $, window, undefined ) {

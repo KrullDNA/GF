@@ -36,13 +36,13 @@ function initLayoutEditor( $ ) {
 
 		var field;
 
-		this.css( 'grid-column', 'span {0}'.gformFormat( span ) );
+		this.css( 'grid-column', 'span {0}'.kformFormat( span ) );
 
 		this.each( function () {
 			// Spacer fields are pseudo-fields; they are generated when the last field in the group is resized and are
 			// rendered based on that field's layoutSpacerGridColumnSpan property.
 			if ( $( this ).hasClass( 'spacer' ) ) {
-				var $prev = $( this ).prev( '.gfield' );
+				var $prev = $( this ).prev( '.kfield' );
 				field = getFieldByElement( $prev );
 				field.layoutSpacerGridColumnSpan = span;
 			} else {
@@ -83,8 +83,8 @@ function initLayoutEditor( $ ) {
 	 *
 	 * @returns {string}
 	 */
-	if ( ! String.prototype.gformFormat ) {
-		String.prototype.gformFormat = function() {
+	if ( ! String.prototype.kformFormat ) {
+		String.prototype.kformFormat = function() {
 			var args = arguments;
 			return this.replace( /{(\d+)}/g, function( match, number ) {
 				return typeof args[ number ] != 'undefined' ? args[ number ] : match;
@@ -219,7 +219,7 @@ function initLayoutEditor( $ ) {
 
 		// editor is receiving first field, cleanup placeholders and no fields class, maybe init simplebar
 		if ( $editorContainer.hasClass( 'form_editor_fields_no_fields' ) ) {
-			gform.simplebar.initializeInstance( $editorContainer[ 0 ] );
+			kform.simplebar.initializeInstance( $editorContainer[ 0 ] );
 			setTimeout( function() {
 				$noFieldsDropzone.hide();
 				$editorContainer.removeClass( 'form_editor_fields_no_fields' );
@@ -240,7 +240,7 @@ function initLayoutEditor( $ ) {
 			StartAddField( 'submit', Math.max( 0, $container.children().index( $elem ) + 1 ) );
 		}
 
-		var nativeEvent = new Event('gform/layout_editor/field_modified');
+		var nativeEvent = new Event('kform/layout_editor/field_modified');
 		document.dispatchEvent(nativeEvent);
 
 	} );
@@ -253,17 +253,17 @@ function initLayoutEditor( $ ) {
 			jQuery( '.submit_location_setting' ).prev( '.kform-alert--notice' ).remove();
 		}
 
-		var nativeEvent = new Event('gform/layout_editor/kform_field_deleted');
+		var nativeEvent = new Event('kform/layout_editor/kform_field_deleted');
 		document.dispatchEvent(nativeEvent);
 	} );
 
 	// Handle resizing the group after the deleted field has been fully removed from the DOM.
-	gform.addAction( 'kform_after_field_removed', function ( form, fieldId ) {
+	kform.addAction( 'kform_after_field_removed', function ( form, fieldId ) {
 		resizeGroup( deletedFieldGroupId );
 	} );
 
 	// Handle duplicating a field.
-	gform.addAction( 'kform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
+	kform.addAction( 'kform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
 
 		var $source      = $( '#field_' + sourceFieldId );
 		var $sourceGroup = getGroup( getGroupId( $source ) );
@@ -280,42 +280,42 @@ function initLayoutEditor( $ ) {
 	} );
 
 	// Re-initialize the field after it's markup is refreshed (e.g. after the description is updated).
-	gform.addAction( 'kform_after_refresh_field_preview', function( fieldId ) {
+	kform.addAction( 'kform_after_refresh_field_preview', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
 
-	gform.addAction( 'kform_after_change_input_type', function( fieldId ) {
+	kform.addAction( 'kform_after_change_input_type', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
 
-	gform.addAction( 'kform_before_get_field_markup', function( form, field, index ) {
+	kform.addAction( 'kform_before_get_field_markup', function( form, field, index ) {
 		addFieldPlaceholder( field, index );
 	} );
 
-	gform.addAction( 'kform_after_get_field_markup', function( form, field, index ) {
+	kform.addAction( 'kform_after_get_field_markup', function( form, field, index ) {
 		removeFieldPlaceholder();
 	} );
 
-	gform.addAction( 'kform_after_get_field_markup', function( form, field, index ) {
+	kform.addAction( 'kform_after_get_field_markup', function( form, field, index ) {
 		initSubmit();
 	} );
 
-	gform.addAction( 'kform_before_field_duplicated', function( sourcefieldId ) {
+	kform.addAction( 'kform_before_field_duplicated', function( sourcefieldId ) {
 		var $source = $( '#field_' + sourcefieldId );
 		var $index  = $container.children().index( $source );
 
 		addFieldPlaceholder( null, $index + 1 );
 	} );
 
-	gform.addAction( 'kform_field_duplicated', function() {
+	kform.addAction( 'kform_field_duplicated', function() {
 		removeFieldPlaceholder();
 	} );
 
-	gform.addAction( 'kform_before_refresh_field_preview', function( field_id ) {
+	kform.addAction( 'kform_before_refresh_field_preview', function( field_id ) {
 		addFieldUpdateIndicator( field_id );
 	} );
 
-	gform.addAction( 'kform_after_refresh_field_preview', function( field_id ) {
+	kform.addAction( 'kform_after_refresh_field_preview', function( field_id ) {
 		removeFieldUpdateIndicator( field_id );
 	} );
 
@@ -422,7 +422,7 @@ function initLayoutEditor( $ ) {
 						// Firefox has trouble positioning the dragged element when it still has it's grid-column property set.
 						.setGridColumnSpan( null );
 
-					if ( ! gform.tools.isRtl() ) {
+					if ( ! kform.tools.isRtl() ) {
 						helperLeft = ui.position.left;
 					} else {
 						helperLeft = ui.position.left + ( ui.helper.outerWidth() );
@@ -655,7 +655,7 @@ function initLayoutEditor( $ ) {
 		$buttons
 			.on( 'mousedown touchstart', function() {
 				// closes any open flyouts
-				gform.tools.trigger( 'gform/flyout/close-all' );
+				kform.tools.trigger( 'kform/flyout/close-all' );
 				// hides the tooltip during drag, stop method sets it back using the data-description
 				// start was too late to execute this with, the tooltip would persist in some browsers
 				$( this ).attr( 'title', '' );
@@ -840,7 +840,7 @@ function initLayoutEditor( $ ) {
 				var available = isSpaceAvailable( ui, $target );
 
 				if ( $target.data( 'field-class' ) === 'kform_editor_submit_container' ) {
-					if ( gform.tools.isRtl() ) {
+					if ( kform.tools.isRtl() ) {
 						if ( where === 'left' || where === 'bottom' ) {
 							return;
 						}
@@ -934,11 +934,11 @@ function initLayoutEditor( $ ) {
 			return false;
 		}
 
-		if ( $target.hasClass( 'gpage' ) || $target.hasClass( 'gsection' ) || $target.hasClass( 'kform_hidden' ) ) {
+		if ( $target.hasClass( 'gpage' ) || $target.hasClass( 'ksection' ) || $target.hasClass( 'kform_hidden' ) ) {
 			return false;
 		}
 
-		if ( $elem.hasClass( 'gpage' ) || $elem.hasClass( 'gsection' ) || $elem.hasClass( 'kform_hidden' ) || $elem.data( 'type' ) === 'hidden' ) {
+		if ( $elem.hasClass( 'gpage' ) || $elem.hasClass( 'ksection' ) || $elem.hasClass( 'kform_hidden' ) || $elem.data( 'type' ) === 'hidden' ) {
 			return false;
 		}
 
@@ -1003,7 +1003,7 @@ function initLayoutEditor( $ ) {
 	 * @returns {boolean}
 	 */
 	function isInEditorArea( x, y, isCompactView = false ) {
-		if ( ! gform.tools.isRtl() ) {
+		if ( ! kform.tools.isRtl() ) {
 			var editorOffsetLeft = $editorContainer.offset().left;
 		} else {
 			var editorOffsetLeft = $container.offset().left;
@@ -1117,7 +1117,7 @@ function initLayoutEditor( $ ) {
 			$target = $targetGroup.last();
 		}
 
-		var direction = gform.tools.isRtl() ? 'right' : 'left';
+		var direction = kform.tools.isRtl() ? 'right' : 'left';
 
 		if ( where == 'top' || where == direction ) {
 			$elem.insertBefore( $target );
@@ -1196,11 +1196,11 @@ function initLayoutEditor( $ ) {
 	function getGroup( groupId, spacers ) {
 		if ( spacers || 'undefined' === typeof( spacers ) ) {
 			return $elements()
-				.filter( '[data-groupId="{0}"]'.gformFormat( groupId ) )
+				.filter( '[data-groupId="{0}"]'.kformFormat( groupId ) )
 				.not( '.ui-draggable-dragging' );
 		} else {
 			return $elements()
-				.filter( '[data-groupId="{0}"]'.gformFormat( groupId ) )
+				.filter( '[data-groupId="{0}"]'.kformFormat( groupId ) )
 				.not( '.ui-draggable-dragging' )
 				.not( '.spacer' );
 		}
@@ -1329,7 +1329,7 @@ function initLayoutEditor( $ ) {
 	 */
 	function addSpacer( $field, groupId, span ) {
 
-		var $spacer = $( '<div class="spacer gfield"></div>' )
+		var $spacer = $( '<div class="spacer kfield"></div>' )
 			.setGroupId( groupId )
 			.setGridColumnSpan( span );
 
@@ -1412,7 +1412,7 @@ function initLayoutEditor( $ ) {
 	 * @returns {jQuery|[]}
 	 */
 	function $elements() {
-		return $container.find( '.gfield' );
+		return $container.find( '.kfield' );
 	}
 
 	/**

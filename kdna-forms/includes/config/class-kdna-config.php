@@ -229,7 +229,7 @@ abstract class KDNA_Config {
 
 	/**
 	 * Validates the config data against a hash to ensure it has not been tampered with.
-	 * This method is called via AJAX, initiated by the gform.config.isValid() JS method.
+	 * This method is called via AJAX, initiated by the kform.config.isValid() JS method.
 	 *
 	 * @since 2.9.0
 	 *

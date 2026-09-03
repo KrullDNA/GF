@@ -2256,8 +2256,8 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$edit_url      = add_query_arg( array( 'fid' => $feed_id ) );
 		$links         = array(
 			'edit'      => '<a href="' . esc_url( $edit_url ) . '">' . esc_html__( 'Edit', 'kdnaforms' ) . '</a>',
-			'duplicate' => '<a href="#" onclick="gaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');" onkeypress="gaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');">' . esc_html__( 'Duplicate', 'kdnaforms' ) . '</a>',
-			'delete'    => '<a class="submitdelete" onclick="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ gaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" onkeypress="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ gaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" style="cursor:pointer;">' . esc_html__( 'Delete', 'kdnaforms' ) . '</a>'
+			'duplicate' => '<a href="#" onclick="kaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');" onkeypress="kaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');">' . esc_html__( 'Duplicate', 'kdnaforms' ) . '</a>',
+			'delete'    => '<a class="submitdelete" onclick="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ kaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" onkeypress="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ kaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" style="cursor:pointer;">' . esc_html__( 'Delete', 'kdnaforms' ) . '</a>'
 		);
 
 		return $links;
@@ -3034,8 +3034,8 @@ class KDNAAddOnFeedsTable extends WP_List_Table {
 		<button
 			type="button"
 			class="kform-status-indicator kform-status-indicator--size-sm kform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
-			onclick="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
-			onkeypress="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
+			onclick="kaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
+			onkeypress="kaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
 		>
 			<span class="kform-status-indicator-status kform-typography--weight-medium kform-typography--size-text-xs">
 				<?php echo esc_html( $text ); ?>

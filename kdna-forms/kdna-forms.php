@@ -3,7 +3,7 @@
 Plugin Name: KDNA Forms
 Plugin URI: https://kdnaforms.com
 Description: Powerful form builder for WordPress. Create contact forms, surveys, quizzes, and more with an intuitive drag-and-drop interface. Includes reCAPTCHA protection and Elementor integration.
-Version: 3.4.4
+Version: 3.5.0
 Requires at least: 6.5
 Requires PHP: 7.4
 Author: KrullDNA
@@ -240,7 +240,7 @@ class KDNAForms {
 	 *
 	 * @var string $version The version number.
 	 */
-	public static $version = '3.4.4';
+	public static $version = '3.5.0';
 
 	/**
 	 * Handles background upgrade tasks.
@@ -1389,11 +1389,11 @@ class KDNAForms {
 
 		$update = KDNACommon::get_version_info();
 		if ( rgar( $update, 'is_valid_key' ) == true && version_compare( KDNACommon::$version, $update['version'], '<' ) ) {
-			$gforms                = get_plugin_data( __FILE__ );
-			$gforms['type']        = 'plugin';
-			$gforms['slug']        = 'kdnaforms/kdnaforms.php';
-			$gforms['new_version'] = ! rgempty( 'version', $update ) ? $update['version'] : false;
-			$premium_update[]      = $gforms;
+			$kforms                = get_plugin_data( __FILE__ );
+			$kforms['type']        = 'plugin';
+			$kforms['slug']        = 'kdnaforms/kdnaforms.php';
+			$kforms['new_version'] = ! rgempty( 'version', $update ) ? $update['version'] : false;
+			$premium_update[]      = $kforms;
 		}
 
 		return $premium_update;
@@ -1417,12 +1417,12 @@ class KDNAForms {
 
 		$update = KDNACommon::get_version_info();
 		if ( rgar( $update, 'is_valid_key' ) == true && version_compare( KDNACommon::$version, $update['version'], '<' ) ) {
-			$gforms         = get_plugin_data( __FILE__ );
-			$gforms['slug'] = 'kdnaforms/kdnaforms.php'; // If not set by default, always pass theme template
-			$gforms['type'] = 'plugin';
-			$gforms['url']  = ! rgempty( 'url', $update ) ? $update['url'] : false; // OR provide your own callback function for managing the update
+			$kforms         = get_plugin_data( __FILE__ );
+			$kforms['slug'] = 'kdnaforms/kdnaforms.php'; // If not set by default, always pass theme template
+			$kforms['type'] = 'plugin';
+			$kforms['url']  = ! rgempty( 'url', $update ) ? $update['url'] : false; // OR provide your own callback function for managing the update
 
-			array_push( $premium_update, $gforms );
+			array_push( $premium_update, $kforms );
 		}
 
 		return $premium_update;
@@ -3010,7 +3010,7 @@ class KDNAForms {
 			'kdnaform_kdnaforms',
 		), $version );
 
-		$kdnaform_namespace_script = 'var gformComponentNamespace = "gform"; var gformComponentDistPath = "' . trailingslashit( \KDNACommon::get_base_url() ) . 'assets/js/dist/";';
+		$kdnaform_namespace_script = 'var kformComponentNamespace = "kform"; var kformComponentDistPath = "' . trailingslashit( \KDNACommon::get_base_url() ) . 'assets/js/dist/";';
         wp_add_inline_script( 'kdnaform_kdnaforms_libraries', $kdnaform_namespace_script, 'before' );
 
         wp_register_style( 'kdnaform_common_icons', $base_url . "/assets/css/dist/kdna-forms-common-icons{$dev_min}.css", array(), $version );
@@ -3369,7 +3369,7 @@ class KDNAForms {
 		if ( self::page_supports_add_form_button() ) {
 			wp_enqueue_script( 'kdnaform_shortcode_ui' );
 			wp_enqueue_style( 'kdnaform_shortcode_ui' );
-			wp_localize_script( 'kdnaform_shortcode_ui', 'gfShortcodeUIData', array(
+			wp_localize_script( 'kdnaform_shortcode_ui', 'kdnaShortcodeUIData', array(
 				'shortcodes'      => self::get_shortcodes(),
 				'previewNonce'    => wp_create_nonce( 'kdna-shortcode-ui-preview' ),
 

@@ -14,7 +14,7 @@ var FOCUSED_BEFORE_RENDER = null;
  * @param {Event} event Passed event from some handlers
  */
 function setFocusToFirstItem( node, event ) {
-	if ( event && event.target && ! gform.tools.getClosest( event.target, '#' + node.id ) ) {
+	if ( event && event.target && ! kform.tools.getClosest( event.target, '#' + node.id ) ) {
 		return;
 	}
 	var focusableChildren = getFocusableChildren( node );
@@ -72,7 +72,7 @@ function trapTabKey( node, event ) {
  * @return {Array<Element>}
  */
 function $$( selector, context ) {
-	return gform.tools.convertElements( (context || document).querySelectorAll( selector ) );
+	return kform.tools.convertElements( (context || document).querySelectorAll( selector ) );
 }
 
 /**
@@ -382,7 +382,7 @@ function isValidFlyoutClick( e ) {
 		e.target.classList.contains( 'kform-field__toggle-input' ) ||
 		e.target.closest( '.kform-dialog__mask' ) !== null
 	);
-	return gform.applyFilters( 'kdnaform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
+	return kform.applyFilters( 'kdnaform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
 }
 
 /**
@@ -469,7 +469,7 @@ KDNAConditionalLogic.prototype.renderFlyout = function() {
 
 	renderView( html, this.els.flyouts[ this.objectType ], config, true );
 
-	gform.tools.trigger( 'kdnaform_render_simplebars' );
+	kform.tools.trigger( 'kdnaform_render_simplebars' );
 };
 
 /**
@@ -515,7 +515,7 @@ KDNAConditionalLogic.prototype.renderLogicDescription = function() {
 	 *
 	 * @return {string}
 	 */
-	return gform.applyFilters( 'kdnaform_conditional_logic_description', markup, [], this.objectType, this );
+	return kform.applyFilters( 'kdnaform_conditional_logic_description', markup, [], this.objectType, this );
 };
 
 /**
@@ -591,7 +591,7 @@ KDNAConditionalLogic.prototype.renderFieldOptions = function( rule ) {
 		}
 	}
 
-	options = gform.applyFilters( 'kdnaform_conditional_logic_fields', options, form, rule.fieldId );
+	options = kform.applyFilters( 'kdnaform_conditional_logic_fields', options, form, rule.fieldId );
 
 	for ( var i = 0; i < options.length; i++ ) {
 		var config = options[ i ];
@@ -626,7 +626,7 @@ KDNAConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
 		ends_with: kdna_vars.endsWith,
 	};
 
-	operators = gform.applyFilters( 'kdnaform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
+	operators = kform.applyFilters( 'kdnaform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
 
 	for ( key in operators ) {
 		var label  = operators[ key ];
@@ -748,9 +748,9 @@ KDNAConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 		html = this.renderSelect( rule, idx );
 	}
 
-	html = gform.applyFilters( 'kdnaform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
+	html = kform.applyFilters( 'kdnaform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
 
-	var el = gform.tools.htmlToElement( html );
+	var el = kform.tools.htmlToElement( html );
 
 	if ( ! el.classList.contains( 'active' ) ) {
 		el.classList.add( 'active' );
@@ -760,7 +760,7 @@ KDNAConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 		el.setAttribute( 'data-js-rule-input', 'value' );
 	}
 
-	return gform.tools.elementToHTML( el );
+	return kform.tools.elementToHTML( el );
 };
 
 /**
@@ -1216,7 +1216,7 @@ KDNAConditionalLogic.prototype.handleSidebarClick = function( e ) {
 	}
 
 	if ( ('jsDeleteRule' in e.target.dataset) ) {
-		var parent = gform.tools.getClosest( e.target, '[data-js-rule-idx]' );
+		var parent = kform.tools.getClosest( e.target, '[data-js-rule-idx]' );
 		this.deleteRule( parent.dataset.jsRuleIdx );
 	}
 
@@ -1286,7 +1286,7 @@ KDNAConditionalLogic.prototype.addEventListeners = function() {
 	this.els.flyouts[ this.objectType ].addEventListener( 'click', this._handleSidebarClick );
 	this.els.flyouts[ this.objectType ].addEventListener( 'change', this._handleFlyoutChange );
 	document.body.addEventListener( 'click', this._handleBodyClick );
-	gform.addAction( 'formEditorNullClick', this._handleAccordionClick );
+	kform.addAction( 'formEditorNullClick', this._handleAccordionClick );
 	this.els.flyouts[ this.objectType ].addEventListener( 'mousedown', ( event ) => {
 		this.pointerDownInside = this.els.flyouts[ this.objectType ].contains( event.target );
 	} );

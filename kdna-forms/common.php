@@ -749,9 +749,9 @@ class KDNACommon {
 	}
 
 	/**
-	 * This function is used by the gfMergeTags JS object to get the localized label for non-field merge tags as well as
+	 * This function is used by the kdnaMergeTags JS object to get the localized label for non-field merge tags as well as
 	 * for backwards compatibility with the kdnaform_custom_merge_tags hook. Lastly, this plugin is used by the soon-to-be
-	 * deprecated insert_variables() function as the new gfMergeTags object has not yet been applied to the Post Content
+	 * deprecated insert_variables() function as the new kdnaMergeTags object has not yet been applied to the Post Content
 	 * Template setting.
 	 *
 	 * @param KDNA_Field[] $fields
@@ -6274,7 +6274,7 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Outputs gforms object and hooks methods depended upon by kdnaform_kdnaforms script early so that inline scripts
+	 * Outputs kforms object and hooks methods depended upon by kdnaform_kdnaforms script early so that inline scripts
 	 * in between the dependency and this block can continue to work
 	 *
 	 * @since 2.5
@@ -6325,7 +6325,7 @@ Content-Type: text/html;
 		return $value;
 	}
 
-	// used by the gfFieldFilterUI() jQuery plugin
+	// used by the kdnaFieldFilterUI() jQuery plugin
 	public static function get_field_filter_settings( $form ) {
 		if ( ! self::form_has_fields( $form ) ) {
 			return array();
@@ -8280,7 +8280,7 @@ Content-Type: text/html;
 	 */
 	public static function send_json( $response ) {
 		// Outputting JSON content with delimiters.
-		echo '<!-- gf:json_start -->' . wp_json_encode( $response ) . '<!-- gf:json_end -->';
+		echo '<!-- kdna:json_start -->' . wp_json_encode( $response ) . '<!-- kdna:json_end -->';
 
 		wp_die( '', '', array( 'response' => null ) );
 	}

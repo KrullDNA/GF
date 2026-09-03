@@ -1,7 +1,7 @@
 //Props: https://github.com/fusioneng/Shortcake/
 var GformShortcodeUI;
 
-( function (gfShortCodeUI, $) {
+( function (kdnaShortCodeUI, $) {
     var i18n = window.kform_admin_config.i18n;
     var sui = window.GformShortcodeUI = {
         models: {},
@@ -405,13 +405,13 @@ var GformShortcodeUI;
                     post_id: $('#post_ID').val(),
                     form_id: formId,
                     shortcode: this.shortcodeModel.formatShortcode(),
-                    nonce: gfShortcodeUIData.previewNonce
+                    nonce: kdnaShortcodeUIData.previewNonce
                 };
 
                 $.post(ajaxurl, data).done(function(response) {
                     self.content = response;
                 }).fail(function () {
-                    self.content = '<span class="kdna_shortcode_ui_error">' + gfShortcodeUIData.strings.errorLoadingPreview + '</span>';
+                    self.content = '<span class="kdna_shortcode_ui_error">' + kdnaShortcodeUIData.strings.errorLoadingPreview + '</span>';
                 }).always(function () {
                     delete self.fetching;
                     self.render();
@@ -678,7 +678,7 @@ var GformShortcodeUI;
                         post_id: $('#post_ID').val(),
                         form_id: formId,
                         shortcode: this.shortcode.formatShortcode(),
-                        nonce: gfShortcodeUIData.previewNonce
+                        nonce: kdnaShortcodeUIData.previewNonce
                     };
 
                     $.post(ajaxurl, data, $.proxy(this.setIframes, this));
@@ -740,16 +740,16 @@ var GformShortcodeUI;
 
     $(document).ready(function () {
 
-        sui.strings = gfShortcodeUIData.strings;
+        sui.strings = kdnaShortcodeUIData.strings;
 
-        sui.shortcodes = new sui.collections.Shortcodes( gfShortcodeUIData.shortcodes );
+        sui.shortcodes = new sui.collections.Shortcodes( kdnaShortcodeUIData.shortcodes );
 
-        if( ! gfShortcodeUIData.previewDisabled && typeof wp.mce != 'undefined'){
+        if( ! kdnaShortcodeUIData.previewDisabled && typeof wp.mce != 'undefined'){
             wp.mce.views.register( 'kdnaform', $.extend(true, {}, sui.utils.shortcodeViewConstructor) );
         }
 
         $(document).on('click', '.kform_media_link', function () {
-            sui.shortcodes = new sui.collections.Shortcodes(gfShortcodeUIData.shortcodes);
+            sui.shortcodes = new sui.collections.Shortcodes(kdnaShortcodeUIData.shortcodes);
             var shortcode = sui.shortcodes.findWhere({shortcode_tag: 'kdnaform', action_tag: ''});
             GformShortcodeUI = new sui.views.editShortcodeForm({model: shortcode, viewMode: 'insert'});
             GformShortcodeUI.render();
@@ -758,4 +758,4 @@ var GformShortcodeUI;
 
     });
 
-}(window.gfShortcodeUI = window.gfShortcodeUI || {}, jQuery));
+}(window.kdnaShortcodeUI = window.kdnaShortcodeUI || {}, jQuery));

@@ -135,7 +135,7 @@ div#preview_form_container.showgrid {
 	box-sizing: border-box;
 }
 
-div#preview_form_container .gfield input[type="checkbox"] {
+div#preview_form_container .kfield input[type="checkbox"] {
 	height: auto;
 }
 
@@ -342,7 +342,7 @@ div#browser_size_info {
 		border: 2px solid #73e600;
 	}
 
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield:before {
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield:before {
 	      content:"\25bc  " attr(id);
 	      line-height: 2.5;
 	      display: block;
@@ -388,7 +388,7 @@ div#browser_size_info {
 	    display: block;
 	}
 
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield {
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield {
 	    border: 1px dashed #060;
 	    margin-top: 32px !important;
 	    padding: 16px;
@@ -495,20 +495,20 @@ div#browser_size_info {
 	    margin-right: 0;
 	}
 
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_left_half,
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_right_half {
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield.kdna_left_half,
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield.kdna_right_half {
 	    width: 49%;
 	}
 
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_left_half,
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_left_third,
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield.kdna_middle_third {
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield.kdna_left_half,
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield.kdna_left_third,
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield.kdna_middle_third {
 	    margin-right:16px;
 	}
 	.kform_wrapper .kdna_showme *:not(label):after,
 	.kform_wrapper .kdna_showme *:not(option):after,
 	.kform_wrapper .kdna_showme label.kfield_label:after,
-	.kform_wrapper .kdna_showme ul.kform_fields li.gfield:after,
+	.kform_wrapper .kdna_showme ul.kform_fields li.kfield:after,
 	.kform_wrapper .kdna_showme ul.kfield_checkbox li label:after,
 	.kform_wrapper .kdna_showme .kform_footer input[type='submit'].kform_button.button:after {
 		content: "\25b2  " attr(class);

@@ -24,7 +24,7 @@ var KDNAPageConditionalLogic = function (args) {
 
     self.bindEvents = function () {
 
-        gform.addAction('kform_input_change', function (elem, formId, inputId) {
+        kform.addAction('kform_input_change', function (elem, formId, inputId) {
 
             var fieldId = parseInt(inputId, 10) + '';
             var isTriggeredInput = $.inArray(inputId, self.triggerInputIds) !== -1 || $.inArray(fieldId, self.triggerInputIds) !== -1;
@@ -61,10 +61,10 @@ var KDNAPageConditionalLogic = function (args) {
          * @param array $pages     A collection of page field objects.
          * @param int   $formId    The form id.
          */
-        gform.doAction('kform_frontend_pages_evaluated', self.options.pages, self.options.formId, self);
-        gform.doAction('kform_frontend_pages_evaluated_{0}'.gformFormat(self.options.formId), self.options.pages, self.options.formId, self);
-        gform.utils.trigger( {
-            event: 'gform/frontend_pages/evaluated',
+        kform.doAction('kform_frontend_pages_evaluated', self.options.pages, self.options.formId, self);
+        kform.doAction('kform_frontend_pages_evaluated_{0}'.kformFormat(self.options.formId), self.options.pages, self.options.formId, self);
+        kform.utils.trigger( {
+            event: 'kform/frontend_pages/evaluated',
             data: {
                 formId: self.options.formId,
                 pages: self.options.pages
@@ -145,8 +145,8 @@ var KDNAPageConditionalLogic = function (args) {
          * @param array $pages  A collection of page field objects.
          * @param int   $formId The form id.
          */
-        gform.doAction('kform_frontend_page_visible', page, self.options.formId);
-        gform.doAction('kform_frontend_page_visible_{0}'.gformFormat(self.options.formId), page, self.options.formId);
+        kform.doAction('kform_frontend_page_visible', page, self.options.formId);
+        kform.doAction('kform_frontend_page_visible_{0}'.kformFormat(self.options.formId), page, self.options.formId);
 
     };
 
@@ -169,8 +169,8 @@ var KDNAPageConditionalLogic = function (args) {
          * @param array $pages  A collection of page field objects.
          * @param int   $formId The form id.
          */
-        gform.doAction('kform_frontend_page_hidden', page, self.options.formId);
-        gform.doAction('kform_frontend_page_hidden_{0}'.gformFormat(self.options.formId), page, self.options.formId);
+        kform.doAction('kform_frontend_page_hidden', page, self.options.formId);
+        kform.doAction('kform_frontend_page_hidden_{0}'.kformFormat(self.options.formId), page, self.options.formId);
 
     };
 

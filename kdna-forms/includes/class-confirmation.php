@@ -631,7 +631,7 @@ class KDNA_Confirmation {
 						var form = <?php echo json_encode( $form ); ?>;
 						var entry_meta = <?php echo KDNACommon::json_encode( $entry_meta ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>;
 
-						gform.addFilter( 'kdnaform_merge_tags', 'MaybeAddSaveMergeTags' );
+						kform.addFilter( 'kdnaform_merge_tags', 'MaybeAddSaveMergeTags' );
 
 						function MaybeAddSaveMergeTags( mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option ) {
 							var event = confirmation.event;

@@ -10,9 +10,9 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	function DeleteCustomChoice() {
         const confirmMessage = kdna_vars.DeleteCustomChoice;
         const confirmTitle = kdna_vars.DeleteFormTitle;
-        gform.instances.moveBulkChoicesBehind();
+        kform.instances.moveBulkChoicesBehind();
 
-        gform.instances.dialogConfirmAsync( confirmTitle, confirmMessage ).then((confirmed) => {
+        kform.instances.dialogConfirmAsync( confirmTitle, confirmMessage ).then((confirmed) => {
             if (!confirmed) return;
 
             //Sending AJAX request
@@ -34,13 +34,13 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 		var name = jQuery('#custom_choice_name').val();
 		if (name.length == 0) {
-                    gform.instances.moveBulkChoicesBehind();
-            		gform.instances.dialogAlert( kdna_vars.MissingNameCustomChoicesTitle, kdna_vars.MissingNameCustomChoices );
+                    kform.instances.moveBulkChoicesBehind();
+            		kform.instances.dialogAlert( kdna_vars.MissingNameCustomChoicesTitle, kdna_vars.MissingNameCustomChoices );
 			return;
 		}
 		else if (kform_custom_choices[name] && name != kform_selected_custom_choice) {
-                    gform.instances.moveBulkChoicesBehind();
-            		gform.instances.dialogAlert( kdna_vars.DuplicateNameCustomChoicesTitle, kdna_vars.DuplicateNameCustomChoices );
+                    kform.instances.moveBulkChoicesBehind();
+            		kform.instances.dialogAlert( kdna_vars.DuplicateNameCustomChoicesTitle, kdna_vars.DuplicateNameCustomChoices );
 			return;
 		}
 
@@ -544,7 +544,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		<?php
 		$current_currency = RGCurrency::get_currency( KDNACommon::get_currency() );
 		?>
-		var currency = new gform.Currency(<?php echo KDNACommon::json_encode( $current_currency ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>);
+		var currency = new kform.Currency(<?php echo KDNACommon::json_encode( $current_currency ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>);
 		return currency;
 	}
 
@@ -570,7 +570,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 
 	function DuplicateTitleMessage() {
 		jQuery("#please_wait_container").hide();
-        gform.instances.dialogAlert( kdna_vars.DuplicateTitleMessageTitle, kdna_vars.DuplicateTitleMessage );
+        kform.instances.dialogAlert( kdna_vars.DuplicateTitleMessageTitle, kdna_vars.DuplicateTitleMessage );
 	}
 
 	function ValidateForm() {
@@ -623,11 +623,11 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			 * @param bool   has_product Indicates if the current form has a product field.
 			 * @param bool   has_option  Indicates if the current form has a option field.
 			 */
-			error = gform.applyFilters('kform_validation_error_form_editor', error, form, has_product, has_option);
+			error = kform.applyFilters('kform_validation_error_form_editor', error, form, has_product, has_option);
 		}
 		if ( error ) {
 			jQuery("#please_wait_container").hide();
-                gform.instances.dialogAlert(errorTitle, error);
+                kform.instances.dialogAlert(errorTitle, error);
 			return false;
 		}
 		return true;
@@ -1278,63 +1278,63 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		switch (type) {
 			case "captcha" :
 				if (GetFieldsByType(["captcha"]).length > 0) {
-		                    gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedCaptcha );
+		                    kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedCaptcha );
 		                    return false;
 				}
 				break;
 
 			case "shipping" :
 				if (GetFieldsByType(["shipping"]).length > 0) {
-                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedShipping );
+                    			kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedShipping );
 					return false;
 				}
 				break;
 
 			case "post_content" :
 				if (GetFieldsByType(["post_content"]).length > 0) {
-                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostContent );
+                    			kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostContent );
 					return false;
 				}
 				break;
 			case "post_title" :
 				if (GetFieldsByType(["post_title"]).length > 0) {
-                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostTitle );
+                    			kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostTitle );
 					return false;
 				}
 				break;
 			case "post_excerpt" :
 				if (GetFieldsByType(["post_excerpt"]).length > 0) {
-                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostExcerpt );
+                    			kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedPostExcerpt );
 					return false;
 				}
 				break;
 			case "creditcard" :
 				if (GetFieldsByType(["creditcard"]).length > 0) {
-                    			gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedCreditCard );
+                    			kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedTitle, kdna_vars.fieldCanBeAddedCreditCard );
 					return false;
 				}
 				break;
 			case "quantity" :
 			case "option" :
 				if (GetFieldsByType(["product"]).length <= 0) {
-					gform.instances.dialogAlert( kdna_vars.fieldCanBeAddedProductTitle, kdna_vars.fieldCanBeAddedProduct );
+					kform.instances.dialogAlert( kdna_vars.fieldCanBeAddedProductTitle, kdna_vars.fieldCanBeAddedProduct );
 					return false;
 				}
 				break;
 			case "multi_choice" :
 				if (GetFieldsByType(["choice"]).length <= 0 && form.markupVersion && form.markupVersion == 1) {
-					gform.instances.dialogAlert( kdna_vars.legacyMarkupTitle, kdna_vars.fieldCanBeAddedMultipleChoice );
+					kform.instances.dialogAlert( kdna_vars.legacyMarkupTitle, kdna_vars.fieldCanBeAddedMultipleChoice );
 					return false;
 				}
 				break;
 			case "image_choice" :
 				if (GetFieldsByType(["image_choice"]).length <= 0 && form.markupVersion && form.markupVersion == 1) {
-					gform.instances.dialogAlert( kdna_vars.legacyMarkupTitle, kdna_vars.fieldCanBeAddedImageChoice );
+					kform.instances.dialogAlert( kdna_vars.legacyMarkupTitle, kdna_vars.fieldCanBeAddedImageChoice );
 					return false;
 				}
 				break;
 			default :
-				return gform.applyFilters('kform_form_editor_can_field_be_added', true, type);
+				return kform.applyFilters('kform_form_editor_can_field_be_added', true, type);
 		}
 
 		return true;
@@ -1365,7 +1365,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		mysack.setVar("field", jQuery.toJSON(field));
 		mysack.setVar('form_id', form.id);
 		mysack.onError = function () {
-            		gform.instances.dialogAlert( kdna_vars.FieldAjaxonErrorTitle, kdna_vars.StartAddFieldAjaxonError );
+            		kform.instances.dialogAlert( kdna_vars.FieldAjaxonErrorTitle, kdna_vars.StartAddFieldAjaxonError );
 		};
 
 		mysack.onCompletion = function() {
@@ -1378,7 +1378,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			 * @param {object} field The field for which the preview was refreshed.
 			 * @param {string} index The index of the affected field.
 			 */
-			gform.doAction( 'kform_after_get_field_markup', form, field, index );
+			kform.doAction( 'kform_after_get_field_markup', form, field, index );
 		};
 
 		/**
@@ -1390,7 +1390,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		 * @param {object} field The field for which the preview was refreshed.
 		 * @param {string} index The index of the affected field.
 		 */
-		gform.doAction( 'kform_before_get_field_markup', form, field, index );
+		kform.doAction( 'kform_before_get_field_markup', form, field, index );
 
 		mysack.runAJAX();
 
@@ -1451,7 +1451,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 		 *
 		 * @param {string} The field ID for which the preview was refreshed.
 		 */
-		gform.doAction( 'kform_before_refresh_field_preview', field.id );
+		kform.doAction( 'kform_before_refresh_field_preview', field.id );
 
 		jQuery.post(ajaxurl, data,
 			function (data) {
@@ -1481,7 +1481,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				 *
 				 * @param object field The field for which the preview was refreshed.
 				 */
-				gform.doAction( 'kform_after_refresh_field_preview', data.fieldId );
+				kform.doAction( 'kform_after_refresh_field_preview', data.fieldId );
 				if (field["type"] == "address") {
 					SetAddressType( false );
 				}
@@ -1489,8 +1489,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 					callback();
 				}
 
-				gform.utils.trigger( {
-                    event: 'gform/layout_editor/field_refresh_preview',
+				kform.utils.trigger( {
+                    event: 'kform/layout_editor/field_refresh_preview',
                     native: false,
                     data: {
 	                    field: document.getElementById('field_' + data.fieldId),
@@ -1523,13 +1523,13 @@ if ( ! class_exists( 'KDNAForms' ) ) {
         mysack.setVar("field", jQuery.toJSON(field));
         mysack.setVar('form_id', form.id);
         mysack.onError = function () {
-            gform.instances.dialogAlert( kdna_vars.FieldAjaxonErrorTitle, kdna_vars.StartChangeInputTypeAjaxonError );
+            kform.instances.dialogAlert( kdna_vars.FieldAjaxonErrorTitle, kdna_vars.StartChangeInputTypeAjaxonError );
         };
 
         // Define the onCompletion callback
         mysack.onCompletion = function() {
             // This will be executed after the AJAX request is completed
-            var nativeEvent = new Event('gform/layout_editor/field_start_change_type');
+            var nativeEvent = new Event('kform/layout_editor/field_start_change_type');
             document.dispatchEvent(nativeEvent);
         };
 
@@ -1560,7 +1560,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 			 * @param string type  The choice selected input type. Defaults to checkbox for checkbox type fields or radio for other field types.
 			 * @param object field The current field.
 			 */
-			type = gform.applyFilters('kform_field_choice_selected_type_form_editor', type, field);
+			type = kform.applyFilters('kform_field_choice_selected_type_form_editor', type, field);
 
 			var text = String(field.choices[i].text),
 				value = field.enableChoiceValue ? String(field.choices[i].value) : text,
@@ -1612,7 +1612,7 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 				} ) + "'></div>";
 			}
 
-			str += gform.applyFilters('kform_append_field_choice_option', '', field, i);
+			str += kform.applyFilters('kform_append_field_choice_option', '', field, i);
 
 			str += "<button class='field-choice-button field-choice-button--insert kdna_insert_field_choice kform-choice__button kform-choice__button--add kform-st-icon kform-st-icon--circle-plus' onclick=\"InsertFieldChoice(" + (i + 1) + ");\" aria-label='<?php esc_attr_e( 'Add choice', 'kdnaforms' ); ?>'></button>";
 

@@ -125,8 +125,8 @@ function InitializeEditor() {
 		}
 	});
 	jQuery( '#field_settings' ).tabs();
-	jQuery( '.field_settings' ).accordion( gform.options.jqEditorAccordions );
-	jQuery( '#add_fields_menu .panel-block-tabs__wrapper' ).accordion( gform.options.jqAddFieldAccordions );
+	jQuery( '.field_settings' ).accordion( kform.options.jqEditorAccordions );
+	jQuery( '#add_fields_menu .panel-block-tabs__wrapper' ).accordion( kform.options.jqAddFieldAccordions );
 	jQuery( '.panel-block-tabs' ).find( '.panel-block-tabs__toggle' ).each( function( i, element ) {
 		jQuery( element ).append( '<i aria-hidden="true"></i>' );
 	} );
@@ -138,7 +138,7 @@ function InitializeEditor() {
 	jQuery( '.panel-block > .field_settings' ).on( 'keydown', function( e ) {
 		// esc key, refocus the settings trigger in the editor preview for the active field
 		if ( e.keyCode === 27 ) {
-			jQuery( '.gfield.field_selected .kfield-edit').focus();
+			jQuery( '.kfield.field_selected .kfield-edit').focus();
 			return;
 		}
 		// not tab key, exit
@@ -146,7 +146,7 @@ function InitializeEditor() {
 			return;
 		}
 		// get visible focusable items
-		var focusable = gform.tools.getFocusable( this );
+		var focusable = kform.tools.getFocusable( this );
 		// store first and last visible item
 		var firstFocusableEl = focusable[0];
 		var lastFocusableEl = focusable[ focusable.length - 1 ];
@@ -172,7 +172,7 @@ function InitializeEditor() {
 
 function InitializeFieldSettings(){
 
-	gform.addFilter( 'kform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
+	kform.addFilter( 'kform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
 
 	jQuery('#field_max_file_size').on('input propertychange', function(){
 		var $this = jQuery(this),
@@ -526,7 +526,7 @@ async function conditionalLogicWarningDependency( field ) {
 	const hasDependency = await HasConditionalLogicDependency( field.id, field.value );
 
 	if (hasDependency) {
-		const confirmed = await gform.instances.dialogConfirmAsync(
+		const confirmed = await kform.instances.dialogConfirmAsync(
 			kdna_vars.conditionalLogicWarningTitle,
 			kdna_vars.conditionalLogicRichTextEditorWarning
 		)
@@ -641,7 +641,7 @@ function InitializeForm(form){
 		event.stopPropagation();
 	});
 
-	jQuery('#kform_fields').on('click', '.gfield', function ( event ) {
+	jQuery('#kform_fields').on('click', '.kfield', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
@@ -808,7 +808,7 @@ function LoadFieldSettings() {
 	ToggleCalculationOptions(field.enableCalculation, field);
 
 	jQuery('#field_calculation_formula').val(field.calculationFormula);
-	var rounding = gform.utils.isNumber(field.calculationRounding) ? field.calculationRounding : "norounding";
+	var rounding = kform.utils.isNumber(field.calculationRounding) ? field.calculationRounding : "norounding";
 	jQuery('#field_calculation_rounding').val(rounding);
 
 	jQuery("#option_field_type").val(field.inputType);
@@ -1285,7 +1285,7 @@ function LoadFieldSettings() {
 
 	jQuery(document).trigger('kform_load_field_settings', [field, form]);
 
-	gform.doAction('kform_post_load_field_settings', [field, form]);
+	kform.doAction('kform_post_load_field_settings', [field, form]);
 
 	if (field.choiceAlignment == "horizontal") {
 		jQuery( "#choice_alignment_horizontal" ).prop( "checked", true );
@@ -1352,7 +1352,7 @@ function getAllFieldSettings(field) {
 	 *
 	 * @return {array} The modified array of settings values.
 	 */
-	settingsArray = gform.applyFilters( 'kform_editor_field_settings', settingsArray, field );
+	settingsArray = kform.applyFilters( 'kform_editor_field_settings', settingsArray, field );
 
 	return settingsArray.join( ', ' );
 }
@@ -1680,9 +1680,9 @@ function UpgradeConsentField(field) {
 
 function TogglePasswordVisibility( isInit ){
 	if ( jQuery( '#kfield_password_visibility_enabled' ).is( ":checked" ) ) {
-		jQuery( '.gfield.field_selected .kinput_container_password span button' ).show();
+		jQuery( '.kfield.field_selected .kinput_container_password span button' ).show();
 	} else {
-		jQuery( '.gfield.field_selected .kinput_container_password span button' ).hide();
+		jQuery( '.kfield.field_selected .kinput_container_password span button' ).hide();
 	}
 }
 
@@ -2124,14 +2124,14 @@ function UpdateFormObject(){
 	}
 
 	// new method for filtering the form object before save
-	form = gform.applyFilters('kform_pre_form_editor_save', form);
+	form = kform.applyFilters('kform_pre_form_editor_save', form);
 	return form;
 
 }
 
 function SortFields(){
 	var fields = new Array();
-	jQuery(".gfield").each(function(){
+	jQuery(".kfield").each(function(){
 		if( jQuery(this).hasClass('spacer') || 'kform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
 			return;
 		}
@@ -2153,10 +2153,10 @@ function EditField( element ) {
 		return;
 	}
 
-	FieldClick( gform.tools.getClosest( element, '.gfield' ) );
+	FieldClick( kform.tools.getClosest( element, '.kfield' ) );
 
-	var settingsPane = gform.tools.getNodes( '.sidebar__panel--settings', false, document, true )[0];
-	var focusableSettings = gform.tools.getFocusable( settingsPane );
+	var settingsPane = kform.tools.getNodes( '.sidebar__panel--settings', false, document, true )[0];
+	var focusableSettings = kform.tools.getFocusable( settingsPane );
 
 	if ( focusableSettings[0]) {
 		setTimeout( function() { focusableSettings[0].focus(); }, 50 );
@@ -2178,7 +2178,7 @@ async function DeleteField( element ) {
 
 	var conditionalLogicDependency = await HasConditionalLogicDependency(fieldId);
 	if (!conditionalLogicDependency) {
-		gform.instances.dialogConfirmAsync( kdna_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
+		kform.instances.dialogConfirmAsync( kdna_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
@@ -2186,7 +2186,7 @@ async function DeleteField( element ) {
 		});
 	} else {
 		var message = kdna_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
-		gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
+		kform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
@@ -2242,7 +2242,7 @@ function proceedWithDeletion(fieldId) {
 				 * @param object form    The current form object.
 				 * @param int    fieldId The ID of the current field.
 				 */
-				gform.doAction( 'kform_after_field_removed', form, fieldId );
+				kform.doAction( 'kform_after_field_removed', form, fieldId );
 
 			} );
 
@@ -2363,7 +2363,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 */
 async function HasConditionalLogicDependency(fieldId, value) {
 	var result = await HasConditionalLogicDependencyLegwork(fieldId, value);
-	return gform.applyFilters('kform_has_conditional_logic_dependency', result, fieldId, value);
+	return kform.applyFilters('kform_has_conditional_logic_dependency', result, fieldId, value);
 }
 
 /**
@@ -2507,7 +2507,7 @@ async function CheckChoiceConditionalLogicDependency(input) {
 
 		// confirm that the user wants to make the modification.
 		setTimeout( ()=>
-			gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
+			kform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
 				if ( ! confirmed ) {
 					// if user does not want to make modification, replace with original value.
 					jQuery( input ).val( previousValue ).trigger( 'blur' );
@@ -2524,7 +2524,7 @@ function StartDuplicateField(element) {
 
 	var sourcefieldId = jQuery(element)[0].id.split("_")[2];
 
-	gform.doAction( 'kform_before_field_duplicated', sourcefieldId );
+	kform.doAction( 'kform_before_field_duplicated', sourcefieldId );
 
 	for(fieldIndex in form.fields){
 
@@ -2560,8 +2560,8 @@ function StartDuplicateField(element) {
 			 *
 			 * @since @todo
 			 */
-			field = gform.applyFilters( 'kform_duplicate_field', field, form );
-			field = gform.applyFilters( 'kform_duplicate_field_{0}'.gformFormat( GetInputType( field ) ), field, form );
+			field = kform.applyFilters( 'kform_duplicate_field', field, form );
+			field = kform.applyFilters( 'kform_duplicate_field_{0}'.kformFormat( GetInputType( field ) ), field, form );
 
 			form.fields.splice(fieldIndex, 0, field);
 
@@ -2573,9 +2573,9 @@ function StartDuplicateField(element) {
 
 function EndDuplicateField(field, fieldString, sourceFieldId) {
 
-	gform.doAction( 'kform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
+	kform.doAction( 'kform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
 
-	var nativeEvent = new Event('gform/form_editor/field-duplicated-native');
+	var nativeEvent = new Event('kform/form_editor/field-duplicated-native');
 	document.dispatchEvent(nativeEvent);
 
 }
@@ -2797,7 +2797,7 @@ function EndChangeInputType(params){
 	 *
 	 * @param int fieldId The ID of the field for which the input type changed.
 	 */
-	gform.doAction( 'kform_after_change_input_type', fieldId );
+	kform.doAction( 'kform_after_change_input_type', fieldId );
 }
 
 function InitializeFields(){
@@ -2841,7 +2841,7 @@ function InitializeFields(){
 		 *
 		 * @param {DomEvent} event The dom event.
 		 */
-		gform.doAction( 'formEditorNullClick', event );
+		kform.doAction( 'formEditorNullClick', event );
 
 		event.stopPropagation();
 	});
@@ -2975,17 +2975,17 @@ function ShowSettings( element ) {
 	// Show field settings tab
 	jQuery('.sidebar').tabs( 'option', 'active', 1 );
 
-	var visibleChoicesSettings = gform.tools
+	var visibleChoicesSettings = kform.tools
 		.getNodes( '[data-js="choices-ui-content"] > li', true, document, true )
 		.filter( function( element ) {
 			return window.getComputedStyle( element ).getPropertyValue( 'display' ) !== 'none';
 		} );
 
 	if ( ! visibleChoicesSettings.length ) {
-		gform.tools.trigger( 'gform/flyout/close-all' );
+		kform.tools.trigger( 'kform/flyout/close-all' );
 	}
 
-	gform.tools.trigger( 'gform/form_editor/setting_selected', document, false, element );
+	kform.tools.trigger( 'kform/form_editor/setting_selected', document, false, element );
 }
 
 function TogglePercentageStyle( isInit ){
@@ -3034,7 +3034,7 @@ function LoadFieldChoices(field){
 	ToggleClearDefaultChoicesButton();
 	jQuery(document).trigger('kform_load_field_choices', [field]);
 
-	gform.doAction('kform_load_field_choices', [field]);
+	kform.doAction('kform_load_field_choices', [field]);
 }
 
 function LoadInputChoices($ul, input){
@@ -3076,7 +3076,7 @@ function LoadBulkChoices(field){
 		 *
 		 * @return {string} The updated text pattern, e.g. Label|Value|Meta|Other
 		 */
-		choice = gform.applyFilters( 'kform_load_bulk_choices_choice', choice, field.choices[i], field );
+		choice = kform.applyFilters( 'kform_load_bulk_choices_choice', choice, field.choices[i], field );
 
 		choices.push(choice);
 	}
@@ -3091,7 +3091,7 @@ function LoadBulkChoices(field){
 	 * @param array bulkChoices The formatted choices.
 	 * @param array choices     The choice objects from the current field.
 	 */
-	choices = gform.applyFilters( 'kform_choices_post_bulk_load', choices, field.choices );
+	choices = kform.applyFilters( 'kform_choices_post_bulk_load', choices, field.choices );
 
 	jQuery("#kfield_bulk_add_input").val(choices.join("\n"));
 }
@@ -3308,7 +3308,7 @@ function InsertBulkChoices(choices){
 		 *
 		 * @return {Choice} The updated Choice object containing any additional data needed.
 		 */
-		choice = gform.applyFilters( 'kform_insert_bulk_choices_choice', choice, choices[i], field );
+		choice = kform.applyFilters( 'kform_insert_bulk_choices_choice', choice, choices[i], field );
 
 		if ( FieldIsChoiceType( field ) ) {
 			InsertFieldForChoice( choice, field );
@@ -3326,7 +3326,7 @@ function InsertBulkChoices(choices){
 	 *
 	 * @param array field The currently selected field object.
 	 */
-	gform.doAction( 'kform_bulk_insert_choices', field );
+	kform.doAction( 'kform_bulk_insert_choices', field );
 
 	if(enableValue){
 		field["enableChoiceValue"] = true;
@@ -3501,7 +3501,7 @@ function UpdateFieldChoices(fieldType){
 				field.inputs.push(new Input(field_number, field.choices[i].text));
 
 				var id = 'choice_' + field.id + '_' + (i + 1);
-				inputContainerClass = "gchoice g" + id;
+				inputContainerClass = "kchoice g" + id;
 				checked = field.choices[i].isSelected ? "checked" : "";
 
 				if(i < 5) {
@@ -3521,7 +3521,7 @@ function UpdateFieldChoices(fieldType){
 			for(var i=0; i<field.choices.length; i++)
 			{
 				var id = 'choice_' + field.id + '_' + (i + 1);
-				inputContainerClass = "gchoice g" + id;
+				inputContainerClass = "kchoice g" + id;
 				checked = field.choices[i].isSelected ? "checked" : "";
 				if(i < 5) {
 					choices += "<" + inputContainer + " class='" + inputContainerClass + "'><input name='input_" + field.id + "' type='" + fieldType + "' " + checked + " value='" + field.choices[i].value + "' id='" + id +"' disabled='disabled'><label for='" + id + "'>" + field.choices[i].text + "</label></" + inputContainer + ">";
@@ -3675,7 +3675,7 @@ async function DeleteFieldChoice(index){
 	var hasDependency = await HasConditionalLogicDependency(field.id, value);
 	if( hasDependency ) {
 		var message = kdna_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
+		kform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
 			if ( ! confirmed ) {
 				return;
 			}
@@ -4032,7 +4032,7 @@ function SetFieldProperty(name, value){
 	 * @param {(string|number|boolean|array)} value         The current value of the specified property.
 	 * @param {(string|number|boolean|array)} previousValue The previous value of the specified property.
 	 */
-	window.gform.doAction( 'kform_post_set_field_property', name, field, value, previousValue );
+	window.kform.doAction( 'kform_post_set_field_property', name, field, value, previousValue );
 }
 
 function SetInputName(value, inputId){
@@ -4223,7 +4223,7 @@ function SetFieldLabel(label){
 	jQuery(".field_selected label.kfield_label, .field_selected .ksection_title, .field_selected legend.kfield_label > span").text(label).append(requiredElement);
 	SetFieldProperty("label", label);
 
-	var nativeEvent = new Event('gform/form_editor/set_field_label');
+	var nativeEvent = new Event('kform/form_editor/set_field_label');
 	document.dispatchEvent(nativeEvent);
 }
 
@@ -4334,7 +4334,7 @@ async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 	var hasDependency = await HasConditionalLogicDependency(field.id);
 	if (!isInit && visibility === 'administrative' && hasDependency) {
 		var message =  kdna_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync(kdna_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
+		kform.instances.dialogConfirmAsync(kdna_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
 			if (confirmed) {
 				proceedWithVisibilityChange(visibility, handleInputs);
 			} else {
@@ -4609,7 +4609,7 @@ function ToggleCalculationOptions(isEnabled, field) {
 	SetFieldProperty('enableCalculation', isEnabled);
 
 	if ( field.type === 'number' ) {
-		var nativeEvent = new Event('gform/form_editor/toggle_calculation_options');
+		var nativeEvent = new Event('kform/form_editor/toggle_calculation_options');
 		document.dispatchEvent(nativeEvent);
 	}
 }
@@ -4963,7 +4963,7 @@ function SearchWithinFieldGroup( group, search ) {
 * Quick jQuery plugin that allows a variable to be passed which determins whether to
 * instantly hide the element or slideUp instead.
 */
-jQuery.fn.gfSlide = function(direction) {
+jQuery.fn.kdnaSlide = function(direction) {
 
 	var isVisible = jQuery('.field_settings').is(':visible');
 
@@ -4988,7 +4988,7 @@ jQuery.fn.gfSlide = function(direction) {
  * Form Editor conditional logic should not allow adminOnly fields to be selectable. Also exclude the current field from being
  * set in conditional logic for itself.
  */
-gform.addFilter( 'kform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
+kform.addFilter( 'kform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
 
 	if( field.visibility == 'administrative' ) {
 		isConditionalLogicField = false;
@@ -5041,7 +5041,7 @@ function IsValidFormula(formula) {
 	 * @param result The validation result.
 	 * @param formula The calculation formula being validated.
 	 */
-	return gform.applyFilters( 'kform_is_valid_formula_form_editor', result, formula );
+	return kform.applyFilters( 'kform_is_valid_formula_form_editor', result, formula );
 }
 
 /**
@@ -5114,7 +5114,7 @@ function setSidebarFieldMessage() {
 	 *
 	 * @param Object types The types of sidebar messages, each with a type and iconClasses property.
 	 */
-	types = gform.applyFilters( 'kform_field_sidebar_messages_types', types );
+	types = kform.applyFilters( 'kform_field_sidebar_messages_types', types );
 
 	let showSidebarMessage = false;
 	types.forEach(

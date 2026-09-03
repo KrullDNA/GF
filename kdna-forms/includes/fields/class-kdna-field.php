@@ -1384,7 +1384,7 @@ class KDNA_Field extends stdClass implements ArrayAccess {
 	 *
 	 * @param string $event The event attribute which should be returned. Possible values: keyup, click, or change.
 	 *
-	 * @deprecated 2.4 Conditional Logic is now triggered based on .gfield class name. No need to hardcode calls to kdnaform_apply_rules() to every field.
+	 * @deprecated 2.4 Conditional Logic is now triggered based on .kfield class name. No need to hardcode calls to kdnaform_apply_rules() to every field.
 	 *
 	 * @return string
 	 */

@@ -25,7 +25,7 @@ class KDNAFormList {
 
 		<script type="text/javascript">
 			// checked by the ToggleActive method to prevent errors when form status icon is clicked before page has fully loaded
-			var gfPageLoaded = false;
+			var kdnaPageLoaded = false;
 		</script>
 
 		<style type="text/css">
@@ -101,7 +101,7 @@ class KDNAFormList {
 
 			function ToggleActive( btn, form_id ) {
 
-				if ( ! gfPageLoaded ) {
+				if ( ! kdnaPageLoaded ) {
 					return;
 				}
 
@@ -158,7 +158,7 @@ class KDNAFormList {
 				element.html(count + "");
 			}
 
-			function gfConfirmBulkAction(element_id) {
+			function kdnaConfirmBulkAction(element_id) {
 				var element = "#" + element_id;
 				if (jQuery(element).val() == 'delete')
 					return confirm(<?php echo json_encode( __( 'WARNING: You are about to delete these forms and ALL entries associated with them. ', 'kdnaforms' ) . __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ); ?>);
@@ -277,7 +277,7 @@ class KDNAFormList {
 				} );
 
 				// enable form status icons
-				gfPageLoaded = true;
+				kdnaPageLoaded = true;
 				$( '.kform_active_icon' ).removeClass( 'kdna_not_ready' );
 
 				$( '#current-page-selector' ).keyup( function( event ) {
@@ -313,15 +313,15 @@ class KDNAFormList {
 
 				// Debug: check if dependencies are available
 				console.log('[KDNA Debug] jQuery.toJSON available:', typeof jQuery.toJSON);
-				console.log('[KDNA Debug] gfAjaxSpinner available:', typeof gfAjaxSpinner);
+				console.log('[KDNA Debug] kdnaAjaxSpinner available:', typeof kdnaAjaxSpinner);
 				console.log('[KDNA Debug] kdna_vars available:', typeof kdna_vars);
 				console.log('[KDNA Debug] ajaxurl:', typeof ajaxurl !== 'undefined' ? ajaxurl : 'UNDEFINED');
 
 				var spinner;
 				try {
-					spinner = new gfAjaxSpinner(createButton, kdna_vars.baseUrl + '/images/spinner.svg');
+					spinner = new kdnaAjaxSpinner(createButton, kdna_vars.baseUrl + '/images/spinner.svg');
 				} catch(e) {
-					console.error('[KDNA Debug] gfAjaxSpinner error:', e.message);
+					console.error('[KDNA Debug] kdnaAjaxSpinner error:', e.message);
 				}
 
 				// clear error message

@@ -517,7 +517,7 @@ class KDNA_Field_Time extends KDNA_Field {
 			return '';
 		}
 
-		return "gform.addFilter( 'kdnaform_value_merge_tag_{$form['id']}_{$this->id}', function( value, input, modifier ) { if( modifier === 'label' ) { return false; } var ampm = input.length == 3 ? ' ' + jQuery(input[2]).val() : ''; return jQuery(input[0]).val() + ':' + jQuery(input[1]).val() + ' ' + ampm; } );";
+		return "kform.addFilter( 'kdnaform_value_merge_tag_{$form['id']}_{$this->id}', function( value, input, modifier ) { if( modifier === 'label' ) { return false; } var ampm = input.length == 3 ? ' ' + jQuery(input[2]).val() : ''; return jQuery(input[0]).val() + ':' + jQuery(input[1]).val() + ' ' + ampm; } );";
 
 	}
 
@@ -530,7 +530,7 @@ class KDNA_Field_Time extends KDNA_Field {
 	 */
 	public function get_form_editor_inline_script_on_page_render() {
 		// No support for custom sub AM/PM sub label.
-		return "gform.addAction( 'kdnaform_post_load_field_settings' , function( [ field, form ] ) { if( GetInputType( field ) === 'time' ) { jQuery('.field_custom_input_row_input_' + field.id + '_3').hide(); } } );";
+		return "kform.addAction( 'kdnaform_post_load_field_settings' , function( [ field, form ] ) { if( GetInputType( field ) === 'time' ) { jQuery('.field_custom_input_row_input_' + field.id + '_3').hide(); } } );";
 	}
 
 	/**

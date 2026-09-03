@@ -1,4 +1,4 @@
-var gfieldmap = function( options ) {
+var kfieldmap = function( options ) {
 
 	var self = this;
 
@@ -104,7 +104,7 @@ var gfieldmap = function( options ) {
 						$elem.find( '.key' ).hide();
 					}
 
-					gform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
+					kform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
 
 				},
 				save: function( obj, data ) {

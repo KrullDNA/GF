@@ -221,7 +221,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 
 		// Prepare button markup.
 		$button_markup = sprintf(
-			'<div class="kfield-choice-toggle-all"><button type="button" id="button_%1$d_select_all" class="kfield_choice_all_toggle kform-theme-button--size-sm" onclick="gformToggleCheckboxes( this )" data-checked="%4$d" data-label-select="%2$s" data-label-deselect="%3$s"%6$s>%5$s</button></div>',
+			'<div class="kfield-choice-toggle-all"><button type="button" id="button_%1$d_select_all" class="kfield_choice_all_toggle kform-theme-button--size-sm" onclick="kformToggleCheckboxes( this )" data-checked="%4$d" data-label-select="%2$s" data-label-deselect="%3$s"%6$s>%5$s</button></div>',
 			$this->id,
 			$select_label,
 			$deselect_label,
@@ -963,8 +963,8 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				// Prepare choice markup.
-				$choice_markup = "<{$tag} class='gchoice kchoice_select_all'>
-						<input class='kfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
+				$choice_markup = "<{$tag} class='kchoice kchoice_select_all'>
+						<input class='kfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='kformToggleCheckboxes( this )' onkeypress='kformToggleCheckboxes( this )'{$checked} />
 						<label for='{$id}' id='label_" . $this->id . "_select_all' class='kform-field-label  kform-field-label--type-inline' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
 					</{$tag}>";
 
@@ -1029,7 +1029,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<{$tag} class='gchoice kchoice_{$id}'>
+				$choice_markup = "<{$tag} class='kchoice kchoice_{$id}'>
 								<input class='kfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
 								<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>{$choice['text']}</label>
 							</{$tag}>";

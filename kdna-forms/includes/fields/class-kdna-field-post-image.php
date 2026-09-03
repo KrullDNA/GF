@@ -125,7 +125,7 @@ class KDNA_Field_Post_Image extends KDNA_Field_Fileupload {
 		if ( ! empty( $file_info ) ) {
 			$hidden_class     = ' kform_hidden';
 			$file_label_style = $hidden_style;
-			$preview          = "<span class='kinput_preview'><strong>" . esc_html( $file_info['uploaded_filename'] ) . "</strong> | <a href='javascript:;' onclick='gformDeleteUploadedFile({$form_id}, {$id});' onkeypress='gformDeleteUploadedFile({$form_id}, {$id});'>" . __( 'delete', 'kdnaforms' ) . '</a></span>';
+			$preview          = "<span class='kinput_preview'><strong>" . esc_html( $file_info['uploaded_filename'] ) . "</strong> | <a href='javascript:;' onclick='kformDeleteUploadedFile({$form_id}, {$id});' onkeypress='kformDeleteUploadedFile({$form_id}, {$id});'>" . __( 'delete', 'kdnaforms' ) . '</a></span>';
 		}
 
 		//in admin, render all meta fields to allow for immediate feedback, but hide the ones not selected

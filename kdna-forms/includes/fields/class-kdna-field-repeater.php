@@ -387,8 +387,8 @@ class KDNA_Field_Repeater extends KDNA_Field {
 
 		$delete_display = count( $values ) == 1 ? 'visibility:hidden;' : '';
 
-		$add_events    = $is_form_editor ? '' : "onclick='gformAddRepeaterItem(this)' onkeypress='gformAddRepeaterItem(this)'";
-		$delete_events = $is_form_editor ? '' : sprintf( "onclick='if(confirm(\"%s\")){gformDeleteRepeaterItem(this)};' onkeypress='gformDeleteRepeaterItem(this)'", esc_js( __( 'Are you sure you want to remove this item?', 'kdnaforms' ) ) );
+		$add_events    = $is_form_editor ? '' : "onclick='kformAddRepeaterItem(this)' onkeypress='kformAddRepeaterItem(this)'";
+		$delete_events = $is_form_editor ? '' : sprintf( "onclick='if(confirm(\"%s\")){kformDeleteRepeaterItem(this)};' onkeypress='kformDeleteRepeaterItem(this)'", esc_js( __( 'Are you sure you want to remove this item?', 'kdnaforms' ) ) );
 
 		$disabled_icon_class = ! empty( $this->maxItems ) && count( $values ) >= intval( $this->maxItems ) ? 'kfield_icon_disabled' : '';
 
@@ -634,7 +634,7 @@ class KDNA_Field_Repeater extends KDNA_Field {
 			}
 		} else {
 			// we need to add a kfield_valid class to the field wrapper so we can over-ride styles
-			$field_content = str_replace( 'gfield ', 'gfield kfield_valid ', $field_content );
+			$field_content = str_replace( 'kfield ', 'kfield kfield_valid ', $field_content );
 		}
 
 		return $field_content;

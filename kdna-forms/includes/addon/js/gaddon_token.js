@@ -19,7 +19,7 @@ window.KDNAToken = null;
 
 			/* Initialize spinner. */
 			if ( ! this.isAjax )
-				gformInitSpinner( this.formId );
+				kformInitSpinner( this.formId );
 
 			/* If multipage form, run on kdnaform_page_loaded. */
 			if ( this.hasPages ) {

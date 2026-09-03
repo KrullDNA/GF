@@ -1,6 +1,6 @@
-(function (gfFieldFilterUI, $) {
+(function (kdnaFieldFilterUI, $) {
 
-    $.fn.gfFilterUI = function(filterSettings, initVars, allowMultiple, minResizeHeight) {
+    $.fn.kdnaFilterUI = function(filterSettings, initVars, allowMultiple, minResizeHeight) {
         init(this, filterSettings, initVars, allowMultiple, minResizeHeight );
         return this;
     };
@@ -131,20 +131,20 @@
 				label = indent + subFilter.text;
 				val = subFilter.key;
 				disabled = isFieldSelected(val) ? 'disabled="disabled"' : "";
-				options.push('<option {0} value="{1}">{2}</option>'.gformFormat(disabled, val, label));
+				options.push('<option {0} value="{1}">{2}</option>'.kformFormat(disabled, val, label));
 			}
 			indent = indentString.repeat(depth);
 			groupLabel = indent + setting.text;
 			if ( setting.isNestable ) {
 				// Optgroups can't be nested so close the optgroup immediately and fake the nested options with indentation.
-				select.push('<optgroup label="{0}"></optgroup>{1}'.gformFormat(groupLabel, options.join('')));
+				select.push('<optgroup label="{0}"></optgroup>{1}'.kformFormat(groupLabel, options.join('')));
 			} else {
-				select.push('<optgroup label="{0}">{1}</optgroup>'.gformFormat(groupLabel, options.join('')));
+				select.push('<optgroup label="{0}">{1}</optgroup>'.kformFormat(groupLabel, options.join('')));
 			}
 		} else {
 			disabled = setting.preventMultiple && isFieldSelected(key) ? "disabled='disabled'" : "";
 			label = setting.text;
-			select.push('<option {0} value="{1}">{2}</option>'.gformFormat(disabled, key, label));
+			select.push('<option {0} value="{1}">{2}</option>'.kformFormat(disabled, key, label));
 		}
 		return select.join('');
 	}
@@ -157,7 +157,7 @@
             $select.siblings(".kform-filter-value").replaceWith(getFilterValues(filter, operatorSelect.value));
         }
         setDisabledFields();
-        if(window['gformInitDatepicker']) {gformInitDatepicker();}
+        if(window['kformInitDatepicker']) {kformInitDatepicker();}
     }
 
     function changeField (fieldSelect) {
@@ -187,7 +187,7 @@
         if (filter) {
             for (i = 0; i < filter.operators.length; i++) {
                 operator = filter.operators[i];
-                str += '<option value="{0}">{1}</option>'.gformFormat(operator, kdna_vars[operatorStrings[operator]] );
+                str += '<option value="{0}">{1}</option>'.kformFormat(operator, kdna_vars[operatorStrings[operator]] );
             }
         }
         str += "</select>";
@@ -205,7 +205,7 @@
         if ( filter && filter.values && selectedOperator != 'contains' ) {
 
             if ( typeof filter.placeholder != 'undefined' ){
-                options += '<option value="">{0}</option>'.gformFormat(filter.placeholder);
+                options += '<option value="">{0}</option>'.kformFormat(filter.placeholder);
             }
 
             for (i = 0; i < filter.values.length; i++) {
@@ -214,13 +214,13 @@
                 if ( filter.values[i].operators && $.inArray( selectedOperator, filter.values[i].operators ) === -1 ) {
                     continue;
                 }
-                options += '<option value="{0}">{1}</option>'.gformFormat(val, text);
+                options += '<option value="{0}">{1}</option>'.kformFormat(val, text);
             }
-            str = "<select name='v[]' class='{0}'>{1}</select>".gformFormat(cssClass, options);
+            str = "<select name='v[]' class='{0}'>{1}</select>".kformFormat(cssClass, options);
         } else {
-            placeholder = ( filter && typeof filter.placeholder != 'undefined' ) ? "placeholder='{0}'".gformFormat(filter.placeholder) : '';
+            placeholder = ( filter && typeof filter.placeholder != 'undefined' ) ? "placeholder='{0}'".kformFormat(filter.placeholder) : '';
 
-            str = "<input type='text' value='' name='v[]' class='{0}' {1}/>".gformFormat(cssClass, placeholder);
+            str = "<input type='text' value='' name='v[]' class='{0}' {1}/>".kformFormat(cssClass, placeholder);
         }
 
         return str;
@@ -258,7 +258,7 @@
         str += "<button " +
 	        "class='kform-add add_field_choice kform-st-icon kform-st-icon--circle-plus' " +
 	        "title='{0}'" +
-	        "></button>".gformFormat(kdna_vars.addFieldFilter);
+	        "></button>".kformFormat(kdna_vars.addFieldFilter);
         str += "<button " +
 	        "class='kform-remove delete_field_choice kform-st-icon kform-st-icon--circle-minus' " +
 	        "title='" + kdna_vars.removeFieldFilter + "'" +
@@ -300,7 +300,7 @@
         str += "<button " +
 	        "class='kform-add add_field_choice kform-st-icon kform-st-icon--circle-plus' " +
 	        "title='{0}'" +
-	        "></div>".gformFormat(kdna_vars.addFieldFilter);
+	        "></div>".kformFormat(kdna_vars.addFieldFilter);
         $("#kform-field-filters").html(str);
         if(isResizable){
             $container.css({'min-height': '', 'border-bottom': ''});
@@ -323,8 +323,8 @@
 
     function getFilterMode(mode){
         var html;
-        html = '<select name="mode"><option value="all" {0}>{1}</option><option value="any" {2}>{3}</option></select>'.gformFormat(selected("all", mode), kdna_vars.all, selected("any", mode), kdna_vars.any);
-        html = kdna_vars.filterAndAny.gformFormat(html);
+        html = '<select name="mode"><option value="all" {0}>{1}</option><option value="any" {2}>{3}</option></select>'.kformFormat(selected("all", mode), kdna_vars.all, selected("any", mode), kdna_vars.any);
+        html = kdna_vars.filterAndAny.kformFormat(html);
         return html
     }
 
@@ -365,8 +365,8 @@
         maybeMakeResizable();
     }
 
-	if ( ! String.prototype.gformFormat ) {
-		String.prototype.gformFormat = function() {
+	if ( ! String.prototype.kformFormat ) {
+		String.prototype.kformFormat = function() {
 			var args = arguments;
 			return this.replace( /{(\d+)}/g, function( match, number ) {
 				return typeof args[ number ] != 'undefined' ? args[ number ] : match;
@@ -374,4 +374,4 @@
 		};
 	}
 
-}(window.gfFilterUI = window.gfFilterUI || {}, jQuery));
+}(window.kdnaFilterUI = window.kdnaFilterUI || {}, jQuery));

@@ -1,7 +1,7 @@
 ( function ( $ ) {
 
 	$(document).ready(function() {
-		gform.adminUtils.handleUnsavedChanges( '#kform-settings' );
+		kform.adminUtils.handleUnsavedChanges( '#kform-settings' );
 	});
 
 	var $container  = $( 'div[id="kform_setting_reset"]' ),

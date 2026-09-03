@@ -34,7 +34,7 @@ class KDNA_Embed_Service_Provider extends KDNA_Service_Provider {
 	const DOM_EMBED_BUTTON = 'dom_embed_button';
 
 	// Strings
-	const ADD_BLOCK_PARAM = 'gfAddBlock';
+	const ADD_BLOCK_PARAM = 'kdnaAddBlock';
 
 	/**
 	 * Array mapping config class names to their container ID.

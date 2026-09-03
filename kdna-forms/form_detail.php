@@ -2131,9 +2131,9 @@ class KDNAFormDetail {
 										$validateFormulaScript = "
 											var field = GetSelectedField();
 											if (IsValidFormula(field.calculationFormula)) {
-												gform.instances.dialogAlert(kdna_vars.FormulaIsValidTitle, kdna_vars.FormulaIsValid, true);
+												kform.instances.dialogAlert(kdna_vars.FormulaIsValidTitle, kdna_vars.FormulaIsValid, true);
 											} else {
-												gform.instances.dialogAlert(kdna_vars.FieldAjaxonErrorTitle, kdna_vars.FormulaIsInvalid);
+												kform.instances.dialogAlert(kdna_vars.FieldAjaxonErrorTitle, kdna_vars.FormulaIsInvalid);
 											}
 										";
                                         				?>

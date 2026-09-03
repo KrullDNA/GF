@@ -24,17 +24,17 @@ var KDNAFrontendFeeds = function( args ) {
 
 	self.bindEvents = function() {
 
-		gform.addAction( 'kdnaform_input_change', function( elem, formId, inputId ) {
-			gform.logger.log( 'KDNAFrontendFeeds: kdnaform_input_change event triggered. formId ' + formId + ', inputId ' + inputId );
+		kform.addAction( 'kdnaform_input_change', function( elem, formId, inputId ) {
+			kform.logger.log( 'KDNAFrontendFeeds: kdnaform_input_change event triggered. formId ' + formId + ', inputId ' + inputId );
 
 			var fieldId = parseInt( inputId ) + '';
 			var isTriggeredInput = $.inArray( inputId, self.triggerInputIds ) !== -1 || $.inArray( fieldId , self.triggerInputIds ) !== -1 ;
 
 			if( self.options.formId == formId && isTriggeredInput ) {
-				gform.logger.log( 'KDNAFrontendFeeds: Evaluating feeds. self.options.formId=' + self.options.formId + ', isTriggeredInput=' + isTriggeredInput + ', triggerInputIds=' + self.triggerInputIds.join( ',' ) );
+				kform.logger.log( 'KDNAFrontendFeeds: Evaluating feeds. self.options.formId=' + self.options.formId + ', isTriggeredInput=' + isTriggeredInput + ', triggerInputIds=' + self.triggerInputIds.join( ',' ) );
 				self.evaluateFeeds();
 			} else {
-				gform.logger.log( 'KDNAFrontendFeeds: Bypassing feed evaluation. self.options.formId=' + self.options.formId + ', isTriggeredInput=' + isTriggeredInput + ', triggerInputIds=' + self.triggerInputIds.join( ',' ) );
+				kform.logger.log( 'KDNAFrontendFeeds: Bypassing feed evaluation. self.options.formId=' + self.options.formId + ', isTriggeredInput=' + isTriggeredInput + ', triggerInputIds=' + self.triggerInputIds.join( ',' ) );
 			}
 		} );
 
@@ -44,9 +44,9 @@ var KDNAFrontendFeeds = function( args ) {
 		const feeds = self.options.feeds.map(({ feedId, isActivated, transactionType }) => ({ feedId, isActivated, transactionType }));
 
 		console.log( 'Saving feeds to state:', feeds );
-		gform.logger.log( 'KDNAFrontendFeeds: Saving feeds to state: ' + JSON.stringify( feeds ) );
+		kform.logger.log( 'KDNAFrontendFeeds: Saving feeds to state: ' + JSON.stringify( feeds ) );
 
-		gform.state.set( self.options.formId, 'feeds', self.options.feeds );
+		kform.state.set( self.options.formId, 'feeds', self.options.feeds );
 	}
 
 	self.evaluateFeeds = function() {
@@ -75,10 +75,10 @@ var KDNAFrontendFeeds = function( args ) {
 		 * @param array $feeds     A collection of feed objects.
 		 * @param int   $formId    The form id.
 		 */
-		gform.doAction( 'kdnaform_frontend_feeds_evaluated', self.options.feeds, self.options.formId, self );
-		gform.doAction( 'kdnaform_frontend_feeds_evaluated_{0}'.gformFormat( self.options.formId ), self.options.feeds, self.options.formId, self );
-		gform.doAction( 'kdnaform_{0}_frontend_feeds_evaluated'.gformFormat( feed.addonSlug ), self.options.feeds, self.options.formId, self );
-		gform.doAction( 'kdnaform_{0}_frontend_feeds_evaluated_{0}'.gformFormat( feed.addonSlug, self.options.formId ), self.options.feeds, self.options.formId, self );
+		kform.doAction( 'kdnaform_frontend_feeds_evaluated', self.options.feeds, self.options.formId, self );
+		kform.doAction( 'kdnaform_frontend_feeds_evaluated_{0}'.kformFormat( self.options.formId ), self.options.feeds, self.options.formId, self );
+		kform.doAction( 'kdnaform_{0}_frontend_feeds_evaluated'.kformFormat( feed.addonSlug ), self.options.feeds, self.options.formId, self );
+		kform.doAction( 'kdnaform_{0}_frontend_feeds_evaluated_{0}'.kformFormat( feed.addonSlug, self.options.formId ), self.options.feeds, self.options.formId, self );
 
 		self.saveToState();
 	};
@@ -177,10 +177,10 @@ var KDNAFrontendFeeds = function( args ) {
 			 * @param int   $formId    The form id.
 			 */
 
-			gform.doAction( 'kdnaform_frontend_feed_activated', feed, self.options.formId );
-			gform.doAction( 'kdnaform_frontend_feed_activated_{0}'.gformFormat( self.options.formId ), feed, self.options.formId );
-			gform.doAction( 'kdnaform_{0}_frontend_feed_activated'.gformFormat( feed.addonSlug ), feed, self.options.formId );
-			gform.doAction( 'kdnaform_{0}_frontend_feed_activated_{0}'.gformFormat( feed.addonSlug, self.options.formId ), feed, self.options.formId );
+			kform.doAction( 'kdnaform_frontend_feed_activated', feed, self.options.formId );
+			kform.doAction( 'kdnaform_frontend_feed_activated_{0}'.kformFormat( self.options.formId ), feed, self.options.formId );
+			kform.doAction( 'kdnaform_{0}_frontend_feed_activated'.kformFormat( feed.addonSlug ), feed, self.options.formId );
+			kform.doAction( 'kdnaform_{0}_frontend_feed_activated_{0}'.kformFormat( feed.addonSlug, self.options.formId ), feed, self.options.formId );
 
 			if( feed.isSingleFeed ) {
 				self.deactivateFeed( self.getFeedsByAddon( feed.addonSlug, feed ) );
@@ -215,10 +215,10 @@ var KDNAFrontendFeeds = function( args ) {
 			 * @param array $feeds     A collection of feed objects.
 			 * @param int   $formId    The form id.
 			 */
-			gform.doAction( 'kdnaform_frontend_feed_deactivated', feed, self.options.formId );
-			gform.doAction( 'kdnaform_frontend_feed_deactivated_{0}'.gformFormat( self.options.formId ), feed, self.options.formId );
-			gform.doAction( 'kdnaform_{0}_frontend_feed_deactivated'.gformFormat( feed.addonSlug ), feed, self.options.formId );
-			gform.doAction( 'kdnaform_{0}_frontend_feed_deactivated_{0}'.gformFormat( feed.addonSlug, self.options.formId ), feed, self.options.formId );
+			kform.doAction( 'kdnaform_frontend_feed_deactivated', feed, self.options.formId );
+			kform.doAction( 'kdnaform_frontend_feed_deactivated_{0}'.kformFormat( self.options.formId ), feed, self.options.formId );
+			kform.doAction( 'kdnaform_{0}_frontend_feed_deactivated'.kformFormat( feed.addonSlug ), feed, self.options.formId );
+			kform.doAction( 'kdnaform_{0}_frontend_feed_deactivated_{0}'.kformFormat( feed.addonSlug, self.options.formId ), feed, self.options.formId );
 
 		}
 

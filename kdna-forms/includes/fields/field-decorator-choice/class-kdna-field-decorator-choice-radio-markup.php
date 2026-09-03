@@ -161,11 +161,11 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 		$choice_value = esc_attr( $field_value );
 
-		$choice_markup = "<div class='gchoice kchoice_{$id}'>
+		$choice_markup = "<div class='kchoice kchoice_{$id}'>
 			<span class='kfield-image-choice-wrapper-outer'>
 				<label for='choice_{$id}' class='kfield-choice-image-label'>{$image}</label>
 				<span class='kfield-image-choice-wrapper-inner'>
-					<input class='kfield-choice-input' name='input_{$this->field->id}' type='radio' value='{$choice_value}' {$checked} id='choice_{$id}' onchange='gformToggleRadioOther( this )' {$tabindex} {$disabled_text} {$aria_describedby}/>
+					<input class='kfield-choice-input' name='input_{$this->field->id}' type='radio' value='{$choice_value}' {$checked} id='choice_{$id}' onchange='kformToggleRadioOther( this )' {$tabindex} {$disabled_text} {$aria_describedby}/>
 					<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>
 						{$choice['text']}
 					</label>

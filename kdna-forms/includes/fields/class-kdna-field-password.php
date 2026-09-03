@@ -111,7 +111,7 @@ class KDNA_Field_Password extends KDNA_Field {
 	 *
 	 * @since 2.4.11
 	 *
-	 * @see kdnaforms.js gformPasswordStrength() JS code
+	 * @see kdnaforms.js kformPasswordStrength() JS code
 	 *
 	 * @param string $password The password that should be checked.
 	 *
@@ -196,7 +196,7 @@ class KDNA_Field_Password extends KDNA_Field {
 																		</div>
 																		<input type='hidden' class='kform_hidden' id='{$field_id}_strength' name='input_{$id}_strength' />" : '';
 
-		$action   = ! $is_admin ? "gformShowPasswordStrength(\"$field_id\");" : '';
+		$action   = ! $is_admin ? "kformShowPasswordStrength(\"$field_id\");" : '';
 		$onchange = $this->passwordStrengthEnabled ? "onchange='{$action}'" : '';
 		$onkeyup  = $this->passwordStrengthEnabled ? "onkeyup='{$action}'" : '';
 
@@ -222,8 +222,8 @@ class KDNA_Field_Password extends KDNA_Field {
 		$confirm_password_placeholder_attribute = KDNACommon::get_input_placeholder_attribute( $confirm_password_field_input );
 
 		$visibility_toggle_style = ! $this->passwordVisibilityEnabled ? " style='display:none;'" : '';
-		$enter_password_toggle   = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password kform-theme-button kform-theme-button--simple' onclick='javascript:gformToggleShowPassword(\"{$field_id}\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
-		$confirm_password_toggle = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password kform-theme-button kform-theme-button--simple' onclick='javascript:gformToggleShowPassword(\"{$field_id}_2\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
+		$enter_password_toggle   = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password kform-theme-button kform-theme-button--simple' onclick='javascript:kformToggleShowPassword(\"{$field_id}\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
+		$confirm_password_toggle = $this->passwordVisibilityEnabled || $is_admin ? "<button type='button' class='kdnaform_show_password kform-theme-button kform-theme-button--simple' onclick='javascript:kformToggleShowPassword(\"{$field_id}_2\");' aria-live='polite' aria-label='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-show='" . esc_attr__( 'Show Password', 'kdnaforms' ) . "' data-label-hide='" . esc_attr__( 'Hide Password', 'kdnaforms' ) . "'{$visibility_toggle_style}><span class='dashicons dashicons-hidden' aria-hidden='true'></span></button>" : "";
 
 		$describedby_extra_id = array();
 		if ( $this->passwordStrengthEnabled ) {
