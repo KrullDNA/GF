@@ -123,6 +123,35 @@ every `$this->` against the framework, every hook they listen for against the
 hooks core actually fires, and that none of them still carries a Gravity Forms
 name. Run it after anything in core that renames or removes something.
 
+## Payments
+
+Stripe is the first payment add-on this fork has had, and payment add-ons take a
+different path through the framework than feed add-ons. That path had never
+executed, so it carried faults nothing else could reach:
+
+- **A function can exist, be spelled correctly, and still be undefined.**
+  `KDNAFeedAddOn::bootstrap()` loaded `class-kdna-feed-processor.php` only when
+  the add-on was *not* a payment add-on, while `maybe_process_feed()` calls
+  `kdna_feed_processor()` unconditionally — so every paid submission fataled
+  with a 500 and nothing in the response. No name-resolution check can see
+  this; the fix is to ask which functions live in a conditionally required file
+  and are called without a `function_exists` guard.
+- **`log_error()` writes nothing without the Logging add-on.** A payment path
+  that reports its failures through it reports into the void on most sites. Use
+  `log_payment_failure()`, which also writes to PHP's `error_log`.
+- **The framework must actually call the gateway.** `validation()` originally
+  set up its state and returned without calling `authorize()`, so
+  `process_capture()` received an empty authorization and returned immediately.
+  The card was charged at Stripe and the entry recorded no payment.
+- **Join the submission pipeline, do not intercept it.** An AJAX form posts into
+  a hidden iframe and core drives it through `kform/submission/pre_submission`.
+  Binding a jQuery `submit` handler and calling `preventDefault()` leaves the
+  spinner running for ever, because the iframe never loads. Use
+  `kform.utils.addAsyncFilter` and let the submission wait.
+- **Read-after-write on the form object.** `kdnaform_pre_render` mutations are
+  visible to everything that runs later, so a value derived from the original
+  has to be captured at the moment it is replaced, not recomputed downstream.
+
 ## Build and release
 
 - **Run the gate before every zip. Never skip it.**
