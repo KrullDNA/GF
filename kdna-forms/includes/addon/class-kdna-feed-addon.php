@@ -127,10 +127,18 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	 * @since 2.5.2
 	 */
 	public function bootstrap() {
+		// The processor is loaded for every feed add-on, payment ones included.
+		// maybe_process_feed() calls kdna_feed_processor() unconditionally, so
+		// loading it only for non-payment add-ons left the function undefined
+		// for exactly the add-ons that reach that line — a fatal on submission
+		// that no other add-on could ever trigger.
+		if ( ! function_exists( 'kdna_feed_processor' ) ) {
+			require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+		}
+
+		// A payment add-on still skips the eager instance: its queue is created
+		// when a feed is actually deferred, not at bootstrap.
 		if ( ! $this instanceof KDNAPaymentAddOn ) {
-			if ( ! function_exists( 'kdna_feed_processor' ) ) {
-				require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
-			}
 			kdna_feed_processor( $this );
 		}
 
@@ -383,6 +391,12 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		// Initialize array of feeds that have been processed.
 		$processed_feeds = array();
+
+		// Belt and braces: this is the line that fataled, and it is reached from
+		// the submission path where a fatal takes the whole form down.
+		if ( ! function_exists( 'kdna_feed_processor' ) ) {
+			require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+		}
 
 		$background_processor = kdna_feed_processor( $this );
 

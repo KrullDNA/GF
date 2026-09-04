@@ -1756,6 +1756,10 @@ class KDNAFormsModel {
 				 * @since 2.3.3.9
 				 */
 				do_action( "kdnaform_post_update_entry_property", $lead_id, $property_name, $property_value, $previous_value );
+				if ( ! function_exists( 'kdna_feed_processor' ) ) {
+					require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+				}
+
 				kdna_feed_processor()->save()->dispatch_on_shutdown();
 			}
 		}

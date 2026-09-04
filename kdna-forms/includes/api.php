@@ -2366,6 +2366,10 @@ class KDNAAPI {
 			}
 		}
 
+		if ( ! function_exists( 'kdna_feed_processor' ) ) {
+			require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+		}
+
 		kdna_feed_processor()->save()->dispatch_on_shutdown();
 
 		return $entry;
