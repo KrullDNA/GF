@@ -265,10 +265,34 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		// rather than after the entry is saved is what lets a declined card
 		// come back as a validation error on the form instead of an entry that
 		// exists but was never paid for.
-		if ( 'subscription' === rgars( $feed, 'meta/transactionType' ) ) {
-			$this->authorization = $this->subscribe( $feed, $submission_data, $form, $entry );
-		} else {
-			$this->authorization = $this->authorize( $feed, $submission_data, $form, $entry );
+		//
+		// Wrapped because a gateway throwing here takes the whole submission
+		// down as a 500 with nothing in the response to say why — the customer
+		// sees a dead form and the site owner sees a blank error log entry at
+		// best. Catching it turns that into a logged reason and a message on
+		// the form.
+		try {
+			if ( 'subscription' === rgars( $feed, 'meta/transactionType' ) ) {
+				$this->authorization = $this->subscribe( $feed, $submission_data, $form, $entry );
+			} else {
+				$this->authorization = $this->authorize( $feed, $submission_data, $form, $entry );
+			}
+		} catch ( \Throwable $e ) {
+			$this->log_error(
+				sprintf(
+					'%s(): the gateway threw %s in %s on line %d: %s',
+					__METHOD__,
+					get_class( $e ),
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
+			$this->authorization = array(
+				'is_authorized' => false,
+				'error_message' => esc_html__( 'The payment could not be processed. Please try again, or contact us if the problem continues.', 'kdnaforms' ),
+			);
 		}
 
 		if ( ! is_array( $this->authorization ) ) {
@@ -353,10 +377,29 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 
 		$transaction_type = rgars( $feed, 'meta/transactionType' );
 
-		if ( 'subscription' === $transaction_type ) {
-			$entry = $this->process_subscription( $this->authorization, $feed, $submission_data, $form, $entry );
-		} else {
-			$entry = $this->process_capture( $this->authorization, $feed, $submission_data, $form, $entry );
+		// Same reasoning as validation(): by this point the entry exists, so a
+		// throw here loses the submission entirely rather than recording it
+		// unpaid.
+		try {
+			if ( 'subscription' === $transaction_type ) {
+				$entry = $this->process_subscription( $this->authorization, $feed, $submission_data, $form, $entry );
+			} else {
+				$entry = $this->process_capture( $this->authorization, $feed, $submission_data, $form, $entry );
+			}
+		} catch ( \Throwable $e ) {
+			$this->log_error(
+				sprintf(
+					'%s(): processing threw %s in %s on line %d: %s',
+					__METHOD__,
+					get_class( $e ),
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
+			$entry['payment_status'] = 'Failed';
+			$this->add_note( rgar( $entry, 'id' ), $e->getMessage(), 'error' );
 		}
 
 		KDNAAPI::update_entry( $entry );

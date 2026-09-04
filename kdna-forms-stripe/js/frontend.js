@@ -241,9 +241,21 @@ window.KDNAStripe = ( function ( $ ) {
 			return;
 		}
 
+		// Styled inline rather than from the stylesheet. The span is inserted
+		// into markup the theme owns, so it inherits that font, and a rule in
+		// our stylesheet is both easy to lose and easy for a theme to outrank.
 		$( '<span/>', { 'class': 'kdna-stripe-price-was', text: earlyBird.was } )
-			.insertBefore( $price )
-			.after( ' ' );
+			.css( {
+				'text-decoration': 'line-through',
+				'text-decoration-thickness': 'from-font',
+				'font-family': $price.css( 'font-family' ),
+				'font-size': $price.css( 'font-size' ),
+				'font-weight': $price.css( 'font-weight' ),
+				'color': $price.css( 'color' ),
+				'opacity': '0.6',
+				'margin-right': '0.4em'
+			} )
+			.insertBefore( $price );
 	}
 
 	/**
