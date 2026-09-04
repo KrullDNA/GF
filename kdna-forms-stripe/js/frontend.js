@@ -182,6 +182,13 @@ window.KDNAStripe = ( function ( $ ) {
 			css['min-height'] = s.height;
 		}
 
+		// Without lineHeight passed to Stripe, the frame sits at the top of a
+		// box that is taller than it. Centring it here does what lineHeight
+		// used to, without the cross-browser inconsistency Stripe warns about.
+		css.display        = 'flex';
+		css['flex-direction'] = 'column';
+		css['justify-content'] = 'center';
+
 		$mount.css( css );
 	}
 
@@ -530,9 +537,22 @@ window.KDNAStripe = ( function ( $ ) {
 		return report;
 	}
 
+	/**
+	 * The same report as debug(), formatted so it can be read or pasted.
+	 *
+	 * The console collapses nested objects, which has meant the useful part of
+	 * every report so far went unseen.
+	 *
+	 * @return {string} The report as indented JSON.
+	 */
+	function debugText() {
+		return JSON.stringify( debug(), null, 2 );
+	}
+
 	return {
 		init: init,
-		debug: debug
+		debug: debug,
+		debugText: debugText
 	};
 
 } )( jQuery );

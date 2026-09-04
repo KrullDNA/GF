@@ -111,6 +111,20 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	private $api = array();
 
 	/**
+	 * The price the early bird replaced, keyed by form id.
+	 *
+	 * apply_early_bird_to_form() lowers basePrice on the field during
+	 * pre_render, and everything after that reads the lowered value — including
+	 * the lookup that works out what to strike through, which then compared 25
+	 * against 25 and concluded there was no discount. The original has to be
+	 * captured at the moment it is replaced.
+	 *
+	 * @since 1.2.3
+	 * @var array
+	 */
+	private $early_bird_was = array();
+
+	/**
 	 * Returns the single instance.
 	 *
 	 * @since 1.0.0
@@ -1131,6 +1145,10 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 			$full = KDNACommon::to_number( $field->basePrice );
 
 			if ( $full > 0 && $early_bird < $full ) {
+				$this->early_bird_was[ (int) rgar( $form, 'id' ) ] = array(
+					'fieldId' => (int) $field->id,
+					'was'     => KDNACommon::to_money( $full, KDNACommon::get_currency() ),
+				);
 				$field->basePrice = $early_bird;
 				break;
 			}
@@ -1238,6 +1256,12 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 * @return array|null The field id and formatted old price, or null.
 	 */
 	public function get_early_bird_display( $form_id ) {
+
+		// Recorded when the price was lowered. Recomputing here would read the
+		// already-lowered price and find no discount.
+		if ( isset( $this->early_bird_was[ (int) $form_id ] ) ) {
+			return $this->early_bird_was[ (int) $form_id ];
+		}
 
 		$feed = $this->get_early_bird_feed( $form_id );
 
