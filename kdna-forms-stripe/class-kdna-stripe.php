@@ -111,6 +111,17 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	private $api = array();
 
 	/**
+	 * Prices replaced by an early bird price, keyed "formId:fieldId".
+	 *
+	 * Held here rather than on the field, because the object that reaches the
+	 * content filter is not reliably the one the pre_render filter modified.
+	 *
+	 * @since 1.2.0
+	 * @var array
+	 */
+	private $early_bird_was = array();
+
+	/**
 	 * Returns the single instance.
 	 *
 	 * @since 1.0.0
@@ -1013,7 +1024,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 */
 	public function show_early_bird_price( $content, $field, $value, $entry_id, $form_id ) {
 
-		$was = rgobj( $field, 'kdnaEarlyBirdWas' );
+		$was = rgar( $this->early_bird_was, $form_id . ':' . $field->id );
 
 		if ( empty( $was ) || $this->is_form_editor() || KDNACommon::is_entry_detail() ) {
 			return $content;
@@ -1120,8 +1131,8 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 
 			if ( $full > 0 && $early_bird < $full ) {
 				// Kept so the old price can be shown struck through.
-				$field->kdnaEarlyBirdWas = $full;
-				$field->basePrice        = $early_bird;
+				$this->early_bird_was[ rgar( $form, 'id' ) . ':' . $field->id ] = $full;
+				$field->basePrice = $early_bird;
 				break;
 			}
 		}

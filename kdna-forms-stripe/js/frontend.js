@@ -34,31 +34,39 @@ window.KDNAStripe = ( function ( $ ) {
 
 		var formId = args.formId;
 
-		// initializeOnLoaded fires again on an AJAX form after each render, so
-		// an element already mounted for this form is left alone rather than
-		// being stacked on top of itself.
-		if ( instances[ formId ] ) {
-			return;
-		}
-
 		var $mount = $( '.kdna-stripe-element[data-form-id="' + formId + '"]' );
 
 		if ( ! $mount.length ) {
 			return;
 		}
 
+		// init runs again after an AJAX render, and again every time the
+		// Elementor editor rebuilds the widget. Mounting twice into the same
+		// node stacks two iframes, but skipping whenever an instance exists
+		// leaves the editor with an empty box, because the node it mounted
+		// into has been thrown away. So the test is whether the element we
+		// mounted last time is still the one on the page.
+		var existing = instances[ formId ];
+
+		if ( existing && existing.mount === $mount.get( 0 ) && document.body.contains( existing.mount ) ) {
+			return;
+		}
+
+		if ( existing && existing.card ) {
+			try {
+				existing.card.unmount();
+			} catch ( e ) {
+				// The node is already gone; nothing to detach from.
+			}
+		}
+
+		var theme = readFormStyling( formId, $mount );
+
 		var stripe   = Stripe( args.publishableKey );
 		var elements = stripe.elements();
 		var card     = elements.create( 'card', {
 			hidePostalCode: false,
-			style: {
-				base: {
-					fontSize: '16px',
-					color: '#32325d',
-					'::placeholder': { color: '#aab7c4' }
-				},
-				invalid: { color: '#9c0f17', iconColor: '#9c0f17' }
-			}
+			style: theme.card
 		} );
 
 		card.mount( $mount.get( 0 ) );
@@ -66,6 +74,7 @@ window.KDNAStripe = ( function ( $ ) {
 		instances[ formId ] = {
 			stripe: stripe,
 			card: card,
+			mount: $mount.get( 0 ),
 			args: args,
 			confirmed: false
 		};
@@ -75,6 +84,88 @@ window.KDNAStripe = ( function ( $ ) {
 		} );
 
 		bindSubmit( formId );
+	}
+
+	/**
+	 * Matches the card element to the form's own inputs.
+	 *
+	 * The card fields live in an iframe Stripe serves, so no stylesheet on this
+	 * site can reach them — whatever Elementor or the form theme does to the
+	 * other inputs stops at the frame. The only way in is the style object
+	 * Stripe accepts, so the styling of a real input on the same form is read
+	 * back and handed over. The box around the frame is a normal element, so
+	 * that is copied directly.
+	 *
+	 * @param {number} formId The form id.
+	 * @param {Object} $mount The element Stripe mounts into.
+	 *
+	 * @return {Object} A style object for Stripe, having styled the container.
+	 */
+	function readFormStyling( formId, $mount ) {
+
+		var fallback = {
+			card: {
+				base: {
+					fontSize: '16px',
+					color: '#32325d',
+					'::placeholder': { color: '#8f95a1' }
+				},
+				invalid: { color: '#c02b0a', iconColor: '#c02b0a' }
+			}
+		};
+
+		var sample = $( '#kform_' + formId )
+			.find( 'input[type="text"], input[type="email"], input[type="tel"]' )
+			.filter( ':visible' )
+			.get( 0 );
+
+		if ( ! sample || ! window.getComputedStyle ) {
+			return fallback;
+		}
+
+		var s = window.getComputedStyle( sample );
+
+		// The frame is transparent, so the box it sits in has to carry the
+		// border, background and spacing the other inputs have.
+		$mount.css( {
+			'background-color': s.backgroundColor,
+			'border': s.border,
+			'border-radius': s.borderRadius,
+			'padding': s.padding,
+			'min-height': s.height
+		} );
+
+		return {
+			card: {
+				base: {
+					fontFamily: s.fontFamily,
+					fontSize: s.fontSize,
+					fontWeight: s.fontWeight,
+					color: s.color,
+					lineHeight: s.lineHeight === 'normal' ? undefined : s.lineHeight,
+					'::placeholder': { color: mutePlaceholder( s.color ) }
+				},
+				invalid: { color: '#c02b0a', iconColor: '#c02b0a' }
+			}
+		};
+	}
+
+	/**
+	 * A placeholder colour derived from the input's own text colour.
+	 *
+	 * @param {string} color The computed colour, as rgb() or rgba().
+	 *
+	 * @return {string} The same hue at reduced opacity.
+	 */
+	function mutePlaceholder( color ) {
+
+		var parts = ( color || '' ).match( /\d+/g );
+
+		if ( ! parts || parts.length < 3 ) {
+			return '#8f95a1';
+		}
+
+		return 'rgba(' + parts[0] + ',' + parts[1] + ',' + parts[2] + ',0.55)';
 	}
 
 	/**

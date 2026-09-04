@@ -6,6 +6,9 @@
  */
 
 .kdna-stripe-element {
+	/* Border, background and padding are copied from the form's own inputs at
+	   runtime, because the card frame cannot inherit them. These are only the
+	   fallback for when there is no input to read. */
 	background: #fff;
 	border: 1px solid #686e77;
 	border-radius: 3px;
