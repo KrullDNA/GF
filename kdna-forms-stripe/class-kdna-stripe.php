@@ -111,17 +111,6 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	private $api = array();
 
 	/**
-	 * Prices replaced by an early bird price, keyed "formId:fieldId".
-	 *
-	 * Held here rather than on the field, because the object that reaches the
-	 * content filter is not reliably the one the pre_render filter modified.
-	 *
-	 * @since 1.1.5
-	 * @var array
-	 */
-	private $early_bird_was = array();
-
-	/**
 	 * Returns the single instance.
 	 *
 	 * @since 1.0.0
@@ -169,10 +158,6 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		// Early bird pricing has to reach the price the customer sees, the
 		// order summary and the amount actually charged, or the three disagree.
 		add_filter( 'kdnaform_product_info', array( $this, 'apply_early_bird_to_product_info' ), 10, 3 );
-
-		// ...and to the price on the form itself, or the customer is quoted one
-		// figure and charged another.
-		add_filter( 'kdnaform_field_content', array( $this, 'show_early_bird_price' ), 10, 5 );
 
 		// The price itself is changed on the field before the form renders, so
 		// core formats it, the hidden input carries it and the running total
@@ -512,6 +497,61 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 						'input_type'        => 'password',
 						'class'             => 'medium',
 						'feedback_callback' => array( $this, 'validate_secret_key' ),
+					),
+				),
+			),
+			array(
+				'title'       => esc_html__( 'Card Field Appearance', 'kdnaforms-stripe' ),
+				'description' => esc_html__( 'The card inputs sit inside a frame served by Stripe, so no CSS on this site can reach them. Leave a box empty and that part is taken from your form\'s own inputs, which is usually what you want. Fill one in to override it.', 'kdnaforms-stripe' ),
+				'fields'      => array(
+					array(
+						'name'        => 'card_background',
+						'label'       => esc_html__( 'Background', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '#ffffff',
+					),
+					array(
+						'name'        => 'card_border_color',
+						'label'       => esc_html__( 'Border Colour', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '#686e77',
+					),
+					array(
+						'name'        => 'card_border_width',
+						'label'       => esc_html__( 'Border Width', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '1px',
+					),
+					array(
+						'name'        => 'card_border_radius',
+						'label'       => esc_html__( 'Border Radius', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '3px',
+					),
+					array(
+						'name'        => 'card_padding',
+						'label'       => esc_html__( 'Padding', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '12px 15px',
+					),
+					array(
+						'name'        => 'card_text_color',
+						'label'       => esc_html__( 'Text Colour', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '#32325d',
+					),
+					array(
+						'name'        => 'card_font_size',
+						'label'       => esc_html__( 'Font Size', 'kdnaforms-stripe' ),
+						'type'        => 'text',
+						'class'       => 'small',
+						'placeholder' => '16px',
 					),
 				),
 			),
@@ -1003,45 +1043,6 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		return $product_info;
 	}
 
-	/**
-	 * Puts the old price back, struck through, beside the new one.
-	 *
-	 * The price itself has already been lowered on the field by
-	 * apply_early_bird_to_form(), so this only adds what was there before. The
-	 * value span is matched by its class attribute ending at
-	 * kinput_product_price — the label span beside it ends at
-	 * kinput_product_price_label and must not be touched.
-	 *
-	 * @since 1.1.4
-	 *
-	 * @param string $content  The field markup.
-	 * @param object $field    The field.
-	 * @param string $value    The field value.
-	 * @param int    $entry_id The entry id.
-	 * @param int    $form_id  The form id.
-	 *
-	 * @return string
-	 */
-	public function show_early_bird_price( $content, $field, $value, $entry_id, $form_id ) {
-
-		$was = rgar( $this->early_bird_was, $form_id . ':' . $field->id );
-
-		if ( empty( $was ) || $this->is_form_editor() || KDNACommon::is_entry_detail() ) {
-			return $content;
-		}
-
-		$markup = sprintf(
-			'<span class="kdna-stripe-price-was">%s</span> ',
-			esc_html( KDNACommon::to_money( $was, KDNACommon::get_currency() ) )
-		);
-
-		return preg_replace(
-			'#(<span[^>]*class=["\'][^"\']*kinput_product_price["\'][^>]*>)#',
-			$markup . '$1',
-			$content,
-			1
-		);
-	}
 
 	/**
 	 * The form's Stripe feed, if one has a live early bird price.
@@ -1130,8 +1131,6 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 			$full = KDNACommon::to_number( $field->basePrice );
 
 			if ( $full > 0 && $early_bird < $full ) {
-				// Kept so the old price can be shown struck through.
-				$this->early_bird_was[ rgar( $form, 'id' ) . ':' . $field->id ] = $full;
 				$field->basePrice = $early_bird;
 				break;
 			}
@@ -1178,12 +1177,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		wp_enqueue_script( 'kdna_stripe_frontend' );
 		wp_enqueue_style( 'kdna_stripe_frontend' );
 
-		$args = array(
-			'formId'         => absint( $form_id ),
-			'publishableKey' => $this->get_publishable_key(),
-			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-			'nonce'          => wp_create_nonce( 'kdna_stripe_intent' ),
-		);
+		$args = $this->get_frontend_args( $form_id );
 
 		// Booting from here as well as from the init script means the element
 		// mounts whichever of the two the page actually delivers; init() is
@@ -1194,6 +1188,108 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 				'jQuery(function(){ if ( window.KDNAStripe ) { window.KDNAStripe.init( %s ); } });',
 				wp_json_encode( $args )
 			)
+		);
+	}
+
+	/**
+	 * Everything the client needs, built once for both boot routes.
+	 *
+	 * The early bird price is worked out here from the feed and the stored form,
+	 * not carried across from the render filters. Two attempts at passing it
+	 * through the field object failed silently — the object reaching the content
+	 * filter is not the one pre_render modified — and the client is the one part
+	 * of this chain already proven to run.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param int $form_id The form id.
+	 *
+	 * @return array
+	 */
+	public function get_frontend_args( $form_id ) {
+
+		$args = array(
+			'formId'         => absint( $form_id ),
+			'publishableKey' => $this->get_publishable_key(),
+			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+			'nonce'          => wp_create_nonce( 'kdna_stripe_intent' ),
+			'appearance'     => $this->get_appearance_settings(),
+			'earlyBird'      => $this->get_early_bird_display( $form_id ),
+		);
+
+		/**
+		 * Filters the settings handed to the Stripe client.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param array $args    The settings.
+		 * @param int   $form_id The form being rendered.
+		 */
+		return apply_filters( 'kdnaform_stripe_frontend_args', $args, $form_id );
+	}
+
+	/**
+	 * The price the early bird replaced, ready to show struck through.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param int $form_id The form id.
+	 *
+	 * @return array|null The field id and formatted old price, or null.
+	 */
+	public function get_early_bird_display( $form_id ) {
+
+		$feed = $this->get_early_bird_feed( $form_id );
+
+		if ( empty( $feed ) ) {
+			return null;
+		}
+
+		$early_bird = $this->get_early_bird_amount( $feed );
+		$form       = KDNAFormsModel::get_form_meta( $form_id );
+
+		if ( null === $early_bird || empty( $form ) ) {
+			return null;
+		}
+
+		foreach ( (array) rgar( $form, 'fields' ) as $field ) {
+			if ( ! in_array( $field->get_input_type(), array( 'singleproduct', 'hiddenproduct', 'price' ), true ) ) {
+				continue;
+			}
+
+			$full = KDNACommon::to_number( $field->basePrice );
+
+			if ( $full > 0 && $early_bird < $full ) {
+				return array(
+					'fieldId' => (int) $field->id,
+					'was'     => KDNACommon::to_money( $full, KDNACommon::get_currency() ),
+				);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * The appearance settings for the card box.
+	 *
+	 * Blank values mean "take it from the form's own inputs", which is the
+	 * default and keeps the card matching the theme without being configured.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return array
+	 */
+	public function get_appearance_settings() {
+
+		return array(
+			'background'   => (string) $this->get_plugin_setting( 'card_background' ),
+			'borderColor'  => (string) $this->get_plugin_setting( 'card_border_color' ),
+			'borderWidth'  => (string) $this->get_plugin_setting( 'card_border_width' ),
+			'borderRadius' => (string) $this->get_plugin_setting( 'card_border_radius' ),
+			'padding'      => (string) $this->get_plugin_setting( 'card_padding' ),
+			'textColor'    => (string) $this->get_plugin_setting( 'card_text_color' ),
+			'fontSize'     => (string) $this->get_plugin_setting( 'card_font_size' ),
 		);
 	}
 
@@ -1665,12 +1761,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 			return;
 		}
 
-		$args = array(
-			'formId'         => absint( rgar( $form, 'id' ) ),
-			'publishableKey' => $this->get_publishable_key(),
-			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
-			'nonce'          => wp_create_nonce( 'kdna_stripe_intent' ),
-		);
+		$args = $this->get_frontend_args( rgar( $form, 'id' ) );
 
 		$script = sprintf(
 			'; if ( window.KDNAStripe ) { window.KDNAStripe.init( %s ); }',

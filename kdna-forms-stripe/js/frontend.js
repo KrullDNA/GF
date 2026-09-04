@@ -60,7 +60,9 @@ window.KDNAStripe = ( function ( $ ) {
 			}
 		}
 
-		var theme = readFormStyling( formId, $mount );
+		var theme = readFormStyling( formId, $mount, args.appearance || {} );
+
+		showEarlyBird( formId, args.earlyBird );
 
 		var stripe   = Stripe( args.publishableKey );
 		var elements = stripe.elements();
@@ -101,7 +103,7 @@ window.KDNAStripe = ( function ( $ ) {
 	 *
 	 * @return {Object} A style object for Stripe, having styled the container.
 	 */
-	function readFormStyling( formId, $mount ) {
+	function readFormStyling( formId, $mount, overrides ) {
 
 		var fallback = {
 			card: {
@@ -114,28 +116,23 @@ window.KDNAStripe = ( function ( $ ) {
 			}
 		};
 
+		overrides = overrides || {};
+
 		var sample = $( '#kform_' + formId )
 			.find( 'input[type="text"], input[type="email"], input[type="tel"]' )
 			.filter( ':visible' )
 			.get( 0 );
 
 		if ( ! sample || ! window.getComputedStyle ) {
-			return fallback;
+			applyContainerStyle( $mount, {}, overrides );
+			return withOverrides( fallback, overrides );
 		}
 
 		var s = window.getComputedStyle( sample );
 
-		// The frame is transparent, so the box it sits in has to carry the
-		// border, background and spacing the other inputs have.
-		$mount.css( {
-			'background-color': s.backgroundColor,
-			'border': s.border,
-			'border-radius': s.borderRadius,
-			'padding': s.padding,
-			'min-height': s.height
-		} );
+		applyContainerStyle( $mount, s, overrides );
 
-		return {
+		return withOverrides( {
 			card: {
 				base: {
 					fontFamily: s.fontFamily,
@@ -147,7 +144,97 @@ window.KDNAStripe = ( function ( $ ) {
 				},
 				invalid: { color: '#c02b0a', iconColor: '#c02b0a' }
 			}
-		};
+		}, overrides );
+	}
+
+	/**
+	 * Styles the box the frame sits in.
+	 *
+	 * The frame itself is transparent, so the background, border, radius and
+	 * padding all belong to this element. A setting wins over what was read from
+	 * the form; an empty setting leaves the form's own value in place.
+	 *
+	 * @param {Object} $mount    The container.
+	 * @param {Object} s         Computed style of a sibling input, may be empty.
+	 * @param {Object} overrides Settings from the plugin's appearance section.
+	 *
+	 * @return {void}
+	 */
+	function applyContainerStyle( $mount, s, overrides ) {
+
+		var css = {};
+
+		css['background-color'] = overrides.background || s.backgroundColor || '#fff';
+		css['border-radius']    = overrides.borderRadius || s.borderRadius || '3px';
+		css['padding']          = overrides.padding || s.padding || '12px 15px';
+
+		if ( overrides.borderColor || overrides.borderWidth ) {
+			css['border-style'] = 'solid';
+			css['border-color'] = overrides.borderColor || s.borderColor || '#686e77';
+			css['border-width'] = overrides.borderWidth || '1px';
+		} else {
+			css.border = s.border || '1px solid #686e77';
+		}
+
+		if ( s.height ) {
+			css['min-height'] = s.height;
+		}
+
+		$mount.css( css );
+	}
+
+	/**
+	 * Applies the text overrides Stripe needs passed in rather than styled.
+	 *
+	 * @param {Object} theme     The style object built from the form.
+	 * @param {Object} overrides Settings from the plugin's appearance section.
+	 *
+	 * @return {Object} The style object with any overrides applied.
+	 */
+	function withOverrides( theme, overrides ) {
+
+		if ( overrides.textColor ) {
+			theme.card.base.color = overrides.textColor;
+			theme.card.base['::placeholder'] = { color: mutePlaceholder( overrides.textColor ) };
+		}
+
+		if ( overrides.fontSize ) {
+			theme.card.base.fontSize = overrides.fontSize;
+		}
+
+		return theme;
+	}
+
+	/**
+	 * Puts the pre-early-bird price back, struck through, beside the new one.
+	 *
+	 * Done here rather than in PHP because two attempts to carry it through the
+	 * render filters were lost, and this code is already known to run — the card
+	 * element mounting is the proof of it.
+	 *
+	 * @param {number} formId    The form id.
+	 * @param {Object} earlyBird The field id and formatted previous price.
+	 *
+	 * @return {void}
+	 */
+	function showEarlyBird( formId, earlyBird ) {
+
+		if ( ! earlyBird || ! earlyBird.was ) {
+			return;
+		}
+
+		var $price = $( '#kform_' + formId )
+			.find( '.kinput_product_price' )
+			.not( '.kinput_product_price_label' )
+			.first();
+
+		if ( ! $price.length || $price.prev( '.kdna-stripe-price-was' ).length ) {
+			return;
+		}
+
+		$( '<span/>', { 'class': 'kdna-stripe-price-was', text: earlyBird.was } )
+			.insertBefore( $price )
+			.after( ' ' );
 	}
 
 	/**
@@ -347,8 +434,46 @@ window.KDNAStripe = ( function ( $ ) {
 		return 'The payment could not be started. Please try again.';
 	}
 
+	/**
+	 * Reports what the client can and cannot see, for when something is missing.
+	 *
+	 * Run KDNAStripe.debug() in the browser console. It answers the questions
+	 * that otherwise take a round trip each: did Stripe.js load, did the field
+	 * render, did the settings arrive, was an early bird price passed, and did
+	 * the element actually mount.
+	 *
+	 * @return {Object} The state of every link in the chain.
+	 */
+	function debug() {
+
+		var report = {
+			stripeJsLoaded: typeof Stripe !== 'undefined',
+			mountPoints: $( '.kdna-stripe-element' ).length,
+			forms: {}
+		};
+
+		$( '.kdna-stripe-element' ).each( function () {
+
+			var id = $( this ).data( 'form-id' );
+			var instance = instances[ id ];
+
+			report.forms[ id ] = {
+				initialised: !! instance,
+				publishableKeyPassed: !! ( instance && instance.args.publishableKey ),
+				earlyBirdPassed: !! ( instance && instance.args.earlyBird ),
+				earlyBirdWas: instance && instance.args.earlyBird ? instance.args.earlyBird.was : null,
+				priceElementFound: $( '#kform_' + id ).find( '.kinput_product_price' ).not( '.kinput_product_price_label' ).length,
+				strikeThroughShown: $( '#kform_' + id ).find( '.kdna-stripe-price-was' ).length > 0,
+				cardMounted: !! ( this.querySelector( 'iframe' ) )
+			};
+		} );
+
+		return report;
+	}
+
 	return {
-		init: init
+		init: init,
+		debug: debug
 	};
 
 } )( jQuery );
