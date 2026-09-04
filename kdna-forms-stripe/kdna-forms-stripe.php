@@ -3,7 +3,7 @@
  * Plugin Name: KDNA Forms Stripe
  * Plugin URI: https://kdnaforms.com
  * Description: Take one-off and recurring card payments through Stripe, with optional early bird pricing that switches to the full price on a date you choose.
- * Version: 1.2.1
+ * Version: 1.1.4
  * Requires at least: 6.5
  * Requires PHP: 7.4
  * Author: KrullDNA
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KDNA_STRIPE_VERSION', '1.2.1' );
+define( 'KDNA_STRIPE_VERSION', '1.1.4' );
 define( 'KDNA_STRIPE_PATH', plugin_dir_path( __FILE__ ) );
 define( 'KDNA_STRIPE_URL', plugin_dir_url( __FILE__ ) );
 

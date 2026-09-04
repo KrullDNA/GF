@@ -142,6 +142,9 @@ class KDNA_Field_Stripe_Card extends KDNA_Field {
 			);
 		}
 
+		// The field is the one thing that certainly knows Stripe is needed here.
+		KDNA_Stripe::get_instance()->enqueue_frontend_assets( $form_id );
+
 		return sprintf(
 			'<div class="kinput_container kinput_container_%1$s">
 				<div class="kdna-stripe-element" data-form-id="%2$d" data-field-id="%3$s"></div>

@@ -162,6 +162,11 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		// ...and to the price on the form itself, or the customer is quoted one
 		// figure and charged another.
 		add_filter( 'kdnaform_field_content', array( $this, 'show_early_bird_price' ), 10, 5 );
+
+		// The price itself is changed on the field before the form renders, so
+		// core formats it, the hidden input carries it and the running total
+		// agrees — rather than rewriting formatted output after the fact.
+		add_filter( 'kdnaform_pre_render', array( $this, 'apply_early_bird_to_form' ) );
 	}
 
 	/**
@@ -988,17 +993,15 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	}
 
 	/**
-	 * Shows the early bird price on the form, with the full price struck out.
+	 * Puts the old price back, struck through, beside the new one.
 	 *
-	 * The charge is already handled server side, but a form that quotes the full
-	 * price and then takes a lower one is just as wrong as the reverse — the
-	 * customer has to be able to see what they are agreeing to. Both the visible
-	 * price and the hidden base price move, so the form's own total agrees too.
+	 * The price itself has already been lowered on the field by
+	 * apply_early_bird_to_form(), so this only adds what was there before. The
+	 * value span is matched by its class attribute ending at
+	 * kinput_product_price — the label span beside it ends at
+	 * kinput_product_price_label and must not be touched.
 	 *
-	 * Applies to the first priced product field, matching where the discount is
-	 * applied server side.
-	 *
-	 * @since 1.2.0
+	 * @since 1.1.4
 	 *
 	 * @param string $content  The field markup.
 	 * @param object $field    The field.
@@ -1010,56 +1013,23 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 */
 	public function show_early_bird_price( $content, $field, $value, $entry_id, $form_id ) {
 
-		if ( ! in_array( $field->get_input_type(), array( 'singleproduct', 'hiddenproduct', 'price' ), true ) ) {
-			return $content;
-		}
+		$was = rgobj( $field, 'kdnaEarlyBirdWas' );
 
-		if ( $this->is_form_editor() || KDNACommon::is_entry_detail() ) {
-			return $content;
-		}
-
-		$feed = $this->get_early_bird_feed( $form_id );
-
-		if ( empty( $feed ) ) {
-			return $content;
-		}
-
-		// Only the field the discount lands on is rewritten.
-		if ( ! $this->is_first_priced_field( $field, $form_id ) ) {
-			return $content;
-		}
-
-		$early_bird = $this->get_early_bird_amount( $feed );
-		$currency   = KDNACommon::get_currency();
-		$full       = KDNACommon::to_number( $field->basePrice );
-
-		if ( null === $early_bird || $full <= 0 || $early_bird >= $full ) {
+		if ( empty( $was ) || $this->is_form_editor() || KDNACommon::is_entry_detail() ) {
 			return $content;
 		}
 
 		$markup = sprintf(
-			'<span class="kdna-stripe-price-was">%1$s</span> <span class="kdna-stripe-price-now">%2$s</span>',
-			esc_html( KDNACommon::to_money( $full, $currency ) ),
-			esc_html( KDNACommon::to_money( $early_bird, $currency ) )
+			'<span class="kdna-stripe-price-was">%s</span> ',
+			esc_html( KDNACommon::to_money( $was, KDNACommon::get_currency() ) )
 		);
 
-		// Replace what the customer reads.
-		$content = preg_replace(
-			'#(<span[^>]*class=[\'"][^\'"]*kinput_product_price[^\'"]*[\'"][^>]*>)(.*?)(</span>)#is',
-			'$1' . $markup . '$3',
+		return preg_replace(
+			'#(<span[^>]*class=["\'][^"\']*kinput_product_price["\'][^>]*>)#',
+			$markup . '$1',
 			$content,
 			1
 		);
-
-		// ...and the value the form totals from.
-		$content = preg_replace(
-			'#(name=[\'"]input_[0-9.]+\.2[\'"][^>]*value=[\'"])[^\'"]*([\'"])#i',
-			'${1}' . esc_attr( $early_bird ) . '$2',
-			$content,
-			1
-		);
-
-		return $content;
 	}
 
 	/**
@@ -1107,6 +1077,113 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Lowers the priced product field before the form is rendered.
+	 *
+	 * Changing basePrice here means core does the formatting, writes the hidden
+	 * base price and drives its own running total from the same number. The
+	 * alternative — rewriting the rendered money string — leaves the total and
+	 * the label disagreeing.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @param array $form The form about to render.
+	 *
+	 * @return array
+	 */
+	public function apply_early_bird_to_form( $form ) {
+
+		if ( $this->is_form_editor() ) {
+			return $form;
+		}
+
+		$feed = $this->get_early_bird_feed( rgar( $form, 'id' ) );
+
+		if ( empty( $feed ) ) {
+			return $form;
+		}
+
+		$early_bird = $this->get_early_bird_amount( $feed );
+
+		if ( null === $early_bird ) {
+			return $form;
+		}
+
+		foreach ( (array) rgar( $form, 'fields' ) as $field ) {
+			if ( ! in_array( $field->get_input_type(), array( 'singleproduct', 'hiddenproduct', 'price' ), true ) ) {
+				continue;
+			}
+
+			$full = KDNACommon::to_number( $field->basePrice );
+
+			if ( $full > 0 && $early_bird < $full ) {
+				// Kept so the old price can be shown struck through.
+				$field->kdnaEarlyBirdWas = $full;
+				$field->basePrice        = $early_bird;
+				break;
+			}
+		}
+
+		return $form;
+	}
+
+	/**
+	 * Registers and enqueues the frontend assets on demand.
+	 *
+	 * Called by the field as it renders, rather than relying on the enqueue
+	 * conditions alone. Those depend on the form reaching the callback, which
+	 * does not happen on every embedding route, and when it fails the field
+	 * renders an unstyled empty container and says nothing.
+	 *
+	 * @since 1.1.4
+	 *
+	 * @param int $form_id The form being rendered.
+	 *
+	 * @return void
+	 */
+	public function enqueue_frontend_assets( $form_id ) {
+
+		if ( ! wp_script_is( 'kdna_stripe_js', 'registered' ) ) {
+			wp_register_script( 'kdna_stripe_js', 'https://js.stripe.com/v3/', array(), $this->_version, true );
+		}
+
+		if ( ! wp_script_is( 'kdna_stripe_frontend', 'registered' ) ) {
+			wp_register_script(
+				'kdna_stripe_frontend',
+				KDNA_STRIPE_URL . 'js/frontend.js',
+				array( 'jquery', 'kdna_stripe_js' ),
+				$this->_version,
+				true
+			);
+		}
+
+		if ( ! wp_style_is( 'kdna_stripe_frontend', 'registered' ) ) {
+			wp_register_style( 'kdna_stripe_frontend', KDNA_STRIPE_URL . 'css/frontend.css', array(), $this->_version );
+		}
+
+		wp_enqueue_script( 'kdna_stripe_js' );
+		wp_enqueue_script( 'kdna_stripe_frontend' );
+		wp_enqueue_style( 'kdna_stripe_frontend' );
+
+		$args = array(
+			'formId'         => absint( $form_id ),
+			'publishableKey' => $this->get_publishable_key(),
+			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+			'nonce'          => wp_create_nonce( 'kdna_stripe_intent' ),
+		);
+
+		// Booting from here as well as from the init script means the element
+		// mounts whichever of the two the page actually delivers; init() is
+		// guarded against running twice for the same form.
+		wp_add_inline_script(
+			'kdna_stripe_frontend',
+			sprintf(
+				'jQuery(function(){ if ( window.KDNAStripe ) { window.KDNAStripe.init( %s ); } });',
+				wp_json_encode( $args )
+			)
+		);
 	}
 
 	// ---------------------------------------------------------------------
