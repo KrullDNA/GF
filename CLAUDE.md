@@ -139,7 +139,14 @@ name. Run it after anything in core that renames or removes something.
 - Version lives in the `Version:` header and `KDNAForms::$version`. Both must match
   the zip filename.
 - **Numbering.** A fix or incremental change moves the third digit (3.4.2 → 3.4.3).
-  A new feature moves the second (3.4.3 → 3.5.0).
+  A new feature moves the second (3.4.3 → 3.5.0). The third digit has no ceiling
+  — 1.1.95 is a perfectly good version number after ninety-five fixes.
+
+  The test is whether the release adds a capability that did not exist, not how
+  much code it took or how visible the result is. Stripe 1.2.0 was numbered as a
+  feature for making the early bird price show on the form; that price had been
+  advertised as working already, so the release was fixing it and should have
+  been 1.1.2. Making a stated feature actually work is a fix.
 - The gate cannot see a click landing on the wrong element, so a build that
   touches editor CSS or the sidebar still needs the Save button pressed once in a
   browser before it is called good.
