@@ -158,6 +158,10 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		// Early bird pricing has to reach the price the customer sees, the
 		// order summary and the amount actually charged, or the three disagree.
 		add_filter( 'kdnaform_product_info', array( $this, 'apply_early_bird_to_product_info' ), 10, 3 );
+
+		// ...and to the price on the form itself, or the customer is quoted one
+		// figure and charged another.
+		add_filter( 'kdnaform_field_content', array( $this, 'show_early_bird_price' ), 10, 5 );
 	}
 
 	/**
@@ -278,6 +282,45 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 */
 	public function init_admin() {
 		parent::init_admin();
+
+		add_action( 'admin_notices', array( $this, 'maybe_warn_about_missing_card_field' ) );
+	}
+
+	/**
+	 * Warns when a form has a Stripe feed but nowhere to enter a card.
+	 *
+	 * Without the field the form simply renders without a card box and the
+	 * payment silently never happens, which looks like the add-on is broken
+	 * rather than like a form that is missing a field.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return void
+	 */
+	public function maybe_warn_about_missing_card_field() {
+
+		if ( ! $this->is_form_settings() && ! $this->is_form_editor() ) {
+			return;
+		}
+
+		$form_id = absint( rgget( 'id' ) );
+
+		if ( ! $form_id || ! $this->has_feed( $form_id ) ) {
+			return;
+		}
+
+		$form = KDNAFormsModel::get_form_meta( $form_id );
+
+		foreach ( (array) rgar( $form, 'fields' ) as $field ) {
+			if ( 'kdna_stripe_card' === $field->get_input_type() ) {
+				return;
+			}
+		}
+
+		printf(
+			'<div class="notice notice-warning"><p>%s</p></div>',
+			esc_html__( 'This form has a Stripe feed but no Stripe Card field, so there is nowhere to enter a card and no payment will be taken. Add the Stripe Card field from the Pricing Fields group in the form editor.', 'kdnaforms-stripe' )
+		);
 	}
 
 	/**
@@ -916,6 +959,128 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		}
 
 		return $product_info;
+	}
+
+	/**
+	 * Shows the early bird price on the form, with the full price struck out.
+	 *
+	 * The charge is already handled server side, but a form that quotes the full
+	 * price and then takes a lower one is just as wrong as the reverse — the
+	 * customer has to be able to see what they are agreeing to. Both the visible
+	 * price and the hidden base price move, so the form's own total agrees too.
+	 *
+	 * Applies to the first priced product field, matching where the discount is
+	 * applied server side.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $content  The field markup.
+	 * @param object $field    The field.
+	 * @param string $value    The field value.
+	 * @param int    $entry_id The entry id.
+	 * @param int    $form_id  The form id.
+	 *
+	 * @return string
+	 */
+	public function show_early_bird_price( $content, $field, $value, $entry_id, $form_id ) {
+
+		if ( ! in_array( $field->get_input_type(), array( 'singleproduct', 'hiddenproduct', 'price' ), true ) ) {
+			return $content;
+		}
+
+		if ( $this->is_form_editor() || KDNACommon::is_entry_detail() ) {
+			return $content;
+		}
+
+		$feed = $this->get_early_bird_feed( $form_id );
+
+		if ( empty( $feed ) ) {
+			return $content;
+		}
+
+		// Only the field the discount lands on is rewritten.
+		if ( ! $this->is_first_priced_field( $field, $form_id ) ) {
+			return $content;
+		}
+
+		$early_bird = $this->get_early_bird_amount( $feed );
+		$currency   = KDNACommon::get_currency();
+		$full       = KDNACommon::to_number( $field->basePrice );
+
+		if ( null === $early_bird || $full <= 0 || $early_bird >= $full ) {
+			return $content;
+		}
+
+		$markup = sprintf(
+			'<span class="kdna-stripe-price-was">%1$s</span> <span class="kdna-stripe-price-now">%2$s</span>',
+			esc_html( KDNACommon::to_money( $full, $currency ) ),
+			esc_html( KDNACommon::to_money( $early_bird, $currency ) )
+		);
+
+		// Replace what the customer reads.
+		$content = preg_replace(
+			'#(<span[^>]*class=[\'"][^\'"]*kinput_product_price[^\'"]*[\'"][^>]*>)(.*?)(</span>)#is',
+			'$1' . $markup . '$3',
+			$content,
+			1
+		);
+
+		// ...and the value the form totals from.
+		$content = preg_replace(
+			'#(name=[\'"]input_[0-9.]+\.2[\'"][^>]*value=[\'"])[^\'"]*([\'"])#i',
+			'${1}' . esc_attr( $early_bird ) . '$2',
+			$content,
+			1
+		);
+
+		return $content;
+	}
+
+	/**
+	 * The form's Stripe feed, if one has a live early bird price.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param int $form_id The form id.
+	 *
+	 * @return array|false
+	 */
+	public function get_early_bird_feed( $form_id ) {
+
+		foreach ( (array) $this->get_feeds( $form_id ) as $feed ) {
+			if ( rgar( $feed, 'is_active' ) && $this->is_early_bird_active( $feed ) ) {
+				return $feed;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Whether this is the first priced product field on the form.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param object $field   The field being rendered.
+	 * @param int    $form_id The form id.
+	 *
+	 * @return bool
+	 */
+	protected function is_first_priced_field( $field, $form_id ) {
+
+		$form = KDNAFormsModel::get_form_meta( $form_id );
+
+		foreach ( (array) rgar( $form, 'fields' ) as $candidate ) {
+			if ( ! in_array( $candidate->get_input_type(), array( 'singleproduct', 'hiddenproduct', 'price' ), true ) ) {
+				continue;
+			}
+
+			if ( KDNACommon::to_number( $candidate->basePrice ) > 0 ) {
+				return (int) $candidate->id === (int) $field->id;
+			}
+		}
+
+		return false;
 	}
 
 	// ---------------------------------------------------------------------
