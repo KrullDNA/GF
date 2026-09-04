@@ -146,7 +146,10 @@ name. Run it after anything in core that renames or removes something.
   much code it took or how visible the result is. Stripe 1.2.0 was numbered as a
   feature for making the early bird price show on the form; that price had been
   advertised as working already, so the release was fixing it and should have
-  been 1.1.2. Making a stated feature actually work is a fix.
+  been 1.1.2. Making a stated feature actually work is a fix, and so is making
+  something that already works do it better — Stripe 1.1.5 replaced a hardcoded
+  card style with one inherited from the form, which looks like new behaviour
+  but lets nobody do anything they could not do before.
 - The gate cannot see a click landing on the wrong element, so a build that
   touches editor CSS or the sidebar still needs the Save button pressed once in a
   browser before it is called good.

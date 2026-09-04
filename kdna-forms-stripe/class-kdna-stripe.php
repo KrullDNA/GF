@@ -116,7 +116,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 * Held here rather than on the field, because the object that reaches the
 	 * content filter is not reliably the one the pre_render filter modified.
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.5
 	 * @var array
 	 */
 	private $early_bird_was = array();
@@ -309,7 +309,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 * payment silently never happens, which looks like the add-on is broken
 	 * rather than like a form that is missing a field.
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.5
 	 *
 	 * @return void
 	 */
@@ -1046,7 +1046,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	/**
 	 * The form's Stripe feed, if one has a live early bird price.
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.5
 	 *
 	 * @param int $form_id The form id.
 	 *
@@ -1066,7 +1066,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	/**
 	 * Whether this is the first priced product field on the form.
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.5
 	 *
 	 * @param object $field   The field being rendered.
 	 * @param int    $form_id The form id.
