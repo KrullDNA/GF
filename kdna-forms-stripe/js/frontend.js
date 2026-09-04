@@ -256,13 +256,82 @@ window.KDNAStripe = ( function ( $ ) {
 	}
 
 	/**
-	 * Intercepts the submit so the card can be confirmed first.
+	 * Hooks the card confirmation into the form's own submission pipeline.
+	 *
+	 * The earlier approach bound a jQuery submit handler and called
+	 * preventDefault(). That fights the pipeline rather than joining it: the
+	 * form posts into a hidden iframe, core had already shown the spinner by
+	 * the time the handler ran, and preventing the post meant the iframe never
+	 * loaded, so the spinner never cleared — even though the payment itself had
+	 * gone through at Stripe.
+	 *
+	 * kform/submission/pre_submission accepts an async filter, so the card can
+	 * be confirmed before the submission continues, and setting abort on the
+	 * data stops it cleanly and clears the spinner.
 	 *
 	 * @param {number} formId The form id.
 	 *
 	 * @return {void}
 	 */
 	function bindSubmit( formId ) {
+
+		if ( window.kform && window.kform.utils && window.kform.utils.addAsyncFilter ) {
+			bindToPipeline( formId );
+			return;
+		}
+
+		bindToSubmitEvent( formId );
+	}
+
+	/**
+	 * Joins the submission pipeline, which is what core uses.
+	 *
+	 * @param {number} formId The form id.
+	 *
+	 * @return {void}
+	 */
+	function bindToPipeline( formId ) {
+
+		if ( instances[ formId ].bound ) {
+			return;
+		}
+
+		instances[ formId ].bound = true;
+
+		window.kform.utils.addAsyncFilter(
+			'kform/submission/pre_submission',
+			function ( data ) {
+
+				var thisForm = parseInt( data && data.form ? data.form.dataset.formid : 0, 10 );
+				var instance = instances[ formId ];
+
+				if ( thisForm !== formId || ! instance || instance.confirmed ) {
+					return Promise.resolve( data );
+				}
+
+				return confirmCard( formId ).then( function ( ok ) {
+
+					if ( ! ok ) {
+						data.abort = true;
+					} else {
+						instance.confirmed = true;
+					}
+
+					return data;
+				} );
+			},
+			5
+		);
+	}
+
+	/**
+	 * The fallback for a form not using the submission pipeline.
+	 *
+	 * @param {number} formId The form id.
+	 *
+	 * @return {void}
+	 */
+	function bindToSubmitEvent( formId ) {
 
 		var $form = $( '#kform_' + formId );
 
@@ -279,110 +348,96 @@ window.KDNAStripe = ( function ( $ ) {
 			}
 
 			event.preventDefault();
+			event.stopImmediatePropagation();
 			setBusy( formId, true );
-			confirm( formId, $form );
+
+			confirmCard( formId ).then( function ( ok ) {
+
+				setBusy( formId, false );
+
+				if ( ! ok ) {
+					return;
+				}
+
+				instance.confirmed = true;
+				$form.trigger( 'submit' );
+			} );
 
 			return false;
 		} );
 	}
 
 	/**
-	 * Asks the server for an intent, confirms the card against it, then lets
-	 * the form submit for real.
+	 * Prices the order server side, then confirms the card against it.
 	 *
 	 * @param {number} formId The form id.
-	 * @param {Object} $form  The form element.
 	 *
-	 * @return {void}
+	 * @return {Promise<boolean>} Whether the form may now be submitted.
 	 */
-	function confirm( formId, $form ) {
+	function confirmCard( formId ) {
 
 		var instance = instances[ formId ];
+		var $form    = $( '#kform_' + formId );
 
-		$.post( instance.args.ajaxUrl, {
+		return $.post( instance.args.ajaxUrl, {
 			action: 'kdna_stripe_create_intent',
 			nonce: instance.args.nonce,
 			form_id: formId,
 			form_data: $form.serialize()
-		} ).done( function ( response ) {
+		} ).then( function ( response ) {
 
 			if ( ! response || ! response.success ) {
-				fail( formId, response && response.data ? response.data.message : genericError() );
-				return;
+				showError( formId, response && response.data ? response.data.message : genericError() );
+
+				return false;
 			}
 
-			// A zero-total submission has nothing to charge, so it goes through
-			// without touching Stripe at all.
+			// Nothing to charge, so the submission carries on untouched.
 			if ( response.data.skip ) {
-				release( formId, $form );
-				return;
+				return true;
 			}
 
 			if ( response.data.subscription ) {
-				confirmForSubscription( formId, $form, response.data );
-				return;
+				return instance.stripe.createPaymentMethod( {
+					type: 'card',
+					card: instance.card
+				} ).then( function ( result ) {
+
+					if ( result.error ) {
+						showError( formId, result.error.message );
+
+						return false;
+					}
+
+					$form.find( 'input[name="kdna_stripe_payment_method"]' ).val( result.paymentMethod.id );
+
+					return true;
+				} );
 			}
 
-			instance.stripe.confirmCardPayment( response.data.clientSecret, {
+			return instance.stripe.confirmCardPayment( response.data.clientSecret, {
 				payment_method: { card: instance.card }
 			} ).then( function ( result ) {
 
 				if ( result.error ) {
-					fail( formId, result.error.message );
-					return;
+					showError( formId, result.error.message );
+
+					return false;
 				}
 
 				$form.find( 'input[name="kdna_stripe_intent_id"]' ).val( result.paymentIntent.id );
-				release( formId, $form );
+
+				return true;
 			} );
 
-		} ).fail( function () {
-			fail( formId, genericError() );
+		} ).then( null, function () {
+			showError( formId, genericError() );
+
+			return false;
 		} );
 	}
 
-	/**
-	 * Collects a payment method for a subscription.
-	 *
-	 * A subscription is created server-side against the customer, so the card
-	 * only needs turning into a payment method here.
-	 *
-	 * @param {number} formId The form id.
-	 * @param {Object} $form  The form element.
-	 *
-	 * @return {void}
-	 */
-	function confirmForSubscription( formId, $form ) {
 
-		var instance = instances[ formId ];
-
-		instance.stripe.createPaymentMethod( {
-			type: 'card',
-			card: instance.card
-		} ).then( function ( result ) {
-
-			if ( result.error ) {
-				fail( formId, result.error.message );
-				return;
-			}
-
-			$form.find( 'input[name="kdna_stripe_payment_method"]' ).val( result.paymentMethod.id );
-			release( formId, $form );
-		} );
-	}
-
-	/**
-	 * Lets the form submit now the card side is done.
-	 *
-	 * @param {number} formId The form id.
-	 * @param {Object} $form  The form element.
-	 *
-	 * @return {void}
-	 */
-	function release( formId, $form ) {
-		instances[ formId ].confirmed = true;
-		$form.trigger( 'submit' );
-	}
 
 	/**
 	 * Shows an error and gives the form back to the customer.
@@ -464,7 +519,9 @@ window.KDNAStripe = ( function ( $ ) {
 				earlyBirdWas: instance && instance.args.earlyBird ? instance.args.earlyBird.was : null,
 				priceElementFound: $( '#kform_' + id ).find( '.kinput_product_price' ).not( '.kinput_product_price_label' ).length,
 				strikeThroughShown: $( '#kform_' + id ).find( '.kdna-stripe-price-was' ).length > 0,
-				cardMounted: !! ( this.querySelector( 'iframe' ) )
+				cardMounted: !! ( this.querySelector( 'iframe' ) ),
+				submitRoute: ( window.kform && window.kform.utils && window.kform.utils.addAsyncFilter ) ? 'submission pipeline' : 'submit event',
+				confirmed: !! ( instance && instance.confirmed )
 			};
 		} );
 
