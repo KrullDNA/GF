@@ -153,7 +153,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	public function init() {
 		parent::init();
 
-		add_filter( 'kdnaform_register_init_scripts', array( $this, 'register_init_scripts' ), 10, 3 );
+		add_action( 'kdnaform_register_init_scripts', array( $this, 'register_init_scripts' ), 10, 3 );
 
 		// Early bird pricing has to reach the price the customer sees, the
 		// order summary and the amount actually charged, or the three disagree.
@@ -1365,37 +1365,45 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 
 
 	/**
-	 * Passes the publishable key and amount to the client.
+	 * Registers the script that boots Stripe for this form.
+	 *
+	 * kdnaform_register_init_scripts is an action, not a filter — a returned
+	 * value is discarded — so the script is handed to add_init_script() the way
+	 * the framework's own frontend feeds do it. Getting this wrong is silent:
+	 * the field renders, Stripe never mounts, and the card box is simply empty.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $scripts The registered init scripts.
-	 * @param array $form    The form.
-	 * @param array $field_values The field values.
+	 * @param array $form         The form being rendered.
+	 * @param array $field_values Field values used to populate the form.
+	 * @param bool  $is_ajax      Whether the form is rendered via AJAX.
 	 *
-	 * @return array
+	 * @return void
 	 */
-	public function register_init_scripts( $scripts, $form, $field_values ) {
+	public function register_init_scripts( $form, $field_values = array(), $is_ajax = false ) {
 
-		if ( ! $this->has_feed( rgar( $form, 'id' ) ) ) {
-			return $scripts;
+		if ( ! $this->has_feed( rgar( $form, 'id' ) ) || ! $this->is_configured() ) {
+			return;
 		}
 
 		$args = array(
-			'formId'         => rgar( $form, 'id' ),
+			'formId'         => absint( rgar( $form, 'id' ) ),
 			'publishableKey' => $this->get_publishable_key(),
 			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
 			'nonce'          => wp_create_nonce( 'kdna_stripe_intent' ),
 		);
 
-		$script = 'if ( window.KDNAStripe ) { window.KDNAStripe.init( ' . wp_json_encode( $args ) . ' ); }';
-
-		$scripts[] = array(
-			'slug' => 'kdna_stripe_init_' . rgar( $form, 'id' ),
-			'script' => $script,
+		$script = sprintf(
+			'; if ( window.KDNAStripe ) { window.KDNAStripe.init( %s ); }',
+			wp_json_encode( $args )
 		);
 
-		return $scripts;
+		KDNAFormDisplay::add_init_script(
+			rgar( $form, 'id' ),
+			'kdna_stripe',
+			KDNAFormDisplay::ON_PAGE_RENDER,
+			$script
+		);
 	}
 
 	// ---------------------------------------------------------------------

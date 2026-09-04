@@ -27,6 +27,7 @@ def core_surface():
     methods = collections.defaultdict(set)
     functions = set()
     hooks = set()
+    hook_kinds = collections.defaultdict(set)
 
     for path in glob.glob(f'{CORE}/**/*.php', recursive=True):
         text = open(path, errors='ignore').read()
@@ -46,10 +47,11 @@ def core_surface():
         functions |= set(re.findall(r'^\s*function\s+([a-z_][A-Za-z0-9_]*)\s*\(', text, re.M))
 
         for m in re.finditer(
-            r"(?:apply_filters|do_action|kdna_apply_filters|kdna_do_action)"
-            r"\(\s*(?:array\(\s*)?['\"]([^'\"]+)['\"]", text
+            r"\b(apply_filters|do_action|kdna_apply_filters|kdna_do_action)"
+            r"\s*\(\s*(?:array\(\s*)?['\"]([^'\"]+)['\"]", text
         ):
-            hooks.add(m.group(1))
+            hooks.add(m.group(2))
+            hook_kinds[m.group(2)].add('filter' if 'apply_filters' in m.group(1) else 'action')
 
     framework = set()
     for path in glob.glob(f'{CORE}/includes/addon/*.php'):
@@ -57,11 +59,11 @@ def core_surface():
             re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', open(path, errors='ignore').read())
         )
 
-    return classes, parents, methods, functions, hooks, framework
+    return classes, parents, methods, functions, hooks, hook_kinds, framework
 
 
 def main():
-    classes, parents, methods, functions, hooks, framework = core_surface()
+    classes, parents, methods, functions, hooks, hook_kinds, framework = core_surface()
 
     addons = sorted(
         d for d in glob.glob('kdna-forms-*')
@@ -135,10 +137,22 @@ def main():
                     elif name not in methods[cls]:
                         problems.add(f"callback array( '{cls}', '{name}' ) — no such method")
 
-            for m in re.finditer(r"add_(?:filter|action)\(\s*['\"]([^'\"]+)['\"]", text):
-                hook = m.group(1)
-                if hook.startswith(('kdnaform_', 'kdna_')) and hook not in hooks:
+            # Hooking an action with add_filter silently discards the return
+            # value, so the add-on runs and achieves nothing. Stripe 1.1.0
+            # registered its init script that way: the field rendered, Stripe
+            # never mounted, and the card box was simply empty.
+            for m in re.finditer(r"add_(filter|action)\(\s*['\"]([^'\"]+)['\"]", text):
+                used, hook = m.groups()
+                if not hook.startswith(('kdnaform_', 'kdna_')):
+                    continue
+                kinds = hook_kinds.get(hook)
+                if not kinds:
                     problems.add(f'hooks "{hook}", which core never fires')
+                elif used not in kinds:
+                    problems.add(
+                        f'uses add_{used} for "{hook}", which core fires as '
+                        f'{" and ".join(sorted(kinds))}'
+                    )
 
             for m in re.finditer(r'(?<![\w>$:])([a-z_][a-z0-9_]{3,})\s*\(', text):
                 fn = m.group(1)
