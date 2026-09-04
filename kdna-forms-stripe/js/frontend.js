@@ -522,7 +522,13 @@ window.KDNAStripe = ( function ( $ ) {
 	 */
 	function debug() {
 
+		var first = instances[ Object.keys( instances )[0] ];
+
 		var report = {
+			// Which build is actually live. Several rounds of debugging have
+			// been spent on a fix that was not installed yet.
+			stripeAddonVersion: first ? first.args.version : 'unknown',
+			coreVersion: first ? first.args.coreVersion : 'unknown',
 			stripeJsLoaded: typeof Stripe !== 'undefined',
 			mountPoints: $( '.kdna-stripe-element' ).length,
 			forms: {}

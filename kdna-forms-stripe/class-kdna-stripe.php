@@ -1231,6 +1231,8 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 			'publishableKey' => $this->get_publishable_key(),
 			'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
 			'nonce'          => wp_create_nonce( 'kdna_stripe_intent' ),
+			'version'        => KDNA_STRIPE_VERSION,
+			'coreVersion'    => KDNAForms::$version,
 			'appearance'     => $this->get_appearance_settings(),
 			'earlyBird'      => $this->get_early_bird_display( $form_id ),
 		);

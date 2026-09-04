@@ -217,6 +217,29 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		return $wpdb->prefix . 'kdna_addon_payment_callback';
 	}
 
+	/**
+	 * Records a payment failure where it can actually be found.
+	 *
+	 * log_error() only writes when the Logging add-on is present, so on a site
+	 * without it a fatal in the payment path left no trace at all — the symptom
+	 * was a bare 500 and an empty log. This writes to both, and PHP's error log
+	 * is the one that is always there.
+	 *
+	 * @since 3.5.5
+	 *
+	 * @param string $message What happened.
+	 *
+	 * @return void
+	 */
+	protected function log_payment_failure( $message ) {
+		$message = '[KDNA Forms payment] ' . $message;
+
+		$this->log_error( $message );
+
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $message );
+	}
+
 	// -------------------------------------------------------------------------
 	// Submission flow
 	// -------------------------------------------------------------------------
@@ -278,7 +301,7 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 				$this->authorization = $this->authorize( $feed, $submission_data, $form, $entry );
 			}
 		} catch ( \Throwable $e ) {
-			$this->log_error(
+			$this->log_payment_failure(
 				sprintf(
 					'%s(): the gateway threw %s in %s on line %d: %s',
 					__METHOD__,
@@ -387,7 +410,7 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 				$entry = $this->process_capture( $this->authorization, $feed, $submission_data, $form, $entry );
 			}
 		} catch ( \Throwable $e ) {
-			$this->log_error(
+			$this->log_payment_failure(
 				sprintf(
 					'%s(): processing threw %s in %s on line %d: %s',
 					__METHOD__,
