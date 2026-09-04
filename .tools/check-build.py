@@ -217,6 +217,48 @@ def check_body_classes(baseline):
 
 
 # --------------------------------------------------------------------------
+def check_asset_names():
+    """Every asset the code asks for must exist on disk.
+
+    Renaming a token inside a bundle also renames the filename that bundle
+    builds at runtime. v3.5.1 shipped with the webpack chunk map asking for
+    kform-products.<hash>.min.js while the file was still gform-products —
+    a 404 and a ChunkLoadError that took the product field's JS down with it,
+    and nothing in PHP or CSS could show it.
+    """
+    dist = os.path.join(ROOT, 'assets/js/dist')
+
+    if not os.path.isdir(dist):
+        return
+
+    hashed = re.compile(r'^([a-z0-9-]+)\.[0-9a-f]{20}\.min\.js$')
+    on_disk = {m.group(1) for f in os.listdir(dist) if (m := hashed.match(f))}
+
+    if not on_disk:
+        return
+
+    # Chunk names appear as bare strings in the runtime's id->name map. Only
+    # names that look like one of ours are worth checking; a miss is a 404.
+    requested = set()
+    for f in os.listdir(dist):
+        if not f.endswith('.js'):
+            continue
+        text = read(os.path.join(dist, f))
+        requested |= set(re.findall(r'["\']((?:kform|gform|kdna)-[a-z-]+)["\']', text))
+
+    # Only compare against names that are actually chunk files somewhere, so
+    # the hundreds of CSS class names sharing the prefix are not dragged in.
+    known = on_disk | {n.replace('gform-', 'kform-') for n in on_disk} \
+                    | {n.replace('kform-', 'gform-') for n in on_disk}
+    missing = sorted(n for n in requested & known if n not in on_disk)
+
+    if missing:
+        fail('the bundle asks for chunk files that do not exist: '
+             + ', '.join(f'{n}.<hash>.min.js' for n in missing))
+    else:
+        notes.append(f'{len(on_disk)} hashed chunk files, all names resolve')
+
+
 def check_audit(baseline):
     def total(rev=None):
         if rev is None:
@@ -244,6 +286,7 @@ def main():
 
     check_lint()
     check_save_path()
+    check_asset_names()
     check_audit(args.baseline)
     if not args.allow_body_class_change:
         check_body_classes(args.baseline)

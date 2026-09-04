@@ -139,7 +139,9 @@ window.KDNAStripe = ( function ( $ ) {
 					fontSize: s.fontSize,
 					fontWeight: s.fontWeight,
 					color: s.color,
-					lineHeight: s.lineHeight === 'normal' ? undefined : s.lineHeight,
+					// lineHeight is deliberately not passed: Stripe warns against
+					// it and renders inconsistently across browsers. The box's
+					// padding, copied above, does the same job.
 					'::placeholder': { color: mutePlaceholder( s.color ) }
 				},
 				invalid: { color: '#c02b0a', iconColor: '#c02b0a' }
