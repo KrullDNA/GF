@@ -261,6 +261,28 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		$this->current_feed            = $feed;
 		$this->current_submission_data = $submission_data;
 
+		// Authorize while the submission can still be stopped. Doing it here
+		// rather than after the entry is saved is what lets a declined card
+		// come back as a validation error on the form instead of an entry that
+		// exists but was never paid for.
+		if ( 'subscription' === rgars( $feed, 'meta/transactionType' ) ) {
+			$this->authorization = $this->subscribe( $feed, $submission_data, $form, $entry );
+		} else {
+			$this->authorization = $this->authorize( $feed, $submission_data, $form, $entry );
+		}
+
+		if ( ! is_array( $this->authorization ) ) {
+			$this->authorization = array();
+		}
+
+		// A gateway that reports neither outcome has authorized nothing, and
+		// treating silence as success would save an unpaid entry as Paid.
+		$succeeded = rgar( $this->authorization, 'is_authorized' ) || rgar( $this->authorization, 'is_success' );
+
+		if ( ! $succeeded ) {
+			$validation_result = $this->get_validation_result( $validation_result, $this->authorization );
+		}
+
 		return $validation_result;
 	}
 
