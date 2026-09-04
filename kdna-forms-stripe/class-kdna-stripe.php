@@ -154,8 +154,6 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		parent::init();
 
 		add_filter( 'kdnaform_register_init_scripts', array( $this, 'register_init_scripts' ), 10, 3 );
-		add_filter( 'kdnaform_field_content', array( $this, 'add_stripe_payment_element' ), 10, 5 );
-		add_filter( 'kdnaform_form_tag', array( $this, 'add_intent_inputs' ), 10, 2 );
 
 		// Early bird pricing has to reach the price the customer sees, the
 		// order summary and the amount actually charged, or the three disagree.
@@ -1364,54 +1362,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		return sanitize_text_field( rgpost( 'kdna_stripe_payment_method' ) );
 	}
 
-	/**
-	 * Adds the hidden inputs the client writes its ids into.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $form_tag The form tag.
-	 * @param array  $form     The form.
-	 *
-	 * @return string
-	 */
-	public function add_intent_inputs( $form_tag, $form ) {
-		return $form_tag;
-	}
 
-	/**
-	 * Renders the Stripe payment element in place of a credit card field.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $content The field content.
-	 * @param object $field   The field.
-	 * @param string $value   The field value.
-	 * @param int    $entry_id The entry id.
-	 * @param int    $form_id The form id.
-	 *
-	 * @return string
-	 */
-	public function add_stripe_payment_element( $content, $field, $value, $entry_id, $form_id ) {
-
-		if ( 'creditcard' !== $field->type || ! $this->has_feed( $form_id ) ) {
-			return $content;
-		}
-
-		if ( $this->is_form_editor() || KDNACommon::is_entry_detail() ) {
-			return $content;
-		}
-
-		$mount = sprintf(
-			'<div class="kdna-stripe-element" data-form-id="%1$d" data-field-id="%2$s"></div>
-			 <div class="kdna-stripe-errors" role="alert" aria-live="polite"></div>
-			 <input type="hidden" name="kdna_stripe_intent_id" value="" />
-			 <input type="hidden" name="kdna_stripe_payment_method" value="" />',
-			(int) $form_id,
-			esc_attr( $field->id )
-		);
-
-		return preg_replace( '#<div class=[\'"]kinput_container[^>]*>.*</div>#is', $mount, $content ) ?: $mount;
-	}
 
 	/**
 	 * Passes the publishable key and amount to the client.

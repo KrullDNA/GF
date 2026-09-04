@@ -23,6 +23,7 @@ CORE = 'kdna-forms'
 def core_surface():
     """What core offers: classes and their methods, functions, and hooks fired."""
     classes = set()
+    parents = {}
     methods = collections.defaultdict(set)
     functions = set()
     hooks = set()
@@ -35,6 +36,9 @@ def core_surface():
             r'(?=\n\s*(?:class|interface|trait)\s|\Z)', text, re.S
         ):
             classes.add(m.group(1))
+            ext = re.match(r'\s*extends\s+([A-Za-z0-9_]+)', m.group(2))
+            if ext:
+                parents[m.group(1)] = ext.group(1)
             methods[m.group(1)] |= set(
                 re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', m.group(2))
             )
@@ -53,11 +57,11 @@ def core_surface():
             re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', open(path, errors='ignore').read())
         )
 
-    return classes, methods, functions, hooks, framework
+    return classes, parents, methods, functions, hooks, framework
 
 
 def main():
-    classes, methods, functions, hooks, framework = core_surface()
+    classes, parents, methods, functions, hooks, framework = core_surface()
 
     addons = sorted(
         d for d in glob.glob('kdna-forms-*')
@@ -81,6 +85,19 @@ def main():
 
             text = open(path, errors='ignore').read()
             own = set(re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', text))
+
+            # An add-on class inherits from whatever it extends, which is not
+            # always the add-on framework — a custom field extends KDNA_Field.
+            # Walk the chain so inherited methods are not reported missing.
+            inherited = set(framework)
+            for m in re.finditer(r'\bclass\s+[A-Za-z0-9_]+\s+extends\s+([A-Za-z0-9_]+)', text):
+                parent = m.group(1)
+                seen_parents = set()
+                while parent in classes and parent not in seen_parents:
+                    seen_parents.add(parent)
+                    inherited |= methods[parent]
+                    parent = parents.get(parent)
+            own = own | inherited
 
             for m in re.finditer(r'\b([A-Z][A-Za-z0-9_]*)::([a-zA-Z_][A-Za-z0-9_]*)\s*\(', text):
                 cls, meth = m.groups()
