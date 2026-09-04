@@ -80,6 +80,20 @@ def main():
     for addon in addons:
         problems = set()
 
+        # Classes the add-on defines itself are not core's to provide.
+        own_classes = {}
+        for path in glob.glob(f'{addon}/**/*.php', recursive=True):
+            if 'stripe-php' in path or '/vendor/' in path:
+                continue
+            body = open(path, errors='ignore').read()
+            for m in re.finditer(
+                r'\b(?:class|interface|trait)\s+([A-Za-z_][A-Za-z0-9_]*)(.*?)'
+                r'(?=\n\s*(?:class|interface|trait)\s|\Z)', body, re.S
+            ):
+                own_classes[m.group(1)] = set(
+                    re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', m.group(2))
+                )
+
         for path in glob.glob(f'{addon}/**/*.php', recursive=True):
             # Bundled third-party libraries answer to themselves, not to core.
             if 'stripe-php' in path or '/vendor/' in path:
@@ -105,8 +119,12 @@ def main():
                 cls, meth = m.groups()
                 if cls in ('self', 'static', 'parent') or not cls.startswith('KDNA'):
                     continue
-                if cls not in classes:
-                    problems.add(f'{cls} does not exist in core')
+                if cls in own_classes:
+                    # Inherited methods count too; the add-on's parent is core's.
+                    if meth not in own_classes[cls] and meth not in framework:
+                        problems.add(f'{cls}::{meth}() is not defined by the add-on')
+                elif cls not in classes:
+                    problems.add(f'{cls} does not exist in core or the add-on')
                 elif meth not in methods[cls]:
                     problems.add(f'{cls}::{meth}() does not exist')
 

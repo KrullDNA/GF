@@ -399,7 +399,33 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 * @return bool
 	 */
 	public function frontend_script_callback( $form ) {
-		return $form && $this->has_feed( $form['id'] );
+		return $form && $this->form_has_card_field( $form );
+	}
+
+	/**
+	 * Whether a form carries the Stripe Card field.
+	 *
+	 * The assets used to load only when the form had a feed, which made an
+	 * unconfigured form fail in the worst way available: the field rendered its
+	 * container, no stylesheet or script arrived to fill it, and the page showed
+	 * a label with nothing beneath it. The field being on the form is reason
+	 * enough to load them — if Stripe cannot then start, it says so.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @param array $form The form.
+	 *
+	 * @return bool
+	 */
+	public function form_has_card_field( $form ) {
+
+		foreach ( (array) rgar( $form, 'fields' ) as $field ) {
+			if ( 'kdna_stripe_card' === $field->get_input_type() ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	// ---------------------------------------------------------------------
@@ -1547,7 +1573,7 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	 */
 	public function register_init_scripts( $form, $field_values = array(), $is_ajax = false ) {
 
-		if ( ! $this->has_feed( rgar( $form, 'id' ) ) || ! $this->is_configured() ) {
+		if ( ! $this->form_has_card_field( $form ) || ! $this->is_configured() ) {
 			return;
 		}
 

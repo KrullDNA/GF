@@ -133,6 +133,15 @@ class KDNA_Field_Stripe_Card extends KDNA_Field {
 			);
 		}
 
+		// If Stripe cannot start, say so where the card box would be. An empty
+		// container is indistinguishable from a broken plugin.
+		if ( ! class_exists( 'KDNA_Stripe' ) || ! KDNA_Stripe::get_instance()->is_configured() ) {
+			return sprintf(
+				'<div class="kinput_container kdna-stripe-unconfigured">%s</div>',
+				esc_html__( 'Card payments are not available: Stripe has not been set up on this site.', 'kdnaforms-stripe' )
+			);
+		}
+
 		return sprintf(
 			'<div class="kinput_container kinput_container_%1$s">
 				<div class="kdna-stripe-element" data-form-id="%2$d" data-field-id="%3$s"></div>

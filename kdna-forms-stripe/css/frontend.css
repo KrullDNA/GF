@@ -58,3 +58,13 @@
 .kdna-stripe-price-now {
 	font-weight: 700;
 }
+
+/* Shown where the card box would be when Stripe has no keys. */
+.kdna-stripe-unconfigured {
+	background: #fff8e5;
+	border: 1px solid #f0b849;
+	border-radius: 3px;
+	color: #674600;
+	font-size: 0.875rem;
+	padding: 0.75rem 0.9375rem;
+}
