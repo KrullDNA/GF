@@ -166,6 +166,30 @@ executed, so it carried faults nothing else could reach:
 - **Read-after-write on the form object.** `kdnaform_pre_render` mutations are
   visible to everything that runs later, so a value derived from the original
   has to be captured at the moment it is replaced, not recomputed downstream.
+- **Never let the gateway see a submission that has already failed validation.**
+  `KDNAPaymentAddOn::validation()` had no check on the incoming
+  `$validation_result['is_valid']` — every other guard in it asks whether there
+  is anything to charge, none asked whether we are allowed to. A client filled
+  in a card but missed a required field: the card was charged, the form came
+  back saying "please fill in the required fields", and because validation
+  failed no entry was saved and no notification was sent. The only record that
+  the money moved was in the Stripe dashboard.
+- **Tokenise on the client, take the money on the server, and only after
+  validation.** Stock Gravity Forms Stripe creates the PaymentIntent with
+  `confirm: 'false'`, `confirmation_method: 'manual'` and
+  `capture_method: 'manual'`, so it sits at `requires_confirmation` while the
+  form is submitted and validated, and `authorize()` confirms it afterwards. Our
+  client called `stripe.confirmCardPayment()` inside
+  `kform/submission/pre_submission`, which charges the card before the server
+  has seen the submission at all. The intent is now always created with
+  `capture_method: 'manual'` whatever the feed asks for, so that confirmation is
+  an authorization only and `capture()` takes the money once validation passes.
+- **An authorization nobody captures is still visible to the customer.** It
+  shows as pending and Stripe drops it after seven days. When a submission is
+  rejected, cancel the intent rather than leaving it to expire —
+  `KDNA_Stripe::validation()` calls `release_unused_authorization()` after the
+  framework has had its turn, so it covers a form that failed on its own fields
+  and one the gateway rejected alike.
 - **Installing the first payment add-on switches on dormant core code.**
   `KDNAFeedAddOn::add_post_payment_actions()` opens with
   `if ( ! $addon instanceof KDNAPaymentAddOn ) return;`, so until Stripe existed
