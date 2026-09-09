@@ -32,16 +32,27 @@ def core_surface():
     for path in glob.glob(f'{CORE}/**/*.php', recursive=True):
         text = open(path, errors='ignore').read()
 
-        for m in re.finditer(
-            r'\b(?:class|interface|trait)\s+([A-Za-z_][A-Za-z0-9_]*)(.*?)'
-            r'(?=\n\s*(?:class|interface|trait)\s|\Z)', text, re.S
-        ):
-            classes.add(m.group(1))
-            ext = re.match(r'\s*extends\s+([A-Za-z0-9_]+)', m.group(2))
+        # Anchored to the start of a line and allowing abstract/final. The old
+        # pattern matched the bare word "class" inside a docblock and then ran to
+        # the end of the file, because its lookahead could not step over the
+        # "abstract " in "abstract class KDNAPaymentAddOn". The whole payment
+        # framework was invisible to this script as a result.
+        marks = [
+            (m.start(), m.group(1))
+            for m in re.finditer(
+                r'^\s*(?:abstract\s+|final\s+)*(?:class|interface|trait)\s+'
+                r'([A-Za-z_][A-Za-z0-9_]*)', text, re.M
+            )
+        ]
+        for i, (pos, name) in enumerate(marks):
+            end = marks[i + 1][0] if i + 1 < len(marks) else len(text)
+            body = text[pos:end]
+            classes.add(name)
+            ext = re.search(r'\bextends\s+([A-Za-z0-9_\\]+)', body[:body.find('{') + 1 or 200])
             if ext:
-                parents[m.group(1)] = ext.group(1)
-            methods[m.group(1)] |= set(
-                re.findall(r'function\s+([a-zA-Z_][A-Za-z0-9_]*)\s*\(', m.group(2))
+                parents[name] = ext.group(1).lstrip('\\')
+            methods[name] |= set(
+                re.findall(r'function\s+&?([a-zA-Z_][A-Za-z0-9_]*)\s*\(', body)
             )
 
         functions |= set(re.findall(r'^\s*function\s+([a-z_][A-Za-z0-9_]*)\s*\(', text, re.M))
@@ -62,8 +73,110 @@ def core_surface():
     return classes, parents, methods, functions, hooks, hook_kinds, framework
 
 
+def strip_comments(text):
+    """Blank out comments, keeping line numbers, so docblock examples don't count."""
+    text = re.sub(r'/\*.*?\*/', lambda m: '\n' * m.group(0).count('\n'), text, flags=re.S)
+    text = re.sub(r'(?m)//.*$', '', text)
+    return re.sub(r'(?m)^\s*#.*$', '', text)
+
+
+def core_self_calls():
+    """Methods core calls on an add-on instance that no class in the tree defines.
+
+    The add-on side cannot see these. KDNAFeedAddOn::add_post_payment_actions()
+    called $addon->get_post_payment_actions_config() for three releases without
+    anything defining it, because the guard above it meant the line only ran once
+    a payment add-on existed. Adding Stripe fataled every payment feed settings
+    page. A function can exist in the design and still be undefined in the code.
+    """
+    parents = {}
+    methods = collections.defaultdict(set)
+    bodies = {}
+
+    roots = [CORE] + sorted(d for d in glob.glob('kdna-forms-*') if os.path.isdir(d))
+    for root in roots:
+        for path in glob.glob(f'{root}/**/*.php', recursive=True):
+            if 'stripe-php' in path or f'{os.sep}legacy{os.sep}' in path:
+                continue
+            text = strip_comments(open(path, errors='ignore').read())
+            marks = [
+                (m.start(), m.group(1), m.group(2))
+                for m in re.finditer(
+                    r'^\s*(?:abstract\s+|final\s+)?class\s+([A-Za-z_]\w*)'
+                    r'\s*(?:extends\s+([A-Za-z_\\][\w\\]*))?', text, re.M
+                )
+            ]
+            for i, (pos, name, ext) in enumerate(marks):
+                end = marks[i + 1][0] if i + 1 < len(marks) else len(text)
+                parents[name] = ext.lstrip('\\') if ext else None
+                bodies[name] = (path, text[:pos].count('\n'), text[pos:end])
+                methods[name] |= set(re.findall(
+                    r'^\s*(?:public|protected|private|static|abstract|final|\s)*'
+                    r'function\s+&?([A-Za-z_]\w*)\s*\(', text[pos:end], re.M
+                ))
+
+    def chain(cls):
+        seen = []
+        while cls and cls not in seen:
+            seen.append(cls)
+            cls = parents.get(cls)
+        return seen
+
+    # Only classes whose whole ancestry is present can be judged; one rooted in a
+    # class we never parsed might inherit the method from there.
+    def resolvable(cls):
+        return parents.get(chain(cls)[-1]) is None and chain(cls)[-1] in bodies
+
+    # $addon is whichever add-on instance was handed in, not the enclosing class,
+    # so it resolves against everything an add-on could be: the three framework
+    # bases plus every concrete add-on. Judging it against $this's own hierarchy
+    # reported the whole delayed-feed API as missing.
+    addon_surface = set()
+    for cls in bodies:
+        if any(base in chain(cls) for base in
+               ('KDNAAddOn', 'KDNAFeedAddOn', 'KDNAPaymentAddOn')):
+            addon_surface |= set().union(*(methods.get(k, set()) for k in chain(cls)))
+
+    problems = []
+    seen = set()
+    for cls, (path, line0, body) in sorted(bodies.items()):
+        if not resolvable(cls):
+            continue
+        own = set().union(*(methods.get(k, set()) for k in chain(cls)))
+
+        # A class with __call answers for anything; ChoiceDecorator forwards the
+        # whole field API to the field it wraps.
+        if '__call' in own:
+            continue
+
+        # Calls the code already guards are not faults. KDNAForms tests for
+        # results_fields() before calling it, which is how an optional add-on
+        # API is meant to be used.
+        guarded = set(re.findall(
+            r'(?:method_exists|is_callable)\s*\(\s*\$\w+\s*,\s*[\'"](\w+)[\'"]', body
+        ))
+
+        for m in re.finditer(r'\$(this|addon)\s*->\s*([A-Za-z_]\w*)\s*\(', body):
+            var, name = m.group(1), m.group(2)
+            known = own if var == 'this' else addon_surface
+            if (name in known or name in guarded or name.startswith('__')
+                    or (cls, var, name) in seen):
+                continue
+            seen.add((cls, var, name))
+            line = line0 + body[:m.start()].count('\n') + 1
+            problems.append(f'{cls}: ${var}->{name}() - {path}:{line}')
+    return problems
+
+
 def main():
     classes, parents, methods, functions, hooks, hook_kinds, framework = core_surface()
+
+    undefined = core_self_calls()
+    if undefined:
+        print('Methods called on an add-on instance that nothing defines:')
+        for p in undefined:
+            print(f'  - {p}')
+        print()
 
     addons = sorted(
         d for d in glob.glob('kdna-forms-*')

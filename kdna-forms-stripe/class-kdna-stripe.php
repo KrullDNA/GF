@@ -730,6 +730,28 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	}
 
 	/**
+	 * Places the "Post Payment Actions" checkbox above the conditional logic
+	 * section, so the two settings that decide whether a feed runs sit together.
+	 *
+	 * A feed add-on that supports delayed payment gets one checkbox here per
+	 * feed it has on this form, reading "Process <add-on> feed only when payment
+	 * is received." Ticking it writes delay_<slug> into this feed's meta, which
+	 * KDNAPaymentAddOn::maybe_delay_feed_processing() reads on submission.
+	 *
+	 * @since 1.2.6
+	 *
+	 * @param string $feed_slug The slug of the feed add-on asking to be delayed.
+	 *
+	 * @return array
+	 */
+	public function get_post_payment_actions_config( $feed_slug ) {
+		return array(
+			'setting'  => 'feed_condition',
+			'position' => 'before',
+		);
+	}
+
+	/**
 	 * Adds the early bird pricing section to the feed.
 	 *
 	 * The section sits with the other product settings because that is where

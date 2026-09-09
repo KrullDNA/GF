@@ -123,6 +123,21 @@ every `$this->` against the framework, every hook they listen for against the
 hooks core actually fires, and that none of them still carries a Gravity Forms
 name. Run it after anything in core that renames or removes something.
 
+It also checks the seam from the **core** side, which the add-on side cannot see:
+every method core calls on an add-on instance (`$this->` and `$addon->`) resolved
+against the whole inheritance chain, skipping names a `method_exists` guard
+already covers and classes with `__call`. That is how `add_post_payment_actions()`
+was found calling `$addon->get_post_payment_actions_config()` when no class
+defined it.
+
+**A checker that reports OK may be reporting on nothing.** This one's class regex
+could not step over the `abstract ` in `abstract class KDNAPaymentAddOn`, so it
+matched the bare word "class" in a docblock, ran `(.*?)` to the end of the file,
+and silently indexed zero payment-framework methods — while printing `OK` for
+every add-on. When a check passes, confirm it looked at what you think it did:
+the run now prints how many classes and methods it found, so a collapse shows up
+as the number falling.
+
 ## Payments
 
 Stripe is the first payment add-on this fork has had, and payment add-ons take a
@@ -151,6 +166,17 @@ executed, so it carried faults nothing else could reach:
 - **Read-after-write on the form object.** `kdnaform_pre_render` mutations are
   visible to everything that runs later, so a value derived from the original
   has to be captured at the moment it is replaced, not recomputed downstream.
+- **Installing the first payment add-on switches on dormant core code.**
+  `KDNAFeedAddOn::add_post_payment_actions()` opens with
+  `if ( ! $addon instanceof KDNAPaymentAddOn ) return;`, so until Stripe existed
+  the line after it never ran. That line called
+  `$addon->get_post_payment_actions_config()`, which nothing defined, and adding
+  Stripe fataled the feed settings page of every add-on. Any guard of the form
+  "only for a kind of add-on this fork has none of" is hiding untested code;
+  grep for `instanceof` in the framework before adding a new kind of add-on.
+  Note the two halves already agreed — `add_post_payment_actions()` writes
+  `delay_<slug>` and `maybe_delay_feed_processing()` reads it — so the feature
+  was fully wired except for the one method that decides where to draw it.
 
 ## Build and release
 
@@ -186,3 +212,22 @@ executed, so it carried faults nothing else could reach:
 - Verify the shipped zip, not just the working tree — check the changed file inside it.
 - The site runs LiteSpeed. Inline scripts and CSS are cached in the page HTML, so a
   fix can look like it did nothing until the cache is purged. Say so when relevant.
+- **LiteSpeed also caches the 404 page against a missing static file's URL.**
+  When a request for a file that is not there falls through to WordPress, the
+  404 page is stored under that exact URL. Upload the file and the cache still
+  answers first, so the file is present on disk and the browser still gets HTML.
+  It survives re-uploading, deleting and re-extracting the plugin — only a purge
+  clears it. Purge before concluding anything about a missing asset.
+- **Reading a ChunkLoadError.** webpack ends the message with `(error: URL)` when
+  the request failed and `(missing: URL)` when it *succeeded* — the script loaded
+  and registered no chunk. `missing` therefore means HTTP 200 with a body that is
+  not the chunk, i.e. an HTML page, which pairs with `Uncaught SyntaxError:
+  Unexpected token '<'`. It never means the file is absent from the build.
+- **Probe the server rather than reasoning about the upload.** `.tools/probe-dist-files.js`
+  pastes into the browser console and fetches all 45 files in `assets/js/dist/`,
+  comparing status, content type and length against the shipped zip, with a
+  control request for a name that is deliberately absent so the site's own 404
+  is visible for comparison. Use a unique query string on each request — that is
+  what distinguishes a caching fault from a missing file, since the cache is
+  keyed on the URL the browser asks for. Compare `t.length` (characters) with
+  care: it undercounts bytes for the vendor bundles, which contain non-ASCII.

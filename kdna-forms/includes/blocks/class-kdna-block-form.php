@@ -96,6 +96,34 @@ class KDNA_Block_Form extends KDNA_Block {
 	}
 
 	/**
+	 * The forms offered in the block's form picker.
+	 *
+	 * localize_script() has always called this and nothing defined it. It does
+	 * not fatal today only because scripts() returns an empty array, so
+	 * KDNA_Block::register_scripts() returns before localizing — the block's JS
+	 * ships inside the admin bundle instead. Anything that gives this block a
+	 * script of its own would have hit an undefined method.
+	 *
+	 * @since 3.5.7
+	 *
+	 * @return array A list of id and title pairs, newest form first.
+	 */
+	public function get_forms() {
+
+		$forms  = KDNAFormsModel::get_forms( null, 'title' );
+		$picker = array();
+
+		foreach ( $forms as $form ) {
+			$picker[] = array(
+				'id'    => absint( $form->id ),
+				'title' => $form->title,
+			);
+		}
+
+		return $picker;
+	}
+
+	/**
 	 * Localize Form block script.
 	 *
 	 * @since  2.4.10

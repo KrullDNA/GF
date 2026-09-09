@@ -1385,6 +1385,33 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 	}
 
 	/**
+	 * Says whether, and where, a feed add-on may add its "Post Payment Actions"
+	 * checkbox to this add-on's feed settings.
+	 *
+	 * KDNAFeedAddOn::add_post_payment_actions() calls this on every payment
+	 * add-on whose feed settings are being rendered, so it must exist on the
+	 * base class: without it, opening a payment feed fatals the moment any feed
+	 * add-on has declared delayed payment support.
+	 *
+	 * Returning an empty array switches the feature off, which is the default —
+	 * a payment add-on has to name a setting to anchor the checkbox to before
+	 * the checkbox can be placed.
+	 *
+	 * @since 3.5.7
+	 *
+	 * @param string $feed_slug The slug of the feed add-on asking to be delayed.
+	 *
+	 * @return array {
+	 *     @type string $setting       The name of the field to anchor to.
+	 *     @type string $position      'before' or 'after'. Defaults to 'after'.
+	 *     @type bool   $default_value Whether the checkbox starts ticked.
+	 * }
+	 */
+	public function get_post_payment_actions_config( $feed_slug ) {
+		return array();
+	}
+
+	/**
 	 * Hold non-payment feeds until payment completes, where configured.
 	 *
 	 * @param bool   $is_delayed Whether processing is already delayed.
