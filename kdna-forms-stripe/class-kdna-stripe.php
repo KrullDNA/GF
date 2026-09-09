@@ -251,9 +251,17 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		$currency = KDNACommon::get_currency();
 
 		$args = array(
-			'amount'         => $this->get_amount_export( $amount, $currency ),
-			'currency'       => strtolower( $currency ),
-			'capture_method' => $this->get_capture_method( $feed ),
+			'amount'   => $this->get_amount_export( $amount, $currency ),
+			'currency' => strtolower( $currency ),
+
+			// Always manual, whatever the feed asks for. The client confirms
+			// this intent before the form is submitted, so an automatic capture
+			// would take the money before the server has seen the submission at
+			// all - and a form that then fails validation leaves the customer
+			// charged with no entry and no notification. Manual capture makes
+			// that confirmation an authorization only; capture() takes the money
+			// once validation has passed, and honours the feed's setting there.
+			'capture_method' => 'manual',
 			'metadata'       => array(
 				'form_id' => $form_id,
 				'form'    => rgar( $form, 'title' ),
@@ -1409,12 +1417,92 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 	// ---------------------------------------------------------------------
 
 	/**
+	 * Releases the hold on the card when the submission is not going to be
+	 * accepted, then hands over to the framework.
+	 *
+	 * The client authorises the card before the form is submitted, so a form
+	 * that fails validation leaves an authorization the customer can see on
+	 * their statement as pending. Nothing will ever capture it and Stripe would
+	 * drop it after seven days, which is seven days of the customer believing
+	 * they have been charged for a form that told them to fill in a missing
+	 * field. Cancelling it here releases it straight away.
+	 *
+	 * @since 1.2.8
+	 *
+	 * @param array $validation_result The validation result.
+	 *
+	 * @return array
+	 */
+	public function validation( $validation_result ) {
+
+		$validation_result = parent::validation( $validation_result );
+
+		// Checked after the framework has had its turn, so this covers both a
+		// form that failed on its own fields and one the gateway rejected —
+		// a declined card, or an amount that no longer matches the order.
+		// Either way nothing is ever going to capture this hold.
+		if ( ! rgar( $validation_result, 'is_valid' ) ) {
+			$this->release_unused_authorization();
+		}
+
+		return $validation_result;
+	}
+
+	/**
+	 * Cancels an authorization this submission is not going to use.
+	 *
+	 * Only an uncaptured authorization is touched. Anything already captured is
+	 * a real payment attached to a real entry and is none of this method's
+	 * business.
+	 *
+	 * @since 1.2.8
+	 *
+	 * @return void
+	 */
+	protected function release_unused_authorization() {
+
+		$intent_id = $this->get_submitted_intent_id();
+
+		if ( empty( $intent_id ) || ! $this->is_configured() ) {
+			return;
+		}
+
+		$api    = $this->get_api();
+		$intent = $api->get_payment_intent( $intent_id );
+
+		if ( is_wp_error( $intent ) || 'requires_capture' !== $intent->status ) {
+			return;
+		}
+
+		$cancelled = $api->cancel_payment_intent( $intent_id );
+
+		if ( is_wp_error( $cancelled ) ) {
+			$this->log_payment_failure(
+				sprintf(
+					'%s(): the form did not validate but the hold on %s could not be released: %s',
+					__METHOD__,
+					$intent_id,
+					$cancelled->get_error_message()
+				)
+			);
+
+			return;
+		}
+
+		$this->log_debug( sprintf( '%s(): released the hold on %s because the form did not validate.', __METHOD__, $intent_id ) );
+	}
+
+	/**
 	 * Authorises the payment.
 	 *
-	 * The card is confirmed on the client, so by the time this runs there is
-	 * already a payment intent. All that is left is to check it really is
-	 * payable and that its amount matches what this form expects — a client can
-	 * send any intent id it likes, so the amount is verified server-side.
+	 * The client has already authorised the card against a manual-capture
+	 * intent, so by the time this runs the money is on hold but not taken. All
+	 * that is left is to check the intent really is payable and that its amount
+	 * matches what this form expects — a client can send any intent id it likes,
+	 * so the amount is verified server-side.
+	 *
+	 * The framework only calls this once validation has passed, so reaching here
+	 * is what makes the hold safe to capture.
 	 *
 	 * @since 1.0.0
 	 *

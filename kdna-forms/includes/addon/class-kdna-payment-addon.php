@@ -255,6 +255,17 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 	 * @return array
 	 */
 	public function validation( $validation_result ) {
+
+		// A submission that has already failed validation must never reach the
+		// gateway. Without this the card is charged for a form the customer is
+		// about to be sent straight back to: no entry is saved, no notification
+		// is sent, and the only record that the money moved is in the gateway's
+		// own dashboard. Every other guard in this method is about whether there
+		// is anything to charge; this one is about whether we are allowed to.
+		if ( ! rgar( $validation_result, 'is_valid' ) ) {
+			return $validation_result;
+		}
+
 		if ( ! $this->has_feed( rgars( $validation_result, 'form/id' ) ) ) {
 			return $validation_result;
 		}
