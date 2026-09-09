@@ -196,9 +196,36 @@ function initLayoutEditor( $ ) {
 
 		var $field = $( '#field_' + field.id );
 
-		// This field was added by clicking.
-		if ( $elem === null ) {
+		// The editor is initialised twice on this page: kdnaform_layout_editor
+		// is registered with $in_footer = false so WordPress prints it in the
+		// head, and KDNAForms::enqueue_scripts() then echoes the same file again
+		// from admin_print_footer_scripts. Two closures means two of these
+		// handlers, and everything below - the move, the group id, initElement,
+		// adding the submit button - is written to run once per field.
+		if ( $field.data( 'kdnaFieldPlaced' ) ) {
+			return;
+		}
+		$field.data( 'kdnaFieldPlaced', true );
 
+		// Whether the field was dragged in is decided by whether there is a live
+		// drop target, not by whether $elem survived.
+		//
+		// $elem is set when a drag starts and cleared in several places, and only
+		// in the closure whose draggable callbacks are currently bound. By the
+		// time the field markup comes back from the server it can be null on a
+		// field that was very much dragged, and the field then stays at index 0,
+		// where StartAddField() creates it, which is the top of the form. The
+		// indicator is the thing that actually knows where the field belongs.
+		var $target = $indicator( false ).data( 'target' );
+
+		if ( $target && $target.length && $.contains( document, $target[ 0 ] ) ) {
+
+			// Added by dragging into the editor.
+			moveByTarget( $field, $target, $indicator( false ).data( 'where' ) );
+
+		} else {
+
+			// Added by clicking.
 			$field.setGroupId( getGroupId() );
 
 			// If the submit button is inline, move it back to its own row
@@ -207,15 +234,11 @@ function initLayoutEditor( $ ) {
 			}
 
 		}
-		// This field was added by dragging into the editor.
-		else {
 
-			moveByTarget( $field, $indicator().data( 'target' ), $indicator().data( 'where' ) );
-
+		if ( $elem ) {
 			$elem.remove();
-			$elem = null;
-
 		}
+		$elem = null;
 
 		// editor is receiving first field, cleanup placeholders and no fields class, maybe init simplebar
 		if ( $editorContainer.hasClass( 'form_editor_fields_no_fields' ) ) {

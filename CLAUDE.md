@@ -275,3 +275,37 @@ executed, so it carried faults nothing else could reach:
   so its absence means the chunk never ran, and nothing about the button, the
   config or the endpoint matters until that changes. It also prints which
   scripts this page load took from the browser cache rather than the network.
+
+## The form editor is initialised twice
+
+`kdnaform_layout_editor` is registered with `$in_footer = false`, so WordPress
+prints it in the head. `KDNAForms::enqueue_scripts()` then echoes the same file
+again from `admin_print_footer_scripts` — a hand-written force-print whose
+comment says WordPress "marks them as done but never outputs them", which is no
+longer true. So `initLayoutEditor()` runs twice and every closure variable
+inside it exists in two copies.
+
+This is how the drag-and-drop bug hid. `$elem` — the editor's proxy for "this
+field was added by dragging" — is set by the sidebar draggable's `start`, but
+calling `.draggable( options )` on an already-initialised element replaces the
+callbacks rather than adding a second draggable, so only the *second* closure's
+`$elem` is ever set. The first closure's `kform_field_added` handler runs with
+`$elem === null`, takes its click-to-add branch, and never calls
+`moveByTarget()`. The field stays at index 0, where `StartAddField()` created
+it, which is the top of the form.
+
+Two rules came out of it:
+
+- **Do not test a closure variable to find out what the user did.** Test the
+  thing that records it. `$elem` is a proxy; the drop indicator's `target` is
+  the fact. The handler now asks whether a live drop target exists, which is
+  also correct for a clicked field, since a click leaves no indicator.
+- **Anything hooked to `kform_field_added` must be idempotent** while the double
+  load stands. The handler now marks the field with `data( 'kdnaFieldPlaced' )`
+  and returns early on the second pass; before that, the move, the group id,
+  `initElement()` and the submit-button insert all ran twice per field.
+
+Fixing the double load is a separate change with its own version. It is a
+script-loading change on the form editor screen, which is the same blast radius
+as the failures that cost v2.8.0 and v2.9.0, so it does not ride along with an
+unrelated fix.
