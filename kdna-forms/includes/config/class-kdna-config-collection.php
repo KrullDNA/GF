@@ -69,7 +69,7 @@ class KDNA_Config_Collection {
 		// Making the query string available for use with form filters.
 		if ( ! empty( $query_string ) && is_string( $query_string ) ) {
 			parse_str( $query_string, $query );
-			unset( $query['kdna_page'] ); // Removing so it doesn't conflict with gf_ajax_page=preview.
+			unset( $query['kdna_page'] ); // Removing so it doesn't conflict with kdna_ajax_page=preview.
 			$_GET = array_merge( $_GET, $query );
 		}
 
@@ -175,7 +175,7 @@ class KDNA_Config_Collection {
 		$data_to_localize = array();
 
 		foreach ( $this->configs as $config ) {
-			if ( ( ! defined( 'GFORMS_DOING_MOCK' ) || ! GFORMS_DOING_MOCK ) && ! $config->should_enqueue() ) {
+			if ( ( ! defined( 'KFORMS_DOING_MOCK' ) || ! KFORMS_DOING_MOCK ) && ! $config->should_enqueue() ) {
 				continue;
 			}
 

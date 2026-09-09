@@ -4,7 +4,7 @@ namespace KDNA_Forms\KDNA_Forms\Libraries;
 
 class Dom_Parser {
 
-	const NO_PARSE_QUERY_ARG = 'gf_disable_hooks_injection';
+	const NO_PARSE_QUERY_ARG = 'kdna_disable_hooks_injection';
 
 	/**
 	 * The string representation of the current DOM.
@@ -61,7 +61,7 @@ class Dom_Parser {
 	public $insert_position = 0;
 
 	/**
-	 * GF_Dom_Parser constructor.
+	 * KDNA_Dom_Parser constructor.
 	 *
 	 * @param string $content
 	 */
@@ -329,7 +329,7 @@ class Dom_Parser {
 			return false;
 		}
 
-		if ( ! empty( $_POST['gform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( ! empty( $_POST['kform_ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			return false;
 		}
 

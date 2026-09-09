@@ -1,7 +1,7 @@
 window.addEventListener( 'load' , function() {
 
-	var $selectOptions = document.querySelectorAll( '.gform-settings-field__select_custom select' );
-	var $buttons       = document.querySelectorAll( '.gform-settings-select-custom__reset' );
+	var $selectOptions = document.querySelectorAll( '.kform-settings-field__select_custom select' );
+	var $buttons       = document.querySelectorAll( '.kform-settings-select-custom__reset' );
 
 	$selectOptions.forEach( function( $select ) {
 
@@ -9,7 +9,7 @@ window.addEventListener( 'load' , function() {
 
 		$select.addEventListener( 'change', function( e ) {
 
-			if ( e.target.value !== 'gf_custom' ) {
+			if ( e.target.value !== 'kdna_custom' ) {
 				return;
 			}
 
@@ -30,7 +30,7 @@ window.addEventListener( 'load' , function() {
 			// Hide input, show drop down.
 			$inputField.style.display = 'none';
 			jQuery( this )
-				.closest('div.gform-settings-field__select_custom')
+				.closest('div.kform-settings-field__select_custom')
 				.find( 'select' )
 				.each( function( index, element ) {
 					element.value         = '';

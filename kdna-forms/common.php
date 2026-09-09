@@ -749,9 +749,9 @@ class KDNACommon {
 	}
 
 	/**
-	 * This function is used by the gfMergeTags JS object to get the localized label for non-field merge tags as well as
+	 * This function is used by the kdnaMergeTags JS object to get the localized label for non-field merge tags as well as
 	 * for backwards compatibility with the kdnaform_custom_merge_tags hook. Lastly, this plugin is used by the soon-to-be
-	 * deprecated insert_variables() function as the new gfMergeTags object has not yet been applied to the Post Content
+	 * deprecated insert_variables() function as the new kdnaMergeTags object has not yet been applied to the Post Content
 	 * Template setting.
 	 *
 	 * @param KDNA_Field[] $fields
@@ -1333,7 +1333,7 @@ class KDNACommon {
 			 * @param array $form The current Form object.
 			 * @param array $lead The current Entry object.
 			 */
-			$entry_url = esc_url( apply_filters( 'gform_entry_detail_url', $entry_url, $form, $lead ) );
+			$entry_url = esc_url( apply_filters( 'kform_entry_detail_url', $entry_url, $form, $lead ) );
 			$text      = str_replace( '{entry_url}', $url_encode ? urlencode( $entry_url ) : $entry_url, $text );
 		}
 
@@ -1439,7 +1439,7 @@ class KDNACommon {
 		$validation_class  = rgar( $form, 'validationPlacement' ) == 'above' ? 'validation_above' : 'validation_below';
 		$sublabel_class    = rgar( $form, 'subLabelPlacement' ) == 'above' ? 'form_sublabel_above' : 'form_sublabel_below';
 
-		$css_class = preg_replace( '/\s+/', ' ', "gform_fields {$label_class} {$sublabel_class} {$description_class} {$validation_class}" ); //removing extra spaces
+		$css_class = preg_replace( '/\s+/', ' ', "kform_fields {$label_class} {$sublabel_class} {$description_class} {$validation_class}" ); //removing extra spaces
 
 		return $css_class;
 	}
@@ -1864,7 +1864,7 @@ class KDNACommon {
 			 * @var array  $products        Current order summary object.
 			 * @var string $format          Format that should be used to display the summary ('html' or 'text').
 			 */
-			$field_data = gf_apply_filters( array( 'kdnaform_order_summary', $form['id'] ), $field_data, $form, $lead, $products, $format );
+			$field_data = kdna_apply_filters( array( 'kdnaform_order_summary', $form['id'] ), $field_data, $form, $lead, $products, $format );
 		}
 
 		return $field_data;
@@ -1893,10 +1893,10 @@ class KDNACommon {
 
 		//handling autoresponder email
 		$to_field = isset( $form['autoResponder']['toField'] ) ? rgget( $form['autoResponder']['toField'], $lead ) : '';
-		$to       = gf_apply_filters( array( 'kdnaform_autoresponder_email', $form_id ), $to_field, $form );
+		$to       = kdna_apply_filters( array( 'kdnaform_autoresponder_email', $form_id ), $to_field, $form );
 		$subject  = KDNACommon::replace_variables( rgget( 'subject', $form['autoResponder'] ), $form, $lead, false, false );
 
-		$message_format = gf_apply_filters( array(
+		$message_format = kdna_apply_filters( array(
 			'kdnaform_notification_format',
 			$form_id
 		), 'html', 'user', $form, $lead );
@@ -1929,7 +1929,7 @@ class KDNACommon {
 			}
 		}
 
-		$attachments = gf_apply_filters( array(
+		$attachments = kdna_apply_filters( array(
 			'kdnaform_user_notification_attachments',
 			$form_id
 		), array(), $lead, $form );
@@ -1959,7 +1959,7 @@ class KDNACommon {
 		//handling admin notification email
 		$subject = KDNACommon::replace_variables( rgget( 'subject', $form['notification'] ), $form, $lead, false, false );
 
-		$message_format = gf_apply_filters( array(
+		$message_format = kdna_apply_filters( array(
 			'kdnaform_notification_format',
 			$form_id
 		), 'html', 'admin', $form, $lead );
@@ -2011,7 +2011,7 @@ class KDNACommon {
 		$from_name = KDNACommon::replace_variables( $from_name, $form, $lead, false, false );
 
 		//Filters the admin notification email to address. Allows users to change email address before notification is sent
-		$to = gf_apply_filters( array( 'kdnaform_notification_email', $form_id ), $email_to, $lead );
+		$to = kdna_apply_filters( array( 'kdnaform_notification_email', $form_id ), $email_to, $lead );
 
 		// override default values if override options provided
 		if ( $override_options && is_array( $override_options ) ) {
@@ -2020,7 +2020,7 @@ class KDNACommon {
 			}
 		}
 
-		$attachments = gf_apply_filters( array(
+		$attachments = kdna_apply_filters( array(
 			'kdnaform_admin_notification_attachments',
 			$form_id
 		), array(), $lead, $form );
@@ -2057,7 +2057,7 @@ class KDNACommon {
 
 		KDNACommon::log_debug( "KDNACommon::send_notification(): Starting to process notification (#{$notification['id']} - {$notification['name']})." );
 
-		$notification = gf_apply_filters( array( 'kdnaform_notification', $form['id'] ), $notification, $form, $lead );
+		$notification = kdna_apply_filters( array( 'kdnaform_notification', $form['id'] ), $notification, $form, $lead );
 
 		$to_field = '';
 		if ( rgar( $notification, 'toType' ) == 'field' ) {
@@ -2114,7 +2114,7 @@ class KDNACommon {
 		 * @param array $notification The current notification object.
 		 * @param array $from         The current form object.
 		 */
-		$enable_cc = gf_apply_filters( array( 'kdnaform_notification_enable_cc', $form['id'], $notification['id'] ), false, $notification, $form );
+		$enable_cc = kdna_apply_filters( array( 'kdnaform_notification_enable_cc', $form['id'], $notification['id'] ), false, $notification, $form );
 
 		// Set CC if enabled.
 		$cc = $enable_cc ? KDNACommon::remove_extra_commas( KDNACommon::replace_variables( rgar( $notification, 'cc' ), $form, $lead, false, false, false, 'text', $data ) ) : null;
@@ -2467,14 +2467,14 @@ class KDNACommon {
 		 * @param array  $notification The current notification object.
 		 * @param array  $entry        The current entry object.
 		 */
-		$source_header = gf_apply_filters( array(
+		$source_header = kdna_apply_filters( array(
 			'kdnaform_notification_email_header',
 			rgar( $entry, 'form_id' ),
 			rgar( $notification, 'id' ),
 		), $source_header, $notification, $entry );
 
 		if ( ! empty( $source_header ) ) {
-			$headers['X-Gravity-Forms-Source'] = 'X-Gravity-Forms-Source: ' . $source_header;
+			$headers['X-KDNA-Forms-Source'] = 'X-KDNA-Forms-Source: ' . $source_header;
 		}
 
 		$abort_email = false;
@@ -3007,7 +3007,7 @@ Content-Type: text/html;
 	 * @return string Returns the support URL.
 	 */
 	public static function get_support_url() {
-		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::GF_ENVIRONMENT_CONFIG_HANDLER );
+		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::KDNA_ENVIRONMENT_CONFIG_HANDLER );
 
 		return $env_handler->get_support_url();
 	}
@@ -3017,12 +3017,12 @@ Content-Type: text/html;
 	 *
 	 * @since 2.6.9
 	 *
-	 * @param string $name The env variable name (without the "gf_env_" prefix. i.e. support_url).
+	 * @param string $name The env variable name (without the "kdna_env_" prefix. i.e. support_url).
 	 *
 	 * @return string Returns the environment variable.
 	 */
 	public static function get_environment_setting( $name ) {
-		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::GF_ENVIRONMENT_CONFIG_HANDLER );
+		$env_handler = KDNAForms::get_service_container()->get( KDNA_Forms\KDNA_Forms\Environment_Config\KDNA_Environment_Config_Service_Provider::KDNA_ENVIRONMENT_CONFIG_HANDLER );
 		return $env_handler->get_environment_setting( $name );
 	}
 
@@ -3292,7 +3292,7 @@ Content-Type: text/html;
 			$message = $raw_response['body'];
 		}
 
-		//validating that message is a valid Gravity Form message. If message is invalid, don't display anything
+		//validating that message is a valid KDNA Form message. If message is invalid, don't display anything
 		if ( substr( $message, 0, 10 ) != '<!--KDNAM-->' ) {
 			$message = '';
 		}
@@ -3301,10 +3301,10 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Post request to Gravity Manager.
+	 * Post request to KDNA Manager.
 	 *
 	 * @since unknown
-	 * @since 2.5     Remove Gravity Manager Proxy.
+	 * @since 2.5     Remove KDNA Manager Proxy.
 	 *
 	 * @param string $file    The file.
 	 * @param string $query   The query string.
@@ -3317,10 +3317,10 @@ Content-Type: text/html;
 		if ( ! isset( $options['headers'] ) ) {
 			$options['headers'] = array();
 		}
-		// Forcing Referer to the unfiltered home url when sending requests to gravity manager.
+		// Forcing Referer to the unfiltered home url when sending requests to KDNA manager.
 		$options['headers']['Referer'] = get_option( 'home' );
 
-		// Sending filtered version of URL so that gravity manager can remove duplicate URLs when filtered and unfiltered URLs are different.
+		// Sending filtered version of URL so that KDNA manager can remove duplicate URLs when filtered and unfiltered URLs are different.
 		$options['headers']['Filtered-Site-URL'] = get_bloginfo( 'url' );
 
 		$manager_url = defined( 'KDNA_MANAGER_URL' ) ? KDNA_MANAGER_URL : '';
@@ -3673,9 +3673,9 @@ Content-Type: text/html;
 	}
 
 	public static function get_field_type_title( $type ) {
-		$gf_field = KDNA_Fields::get( $type );
-		if ( ! empty( $gf_field ) ) {
-			return $gf_field->get_form_editor_field_title();
+		$kdna_field = KDNA_Fields::get( $type );
+		if ( ! empty( $kdna_field ) ) {
+			return $kdna_field->get_form_editor_field_title();
 		}
 
 		return apply_filters( 'kdnaform_field_type_title', $type, $type );
@@ -3697,7 +3697,7 @@ Content-Type: text/html;
 
 			if ( ! rgblank( $placeholder ) ) {
 				$selected = empty( $value ) ? "selected='selected'" : '';
-				$choices .= sprintf( "<option value='' %s class='gf_placeholder'>%s</option>", $selected, esc_html( $placeholder) );
+				$choices .= sprintf( "<option value='' %s class='kdna_placeholder'>%s</option>", $selected, esc_html( $placeholder) );
 			}
 
 			foreach ( $field->choices as $choice ) {
@@ -3709,7 +3709,7 @@ Content-Type: text/html;
 					$field_value .= '|' . $price;
 				}
 
-				if ( ! isset( $_GET['gf_token'] ) && empty( $_POST ) && self::is_empty_array( $value ) && rgget('view') != 'entry' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
+				if ( ! isset( $_GET['kdna_token'] ) && empty( $_POST ) && self::is_empty_array( $value ) && rgget('view') != 'entry' ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended
 					$selected = rgar( $choice, 'isSelected' ) ? "selected='selected'" : '';
 				} else {
 					if ( is_array( $value ) ) {
@@ -3728,7 +3728,7 @@ Content-Type: text/html;
 
 				$choice_markup = sprintf( "<option value='%s' %s>%s</option>", esc_attr( $field_value ), $selected, esc_html( $choice['text'] ) );
 
-				$choices .= gf_apply_filters( array(
+				$choices .= kdna_apply_filters( array(
 					'kdnaform_field_choice_markup_pre_render',
 					$field->formId,
 					$field->id
@@ -3876,7 +3876,7 @@ Content-Type: text/html;
 		<h1>
 			<span id='kdnaform_settings_page_title' class='kdnaform_settings_page_title<?php echo esc_attr( $editable_class ); ?>' onclick='KDNA_ShowEditTitle()'><?php echo esc_html( rgar( $form, 'title' ) ); ?></span>
 			<?php KDNAForms::form_switcher(); ?>
-			<span class="gf_admin_page_formid">ID: <?php echo absint( $form['id'] ); ?></span>
+			<span class="kdna_admin_page_formid">ID: <?php echo absint( $form['id'] ); ?></span>
 		</h1>
 		<?php KDNAForms::edit_form_title( $form ); ?>
 		<?php
@@ -3940,7 +3940,7 @@ Content-Type: text/html;
 		 * @param string $value   The field value.
 		 * @param int    $form_id The form ID.
 		 */
-		$field_input = gf_apply_filters( array( 'kdnaform_field_input', $form_id, $field->id ), '', $field, $value, $lead_id, $form_id );
+		$field_input = kdna_apply_filters( array( 'kdnaform_field_input', $form_id, $field->id ), '', $field, $value, $lead_id, $form_id );
 		if ( $field_input ) {
 			return $field_input;
 		}
@@ -3948,7 +3948,7 @@ Content-Type: text/html;
 		// Pricing fields are not editable.
 		if ( rgget('view') == 'entry' && self::is_pricing_field( $field->type ) ) {
 
-			return "<div class='ginput_container'>" . esc_html__( 'Pricing fields are not editable' , 'kdnaforms' ) . '</div>';
+			return "<div class='kinput_container'>" . esc_html__( 'Pricing fields are not editable' , 'kdnaforms' ) . '</div>';
 
 		}
 
@@ -3967,13 +3967,13 @@ Content-Type: text/html;
 						$value = json_encode( $value );
 					}
 
-					return sprintf( "<input name='input_%d' id='%s' class='gform_hidden' type='hidden' value='%s'/>", $id, esc_attr( $field_id ), esc_attr( $value ) );
+					return sprintf( "<input name='input_%d' id='%s' class='kform_hidden' type='hidden' value='%s'/>", $id, esc_attr( $field_id ), esc_attr( $value ) );
 				}
 
 
 				$fields = '';
 				foreach ( $inputs as $input ) {
-					$fields .= sprintf( "<input name='input_%s' class='gform_hidden' type='hidden' value='%s'/>", $input['id'], esc_attr( rgar( $value, strval( $input['id'] ) ) ) );
+					$fields .= sprintf( "<input name='input_%s' class='kform_hidden' type='hidden' value='%s'/>", $input['id'], esc_attr( rgar( $value, strval( $input['id'] ) ) ) );
 				}
 
 				return $fields;
@@ -4029,7 +4029,7 @@ Content-Type: text/html;
 		$url_info  = parse_url( KDNAFormsModel::get_current_page_url() );
 		$file_name = basename( rgar( $url_info, 'path' ) );
 
-		return $file_name == 'preview.php' || rgget( 'kdna_page', $_GET ) == 'preview' || rgget( 'gf_ajax_page', $_GET ) == 'preview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return $file_name == 'preview.php' || rgget( 'kdna_page', $_GET ) == 'preview' || rgget( 'kdna_ajax_page', $_GET ) == 'preview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	}
 
 	/**
@@ -4052,13 +4052,13 @@ Content-Type: text/html;
 			),
 			'form_id'      => 0,
 			'label'        => __( 'Preview', 'kdnaforms' ),
-			'link_class'   => 'preview-form gform-button gform-button--white',
+			'link_class'   => 'preview-form kform-button kform-button--white',
 			'menu_class'   => 'kdna_form_toolbar_preview',
 			'priority'     => 700,
 			'target'       => '_blank',
 		) );
 
-		$options['url'] = trailingslashit( site_url() ) . '?gf_page=preview&id=' . $options['form_id'];
+		$options['url'] = trailingslashit( site_url() ) . '?kdna_page=preview&id=' . $options['form_id'];
 
 		return $options;
 	}
@@ -4094,10 +4094,10 @@ Content-Type: text/html;
 
 		$preview_link = sprintf(
 			'
-			<a href="%s" class="%s gform-button--icon-leading" target="%s" rel="noopener">
+			<a href="%s" class="%s kform-button--icon-leading" target="%s" rel="noopener">
 				<span class="screen-reader-text">%s</span>
 				<span class="screen-reader-text">%s</span>
-				<i class="gform-button__icon gform-common-icon gform-common-icon--eye" aria-hidden="true"></i>%s
+				<i class="kform-button__icon kform-common-icon kform-common-icon--eye" aria-hidden="true"></i>%s
 			</a>
 				',
 			esc_url( $options['url'] ),
@@ -4302,11 +4302,11 @@ Content-Type: text/html;
 	 * @return string The currency code.
 	 */
 	public static function get_submission_currency() {
-		// The hidden input is still emitted as gform_currency, so accept both
+		// The hidden input is still emitted as kform_currency, so accept both
 		// names rather than silently reading nothing.
 		$posted_currency = rgpost( 'kdnaform_currency' );
 		if ( empty( $posted_currency ) ) {
-			$posted_currency = rgpost( 'gform_currency' );
+			$posted_currency = rgpost( 'kform_currency' );
 		}
 
 		if ( ! $posted_currency || ! is_string( $posted_currency ) ) {
@@ -4323,7 +4323,7 @@ Content-Type: text/html;
 	}
 
 	public static function get_simple_captcha() {
-		_deprecated_function( 'KDNACommon::get_simple_captcha', '1.9', 'GFField_CAPTCHA::get_simple_captcha' );
+		_deprecated_function( 'KDNACommon::get_simple_captcha', '1.9', 'KDNA_Field_CAPTCHA::get_simple_captcha' );
 		$captcha          = new ReallySimpleCaptcha();
 		$captcha->tmp_dir = KDNAFormsModel::get_upload_path( 'captcha' ) . '/';
 
@@ -4338,7 +4338,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function get_captcha( $field ) {
-		_deprecated_function( 'KDNACommon::get_captcha', '1.9', 'GFField_CAPTCHA::get_captcha' );
+		_deprecated_function( 'KDNACommon::get_captcha', '1.9', 'KDNA_Field_CAPTCHA::get_captcha' );
 
 		return $field->get_captcha();
 	}
@@ -4352,7 +4352,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function get_math_captcha( $field, $pos ) {
-		_deprecated_function( 'KDNACommon::get_math_captcha', '1.9', 'GFField_CAPTCHA::get_math_captcha' );
+		_deprecated_function( 'KDNACommon::get_math_captcha', '1.9', 'KDNA_Field_CAPTCHA::get_math_captcha' );
 
 		return $field->get_math_captcha( $pos );
 	}
@@ -4549,7 +4549,7 @@ Content-Type: text/html;
 			 * @param array $form         The form object used to generate the current entry.
 			 * @param array $lead         The current entry object.
 			 */
-			$product_info = gf_apply_filters( array( 'kdnaform_product_info', $form['id'] ), $product_info, $form, $lead );
+			$product_info = kdna_apply_filters( array( 'kdnaform_product_info', $form['id'] ), $product_info, $form, $lead );
 
 			// save static copy of product info (only for 'real' entries)
 			if ( ! rgempty( 'id', $lead ) && ! empty( $product_info['products'] ) ) {
@@ -4688,7 +4688,7 @@ Content-Type: text/html;
 		 * @param array $form    The form currently being processed.
 		 * @param array $entry   The entry currently being processed.
 		 */
-		$is_spam = gf_apply_filters( array( 'kdnaform_entry_is_spam', $form_id ), $is_spam, $form, $entry );
+		$is_spam = kdna_apply_filters( array( 'kdnaform_entry_is_spam', $form_id ), $is_spam, $form, $entry );
 		self::log_debug( __METHOD__ . '(): Result from kdnaform_entry_is_spam filter: ' . json_encode( $is_spam ) );
 
 		if ( $use_cache ) {
@@ -4771,7 +4771,7 @@ Content-Type: text/html;
 	 * @return bool
 	 */
 	public static function has_akismet() {
-		if ( function_exists( 'gf_akismet' ) && method_exists( gf_akismet(), 'initalize_api' ) ) {
+		if ( function_exists( 'kdna_akismet' ) && method_exists( kdna_akismet(), 'initalize_api' ) ) {
 			return false;
 		}
 
@@ -4798,7 +4798,7 @@ Content-Type: text/html;
 		 * @param bool $enabled Indicates if the Akismet integration is enabled.
 		 * @param int  $form_id The ID of the form being processed.
 		 */
-		return gf_apply_filters( array( 'kdnaform_akismet_enabled', $form_id ), $enabled, $form_id );
+		return kdna_apply_filters( array( 'kdnaform_akismet_enabled', $form_id ), $enabled, $form_id );
 
 	}
 
@@ -4856,7 +4856,7 @@ Content-Type: text/html;
 
 		// Gathering Akismet information
 		$akismet_fields                         = array();
-		$akismet_fields['comment_type']         = 'gravity_form';
+		$akismet_fields['comment_type']         = 'kdna_form';
 		$akismet_fields['comment_author']       = self::get_akismet_field( 'name', $form, $entry );
 		$akismet_fields['comment_author_email'] = self::get_akismet_field( 'email', $form, $entry );
 		$akismet_fields['comment_author_url']   = self::get_akismet_field( 'website', $form, $entry );
@@ -4880,7 +4880,7 @@ Content-Type: text/html;
 		 * @param array  $entry          The entry being processed.
 		 * @param string $action         The action triggering the Akismet request: submit, spam, or ham.
 		 */
-		$akismet_fields = gf_apply_filters( array( 'kdnaform_akismet_fields', $form['id'] ), $akismet_fields, $form, $entry, $action );
+		$akismet_fields = kdna_apply_filters( array( 'kdnaform_akismet_fields', $form['id'] ), $akismet_fields, $form, $entry, $action );
 
 		return http_build_query( $akismet_fields );
 	}
@@ -4932,21 +4932,21 @@ Content-Type: text/html;
 
 		//adding browser related class
 		if ( $is_lynx ) {
-			$classes[] = 'gf_browser_lynx';
+			$classes[] = 'kdna_browser_lynx';
 		} else if ( $is_gecko ) {
-			$classes[] = 'gf_browser_gecko';
+			$classes[] = 'kdna_browser_gecko';
 		} else if ( $is_opera ) {
-			$classes[] = 'gf_browser_opera';
+			$classes[] = 'kdna_browser_opera';
 		} else if ( $is_NS4 ) {
-			$classes[] = 'gf_browser_ns4';
+			$classes[] = 'kdna_browser_ns4';
 		} else if ( $is_safari ) {
-			$classes[] = 'gf_browser_safari';
+			$classes[] = 'kdna_browser_safari';
 		} else if ( $is_chrome ) {
-			$classes[] = 'gf_browser_chrome';
+			$classes[] = 'kdna_browser_chrome';
 		} else if ( $is_IE ) {
-			$classes[] = 'gf_browser_ie';
+			$classes[] = 'kdna_browser_ie';
 		} else {
-			$classes[] = 'gf_browser_unknown';
+			$classes[] = 'kdna_browser_unknown';
 		}
 
 
@@ -4955,28 +4955,28 @@ Content-Type: text/html;
 			if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
 				$ie_user_agent = sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) );
 				if (  strpos( $ie_user_agent, 'MSIE 6' ) !== false ) {
-					$classes[] = 'gf_browser_ie6';
+					$classes[] = 'kdna_browser_ie6';
 				} else if ( strpos( $ie_user_agent, 'MSIE 7' ) !== false ) {
-					$classes[] = 'gf_browser_ie7';
+					$classes[] = 'kdna_browser_ie7';
 				}
 				if ( strpos( $ie_user_agent, 'MSIE 8' ) !== false ) {
-					$classes[] = 'gf_browser_ie8';
+					$classes[] = 'kdna_browser_ie8';
 				}
 				if ( strpos( $ie_user_agent, 'MSIE 9' ) !== false ) {
-					$classes[] = 'gf_browser_ie9';
+					$classes[] = 'kdna_browser_ie9';
 				}
 			}
 		}
 
 		if ( $is_iphone ) {
-			$classes[] = 'gf_browser_iphone';
+			$classes[] = 'kdna_browser_iphone';
 		}
 
 		return implode( ' ', $classes );
 	}
 
 	public static function create_post( $form, &$lead ) {
-		$disable_post = gf_apply_filters( array( 'kdnaform_disable_post_creation', $form['id'] ), false, $form, $lead );
+		$disable_post = kdna_apply_filters( array( 'kdnaform_disable_post_creation', $form['id'] ), false, $form, $lead );
 		$post_id      = 0;
 		if ( ! $disable_post ) {
 			//creates post if the form has any post fields
@@ -5230,7 +5230,7 @@ Content-Type: text/html;
 	public static function add_categories_as_choices( $field, $value ) {
 
 		$choices         = $inputs = array();
-		$is_post         = isset( $_POST['gform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$is_post         = isset( $_POST['kform_submit'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		$has_placeholder = $field->categoryInitialItemEnabled && KDNAFormsModel::get_input_type( $field ) == 'select';
 
 		if ( $has_placeholder ) {
@@ -5247,7 +5247,7 @@ Content-Type: text/html;
 			}
 		}
 
-		$args  = gf_apply_filters( array( 'kdnaform_post_category_args', $field->id ), $args, $field );
+		$args  = kdna_apply_filters( array( 'kdnaform_post_category_args', $field->id ), $args, $field );
 		$terms = get_terms( $args['taxonomy'], $args );
 
 		$terms_copy = unserialize( serialize( $terms ) ); // deep copy the terms to avoid repeating KDNACategoryWalker on previously cached terms.
@@ -5297,7 +5297,7 @@ Content-Type: text/html;
 		 * @param KDNA_Field $field   The category choices field.
 		 * @param int      $form_id The current form ID.
 		 */
-		$field->choices = gf_apply_filters( array(
+		$field->choices = kdna_apply_filters( array(
 			'kdnaform_post_category_choices',
 			$form_id,
 			$field->id
@@ -5655,204 +5655,204 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Outputs the gf_global and returns either the gf_global var declaration or the array containing the gf_global values.
+	 * Outputs the kdna_global and returns either the kdna_global var declaration or the array containing the kdna_global values.
 	 *
 	 *
 	 * @since 2.4.7		Added the $return_array parameter
 	 * @since unknown
 	 *
-	 * @param bool $echo         If true, outputs the inline gf_global var declaration.
-	 * @param bool $return_array If true, returns the array containing the gf_global values.
+	 * @param bool $echo         If true, outputs the inline kdna_global var declaration.
+	 * @param bool $return_array If true, returns the array containing the kdna_global values.
 	 *
 	 * @return array|string
 	 */
-	public static function gf_global( $echo = true, $return_array = false ) {
-		$gf_global                       = array();
-		$gf_global['gf_currency_config'] = RGCurrency::get_currency( KDNACommon::get_currency() );
-		$gf_global['base_url']           = KDNACommon::get_base_url();
-		$gf_global['number_formats']     = array();
-		$gf_global['spinnerUrl']         = KDNACommon::get_base_url() . '/images/spinner.svg';
-		$gf_global['version_hash']       = wp_hash( KDNAForms::$version );
+	public static function kdna_global( $echo = true, $return_array = false ) {
+		$kdna_global                       = array();
+		$kdna_global['kdna_currency_config'] = RGCurrency::get_currency( KDNACommon::get_currency() );
+		$kdna_global['base_url']           = KDNACommon::get_base_url();
+		$kdna_global['number_formats']     = array();
+		$kdna_global['spinnerUrl']         = KDNACommon::get_base_url() . '/images/spinner.svg';
+		$kdna_global['version_hash']       = wp_hash( KDNAForms::$version );
 
-		$gf_global['strings'] = array(
+		$kdna_global['strings'] = array(
 			'newRowAdded' => __( 'New row added.', 'kdnaforms' ),
 			'rowRemoved'  => __( 'Row removed', 'kdnaforms' ),
 			'formSaved'   => __( 'The form has been saved.  The content contains the link to return and complete the form.', 'kdnaforms' ),
 		);
 
-		$gf_global_json = 'var gf_global = ' . json_encode( $gf_global ) . ';';
+		$kdna_global_json = 'var kdna_global = ' . json_encode( $kdna_global ) . ';';
 
 		if ( ! $echo ) {
-			return $return_array ? $gf_global : $gf_global_json;
+			return $return_array ? $kdna_global : $kdna_global_json;
 		}
 
-		echo $gf_global_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $kdna_global_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
-	public static function gf_vars( $echo = true ) {
-		$gf_vars                            = array();
-		$gf_vars['active']                  = esc_attr__( 'Active', 'kdnaforms' );
-		$gf_vars['inactive']                = esc_attr__( 'Inactive', 'kdnaforms' );
-		$gf_vars['save']                    = esc_html__( 'Save', 'kdnaforms' );
-		$gf_vars['update']                  = esc_html__( 'Update', 'kdnaforms' );
-		$gf_vars['previousLabel']           = esc_html__( 'Previous', 'kdnaforms' );
-		$gf_vars['selectFormat']            = esc_html__( 'Select a format', 'kdnaforms' );
-		$gf_vars['column']                  = esc_html__( 'Column', 'kdnaforms' );
-		$gf_vars['editToViewAll']           = esc_html__( '5 of %d items shown. Edit field to view all', 'kdnaforms' );
-		$gf_vars['selectAll']               = esc_html__( 'Select All', 'kdnaforms' );
-		$gf_vars['enterValue']              = esc_html__( 'Enter a value', 'kdnaforms' );
-		$gf_vars['formTitle']               = esc_html__( 'Untitled Form', 'kdnaforms' );
-		$gf_vars['formDescription']         = esc_html__( 'We would love to hear from you! Please fill out this form and we will get in touch with you shortly.', 'kdnaforms' );
-		$gf_vars['formConfirmationMessage'] = esc_html__( 'Thanks for contacting us! We will get in touch with you shortly.', 'kdnaforms' );
-		$gf_vars['buttonText']              = esc_html__( 'Submit', 'kdnaforms' );
-		$gf_vars['buttonDescription']       = esc_html__( 'The submit button for this form', 'kdnaforms' );
-		$gf_vars['loading']                 = esc_html__( 'Loading...', 'kdnaforms' );
-		$gf_vars['thisFieldIf']             = esc_html__( 'this field if', 'kdnaforms' );
-		$gf_vars['thisSectionIf']           = esc_html__( 'this section if', 'kdnaforms' );
-		$gf_vars['thisPage']                = esc_html__( 'this page if', 'kdnaforms' );
-		$gf_vars['thisFormButton']          = esc_html__( 'this form button if', 'kdnaforms' );
-		$gf_vars['show']                    = esc_html__( 'Show', 'kdnaforms' );
-		$gf_vars['hide']                    = esc_html__( 'Hide', 'kdnaforms' );
-		$gf_vars['enable']                  = esc_html__( 'Enable', 'kdnaforms' );
-		$gf_vars['disable']                 = esc_html__( 'Disable', 'kdnaforms' );
-		$gf_vars['enabled']                 = esc_html__( 'Enabled', 'kdnaforms' );
-		$gf_vars['disabled']                = esc_html__( 'Disabled', 'kdnaforms' );
-		$gf_vars['configure']               = esc_html__( 'Configure', 'kdnaforms' );
-		$gf_vars['conditional_logic_text']  = esc_html__( 'Conditional Logic', 'kdnaforms' );
-		$gf_vars['conditional_logic_desc']  = esc_html__( 'Conditional logic allows you to change what the user sees depending on the fields they select.', 'kdnaforms' );
+	public static function kdna_vars( $echo = true ) {
+		$kdna_vars                            = array();
+		$kdna_vars['active']                  = esc_attr__( 'Active', 'kdnaforms' );
+		$kdna_vars['inactive']                = esc_attr__( 'Inactive', 'kdnaforms' );
+		$kdna_vars['save']                    = esc_html__( 'Save', 'kdnaforms' );
+		$kdna_vars['update']                  = esc_html__( 'Update', 'kdnaforms' );
+		$kdna_vars['previousLabel']           = esc_html__( 'Previous', 'kdnaforms' );
+		$kdna_vars['selectFormat']            = esc_html__( 'Select a format', 'kdnaforms' );
+		$kdna_vars['column']                  = esc_html__( 'Column', 'kdnaforms' );
+		$kdna_vars['editToViewAll']           = esc_html__( '5 of %d items shown. Edit field to view all', 'kdnaforms' );
+		$kdna_vars['selectAll']               = esc_html__( 'Select All', 'kdnaforms' );
+		$kdna_vars['enterValue']              = esc_html__( 'Enter a value', 'kdnaforms' );
+		$kdna_vars['formTitle']               = esc_html__( 'Untitled Form', 'kdnaforms' );
+		$kdna_vars['formDescription']         = esc_html__( 'We would love to hear from you! Please fill out this form and we will get in touch with you shortly.', 'kdnaforms' );
+		$kdna_vars['formConfirmationMessage'] = esc_html__( 'Thanks for contacting us! We will get in touch with you shortly.', 'kdnaforms' );
+		$kdna_vars['buttonText']              = esc_html__( 'Submit', 'kdnaforms' );
+		$kdna_vars['buttonDescription']       = esc_html__( 'The submit button for this form', 'kdnaforms' );
+		$kdna_vars['loading']                 = esc_html__( 'Loading...', 'kdnaforms' );
+		$kdna_vars['thisFieldIf']             = esc_html__( 'this field if', 'kdnaforms' );
+		$kdna_vars['thisSectionIf']           = esc_html__( 'this section if', 'kdnaforms' );
+		$kdna_vars['thisPage']                = esc_html__( 'this page if', 'kdnaforms' );
+		$kdna_vars['thisFormButton']          = esc_html__( 'this form button if', 'kdnaforms' );
+		$kdna_vars['show']                    = esc_html__( 'Show', 'kdnaforms' );
+		$kdna_vars['hide']                    = esc_html__( 'Hide', 'kdnaforms' );
+		$kdna_vars['enable']                  = esc_html__( 'Enable', 'kdnaforms' );
+		$kdna_vars['disable']                 = esc_html__( 'Disable', 'kdnaforms' );
+		$kdna_vars['enabled']                 = esc_html__( 'Enabled', 'kdnaforms' );
+		$kdna_vars['disabled']                = esc_html__( 'Disabled', 'kdnaforms' );
+		$kdna_vars['configure']               = esc_html__( 'Configure', 'kdnaforms' );
+		$kdna_vars['conditional_logic_text']  = esc_html__( 'Conditional Logic', 'kdnaforms' );
+		$kdna_vars['conditional_logic_desc']  = esc_html__( 'Conditional logic allows you to change what the user sees depending on the fields they select.', 'kdnaforms' );
 		/**
 		 * @translators: %1$s is an opening <a> tag containing a href attribute
 		 *               %2$s is a closing <a> tag
 		 */
 		$logic_a11y_warn                   = esc_html__( 'Adding conditional logic to the form submit button could cause usability problems for some users and negatively impact the accessibility of your form. Learn more about button conditional logic in our %1$sdocumentation%2$s.', 'kdnaforms' );
 		$logic_a11y_warn_link1             = '<a href="https://docs.kdnaforms.com/field-accessibility-warning/" target="_blank" rel="noopener">';
-		$logic_a11y_warn_link2             = '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
-		$gf_vars['conditional_logic_a11y'] = sprintf( $logic_a11y_warn, $logic_a11y_warn_link1, $logic_a11y_warn_link2 );
-		$gf_vars['page']                   = esc_html__( 'Page', 'kdnaforms' );
-		$gf_vars['next_button']            = esc_html__( 'Next Button', 'kdnaforms' );
-		$gf_vars['button']                 = esc_html__( 'Submit Button', 'kdnaforms' );
-		$gf_vars['all']                    = esc_html( _x( 'All', 'Conditional Logic', 'kdnaforms' ) );
-		$gf_vars['any']                    = esc_html( _x( 'Any', 'Conditional Logic', 'kdnaforms' ) );
-		$gf_vars['ofTheFollowingMatch']    = esc_html__( 'of the following match:', 'kdnaforms' );
-		$gf_vars['is']                     = esc_html__( 'is', 'kdnaforms' );
-		$gf_vars['isNot']                  = esc_html__( 'is not', 'kdnaforms' );
-		$gf_vars['greaterThan']            = esc_html__( 'greater than', 'kdnaforms' );
-		$gf_vars['lessThan']               = esc_html__( 'less than', 'kdnaforms' );
-		$gf_vars['contains']               = esc_html__( 'contains', 'kdnaforms' );
-		$gf_vars['startsWith']             = esc_html__( 'starts with', 'kdnaforms' );
-		$gf_vars['endsWith']               = esc_html__( 'ends with', 'kdnaforms' );
-		$gf_vars['emptyChoice']            = wp_strip_all_tags( __( 'Empty (no choices selected)', 'kdnaforms' ) );
+		$logic_a11y_warn_link2             = '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>';
+		$kdna_vars['conditional_logic_a11y'] = sprintf( $logic_a11y_warn, $logic_a11y_warn_link1, $logic_a11y_warn_link2 );
+		$kdna_vars['page']                   = esc_html__( 'Page', 'kdnaforms' );
+		$kdna_vars['next_button']            = esc_html__( 'Next Button', 'kdnaforms' );
+		$kdna_vars['button']                 = esc_html__( 'Submit Button', 'kdnaforms' );
+		$kdna_vars['all']                    = esc_html( _x( 'All', 'Conditional Logic', 'kdnaforms' ) );
+		$kdna_vars['any']                    = esc_html( _x( 'Any', 'Conditional Logic', 'kdnaforms' ) );
+		$kdna_vars['ofTheFollowingMatch']    = esc_html__( 'of the following match:', 'kdnaforms' );
+		$kdna_vars['is']                     = esc_html__( 'is', 'kdnaforms' );
+		$kdna_vars['isNot']                  = esc_html__( 'is not', 'kdnaforms' );
+		$kdna_vars['greaterThan']            = esc_html__( 'greater than', 'kdnaforms' );
+		$kdna_vars['lessThan']               = esc_html__( 'less than', 'kdnaforms' );
+		$kdna_vars['contains']               = esc_html__( 'contains', 'kdnaforms' );
+		$kdna_vars['startsWith']             = esc_html__( 'starts with', 'kdnaforms' );
+		$kdna_vars['endsWith']               = esc_html__( 'ends with', 'kdnaforms' );
+		$kdna_vars['emptyChoice']            = wp_strip_all_tags( __( 'Empty (no choices selected)', 'kdnaforms' ) );
 
-		$gf_vars['alertLegacyMode']                  = esc_html__( 'This form has legacy markup enabled and doesn’t support field resizing within the editor. Please disable legacy markup in the form settings to enable live resizing.', 'kdnaforms' );
-		$gf_vars['thisConfirmation']                 = esc_html__( 'Use this confirmation if', 'kdnaforms' );
-		$gf_vars['thisNotification']                 = esc_html__( 'Send this notification if', 'kdnaforms' );
-		$gf_vars['confirmationSave']                 = esc_html__( 'Save', 'kdnaforms' );
-		$gf_vars['confirmationSaving']               = esc_html__( 'Saving...', 'kdnaforms' );
-		$gf_vars['confirmationAreYouSure']           = __( 'Are you sure you wish to cancel these changes?', 'kdnaforms' );
-		$gf_vars['confirmationIssueSaving']          = __( 'There was an issue saving this confirmation.', 'kdnaforms' );
-		$gf_vars['confirmationConfirmDelete']        = __( 'Are you sure you wish to delete this confirmation?', 'kdnaforms' );
-		$gf_vars['confirmationIssueDeleting']        = __( 'There was an issue deleting this confirmation.', 'kdnaforms' );
-		$gf_vars['confirmationConfirmDiscard']       = __( 'There are unsaved changes to the current confirmation. Would you like to discard these changes?', 'kdnaforms' );
-		$gf_vars['confirmationDefaultName']          = __( 'Untitled Confirmation', 'kdnaforms' );
-		$gf_vars['confirmationDefaultMessage']       = __( 'Thanks for contacting us! We will get in touch with you shortly.', 'kdnaforms' );
-		$gf_vars['confirmationInvalidPageSelection'] = __( 'Please select a page.', 'kdnaforms' );
-		$gf_vars['confirmationInvalidRedirect']      = __( 'Please enter a URL.', 'kdnaforms' );
-		$gf_vars['confirmationInvalidName']          = __( 'Please enter a confirmation name.', 'kdnaforms' );
-		$gf_vars['confirmationDeleteField']          = __( "Deleting this field will also delete all entry data associated with it. 'Cancel' to abort. 'OK' to delete.", 'kdnaforms' );
-		$gf_vars['confirmationDeleteDisplayField']   = __( "You're about to delete this field. 'Cancel' to stop. 'OK' to delete", 'kdnaforms' );
+		$kdna_vars['alertLegacyMode']                  = esc_html__( 'This form has legacy markup enabled and doesn’t support field resizing within the editor. Please disable legacy markup in the form settings to enable live resizing.', 'kdnaforms' );
+		$kdna_vars['thisConfirmation']                 = esc_html__( 'Use this confirmation if', 'kdnaforms' );
+		$kdna_vars['thisNotification']                 = esc_html__( 'Send this notification if', 'kdnaforms' );
+		$kdna_vars['confirmationSave']                 = esc_html__( 'Save', 'kdnaforms' );
+		$kdna_vars['confirmationSaving']               = esc_html__( 'Saving...', 'kdnaforms' );
+		$kdna_vars['confirmationAreYouSure']           = __( 'Are you sure you wish to cancel these changes?', 'kdnaforms' );
+		$kdna_vars['confirmationIssueSaving']          = __( 'There was an issue saving this confirmation.', 'kdnaforms' );
+		$kdna_vars['confirmationConfirmDelete']        = __( 'Are you sure you wish to delete this confirmation?', 'kdnaforms' );
+		$kdna_vars['confirmationIssueDeleting']        = __( 'There was an issue deleting this confirmation.', 'kdnaforms' );
+		$kdna_vars['confirmationConfirmDiscard']       = __( 'There are unsaved changes to the current confirmation. Would you like to discard these changes?', 'kdnaforms' );
+		$kdna_vars['confirmationDefaultName']          = __( 'Untitled Confirmation', 'kdnaforms' );
+		$kdna_vars['confirmationDefaultMessage']       = __( 'Thanks for contacting us! We will get in touch with you shortly.', 'kdnaforms' );
+		$kdna_vars['confirmationInvalidPageSelection'] = __( 'Please select a page.', 'kdnaforms' );
+		$kdna_vars['confirmationInvalidRedirect']      = __( 'Please enter a URL.', 'kdnaforms' );
+		$kdna_vars['confirmationInvalidName']          = __( 'Please enter a confirmation name.', 'kdnaforms' );
+		$kdna_vars['confirmationDeleteField']          = __( "Deleting this field will also delete all entry data associated with it. 'Cancel' to abort. 'OK' to delete.", 'kdnaforms' );
+		$kdna_vars['confirmationDeleteDisplayField']   = __( "You're about to delete this field. 'Cancel' to stop. 'OK' to delete", 'kdnaforms' );
 
-		$gf_vars['confirmationDeleteDisplayFieldTitle'] = __( 'Warning', 'kdnaforms' );
+		$kdna_vars['confirmationDeleteDisplayFieldTitle'] = __( 'Warning', 'kdnaforms' );
 
-		$gf_vars['conditionalLogicDependency']            = __( "This form contains {type} conditional logic dependent upon this field. Deleting this field will deactivate those conditional logic rules and also delete all entry data associated with the field. 'Cancel' to abort. 'OK' to delete.", 'kdnaforms' );
-		$gf_vars['conditionalLogicDependencyChoice']      = __( "This form contains {type} conditional logic dependent upon this choice. Are you sure you want to delete this choice? 'Cancel' to abort. 'OK' to delete.", 'kdnaforms' );
-		$gf_vars['conditionalLogicDependencyChoiceEdit']  = __( "This form contains {type} conditional logic dependent upon this choice. Are you sure you want to modify this choice? 'Cancel' to abort. 'OK' to continue.", 'kdnaforms' );
-		$gf_vars['conditionalLogicDependencyAdminOnly']   = __( "This form contains {type} conditional logic dependent upon this field. Are you sure you want to mark this field as Administrative? 'Cancel' to abort. 'OK' to continue.", 'kdnaforms' );
-		$gf_vars['conditionalLogicRichTextEditorWarning'] = __( "This form contains conditional logic dependent upon this field. This will no longer work if the Rich Text Editor is enabled.  Are you sure you want to enable the Rich Text Editor?  'Cancel' to abort. 'OK' to continue.", 'kdnaforms' );
-		$gf_vars['conditionalLogicTypeButton']            = __( 'button', 'kdnaforms' );
-		$gf_vars['conditionalLogicTypeConfirmation']      = __( 'confirmation', 'kdnaforms' );
-		$gf_vars['conditionalLogicTypeNotification']      = __( 'notification', 'kdnaforms' );
-		$gf_vars['conditionalLogicTypeNoficationRouting'] = __( 'notification routing', 'kdnaforms' );
-		$gf_vars['conditionalLogicTypeField']             = __( 'field', 'kdnaforms' );
-		$gf_vars['conditionalLogicTypeFeed']              = __( 'feed', 'kdnaforms' );
-		$gf_vars['conditionalLogicWarningTitle']          = __( 'Conditional Logic Warning', 'kdnaforms' );
+		$kdna_vars['conditionalLogicDependency']            = __( "This form contains {type} conditional logic dependent upon this field. Deleting this field will deactivate those conditional logic rules and also delete all entry data associated with the field. 'Cancel' to abort. 'OK' to delete.", 'kdnaforms' );
+		$kdna_vars['conditionalLogicDependencyChoice']      = __( "This form contains {type} conditional logic dependent upon this choice. Are you sure you want to delete this choice? 'Cancel' to abort. 'OK' to delete.", 'kdnaforms' );
+		$kdna_vars['conditionalLogicDependencyChoiceEdit']  = __( "This form contains {type} conditional logic dependent upon this choice. Are you sure you want to modify this choice? 'Cancel' to abort. 'OK' to continue.", 'kdnaforms' );
+		$kdna_vars['conditionalLogicDependencyAdminOnly']   = __( "This form contains {type} conditional logic dependent upon this field. Are you sure you want to mark this field as Administrative? 'Cancel' to abort. 'OK' to continue.", 'kdnaforms' );
+		$kdna_vars['conditionalLogicRichTextEditorWarning'] = __( "This form contains conditional logic dependent upon this field. This will no longer work if the Rich Text Editor is enabled.  Are you sure you want to enable the Rich Text Editor?  'Cancel' to abort. 'OK' to continue.", 'kdnaforms' );
+		$kdna_vars['conditionalLogicTypeButton']            = __( 'button', 'kdnaforms' );
+		$kdna_vars['conditionalLogicTypeConfirmation']      = __( 'confirmation', 'kdnaforms' );
+		$kdna_vars['conditionalLogicTypeNotification']      = __( 'notification', 'kdnaforms' );
+		$kdna_vars['conditionalLogicTypeNoficationRouting'] = __( 'notification routing', 'kdnaforms' );
+		$kdna_vars['conditionalLogicTypeField']             = __( 'field', 'kdnaforms' );
+		$kdna_vars['conditionalLogicTypeFeed']              = __( 'feed', 'kdnaforms' );
+		$kdna_vars['conditionalLogicWarningTitle']          = __( 'Conditional Logic Warning', 'kdnaforms' );
 
 
-		$gf_vars['mergeTagsText'] = esc_html__( 'Insert Merge Tags', 'kdnaforms' );
+		$kdna_vars['mergeTagsText'] = esc_html__( 'Insert Merge Tags', 'kdnaforms' );
 
-		$gf_vars['baseUrl']              = KDNACommon::get_base_url();
-		$gf_vars['gf_currency_config']   = RGCurrency::get_currency( KDNACommon::get_currency() );
-		$gf_vars['otherChoiceValue']     = KDNACommon::get_other_choice_value();
-		$gf_vars['isFormTrash']          = false;
-		$gf_vars['currentlyAddingField'] = false;
-		$gf_vars['visibilityOptions']    = KDNACommon::get_visibility_options();
+		$kdna_vars['baseUrl']              = KDNACommon::get_base_url();
+		$kdna_vars['kdna_currency_config']   = RGCurrency::get_currency( KDNACommon::get_currency() );
+		$kdna_vars['otherChoiceValue']     = KDNACommon::get_other_choice_value();
+		$kdna_vars['isFormTrash']          = false;
+		$kdna_vars['currentlyAddingField'] = false;
+		$kdna_vars['visibilityOptions']    = KDNACommon::get_visibility_options();
 
-		$gf_vars['addFieldFilter']    = esc_html__( 'Add a condition', 'kdnaforms' );
-		$gf_vars['removeFieldFilter'] = esc_html__( 'Remove a condition', 'kdnaforms' );
-		$gf_vars['filterAndAny']      = esc_html__( '{0} of the following match:', 'kdnaforms' );
+		$kdna_vars['addFieldFilter']    = esc_html__( 'Add a condition', 'kdnaforms' );
+		$kdna_vars['removeFieldFilter'] = esc_html__( 'Remove a condition', 'kdnaforms' );
+		$kdna_vars['filterAndAny']      = esc_html__( '{0} of the following match:', 'kdnaforms' );
 
-		$gf_vars['customChoices']     = esc_html__( 'Custom Choices', 'kdnaforms' );
-		$gf_vars['predefinedChoices'] = esc_html__( 'Predefined Choices', 'kdnaforms' );
+		$kdna_vars['customChoices']     = esc_html__( 'Custom Choices', 'kdnaforms' );
+		$kdna_vars['predefinedChoices'] = esc_html__( 'Predefined Choices', 'kdnaforms' );
 
 		// translators: {field_title} and {field_type} should not be translated , they are variables
-		$gf_vars['fieldLabelAriaLabel'] = esc_html__( '{field_label} - {field_type}, jump to this field\'s settings', 'kdnaforms' );
+		$kdna_vars['fieldLabelAriaLabel'] = esc_html__( '{field_label} - {field_type}, jump to this field\'s settings', 'kdnaforms' );
 
-		$gf_vars['fieldCanBeAddedTitle']       = esc_html__('Field Limit', 'kdnaforms');
-		$gf_vars['fieldCanBeAddedCaptcha']     = esc_html__( 'A form can only contain one CAPTCHA field.', 'kdnaforms' );
-        $gf_vars['fieldCanBeAddedShipping']    = esc_html__( 'A form can only contain one Shipping field.', 'kdnaforms' );
-		$gf_vars['fieldCanBeAddedPostContent'] = esc_html__( 'A form can only contain one Post Body field.', 'kdnaforms' );
-		$gf_vars['fieldCanBeAddedPostTitle']   = esc_html__( 'A form can only contain one Post Title field.', 'kdnaforms' );
-		$gf_vars['fieldCanBeAddedPostExcerpt'] = esc_html__( 'A form can only contain one Post Excerpt field.', 'kdnaforms' );
-		$gf_vars['fieldCanBeAddedCreditCard']  = esc_html__('A form can only contain one Credit Card field.', 'kdnaforms');
+		$kdna_vars['fieldCanBeAddedTitle']       = esc_html__('Field Limit', 'kdnaforms');
+		$kdna_vars['fieldCanBeAddedCaptcha']     = esc_html__( 'A form can only contain one CAPTCHA field.', 'kdnaforms' );
+        $kdna_vars['fieldCanBeAddedShipping']    = esc_html__( 'A form can only contain one Shipping field.', 'kdnaforms' );
+		$kdna_vars['fieldCanBeAddedPostContent'] = esc_html__( 'A form can only contain one Post Body field.', 'kdnaforms' );
+		$kdna_vars['fieldCanBeAddedPostTitle']   = esc_html__( 'A form can only contain one Post Title field.', 'kdnaforms' );
+		$kdna_vars['fieldCanBeAddedPostExcerpt'] = esc_html__( 'A form can only contain one Post Excerpt field.', 'kdnaforms' );
+		$kdna_vars['fieldCanBeAddedCreditCard']  = esc_html__('A form can only contain one Credit Card field.', 'kdnaforms');
 
-		$gf_vars['fieldCanBeAddedProductTitle'] = esc_html__('Missing Product field', 'kdnaforms');
-		$gf_vars['fieldCanBeAddedProduct']      = esc_html__('You must add a Product field to the form first.', 'kdnaforms');
+		$kdna_vars['fieldCanBeAddedProductTitle'] = esc_html__('Missing Product field', 'kdnaforms');
+		$kdna_vars['fieldCanBeAddedProduct']      = esc_html__('You must add a Product field to the form first.', 'kdnaforms');
 
-		$gf_vars['legacyMarkupTitle']             = esc_html__( 'Unsupported Markup', 'kdnaforms' );
-		$gf_vars['fieldCanBeAddedMultipleChoice'] = esc_html__( 'You cannot add a Multiple Choice field to a form that uses legacy markup. Please edit the form settings and turn off Legacy Markup.', 'kdnaforms' );
-		$gf_vars['fieldCanBeAddedImageChoice']    = esc_html__( 'You cannot add an Image Choice field to a form that uses legacy markup. Please edit the form settings and turn off Legacy Markup.', 'kdnaforms' );
+		$kdna_vars['legacyMarkupTitle']             = esc_html__( 'Unsupported Markup', 'kdnaforms' );
+		$kdna_vars['fieldCanBeAddedMultipleChoice'] = esc_html__( 'You cannot add a Multiple Choice field to a form that uses legacy markup. Please edit the form settings and turn off Legacy Markup.', 'kdnaforms' );
+		$kdna_vars['fieldCanBeAddedImageChoice']    = esc_html__( 'You cannot add an Image Choice field to a form that uses legacy markup. Please edit the form settings and turn off Legacy Markup.', 'kdnaforms' );
 
-		$gf_vars['FieldAjaxonErrorTitle']           = esc_html__('Error', 'kdnaforms');
-		$gf_vars['StartAddFieldAjaxonError']        = esc_html__('Ajax error while adding field. Please refresh the page and try again.', 'kdnaforms');
-		$gf_vars['StartChangeInputTypeAjaxonError'] = esc_html__('Ajax error while changing input type. Please refresh the page and try again.', 'kdnaforms');
+		$kdna_vars['FieldAjaxonErrorTitle']           = esc_html__('Error', 'kdnaforms');
+		$kdna_vars['StartAddFieldAjaxonError']        = esc_html__('Ajax error while adding field. Please refresh the page and try again.', 'kdnaforms');
+		$kdna_vars['StartChangeInputTypeAjaxonError'] = esc_html__('Ajax error while changing input type. Please refresh the page and try again.', 'kdnaforms');
 
-		$gf_vars['MissingNameCustomChoicesTitle']   = esc_html__('Missing Name', 'kdnaforms');
-		$gf_vars['MissingNameCustomChoices']        = esc_html__('Please give this custom choice a name.', 'kdnaforms');
-		$gf_vars['DuplicateNameCustomChoicesTitle'] = esc_html__('Duplicate Name', 'kdnaforms');
-		$gf_vars['DuplicateNameCustomChoices']      = esc_html__('This custom choice name is already in use. Please enter another name.', 'kdnaforms');
+		$kdna_vars['MissingNameCustomChoicesTitle']   = esc_html__('Missing Name', 'kdnaforms');
+		$kdna_vars['MissingNameCustomChoices']        = esc_html__('Please give this custom choice a name.', 'kdnaforms');
+		$kdna_vars['DuplicateNameCustomChoicesTitle'] = esc_html__('Duplicate Name', 'kdnaforms');
+		$kdna_vars['DuplicateNameCustomChoices']      = esc_html__('This custom choice name is already in use. Please enter another name.', 'kdnaforms');
 
-		$gf_vars['DuplicateTitleMessageTitle'] = esc_html__('Duplicate Title', 'kdnaforms');
-		$gf_vars['DuplicateTitleMessage']      = esc_html__('The form title you have entered is already taken. Please enter a unique form title.', 'kdnaforms');
+		$kdna_vars['DuplicateTitleMessageTitle'] = esc_html__('Duplicate Title', 'kdnaforms');
+		$kdna_vars['DuplicateTitleMessage']      = esc_html__('The form title you have entered is already taken. Please enter a unique form title.', 'kdnaforms');
 
-		$gf_vars['ValidateFormMissingFormTitleTitle']    = esc_html__('Missing Form Title', 'kdnaforms');
-		$gf_vars['ValidateFormMissingFormTitle']         = esc_html__('Please enter a Title for this form. When adding the form to a page or post, you will have the option to hide the title.', 'kdnaforms');
-		$gf_vars['ValidateFormEmptyPageTitle']           = esc_html__('Empty Page', 'kdnaforms');
-		$gf_vars['ValidateFormEmptyPage']                = esc_html__('This form currently has one or more pages without any fields. Blank pages are a result of Page Breaks that are positioned as the first or last field in the form or right after each other. Please adjust the Page Breaks.', 'kdnaforms');
-		$gf_vars['ValidateFormMissingProductLabelTitle'] = esc_html__('Missing Product Label', 'kdnaforms');
-		$gf_vars['ValidateFormMissingProductLabel']      = esc_html__('This form has a Product field with a blank label. Please enter a label for every Product field.', 'kdnaforms');
-		$gf_vars['ValidateFormMissingProductFieldTitle'] = esc_html__('Missing Product field', 'kdnaforms');
-		$gf_vars['ValidateFormMissingProductField']      = esc_html__('This form has an Option field without a Product field. You must add a Product field to your form.', 'kdnaforms');
+		$kdna_vars['ValidateFormMissingFormTitleTitle']    = esc_html__('Missing Form Title', 'kdnaforms');
+		$kdna_vars['ValidateFormMissingFormTitle']         = esc_html__('Please enter a Title for this form. When adding the form to a page or post, you will have the option to hide the title.', 'kdnaforms');
+		$kdna_vars['ValidateFormEmptyPageTitle']           = esc_html__('Empty Page', 'kdnaforms');
+		$kdna_vars['ValidateFormEmptyPage']                = esc_html__('This form currently has one or more pages without any fields. Blank pages are a result of Page Breaks that are positioned as the first or last field in the form or right after each other. Please adjust the Page Breaks.', 'kdnaforms');
+		$kdna_vars['ValidateFormMissingProductLabelTitle'] = esc_html__('Missing Product Label', 'kdnaforms');
+		$kdna_vars['ValidateFormMissingProductLabel']      = esc_html__('This form has a Product field with a blank label. Please enter a label for every Product field.', 'kdnaforms');
+		$kdna_vars['ValidateFormMissingProductFieldTitle'] = esc_html__('Missing Product field', 'kdnaforms');
+		$kdna_vars['ValidateFormMissingProductField']      = esc_html__('This form has an Option field without a Product field. You must add a Product field to your form.', 'kdnaforms');
 
-		$gf_vars['FormulaIsValidTitle'] = esc_html__('Success', 'kdnaforms');
-		$gf_vars['FormulaIsValid']      = esc_html__('The formula appears to be valid.', 'kdnaforms');
-		$gf_vars['FormulaIsInvalid']    = esc_html__('There appears to be a problem with the formula.', 'kdnaforms');
+		$kdna_vars['FormulaIsValidTitle'] = esc_html__('Success', 'kdnaforms');
+		$kdna_vars['FormulaIsValid']      = esc_html__('The formula appears to be valid.', 'kdnaforms');
+		$kdna_vars['FormulaIsInvalid']    = esc_html__('There appears to be a problem with the formula.', 'kdnaforms');
 
-		$gf_vars['DeleteFormTitle']    = esc_html__('Confirm', 'kdnaforms');
-		$gf_vars['DeleteForm']         = esc_html__("You are about to move this form to the trash. 'Cancel' to abort. 'OK' to delete.", 'kdnaforms');
-        $gf_vars['DeleteCustomChoice'] = esc_html__("Delete this custom choice list? 'Cancel' to abort. 'OK' to delete.", 'kdnaforms');
+		$kdna_vars['DeleteFormTitle']    = esc_html__('Confirm', 'kdnaforms');
+		$kdna_vars['DeleteForm']         = esc_html__("You are about to move this form to the trash. 'Cancel' to abort. 'OK' to delete.", 'kdnaforms');
+        $kdna_vars['DeleteCustomChoice'] = esc_html__("Delete this custom choice list? 'Cancel' to abort. 'OK' to delete.", 'kdnaforms');
 
-		$gf_vars['FieldAdded'] = '&nbsp;' . esc_html__( 'field added to form', 'kdnaforms' ); // Added field to form
+		$kdna_vars['FieldAdded'] = '&nbsp;' . esc_html__( 'field added to form', 'kdnaforms' ); // Added field to form
 
 		if ( ( is_admin() && rgget( 'id' ) ) || ( self::is_form_editor() && rgpost( 'form_id' ) ) ) {
 			$form_id = absint( rgget( 'id' ) ?: rgpost( 'form_id' ) );
 			$form    = KDNAFormsModel::get_form_meta( $form_id );
 			if ( $form ) {
-				$gf_vars['mergeTags'] = KDNACommon::get_merge_tags( rgar( $form, 'fields', array() ), '', false );
+				$kdna_vars['mergeTags'] = KDNACommon::get_merge_tags( rgar( $form, 'fields', array() ), '', false );
 
 				$address_field                 = new KDNA_Field_Address();
-				$gf_vars['addressTypes']       = $address_field->get_address_types( $form_id );
-				$gf_vars['defaultAddressType'] = $address_field->get_default_address_type( $form_id );
+				$kdna_vars['addressTypes']       = $address_field->get_address_types( $form_id );
+				$kdna_vars['defaultAddressType'] = $address_field->get_default_address_type( $form_id );
 			}
-			$gf_vars['idString'] = __( 'ID: ', 'kdnaforms' );
+			$kdna_vars['idString'] = __( 'ID: ', 'kdnaforms' );
 		}
 
 		/*
@@ -5866,15 +5866,15 @@ Content-Type: text/html;
 
 		sort( $prefixes );
 
-		$gf_vars['nameFieldDefaultPrefixes'] = array();
+		$kdna_vars['nameFieldDefaultPrefixes'] = array();
 		foreach ( $prefixes as $prefix ) {
 			$prefix = wp_strip_all_tags( $prefix );
 
-			$gf_vars['nameFieldDefaultPrefixes'][] = array( 'text' => $prefix, 'value' => $prefix );
+			$kdna_vars['nameFieldDefaultPrefixes'][] = array( 'text' => $prefix, 'value' => $prefix );
 		}
 
 		if ( ( is_admin() && rgget( 'id' ) ) || ( self::is_form_editor() && rgpost( 'form_id' ) ) ) {
-			$gf_vars['conditionalLogic'] = array(
+			$kdna_vars['conditionalLogic'] = array(
 				'views' => array(
 					'sidebar'          => file_get_contents( KDNACommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/accordion_header.html' ),
 					'flyout'           => file_get_contents( KDNACommon::get_base_path() . '/js/components/form_editor/conditional_flyout/views/flyout.html' ),
@@ -5894,14 +5894,12 @@ Content-Type: text/html;
 			);
 		}
 
-		// Emitted under both names: the rename reached the readers but never this
-		// writer, so conditional_flyout.js was reading an undefined kdna_vars.
-		$gf_vars_json = 'var gf_vars = ' . json_encode( $gf_vars ) . '; var kdna_vars = gf_vars;';
+		$kdna_vars_json = 'var kdna_vars = ' . json_encode( $kdna_vars ) . ';';
 
 		if ( ! $echo ) {
-			return $gf_vars_json;
+			return $kdna_vars_json;
 		} else {
-			echo $gf_vars_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $kdna_vars_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -5967,7 +5965,7 @@ Content-Type: text/html;
 
 		if ( ! empty( $errors ) ) {
 			?>
-			<div class="notice notice-error gf-notice" id="gf-admin-notices-wrapper">
+			<div class="notice notice-error kdna-notice" id="kdna-admin-notices-wrapper">
 				<?php if ( count( $errors ) > 1 ) { ?>
 					<ul style="margin: 0.5em 0 0; padding: 2px;">
 						<li><?php echo wp_kses_post( implode( '</li><li>', $errors ) ); ?></li>
@@ -6044,7 +6042,7 @@ Content-Type: text/html;
 		_deprecated_function( __FUNCTION__, '2.5.7', 'Dismissable_Messages::get_db_key()' );
 	}
 
-	private static function requires_gf_vars() {
+	private static function requires_kdna_vars() {
 		$dependent_scripts = array(
 			'kdnaform_form_admin',
 			'kdnaform_kdnaforms',
@@ -6067,7 +6065,7 @@ Content-Type: text/html;
 	 *
 	 * @return bool
 	 */
-	public static function requires_gf_hooks_javascript() {
+	public static function requires_kdna_hooks_javascript() {
 		require_once self::get_base_path() . '/form_display.php';
 
 		// Script has already been output; bail to avoid duplicating it.
@@ -6115,21 +6113,21 @@ Content-Type: text/html;
 	 *
 	 * @since 2.5
 	 */
-	public static function gf_header() {
+	public static function kdna_header() {
 		$header_buttons = apply_filters( 'kdnaform_settings_header_buttons', '' );
 		if ( !empty( $header_buttons ) ) {
-			$header_button_class = 'gform-settings-header--has_buttons';
+			$header_button_class = 'kform-settings-header--has_buttons';
 		} else {
 			$header_button_class = '';
 		}
 		?>
-		<header class="gform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
-			<div class="gform-settings__wrapper">
+		<header class="kform-settings-header <?php echo esc_attr( $header_button_class ); ?>">
+			<div class="kform-settings__wrapper">
 				<h2 style="margin: 0; font-size: 20px; font-weight: 600; color: #1d2327; line-height: 1.4;">KDNA Forms</h2>
 
 				<?php
 				if ( !empty ( $header_buttons ) ) { ?>
-					<div class="gform-settings-header_buttons">
+					<div class="kform-settings-header_buttons">
 						<?php echo $header_buttons; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 				<?php } ?>
@@ -6162,7 +6160,7 @@ Content-Type: text/html;
 	 */
 	public static function notices_section() {
 		?>
-		<div id="gf-admin-notices-wrapper">
+		<div id="kdna-admin-notices-wrapper">
 		<?php self::admin_screen_reader_title(); ?>
 		</div>
 		<?php
@@ -6205,7 +6203,7 @@ Content-Type: text/html;
 					call_user_func( $callback['function'] );
 					$content = ob_get_clean();
 
-					if ( strpos( $content, 'gf-notice' ) == false ) {
+					if ( strpos( $content, 'kdna-notice' ) == false ) {
 						remove_action( $hook, $name, $priority );
 					}
 				}
@@ -6223,11 +6221,11 @@ Content-Type: text/html;
 	public static function admin_notices_style() {
 		?>
 		<style>
-			.gf-notice {
+			.kdna-notice {
 				display: none;
 			}
-			#gf-admin-notices-wrapper .gf-notice,
-			#gf-wordpress-notices {
+			#kdna-admin-notices-wrapper .kdna-notice,
+			#kdna-wordpress-notices {
 				display: block;
 			}
 		</style>
@@ -6235,16 +6233,16 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Outputs the gf_vars variable if a script that requires it has been enqueued.
+	 * Outputs the kdna_vars variable if a script that requires it has been enqueued.
 	 *
 	 * @since unknown
 	 * @since 2.9.16 Updated to use self::get_inline_script_tag().
 	 *
 	 * @return void
 	 */
-	public static function maybe_output_gf_vars() {
-		if ( self::requires_gf_vars() ) {
-			echo self::get_inline_script_tag( self::gf_vars( false ), false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	public static function maybe_output_kdna_vars() {
+		if ( self::requires_kdna_vars() ) {
+			echo self::get_inline_script_tag( self::kdna_vars( false ), false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -6257,7 +6255,7 @@ Content-Type: text/html;
 	 *
 	 * @return void
 	 */
-	public static function check_for_gf_widgets( $sidebar_index ) {
+	public static function check_for_kdna_widgets( $sidebar_index ) {
 		require_once self::get_base_path() . '/form_display.php';
 		$sidebars = wp_get_sidebars_widgets();
 
@@ -6276,13 +6274,13 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Outputs gforms object and hooks methods depended upon by kdnaform_kdnaforms script early so that inline scripts
+	 * Outputs kforms object and hooks methods depended upon by kdnaform_kdnaforms script early so that inline scripts
 	 * in between the dependency and this block can continue to work
 	 *
 	 * @since 2.5
 	 */
 	public static function output_hooks_javascript() {
-		if ( ! self::requires_gf_hooks_javascript() ) {
+		if ( ! self::requires_kdna_hooks_javascript() ) {
 			return;
 		}
 
@@ -6290,7 +6288,7 @@ Content-Type: text/html;
 	}
 
 	/**
-	 * Get the Javascript code from the gforms_hooks file and return it.
+	 * Get the Javascript code from the kdna_hooks file and return it.
 	 *
 	 * @since 2.5
 	 * @since 2.9.19 Added the $set_printed_prop param.
@@ -6307,7 +6305,7 @@ Content-Type: text/html;
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['kdnaform_debug'] ) ? '' : '.min'; // phpcs:ignoreWordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Recommended
 
-		return file_get_contents( KDNACommon::get_base_path() . '/js/gforms_hooks' . $min . '.js' );
+		return file_get_contents( KDNACommon::get_base_path() . '/js/kdna_hooks' . $min . '.js' );
 	}
 
 	/**
@@ -6327,7 +6325,7 @@ Content-Type: text/html;
 		return $value;
 	}
 
-	// used by the gfFieldFilterUI() jQuery plugin
+	// used by the kdnaFieldFilterUI() jQuery plugin
 	public static function get_field_filter_settings( $form ) {
 		if ( ! self::form_has_fields( $form ) ) {
 			return array();
@@ -6451,7 +6449,7 @@ Content-Type: text/html;
 				'text'        => esc_html__( 'Entry Date', 'kdnaforms' ),
 				'operators'   => array( 'is', '>', '<' ),
 				'placeholder' => __( 'yyyy-mm-dd', 'kdnaforms' ),
-				'cssClass'    => 'datepicker gform-datepicker ymd_dash',
+				'cssClass'    => 'datepicker kform-datepicker ymd_dash',
 			),
 			'is_starred'     => array(
 				'text'      => esc_html__( 'Starred', 'kdnaforms' ),
@@ -6484,7 +6482,7 @@ Content-Type: text/html;
 				'text'        => esc_html__( 'Payment Date', 'kdnaforms' ),
 				'operators'   => array( 'is', 'isnot', '>', '<' ),
 				'placeholder' => __( 'yyyy-mm-dd', 'kdnaforms' ),
-				'cssClass'    => 'datepicker gform-datepicker ymd_dash',
+				'cssClass'    => 'datepicker kform-datepicker ymd_dash',
 			),
 			'payment_amount' => array(
 				'text'      => esc_html__( 'Payment Amount', 'kdnaforms' ),
@@ -6706,9 +6704,9 @@ Content-Type: text/html;
 	 * @deprecated since 2.6
 	 * @remove-in 3.0
 	 * @see        class-kdna-config-service-provider.php::register_config_items()
-	 * @see        kdnaform_gf_legacy_multi
+	 * @see        kdnaform_kdna_legacy_multi
 	 */
-	public static function localize_gf_legacy_multi() {
+	public static function localize_kdna_legacy_multi() {
 		return; // as of 2.6, we no longer directly localize our data.
 	}
 
@@ -6719,7 +6717,7 @@ Content-Type: text/html;
 
 		$message_format = 'multipart';
 
-		$resume_url  = add_query_arg( array( 'gf_token' => $resume_token ), $embed_url );
+		$resume_url  = add_query_arg( array( 'kdna_token' => $resume_token ), $embed_url );
 		$resume_url  = esc_url( $resume_url );
 		$resume_link = "<a href='{$resume_url}'>{$resume_url}</a>";
 		$message .= $resume_link;
@@ -7120,7 +7118,7 @@ Content-Type: text/html;
 	 *
 	 * @return string
 	 */
-	public static function load_gf_text_domain( $domain = 'kdnaforms', $basename = '' ) {
+	public static function load_kdna_text_domain( $domain = 'kdnaforms', $basename = '' ) {
 		$current_locale = version_compare( get_bloginfo( 'version', 'display' ), '5.0', '>=' ) ? determine_locale() : self::legacy_determine_locale();
 		$locale         = apply_filters( 'plugin_locale', $current_locale, $domain );
 
@@ -7611,8 +7609,8 @@ Content-Type: text/html;
 			}
 		} else if ( strpos( $icon, 'dashicons' ) === 0 ) {
 			return sprintf( '<i class="dashicons %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
-		} else if ( strpos( $icon, 'gform-icon' ) === 0 ) {
-			return sprintf( '<i class="gform-icon %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
+		} else if ( strpos( $icon, 'kform-icon' ) === 0 ) {
+			return sprintf( '<i class="kform-icon %s"%s></i>', esc_attr( $icon ), $aria_hidden_attr );
 		}
 
 		return null;
@@ -7660,7 +7658,7 @@ Content-Type: text/html;
 	     * @param bool  $is_enabled Indicates if legacy markup is enabled for the current form. Default is false for forms created with KDNA Forms 2.5 and greater.
 	     * @param array $form       The form object.
 	     */
-	    $is_enabled = (bool) gf_apply_filters( array( 'kdnaform_enable_legacy_markup', $form_id ), $is_enabled, $form );
+	    $is_enabled = (bool) kdna_apply_filters( array( 'kdnaform_enable_legacy_markup', $form_id ), $is_enabled, $form );
 
 	    KDNACache::set( $key, $is_enabled );
 
@@ -7905,7 +7903,7 @@ Content-Type: text/html;
 		 * @param bool  $require_login Indicates if the form requires the user to be logged-in.
 		 * @param array $form          The current form object.
 		 */
-		$require_login = (bool) gf_apply_filters( array(
+		$require_login = (bool) kdna_apply_filters( array(
 			'kdnaform_require_login',
 			$form_id,
 		), (bool) rgar( $form, 'requireLogin' ), $form );
@@ -7968,7 +7966,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function darken_color( $color, $darken_amount, $format = 'hex' ) {
-		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::GF_COLORS );
+		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::KDNA_COLORS );
 
 		if ( $darken_amount > 0 ) {
 			$darken_amount *= -1;
@@ -7989,7 +7987,7 @@ Content-Type: text/html;
 	 * @return mixed
 	 */
 	public static function lighten_color( $color, $lighten_amount, $format = 'hex' ) {
-		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::GF_COLORS );
+		$color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::KDNA_COLORS );
 
 		if ( $lighten_amount < 0 ) {
 			$lighten_amount *= -1;
@@ -8009,7 +8007,7 @@ Content-Type: text/html;
 	 * @return bool
 	 */
     public static function is_dark_color( $color = '', $threshold = 465 ) {
-	    $color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::GF_COLORS );
+	    $color_modifier = KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Util\KDNA_Util_Service_Provider::KDNA_COLORS );
 	    $hex_color      = $color_modifier->sanitize_color_string( $color );
 
 	    return hexdec( substr( $hex_color, 0, 2 ) ) + hexdec( substr( $hex_color, 2, 2 ) ) + hexdec( substr( $hex_color, 4, 2 ) ) < $threshold;
@@ -8026,7 +8024,7 @@ Content-Type: text/html;
 	 * @return array[]
 	 */
 	public static function generate_block_styles_palette( $block_settings ) {
-		$default_settings = \KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Form_Display\GF_Form_Display_Service_Provider::BLOCK_STYLES_DEFAULTS );
+		$default_settings = \KDNAForms::get_service_container()->get( \KDNA_Forms\KDNA_Forms\Form_Display\KDNA_Form_Display_Service_Provider::BLOCK_STYLES_DEFAULTS );
 		$applied_settings = wp_parse_args( $block_settings, $default_settings );
 
 		// Set up the inside control primary color used by default to be user-friendly
@@ -8196,7 +8194,7 @@ Content-Type: text/html;
 			 *
 			 * @param array $form The current form.
 			 */
-			$forms[ $form_id ] = gf_apply_filters( array( 'kdnaform_admin_pre_render', $form_id ), $form );
+			$forms[ $form_id ] = kdna_apply_filters( array( 'kdnaform_admin_pre_render', $form_id ), $form );
 		}
 
 		return $forms[ $form_id ];
@@ -8282,7 +8280,7 @@ Content-Type: text/html;
 	 */
 	public static function send_json( $response ) {
 		// Outputting JSON content with delimiters.
-		echo '<!-- gf:json_start -->' . wp_json_encode( $response ) . '<!-- gf:json_end -->';
+		echo '<!-- kdna:json_start -->' . wp_json_encode( $response ) . '<!-- kdna:json_end -->';
 
 		wp_die( '', '', array( 'response' => null ) );
 	}
@@ -8622,7 +8620,7 @@ class KDNACache {
  * do any garbage collection of transients.
  *
  */
-class GF_Cache {
+class KDNA_Cache {
 	public function get( $key, &$found = null, $is_persistent = true ) {
 		return KDNACache::get( $key, $found, $is_persistent );
 	}
@@ -8684,7 +8682,7 @@ class EncryptDB extends wpdb {
  * Provides compatibility with PHP 7.2 (create_function deprecated) and 5.2.
  * So whenever the need for `create_function` arises, use this instead.
  */
-class GF_Late_Static_Binding {
+class KDNA_Late_Static_Binding {
 	private $args = array();
 
 	public function __construct( $args ) {

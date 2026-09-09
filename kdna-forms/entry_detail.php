@@ -88,7 +88,7 @@ class KDNAEntryDetail {
 		 * @param array $entry      The entry currently being viewed/edited.
 		 * @param array $form       The form object used to process the current entry.
 		 */
-		$meta_boxes = apply_filters( 'gform_entry_detail_meta_boxes', $meta_boxes, $entry, $form );
+		$meta_boxes = apply_filters( 'kform_entry_detail_meta_boxes', $meta_boxes, $entry, $form );
 
 		foreach ( $meta_boxes as $id => $meta_box ) {
 			$screen = get_current_screen();
@@ -246,7 +246,7 @@ class KDNAEntryDetail {
 		 * @param array $search_criteria An array containing the search criteria.
 		 * @param int   $form_id         The ID of the current form.
 		 */
-		$search_criteria = gf_apply_filters( array( 'kdnaform_search_criteria_entry_list', $form_id ), $search_criteria, $form_id );
+		$search_criteria = kdna_apply_filters( array( 'kdnaform_search_criteria_entry_list', $form_id ), $search_criteria, $form_id );
 
 		$paging = array( 'offset' => $position, 'page_size' => 1 );
 
@@ -312,7 +312,7 @@ class KDNAEntryDetail {
 		 *
 		 * @since 2.3.3.9
 		 */
-		gf_do_action( array( 'kdnaform_pre_entry_detail', $form_id ), $form, $lead );
+		kdna_do_action( array( 'kdnaform_pre_entry_detail', $form_id ), $form, $lead );
 
 		$total_count = self::get_total_count();
 		$position    = rgget( 'pos' ) ? rgget( 'pos' ) : 0;
@@ -334,7 +334,7 @@ class KDNAEntryDetail {
 
 		switch ( KDNAForms::post( 'action' ) ) {
 			case 'update' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 
 				$original_entry = $lead;
 
@@ -353,7 +353,7 @@ class KDNAEntryDetail {
 				 * @param integer $lead['id']     The entry ID.
 				 * @param array   $original_entry The entry object before being updated.
 				 */
-				gf_do_action( array( 'kdnaform_after_update_entry', $form['id'] ), $form, $lead['id'], $original_entry );
+				kdna_do_action( array( 'kdnaform_after_update_entry', $form['id'] ), $form, $lead['id'], $original_entry );
 
 				$lead = KDNAFormsModel::get_entry( $lead['id'] );
 				$lead = KDNAFormsModel::set_entry_meta( $lead, $form );
@@ -389,7 +389,7 @@ class KDNAEntryDetail {
 				break;
 
 			case 'add_note' :
-				check_admin_referer( 'gforms_update_note', 'gforms_update_note' );
+				check_admin_referer( 'kforms_update_note', 'kforms_update_note' );
 				$user_data = get_userdata( $current_user->ID );
 				KDNAFormsModel::add_note( $lead['id'], $current_user->ID, $user_data->display_name, isset( $_POST['new_note'] ) ? wp_unslash( $_POST['new_note'] ) : '' ); //  phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
@@ -432,13 +432,13 @@ class KDNAEntryDetail {
 				break;
 
 			case 'add_quick_note' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				$user_data = get_userdata( $current_user->ID );
 				KDNAFormsModel::add_note( $lead['id'], $current_user->ID, $user_data->display_name, isset( $_POST['quick_note'] ) ? wp_unslash( $_POST['quick_note'] ) : '' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 				break;
 
 			case 'bulk' :
-				check_admin_referer( 'gforms_update_note', 'gforms_update_note' );
+				check_admin_referer( 'kforms_update_note', 'kforms_update_note' );
 				if ( rgpost( 'bulk_action' ) == 'delete' ) {
 					if ( ! KDNACommon::current_user_can_any( 'kdnaforms_edit_entry_notes' ) ) {
 						wp_die( esc_html__( "You don't have adequate permission to delete notes.", 'kdnaforms' ) );
@@ -448,7 +448,7 @@ class KDNAEntryDetail {
 				break;
 
 			case 'trash' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				if ( ! KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					wp_die( esc_html__( "You don't have adequate permission to trash entries.", 'kdnaforms' ) );
 				}
@@ -462,7 +462,7 @@ class KDNAEntryDetail {
 				break;
 
 			case 'restore' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				if ( ! KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					wp_die( esc_html__( "You don't have adequate permission to restore entries.", 'kdnaforms' ) );
 				}
@@ -472,21 +472,21 @@ class KDNAEntryDetail {
 				break;
 
 			case 'unspam' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				KDNAFormsModel::update_entry_property( $lead['id'], 'status', 'active' );
 				$lead = KDNAFormsModel::get_entry( $lead['id'] );
 				self::set_current_entry( $lead );
 				break;
 
 			case 'spam' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				KDNAFormsModel::update_entry_property( $lead['id'], 'status', 'spam' );
 				$lead = KDNAFormsModel::get_entry( $lead['id'] );
 				self::set_current_entry( $lead );
 				break;
 
 			case 'delete' :
-				check_admin_referer( 'gforms_save_entry', 'gforms_save_entry' );
+				check_admin_referer( 'kforms_save_entry', 'kforms_save_entry' );
 				if ( ! KDNACommon::current_user_can_any( 'kdnaforms_delete_entries' ) ) {
 					wp_die( esc_html__( "You don't have adequate permission to delete entries.", 'kdnaforms' ) );
 				}
@@ -510,7 +510,7 @@ class KDNAEntryDetail {
 
 			jQuery(document).ready(function () {
 				toggleNotificationOverride(true);
-				jQuery('#gform_update_button').prop('disabled', false);
+				jQuery('#kform_update_button').prop('disabled', false);
 				if(typeof postboxes != 'undefined'){
 					jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
 					postboxes.add_postbox_toggles( <?php echo json_encode( $screen->id ); ?>);
@@ -538,7 +538,7 @@ class KDNAEntryDetail {
 			}
 
 			function EndDeleteFile(fieldId, fileIndex) {
-				var previewFileSelector = "#preview_existing_files_" + fieldId + " .ginput_preview";
+				var previewFileSelector = "#preview_existing_files_" + fieldId + " .kinput_preview";
 				var $previewFiles = jQuery(previewFileSelector);
 				var rr = $previewFiles.eq(fileIndex);
 				$previewFiles.eq(fileIndex).remove();
@@ -548,7 +548,7 @@ class KDNAEntryDetail {
 					jQuery('#upload_' + fieldId).show('slow');
 				}
 
-				var $multiFileContainer = jQuery( '#gform_multifile_upload_' + formId + '_' + fieldId );
+				var $multiFileContainer = jQuery( '#kform_multifile_upload_' + formId + '_' + fieldId );
 				if ( ! $multiFileContainer.hasClass( 'kdnaform_fileupload_multifile' ) ) {
 					return;
 				}
@@ -568,11 +568,11 @@ class KDNAEntryDetail {
 
 			function ToggleShowEmptyFields() {
 				if (jQuery("#gentry_display_empty_fields").is(":checked")) {
-					createCookie("gf_display_empty_fields", true, 10000);
+					createCookie("kdna_display_empty_fields", true, 10000);
 					document.location = document.location.href;
 				}
 				else {
-					eraseCookie("gf_display_empty_fields");
+					eraseCookie("kdna_display_empty_fields");
 					document.location = document.location.href;
 				}
 			}
@@ -607,8 +607,8 @@ class KDNAEntryDetail {
 				jQuery('#please_wait_container').fadeIn();
 
 				jQuery.post(ajaxurl, {
-						action                 : "gf_resend_notifications",
-						gf_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
+						action                 : "kdna_resend_notifications",
+						kdna_resend_notifications: '<?php echo esc_js( wp_create_nonce( 'kdna_resend_notifications' ) ); ?>',
 						notifications          : jQuery.toJSON(selectedNotifications),
 						sendTo                 : sendTo,
 						leadIds                : '<?php echo absint( $lead['id'] ); ?>',
@@ -670,13 +670,13 @@ class KDNAEntryDetail {
 
 		?>
 		<form method="post" id="entry_form" enctype='multipart/form-data'>
-			<?php wp_nonce_field( 'gforms_save_entry', 'gforms_save_entry' ) ?>
+			<?php wp_nonce_field( 'kforms_save_entry', 'kforms_save_entry' ) ?>
 			<input type="hidden" name="action" id="action" value="" />
 			<input type="hidden" name="screen_mode" id="screen_mode" value="<?php echo esc_attr( rgpost( 'screen_mode' ) ) ?>" />
 
 			<input type="hidden" name="entry_id" id="entry_id" value="<?php echo absint( $lead['id'] ) ?>" />
 
-			<div class="wrap gf_entry_wrap">
+			<div class="wrap kdna_entry_wrap">
 
 					<?php
 					// Locking removed for lean plugin. ?>
@@ -696,7 +696,7 @@ class KDNAEntryDetail {
 					<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 
 
-					<div id="post-body" class="metabox-holder columns-2 gform-settings-panel__content">
+					<div id="post-body" class="metabox-holder columns-2 kform-settings-panel__content">
 						<div id="post-body-content" >
 							<?php
 							/**
@@ -705,7 +705,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'gform_entry_detail_content_before', $form, $lead );
+							do_action( 'kform_entry_detail_content_before', $form, $lead );
 
 							if ( 'edit' === $mode && KDNACommon::current_user_can_any( 'kdnaforms_edit_entries' ) ) {
 								self::lead_detail_edit( $form, $lead );
@@ -719,7 +719,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'gform_entry_detail', $form, $lead );
+							do_action( 'kform_entry_detail', $form, $lead );
 							?>
 						</div>
 
@@ -732,7 +732,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'gform_entry_detail_sidebar_before', $form, $lead );
+							do_action( 'kform_entry_detail_sidebar_before', $form, $lead );
 							?>
 							<?php
 
@@ -746,7 +746,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'gform_entry_detail_sidebar_middle', $form, $lead );
+							do_action( 'kform_entry_detail_sidebar_middle', $form, $lead );
 
 							/**
 							 * Fires after the entry detail sidebar information.
@@ -754,7 +754,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'gform_entry_detail_sidebar_after', $form, $lead );
+							do_action( 'kform_entry_detail_sidebar_after', $form, $lead );
 							?>
 						</div>
 
@@ -768,7 +768,7 @@ class KDNAEntryDetail {
 							 * @param array $form The Form object
 							 * @param array $lead The Entry object
 							 */
-							do_action( 'gform_entry_detail_content_after', $form, $lead );
+							do_action( 'kform_entry_detail_content_after', $form, $lead );
 							?>
 						</div>
 					</div>
@@ -790,7 +790,7 @@ class KDNAEntryDetail {
 				<label for="name"><?php esc_html_e( 'Details', 'kdnaforms' ); ?></label>
 			</h3>
 
-			<div class="inside gform_wrapper gravity-theme gform_wrapper_edit_form_entry">
+			<div class="inside kform_wrapper kdna-theme kform_wrapper_edit_form_entry">
 				<table class="form-table entry-details">
 					<tbody>
 					<?php
@@ -805,7 +805,7 @@ class KDNAEntryDetail {
 								<tr valign="top">
 									<td class="detail-view">
 										<div style="margin-bottom:10px; border-bottom:1px dotted #ccc;">
-											<h2 class="detail_gsection_title">' . esc_html( KDNACommon::get_label( $field ) ) . '</h2>
+											<h2 class="detail_ksection_title">' . esc_html( KDNACommon::get_label( $field ) ) . '</h2>
 										</div>
 									</td>
 								</tr>';
@@ -850,7 +850,7 @@ class KDNAEntryDetail {
 						 * @param int    $lead['id'] The entry ID.
 						 * @param int    $form['id'] The form ID.
 						 */
-						$content = gf_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
+						$content = kdna_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
 
 						echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
@@ -859,9 +859,9 @@ class KDNAEntryDetail {
 				</table>
 				<br />
 
-				<div class="gform_footer">
-					<input type="hidden" name="gform_unique_id" value="" />
-					<input type="hidden" name="gform_uploaded_files" id='gform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
+				<div class="kform_footer">
+					<input type="hidden" name="kform_unique_id" value="" />
+					<input type="hidden" name="kform_uploaded_files" id='kform_uploaded_files_<?php echo absint( $form_id ); ?>' value="" />
 				</div>
 			</div>
 		</div>
@@ -907,12 +907,12 @@ class KDNAEntryDetail {
 
 		        // Add base note class.
 		        if ( $note->note_type ) {
-			        $classes[] = sprintf( 'gforms_note_%s', $note->note_type );
+			        $classes[] = sprintf( 'kforms_note_%s', $note->note_type );
 		        }
 
 		        // Add sub type note class.
 		        if ( rgobj( $note, 'sub_type' ) ) {
-			        $classes[] = sprintf( 'alert gforms_note_%s', $note->sub_type );
+			        $classes[] = sprintf( 'alert kforms_note_%s', $note->sub_type );
 		        }
 
 		        // Escape note classes.
@@ -1028,7 +1028,7 @@ class KDNAEntryDetail {
 					 * @param array  $form  The Form Object.
 					 * @param array  $entry The Entry Object.
 					 */
-					echo apply_filters( 'gform_entry_detail_title', $title, $form, $lead ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo apply_filters( 'kform_entry_detail_title', $title, $form, $lead ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 				</th>
 				<th style="width:auto; font-size:10px; text-align: right;">
@@ -1129,7 +1129,7 @@ class KDNAEntryDetail {
 				 * @param int    $lead['id'] The entry ID.
 				 * @param int    $form['id'] The form ID.
 				 */
-				$content = gf_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
+				$content = kdna_apply_filters( array( 'kdnaform_field_content', $form['id'], $field->id ), $content, $field, $value, $lead['id'], $form['id'] );
 
 				echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
@@ -1151,7 +1151,7 @@ class KDNAEntryDetail {
 					 * @var array  $products        Current order summary object.
 					 * @var string $format          Format that should be used to display the summary ('html' or 'text').
 					 */
-					$order_summary_markup = gf_apply_filters( array( 'kdnaform_order_summary', $form['id'] ), trim( $order_summary_markup ), $form, $lead, $products, 'html' );
+					$order_summary_markup = kdna_apply_filters( array( 'kdnaform_order_summary', $form['id'] ), trim( $order_summary_markup ), $form, $lead, $products, 'html' );
 
 					echo $order_summary_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
@@ -1204,9 +1204,9 @@ class KDNAEntryDetail {
 				$payment_status = apply_filters( 'kdnaform_payment_status', KDNACommon::get_entry_payment_status_text( $entry['payment_status'] ), $form, $entry );
 				if ( ! empty( $payment_status ) ) {
 					?>
-					<div id="gf_payment_status" class="gf_payment_detail">
+					<div id="kdna_payment_status" class="kdna_payment_detail">
 						<?php esc_html_e( 'Status', 'kdnaforms' ) ?>:
-						<span id="kdnaform_payment_status"><?php echo $payment_status; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+						<span id="kform_payment_status"><?php echo $payment_status; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 					</div>
 
 					<?php
@@ -1220,9 +1220,9 @@ class KDNAEntryDetail {
 					$payment_date = apply_filters( 'kdnaform_payment_date', KDNACommon::format_date( $entry['payment_date'], false, 'Y/m/d', $entry['transaction_type'] != 2 ), $form, $entry );
 					if ( ! empty( $payment_date ) ) {
 						?>
-						<div id="gf_payment_date" class="gf_payment_detail">
+						<div id="kdna_payment_date" class="kdna_payment_detail">
 							<?php echo $entry['transaction_type'] == 2 ? esc_html__( 'Start Date', 'kdnaforms' ) : esc_html__( 'Date', 'kdnaforms' ) ?>:
-							<span id='gform_payment_date'><?php echo $payment_date; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+							<span id='kform_payment_date'><?php echo $payment_date; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 						</div>
 						<?php
 					}
@@ -1237,9 +1237,9 @@ class KDNAEntryDetail {
 					$transaction_id = apply_filters( 'kdnaform_payment_transaction_id', $entry['transaction_id'], $form, $entry );
 					if ( ! empty( $transaction_id ) ) {
 						?>
-						<div id="gf_payment_transaction_id" class="gf_payment_detail">
+						<div id="kdna_payment_transaction_id" class="kdna_payment_detail">
 							<?php echo $entry['transaction_type'] == 2 ? esc_html__( 'Subscription Id', 'kdnaforms' ) : esc_html__( 'Transaction Id', 'kdnaforms' ); ?>:
-							<span id='gform_payment_transaction_id'><?php echo $transaction_id; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+							<span id='kform_payment_transaction_id'><?php echo $transaction_id; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 						</div>
 						<?php
 					}
@@ -1255,9 +1255,9 @@ class KDNAEntryDetail {
 					$payment_amount = apply_filters( 'kdnaform_payment_amount', KDNACommon::to_money( $entry['payment_amount'], $entry['currency'] ), $form, $entry );
 					if ( ! rgblank( $payment_amount ) ) {
 						?>
-						<div id="gf_payment_amount" class="gf_payment_detail">
+						<div id="kdna_payment_amount" class="kdna_payment_detail">
 							<?php echo $entry['transaction_type'] == 2 ? esc_html__( 'Recurring Amount', 'kdnaforms' ) : esc_html__( 'Amount', 'kdnaforms' ); ?>:
-							<span id='gform_payment_amount'><?php echo $payment_amount; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
+							<span id='kform_payment_amount'><?php echo $payment_amount; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- May contain HTML ?></span>
 						</div>
 						<?php
 					}
@@ -1277,7 +1277,7 @@ class KDNAEntryDetail {
 						$trial_description = apply_filters( 'kdnaform_subscription_details_trial_description', $trial_item->description, $form, $entry );
 						if ( ! rgblank( $trial_description ) ) {
 							?>
-							<div id="gf_trial_description" class="gf_payment_detail">
+							<div id="kdna_trial_description" class="kdna_payment_detail">
 								<?php echo esc_html( $trial_description ); ?>
 							</div>
 							<?php
@@ -1317,12 +1317,12 @@ class KDNAEntryDetail {
 		<div class="detail-view-print">
 			<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_view_entry_notes' ) ) { ?>
 
-				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="gform_print_notes" />
+				<input type="checkbox" name="print_notes" value="print_notes" checked="checked" id="kform_print_notes" />
 				<label for="print_notes"><?php esc_html_e( 'Include Notes', 'kdnaforms' ); ?></label>
 
 			<?php } ?>
 			<br><br>
-			<a href="javascript:;" onclick="var notes_qs = jQuery('#gform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?gf_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
+			<a href="javascript:;" onclick="var notes_qs = jQuery('#kform_print_notes').is(':checked') ? '&notes=1' : ''; var url='<?php echo esc_url( trailingslashit( site_url() ) ); ?>?kdna_page=print-entry&fid=<?php echo absint( $form['id'] ); ?>&lid=<?php echo absint( $lead['id'] ); ?>' + notes_qs; window.open (url,'printwindow');" class="button"><?php esc_html_e( 'Print', 'kdnaforms' ); ?></a>
 		</div>
 		<!-- end print button -->
 		<?php
@@ -1333,7 +1333,7 @@ class KDNAEntryDetail {
 		$form  = $args['form'];
 		?>
 		<form method="post">
-			<?php wp_nonce_field( 'gforms_update_note', 'gforms_update_note' ) ?>
+			<?php wp_nonce_field( 'kforms_update_note', 'kforms_update_note' ) ?>
 				<?php
 				$notes = KDNAFormsModel::get_lead_notes( $entry['id'] );
 
@@ -1384,7 +1384,7 @@ class KDNAEntryDetail {
 				}
 
 				esc_html_e( 'Embed Url', 'kdnaforms' ); ?>:
-				<a href="<?php echo esc_url( $entry['source_url'] ) ?>" target="_blank">.../<?php echo esc_html( KDNACommon::truncate_url( $entry['source_url'] ) ) ?><span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>
+				<a href="<?php echo esc_url( $entry['source_url'] ) ?>" target="_blank">.../<?php echo esc_html( KDNACommon::truncate_url( $entry['source_url'] ) ) ?><span class="screen-reader-text"><?php echo esc_html__('(opens in a new tab)', 'kdnaforms'); ?></span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>
 				<br /><br />
 				<?php
 				if ( ! empty( $entry['post_id'] ) ) {
@@ -1523,7 +1523,7 @@ class KDNAEntryDetail {
 
 				<input type="button" name="notification_resend" value="<?php esc_attr_e( 'Resend', 'kdnaforms' ) ?>" class="button" style="" onclick="ResendNotifications();" />
 				<span id="please_wait_container" style="display:none; margin-left: 5px;">
-							<i class='gficon-kdnaforms-spinner-icon gficon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
+							<i class='kdnaicon-kdnaforms-spinner-icon kdnaicon-spin'></i> <?php esc_html_e( 'Resending...', 'kdnaforms' ); ?>
                         </span>
 				<?php
 			}
@@ -1546,7 +1546,7 @@ class KDNAEntryDetail {
 	public static function maybe_display_empty_fields( $allow_display_empty_fields, $form, $lead = false ) {
 		$display_empty_fields = false;
 		if ( $allow_display_empty_fields ) {
-			$display_empty_fields = (bool) rgget( 'gf_display_empty_fields', $_COOKIE );
+			$display_empty_fields = (bool) rgget( 'kdna_display_empty_fields', $_COOKIE );
 		}
 
 		if ( ! $lead ) {
@@ -1560,7 +1560,7 @@ class KDNAEntryDetail {
 		 * @param array $form The Form object to filter
 		 * @param array $lead The Entry object to filter
 		 */
-		return apply_filters( 'gform_entry_detail_grid_display_empty_fields', $display_empty_fields, $form, $lead );
+		return apply_filters( 'kform_entry_detail_grid_display_empty_fields', $display_empty_fields, $form, $lead );
 	}
 
 }

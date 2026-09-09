@@ -166,7 +166,7 @@ Class KDNANotification {
 		 *
 		 * @param bool $disable_from_warning Should the From Email warning be disabled?
 		 */
-		$disable_from_warning = gf_apply_filters( array( 'kdnaform_notification_disable_from_warning', $form['id'], rgar( $notification, 'id' ) ), false );
+		$disable_from_warning = kdna_apply_filters( array( 'kdnaform_notification_disable_from_warning', $form['id'], rgar( $notification, 'id' ) ), false );
 
 		$from_email_warning = '';
 
@@ -186,7 +186,7 @@ Class KDNANotification {
 					sprintf(
 						esc_html__( 'Warning! Using a third-party email in the From Email field may prevent your notification from being delivered. It is best to use an email with the same domain as your website. %sMore details in our documentation.%s', 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/troubleshooting-notifications/#use-a-valid-from-address" target="_blank" >',
-						'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 					)
 				);
 			}
@@ -400,7 +400,7 @@ Class KDNANotification {
 							 * @param array $notification The current notification object.
 							 * @param array $from         The current form object.
 							 */
-							return gf_apply_filters( array( 'kdnaform_notification_enable_cc', $form['id'], rgar( $notification, 'id' ) ), false, $notification, $form );
+							return kdna_apply_filters( array( 'kdnaform_notification_enable_cc', $form['id'], rgar( $notification, 'id' ) ), false, $notification, $form );
 
 						},
 						'validation_callback' => function( $field, $value ) {
@@ -492,7 +492,7 @@ Class KDNANotification {
 		 * @param array $fields Form settings fields.
 		 * @param array $form   Form Object.
 		 */
-		$fields = gf_apply_filters( array( 'kdnaform_notification_settings_fields', $form['id'] ), $fields, $notification, $form );
+		$fields = kdna_apply_filters( array( 'kdnaform_notification_settings_fields', $form['id'] ), $fields, $notification, $form );
 
 		return $fields;
 
@@ -510,7 +510,7 @@ Class KDNANotification {
 	 * @return array
 	 */
 	public static function append_filtered_notification_email_fields( $fields, $form ) {
-		return gf_apply_filters( array( 'kdnaform_email_fields_notification_admin', $form['id'] ), $fields, $form );
+		return kdna_apply_filters( array( 'kdnaform_email_fields_notification_admin', $form['id'] ), $fields, $form );
 	}
 
 	/**
@@ -549,17 +549,17 @@ Class KDNANotification {
 		// Add the Legacy Settings section.
 		$fields[] = array(
 			'title'  => esc_html__( 'Legacy Settings', 'kdnaforms' ),
-			'class'  => 'gform-settings-panel--full',
+			'class'  => 'kform-settings-panel--full',
 			'fields' => array(
 				array(
 					'name' => 'legacy',
 					'type' => 'html',
 					'html' => function() use ( $legacy_settings ) {
-						$html = '<table class="gforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
+						$html = '<table class="kforms_form_settings" cellspacing="0" cellpadding="0" width="100%">';
 
 						foreach ( $legacy_settings as $title => $legacy_fields ) {
 							$html .= sprintf(
-								'<tr><td colspan="2"><h4 class="gf_settings_subgroup_title">%s</h4></td>',
+								'<tr><td colspan="2"><h4 class="kdna_settings_subgroup_title">%s</h4></td>',
 								esc_html( $title )
 							);
 
@@ -601,7 +601,7 @@ Class KDNANotification {
 		$notification_id = rgget( 'nid' );
 
 		if ( ! rgempty( 'kdnaform_notification_id' ) ) {
-			$notification_id = rgpost( 'kdnaform_notification_id' ) ?: rgpost( 'gform_notification_id' );
+			$notification_id = rgpost( 'kdnaform_notification_id' );
 		}
 
 		$form = KDNAFormsModel::get_form_meta( $form_id );
@@ -614,7 +614,7 @@ Class KDNANotification {
 		 * @param array $form            The Form Object
 		 * @param int   $notification_id The notification ID
 		 */
-		$form = gf_apply_filters( array( 'kdnaform_form_notification_page', $form_id ), $form, $notification_id );
+		$form = kdna_apply_filters( array( 'kdnaform_form_notification_page', $form_id ), $form, $notification_id );
 
 		$notification = ! $notification_id ? array() : self::get_notification( $form, $notification_id );
 
@@ -686,7 +686,7 @@ Class KDNANotification {
 					 *
 					 * @param array $notification        The Notification Object.
 					 */
-					$notification = gf_apply_filters( array(
+					$notification = kdna_apply_filters( array(
 						'kdnaform_pre_notification_save',
 						$form['id'],
 					), $notification, $form, $is_new_notification );
@@ -703,7 +703,7 @@ Class KDNANotification {
 
 					<script type="text/javascript">
 
-						gform.addFilter( 'kdnaform_merge_tags', 'MaybeAddSaveLinkMergeTag' );
+						kform.addFilter( 'kdnaform_merge_tags', 'MaybeAddSaveLinkMergeTag' );
 						function MaybeAddSaveLinkMergeTag( mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option ) {
 							var event = document.getElementById( 'event' ).value;
 							if ( event === 'form_saved' || event === 'form_save_email_requested' ) {
@@ -753,7 +753,7 @@ Class KDNANotification {
 					<?php
 				},
 				'after_fields'   => function() use ( &$notification_id ) {
-					printf( '<input type="hidden" id="gform_notification_id" name="gform_notification_id" value="%s" />', esc_attr( $notification_id ) );
+					printf( '<input type="hidden" id="kdnaform_notification_id" name="kdnaform_notification_id" value="%s" />', esc_attr( $notification_id ) );
 				}
 			)
 		);
@@ -849,12 +849,12 @@ Class KDNANotification {
 		KDNAFormSettings::page_header();
 		?>
 
-		<div class="gform-settings-panel">
-			<header class="gform-settings-panel__header">
-				<h4 class="gform-settings-panel__title"><?php esc_html_e( 'Notifications', 'kdnaforms' ); ?></h4>
+		<div class="kform-settings-panel">
+			<header class="kform-settings-panel__header">
+				<h4 class="kform-settings-panel__title"><?php esc_html_e( 'Notifications', 'kdnaforms' ); ?></h4>
 			</header>
 
-			<div class="gform-settings-panel__content">
+			<div class="kform-settings-panel__content">
 
 				<form id="notification_list_form" method="post">
 
@@ -874,7 +874,7 @@ Class KDNANotification {
 
 		<script type="text/javascript">
 			function ToggleActive( btn, notification_id ) {
-				var is_active = jQuery( btn ).hasClass( 'gform-status--active' );
+				var is_active = jQuery( btn ).hasClass( 'kform-status--active' );
 
 				jQuery.ajax(
 					{
@@ -908,11 +908,11 @@ Class KDNANotification {
 				);
 
 				function setToggleInactive() {
-					jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Inactive', 'kdnaforms' ) ); ?> );
+					jQuery( btn ).removeClass( 'kform-status--active' ).addClass( 'kform-status--inactive' ).find( '.kform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Inactive', 'kdnaforms' ) ); ?> );
 				}
 
 				function setToggleActive() {
-					jQuery( btn ).removeClass( 'gform-status--inactive' ).addClass( 'gform-status--active' ).find( '.gform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Active', 'kdnaforms' ) ); ?> );
+					jQuery( btn ).removeClass( 'kform-status--inactive' ).addClass( 'kform-status--active' ).find( '.kform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Active', 'kdnaforms' ) ); ?> );
 				}
 
 			}
@@ -991,7 +991,7 @@ Class KDNANotification {
 		 *
 		 * @param array $services The services available.
 		 */
-		return gf_apply_filters( array( 'kdnaform_notification_services' ), $services );
+		return kdna_apply_filters( array( 'kdnaform_notification_services' ), $services );
 
 	}
 
@@ -1108,7 +1108,7 @@ Class KDNANotification {
 		$id       = 'routing_value_' . rgpost( 'ruleIndex' );
 		$selected = rgempty( 'selectedValue' ) ? 0 : rgpost( 'selectedValue' );
 
-		$dropdown = wp_dropdown_categories( array( 'class' => 'gfield_routing_select gfield_routing_value_dropdown gfield_category_dropdown', 'orderby' => 'name', 'id' => $id, 'selected' => $selected, 'hierarchical' => true, 'hide_empty' => 0, 'echo' => false ) );
+		$dropdown = wp_dropdown_categories( array( 'class' => 'kfield_routing_select kfield_routing_value_dropdown kfield_category_dropdown', 'orderby' => 'name', 'id' => $id, 'selected' => $selected, 'hierarchical' => true, 'hide_empty' => 0, 'echo' => false ) );
 		die( $dropdown ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
@@ -1493,21 +1493,21 @@ class KDNANotificationTable extends WP_List_Table {
 		$active = rgar( $item, 'isActive' ) !== false;
 
 		if ( $active ) {
-			$class = 'gform-status--active';
+			$class = 'kform-status--active';
 			$text  = esc_html__( 'Active', 'kdnaforms' );
 		} else {
-			$class = 'gform-status--inactive';
+			$class = 'kform-status--inactive';
 			$text  = esc_html__( 'Inactive', 'kdnaforms' );
 		}
 		?>
 
 		<button
 			type="button"
-			class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
+			class="kform-status-indicator kform-status-indicator--size-sm kform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
 			onclick="ToggleActive( this, '<?php echo esc_js( $item['id'] ); ?>' );"
 			onkeypress="ToggleActive( this, '<?php echo esc_js( $item['id'] ); ?>' );"
 		>
-			<span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs">
+			<span class="kform-status-indicator-status kform-typography--weight-medium kform-typography--size-text-xs">
 				<?php echo esc_html( $text ); ?>
 			</span>
 		</button>

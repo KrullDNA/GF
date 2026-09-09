@@ -52,14 +52,14 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--check-box';
+		return 'kform-icon--check-box';
 	}
 
 	/**
@@ -134,7 +134,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 	 *
 	 * @since Unknown
 	 * @since 2.5 Implement Select All directly.
-	 * @since 2.7 Added `gfield_choice_all_toggle` class to Select All button.
+	 * @since 2.7 Added `kfield_choice_all_toggle` class to Select All button.
 	 *
 	 * @param array        $form  The Form Object currently being processed.
 	 * @param string|array $value The field value. From default/dynamic population, $_POST, or a resumed incomplete submission.
@@ -168,13 +168,13 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		// Get button markup.
 		$button_markup = $this->get_button_markup( $value, $entry );
 
-		$select_all_enabled_class = $this->enableSelectAll ? 'gfield_choice--select_all_enabled' : '';
+		$select_all_enabled_class = $this->enableSelectAll ? 'kfield_choice--select_all_enabled' : '';
 
 		$limit_message = $this->get_limit_message();
 
 		if ( 'multi_choice' == $this->type || ! $this->enableSelectAll ) {
 			return sprintf(
-				"<div class='ginput_container ginput_container_checkbox'>%s<div class='gfield_checkbox %s' id='%s'>%s</div></div>",
+				"<div class='kinput_container kinput_container_checkbox'>%s<div class='kfield_checkbox %s' id='%s'>%s</div></div>",
 				$limit_message,
 				$select_all_enabled_class,
 				esc_attr( $field_id ),
@@ -183,7 +183,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		}
 
 		return sprintf(
-			"<div class='ginput_container ginput_container_checkbox'>%s<div class='gfield_checkbox %s' id='%s'>%s%s</div></div>",
+			"<div class='kinput_container kinput_container_checkbox'>%s<div class='kfield_checkbox %s' id='%s'>%s%s</div></div>",
 			$limit_message,
 			$select_all_enabled_class,
 			esc_attr( $field_id ),
@@ -202,7 +202,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		 * @param string $select_label The "Select All" label.
 		 * @param object $field        The field currently being processed.
 		 */
-		$select_label = gf_apply_filters( array( 'kdnaform_checkbox_select_all_label', $this->formId, $this->id ), esc_html__( 'Select All', 'kdnaforms' ), $this );
+		$select_label = kdna_apply_filters( array( 'kdnaform_checkbox_select_all_label', $this->formId, $this->id ), esc_html__( 'Select All', 'kdnaforms' ), $this );
 		$select_label = esc_html( $select_label );
 
 		/**
@@ -213,7 +213,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		 * @param string $deselect_label The "Deselect All" label.
 		 * @param object $field          The field currently being processed.
 		 */
-		$deselect_label = gf_apply_filters( array( 'kdnaform_checkbox_deselect_all_label', $this->formId, $this->id ), esc_html__( 'Deselect All', 'kdnaforms' ), $this );
+		$deselect_label = kdna_apply_filters( array( 'kdnaform_checkbox_deselect_all_label', $this->formId, $this->id ), esc_html__( 'Deselect All', 'kdnaforms' ), $this );
 		$deselect_label = esc_html( $deselect_label );
 
 		// Determine if all checkboxes are selected.
@@ -221,7 +221,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 
 		// Prepare button markup.
 		$button_markup = sprintf(
-			'<div class="gfield-choice-toggle-all"><button type="button" id="button_%1$d_select_all" class="gfield_choice_all_toggle gform-theme-button--size-sm" onclick="gformToggleCheckboxes( this )" data-checked="%4$d" data-label-select="%2$s" data-label-deselect="%3$s"%6$s>%5$s</button></div>',
+			'<div class="kfield-choice-toggle-all"><button type="button" id="button_%1$d_select_all" class="kfield_choice_all_toggle kform-theme-button--size-sm" onclick="kformToggleCheckboxes( this )" data-checked="%4$d" data-label-select="%2$s" data-label-deselect="%3$s"%6$s>%5$s</button></div>',
 			$this->id,
 			$select_label,
 			$deselect_label,
@@ -256,7 +256,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 
 		$id = $this->id;
 
-		return "<span class='gfield_choice_limit_message gfield_description' id='gfield_choice_limit_message_{$form_id}_{$id}'>{$text}</span>";
+		return "<span class='kfield_choice_limit_message kfield_description' id='kfield_choice_limit_message_{$form_id}_{$id}'>{$text}</span>";
 	}
 
 	/**
@@ -289,7 +289,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 			 * @param int    $number  The number of choices that must be selected.
 			 * @param object $field   The field currently being processed.
 			 */
-			return gf_apply_filters( array( 'kdnaform_checkbox_limit_exact_message', $this->formId, $this->id ), $message, $this->choiceLimitNumber, $this );
+			return kdna_apply_filters( array( 'kdnaform_checkbox_limit_exact_message', $this->formId, $this->id ), $message, $this->choiceLimitNumber, $this );
 		}
 		if ( $this->choiceLimit === 'range' ) {
 			$min  = $this->choiceLimitMin;
@@ -316,7 +316,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param int $max The maximum number of choices that must be selected.
 				 * @param object $field The field currently being processed.
                 */
-				return gf_apply_filters( array( 'kdnaform_checkbox_limit_max_message', $this->formId, $this->id ), $message, $max, $this );
+				return kdna_apply_filters( array( 'kdnaform_checkbox_limit_max_message', $this->formId, $this->id ), $message, $max, $this );
 			}
 			if ( ! $max && $min ) {
 				$message = sprintf(
@@ -340,7 +340,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param int $min The minimum number of choices that must be selected.
 				 * @param object $field The field currently being processed.
 				 */
-				return gf_apply_filters( array( 'kdnaform_checkbox_limit_min_message', $this->formId, $this->id ), $message, $min, $this );
+				return kdna_apply_filters( array( 'kdnaform_checkbox_limit_min_message', $this->formId, $this->id ), $message, $min, $this );
 			}
 			if( $min && $max ) {
 				$message = sprintf( esc_html__( 'Select between %s and %s choices.', 'kdnaforms' ), "<strong>$min</strong>", "<strong>$max</strong>" );
@@ -355,7 +355,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param int $max The maximum number of choices that must be selected.
 				 * @param object $field The field currently being processed.
 				 */
-				return gf_apply_filters( array( 'kdnaform_checkbox_limit_range_message', $this->formId, $this->id ), $message, $min, $max, $this );
+				return kdna_apply_filters( array( 'kdnaform_checkbox_limit_range_message', $this->formId, $this->id ), $message, $min, $max, $this );
 			}
 		}
 
@@ -385,7 +385,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		$tag           = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 
 		return sprintf(
-			"<div class='ginput_container ginput_container_checkbox'><{$tag} class='gfield_checkbox' id='%s'>%s</{$tag}></div>",
+			"<div class='kinput_container kinput_container_checkbox'><{$tag} class='kfield_checkbox' id='%s'>%s</{$tag}></div>",
 			esc_attr( $field_id ),
 			$this->get_checkbox_choices( $value, $disabled_text, $form_id )
 		);
@@ -423,7 +423,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				$input_id = $this->id . '.' . $choice_number;
 			}
 
-			if ( ( $this->is_form_editor() || ( ! isset( $_GET['gf_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+			if ( ( $this->is_form_editor() || ( ! isset( $_GET['kdna_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 				$checkboxes_selected++;
 			} else if ( is_array( $value ) && KDNAFormsModel::choice_value_match( $this, $choice, rgget( $input_id, $value ) ) ) {
 				$checkboxes_selected++;
@@ -599,7 +599,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 			$value = '';
 
 			if ( ! rgblank( $this->is_checkbox_checked( $field_id, $columns[ $field_id ]['label'], $entry ) ) ) {
-				$value = "<i class='fa fa-check gf_valid'></i>";
+				$value = "<i class='fa fa-check kdna_valid'></i>";
 			}
 
 		}
@@ -916,7 +916,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 			 * @param int    $max_choices_visible_count The default number of choices visible is 5.
 			 * @param object $field                     The current field object.
 			 */
-			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $form_id ), $max_choices, $this );
+			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $form_id ), $max_choices, $this );
 
 			$legacy_markup = KDNACommon::is_legacy_markup_enabled( $form_id );
 
@@ -933,7 +933,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param string $select_label The "Select All" label.
 				 * @param object $field        The field currently being processed.
 				 */
-				$select_label = gf_apply_filters( array( 'kdnaform_checkbox_select_all_label', $this->formId, $this->id ), esc_html__( 'Select All', 'kdnaforms' ), $this );
+				$select_label = kdna_apply_filters( array( 'kdnaform_checkbox_select_all_label', $this->formId, $this->id ), esc_html__( 'Select All', 'kdnaforms' ), $this );
 				$select_label = esc_html( $select_label );
 
 				/**
@@ -944,7 +944,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param string $deselect_label The "Deselect All" label.
 				 * @param object $field          The field currently being processed.
 				 */
-				$deselect_label = gf_apply_filters( array( 'kdnaform_checkbox_deselect_all_label', $this->formId, $this->id ), esc_html__( 'Deselect All', 'kdnaforms' ), $this );
+				$deselect_label = kdna_apply_filters( array( 'kdnaform_checkbox_deselect_all_label', $this->formId, $this->id ), esc_html__( 'Deselect All', 'kdnaforms' ), $this );
 				$deselect_label = esc_html( $deselect_label );
 
 				// Get tabindex.
@@ -963,9 +963,9 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				// Prepare choice markup.
-				$choice_markup = "<{$tag} class='gchoice gchoice_select_all'>
-						<input class='gfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} />
-						<label for='{$id}' id='label_" . $this->id . "_select_all' class='gform-field-label  gform-field-label--type-inline' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
+				$choice_markup = "<{$tag} class='kchoice kchoice_select_all'>
+						<input class='kfield-choice-input' type='checkbox' id='{$id}' {$tabindex} {$disabled_text} onclick='kformToggleCheckboxes( this )' onkeypress='kformToggleCheckboxes( this )'{$checked} />
+						<label for='{$id}' id='label_" . $this->id . "_select_all' class='kform-field-label  kform-field-label--type-inline' data-label-select='{$select_label}' data-label-deselect='{$deselect_label}'>{$toggle_label}</label>
 					</{$tag}>";
 
 				/**
@@ -978,7 +978,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param object $field         The field currently being processed.
 				 * @param string $value         The value to be selected if the field is being populated.
 				 */
-				$choices .= gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, array(), $this, $value );
+				$choices .= kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, array(), $this, $value );
 
 			}
 
@@ -1029,9 +1029,9 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<{$tag} class='gchoice gchoice_{$id}'>
-								<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
-								<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>{$choice['text']}</label>
+				$choice_markup = "<{$tag} class='kchoice kchoice_{$id}'>
+								<input class='kfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
+								<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>{$choice['text']}</label>
 							</{$tag}>";
 
 				/**
@@ -1044,7 +1044,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 				 * @param object $field         The field currently being processed.
 				 * @param string $value         The value to be selected if the field is being populated.
 				 */
-				$choices .= gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, $choice, $this, $value );
+				$choices .= kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, $choice, $this, $value );
 
 				$is_admin = $is_entry_detail || $is_form_editor;
 
@@ -1059,7 +1059,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 			$total = sizeof( $this->choices );
 
 			if ( $count < $total ) {
-				$choices .= "<{$tag} class='gchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
+				$choices .= "<{$tag} class='kchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
 			}
 
 		}
@@ -1072,14 +1072,14 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		 * @param string $choices The string containing the choices to be filtered.
 		 * @param object $field   The field currently being processed.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choices', $this->formId, $this->id ), $choices, $this );
+		return kdna_apply_filters( array( 'kdnaform_field_choices', $this->formId, $this->id ), $choices, $this );
 
 	}
 
 	public function get_checked_attribute( $choice, $value, $input_id, $form_id ) {
 		$is_form_editor  = $this->is_form_editor();
 
-		if ( ( $is_form_editor || ( ! isset( $_GET['gf_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+		if ( ( $is_form_editor || ( ! isset( $_GET['kdna_token'] ) && empty( $_POST ) ) ) && rgar( $choice, 'isSelected' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 			$checked = "checked='checked'";
 		} elseif ( is_array( $value ) && KDNAFormsModel::choice_value_match( $this, $choice, rgget( $input_id, $value ) ) ) {
 			$checked = "checked='checked'";
@@ -1111,7 +1111,7 @@ class KDNA_Field_Checkbox extends KDNA_Field {
 		}
 
 		if ( $this->get_limit_message_text() ) {
-			$limit_describedby[] = 'gfield_choice_limit_message_' . $form_id . '_' . $this->id;
+			$limit_describedby[] = 'kfield_choice_limit_message_' . $form_id . '_' . $this->id;
 		}
 
 		return $this->get_aria_describedby( $limit_describedby );

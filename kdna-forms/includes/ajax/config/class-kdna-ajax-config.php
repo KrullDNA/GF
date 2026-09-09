@@ -12,7 +12,7 @@ use KDNAForms;
  */
 class KDNA_Ajax_Config extends KDNA_Config {
 
-	protected $name               = 'gform_theme_config';
+	protected $name               = 'kform_theme_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_theme';
 
 	/**
@@ -21,7 +21,7 @@ class KDNA_Ajax_Config extends KDNA_Config {
 	 * @return array[]
 	 */
 	public function data() {
-		$preview_query_string = \KDNACommon::is_preview() ? '?gf_ajax_page=preview' : '';
+		$preview_query_string = \KDNACommon::is_preview() ? '?kdna_ajax_page=preview' : '';
 		return array(
 			'common' => array(
 				'form' => array(

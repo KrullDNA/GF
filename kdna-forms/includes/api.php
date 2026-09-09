@@ -623,7 +623,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			$entries = GF_Forms_Model_Legacy::search_leads( $form_ids, $search_criteria, $sorting, $paging );
+			$entries = KDNA_Forms_Model_Legacy::search_leads( $form_ids, $search_criteria, $sorting, $paging );
 			if ( ! is_null( $total_count ) ) {
 				$total_count = self::count_entries( $form_ids, $search_criteria );
 			}
@@ -655,7 +655,7 @@ class KDNAAPI {
 	public static function get_entry_ids( $form_id, $search_criteria = array(), $sorting = null, $paging = null, &$total_count = null ) {
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			$entry_ids = GF_Forms_Model_Legacy::search_lead_ids( $form_id, $search_criteria );
+			$entry_ids = KDNA_Forms_Model_Legacy::search_lead_ids( $form_id, $search_criteria );
 			return $entry_ids;
 		}
 
@@ -685,7 +685,7 @@ class KDNAAPI {
 	public static function count_entries( $form_ids, $search_criteria = array() ) {
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::count_search_leads( $form_ids, $search_criteria );
+			return KDNA_Forms_Model_Legacy::count_search_leads( $form_ids, $search_criteria );
 		}
 
 		$q = new KDNA_Query( $form_ids, $search_criteria );
@@ -834,7 +834,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::update_entry( $entry, $entry_id );
+			return KDNA_Forms_Model_Legacy::update_entry( $entry, $entry_id );
 		}
 
 		if ( empty( $entry_id ) ) {
@@ -1029,7 +1029,7 @@ class KDNAAPI {
 		$entry_meta_table = KDNAFormsModel::get_entry_meta_table_name();
 		$current_fields    = $wpdb->get_results( $wpdb->prepare( "SELECT id, meta_key, item_index FROM %i WHERE entry_id=%d", $entry_meta_table, $entry_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.DirectQuery
 
-		$form = gf_apply_filters( array( 'kdnaform_form_pre_update_entry', $form_id ), $form, $entry, $entry_id );
+		$form = kdna_apply_filters( array( 'kdnaform_form_pre_update_entry', $form_id ), $form, $entry, $entry_id );
 
 		KDNAFormsModel::begin_batch_field_operations();
 
@@ -1094,7 +1094,7 @@ class KDNAAPI {
 		 * @param array $lead           The entry object after being updated.
 		 * @param array $original_entry The entry object before being updated.
 		 */
-		gf_do_action( array( 'kdnaform_post_update_entry', $form_id ), $entry, $original_entry );
+		kdna_do_action( array( 'kdnaform_post_update_entry', $form_id ), $entry, $original_entry );
 
 		return true;
 	}
@@ -1230,7 +1230,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::add_entry( $entry );
+			return KDNA_Forms_Model_Legacy::add_entry( $entry );
 		}
 
 		if ( ! is_array( $entry ) ) {
@@ -1411,7 +1411,7 @@ class KDNAAPI {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::update_entry_field( $entry_id, $input_id, $value );
+			return KDNA_Forms_Model_Legacy::update_entry_field( $entry_id, $input_id, $value );
 		}
 
 		$entry = self::get_entry( $entry_id );
@@ -1643,7 +1643,7 @@ class KDNAAPI {
 	 * $input_values['input_2_3'] = 'First name';
 	 * $input_values['input_2_6'] = 'Last name';
 	 * $input_values['input_5']   = 'A paragraph of text.';
-	 * //$input_values['gform_save'] = true; // support for save and continue
+	 * //$input_values['kform_save'] = true; // support for save and continue
 	 *
 	 * $result = KDNAAPI::submit_form( 52, $input_values );
 	 *
@@ -1783,9 +1783,9 @@ class KDNAAPI {
 	 *
 	 * @param int   $form_id      The ID of the form this submission belongs to.
 	 * @param array $input_values Optional. An associative array containing the values to be validated using the field input names as the keys. Will be merged into the $_POST.
-	 * @param array $field_values Optional. An array of dynamic population parameter keys with their corresponding values used to populate the fields. Overwrites `$_POST['gform_field_values']`.
-	 * @param int   $target_page  Optional. For multi-page forms; indicates which page would be loaded next if the current page passes validation. Overwrites `$_POST[ 'gform_target_page_number_' . $form_id ]`.
-	 * @param int   $source_page  Optional. For multi-page forms; indicates which page was active when the values were submitted for validation. Overwrites `$_POST[ 'gform_source_page_number_' . $form_id ]`.
+	 * @param array $field_values Optional. An array of dynamic population parameter keys with their corresponding values used to populate the fields. Overwrites `$_POST['kform_field_values']`.
+	 * @param int   $target_page  Optional. For multi-page forms; indicates which page would be loaded next if the current page passes validation. Overwrites `$_POST[ 'kform_target_page_number_' . $form_id ]`.
+	 * @param int   $source_page  Optional. For multi-page forms; indicates which page was active when the values were submitted for validation. Overwrites `$_POST[ 'kform_source_page_number_' . $form_id ]`.
 	 *
 	 * @return WP_Error|array
 	 */
@@ -1865,7 +1865,7 @@ class KDNAAPI {
 		}
 
 		$kdnaform_pre_validation_args = array( 'kdnaform_pre_validation', $form_id );
-		if ( gf_has_filter( $kdnaform_pre_validation_args ) ) {
+		if ( kdna_has_filter( $kdnaform_pre_validation_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_pre_validation.' );
 			/**
 			 * Allows the form to be modified before the submission is validated.
@@ -1875,7 +1875,7 @@ class KDNAAPI {
 			 *
 			 * @param array $form The form for the submission to be validated.
 			 */
-			$form = gf_apply_filters( $kdnaform_pre_validation_args, $form );
+			$form = kdna_apply_filters( $kdnaform_pre_validation_args, $form );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_pre_validation.' );
 		}
 
@@ -1944,10 +1944,10 @@ class KDNAAPI {
 		self::normalize_post_keys();
 
 		$_POST[ 'is_submit_' . $form_id ]                = '1';
-		$_POST['gform_submit']                           = $form_id;
-		$_POST[ 'gform_target_page_number_' . $form_id ] = absint( $target_page );
-		$_POST[ 'gform_source_page_number_' . $form_id ] = absint( $source_page );
-		$_POST['gform_field_values']                     = $field_values;
+		$_POST['kform_submit']                           = $form_id;
+		$_POST[ 'kform_target_page_number_' . $form_id ] = absint( $target_page );
+		$_POST[ 'kform_source_page_number_' . $form_id ] = absint( $source_page );
+		$_POST['kform_field_values']                     = $field_values;
 
 		// Adds the state to the $_POST, if missing.
 		add_filter( 'kdnaform_pre_validation', array( 'KDNAAPI', 'submit_form_filter_kdnaform_pre_validation' ), 50 );
@@ -1998,7 +1998,7 @@ class KDNAAPI {
 	public static function submit_form_filter_kdnaform_pre_validation( $form ) {
 		$name = 'state_' . absint( $form['id'] );
 		if ( ! isset( $_POST[ $name ] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$field_values   = rgpost( 'gform_field_values' );
+			$field_values   = rgpost( 'kform_field_values' );
 			$_POST[ $name ] = KDNAFormDisplay::get_state( $form, $field_values );
 		}
 
@@ -2366,6 +2366,10 @@ class KDNAAPI {
 			}
 		}
 
+		if ( ! function_exists( 'kdna_feed_processor' ) ) {
+			require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+		}
+
 		kdna_feed_processor()->save()->dispatch_on_shutdown();
 
 		return $entry;
@@ -2567,7 +2571,7 @@ class KDNAAPI {
 				 * @param array $form  The Form Object that triggered the notification event.
 				 * @param array $entry The Entry Object that triggered the notification event.
 				 */
-				if ( rgar( $notification, 'type' ) == 'user' && gf_apply_filters( array( 'kdnaform_disable_user_notification', $form_id ), false, $form, $entry ) ) {
+				if ( rgar( $notification, 'type' ) == 'user' && kdna_apply_filters( array( 'kdnaform_disable_user_notification', $form_id ), false, $form, $entry ) ) {
 					KDNACommon::log_debug( __METHOD__ . "(): Notification is disabled by kdnaform_disable_user_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
 					// Skip user notification if it has been disabled by a hook.
 					continue;
@@ -2580,7 +2584,7 @@ class KDNAAPI {
 					 * @param array $form  The Form Object that triggered the notification event.
 					 * @param array $entry The Entry Object that triggered the notification event.
 					 */
-				} elseif ( rgar( $notification, 'type' ) == 'admin' && gf_apply_filters( array( 'kdnaform_disable_admin_notification', $form_id ), false, $form, $entry ) ) {
+				} elseif ( rgar( $notification, 'type' ) == 'admin' && kdna_apply_filters( array( 'kdnaform_disable_admin_notification', $form_id ), false, $form, $entry ) ) {
 					KDNACommon::log_debug( __METHOD__ . "(): Notification is disabled by kdnaform_disable_admin_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
 					// Skip admin notification if it has been disabled by a hook.
 					continue;
@@ -2598,7 +2602,7 @@ class KDNAAPI {
 			 * @param array $entry The Entry Object that triggered the notification event.
 			 * @param array $data  Array of data which can be used in the notifications via the generic {object:property} merge tag. Defaults to empty array.
 			 */
-			if ( gf_apply_filters( array( 'kdnaform_disable_notification', $form_id ), false, $notification, $form, $entry, $data ) ) {
+			if ( kdna_apply_filters( array( 'kdnaform_disable_notification', $form_id ), false, $notification, $form, $entry, $data ) ) {
 				KDNACommon::log_debug( __METHOD__ . "(): Notification is disabled by kdnaform_disable_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
 				// Skip notifications if it has been disabled by a hook
 				continue;

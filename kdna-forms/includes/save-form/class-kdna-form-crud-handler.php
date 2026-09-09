@@ -40,7 +40,7 @@ class KDNA_Form_CRUD_Handler {
 	 *
 	 * @var \KDNACommon
 	 */
-	private $gf_common;
+	private $kdna_common;
 
 	/**
 	 * Holds an instance of the KDNAFormsModel class.
@@ -58,7 +58,7 @@ class KDNA_Form_CRUD_Handler {
 	 *
 	 * @var \KDNAAPI
 	 */
-	private $gf_api;
+	private $kdna_api;
 
 	/**
 	 * Holds an instance of the KDNAForms class.
@@ -125,8 +125,8 @@ class KDNA_Form_CRUD_Handler {
 
 		$this->kdna_forms_model = $dependencies['kdna_forms_model'];
 		$this->rg_forms_model = $dependencies['rg_forms_model'];
-		$this->gf_common      = $dependencies['gf_common'];
-		$this->gf_api         = $dependencies['gf_api'];
+		$this->kdna_common      = $dependencies['kdna_common'];
+		$this->kdna_api         = $dependencies['kdna_api'];
 		$this->kdna_forms       = $dependencies['kdna_forms'];
 
 	}
@@ -244,20 +244,20 @@ class KDNA_Form_CRUD_Handler {
 	private function cleanup() {
 
 		$kdna_forms_model = $this->kdna_forms_model;
-		$gf_common      = $this->gf_common;
+		$kdna_common      = $this->kdna_common;
 		$kdna_forms       = $this->kdna_forms;
 		$action         = rgpost( 'action' );
 
 		if ( $action !== 'create_from_template' ) {
 			// Clean up form meta JSON.
-			$gf_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Form meta json before stripslashes: ' . $this->form_json );
+			$kdna_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Form meta json before stripslashes: ' . $this->form_json );
 
 			$this->form_json = stripslashes( $this->form_json );
 		}
 
-		$gf_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Form meta json before nl2br: ' . $this->form_json );
+		$kdna_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Form meta json before nl2br: ' . $this->form_json );
 		$this->form_json = nl2br( $this->form_json );
-		$gf_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Final form meta json: ' . $this->form_json );
+		$kdna_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Final form meta json: ' . $this->form_json );
 
 		// Convert form meta JSON to array.
 		$this->form_meta = json_decode( $this->form_json, true );
@@ -277,9 +277,9 @@ class KDNA_Form_CRUD_Handler {
 		$this->form_meta = $kdna_forms_model::maybe_sanitize_form_settings( $this->form_meta );
 
 		$deleted_fields = $this->get_deleted_fields();
-		$gf_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Deleted fields ' . print_r( $deleted_fields, true ) );
+		$kdna_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Deleted fields ' . print_r( $deleted_fields, true ) );
 		unset( $this->form_meta['deletedFields'] );
-		$gf_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Form meta => ' . print_r( $this->form_meta, true ) );
+		$kdna_common::log_debug( 'KDNA_Form_CRUD_Handler::cleanup(): Form meta => ' . print_r( $this->form_meta, true ) );
 
 		return true;
 	}
@@ -294,9 +294,9 @@ class KDNA_Form_CRUD_Handler {
 	private function update() {
 
 			$kdna_forms_model = $this->kdna_forms_model;
-			$gf_common      = $this->gf_common;
+			$kdna_common      = $this->kdna_common;
 			$kdna_forms       = $this->kdna_forms;
-			$gf_api         = $this->gf_api;
+			$kdna_api         = $this->kdna_api;
 			$rg_forms_model = $this->rg_forms_model;
 
 			// Trim form meta values.
@@ -313,7 +313,7 @@ class KDNA_Form_CRUD_Handler {
 			$kdna_forms_model::update_form_meta( $this->form_id, $this->form_meta );
 
 			// Update form title.
-			$gf_api::update_form_property( $this->form_id, 'title', $this->form_meta['title'] );
+			$kdna_api::update_form_property( $this->form_id, 'title', $this->form_meta['title'] );
 
 			// Get form meta.
 			$this->form_meta = $rg_forms_model::get_form_meta( $this->form_id );

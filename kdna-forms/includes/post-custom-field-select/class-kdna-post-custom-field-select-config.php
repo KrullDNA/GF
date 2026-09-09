@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || die();
  */
 class KDNA_Post_Custom_Field_Select_Config extends KDNA_Config {
 
-	protected $name               = 'gform_admin_config';
+	protected $name               = 'kform_admin_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
 	/**
@@ -53,8 +53,8 @@ class KDNA_Post_Custom_Field_Select_Config extends KDNA_Config {
 				'post_custom_select' => array(
 					'endpoints' => array(
 						'get' => array(
-							'action' => 'gf_get_custom_fields',
-							'nonce'  => wp_create_nonce( 'gf_get_custom_fields' ),
+							'action' => 'kdna_get_custom_fields',
+							'nonce'  => wp_create_nonce( 'kdna_get_custom_fields' ),
 						),
 					),
 					'data'           => $this->get_initial_custom_fields(),

@@ -58,7 +58,7 @@ class KDNA_REST_Form_Results_Controller extends KDNA_REST_Controller {
 			'time_limit' => 5,
 			'wait' => 5,
 		);
-		$data = gf_results_cache()->get_results( $form_id, $search_criteria, $args );
+		$data = kdna_results_cache()->get_results( $form_id, $search_criteria, $args );
 		$response = $this->prepare_item_for_response( $data, $request );
 		return $response;
 	}

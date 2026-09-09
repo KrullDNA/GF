@@ -13,7 +13,7 @@ class KDNA_Upgrade {
 
 	private $versions = null;
 
-	private $auto_increment_tables_cache_key = 'gf_tables_auto_increment_settings';
+	private $auto_increment_tables_cache_key = 'kdna_tables_auto_increment_settings';
 	/**
 	 * Contains all DB versions that require a manual upgrade via the upgrade wizard.
 	 *
@@ -231,7 +231,7 @@ class KDNA_Upgrade {
 		// Setting the version of KDNA Forms that was installed initially
 		update_option( 'rg_form_original_version', KDNAForms::$version, false );
 
-		// Auto-setting and auto-validating license key based on value configured via the KDNA_LICENSE_KEY constant or the gf_license_key variable
+		// Auto-setting and auto-validating license key based on value configured via the KDNA_LICENSE_KEY constant or the kdna_license_key variable
 		// Auto-populating reCAPTCHA keys base on constant
 		$this->maybe_populate_keys();
 
@@ -284,7 +284,7 @@ class KDNA_Upgrade {
 		$versions = $this->get_versions();
 
 		$lock_params = array(
-			'from_gf_version' => $versions['current_version'],
+			'from_kdna_version' => $versions['current_version'],
 			'to_version' => $versions['version'],
 			'from_db_version' => $from_db_version,
 			'force_upgrade' => $force_upgrade,
@@ -2049,7 +2049,7 @@ HAVING count(*) > 1;" );
 		// Remove dismissible messages
 		$lock_params = $this->get_upgrade_lock();
 		if ( $lock_params ) {
-			$to_version = rgar( $lock_params, 'to_gf_version' );
+			$to_version = rgar( $lock_params, 'to_kdna_version' );
 			$key        = sanitize_key( 'kdnaforms_upgrading_' . $to_version );
 			KDNACommon::remove_dismissible_message( $key );
 		}

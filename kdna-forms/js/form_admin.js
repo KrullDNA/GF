@@ -6,21 +6,21 @@
 
 jQuery(document).ready(function($){
 
-	gaddon.init();
+	kaddon.init();
 
-	gform.adminUtils.handleUnsavedChanges( '#gform-settings' );
+	kform.adminUtils.handleUnsavedChanges( '#kform-settings' );
 
-	$(document).on('change', '.gfield_rule_value_dropdown', function(){
+	$(document).on('change', '.kfield_rule_value_dropdown', function(){
 		SetRuleValueDropDown($(this));
 	});
 
 	// For backwards compat.
 	if( window.form ) {
-		window.gfMergeTags = new gfMergeTagsObj( form );
+		window.kdnaMergeTags = new kdnaMergeTagsObj( form );
 	}
 
 	$(document).ready(function(){
-		$(".gform_currency").bind("change", function(){
+		$(".kform_currency").bind("change", function(){
 			FormatCurrency(this);
 		}).each(function(){
 			FormatCurrency(this);
@@ -37,14 +37,14 @@ function initMergeTagSupport() {
 	// init merge tag auto complete
 	if ( typeof form != 'undefined' && jQuery( '.merge-tag-support' ).length >= 0 ) {
 		jQuery( '.merge-tag-support' ).each( function() {
-			new gfMergeTagsObj( form, jQuery( this ) );
+			new kdnaMergeTagsObj( form, jQuery( this ) );
 		} );
 	}
 }
 
 function FormatCurrency(element){
-	if(gf_vars.gf_currency_config){
-		var currency = new gform.Currency(gf_vars.gf_currency_config);
+	if(kdna_vars.kdna_currency_config){
+		var currency = new kform.Currency(kdna_vars.kdna_currency_config);
 		var price = currency.toMoney(jQuery(element).val());
 		jQuery(element).val(price);
 	}
@@ -102,7 +102,7 @@ function GetConditionalObject(objectType){
 		break;
 	}
 
-	object = gform.applyFilters( 'gform_conditional_object', object, objectType );
+	object = kform.applyFilters( 'kform_conditional_object', object, objectType );
 
 	return object;
 }
@@ -118,49 +118,49 @@ function CreateConditionalLogic(objectType, obj){
 
 	var objText;
 	if (obj['type'] == "section")
-		objText = gf_vars.thisSectionIf;
+		objText = kdna_vars.thisSectionIf;
 	else if(objectType == "field")
-		objText = gf_vars.thisFieldIf;
+		objText = kdna_vars.thisFieldIf;
 	else if(objectType == "page")
-		objText = gf_vars.thisPage;
+		objText = kdna_vars.thisPage;
 	else if(objectType == "confirmation")
-		objText = gf_vars.thisConfirmation;
+		objText = kdna_vars.thisConfirmation;
 	else if(objectType == "notification")
-		objText = gf_vars.thisNotification;
+		objText = kdna_vars.thisNotification;
 	else
-		objText = gf_vars.thisFormButton;
+		objText = kdna_vars.thisFormButton;
 
 	// Some elements are shown/hidden, and some elements are enabled/disabled.
 	var showText;
 	var hideText;
 	if( objectType == "next_button" ) {
-		showText = gf_vars.enable;
-		hideText = gf_vars.disable;
+		showText = kdna_vars.enable;
+		hideText = kdna_vars.disable;
 	} else {
-		showText = gf_vars.show;
-		hideText = gf_vars.hide;
+		showText = kdna_vars.show;
+		hideText = kdna_vars.hide;
 	}
 
 	var descPieces = {};
 	descPieces.actionType = "<select id='" + objectType + "_action_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"actionType\", jQuery(this).val());'><option value='show' " + showSelected + ">" + showText + "</option><option value='hide' " + hideSelected + ">" + hideText + "</option></select>";
 	descPieces.objectDescription = objText;
-	descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + gf_vars.all + "</option><option value='any' " + anySelected + ">" + gf_vars.any + "</option></select>";
-	descPieces.ofTheFollowingMatch = gf_vars.ofTheFollowingMatch;
+	descPieces.logicType = "<select id='" + objectType + "_logic_type' onchange='SetConditionalProperty(\"" + objectType + "\", \"logicType\", jQuery(this).val());'><option value='all' " + allSelected + ">" + kdna_vars.all + "</option><option value='any' " + anySelected + ">" + kdna_vars.any + "</option></select>";
+	descPieces.ofTheFollowingMatch = kdna_vars.ofTheFollowingMatch;
 
 	var descPiecesArr = makeArray( descPieces );
 
 	var str = descPiecesArr.join(' ');
-	str = gform.applyFilters( 'gform_conditional_logic_description', str, descPieces, objectType, obj );
+	str = kform.applyFilters( 'kform_conditional_logic_description', str, descPieces, objectType, obj );
 	var i, rule;
 	for(i=0; i < obj.conditionalLogic.rules.length; i++){
 		rule = obj.conditionalLogic.rules[i];
-		str += "<div width='100%' class='gf_conditional_logic_rules_container'>";
+		str += "<div width='100%' class='kdna_conditional_logic_rules_container'>";
 		str += GetRuleFields(objectType, i, obj.conditionalLogic.rules[i].fieldId);
 		str += GetRuleOperators(objectType, i, obj.conditionalLogic.rules[i].fieldId, rule.operator);
 		str += GetRuleValues(objectType, i, obj.conditionalLogic.rules[i].fieldId, rule.value);
 		str += "<button " +
 			"type='button' " +
-			"class='add_field_choice gform-st-icon gform-st-icon--circle-plus' " +
+			"class='add_field_choice kform-st-icon kform-st-icon--circle-plus' " +
 			"title='add another rule' " +
 			"onclick=\"InsertRule('" + objectType + "', " + (i+1) + ");\" " +
 			"onkeypress=\"InsertRule('" + objectType + "', " + (i+1) + ");\"" +
@@ -168,7 +168,7 @@ function CreateConditionalLogic(objectType, obj){
 		if(obj.conditionalLogic.rules.length > 1 )
 			str += "<button " +
 				"type='button' " +
-				"class='delete_field_choice gform-st-icon gform-st-icon--circle-minus' " +
+				"class='delete_field_choice kform-st-icon kform-st-icon--circle-minus' " +
 				"title='remove this rule' " +
 				"onclick=\"DeleteRule('" + objectType + "', " + i + ");\" " +
 				"onkeypress=\"DeleteRule('" + objectType + "', " + i + ");\"" +
@@ -191,15 +191,15 @@ function CreateConditionalLogic(objectType, obj){
 function GetRuleOperators( objectType, i, fieldId, selectedOperator ) {
 	var str, supportedOperators, operators, selected;
 	supportedOperators = {"is":"is","isnot":"isNot", ">":"greaterThan", "<":"lessThan", "contains":"contains", "starts_with":"startsWith", "ends_with":"endsWith"};
-	str = "<select id='" + objectType + "_rule_operator_" + i + "' class='gfield_rule_select' onchange='SetRuleProperty(\"" + objectType + "\", " + i + ", \"operator\", jQuery(this).val());var valueSelector=\"#" + objectType + "_rule_value_" + i + "\"; jQuery(valueSelector).replaceWith(GetRuleValues(\"" + objectType + "\", " + i + ",\"" + fieldId + "\", \"\"));jQuery(valueSelector).change();'>";
+	str = "<select id='" + objectType + "_rule_operator_" + i + "' class='kfield_rule_select' onchange='SetRuleProperty(\"" + objectType + "\", " + i + ", \"operator\", jQuery(this).val());var valueSelector=\"#" + objectType + "_rule_value_" + i + "\"; jQuery(valueSelector).replaceWith(GetRuleValues(\"" + objectType + "\", " + i + ",\"" + fieldId + "\", \"\"));jQuery(valueSelector).change();'>";
 	operators = IsEntryMeta(fieldId) ? GetOperatorsForMeta(supportedOperators, fieldId) : supportedOperators;
 
-	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, objectType, fieldId );
+	operators = kform.applyFilters( 'kform_conditional_logic_operators', operators, objectType, fieldId );
 
 	jQuery.each(operators,function(operator, stringKey){
-		var operatorText = gf_vars[stringKey];
+		var operatorText = kdna_vars[stringKey];
 		if ( undefined === operatorText ) {
-			// If the operator text has been filtered, it may not be in the gf_vars array.
+			// If the operator text has been filtered, it may not be in the kdna_vars array.
 			operatorText = stringKey;
 		}
 		selected = selectedOperator == operator ? "selected='selected'" : "";
@@ -224,7 +224,7 @@ function GetOperatorsForMeta(supportedOperators, key){
 }
 
 function GetRuleFields( objectType, ruleIndex, selectedFieldId ) {
-	var str = "<select id='" + objectType + "_rule_field_" + ruleIndex + "' class='gfield_rule_select' onchange='jQuery(\"#" + objectType + "_rule_operator_" + ruleIndex + "\").replaceWith(GetRuleOperators(\"" + objectType + "\", " + ruleIndex + ", jQuery(this).val()));jQuery(\"#" + objectType + "_rule_value_" + ruleIndex + "\").replaceWith(GetRuleValues(\"" + objectType + "\", " + ruleIndex + ", jQuery(this).val())); SetRule(\"" + objectType + "\", " + ruleIndex + "); '>";
+	var str = "<select id='" + objectType + "_rule_field_" + ruleIndex + "' class='kfield_rule_select' onchange='jQuery(\"#" + objectType + "_rule_operator_" + ruleIndex + "\").replaceWith(GetRuleOperators(\"" + objectType + "\", " + ruleIndex + ", jQuery(this).val()));jQuery(\"#" + objectType + "_rule_value_" + ruleIndex + "\").replaceWith(GetRuleValues(\"" + objectType + "\", " + ruleIndex + ", jQuery(this).val())); SetRule(\"" + objectType + "\", " + ruleIndex + "); '>";
 	var options = [];
 
 	for( var i = 0; i < form.fields.length; i++ ) {
@@ -258,7 +258,7 @@ function GetRuleFields( objectType, ruleIndex, selectedFieldId ) {
 	// get entry meta fields and append to existing fields
 	jQuery.merge(options, GetEntryMetaFields( selectedFieldId ) );
 
-	options = gform.applyFilters( 'gform_conditional_logic_fields', options, form, selectedFieldId );
+	options = kform.applyFilters( 'kform_conditional_logic_fields', options, form, selectedFieldId );
 
 	str += GetRuleFieldsOptions( options, selectedFieldId );
 
@@ -313,7 +313,7 @@ function IsConditionalLogicField(field){
 
 	var index = jQuery.inArray(inputType, supported_fields);
 	var isConditionalLogicField = index >= 0 ? true : false;
-	isConditionalLogicField = gform.applyFilters( 'gform_is_conditional_logic_field', isConditionalLogicField, field );
+	isConditionalLogicField = kform.applyFilters( 'kform_is_conditional_logic_field', isConditionalLogicField, field );
 	return isConditionalLogicField;
 }
 
@@ -344,7 +344,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 
 	if(field && field["type"] == "post_category" && field["displayAllCategories"]){
 
-		var dropdown = jQuery('#' + dropdownId + ".gfield_category_dropdown");
+		var dropdown = jQuery('#' + dropdownId + ".kfield_category_dropdown");
 
 		//don't load category drop down if it already exists (to avoid unnecessary ajax requests)
 		if(dropdown.length > 0){
@@ -352,13 +352,13 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 			var options = dropdown.html();
 			options = options.replace(/ selected="selected"/g, '');
 			options = options.replace("value=\"" + selectedValue + "\"", "value=\"" + selectedValue + "\" selected=\"selected\"");
-			str = "<select id='" + dropdownId + "' class='gfield_rule_select gfield_rule_value_dropdown gfield_category_dropdown'>" + options + "</select>";
+			str = "<select id='" + dropdownId + "' class='kfield_rule_select kfield_rule_value_dropdown kfield_category_dropdown'>" + options + "</select>";
 		}
 		else{
-			var placeholderName = inputName == false ? "gfield_ajax_placeholder_" + ruleIndex : inputName + "_placeholder";
+			var placeholderName = inputName == false ? "kfield_ajax_placeholder_" + ruleIndex : inputName + "_placeholder";
 
 			//loading categories via AJAX
-			jQuery.post(ajaxurl,{   action:"gf_get_post_categories",
+			jQuery.post(ajaxurl,{   action:"kdna_get_post_categories",
 									objectType: objectType,
 									ruleIndex: ruleIndex,
 									inputName: inputName,
@@ -373,7 +373,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 						);
 
 			//will be replaced by real drop down during the ajax callback
-			str = "<select id='" + placeholderName + "' class='gfield_rule_select'><option>" + gf_vars["loading"] + "</option></select>";
+			str = "<select id='" + placeholderName + "' class='kfield_rule_select'><option>" + kdna_vars["loading"] + "</option></select>";
 		}
 	}
 	else if(field && field.choices && jQuery.inArray(operator, ["is", "isnot"]) > -1){
@@ -381,7 +381,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 			ruleChoices;
 
 		if (GetInputType(field) === 'multiselect') {
-			emptyChoice = gf_vars.emptyChoice;
+			emptyChoice = kdna_vars.emptyChoice;
 		} else if (field.placeholder) {
 			emptyChoice = field.placeholder;
 		}
@@ -396,8 +396,8 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 
 		//loading categories via AJAX
 		jQuery.post( ajaxurl, {
-			action:       'gf_get_address_rule_values_select',
-			address_type: field.addressType ? field.addressType : gf_vars.defaultAddressType,
+			action:       'kdna_get_address_rule_values_select',
+			address_type: field.addressType ? field.addressType : kdna_vars.defaultAddressType,
 			value:        selectedValue,
 			id:           dropdownId,
 			form_id:      field.formId
@@ -411,7 +411,7 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		} );
 
 		// will be replaced by real drop down during the ajax callback
-		str = "<select id='" + dropdownId + "' class='gfield_rule_select'><option>" + gf_vars['loading'] + "</option></select>";
+		str = "<select id='" + dropdownId + "' class='kfield_rule_select'><option>" + kdna_vars['loading'] + "</option></select>";
 
 	}
 	else if (isEntryMeta && entry_meta && entry_meta[selectedFieldId] &&  entry_meta[selectedFieldId].filter && typeof entry_meta[selectedFieldId].filter.choices != 'undefined') {
@@ -421,10 +421,10 @@ function GetRuleValues(objectType, ruleIndex, selectedFieldId, selectedValue, in
 		selectedValue = selectedValue ? selectedValue.replace(/'/g, "&#039;") : "";
 
 		//create a text field for fields that don't have choices (i.e text, textarea, number, email, etc...)
-		str = "<input type='text' placeholder='" + gf_vars["enterValue"] + "' class='gfield_rule_select gfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
+		str = "<input type='text' placeholder='" + kdna_vars["enterValue"] + "' class='kfield_rule_select kfield_rule_input' id='" + dropdownId + "' name='" + dropdownId + "' value='" + selectedValue.replace(/'/g, "&#039;") + "' onchange='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());' onkeyup='SetRuleProperty(\"" + objectType + "\", " + ruleIndex + ", \"value\", jQuery(this).val());'>";
 	}
 
-	str = gform.applyFilters( 'gform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
+	str = kform.applyFilters( 'kform_conditional_logic_values_input', str, objectType, ruleIndex, selectedFieldId, selectedValue )
 
 	return str;
 }
@@ -441,13 +441,13 @@ function IsAddressSelect( inputId, field ) {
 		return false;
 	}
 
-	var addressType = field.addressType ? field.addressType : gf_vars.defaultAddressType;
+	var addressType = field.addressType ? field.addressType : kdna_vars.defaultAddressType;
 
-	if( ! gf_vars.addressTypes[ addressType ] ) {
+	if( ! kdna_vars.addressTypes[ addressType ] ) {
 		return false;
 	}
 
-	var addressTypeObj = gf_vars.addressTypes[ addressType ],
+	var addressTypeObj = kdna_vars.addressTypes[ addressType ],
 		isCountryInput = inputId == field.id + '.6',
 		isStateInput   = inputId == field.id + '.4';
 
@@ -468,7 +468,7 @@ function GetRuleValuesDropDown(choices, objectType, ruleIndex, selectedValue, in
 	var dropdown_id = inputName == false ? objectType + '_rule_value_' + ruleIndex : inputName;
 
 	//create a drop down for fields that have choices (i.e. drop down, radio, checkboxes, etc...)
-	var str = "<select class='gfield_rule_select gfield_rule_value_dropdown' id='" + dropdown_id + "' name='" + dropdown_id + "'>";
+	var str = "<select class='kfield_rule_select kfield_rule_value_dropdown' id='" + dropdown_id + "' name='" + dropdown_id + "'>";
 
 	var isAnySelected = false;
 	for(var i=0; i<choices.length; i++){
@@ -567,13 +567,13 @@ function TruncateRuleText(text){
 
 }
 
-function gfAjaxSpinner(elem, imageSrc, inlineStyles) {
+function kdnaAjaxSpinner(elem, imageSrc, inlineStyles) {
 
-	imageSrc     = typeof imageSrc == 'undefined' || ! imageSrc ? gf_vars.baseUrl + '/images/spinner.svg': imageSrc;
+	imageSrc     = typeof imageSrc == 'undefined' || ! imageSrc ? kdna_vars.baseUrl + '/images/spinner.svg': imageSrc;
 	inlineStyles = typeof inlineStyles != 'undefined' ? inlineStyles : '';
 
 	this.elem = elem;
-	this.image = '<img class="gfspinner" src="' + imageSrc + '" style="' + inlineStyles + '" />';
+	this.image = '<img class="kdnaspinner" src="' + imageSrc + '" style="' + inlineStyles + '" />';
 
 	this.init = function() {
 		this.spinner = jQuery(this.image);
@@ -841,15 +841,15 @@ function StashConditionalLogic() {
 
 function ConfirmationObj() {
 	this.id = false;
-	this.name = gf_vars.confirmationDefaultName;
+	this.name = kdna_vars.confirmationDefaultName;
 	this.type = 'message';
-	this.message = gf_vars.confirmationDefaultMessage;
+	this.message = kdna_vars.confirmationDefaultMessage;
 	this.isDefault = 0;
 }
 
-(function (gaddon, $, undefined) {
+(function (kaddon, $, undefined) {
 
-	gaddon.init = function () {
+	kaddon.init = function () {
 
 		var defaultVal, valueExists, value;
 
@@ -861,50 +861,50 @@ function ConfirmationObj() {
 
 	};
 
-	gaddon.toggleFeedSwitch = function( btn, is_active ) {
-		var i18n = window.gform_admin_config.i18n;
+	kaddon.toggleFeedSwitch = function( btn, is_active ) {
+		var i18n = window.kform_admin_config.i18n;
 		if ( is_active ) {
-			jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_inactive );
+			jQuery( btn ).removeClass( 'kform-status--active' ).addClass( 'kform-status--inactive' ).find( '.kform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_inactive );
 		} else {
-			jQuery( btn ).removeClass( 'gform-status--inactive' ).addClass( 'gform-status--active' ).find( '.gform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_active );
+			jQuery( btn ).removeClass( 'kform-status--inactive' ).addClass( 'kform-status--active' ).find( '.kform-status-indicator-status' ).html( i18n.form_admin.toggle_feed_active );
 		}
 	};
 
-	gaddon.toggleFeedActive = function( btn, addon_slug, feed_id ) {
-		var is_active = jQuery( btn ).hasClass( 'gform-status--active' );
+	kaddon.toggleFeedActive = function( btn, addon_slug, feed_id ) {
+		var is_active = jQuery( btn ).hasClass( 'kform-status--active' );
 
 		jQuery.post( ajaxurl, {
-			action: "gf_feed_is_active_" + addon_slug,
+			action: "kdna_feed_is_active_" + addon_slug,
 			feed_id: feed_id,
 			is_active: is_active ? 0 : 1,
 			nonce: jQuery( '#feed_list' ).val()
 			},
 			function( response) {
 				if ( response.success ) {
-					gaddon.toggleFeedSwitch( btn, is_active );
+					kaddon.toggleFeedSwitch( btn, is_active );
 				} else {
-					gaddon.toggleFeedSwitch( btn, ! is_active );
-					gform.instances.dialogAlert( response.data.message );
+					kaddon.toggleFeedSwitch( btn, ! is_active );
+					kform.instances.dialogAlert( response.data.message );
 				}
 			}
 		).fail( function( jqXHR, textStatus, error ) {
-			gaddon.toggleFeedSwitch( btn, ! is_active );
-			gform.instances.dialogAlert( error );
+			kaddon.toggleFeedSwitch( btn, ! is_active );
+			kform.instances.dialogAlert( error );
 		} );
 
 		return true;
 	};
 
-	gaddon.deleteFeed = function (id) {
+	kaddon.deleteFeed = function (id) {
 		$("#single_action").val("delete");
 		$("#single_action_argument").val(id);
-		$("#gform-settings").submit();
+		$("#kform-settings").submit();
 	};
 
-	gaddon.duplicateFeed = function (id) {
+	kaddon.duplicateFeed = function (id) {
 		$("#single_action").val("duplicate");
 		$("#single_action_argument").val(id);
-		$("#gform-settings").submit();
+		$("#kform-settings").submit();
 	};
 
 	function isValidJson(str) {
@@ -928,7 +928,7 @@ function ConfirmationObj() {
 		return '';
 	}
 
-}(window.gaddon = window.gaddon || {}, jQuery));
+}(window.kaddon = window.kaddon || {}, jQuery));
 
 function Copy(variable){
 
@@ -946,7 +946,7 @@ function Copy(variable){
 	return variable;
 }
 
-var gfMergeTagsObj = function( form, element ) {
+var kdnaMergeTagsObj = function( form, element ) {
 
 	var self      = this;
 		self.form = form;
@@ -963,7 +963,7 @@ var gfMergeTagsObj = function( form, element ) {
 		}
 
 		// Get merge tag list element.
-		self.mergeTagList      = jQuery( '<ul id="gf_merge_tag_list" class=""></ul>' );
+		self.mergeTagList      = jQuery( '<ul id="kdna_merge_tag_list" class=""></ul>' );
 		self.mergeTagListHover = false;
 
 		// Bind keydown event.
@@ -974,7 +974,7 @@ var gfMergeTagsObj = function( form, element ) {
 
 		self.addMergeTagIcon();
 
-		self.mergeTagIcon.find( '.open-list' ).on( 'click.gravityforms', function(e) {
+		self.mergeTagIcon.find( '.open-list' ).on( 'click.kdnaforms', function(e) {
 
 			e.preventDefault();
 
@@ -1004,7 +1004,7 @@ var gfMergeTagsObj = function( form, element ) {
 			}
 		} );
 
-		// Assign gfMergeTagsObj to element.
+		// Assign kdnaMergeTagsObj to element.
 		self.elem.data( 'mergeTags', self );
 
 	};
@@ -1018,7 +1018,7 @@ var gfMergeTagsObj = function( form, element ) {
 		element = self.elem ? self.elem : element;
 
 		element.next( '.all-merge-tags' ).remove();
-		element.off( 'keydown.gravityforms' );
+		element.off( 'keydown.kdnaforms' );
 		element.autocomplete( 'destroy' );
 		element.data( 'mergeTags', null );
 
@@ -1035,7 +1035,7 @@ var gfMergeTagsObj = function( form, element ) {
 	*/
 	self.bindKeyDown = function() {
 
-		self.elem.on( 'keydown.gravityforms', function( event ) {
+		self.elem.on( 'keydown.kdnaforms', function( event ) {
 			var menuActive = self.elem.data( 'autocomplete' ) && self.elem.data( 'autocomplete' ).menu ? self.elem.data( 'autocomplete' ).menu.active : false;
 
 			if ( event.keyCode === jQuery.ui.keyCode.TAB && menuActive ) {
@@ -1104,7 +1104,7 @@ var gfMergeTagsObj = function( form, element ) {
 		var inputType     = self.elem.is( 'input' ) ? 'input' : 'textarea',
 			positionClass = self.getClassProperty( self.elem, 'position' );
 
-		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag gform-button gform-button--unstyled" title="' + gf_vars.mergeTagsText + '"><i class="gform-icon gform-icon--merge-tag gform-button__icon" aria-hidden="true"></i>' + gf_vars.mergeTagsText + '</button></span>' );
+		self.mergeTagIcon  = jQuery( '<span class="all-merge-tags ' + positionClass + ' ' + inputType + '"><button class="open-list tooltip-merge-tag kform-button kform-button--unstyled" title="' + kdna_vars.mergeTagsText + '"><i class="kform-icon kform-icon--merge-tag kform-button__icon" aria-hidden="true"></i>' + kdna_vars.mergeTagsText + '</button></span>' );
 
 		// Add the target element to the merge tag icon data for reference later when determining where the selected merge tag should be inserted.
 		self.mergeTagIcon.data( 'targetElement', self.elem.attr( 'id' ) );
@@ -1114,7 +1114,7 @@ var gfMergeTagsObj = function( form, element ) {
 
 			// Make sure we only do this on the mergetag button for this field.
 			var id = self.elem.attr( 'id' ).substring( 1, self.elem.attr( 'id' ).length );
-			jQuery( '#' + id ).find( '.gform-tinymce-mergetag-button' ).append( self.mergeTagIcon );
+			jQuery( '#' + id ).find( '.kform-tinymce-mergetag-button' ).append( self.mergeTagIcon );
 
 		} else {
 
@@ -1342,19 +1342,19 @@ var gfMergeTagsObj = function( form, element ) {
 			}
 		};
 
-		mergeTags = gform.applyFilters('gform_merge_tags', mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option, this );
+		mergeTags = kform.applyFilters('kform_merge_tags', mergeTags, elementId, hideAllFields, excludeFieldTypes, isPrepop, option, this );
 
 		return mergeTags;
 	};
 
 	this.getMergeTagLabel = function(tag) {
 
-		for(groupName in gf_vars.mergeTags) {
+		for(groupName in kdna_vars.mergeTags) {
 
-			if(!gf_vars.mergeTags.hasOwnProperty(groupName))
+			if(!kdna_vars.mergeTags.hasOwnProperty(groupName))
 				continue;
 
-			var tags = gf_vars.mergeTags[groupName].tags;
+			var tags = kdna_vars.mergeTags[groupName].tags;
 			for(i in tags) {
 
 				if(!tags.hasOwnProperty(i))
@@ -1369,7 +1369,7 @@ var gfMergeTagsObj = function( form, element ) {
 	};
 
 	this.getMergeGroupLabel = function(group) {
-		return gf_vars.mergeTags[group].label;
+		return kdna_vars.mergeTags[group].label;
 	};
 
 	this.getFieldMergeTags = function(field, option) {
@@ -1422,14 +1422,14 @@ var gfMergeTagsObj = function( form, element ) {
 	*/
 	self.getCustomMergeTags = function() {
 
-		for ( groupName in gf_vars.mergeTags ) {
+		for ( groupName in kdna_vars.mergeTags ) {
 
-			if ( ! gf_vars.mergeTags.hasOwnProperty( groupName ) ) {
+			if ( ! kdna_vars.mergeTags.hasOwnProperty( groupName ) ) {
 				continue;
 			}
 
 			if ( groupName == 'custom' ) {
-				return gf_vars.mergeTags[ groupName ];
+				return kdna_vars.mergeTags[ groupName ];
 			}
 
 		}
@@ -1509,10 +1509,10 @@ var gfMergeTagsObj = function( form, element ) {
 					continue;
 
 				var tag   = tags[ i ];
-				var label = gform.tools.stripSlashes( tag.label );
+				var label = kform.tools.stripSlashes( tag.label );
 
 				var tagHTML = jQuery( '<a class="" data-value="' + escapeAttr( tag.tag ) + '">' + escapeHtml( label ) + '</a>' );
-				tagHTML.on( 'click.gravityforms', self.bindMergeTagListClick );
+				tagHTML.on( 'click.kdnaforms', self.bindMergeTagListClick );
 
 				optionsHTML.push( jQuery( '<li></li>' ).html( tagHTML ) );
 
@@ -1676,8 +1676,8 @@ var FeedConditionObj = function( args ) {
 
 		var fcobj = this;
 
-		gform.addFilter( 'gform_conditional_object', 'FeedConditionConditionalObject' );
-		gform.addFilter( 'gform_conditional_logic_description', 'FeedConditionConditionalDescription' );
+		kform.addFilter( 'kform_conditional_object', 'FeedConditionConditionalObject' );
+		kform.addFilter( 'kform_conditional_logic_description', 'FeedConditionConditionalDescription' );
 
 		jQuery(document).ready(function(){
 			ToggleConditionalLogic( true,"feed_condition" );
@@ -1736,7 +1736,7 @@ function isSet( $var ) {
  */
 jQuery( document ).ready( function() {
 
-	var $formTitle = jQuery( '.gform-form-toolbar__form-title span:not(.gform-dropdown__trigger-text):not(.gform-dropdown__control-text):not(.gform-visually-hidden)' );
+	var $formTitle = jQuery( '.kform-form-toolbar__form-title span:not(.kform-dropdown__trigger-text):not(.kform-dropdown__control-text):not(.kform-visually-hidden)' );
 
 	// If form title is not present, exit.
 	if ( ! $formTitle ) {
@@ -1748,7 +1748,7 @@ jQuery( document ).ready( function() {
 
 	// If cloned title is wider, initialize tooltip.
 	if ( $clone.width() > $formTitle.width() ) {
-		jQuery( '.gform-form-toolbar__form-title span' ).tooltip( {
+		jQuery( '.kform-form-toolbar__form-title span' ).tooltip( {
 			position:     {
 				my: 'left center',
 				at: 'right+6 center'
@@ -1817,7 +1817,7 @@ function escapeHtml( string ) {
  * Fresh admin only code 2.5 onwards
  */
 
-var gform = window.gform || {};
+var kform = window.kform || {};
 
 //----------------------------------------
 //------ COMPONENTS ----------------------
@@ -1827,10 +1827,10 @@ var gform = window.gform || {};
  * Components namespace to house scripts associated with our new 2.5 and up components
  */
 
-gform.components = gform.components || {};
+kform.components = kform.components || {};
 
 /**
- * @function gform.components.dropdown
+ * @function kform.components.dropdown
  * @description An accessible listbox that allows for a custom function to be passed in for trigger handling on list items.
  * Passes value of data-value attribute in to the optional custom function.
  *
@@ -1838,7 +1838,7 @@ gform.components = gform.components || {};
  * @constructor
  */
 
-gform.components.dropdown = function( options ) {
+kform.components.dropdown = function( options ) {
 	this.el = null;
 	this.control = null;
 	this.controlText = null;
@@ -1860,29 +1860,29 @@ gform.components.dropdown = function( options ) {
 		titleLengthThresholdLong: 32,
 	};
 
-	this.options = gform.tools.mergeObjects( this.options, gform.tools.defaultFor( options, {} ) );
+	this.options = kform.tools.mergeObjects( this.options, kform.tools.defaultFor( options, {} ) );
 
-	this.el = gform.tools.getNodes( this.options.selector, false, this.options.container )[ 0 ];
+	this.el = kform.tools.getNodes( this.options.selector, false, this.options.container )[ 0 ];
 	if ( ! this.el ) {
-		gform.console.error( 'Gform dropdown couldn\'t find [data-js="' + this.options.selector + '"] to instantiate on.');
+		kform.console.error( 'Gform dropdown couldn\'t find [data-js="' + this.options.selector + '"] to instantiate on.');
 		return;
 	}
-	this.titleEl = gform.tools.getNodes( 'gform-dropdown-control-text', false, this.el )[ 0 ];
+	this.titleEl = kform.tools.getNodes( 'kform-dropdown-control-text', false, this.el )[ 0 ];
 
 	this.storeTriggers();
 	this.bindEvents();
 	this.setupUI();
 
 	this.hideSpinner = function() {
-		this.el.classList.remove( 'gform-dropdown--show-spinner' );
+		this.el.classList.remove( 'kform-dropdown--show-spinner' );
 	}
 
 	this.showSpinner = function() {
-		this.el.classList.add( 'gform-dropdown--show-spinner' );
+		this.el.classList.add( 'kform-dropdown--show-spinner' );
 	}
 }
 
-gform.components.dropdown.prototype.handleChange = function( e ) {
+kform.components.dropdown.prototype.handleChange = function( e ) {
 	this.options.onItemSelect( e.target.dataset.value );
 	if ( this.options.showSpinner ) {
 		this.showSpinner();
@@ -1895,7 +1895,7 @@ gform.components.dropdown.prototype.handleChange = function( e ) {
 	}
 };
 
-gform.components.dropdown.prototype.handleControl = function() {
+kform.components.dropdown.prototype.handleControl = function() {
 	if ( this.state.open ) {
 		this.closeDropdown();
 	} else {
@@ -1903,46 +1903,46 @@ gform.components.dropdown.prototype.handleControl = function() {
 	}
 };
 
-gform.components.dropdown.prototype.openDropdown = function() {
+kform.components.dropdown.prototype.openDropdown = function() {
 	if ( this.state.open ) {
 		return;
 	}
-	this.el.classList.add( 'gform-dropdown--reveal' );
+	this.el.classList.add( 'kform-dropdown--reveal' );
 	setTimeout( function() {
-		this.el.classList.add( 'gform-dropdown--open' );
+		this.el.classList.add( 'kform-dropdown--open' );
 		this.control.setAttribute( 'aria-expanded', 'true' );
 		this.state.open = true;
 	}.bind( this ), 25 );
 	setTimeout( function() {
-		this.el.classList.remove( 'gform-dropdown--reveal' );
+		this.el.classList.remove( 'kform-dropdown--reveal' );
 	}.bind( this ), 200 );
 };
 
-gform.components.dropdown.prototype.closeDropdown = function() {
+kform.components.dropdown.prototype.closeDropdown = function() {
 	this.state.open = false;
-	this.el.classList.remove( 'gform-dropdown--open' );
-	this.el.classList.add( 'gform-dropdown--hide' );
+	this.el.classList.remove( 'kform-dropdown--open' );
+	this.el.classList.add( 'kform-dropdown--hide' );
 	this.control.setAttribute( 'aria-expanded', 'false' );
 	setTimeout( function() {
-		this.el.classList.remove( 'gform-dropdown--hide' );
+		this.el.classList.remove( 'kform-dropdown--hide' );
 	}.bind( this ), 150 );
 };
 
-gform.components.dropdown.prototype.handleMouseenter = function() {
+kform.components.dropdown.prototype.handleMouseenter = function() {
 	if ( this.options.reveal !== 'hover' || this.state.open || this.state.unloading ) {
 		return;
 	}
 	this.openDropdown();
 };
 
-gform.components.dropdown.prototype.handleMouseleave = function( e ) {
+kform.components.dropdown.prototype.handleMouseleave = function( e ) {
 	if ( this.options.reveal !== 'hover' || this.state.unloading ) {
 		return;
 	}
 	this.closeDropdown();
 };
 
-gform.components.dropdown.prototype.handleA11y = function( e ) {
+kform.components.dropdown.prototype.handleA11y = function( e ) {
 	if ( ! this.state.open ) {
 		return;
 	}
@@ -1951,12 +1951,12 @@ gform.components.dropdown.prototype.handleA11y = function( e ) {
 		this.control.focus();
 		return;
 	}
-	if ( e.keyCode === 9  && ! gform.tools.getClosest( e.target, '[data-js="' + this.options.selector + '"]' ) ) {
+	if ( e.keyCode === 9  && ! kform.tools.getClosest( e.target, '[data-js="' + this.options.selector + '"]' ) ) {
 		this.triggers[0].focus();
 	}
 };
 
-gform.components.dropdown.prototype.handleSearch = function( e ) {
+kform.components.dropdown.prototype.handleSearch = function( e ) {
 	var search = e.target.value.toLowerCase();
 	this.triggers.forEach( function( trigger ) {
 		if ( trigger.innerText.toLowerCase().includes( search ) ) {
@@ -1967,9 +1967,9 @@ gform.components.dropdown.prototype.handleSearch = function( e ) {
 	} );
 };
 
-gform.components.dropdown.prototype.setupUI = function() {
+kform.components.dropdown.prototype.setupUI = function() {
 	if ( this.options.reveal === 'hover' ) {
-		this.el.classList.add( 'gform-dropdown--hover' );
+		this.el.classList.add( 'kform-dropdown--hover' );
 	}
 	if ( this.options.detectTitleLength ) {
 		// add a class to the container of the dropdown if displayed title is long.
@@ -1977,42 +1977,42 @@ gform.components.dropdown.prototype.setupUI = function() {
 		// dropdown is just always full width of its container
 		var title = this.titleEl ? this.titleEl.innerText : '';
 		if ( title.length > this.options.titleLengthThresholdMedium && title.length <= this.options.titleLengthThresholdLong ) {
-			this.el.parentNode.classList.add( 'gform-dropdown--medium-title' );
+			this.el.parentNode.classList.add( 'kform-dropdown--medium-title' );
 		} else if ( title.length > this.options.titleLengthThresholdLong ) {
-			this.el.parentNode.classList.add( 'gform-dropdown--long-title' );
+			this.el.parentNode.classList.add( 'kform-dropdown--long-title' );
 		}
 	}
 };
 
-gform.components.dropdown.prototype.storeTriggers = function() {
-	this.control = gform.tools.getNodes( 'gform-dropdown-control', false, this.el )[ 0 ];
-	this.controlText = gform.tools.getNodes( 'gform-dropdown-control-text', false, this.control )[ 0 ];
-	this.triggers = gform.tools.getNodes( 'gform-dropdown-trigger', true, this.el );
+kform.components.dropdown.prototype.storeTriggers = function() {
+	this.control = kform.tools.getNodes( 'kform-dropdown-control', false, this.el )[ 0 ];
+	this.controlText = kform.tools.getNodes( 'kform-dropdown-control-text', false, this.control )[ 0 ];
+	this.triggers = kform.tools.getNodes( 'kform-dropdown-trigger', true, this.el );
 };
 
-gform.components.dropdown.prototype.bindEvents = function() {
-	gform.tools.delegate(
+kform.components.dropdown.prototype.bindEvents = function() {
+	kform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'click',
-		'[data-js="gform-dropdown-trigger"], [data-js="gform-dropdown-trigger"] > span',
+		'[data-js="kform-dropdown-trigger"], [data-js="kform-dropdown-trigger"] > span',
 		this.handleChange.bind( this )
 	);
-	gform.tools.delegate(
+	kform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'click',
-		'[data-js="gform-dropdown-trigger"]',
+		'[data-js="kform-dropdown-trigger"]',
 		this.handleChange.bind( this )
 	);
-	gform.tools.delegate(
+	kform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'click',
-		'[data-js="gform-dropdown-control"], [data-js="gform-dropdown-control"] *',
+		'[data-js="kform-dropdown-control"], [data-js="kform-dropdown-control"] *',
 		this.handleControl.bind( this )
 	);
-	gform.tools.delegate(
+	kform.tools.delegate(
 		'[data-js="' + this.options.selector + '"]',
 		'keyup',
-		'[data-js="gform-dropdown-search"]',
+		'[data-js="kform-dropdown-search"]',
 		this.handleSearch.bind( this )
 	);
 
@@ -2037,36 +2037,36 @@ gform.components.dropdown.prototype.bindEvents = function() {
 /**
  * Alert Component
  *
- * Inits any gform specific Alert component instances either on init via data-attribute, by method
+ * Inits any kform specific Alert component instances either on init via data-attribute, by method
  * call, or by custom event. Stores instances with reference dom id for later manipulation if needed.
  *
  * You have 3 ways to trigger an init on your Alert component element:
  *
- * 1) Place an attribute of data-js="gform-alert" on the el, data-js="gform-alert-dismiss-trigger" on
- * the dismiss button (plus data-gform-alert-cookie="cookieName" on the el if you want a 24 hour cookie based
+ * 1) Place an attribute of data-js="kform-alert" on the el, data-js="kform-alert-dismiss-trigger" on
+ * the dismiss button (plus data-kform-alert-cookie="cookieName" on the el if you want a 24 hour cookie based
  * dismissal vs. only a display none dismissal).
- * 2) Calling gform.components.alert.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
- * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'gform_init_alerts' ) making
+ * 2) Calling kform.components.alert.initializeInstance( HTMLElement ), probably in kform.initializeOnLoaded.
+ * 3) Injecting your element into the dom and then calling kform.tools.trigger( 'kform_init_alerts' ) making
  * sure to add the various data attributes as outlined in the component documentation and in #1 above to the
  * injected HTML'S container.
  *
- * You will find your instances on the object gform.components.alert.instances. Each instance has an id which
- * relates to the dom node it was initialized on and its attribute of data-gform-alert-instance. We provide a
+ * You will find your instances on the object kform.components.alert.instances. Each instance has an id which
+ * relates to the dom node it was initialized on and its attribute of data-kform-alert-instance. We provide a
  * getInstance method. Say you want to get an instance only knowing your element you initialized it on:
  *
- * var myInstance = gform.components.alert.getInstance( HTMLElement );
+ * var myInstance = kform.components.alert.getInstance( HTMLElement );
  *
  * @since 2.5.8
  */
 
-gform.components.alert = {
+kform.components.alert = {
 	/**
 	 * Initialized instances are stored here with an array of objects.
 	 */
 	instances: [],
 
 	/**
-	 * @function gform.components.alert.getInstance
+	 * @function kform.components.alert.getInstance
 	 * @description Get an Alert instance by element it was rendered on.
 	 *
 	 * @since 2.5.8
@@ -2076,13 +2076,13 @@ gform.components.alert = {
 	 * @returns {*}
 	 */
 	getInstance: function( element ) {
-		return gform.components.alert.instances.filter( function( instance ) {
-			return instance.id === element.getAttribute( 'data-gform-alert-instance' ); }
+		return kform.components.alert.instances.filter( function( instance ) {
+			return instance.id === element.getAttribute( 'data-kform-alert-instance' ); }
 		)[ 0 ];
 	},
 
 	/**
-	 * @function gform.components.alert.initializeInstance
+	 * @function kform.components.alert.initializeInstance
 	 * @description Initialize a Alert instance and store on our instances object.
 	 *
 	 * @since 2.5.8
@@ -2090,24 +2090,24 @@ gform.components.alert = {
 	 * @param {HTMLElement} element
 	 */
 	initializeInstance: function( element ) {
-		if ( element.hasAttribute( 'data-gform-alert-instance' ) ) {
+		if ( element.hasAttribute( 'data-kform-alert-instance' ) ) {
 			return;
 		}
 
-		var uid = gform.tools.uniqueId( 'gform-alert' );
-		var cookie = element.hasAttribute( 'data-gform-alert-cookie' ) ? element.getAttribute( 'data-gform-alert-cookie' ) : '';
+		var uid = kform.tools.uniqueId( 'kform-alert' );
+		var cookie = element.hasAttribute( 'data-kform-alert-cookie' ) ? element.getAttribute( 'data-kform-alert-cookie' ) : '';
 
-		element.setAttribute( 'data-gform-alert-instance', uid );
-		element.classList.add( 'gform-initialized' );
+		element.setAttribute( 'data-kform-alert-instance', uid );
+		element.classList.add( 'kform-initialized' );
 
-		gform.components.alert.instances.push( {
+		kform.components.alert.instances.push( {
 			id: uid,
 			cookie: cookie
 		} );
 	},
 
 	/**
-	 * @function gform.components.alert.initializeInstances
+	 * @function kform.components.alert.initializeInstances
 	 * @description Initialize any uninitialized Alert instances in the DOM.
 	 *
 	 * @since 2.5.8
@@ -2115,80 +2115,80 @@ gform.components.alert = {
 	 * @param {HTMLElement} element
 	 */
 	initializeInstances: function() {
-		gform.tools
-			.getNodes( '[data-js="gform-alert"]:not(.gform-initialized)', true, document, true )
-			.forEach( gform.components.alert.initializeInstance );
+		kform.tools
+			.getNodes( '[data-js="kform-alert"]:not(.kform-initialized)', true, document, true )
+			.forEach( kform.components.alert.initializeInstance );
 	},
 
 	/**
-	 * @function gform.components.alert.dismissAlert
+	 * @function kform.components.alert.dismissAlert
 	 * @description Implements hiding of an alert and sets up cookie if it has been configured via
-	 * the data-gform-alert-cookie attribute on the parent el.
+	 * the data-kform-alert-cookie attribute on the parent el.
 	 *
 	 * @since 2.5.8
 	 */
 	dismissAlert: function( e ) {
-		var parentEl = gform.tools.getClosest( e.target, '[data-js="gform-alert"]' );
-		var instance = gform.components.alert.getInstance( parentEl );
+		var parentEl = kform.tools.getClosest( e.target, '[data-js="kform-alert"]' );
+		var instance = kform.components.alert.getInstance( parentEl );
 		parentEl.style.display = 'none';
 		if ( instance.cookie ) {
-			gform.tools.setCookie( instance.cookie, form.id, 1, true );
+			kform.tools.setCookie( instance.cookie, form.id, 1, true );
 		}
 	},
 
 	/**
-	 * @function gform.components.alert.bindEvents
+	 * @function kform.components.alert.bindEvents
 	 * @description Bind event listeners for this namespace.
 	 *
 	 * @since 2.5.8
 	 */
 	bindEvents: function() {
-		document.addEventListener( 'gform_init_alerts', gform.components.alert.initializeInstances );
-		gform.tools.delegate( 'body', 'click', '[data-js="gform-alert-dismiss-trigger"]', gform.components.alert.dismissAlert );
+		document.addEventListener( 'kform_init_alerts', kform.components.alert.initializeInstances );
+		kform.tools.delegate( 'body', 'click', '[data-js="kform-alert-dismiss-trigger"]', kform.components.alert.dismissAlert );
 	},
 
 	/**
-	 * @function gform.components.alert.init
+	 * @function kform.components.alert.init
 	 * @description Initialize this module.
 	 *
 	 * @since 2.5.8
 	 */
 	init: function() {
-		gform.components.alert.bindEvents();
-		gform.components.alert.initializeInstances();
+		kform.components.alert.bindEvents();
+		kform.components.alert.initializeInstances();
 	}
 };
 
-document.addEventListener( 'gform_main_scripts_loaded', gform.components.alert.init );
+document.addEventListener( 'kform_main_scripts_loaded', kform.components.alert.init );
 
 //------------------------------------------------
 //---------- SIMPLEBAR ---------------------------
 //------------------------------------------------
 
 /**
- * Inits any gform specific SimpleBar instances that can't be initialized by the data attribute, either on init,
+ * Inits any kform specific SimpleBar instances that can't be initialized by the data attribute, either on init,
  * by method call or by custom event. Stores instances with reference dom id for later manipulation if needed.
  *
- * Make sure to enqueue 'gform_simplebar' before using the techniques below.
+ * Make sure to enqueue 'kform_simplebar' before using the techniques below.
  *
  * You have 3 ways to trigger a render on your element:
  *
  * 1) Place an attribute of data-simplebar (plus data-simplebar-direction="rtl" if in rtl) on the el.
- * 2) Calling gform.simplebar.initializeInstance( HTMLElement ), probably in gform.initializeOnLoaded.
- * 3) Injecting your element into the dom and then calling gform.tools.trigger( 'gform_render_simplebars' ) making
- * sure to add data-js="gform-simplebar" to the injected HTML'S container.
+ * 2) Calling kform.simplebar.initializeInstance( HTMLElement ), probably in kform.initializeOnLoaded.
+ * 3) Injecting your element into the dom and then calling kform.tools.trigger( 'kform_render_simplebars' ) making
+ * sure to add data-js="kform-simplebar" to the injected HTML'S container.
  *
- * You will find your instances on the object gform.simplebar.instances. Each instance has an id which relates to the dom
+ * You will find your instances on the object kform.simplebar.instances. Each instance has an id which relates to the dom
  * node it was initialized on and its attribute of data-simplebar-instance. We provide a getInstance method. Say you
  * want to get an instance only knowing your element you initialized it on:
  *
- * var myInstance = gform.simplebar.getInstance( HTMLElement );
+ * var myInstance = kform.simplebar.getInstance( HTMLElement );
  *
  * https://github.com/Grsmto/simplebar/tree/master/packages/simplebar
  *
  */
 
-gform.simplebar = {
+kform.simplebar = {
 	/**
 	 * Initialized instances are stored here with an array of objects. Each instance looks like:
 	 *
@@ -2196,24 +2196,24 @@ gform.simplebar = {
 	instances: [],
 
 	/**
-	 * @function gform.simplebar.cleanInstances
+	 * @function kform.simplebar.cleanInstances
 	 * @description Cleans out any instances that were removed in between the last call and this one to render.
 	 *
 	 * @since 2.5.6
 	 */
 	cleanInstances: function() {
-		gform.simplebar.instances = gform.simplebar.instances.filter( function( instance, index ) {
-			var exists = gform.tools.getNodes( '[data-simplebar-instance="' + instance.id + '"]', false, document, true )[ 0 ];
+		kform.simplebar.instances = kform.simplebar.instances.filter( function( instance, index ) {
+			var exists = kform.tools.getNodes( '[data-simplebar-instance="' + instance.id + '"]', false, document, true )[ 0 ];
 			if ( exists ) {
 				return true;
 			}
-			gform.simplebar.instances[ index ].instance.unMount();
+			kform.simplebar.instances[ index ].instance.unMount();
 			return false;
 		} );
 	},
 
 	/**
-	 * @function gform.simplebar.getInstance
+	 * @function kform.simplebar.getInstance
 	 * @description Get a SimpleBar instance by element it was rendered on.
 	 *
 	 * @since 2.5.6
@@ -2223,14 +2223,14 @@ gform.simplebar = {
 	 * @returns {*}
 	 */
 	getInstance: function( element ) {
-		var instanceObj = gform.simplebar.instances.filter( function( instance ) {
+		var instanceObj = kform.simplebar.instances.filter( function( instance ) {
 			return instance.id === element.getAttribute( 'data-simplebar-instance' ); }
 		)[ 0 ];
 		return instanceObj.instance;
 	},
 
 	/**
-	 * @function gform.simplebar.initializeInstance
+	 * @function kform.simplebar.initializeInstance
 	 * @description Initialize a SimpleBar instance and store on our instances object.
 	 * You can delay initialization of an instance by a data attribute of data-simplebar-delay (helpful if say
 	 * your container is part of some jquery ui or other third party display logic).
@@ -2243,24 +2243,24 @@ gform.simplebar = {
 		if ( element.hasAttribute( 'data-simplebar-instance' ) ) {
 			return;
 		}
-		var uid = gform.tools.uniqueId( 'simplebar' );
+		var uid = kform.tools.uniqueId( 'simplebar' );
 		var delayAttr = element.getAttribute( 'data-simplebar-delay' );
 		var delay = delayAttr ? parseInt( delayAttr, 10 ) : 0;
 
 		setTimeout( function() {
-			var direction = gform.tools.isRtl() ? 'rtl' : 'ltr';
+			var direction = kform.tools.isRtl() ? 'rtl' : 'ltr';
 
 			if ( direction === 'rtl' ) {
 				element.setAttribute( 'data-simplebar-direction', 'rtl' );
 			}
 			element.setAttribute( 'data-simplebar-instance', uid );
-			element.classList.add( 'gform-initialized' );
+			element.classList.add( 'kform-initialized' );
 
 			var simplebar = new SimpleBar( element, {
 				direction: direction,
 			} );
 
-			gform.simplebar.instances.push( {
+			kform.simplebar.instances.push( {
 				id: uid,
 				instance: simplebar,
 			} );
@@ -2268,7 +2268,7 @@ gform.simplebar = {
 	},
 
 	/**
-	 * @function gform.simplebar.initializeInstances
+	 * @function kform.simplebar.initializeInstances
 	 * @description Start by cleaning any zombie instances, then initialize any uninitialized SimpleBar instances in
 	 * the DOM.
 	 *
@@ -2277,24 +2277,24 @@ gform.simplebar = {
 	 * @param {HTMLElement} element
 	 */
 	initializeInstances: function() {
-		gform.simplebar.cleanInstances();
-		gform.tools
-			.getNodes( '[data-js="gform-simplebar"]:not(.gform-initialized)', true, document, true )
-			.forEach( gform.simplebar.initializeInstance );
+		kform.simplebar.cleanInstances();
+		kform.tools
+			.getNodes( '[data-js="kform-simplebar"]:not(.kform-initialized)', true, document, true )
+			.forEach( kform.simplebar.initializeInstance );
 	},
 
 	/**
-	 * @function gform.simplebar.bindEvents
+	 * @function kform.simplebar.bindEvents
 	 * @description Bind event listeners for this namespace.
 	 *
 	 * @since 2.5.6
 	 */
 	bindEvents: function() {
-		document.addEventListener( 'gform_render_simplebars', gform.simplebar.initializeInstances );
+		document.addEventListener( 'kform_render_simplebars', kform.simplebar.initializeInstances );
 	},
 
 	/**
-	 * @function gform.simplebar.init
+	 * @function kform.simplebar.init
 	 * @description Initialize this module if SimpleBar is enqueued.
 	 *
 	 * @since 2.5.6
@@ -2303,9 +2303,9 @@ gform.simplebar = {
 		if ( ! window.SimpleBar ) {
 			return;
 		}
-		gform.simplebar.bindEvents();
-		gform.simplebar.initializeInstances();
+		kform.simplebar.bindEvents();
+		kform.simplebar.initializeInstances();
 	}
 };
 
-document.addEventListener( 'gform_main_scripts_loaded', gform.simplebar.init );
+document.addEventListener( 'kform_main_scripts_loaded', kform.simplebar.init );

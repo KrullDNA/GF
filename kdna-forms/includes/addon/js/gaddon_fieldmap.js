@@ -1,9 +1,9 @@
-var gfieldmap = function( options ) {
+var kfieldmap = function( options ) {
 
 	var self = this;
 
 	self.options = options;
-	self.UI = jQuery( '#gaddon-setting-row-'+ self.options.fieldName );
+	self.UI = jQuery( '#kaddon-setting-row-'+ self.options.fieldName );
 
 	self.init = function() {
 
@@ -17,13 +17,13 @@ var gfieldmap = function( options ) {
 
 	self.bindEvents = function() {
 
-		self.UI.on( 'change', 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]', function() {
+		self.UI.on( 'change', 'select[name="_kaddon_setting_'+ self.options.keyFieldName +'"]', function() {
 
 			var $select    = jQuery( this ),
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
 				$input     = $select.siblings( '.custom-key-container' );
 
-			if( $select.val() != 'gf_custom' ) {
+			if( $select.val() != 'kdna_custom' ) {
 				return;
 			}
 
@@ -52,7 +52,7 @@ var gfieldmap = function( options ) {
 
 		self.UI.closest( 'form' ).on( 'submit', function( event ) {
 
-			jQuery( '[name^="_gaddon_setting_'+ self.options.fieldName +'_"]' ).each( function( i ) {
+			jQuery( '[name^="_kaddon_setting_'+ self.options.fieldName +'_"]' ).each( function( i ) {
 
 				jQuery( this ).removeAttr( 'name' );
 
@@ -91,12 +91,12 @@ var gfieldmap = function( options ) {
 
 			limit:              limit,
 			items:              self.data,
-			addButtonMarkup:    '<i class="gficon-add"></i>',
-			removeButtonMarkup: '<i class="gficon-subtract"></i>',
+			addButtonMarkup:    '<i class="kdnaicon-add"></i>',
+			removeButtonMarkup: '<i class="kdnaicon-subtract"></i>',
 			callbacks:          {
 				add:  function( obj, $elem, item ) {
 
-					var key_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]' );
+					var key_select = $elem.find( 'select[name="_kaddon_setting_'+ self.options.keyFieldName +'"]' );
 
 					if ( ! item.custom_key && key_select.length > 0 ) {
 						$elem.find( '.custom-key-container' ).hide();
@@ -104,7 +104,7 @@ var gfieldmap = function( options ) {
 						$elem.find( '.key' ).hide();
 					}
 
-					gform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
+					kform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
 
 				},
 				save: function( obj, data ) {

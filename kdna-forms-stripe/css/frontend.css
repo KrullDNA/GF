@@ -1,0 +1,73 @@
+/**
+ * Stripe card field styling.
+ *
+ * Deliberately quiet: the field borrows the form theme's own input treatment so
+ * it does not look bolted on next to the fields around it.
+ */
+
+.kdna-stripe-element {
+	/* Border, background and padding are copied from the form's own inputs at
+	   runtime, because the card frame cannot inherit them. These are only the
+	   fallback for when there is no input to read. */
+	background: #fff;
+	border: 1px solid #686e77;
+	border-radius: 3px;
+	box-sizing: border-box;
+	padding: 0.75rem 0.9375rem;
+	width: 100%;
+}
+
+.kdna-stripe-element.StripeElement--focus {
+	border-color: #204ce5;
+	box-shadow: 0 0 0 2px rgba( 32, 76, 229, 0.2 );
+	outline: none;
+}
+
+.kdna-stripe-element.StripeElement--invalid {
+	border-color: #c02b0a;
+}
+
+.kdna-stripe-errors {
+	color: #c02b0a;
+	display: block;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	margin-top: 0.5rem;
+	min-height: 1em;
+}
+
+.kdna-stripe-errors:empty {
+	display: none;
+}
+
+/* While Stripe is confirming, the form is not accepting another attempt. */
+.kdna-stripe-busy {
+	cursor: progress;
+}
+
+.kdna-stripe-busy input[type="submit"],
+.kdna-stripe-busy button[type="submit"] {
+	cursor: progress;
+	opacity: 0.6;
+}
+
+/* Early bird: the full price stays visible, struck out, so the customer can
+   see what the offer is worth rather than just a lower number. */
+.kdna-stripe-price-was {
+	opacity: 0.65;
+	text-decoration: line-through;
+}
+
+.kdna-stripe-price-now {
+	font-weight: 700;
+}
+
+/* Shown where the card box would be when Stripe has no keys. */
+.kdna-stripe-unconfigured {
+	background: #fff8e5;
+	border: 1px solid #f0b849;
+	border-radius: 3px;
+	color: #674600;
+	font-size: 0.875rem;
+	padding: 0.75rem 0.9375rem;
+}

@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms\Save_Form\Endpoints;
 
-use KDNA_Forms\KDNA_Forms\Save_Form\Config\GF_Admin_Form_Save_Config;
+use KDNA_Forms\KDNA_Forms\Save_Form\Config\KDNA_Admin_Form_Save_Config;
 use KDNA_Forms\KDNA_Forms\Form_Editor\Save_Form\Config\KDNA_Form_Editor_Form_Save_Config;
 use KDNA_Forms\KDNA_Forms\Save_Form\KDNA_Form_CRUD_Handler;
 use KDNA_Forms\KDNA_Forms\Save_Form\KDNA_Save_Form_Service_Provider;
@@ -193,7 +193,7 @@ class KDNA_Save_Form_Endpoint_Admin {
 				/* Translators: 1. Opening link tag, 2. Closing link tag. */
 				esc_html__( 'There was an error while saving your form. Please %1$scontact our support team%2$s.', 'kdnaforms'),
 				'<a target="_blank" href="' . esc_attr( \KDNACommon::get_support_url() ) . '">',
-				'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+				'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 			);
 		}
 
@@ -211,8 +211,8 @@ class KDNA_Save_Form_Endpoint_Admin {
 	 * @return array
 	 */
 	protected function wrap_json_response( $response ) {
-		$json_start = array( GF_Admin_Form_Save_Config::JSON_START_STRING => 0 );
-		$json_end   = array( GF_Admin_Form_Save_Config::JSON_END_STRING => 1 );
+		$json_start = array( KDNA_Admin_Form_Save_Config::JSON_START_STRING => 0 );
+		$json_end   = array( KDNA_Admin_Form_Save_Config::JSON_END_STRING => 1 );
 
 		$response = array_merge( $json_start, $response );
 		$response = array_merge( $response, $json_end );

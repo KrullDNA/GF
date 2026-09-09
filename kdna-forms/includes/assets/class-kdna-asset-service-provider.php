@@ -20,10 +20,10 @@ class KDNA_Asset_Service_Provider extends KDNA_Service_Provider {
 
 	const HASH_MAP          = 'hash_map';
 	const ASSET_PROCESSOR   = 'asset_processor';
-	const STYLE_DEPS        = 'gf_global_style_deps';
-	const SCRIPT_DEPS       = 'gf_global_script_deps';
-	const SCRIPT_DEPS_THEME = 'gf_global_script_deps_theme';
-	const SVG_OPTIONS       = 'gf_svg_options';
+	const STYLE_DEPS        = 'kdna_global_style_deps';
+	const SCRIPT_DEPS       = 'kdna_global_script_deps';
+	const SCRIPT_DEPS_THEME = 'kdna_global_script_deps_theme';
+	const SVG_OPTIONS       = 'kdna_svg_options';
 
 	private $plugin_dir;
 

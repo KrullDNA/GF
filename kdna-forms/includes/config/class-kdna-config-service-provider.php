@@ -159,11 +159,11 @@ class KDNA_Config_Service_Provider extends KDNA_Service_Provider {
 		} );
 
 		// Add global config data to admin and theme.
-		add_filter( 'kdnaform_localized_script_data_gform_admin_config', function ( $data ) use ( $self ) {
+		add_filter( 'kdnaform_localized_script_data_kform_admin_config', function ( $data ) use ( $self ) {
 			return $self->add_global_config_data( $data );
 		} );
 
-		add_filter( 'kdnaform_localized_script_data_gform_theme_config', function ( $data ) use ( $self ) {
+		add_filter( 'kdnaform_localized_script_data_kform_theme_config', function ( $data ) use ( $self ) {
 			return $self->add_global_config_data( $data );
 		} );
 	}
@@ -219,7 +219,7 @@ class KDNA_Config_Service_Provider extends KDNA_Service_Provider {
 	 * @return array
 	 */
 	public function config_mocks_endpoint() {
-		define( 'GFORMS_DOING_MOCK', true );
+		define( 'KFORMS_DOING_MOCK', true );
 		$container = \KDNAForms::get_service_container();
 		$data      = $container->get( self::CONFIG_COLLECTION )->handle( false );
 

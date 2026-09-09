@@ -3,8 +3,8 @@
 namespace KDNA_Forms\KDNA_Forms\Theme_Layers;
 
 use KDNA_Forms\KDNA_Forms\KDNA_Service_Container;
-use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\GF_Theme_Layer;
-use KDNA_Forms\KDNA_Forms_Conversational_Forms\Style_Layers\GFCF_Style_Layers_Provider;
+use KDNA_Forms\KDNA_Forms\Theme_Layers\Framework\KDNA_Theme_Layer;
+use KDNA_Forms\KDNA_Forms_Conversational_Forms\Style_Layers\KDNACF_Style_Layers_Provider;
 
 \KDNAForms::include_addon_framework();
 
@@ -35,7 +35,7 @@ class KDNA_Theme_Layers extends \KDNAAddOn {
 	 *
 	 * @since 2.7
 	 *
-	 * @return GF_Conversational_Forms $_instance An instance of this class.
+	 * @return KDNA_Conversational_Forms $_instance An instance of this class.
 	 */
 	public static function get_instance() {
 		if ( self::$_instance == null ) {
@@ -65,13 +65,13 @@ class KDNA_Theme_Layers extends \KDNAAddOn {
 	 */
 	public function add_form_settings_menu( $tabs, $form_id ) {
 		/**
-		 * @var GF_Theme_Layer[]
+		 * @var KDNA_Theme_Layer[]
 		 */
 		$theme_layers = \KDNAForms::get_service_container()->get( KDNA_Theme_Layers_Provider::THEME_LAYERS );
 
 		foreach ( $theme_layers as $layer ) {
 			/**
-			 * @var GF_Theme_Layer $layer
+			 * @var KDNA_Theme_Layer $layer
 			 */
 			if ( empty( $layer->get_definitions()['settings'] ) ) {
 				continue;
@@ -116,7 +116,7 @@ class KDNA_Theme_Layers extends \KDNAAddOn {
 
 			foreach ( $theme_layers as $layer ) {
 				/**
-				 * @var GF_Theme_Layer $layer
+				 * @var KDNA_Theme_Layer $layer
 				 */
 				$caps[ $layer->name() ] = $layer->get_form_settings_capability();
 			}

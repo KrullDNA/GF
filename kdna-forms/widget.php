@@ -4,10 +4,10 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	die();
 }
 
-add_action( 'widgets_init', 'gf_register_widget' );
+add_action( 'widgets_init', 'kdna_register_widget' );
 
-if ( ! function_exists( 'gf_register_widget' ) ) {
-	function gf_register_widget() {
+if ( ! function_exists( 'kdna_register_widget' ) ) {
+	function kdna_register_widget() {
 		register_widget( 'KDNAWidget' );
 	}
 }
@@ -29,7 +29,7 @@ if ( ! class_exists( 'KDNAWidget' ) ) {
 		function __construct() {
 
 			//load text domains
-			KDNACommon::load_gf_text_domain();
+			KDNACommon::load_kdna_text_domain();
 
 			$description = esc_html__( 'KDNA Forms Widget', 'kdnaforms' );
 
@@ -162,14 +162,14 @@ if ( ! class_exists( 'KDNAWidget' ) ) {
 			<p>
 				<a href="javascript: var obj = jQuery('#<?php echo esc_attr( $this->get_field_id( 'advanced' ) ); ?>'); if(!obj.is(':visible')) {var a = obj.show('slow');} else {var a = obj.hide('slow');}"><?php esc_html_e( 'Advanced Options', 'kdnaforms' ); ?></a>
 			</p>
-			<p id="<?php echo esc_attr( $this->get_field_id( 'advanced' ) ); ?>" class="gf_widget_advanced" style="display:none;">
+			<p id="<?php echo esc_attr( $this->get_field_id( 'advanced' ) ); ?>" class="kdna_widget_advanced" style="display:none;">
 				<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'ajax' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'ajax' ) ); ?>" <?php checked( rgar( $instance, 'ajax' ) ); ?> value="1" />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'ajax' ) ); ?>"><?php esc_html_e( 'Enable Ajax', 'kdnaforms' ); ?></label><br />
 				<input type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'disable_scripts' ) ); ?>" id="<?php echo esc_attr( $this->get_field_id( 'disable_scripts' ) ); ?>" <?php checked( rgar( $instance, 'disable_scripts' ) ); ?> value="1" />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'disable_scripts' ) ); ?>"><?php esc_html_e( 'Disable script output', 'kdnaforms' ); ?></label><br />
 				<label for="<?php echo esc_attr( $this->get_field_id( 'tabindex' ) ); ?>"><?php esc_html_e( 'Tab Index Start', 'kdnaforms' ); ?>: </label>
 				<input id="<?php echo esc_attr( $this->get_field_id( 'tabindex' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'tabindex' ) ); ?>" value="<?php echo esc_attr( rgar( $instance, 'tabindex', 0 ) ); ?>" style="width:15%;" /><br />
-				<small><?php esc_html_e( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your Gravity Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ); ?></small>
+				<small><?php esc_html_e( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your KDNA Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ); ?></small>
 			</p>
 
 		<?php

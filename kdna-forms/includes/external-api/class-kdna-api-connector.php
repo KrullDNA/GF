@@ -3,7 +3,7 @@
 namespace KDNA_Forms\KDNA_Forms\External_API;
 
 /**
- * Class GF_API_Connector
+ * Class KDNA_API_Connector
  *
  * An abstraction allowing us to create codified API Connector classes with a distinct
  * strategy for each one, and a standardized Cache mechanism. This separates the actually
@@ -13,7 +13,7 @@ namespace KDNA_Forms\KDNA_Forms\External_API;
  *
  * @since 2.5
  */
-abstract class GF_API_Connector {
+abstract class KDNA_API_Connector {
 
 	protected $strategy;
 
@@ -23,7 +23,7 @@ abstract class GF_API_Connector {
 	protected $cache;
 
 	/**
-	 * GF_API_Connector constructor.
+	 * KDNA_API_Connector constructor.
 	 *
 	 * @param $strategy The strategy class used to actually communicate with the API.
 	 * @param $cache    The cache class used for caching results and other operations.

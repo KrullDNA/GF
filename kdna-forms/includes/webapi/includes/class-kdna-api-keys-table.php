@@ -45,7 +45,7 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 			return;
 		}
 
-		check_admin_referer( 'gforms_revoke_key' );
+		check_admin_referer( 'kforms_revoke_key' );
 
 		$this->delete_api_key( rgget( 'key_id' ) );
 	}
@@ -57,12 +57,12 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 	function column_description( $item ) {
 
 		// create a nonce
-		$revoke_nonce = wp_create_nonce( 'gforms_revoke_key' );
+		$revoke_nonce = wp_create_nonce( 'kforms_revoke_key' );
 
 		$description = $item['description'];
 
 		$confirm = "javascript: if( ! confirm('WARNING: You are about to revoke this API Key. \'Cancel\' to stop, \'OK\' to revoke.')){ event.stopPropagation(); return false } ";
-		$nonce_url = wp_nonce_url( '?page=kdna_settings&subview=kdnaformswebapi', 'gf_revoke_key' );
+		$nonce_url = wp_nonce_url( '?page=kdna_settings&subview=kdnaformswebapi', 'kdna_revoke_key' );
 
 		$actions = array(
 			'edit' => '<a href="#" class="rest-api-edit-key" data-id=" ' . esc_attr__( $item['key_id'] ) . ' " >' . esc_html__( 'Edit', 'kdnaforms' ) . '</a>',
@@ -121,7 +121,7 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 			</tbody>
 
 		</table>
-        <button type="button" class="gform-button gform-button--white" id="rest-api-add-key" data-js="rest-api-add-key" style="margin-top: 10px"><?php echo esc_html__( 'Add Key', 'kdnaforms' ) ?></button>
+        <button type="button" class="kform-button kform-button--white" id="rest-api-add-key" data-js="rest-api-add-key" style="margin-top: 10px"><?php echo esc_html__( 'Add Key', 'kdnaforms' ) ?></button>
 		<?php
 
 	}
@@ -142,7 +142,7 @@ class KDNA_API_Keys_Table extends WP_List_Table {
 	public function output_styles() {
 		?>
 		<style>
-			table.gforms_form_settings .api_key_table td { padding-left: 10px; vertical-align: top; }
+			table.kforms_form_settings .api_key_table td { padding-left: 10px; vertical-align: top; }
 			#add_setting_button { margin-top: 10px; }
 			tr:hover .row-actions { position: relative; }
 			.api_key_table tr:hover .row-actions { position: static; }

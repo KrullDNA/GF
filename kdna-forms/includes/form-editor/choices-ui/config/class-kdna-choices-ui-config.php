@@ -9,9 +9,9 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
  *
  * @since 2.6
  */
-class GF_Choices_UI_Config extends KDNA_Config {
+class KDNA_Choices_UI_Config extends KDNA_Config {
 
-	protected $name               = 'gform_admin_config';
+	protected $name               = 'kform_admin_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
 

@@ -5,10 +5,10 @@ namespace KDNA_Forms\KDNA_Forms\Save_Form\Config;
 use KDNA_Forms\KDNA_Forms\Config;
 use KDNA_Forms\KDNA_Forms\Save_Form\Endpoints\KDNA_Save_Form_Endpoint_Admin;
 
-class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
+class KDNA_Admin_Form_Save_Config extends Config\KDNA_Config {
 
-	const JSON_START_STRING = 'GFORMS_SAVE_REQUEST_JSON_START';
-	const JSON_END_STRING   = 'GFORMS_SAVE_REQUEST_JSON_END';
+	const JSON_START_STRING = 'KFORMS_SAVE_REQUEST_JSON_START';
+	const JSON_END_STRING   = 'KFORMS_SAVE_REQUEST_JSON_END';
 
 	/**
 	 * The object name for this config.
@@ -17,7 +17,7 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 *
 	 * @var string
 	 */
-	protected $name = 'gform_admin_config';
+	protected $name = 'kform_admin_config';
 
 	/**
 	 * The ID of the script to localize the data to.
@@ -38,16 +38,16 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	protected $kdna_forms;
 
 	/**
-	 * An instance of the KDNAAPI class to use for calling static GForms API functions.
+	 * An instance of the KDNAAPI class to use for calling static KDNAForms API functions.
 	 *
 	 * @since 2.6
 	 *
 	 * @var \KDNAAPI
 	 */
-	protected $gf_api;
+	protected $kdna_api;
 
 	/**
-	 * GF_Admin_Form_Save_Config constructor.
+	 * KDNA_Admin_Form_Save_Config constructor.
 	 *
 	 * @since 2.6
 	 *
@@ -56,7 +56,7 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 */
 	public function __construct( Config\KDNA_Config_Data_Parser $parser, $dependencies ) {
 		$this->kdna_forms = $dependencies['kdna_forms'];
-		$this->gf_api   = $dependencies['gf_api'];
+		$this->kdna_api   = $dependencies['kdna_api'];
 		parent::__construct( $parser );
 	}
 
@@ -73,8 +73,8 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 					'is_quick_editor' => false,
 					'form'            => $this->get_form(),
 					'json_containers' => array(
-						GF_Admin_Form_Save_Config::JSON_START_STRING,
-						GF_Admin_Form_Save_Config::JSON_END_STRING,
+						KDNA_Admin_Form_Save_Config::JSON_START_STRING,
+						KDNA_Admin_Form_Save_Config::JSON_END_STRING,
 					),
 				),
 				'endpoints' => $this->get_endpoints(),
@@ -91,10 +91,10 @@ class GF_Admin_Form_Save_Config extends Config\KDNA_Config {
 	 */
 	private function get_form() {
 		$kdna_forms = $this->kdna_forms;
-		$gf_api   = $this->gf_api;
+		$kdna_api   = $this->kdna_api;
 		$form_id  = $kdna_forms::get_page() === 'form_editor' ? rgget( 'id' ) : rgget( 'form_id' );
 		if ( $form_id ) {
-			return $gf_api::get_form( $form_id );
+			return $kdna_api::get_form( $form_id );
 		}
 
 		return false;

@@ -1,9 +1,9 @@
-var GFGenericMap = function( options ) {
+var KDNAGenericMap = function( options ) {
 
 	var self = this;
 
 	self.options = options;
-	self.UI = jQuery( '#gaddon-setting-row-'+ self.options.fieldName );
+	self.UI = jQuery( '#kaddon-setting-row-'+ self.options.fieldName );
 
 	self.init = function() {
 
@@ -17,13 +17,13 @@ var GFGenericMap = function( options ) {
 
 	self.bindEvents = function() {
 
-		self.UI.on( 'change', 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]', function() {
+		self.UI.on( 'change', 'select[name="_kaddon_setting_'+ self.options.keyFieldName +'"]', function() {
 
 			var $select    = jQuery( this ),
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
 				$input     = $select.siblings( '.custom-key-container' );
 
-			if( $select.val() != 'gf_custom' ) {
+			if( $select.val() != 'kdna_custom' ) {
 				return;
 			}
 
@@ -33,13 +33,13 @@ var GFGenericMap = function( options ) {
 
 		} );
 
-		self.UI.on( 'change', 'select[name="_gaddon_setting_'+ self.options.valueFieldName +'"]', function() {
+		self.UI.on( 'change', 'select[name="_kaddon_setting_'+ self.options.valueFieldName +'"]', function() {
 
 			var $select    = jQuery( this ),
 				$selectElm = $select.data( 'chosen' ) ? $select.siblings( '.chosen-container' ) : ( $select.data( 'select2' ) ? $select.siblings( '.select2-container' ) : $select ),
 				$input     = $select.siblings( '.custom-value-container' );
 
-			if ( $select.val() != 'gf_custom' ) {
+			if ( $select.val() != 'kdna_custom' ) {
 				return;
 			}
 
@@ -85,7 +85,7 @@ var GFGenericMap = function( options ) {
 
 		self.UI.closest( 'form' ).on( 'submit', function( event ) {
 
-			jQuery( '[name^="_gaddon_setting_'+ self.options.fieldName +'_"]' ).each( function( i ) {
+			jQuery( '[name^="_kaddon_setting_'+ self.options.fieldName +'_"]' ).each( function( i ) {
 
 				jQuery( this ).removeAttr( 'name' );
 
@@ -119,34 +119,34 @@ var GFGenericMap = function( options ) {
 
 			limit:              limit,
 			items:              self.data,
-			addButtonMarkup:    '<i class="gficon-add"></i>',
-			removeButtonMarkup: '<i class="gficon-subtract"></i>',
+			addButtonMarkup:    '<i class="kdnaicon-add"></i>',
+			removeButtonMarkup: '<i class="kdnaicon-subtract"></i>',
 			callbacks:          {
 				add:  function( obj, $elem, item ) {
 
-					var key_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.keyFieldName +'"]' );
+					var key_select = $elem.find( 'select[name="_kaddon_setting_'+ self.options.keyFieldName +'"]' );
 
-					if ( ! item.custom_key && ( key_select.length > 0 && key_select.val() !== 'gf_custom' ) ) {
+					if ( ! item.custom_key && ( key_select.length > 0 && key_select.val() !== 'kdna_custom' ) ) {
 						$elem.find( '.custom-key-container' ).hide();
 					} else {
 						$elem.find( '.key' ).hide();
 					}
 
-					var value_select = $elem.find( 'select[name="_gaddon_setting_'+ self.options.valueFieldName +'"]' );
+					var value_select = $elem.find( 'select[name="_kaddon_setting_'+ self.options.valueFieldName +'"]' );
 
-					if ( ! item.custom_value && ( value_select.length > 0 && value_select.val() !== 'gf_custom' ) ) {
+					if ( ! item.custom_value && ( value_select.length > 0 && value_select.val() !== 'kdna_custom' ) ) {
 						$elem.find( '.custom-value-container' ).hide();
 					} else {
 						$elem.find( '.value' ).hide();
 					}
 
 					if ( self.options.mergeTags ) {
-						new gfMergeTagsObj( form, $elem.find( '.custom-value-container input' ) );
+						new kdnaMergeTagsObj( form, $elem.find( '.custom-value-container input' ) );
 						$elem.find( '.custom-value-container' ).addClass( 'supports-merge-tags' );
 					}
 
-					if ( window.hasOwnProperty( 'gform' ) ) {
-						gform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
+					if ( window.hasOwnProperty( 'kform' ) ) {
+						kform.doAction( 'kdnaform_fieldmap_add_row', obj, $elem, item );
 					}
 
 				},

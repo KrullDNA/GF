@@ -58,11 +58,11 @@ final class KDNA_Order_Summary {
 	 */
 	public static function get_labels( $form ) {
 		return array(
-			'order_label'       => gf_apply_filters( array( 'kdnaform_order_label', $form['id'] ), __( 'Order', 'kdnaforms' ), $form['id'] ),
-			'product'           => gf_apply_filters( array( 'kdnaform_product', $form['id'] ), __( 'Product', 'kdnaforms' ), $form['id'] ),
-			'product_qty'       => gf_apply_filters( array( 'kdnaform_product_qty', $form['id'] ), __( 'Qty', 'kdnaforms' ), $form['id'] ),
-			'product_unitprice' => gf_apply_filters( array( 'kdnaform_product_unitprice', $form['id'] ), __( 'Unit Price', 'kdnaforms' ), $form['id'] ),
-			'product_price'     => gf_apply_filters( array( 'kdnaform_product_price', $form['id'] ), __( 'Price', 'kdnaforms' ), $form['id'] ),
+			'order_label'       => kdna_apply_filters( array( 'kdnaform_order_label', $form['id'] ), __( 'Order', 'kdnaforms' ), $form['id'] ),
+			'product'           => kdna_apply_filters( array( 'kdnaform_product', $form['id'] ), __( 'Product', 'kdnaforms' ), $form['id'] ),
+			'product_qty'       => kdna_apply_filters( array( 'kdnaform_product_qty', $form['id'] ), __( 'Qty', 'kdnaforms' ), $form['id'] ),
+			'product_unitprice' => kdna_apply_filters( array( 'kdnaform_product_unitprice', $form['id'] ), __( 'Unit Price', 'kdnaforms' ), $form['id'] ),
+			'product_price'     => kdna_apply_filters( array( 'kdnaform_product_price', $form['id'] ), __( 'Price', 'kdnaforms' ), $form['id'] ),
 
 		);
 	}

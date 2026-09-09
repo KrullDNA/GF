@@ -40,13 +40,13 @@ class KDNA_Environment_Config_Handler {
 	 *
 	 * @since 2.6.7
 	 *
-	 * @param string $name    The environment setting name. Don't include the "gf_env_" prefix.
+	 * @param string $name    The environment setting name. Don't include the "kdna_env_" prefix.
 	 * @param mixed  $default Default value to be returned if option is not set.
 	 *
 	 * @return mixed
 	 */
 	public function get_environment_setting( $name, $default = false ) {
-		$option_name = "gf_env_{$name}";
+		$option_name = "kdna_env_{$name}";
 		$setting = $this->cache->get( $option_name, $found );
 		if ( ! $found ) {
 			$setting = get_option( $option_name, $default );

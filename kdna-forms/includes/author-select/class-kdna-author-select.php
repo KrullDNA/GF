@@ -34,7 +34,7 @@ class KDNA_Author_Select {
 			wp_send_json_error( array( 'message' => __( 'Access denied', 'kdnaforms' ) ) );
 		}
 
-		check_ajax_referer( 'gf_get_users', 'nonce' );
+		check_ajax_referer( 'kdna_get_users', 'nonce' );
 
 		$search  = isset( $_POST['search'] ) ? sanitize_text_field( wp_unslash( $_POST['search'] ) ) : '';
 		$form_id = isset( $_POST['form_id'] ) ? intval( $_POST['form_id'] ) : 0;
@@ -53,7 +53,7 @@ class KDNA_Author_Select {
 		 *
 		 * @param array $args WP_User_Query arguments for get_users()
 		 */
-		$args = gf_apply_filters( array( 'kdnaform_author_dropdown_args', $form_id ), $args );
+		$args = kdna_apply_filters( array( 'kdnaform_author_dropdown_args', $form_id ), $args );
 
 		if ( ! empty( $search ) ) {
 			$args['search']         = '*' . $search . '*';

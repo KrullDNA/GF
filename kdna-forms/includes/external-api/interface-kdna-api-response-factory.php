@@ -2,10 +2,10 @@
 
 namespace KDNA_Forms\KDNA_Forms\External_API;
 
-use KDNA_Forms\KDNA_Forms\External_API\GF_API_Response;
+use KDNA_Forms\KDNA_Forms\External_API\KDNA_API_Response;
 
 /**
- * Interface GF_API_Response_Factory
+ * Interface KDNA_API_Response_Factory
  *
  * Contract to define how Response Factories should behave.
  *
@@ -13,12 +13,12 @@ use KDNA_Forms\KDNA_Forms\External_API\GF_API_Response;
  *
  * @package KDNA_Forms\KDNA_Forms\External_API
  */
-interface GF_API_Response_Factory {
+interface KDNA_API_Response_Factory {
 
 	/**
 	 * @param mixed ...$args
 	 *
-	 * @return GF_API_Response
+	 * @return KDNA_API_Response
 	 */
 	public function create( ...$args );
 

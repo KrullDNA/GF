@@ -1,13 +1,13 @@
 /**
  * Apply legacy options to DatePickers within Legacy Forms.
  */
-gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
-	var gf_legacy = window.gf_legacy_multi;
+kform.addFilter( 'kform_datepicker_options_pre_init', function( optionsObj, formId, inputId, $element ) {
+	var kdna_legacy = window.kdna_legacy_multi;
 
-	if ( ! gf_legacy ) {
+	if ( ! kdna_legacy ) {
 		return optionsObj;
 	}
-	if ( !gf_legacy[ formId ] || gf_legacy[ formId ] !== '1' ) {
+	if ( !kdna_legacy[ formId ] || kdna_legacy[ formId ] !== '1' ) {
 		return optionsObj;
 	}
 
@@ -17,23 +17,23 @@ gform.addFilter( 'gform_datepicker_options_pre_init', function( optionsObj, form
 	var overrides = {
 		showOtherMonths: false,
 		beforeShow: function( input, inst ) {
-			inst.dpDiv[0].classList.remove( 'gform-theme-datepicker' );
-			inst.dpDiv[0].classList.remove( 'gravity-theme' );
-			inst.dpDiv[0].classList.remove( 'gform-theme' );
-			inst.dpDiv[0].classList.remove( 'gform-legacy-datepicker' );
-			inst.dpDiv[0].classList.remove( 'gform-theme--framework' );
-			inst.dpDiv[0].classList.remove( 'gform-theme--foundation' );
-			inst.dpDiv[0].classList.remove( 'gform-theme--orbital' );
-			inst.dpDiv[0].classList.add( 'gform-legacy-datepicker' );
+			inst.dpDiv[0].classList.remove( 'kform-theme-datepicker' );
+			inst.dpDiv[0].classList.remove( 'kdna-theme' );
+			inst.dpDiv[0].classList.remove( 'kform-theme' );
+			inst.dpDiv[0].classList.remove( 'kform-legacy-datepicker' );
+			inst.dpDiv[0].classList.remove( 'kform-theme--framework' );
+			inst.dpDiv[0].classList.remove( 'kform-theme--foundation' );
+			inst.dpDiv[0].classList.remove( 'kform-theme--orbital' );
+			inst.dpDiv[0].classList.add( 'kform-legacy-datepicker' );
 
 			if ( isRTL && isPreview ) {
-				var $inputContainer = $( input ).closest( '.gfield' );
+				var $inputContainer = $( input ).closest( '.kfield' );
 				var rightOffset = $( document ).outerWidth() - ( $inputContainer.offset().left + $inputContainer.outerWidth() );
 				inst.dpDiv[ 0 ].style.right = rightOffset + 'px';
 			}
 
 			if ( isPreview ) {
-				inst.dpDiv[0].classList.add( 'gform-preview-datepicker' );
+				inst.dpDiv[0].classList.add( 'kform-preview-datepicker' );
 			}
 			return ! this.suppressDatePicker;
 		}

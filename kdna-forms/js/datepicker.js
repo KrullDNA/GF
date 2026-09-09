@@ -1,4 +1,4 @@
-(function ($, gform, kdnaform_i18n) {
+(function ($, kform, kdnaform_i18n) {
 
 	/**
 	 * @function getDatepickerI18n
@@ -65,12 +65,12 @@
 
 	function getDatepickerBaseOptions( $element ) {
 		var i18n = getDatepickerI18n();
-		var isThemeDatepicker = $element.closest( '.gform_wrapper' ).length > 0;
+		var isThemeDatepicker = $element.closest( '.kform_wrapper' ).length > 0;
 		var isPreview = $( '#preview_form_container' ).length > 0;
 		var isRTL = window.getComputedStyle($element[0], null).getPropertyValue('direction') === 'rtl';
-		var formTheme = isThemeDatepicker ? $element.closest( '.gform_wrapper' ).data( 'form-theme' ) : 'gravity-theme';
-		var formId = isThemeDatepicker ? $element.closest( '.gform_wrapper' ).attr( 'id' ).replace( 'gform_wrapper_', '' ) : '';
-		var formPageInstance = isThemeDatepicker ? $element.closest( '.gform_wrapper' ).attr( 'data-form-index' ) : '';
+		var formTheme = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).data( 'form-theme' ) : 'kdna-theme';
+		var formId = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).attr( 'id' ).replace( 'kform_wrapper_', '' ) : '';
+		var formPageInstance = isThemeDatepicker ? $element.closest( '.kform_wrapper' ).attr( 'data-form-index' ) : '';
 
 		return {
 			yearRange: '-100:+20',
@@ -95,35 +95,35 @@
 			beforeShow: function( input, inst ) {
 
 				// Remove any classes that were added before as it could have been added to a different datepicker.
-				inst.dpDiv[0].classList.remove( 'gform-theme-datepicker' );
-				inst.dpDiv[0].classList.remove( 'gravity-theme' );
-				inst.dpDiv[0].classList.remove( 'gform-theme' );
-				inst.dpDiv[0].classList.remove( 'gform-legacy-datepicker' );
-				inst.dpDiv[0].classList.remove( 'gform-theme--framework' );
-				inst.dpDiv[0].classList.remove( 'gform-theme--foundation' );
-				inst.dpDiv[0].classList.remove( 'gform-theme--orbital' );
+				inst.dpDiv[0].classList.remove( 'kform-theme-datepicker' );
+				inst.dpDiv[0].classList.remove( 'kdna-theme' );
+				inst.dpDiv[0].classList.remove( 'kform-theme' );
+				inst.dpDiv[0].classList.remove( 'kform-legacy-datepicker' );
+				inst.dpDiv[0].classList.remove( 'kform-theme--framework' );
+				inst.dpDiv[0].classList.remove( 'kform-theme--foundation' );
+				inst.dpDiv[0].classList.remove( 'kform-theme--orbital' );
 
 				// Add classes based on the form theme
 				if ( isThemeDatepicker ) {
-					inst.dpDiv[ 0 ].classList.add( 'gform-theme-datepicker' );
+					inst.dpDiv[ 0 ].classList.add( 'kform-theme-datepicker' );
 					$( inst.dpDiv[ 0 ] ).attr( 'data-parent-form', formId + '_' + formPageInstance );
 				}
 
-				if ( formTheme === undefined || formTheme === 'gravity-theme' ) {
-					$( inst.dpDiv[0] ).addClass( 'gravity-theme' );
+				if ( formTheme === undefined || formTheme === 'kdna-theme' ) {
+					$( inst.dpDiv[0] ).addClass( 'kdna-theme' );
 				} else if ( formTheme === 'legacy' ) {
-					$( inst.dpDiv[0] ).addClass( 'gform-legacy-datepicker' );
+					$( inst.dpDiv[0] ).addClass( 'kform-legacy-datepicker' );
 				} else {
-					$( inst.dpDiv[0] ).addClass( 'gform-theme--' + formTheme );
+					$( inst.dpDiv[0] ).addClass( 'kform-theme--' + formTheme );
 					if ( formTheme === 'orbital' ) {
-						$( inst.dpDiv[0] ).addClass( 'gform-theme--framework' );
-						$( inst.dpDiv[0] ).addClass( 'gform-theme--foundation' );
+						$( inst.dpDiv[0] ).addClass( 'kform-theme--framework' );
+						$( inst.dpDiv[0] ).addClass( 'kform-theme--foundation' );
 					}
 				}
 
 				// If the form is in preview mode and the site is RTL, adjust the datepicker position.
 				if ( isRTL && isPreview ) {
-					var $inputContainer = $( input ).closest( '.gfield' );
+					var $inputContainer = $( input ).closest( '.kfield' );
 					var rightOffset = $( document ).outerWidth() - ( $inputContainer.offset().left + $inputContainer.outerWidth() );
 					inst.dpDiv[ 0 ].style.right = rightOffset + 'px';
 				}
@@ -161,7 +161,7 @@
 
 		if ( $element.hasClass( 'gdatepicker_with_icon' ) ) {
 			optionsObj.showOn = 'both';
-			optionsObj.buttonImage = $element.parent().siblings( "[id^='gforms_calendar_icon_input']" ).val();
+			optionsObj.buttonImage = $element.parent().siblings( "[id^='kforms_calendar_icon_input']" ).val();
 			optionsObj.buttonImageOnly = true;
 			optionsObj.buttonText = i18n.iconText;
 		} else {
@@ -171,7 +171,7 @@
 		inputId = inputId.split( '_' );
 
 		// allow the user to override the datepicker options object
-		optionsObj = gform.applyFilters( 'gform_datepicker_options_pre_init', optionsObj, inputId[ 1 ], inputId[ 2 ], $element );
+		optionsObj = kform.applyFilters( 'kform_datepicker_options_pre_init', optionsObj, inputId[ 1 ], inputId[ 2 ], $element );
 
 		$element.datepicker( optionsObj );
 
@@ -186,13 +186,13 @@
 
 	/**
 	 * @function initDatepickers
-	 * @description Iterate over uninitialized datepickers and init. Exposed on window as gformInitDatepicker.
+	 * @description Iterate over uninitialized datepickers and init. Exposed on window as kformInitDatepicker.
 	 * Note: this function powers both admin and theme datepickers.
 	 * @since 2.4
 	 */
 
 	function initDatepickers() {
-		$( '.gform-datepicker:not(.initialized)' ).each( function() {
+		$( '.kform-datepicker:not(.initialized)' ).each( function() {
 			var $element = $( this );
 			initSingleDatepicker( $element );
 			$element.addClass( 'initialized' );
@@ -203,7 +203,7 @@
 
 	// Make all and single init functions public for add-ons.
 	// Naming is done in the 2.4 backwards compatible way.
-	window.gformInitDatepicker = initDatepickers;
-	window.gformInitSingleDatepicker = initSingleDatepicker;
+	window.kformInitDatepicker = initDatepickers;
+	window.kformInitSingleDatepicker = initSingleDatepicker;
 
-})(jQuery, gform, kdnaform_i18n);
+})(jQuery, kform, kdnaform_i18n);

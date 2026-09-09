@@ -1,0 +1,25 @@
+# Stage 8 — the form theme slug, and the block name.
+#
+# Both were held back from stage 7 because they are stored values rather than
+# class names, so each needs its rename paired with a read-side migration.
+#
+# gravity-theme is the form theme slug. It is saved per form in the form meta,
+# saved site-wide in the rg_gforms_default_theme option, and validated against
+# array( 'legacy', 'gravity-theme', 'orbital' ) — so renaming it alone would
+# make every existing form fail that check and silently fall back to the
+# default. The migration goes in KDNAForms::normalize_theme_slug(), which both
+# get_default_theme() and get_form_theme_slug() run their value through.
+#
+# gravityforms/form is the Gutenberg block name. This one is not a migration at
+# all, it is a half-applied rename that currently has the block broken in both
+# directions: PHP registers kdnaforms/form and keys its editor config under
+# that name, while the JS bundles call registerBlockType("gravityforms/form")
+# and read block_editor["gravityforms/form"]. A block inserted from the editor
+# therefore saves wp:gravityforms/form, which PHP has no renderer for and which
+# renders as nothing, while the embed endpoint writes wp:kdnaforms/form, which
+# the editor does not recognise. Moving the JS side onto the name PHP already
+# uses makes the two agree. Nothing needs preserving for old content, because
+# a stored wp:gravityforms/form block has never had a renderer to begin with.
+
+gravity-theme                                              kdna-theme
+gravityforms/form                                          kdnaforms/form

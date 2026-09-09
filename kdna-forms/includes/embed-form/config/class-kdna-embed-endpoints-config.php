@@ -14,7 +14,7 @@ use KDNA_Forms\KDNA_Forms\Embed_Form\Endpoints\KDNA_Embed_Endpoint_Get_Posts;
 class KDNA_Embed_Endpoints_Config extends KDNA_Config {
 
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
-	protected $name               = 'gform_admin_config';
+	protected $name               = 'kform_admin_config';
 	protected $overwrite          = false;
 
 	/**
@@ -56,7 +56,7 @@ class KDNA_Embed_Endpoints_Config extends KDNA_Config {
 			// Endpoint to get posts for typeahead
 			'get_posts'              => array(
 				'action' => array(
-					'value'   => 'gf_embed_query_posts',
+					'value'   => 'kdna_embed_query_posts',
 					'default' => 'mock_endpoint',
 				),
 				'nonce'  => array(

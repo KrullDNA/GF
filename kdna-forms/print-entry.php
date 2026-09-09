@@ -143,7 +143,7 @@ if ( 0 == $entry_ids ) {
 	 * @param array $search_criteria An array containing the search criteria.
 	 * @param int   $form_id         The ID of the current form.
 	 */
-	$search_criteria = gf_apply_filters( array( 'kdnaform_search_criteria_entry_list', $form_id ), $search_criteria, $form_id );
+	$search_criteria = kdna_apply_filters( array( 'kdnaform_search_criteria_entry_list', $form_id ), $search_criteria, $form_id );
 
 	/**
 	 * Filter the arguments that will be used to fetch entries for display on the Entry List view.
@@ -160,7 +160,7 @@ if ( 0 == $entry_ids ) {
 	 *     @var array $paging          An array containing properties that specify how the entries will be paginated.
 	 * }
 	 */
-	$args = gf_apply_filters( array( 'kdnaform_get_entries_args_entry_list', $form_id ), compact( 'form_id', 'search_criteria', 'sorting', 'paging' ) );
+	$args = kdna_apply_filters( array( 'kdnaform_get_entries_args_entry_list', $form_id ), compact( 'form_id', 'search_criteria', 'sorting', 'paging' ) );
 
 	$entry_ids = KDNAAPI::get_entry_ids( $args['form_id'], $args['search_criteria'], $args['sorting'], $args['paging'] );
 
@@ -227,7 +227,7 @@ $admin_title = sprintf( __( '%1$s &lsaquo; %2$s &lsaquo; Print Preview - KDNA Fo
 			 *
 			 * @see https://gist.github.com/spivurno/e7d1e4563986b3bc5ac4
 			 */
-			$auto_print = gf_apply_filters( array( 'kdnaform_print_entry_disable_auto_print', $form['id'] ), false, $form ) ? '' : 'onload="window.print();"';
+			$auto_print = kdna_apply_filters( array( 'kdnaform_print_entry_disable_auto_print', $form['id'] ), false, $form ) ? '' : 'onload="window.print();"';
 
 		?>
 	</head>

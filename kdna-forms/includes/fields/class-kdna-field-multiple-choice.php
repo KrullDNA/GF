@@ -25,12 +25,12 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--choice';
+		return 'kform-icon--choice';
 	}
 
 	function get_form_editor_field_settings() {
@@ -83,9 +83,9 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		$aria_describedby = $checkbox->get_choice_aria_describedby( $this->formId );
 
 		// Prepare choice markup.
-		$choice_markup = "<div class='gchoice gchoice_select_all'>
-						<input class='gfield-choice-input gfield_choice_all_toggle' type='checkbox' id='{$id}' {$tabindex} {$aria_describedby} onclick='gformToggleCheckboxes( this )' onkeypress='gformToggleCheckboxes( this )'{$checked} {$disabled_text} />
-						<label for='{$id}' id='label_" . $this->id . "_select_all' class='gform-field-label gform-field-label--type-inline' data-label-select='{$select_label}''>{$select_label}</label>
+		$choice_markup = "<div class='kchoice kchoice_select_all'>
+						<input class='kfield-choice-input kfield_choice_all_toggle' type='checkbox' id='{$id}' {$tabindex} {$aria_describedby} onclick='kformToggleCheckboxes( this )' onkeypress='kformToggleCheckboxes( this )'{$checked} {$disabled_text} />
+						<label for='{$id}' id='label_" . $this->id . "_select_all' class='kform-field-label kform-field-label--type-inline' data-label-select='{$select_label}''>{$select_label}</label>
 					</div>";
 
 		/**
@@ -98,7 +98,7 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		 * @param object $field         The field currently being processed.
 		 * @param string $value         The value to be selected if the field is being populated.
 		 */
-		$select_all = gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, array(), $this, $value );
+		$select_all = kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, array(), $this, $value );
 
 		return $select_all;
 	}
@@ -135,12 +135,12 @@ class KDNA_Field_Multiple_Choice extends KDNA_Field {
 		 *
 		 * @return string
 		 */
-		return gf_apply_filters( array( 'kdnaform_default_choice_alignment', $field->formId ), 'vertical', $field );
+		return kdna_apply_filters( array( 'kdnaform_default_choice_alignment', $field->formId ), 'vertical', $field );
 	}
 
 	public function get_form_editor_inline_script_on_page_render() {
 		$alignment = self::get_default_choice_alignment( $this );
-		return "gform.addAction( 'kdnaform_post_load_field_settings', function( [ field, form ] ) { if( '" . $alignment . "' == 'horizontal' ) { jQuery('#choice_alignment_horizontal').prop('checked', true); } else { jQuery('#choice_alignment_vertical').prop('checked', true); } } );";
+		return "kform.addAction( 'kdnaform_post_load_field_settings', function( [ field, form ] ) { if( '" . $alignment . "' == 'horizontal' ) { jQuery('#choice_alignment_horizontal').prop('checked', true); } else { jQuery('#choice_alignment_vertical').prop('checked', true); } } );";
 	}
 
 }

@@ -36,13 +36,13 @@ function initLayoutEditor( $ ) {
 
 		var field;
 
-		this.css( 'grid-column', 'span {0}'.gformFormat( span ) );
+		this.css( 'grid-column', 'span {0}'.kformFormat( span ) );
 
 		this.each( function () {
 			// Spacer fields are pseudo-fields; they are generated when the last field in the group is resized and are
 			// rendered based on that field's layoutSpacerGridColumnSpan property.
 			if ( $( this ).hasClass( 'spacer' ) ) {
-				var $prev = $( this ).prev( '.gfield' );
+				var $prev = $( this ).prev( '.kfield' );
 				field = getFieldByElement( $prev );
 				field.layoutSpacerGridColumnSpan = span;
 			} else {
@@ -83,8 +83,8 @@ function initLayoutEditor( $ ) {
 	 *
 	 * @returns {string}
 	 */
-	if ( ! String.prototype.gformFormat ) {
-		String.prototype.gformFormat = function() {
+	if ( ! String.prototype.kformFormat ) {
+		String.prototype.kformFormat = function() {
 			var args = arguments;
 			return this.replace( /{(\d+)}/g, function( match, number ) {
 				return typeof args[ number ] != 'undefined' ? args[ number ] : match;
@@ -93,12 +93,12 @@ function initLayoutEditor( $ ) {
 	}
 
 	var $editorContainer = $( '#form_editor_fields_container' ),
-		$editor = $( '.gform_editor' ),
-		$container = $( '#gform_fields' ),
+		$editor = $( '.kform_editor' ),
+		$container = $( '#kform_fields' ),
 		$noFields = $( '#no-fields' ),
 		$noFieldsDropzone = $( '#no-fields-drop' ),
 		$sidebar = $( '.editor-sidebar' ),
-		$button = $( '.gfield-field-action' ),
+		$button = $( '.kfield-field-action' ),
 		$fields = $elements(),
 		$elem = null,
 		fieldButtonsSelector = '.add-buttons button';
@@ -183,7 +183,7 @@ function initLayoutEditor( $ ) {
 	} );
 	$editorContainer.on( 'click', function ( event ) {
 		// Don't clear if mousedown originated inside any flyout
-		if ( mousedownTarget && $( mousedownTarget ).closest( '.gform-flyout, [id$="_flyout_container"]' ).length ) {
+		if ( mousedownTarget && $( mousedownTarget ).closest( '.kform-flyout, [id$="_flyout_container"]' ).length ) {
 			mousedownTarget = null;
 			return;
 		}
@@ -192,13 +192,40 @@ function initLayoutEditor( $ ) {
 	} );
 
 	// Handle adding a new field.
-	$( document ).on( 'gform_field_added', function ( event, form, field ) {
+	$( document ).on( 'kform_field_added', function ( event, form, field ) {
 
 		var $field = $( '#field_' + field.id );
 
-		// This field was added by clicking.
-		if ( $elem === null ) {
+		// The editor is initialised twice on this page: kdnaform_layout_editor
+		// is registered with $in_footer = false so WordPress prints it in the
+		// head, and KDNAForms::enqueue_scripts() then echoes the same file again
+		// from admin_print_footer_scripts. Two closures means two of these
+		// handlers, and everything below - the move, the group id, initElement,
+		// adding the submit button - is written to run once per field.
+		if ( $field.data( 'kdnaFieldPlaced' ) ) {
+			return;
+		}
+		$field.data( 'kdnaFieldPlaced', true );
 
+		// Whether the field was dragged in is decided by whether there is a live
+		// drop target, not by whether $elem survived.
+		//
+		// $elem is set when a drag starts and cleared in several places, and only
+		// in the closure whose draggable callbacks are currently bound. By the
+		// time the field markup comes back from the server it can be null on a
+		// field that was very much dragged, and the field then stays at index 0,
+		// where StartAddField() creates it, which is the top of the form. The
+		// indicator is the thing that actually knows where the field belongs.
+		var $target = $indicator( false ).data( 'target' );
+
+		if ( $target && $target.length && $.contains( document, $target[ 0 ] ) ) {
+
+			// Added by dragging into the editor.
+			moveByTarget( $field, $target, $indicator( false ).data( 'where' ) );
+
+		} else {
+
+			// Added by clicking.
 			$field.setGroupId( getGroupId() );
 
 			// If the submit button is inline, move it back to its own row
@@ -207,19 +234,15 @@ function initLayoutEditor( $ ) {
 			}
 
 		}
-		// This field was added by dragging into the editor.
-		else {
 
-			moveByTarget( $field, $indicator().data( 'target' ), $indicator().data( 'where' ) );
-
+		if ( $elem ) {
 			$elem.remove();
-			$elem = null;
-
 		}
+		$elem = null;
 
 		// editor is receiving first field, cleanup placeholders and no fields class, maybe init simplebar
 		if ( $editorContainer.hasClass( 'form_editor_fields_no_fields' ) ) {
-			gform.simplebar.initializeInstance( $editorContainer[ 0 ] );
+			kform.simplebar.initializeInstance( $editorContainer[ 0 ] );
 			setTimeout( function() {
 				$noFieldsDropzone.hide();
 				$editorContainer.removeClass( 'form_editor_fields_no_fields' );
@@ -240,30 +263,30 @@ function initLayoutEditor( $ ) {
 			StartAddField( 'submit', Math.max( 0, $container.children().index( $elem ) + 1 ) );
 		}
 
-		var nativeEvent = new Event('gform/layout_editor/field_modified');
+		var nativeEvent = new Event('kform/layout_editor/field_modified');
 		document.dispatchEvent(nativeEvent);
 
 	} );
 
 	// Save the group ID of the deleted field.
-	$( document ).on( 'gform_field_deleted', function ( event, form, fieldId ) {
+	$( document ).on( 'kform_field_deleted', function ( event, form, fieldId ) {
 		deletedFieldGroupId = getGroupId( $( '#field_' + fieldId ) );
 		if ( ! HasPageField() ) {
 			jQuery('input[name="submit_location"][value="inline"]').prop( 'disabled', false );
-			jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
+			jQuery( '.submit_location_setting' ).prev( '.kform-alert--notice' ).remove();
 		}
 
-		var nativeEvent = new Event('gform/layout_editor/gform_field_deleted');
+		var nativeEvent = new Event('kform/layout_editor/kform_field_deleted');
 		document.dispatchEvent(nativeEvent);
 	} );
 
 	// Handle resizing the group after the deleted field has been fully removed from the DOM.
-	gform.addAction( 'gform_after_field_removed', function ( form, fieldId ) {
+	kform.addAction( 'kform_after_field_removed', function ( form, fieldId ) {
 		resizeGroup( deletedFieldGroupId );
 	} );
 
 	// Handle duplicating a field.
-	gform.addAction( 'gform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
+	kform.addAction( 'kform_field_duplicated', function ( form, field, $field, sourceFieldId ) {
 
 		var $source      = $( '#field_' + sourceFieldId );
 		var $sourceGroup = getGroup( getGroupId( $source ) );
@@ -280,42 +303,42 @@ function initLayoutEditor( $ ) {
 	} );
 
 	// Re-initialize the field after it's markup is refreshed (e.g. after the description is updated).
-	gform.addAction( 'gform_after_refresh_field_preview', function( fieldId ) {
+	kform.addAction( 'kform_after_refresh_field_preview', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
 
-	gform.addAction( 'gform_after_change_input_type', function( fieldId ) {
+	kform.addAction( 'kform_after_change_input_type', function( fieldId ) {
 		initElement( $( '#field_' + fieldId ) );
 	} );
 
-	gform.addAction( 'gform_before_get_field_markup', function( form, field, index ) {
+	kform.addAction( 'kform_before_get_field_markup', function( form, field, index ) {
 		addFieldPlaceholder( field, index );
 	} );
 
-	gform.addAction( 'gform_after_get_field_markup', function( form, field, index ) {
+	kform.addAction( 'kform_after_get_field_markup', function( form, field, index ) {
 		removeFieldPlaceholder();
 	} );
 
-	gform.addAction( 'gform_after_get_field_markup', function( form, field, index ) {
+	kform.addAction( 'kform_after_get_field_markup', function( form, field, index ) {
 		initSubmit();
 	} );
 
-	gform.addAction( 'gform_before_field_duplicated', function( sourcefieldId ) {
+	kform.addAction( 'kform_before_field_duplicated', function( sourcefieldId ) {
 		var $source = $( '#field_' + sourcefieldId );
 		var $index  = $container.children().index( $source );
 
 		addFieldPlaceholder( null, $index + 1 );
 	} );
 
-	gform.addAction( 'gform_field_duplicated', function() {
+	kform.addAction( 'kform_field_duplicated', function() {
 		removeFieldPlaceholder();
 	} );
 
-	gform.addAction( 'gform_before_refresh_field_preview', function( field_id ) {
+	kform.addAction( 'kform_before_refresh_field_preview', function( field_id ) {
 		addFieldUpdateIndicator( field_id );
 	} );
 
-	gform.addAction( 'gform_after_refresh_field_preview', function( field_id ) {
+	kform.addAction( 'kform_after_refresh_field_preview', function( field_id ) {
 		removeFieldUpdateIndicator( field_id );
 	} );
 
@@ -339,15 +362,15 @@ function initLayoutEditor( $ ) {
 		//sets up DOM for new field
 		if ( typeof index != 'undefined' ) {
 			if ( index === 0 ) {
-				$( '#gform_fields' ).prepend( fieldString );
+				$( '#kform_fields' ).prepend( fieldString );
 			} else {
-				$( '#gform_fields' ).children().eq( index - 1 ).after( fieldString );
+				$( '#kform_fields' ).children().eq( index - 1 ).after( fieldString );
 			}
 		} else {
 			if ( jQuery( '#field_submit' ) ) {
 				jQuery( fieldString ).insertBefore ( jQuery( '#field_submit' ) );
 			} else {
-				$( '#gform_fields' ).append( fieldString );
+				$( '#kform_fields' ).append( fieldString );
 			}
 		}
 
@@ -388,7 +411,7 @@ function initLayoutEditor( $ ) {
 			.draggable( {
 				helper: 'clone',
 				zIndex: 999,
-				handle: '.gfield-drag',
+				handle: '.kfield-drag',
 				create: function( event, ui ) {
 					if ( isSpacer( $( this ) ) ) {
 						return;
@@ -398,7 +421,7 @@ function initLayoutEditor( $ ) {
 						fieldId = $( this ).attr( 'id' ).replace( 'field_', '' ),
 						field = fieldId ? GetFieldById( fieldId ) : false;
 
-					if ( field && field.layoutGroupId && ! $editor.hasClass( 'gform_legacy_markup' ) ) {
+					if ( field && field.layoutGroupId && ! $editor.hasClass( 'kform_legacy_markup' ) ) {
 						groupId = field.layoutGroupId;
 					}
 					// This applies when initializing a newly added field.
@@ -422,7 +445,7 @@ function initLayoutEditor( $ ) {
 						// Firefox has trouble positioning the dragged element when it still has it's grid-column property set.
 						.setGridColumnSpan( null );
 
-					if ( ! gform.tools.isRtl() ) {
+					if ( ! kform.tools.isRtl() ) {
 						helperLeft = ui.position.left;
 					} else {
 						helperLeft = ui.position.left + ( ui.helper.outerWidth() );
@@ -448,17 +471,17 @@ function initLayoutEditor( $ ) {
 			.resizable( {
 				handles: 'e, w',
 				start: function( event, ui ) {
-					if ( gf_legacy.is_legacy === '1' ) {
+					if ( kdna_legacy.is_legacy === '1' ) {
 						$element.resizable( 'option', 'minWidth', ui.size.width );
 						$element.resizable( 'option', 'maxWidth', ui.size.width );
-						alert( gf_vars.alertLegacyMode );
+						alert( kdna_vars.alertLegacyMode );
 						return;
 					}
 					max = null;
 					$container.addClass( 'resizing' );
 				},
 				resize: function( event, ui ) {
-					if ( gf_legacy.is_legacy === '1' ) {
+					if ( kdna_legacy.is_legacy === '1' ) {
 						return;
 					}
 					var columnWidth = $container.outerWidth() / columnCount,
@@ -485,7 +508,7 @@ function initLayoutEditor( $ ) {
 						}
 					}
 
-					if ( ui.element.data( 'fieldClass' ) === 'gform_editor_submit_container' ) {
+					if ( ui.element.data( 'fieldClass' ) === 'kform_editor_submit_container' ) {
 						min = 1;
 					} else {
 						min = columnCount / 4;
@@ -499,7 +522,7 @@ function initLayoutEditor( $ ) {
 					 * the field to it's right. If it the last field, we do not have to save this room.
 					 */
 					var calculatedMax = max;
-					if ( $item.next().data( 'fieldClass' ) === 'gform_editor_submit_container' ) {
+					if ( $item.next().data( 'fieldClass' ) === 'kform_editor_submit_container' ) {
 						calculatedMax = max - 1;
 					} else if ( $group.length > 1 && ! lastInGroup ) {
 						calculatedMax = max - min;
@@ -528,7 +551,7 @@ function initLayoutEditor( $ ) {
 					}
 				},
 				stop: function() {
-					if ( gf_legacy.is_legacy === '1' ) {
+					if ( kdna_legacy.is_legacy === '1' ) {
 						return;
 					}
 					$container.removeClass( 'resizing' );
@@ -600,7 +623,7 @@ function initLayoutEditor( $ ) {
 
 	function validateGroupIds() {
 		// no need to run in legacy mode or if no fields
-		if ( window.gf_legacy.is_legacy === '1' || ! $fields.length ) {
+		if ( window.kdna_legacy.is_legacy === '1' || ! $fields.length ) {
 			return;
 		}
 		var rows = getFieldsAsRows();
@@ -655,7 +678,7 @@ function initLayoutEditor( $ ) {
 		$buttons
 			.on( 'mousedown touchstart', function() {
 				// closes any open flyouts
-				gform.tools.trigger( 'gform/flyout/close-all' );
+				kform.tools.trigger( 'kform/flyout/close-all' );
 				// hides the tooltip during drag, stop method sets it back using the data-description
 				// start was too late to execute this with, the tooltip would persist in some browsers
 				$( this ).attr( 'title', '' );
@@ -674,11 +697,11 @@ function initLayoutEditor( $ ) {
 
 					$editorContainer.addClass( 'droppable' );
 
-					if ( gf_vars[ 'currentlyAddingField' ] == true ) {
+					if ( kdna_vars[ 'currentlyAddingField' ] == true ) {
 						return false;
 					}
 
-					ui.helper.addClass( 'gform-theme__disable' );
+					ui.helper.addClass( 'kform-theme__disable' );
 
 					// Match the helper to the current elements size.
 					ui.helper
@@ -698,7 +721,7 @@ function initLayoutEditor( $ ) {
 
 					/**
 					 * New field buttons are dragged relative to #wpbody so their position needs to be adjusted to work
-					 * the same way as dragging an existing field (which is relative to #gform_fields).
+					 * the same way as dragging an existing field (which is relative to #kform_fields).
 					 */
 					var helperTop = ui.position.top - 0 + ( ui.helper.outerHeight() / 2 ),
 						helperLeft = ui.position.left - 0 + ( ui.helper.outerWidth() / 2 );
@@ -709,7 +732,7 @@ function initLayoutEditor( $ ) {
 					$( this ).removeClass( 'fieldPlaceholder' );
 					$editorContainer.removeClass( 'droppable' );
 					$container.removeClass( 'dragging' );
-					ui.helper.removeClass( 'gform-theme__disable' );
+					ui.helper.removeClass( 'kform-theme__disable' );
 
 					var isAddingField = false;
 
@@ -748,7 +771,7 @@ function initLayoutEditor( $ ) {
 
 		$elements().removeClass( 'hovering' );
 
-		var isCompactView = $( '.gform-compact-view' ).length > 0;
+		var isCompactView = $( '.kform-compact-view' ).length > 0;
 
 		if ( ! isInEditorArea( helperLeft, helperTop, isCompactView ) ) {
 			$indicator( false ).remove();
@@ -785,7 +808,7 @@ function initLayoutEditor( $ ) {
 		}
 		// Check if field is dragged *below* all other fields.
 		else if ( helperTop > $container.outerHeight() ) {
-			if ( $elements().last().data( 'field-class' ) !== 'gform_editor_submit_container' && $elements().last().prev().data( 'field-class' ) !== 'gform_editor_submit_container' ) {
+			if ( $elements().last().data( 'field-class' ) !== 'kform_editor_submit_container' && $elements().last().prev().data( 'field-class' ) !== 'kform_editor_submit_container' ) {
 				$indicator()
 					.css( {
 						top: $container.outerHeight() - bottomDistanceAllFields,
@@ -839,8 +862,8 @@ function initLayoutEditor( $ ) {
 
 				var available = isSpaceAvailable( ui, $target );
 
-				if ( $target.data( 'field-class' ) === 'gform_editor_submit_container' ) {
-					if ( gform.tools.isRtl() ) {
+				if ( $target.data( 'field-class' ) === 'kform_editor_submit_container' ) {
+					if ( kform.tools.isRtl() ) {
 						if ( where === 'left' || where === 'bottom' ) {
 							return;
 						}
@@ -930,15 +953,15 @@ function initLayoutEditor( $ ) {
 	 */
 	function areColumnsEnabled( $target, $elem ) {
 
-		if ( $editor.hasClass( 'gform_legacy_markup' ) ) {
+		if ( $editor.hasClass( 'kform_legacy_markup' ) ) {
 			return false;
 		}
 
-		if ( $target.hasClass( 'gpage' ) || $target.hasClass( 'gsection' ) || $target.hasClass( 'gform_hidden' ) ) {
+		if ( $target.hasClass( 'gpage' ) || $target.hasClass( 'ksection' ) || $target.hasClass( 'kform_hidden' ) ) {
 			return false;
 		}
 
-		if ( $elem.hasClass( 'gpage' ) || $elem.hasClass( 'gsection' ) || $elem.hasClass( 'gform_hidden' ) || $elem.data( 'type' ) === 'hidden' ) {
+		if ( $elem.hasClass( 'gpage' ) || $elem.hasClass( 'ksection' ) || $elem.hasClass( 'kform_hidden' ) || $elem.data( 'type' ) === 'hidden' ) {
 			return false;
 		}
 
@@ -1003,7 +1026,7 @@ function initLayoutEditor( $ ) {
 	 * @returns {boolean}
 	 */
 	function isInEditorArea( x, y, isCompactView = false ) {
-		if ( ! gform.tools.isRtl() ) {
+		if ( ! kform.tools.isRtl() ) {
 			var editorOffsetLeft = $editorContainer.offset().left;
 		} else {
 			var editorOffsetLeft = $container.offset().left;
@@ -1079,7 +1102,7 @@ function initLayoutEditor( $ ) {
 			return;
 		}
 
-		if ( $target.hasClass( 'gform_button' ) ) {
+		if ( $target.hasClass( 'kform_button' ) ) {
 			return;
 		}
 
@@ -1117,7 +1140,7 @@ function initLayoutEditor( $ ) {
 			$target = $targetGroup.last();
 		}
 
-		var direction = gform.tools.isRtl() ? 'right' : 'left';
+		var direction = kform.tools.isRtl() ? 'right' : 'left';
 
 		if ( where == 'top' || where == direction ) {
 			$elem.insertBefore( $target );
@@ -1196,11 +1219,11 @@ function initLayoutEditor( $ ) {
 	function getGroup( groupId, spacers ) {
 		if ( spacers || 'undefined' === typeof( spacers ) ) {
 			return $elements()
-				.filter( '[data-groupId="{0}"]'.gformFormat( groupId ) )
+				.filter( '[data-groupId="{0}"]'.kformFormat( groupId ) )
 				.not( '.ui-draggable-dragging' );
 		} else {
 			return $elements()
-				.filter( '[data-groupId="{0}"]'.gformFormat( groupId ) )
+				.filter( '[data-groupId="{0}"]'.kformFormat( groupId ) )
 				.not( '.ui-draggable-dragging' )
 				.not( '.spacer' );
 		}
@@ -1303,7 +1326,7 @@ function initLayoutEditor( $ ) {
 	 * @returns {boolean}
 	 */
 	function isButtonInGroup( $group ) {
-		return $group.filter( '[data-field-class="gform_editor_submit_container"]' ).length > 0;
+		return $group.filter( '[data-field-class="kform_editor_submit_container"]' ).length > 0;
 	}
 
 	/**
@@ -1329,7 +1352,7 @@ function initLayoutEditor( $ ) {
 	 */
 	function addSpacer( $field, groupId, span ) {
 
-		var $spacer = $( '<div class="spacer gfield"></div>' )
+		var $spacer = $( '<div class="spacer kfield"></div>' )
 			.setGroupId( groupId )
 			.setGridColumnSpan( span );
 
@@ -1374,7 +1397,7 @@ function initLayoutEditor( $ ) {
 	}
 
 	/**
-	 * Get the Gravity Forms field object based on the given element.
+	 * Get the KDNA Forms field object based on the given element.
 	 *
 	 * @param {jQuery} $elem The element to be used to fetch the field object.
 	 *
@@ -1412,7 +1435,7 @@ function initLayoutEditor( $ ) {
 	 * @returns {jQuery|[]}
 	 */
 	function $elements() {
-		return $container.find( '.gfield' );
+		return $container.find( '.kfield' );
 	}
 
 	/**

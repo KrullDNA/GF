@@ -1,4 +1,4 @@
-var GFPageConditionalLogic = function (args) {
+var KDNAPageConditionalLogic = function (args) {
     var self = this,
         $ = jQuery;
 
@@ -12,9 +12,9 @@ var GFPageConditionalLogic = function (args) {
 
         self.triggerInputIds = self.getTriggerInputIds(self.options.pages);
 
-        self.formWrapper = '#gform_wrapper_' + self.options.formId;
+        self.formWrapper = '#kform_wrapper_' + self.options.formId;
 
-		self.startAtZero = $(self.formWrapper + ' .gf_progressbar_wrapper').data('startAtZero');
+		self.startAtZero = $(self.formWrapper + ' .kdna_progressbar_wrapper').data('startAtZero');
 
         self.evaluatePages();
 
@@ -24,7 +24,7 @@ var GFPageConditionalLogic = function (args) {
 
     self.bindEvents = function () {
 
-        gform.addAction('gform_input_change', function (elem, formId, inputId) {
+        kform.addAction('kform_input_change', function (elem, formId, inputId) {
 
             var fieldId = parseInt(inputId, 10) + '';
             var isTriggeredInput = $.inArray(inputId, self.triggerInputIds) !== -1 || $.inArray(fieldId, self.triggerInputIds) !== -1;
@@ -61,10 +61,10 @@ var GFPageConditionalLogic = function (args) {
          * @param array $pages     A collection of page field objects.
          * @param int   $formId    The form id.
          */
-        gform.doAction('gform_frontend_pages_evaluated', self.options.pages, self.options.formId, self);
-        gform.doAction('gform_frontend_pages_evaluated_{0}'.gformFormat(self.options.formId), self.options.pages, self.options.formId, self);
-        gform.utils.trigger( {
-            event: 'gform/frontend_pages/evaluated',
+        kform.doAction('kform_frontend_pages_evaluated', self.options.pages, self.options.formId, self);
+        kform.doAction('kform_frontend_pages_evaluated_{0}'.kformFormat(self.options.formId), self.options.pages, self.options.formId, self);
+        kform.utils.trigger( {
+            event: 'kform/frontend_pages/evaluated',
             data: {
                 formId: self.options.formId,
                 pages: self.options.pages
@@ -81,7 +81,7 @@ var GFPageConditionalLogic = function (args) {
             return true;
         }
 
-        return gf_get_field_action(formId, page.conditionalLogic) === 'show';
+        return kdna_get_field_action(formId, page.conditionalLogic) === 'show';
     };
 
     self.getTriggerInputIds = function () {
@@ -136,7 +136,7 @@ var GFPageConditionalLogic = function (args) {
         }
 
         page.isVisible = true;
-        $('#gform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'visible');
+        $('#kform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'visible');
         /**
          * Fires after the conditional logic on the form has been evaluated and the page has been found to be visible.
          *
@@ -145,8 +145,8 @@ var GFPageConditionalLogic = function (args) {
          * @param array $pages  A collection of page field objects.
          * @param int   $formId The form id.
          */
-        gform.doAction('gform_frontend_page_visible', page, self.options.formId);
-        gform.doAction('gform_frontend_page_visible_{0}'.gformFormat(self.options.formId), page, self.options.formId);
+        kform.doAction('kform_frontend_page_visible', page, self.options.formId);
+        kform.doAction('kform_frontend_page_visible_{0}'.kformFormat(self.options.formId), page, self.options.formId);
 
     };
 
@@ -159,7 +159,7 @@ var GFPageConditionalLogic = function (args) {
         }
 
         page.isVisible = false;
-        $('#gform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'hidden');
+        $('#kform_' + self.options.formId + ' div[data-js="page-field-id-' + page.fieldId + '"]').attr('data-conditional-logic', 'hidden');
 
         /**
          * Fires after the conditional logic on the form has been evaluated and the page has become hidden.
@@ -169,8 +169,8 @@ var GFPageConditionalLogic = function (args) {
          * @param array $pages  A collection of page field objects.
          * @param int   $formId The form id.
          */
-        gform.doAction('gform_frontend_page_hidden', page, self.options.formId);
-        gform.doAction('gform_frontend_page_hidden_{0}'.gformFormat(self.options.formId), page, self.options.formId);
+        kform.doAction('kform_frontend_page_hidden', page, self.options.formId);
+        kform.doAction('kform_frontend_page_hidden_{0}'.kformFormat(self.options.formId), page, self.options.formId);
 
     };
 

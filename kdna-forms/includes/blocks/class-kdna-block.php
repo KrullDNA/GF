@@ -148,7 +148,7 @@ class KDNA_Block {
 	}
 
 	/**
-	 * Checks allowed blocks for Gravity forms blocks to only enqueue block editor assets when necessary.
+	 * Checks allowed blocks for KDNA Forms blocks to only enqueue block editor assets when necessary.
 	 *
 	 * @since  2.4.18
 	 *

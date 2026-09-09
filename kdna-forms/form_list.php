@@ -25,7 +25,7 @@ class KDNAFormList {
 
 		<script type="text/javascript">
 			// checked by the ToggleActive method to prevent errors when form status icon is clicked before page has fully loaded
-			var gfPageLoaded = false;
+			var kdnaPageLoaded = false;
 		</script>
 
 		<style type="text/css">
@@ -35,20 +35,20 @@ class KDNAFormList {
 		</style>
 
 		<?php if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) { ?>
-		<div id="gf_new_form_modal" style="display:none;">
-				<div class="gform-settings__wrapper ">
-					<div class="gform-settings-panel__content">
-						<form class="gform_new_form_modal_container" onsubmit="saveNewForm();return false;">
-                            <div id="gf_new_form_error_message" ></div>
-							<div class="setting-row gform-settings-field gform-settings-field__text">
-								<label class="gform-settings-label" for="new_form_title"><?php esc_html_e( 'Form Title', 'kdnaforms' ); ?>
-									<span class="gfield_required">*</span></label>
-                                <div class="gform-settings-input__container">
+		<div id="kdna_new_form_modal" style="display:none;">
+				<div class="kform-settings__wrapper ">
+					<div class="kform-settings-panel__content">
+						<form class="kform_new_form_modal_container" onsubmit="saveNewForm();return false;">
+                            <div id="kdna_new_form_error_message" ></div>
+							<div class="setting-row kform-settings-field kform-settings-field__text">
+								<label class="kform-settings-label" for="new_form_title"><?php esc_html_e( 'Form Title', 'kdnaforms' ); ?>
+									<span class="kfield_required">*</span></label>
+                                <div class="kform-settings-input__container">
                                     <input type="text" class="regular-text" value="" id="new_form_title" tabindex="9000">                                         </div>
 							</div>
 
 							<div class="setting-row">
-								<label class="gform-settings-label" for="new_form_description"><?php esc_html_e( 'Form Description', 'kdnaforms' ); ?></label>
+								<label class="kform-settings-label" for="new_form_description"><?php esc_html_e( 'Form Description', 'kdnaforms' ); ?></label>
 								<textarea class="regular-text" id="new_form_description" tabindex="9001"></textarea>
 							</div>
 
@@ -59,7 +59,7 @@ class KDNAFormList {
 								 *
 								 * @param string The HTML rendered for the "New Form" button.
 								 */
-								echo apply_filters( 'gform_new_form_button', '<button type="submit" value="save" id="save_new_form" class="button large primary" tabindex="9002">' . esc_html__( 'Create Form', 'kdnaforms' ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								echo apply_filters( 'kform_new_form_button', '<button type="submit" value="save" id="save_new_form" class="button large primary" tabindex="9002">' . esc_html__( 'Create Form', 'kdnaforms' ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 							</div>
 						</form>
 					</div>
@@ -101,11 +101,11 @@ class KDNAFormList {
 
 			function ToggleActive( btn, form_id ) {
 
-				if ( ! gfPageLoaded ) {
+				if ( ! kdnaPageLoaded ) {
 					return;
 				}
 
-				var is_active = jQuery( btn ).hasClass( 'gform-status--active' );
+				var is_active = jQuery( btn ).hasClass( 'kform-status--active' );
 
 				jQuery.ajax(
 					{
@@ -141,11 +141,11 @@ class KDNAFormList {
 				);
 
 				function setToggleInactive() {
-					jQuery( btn ).removeClass( 'gform-status--active' ).addClass( 'gform-status--inactive' ).find( '.gform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Inactive', 'kdnaforms' ) ); ?> );
+					jQuery( btn ).removeClass( 'kform-status--active' ).addClass( 'kform-status--inactive' ).find( '.kform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Inactive', 'kdnaforms' ) ); ?> );
 				}
 
 				function setToggleActive() {
-					jQuery( btn ).removeClass( 'gform-status--inactive' ).addClass( 'gform-status--active' ).find( '.gform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Active', 'kdnaforms' ) ); ?> );
+					jQuery( btn ).removeClass( 'kform-status--inactive' ).addClass( 'kform-status--active' ).find( '.kform-status-indicator-status' ).html( <?php echo wp_json_encode( esc_attr__( 'Active', 'kdnaforms' ) ); ?> );
 				}
 
 			}
@@ -158,7 +158,7 @@ class KDNAFormList {
 				element.html(count + "");
 			}
 
-			function gfConfirmBulkAction(element_id) {
+			function kdnaConfirmBulkAction(element_id) {
 				var element = "#" + element_id;
 				if (jQuery(element).val() == 'delete')
 					return confirm(<?php echo json_encode( __( 'WARNING: You are about to delete these forms and ALL entries associated with them. ', 'kdnaforms' ) . __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ); ?>);
@@ -176,11 +176,11 @@ class KDNAFormList {
                 $table->process_action();
 		?>
 
-                <div class="gform-settings-panel__content form-list">
+                <div class="kform-settings-panel__content form-list">
                     <div class="form-list-head">
                     <h2> <?php esc_html_e( 'Forms', 'kdnaforms' ); ?> </h2>
                         <?php if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) {
-                            echo '<button class="button gform-add-new-form primary add-new-h2" data-js="gform-add-new-form">' . esc_html__( 'Add New', 'kdnaforms' ) . '</button>';
+                            echo '<button class="button kform-add-new-form primary add-new-h2" data-js="kform-add-new-form">' . esc_html__( 'Add New', 'kdnaforms' ) . '</button>';
                         } ?>
                     </div>
                     <div class="form-list-nav">
@@ -189,7 +189,7 @@ class KDNAFormList {
                         $table->prepare_items();
                         ?>
                         <form id="form_list_search" method="get">
-                    <input type="hidden" value="gf_edit_forms" name="page" />
+                    <input type="hidden" value="kdna_edit_forms" name="page" />
                     <?php
                         if ( rgget( 'filter' ) ) {
                             echo '<input type="hidden" value="' . esc_attr( rgget( 'filter' ) ) . '" name="filter" />';
@@ -246,18 +246,18 @@ class KDNAFormList {
 		?>
 		<script type="text/javascript">
 			jQuery( document ).ready( function( $ ) {
-				$( 'body' ).addClass( 'gform_new_form' );
+				$( 'body' ).addClass( 'kform_new_form' );
 				// load new form modal on New Form page
 				<?php if ( KDNAForms::get_page_query_arg() == 'kdna_new_form' && ! rgget( 'paged' ) ) :    ?>
 					loadNewFormModal();
 				<?php endif; ?>
 
 				// form settings submenu support
-				$( '.gf_form_action_has_submenu' ).hover( function() {
+				$( '.kdna_form_action_has_submenu' ).hover( function() {
 					var $this = $( this );
 					var offset = $this.offset();
 					var docHeight = $( document ).height();
-					var $subMenu = $this.find( '.gform-form-toolbar__submenu' );
+					var $subMenu = $this.find( '.kform-form-toolbar__submenu' );
 					var menuHeight = $subMenu.height();
 					var spaceAvailable = docHeight - offset.top;
 
@@ -271,14 +271,14 @@ class KDNAFormList {
 						.toggle()
 						.offset( { left: offset.left } );
 				}, function() {
-					$( this ).find( '.gform-form-toolbar__submenu' )
+					$( this ).find( '.kform-form-toolbar__submenu' )
 						.css( 'height', '' )
 						.hide();
 				} );
 
 				// enable form status icons
-				gfPageLoaded = true;
-				$( '.gform_active_icon' ).removeClass( 'gf_not_ready' );
+				kdnaPageLoaded = true;
+				$( '.kform_active_icon' ).removeClass( 'kdna_not_ready' );
 
 				$( '#current-page-selector' ).keyup( function( event ) {
 					if ( event.keyCode == 13 ) {
@@ -293,14 +293,14 @@ class KDNAFormList {
 
 			function loadNewFormModal() {
 				resetNewFormModal();
-				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=gf_new_form_modal');
+				tb_show(<?php echo json_encode( '<div class="tb-title"><div class="tb-title__text"><div class="tb-title__main">'.esc_html__( 'Create a New Form', 'kdnaforms' ).'</div><div class="tb-title__sub">'.esc_html__('Provide a title and a description for this form', 'kdnaforms').'</div></div></div>' ); ?>, '#TB_inline?width=490&amp;height=auto&amp;inlineId=kdna_new_form_modal');
 				jQuery('#new_form_title').focus();
 
 				return false;
 			}
 
 			// Bind Add New button to open the ThickBox modal
-			jQuery(document).on('click', '[data-js="gform-add-new-form"]', function(e) {
+			jQuery(document).on('click', '[data-js="kform-add-new-form"]', function(e) {
 				e.preventDefault();
 				loadNewFormModal();
 			});
@@ -313,20 +313,20 @@ class KDNAFormList {
 
 				// Debug: check if dependencies are available
 				console.log('[KDNA Debug] jQuery.toJSON available:', typeof jQuery.toJSON);
-				console.log('[KDNA Debug] gfAjaxSpinner available:', typeof gfAjaxSpinner);
-				console.log('[KDNA Debug] gf_vars available:', typeof gf_vars);
+				console.log('[KDNA Debug] kdnaAjaxSpinner available:', typeof kdnaAjaxSpinner);
+				console.log('[KDNA Debug] kdna_vars available:', typeof kdna_vars);
 				console.log('[KDNA Debug] ajaxurl:', typeof ajaxurl !== 'undefined' ? ajaxurl : 'UNDEFINED');
 
 				var spinner;
 				try {
-					spinner = new gfAjaxSpinner(createButton, gf_vars.baseUrl + '/images/spinner.svg');
+					spinner = new kdnaAjaxSpinner(createButton, kdna_vars.baseUrl + '/images/spinner.svg');
 				} catch(e) {
-					console.error('[KDNA Debug] gfAjaxSpinner error:', e.message);
+					console.error('[KDNA Debug] kdnaAjaxSpinner error:', e.message);
 				}
 
 				// clear error message
-				jQuery('#gf_new_form_error_message').html('');
-				jQuery('#gf_new_form_error_message').removeClass( 'alert error' );
+				jQuery('#kdna_new_form_error_message').html('');
+				jQuery('#kdna_new_form_error_message').removeClass( 'alert error' );
 
 				var origVal = createButton.val();
 				createButton.val(<?php echo json_encode( esc_html__( 'Creating Form...', 'kdnaforms' ) ); ?>);
@@ -379,8 +379,8 @@ class KDNAFormList {
 
 					if(respData['error']) {
 						// adding class later otherwise WP moves box up to the top of the page
-						jQuery('#gf_new_form_error_message').addClass( 'alert error' );
-						jQuery('#gf_new_form_error_message').html( respData.error );
+						jQuery('#kdna_new_form_error_message').addClass( 'alert error' );
+						jQuery('#kdna_new_form_error_message').html( respData.error );
 
 						addInputErrorIcon( '#new_form_title' );
 						createButton.val(origVal);
@@ -396,20 +396,20 @@ class KDNAFormList {
 			function resetNewFormModal() {
 				jQuery('#new_form_title').val('');
 				jQuery('#new_form_description').val('');
-				jQuery('#gf_new_form_error_message').html('');
-				jQuery('#gf_new_form_error_message').html('');
-				jQuery('#gf_new_form_error_message').removeClass( 'error alert' );
-				removeInputErrorIcons( '.gform_new_form_modal_container' );
+				jQuery('#kdna_new_form_error_message').html('');
+				jQuery('#kdna_new_form_error_message').html('');
+				jQuery('#kdna_new_form_error_message').removeClass( 'error alert' );
+				removeInputErrorIcons( '.kform_new_form_modal_container' );
 			}
 
 			function addInputErrorIcon( elem ) {
 				var elem = jQuery(elem);
-				elem.after( '<span class="gform-settings-field__feedback gform-settings-field__feedback--invalid" aria-hidden="true"></span>' );
+				elem.after( '<span class="kform-settings-field__feedback kform-settings-field__feedback--invalid" aria-hidden="true"></span>' );
 			}
 
 			function removeInputErrorIcons( elem ) {
 				var elem = jQuery(elem);
-				elem.find('span.gform-settings-field__feedback--invalid').remove();
+				elem.find('span.kform-settings-field__feedback--invalid').remove();
 			}
 
 		</script>
@@ -794,20 +794,20 @@ class KDNA_Form_List_Table extends WP_List_Table {
 		echo '<td class="manage-column column-is_active">';
 		if ( $this->filter !== 'trash' ) {
 			if ( $form->is_active ) {
-				$class = 'gform-status--active';
+				$class = 'kform-status--active';
 				$text  = esc_html__( 'Active', 'kdnaforms' );
 			} else {
-				$class = 'gform-status--inactive';
+				$class = 'kform-status--inactive';
 				$text  = esc_html__( 'Inactive', 'kdnaforms' );
 			}
 			?>
 			<button
 				type="button"
-				class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
+				class="kform-status-indicator kform-status-indicator--size-sm kform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
 				onclick="ToggleActive( this, <?php echo absint( $form->id ); ?> );"
 				onkeypress="ToggleActive( this, <?php echo absint( $form->id ); ?> );"
 			>
-				<span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs">
+				<span class="kform-status-indicator-status kform-typography--weight-medium kform-typography--size-text-xs">
 					<?php echo esc_html( $text ); ?>
 				</span>
 			</button>
@@ -952,7 +952,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 
 		if ( $single_action ) {
 
-			check_admin_referer( 'gforms_update_forms', 'gforms_update_forms' );
+			check_admin_referer( 'kforms_update_forms', 'kforms_update_forms' );
 
 			$form_id = rgpost( 'single_action_argument' );
 			switch ( $single_action ) {
@@ -1004,7 +1004,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 			switch ( $remote_action ) {
 				case 'trash' :
 
-					check_admin_referer( "gf_delete_form_{$form_id}" );
+					check_admin_referer( "kdna_delete_form_{$form_id}" );
 
 					if ( KDNACommon::current_user_can_any( 'kdnaforms_delete_forms' ) ) {
 						$trashed       = KDNAFormsModel::trash_form( $form_id );
@@ -1016,7 +1016,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 					}
 					break;
 				case 'duplicate' :
-					check_ajax_referer( "gf_duplicate_form_{$form_id}" );
+					check_ajax_referer( "kdna_duplicate_form_{$form_id}" );
 
 					if ( KDNACommon::current_user_can_any( 'kdnaforms_create_form' ) ) {
 						$duplicated    = KDNAFormsModel::duplicate_form( $form_id );
@@ -1032,7 +1032,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 
 		} elseif ( $bulk_action ) {
 
-			check_admin_referer( 'gforms_update_forms', 'gforms_update_forms' );
+			check_admin_referer( 'kforms_update_forms', 'kforms_update_forms' );
 
 			$form_ids   = is_array( rgpost( 'form' ) ) ? rgpost( 'form' ) : array();
 			$form_count = count( $form_ids );
@@ -1111,7 +1111,7 @@ class KDNA_Form_List_Table extends WP_List_Table {
 		if ( $which !== 'top' ) {
 			return;
 		}
-		wp_nonce_field( 'gforms_update_forms', 'gforms_update_forms' );
+		wp_nonce_field( 'kforms_update_forms', 'kforms_update_forms' );
 		?>
 		<input type="hidden" id="single_action" name="single_action" />
 		<input type="hidden" id="single_action_argument" name="single_action_argument" />

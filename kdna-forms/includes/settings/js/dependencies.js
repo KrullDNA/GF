@@ -158,13 +158,13 @@ var KDNA_Settings_Dependencies = function ( args ) {
 		switch ( self.args.target.type ) {
 
 			case 'save':
-				return document.getElementById( 'gform-settings-save' );
+				return document.getElementById( 'kform-settings-save' );
 
 			case 'section':
 				return document.getElementById( self.args.target.field );
 
 			case 'tab':
-				return document.querySelector( '.gform-settings-tabs__navigation a[data-tab="' + self.args.target.field + '"]' );
+				return document.querySelector( '.kform-settings-tabs__navigation a[data-tab="' + self.args.target.field + '"]' );
 
 			default:
 				return document.getElementById( 'kdnaform_setting_' + self.args.target.field );

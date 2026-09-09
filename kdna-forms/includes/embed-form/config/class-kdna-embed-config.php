@@ -11,7 +11,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
  */
 class KDNA_Embed_Config extends KDNA_Config {
 
-	protected $name               = 'gform_admin_config';
+	protected $name               = 'kform_admin_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
 	/**
@@ -81,7 +81,7 @@ class KDNA_Embed_Config extends KDNA_Config {
 		return [
 			'edit_post'      => [
 				'value'   => $edit_link,
-				'default' => 'https://gravity.loc/wp-admin/post.php?post=%1$s&action=edit',
+				'default' => 'https://KDNA.loc/wp-admin/post.php?post=%1$s&action=edit',
 			],
 			'shortcode_docs' => 'https://docs.kdnaforms.com/shortcodes/',
 		];

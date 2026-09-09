@@ -1,0 +1,142 @@
+# Stage 12 — the identifiers with nothing between the prefix and the word.
+#
+# The last GF family. Every earlier scan required a separator after the prefix
+# (gform_, gform-, gf/), so bare gform and gfield were invisible to all of them.
+# 118 identifiers, 3776 occurrences.
+#
+# Naming rule as given: where the f belongs to the following word, only the g
+# changes — gform to kform, gfield to kfield, gsection to ksection. Where gf is
+# the Gravity Forms abbreviation and the next letters start a new word, the
+# whole gf becomes kdna — gfMultiFileUploader to kdnaMultiFileUploader.
+#
+# The riskiest single entry in the whole rename is gform, at 1173 occurrences:
+# it is the JS namespace, so gform.applyFilters, gform.addAction and above all
+# gform.initializeOnLoaded, which gates whether a form renders at all. It moves
+# in one pass across PHP inline scripts and every bundle, or not at all.
+#
+# Bare gf is deliberately absent. It is the REST namespace in gf/v2 and in the
+# $rest_prefix . 'gf/' check beside it, both public URLs, and renaming a bare
+# token would take them with it. The two gf:json delimiters below are handled
+# as whole strings instead, so the namespace cannot be caught by accident.
+#
+# The frozen database and option names are absent too: every one of them
+# carries an underscore, and none is in this list.
+
+gfield                             kfield
+gform                              kform
+gchoice                            kchoice
+gsection                           ksection
+gformFormat                        kformFormat
+gresults                           kresults
+gaddon                             kaddon
+gfMultiFileUploader                kdnaMultiFileUploader
+gformIsHidden                      kformIsHidden
+gformFormatMoney                   kformFormatMoney
+gfShortcodeUIData                  kdnaShortcodeUIData
+gformInitDatepicker                kformInitDatepicker
+gformDeleteUploadedFile            kformDeleteUploadedFile
+gfFilterUI                         kdnaFilterUI
+gformGetPrice                      kformGetPrice
+gformReInitTinymceInstance         kformReInitTinymceInstance
+gformVars                          kformVars
+gformCalculateTotalPrice           kformCalculateTotalPrice
+gfMergeTagsObj                     kdnaMergeTagsObj
+gformToggleSelectAll               kformToggleSelectAll
+gfwebapi                           kdnawebapi
+gformToNumber                      kformToNumber
+gformGetOptionLabel                kformGetOptionLabel
+gformResetRepeaterAttributes       kformResetRepeaterAttributes
+gformToggleRepeaterButtons         kformToggleRepeaterButtons
+gformIsRecaptchaPending            kformIsRecaptchaPending
+gformInitSpinner                   kformInitSpinner
+gformInitPriceFields               kformInitPriceFields
+gfbutton                           kdnabutton
+gresultsData                       kresultsData
+gformAddListItem                   kformAddListItem
+gformToggleCheckboxes              kformToggleCheckboxes
+gformParseChoiceValue              kformParseChoiceValue
+gfAjaxSpinner                      kdnaAjaxSpinner
+gformGetProductQuantity            kformGetProductQuantity
+gresultsStrings                    kresultsStrings
+gformToggleCreditCard              kformToggleCreditCard
+gformExtractFieldId                kformExtractFieldId
+gformBindFormatPricingFields       kformBindFormatPricingFields
+gformFormatPricingField            kformFormatPricingField
+gformToggleIcons                   kformToggleIcons
+gformAdjustClasses                 kformAdjustClasses
+gformAdjustRowAttributes           kformAdjustRowAttributes
+gformIsSpinnerInitialized          kformIsSpinnerInitialized
+gformStrings                       kformStrings
+gformRedirect                      kformRedirect
+gfcalc                             kdnacalc
+gformComponentNamespace            kformComponentNamespace
+gformLoaderRotate                  kformLoaderRotate
+gformLoaderStretch                 kformLoaderStretch
+gfAddBlock                         kdnaAddBlock
+gformRemoveSpinner                 kformRemoveSpinner
+gformDeleteListItem                kformDeleteListItem
+gformPasswordStrength              kformPasswordStrength
+gformCalculateProductPrice         kformCalculateProductPrice
+gformFormatNumber                  kformFormatNumber
+gformShowPasswordStrength          kformShowPasswordStrength
+gfMergeTags                        kdnaMergeTags
+gformLoader                        kformLoader
+gresultsAjaxRequest                kresultsAjaxRequest
+gresultsFilterSettings             kresultsFilterSettings
+gformToggleRadioOther              kformToggleRadioOther
+gformAddRepeaterItem               kformAddRepeaterItem
+gformDeleteRepeaterItem            kformDeleteRepeaterItem
+gformToggleShowPassword            kformToggleShowPassword
+gformMatchCard                     kformMatchCard
+gfShortcodeUI                      kdnaShortcodeUI
+gformExtractInputIndex             kformExtractInputIndex
+gformIsNumeric                     kformIsNumeric
+gformCleanNumber                   kformCleanNumber
+gformGetDecimalSeparator           kformGetDecimalSeparator
+gformIsNumber                      kformIsNumber
+gformGetShippingPrice              kformGetShippingPrice
+gformUpdateTotalFieldPrice         kformUpdateTotalFieldPrice
+gformGetBasePrice                  kformGetBasePrice
+gformRoundPrice                    kformRoundPrice
+gformIsProductSelected             kformIsProductSelected
+gformGetPriceDifference            kformGetPriceDifference
+gformGetProductIds                 kformGetProductIds
+gformRegisterPriceField            kformRegisterPriceField
+gformHandleProductChange           kformHandleProductChange
+gformFindCardType                  kformFindCardType
+gformShowSpinner                   kformShowSpinner
+gformAddSpinner                    kformAddSpinner
+gformInitializeSpinner             kformInitializeSpinner
+gformWrapperDiv                    kformWrapperDiv
+gformInitChosenFields              kformInitChosenFields
+gformInitCurrencyFormatFields      kformInitCurrencyFormatFields
+gformComponentDistPath             kformComponentDistPath
+gforms                             kforms
+gfPageLoaded                       kdnaPageLoaded
+gfspinner                          kdnaspinner
+gformValidateFileSize              kformValidateFileSize
+gformFieldFilters                  kformFieldFilters
+gformInitFilter                    kformInitFilter
+gfFieldFilterUI                    kdnaFieldFilterUI
+gfcs                               kdnacs
+gformDataGridOpacityCycle          kformDataGridOpacityCycle
+gformKanbanOpacityCycle            kformKanbanOpacityCycle
+gformLoader1                       kformLoader1
+gformPlaceholderOpacityCycle       kformPlaceholderOpacityCycle
+gresultsInitVars                   kresultsInitVars
+gfieldmap                          kfieldmap
+gftokensubmitting                  kdnatokensubmitting
+gformInitMCEInstances              kformInitMCEInstances
+gfields                            kfields
+gfSlide                            kdnaSlide
+gformInitSingleDatepicker          kformInitSingleDatepicker
+gformGetFieldId                    kformGetFieldId
+gfRecaptchaPoller                  kdnaRecaptchaPoller
+gfSpinner                          kdnaSpinner
+gfapi                              kdnaapi
+gfaddon                            kdnaaddon
+gfConfirmBulkAction                kdnaConfirmBulkAction
+gfDoAction                         kdnaDoAction
+gfresults                          kdnaresults
+gformInitTinymce                   kformInitTinymce
+gfShortCodeUI                      kdnaShortCodeUI

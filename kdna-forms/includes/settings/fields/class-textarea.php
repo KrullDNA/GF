@@ -107,7 +107,7 @@ class Textarea extends Base {
 
 			// Create editor container.
 			$html = sprintf(
-				'<span class="mt-gaddon-editor mt-%s_%s"></span>',
+				'<span class="mt-kaddon-editor mt-%s_%s"></span>',
 				esc_attr( $this->settings->get_input_name_prefix() ),
 				esc_attr( $this->name )
 			);

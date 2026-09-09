@@ -13,7 +13,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Configurator;
  */
 class KDNA_Config_Admin extends KDNA_Config {
 
-	protected $name               = 'gform_admin_config';
+	protected $name               = 'kform_admin_config';
 	protected $script_to_localize = 'kdnaform_kdnaforms_admin_vendors';
 
 	/**

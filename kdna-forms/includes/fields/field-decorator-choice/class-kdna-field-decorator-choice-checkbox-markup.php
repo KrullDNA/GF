@@ -21,7 +21,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 		$choices_markup = $this->get_checkbox_choices( $value, $disabled_text, $form, $field_id );
 
 		return sprintf(
-			"<div class='ginput_container ginput_container_checkbox ginput_container_image_choice %s'>%s%s</div>",
+			"<div class='kinput_container kinput_container_checkbox kinput_container_image_choice %s'>%s%s</div>",
 			$image_style_classes,
 			$limit_message,
 			$choices_markup
@@ -53,9 +53,9 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 			 * @param int    $max_choices_visible_count The default number of choices visible is 8.
 			 * @param object $field                     The current field object.
 			 */
-			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
+			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
 
-			$choices .= sprintf( '<div class="gfield_checkbox" id="%s">', esc_attr( $field_id ) );
+			$choices .= sprintf( '<div class="kfield_checkbox" id="%s">', esc_attr( $field_id ) );
 
 			foreach ( $this->field->choices as $choice ) {
 				// Hack to skip numbers ending in 0, so that 5.1 doesn't conflict with 5.10.
@@ -72,7 +72,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 
 				// Handling of input/image aria-describedby
 				$image                  = $this->get_image_markup( $choice, $id, $choice_number, $form );
-				$image_aria_describedby = 'gchoice_image_' . $id;
+				$image_aria_describedby = 'kchoice_image_' . $id;
 				$aria_describedby       = '';
 
 				if ( $choice_number === 1 ) {
@@ -96,12 +96,12 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 				}
 
 				$choice_value  = esc_attr( $choice_value );
-				$choice_markup = "<div class='gchoice gchoice_{$id}'>
-					<span class='gfield-image-choice-wrapper-outer'>
-						<label for='choice_{$id}' class='gfield-choice-image-label'>{$image}</label>
-						<span class='gfield-image-choice-wrapper-inner'>
-							<input class='gfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
-							<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>
+				$choice_markup = "<div class='kchoice kchoice_{$id}'>
+					<span class='kfield-image-choice-wrapper-outer'>
+						<label for='choice_{$id}' class='kfield-choice-image-label'>{$image}</label>
+						<span class='kfield-image-choice-wrapper-inner'>
+							<input class='kfield-choice-input' name='input_{$input_id}' type='checkbox'  value='{$choice_value}' {$checked} id='choice_{$id}' {$tabindex} {$disabled_text} {$aria_describedby}/>
+							<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>
 								{$choice['text']}
 							</label>
 						</span>
@@ -118,7 +118,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 				 * @param object $field         The field currently being processed.
 				 * @param string $value         The value to be selected if the field is being populated.
 				 */
-				$choices .= gf_apply_filters( array(
+				$choices .= kdna_apply_filters( array(
 					'kdnaform_field_choice_markup_pre_render',
 					$this->field->formId,
 					$this->field->id
@@ -138,7 +138,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 			$total = sizeof( $this->field->choices );
 
 			if ( $count < $total ) {
-				$choices .= "<div class='gchoice_total'><span>"
+				$choices .= "<div class='kchoice_total'><span>"
 	                . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) .
 	            "</span></div>";
 			}
@@ -152,7 +152,7 @@ class KDNA_Field_Decorator_Choice_Checkbox_Markup extends ChoiceDecorator {
 		 * @param string $choices The string containing the choices to be filtered.
 		 * @param object $field   The field currently being processed.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
+		return kdna_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
 
 	}
 

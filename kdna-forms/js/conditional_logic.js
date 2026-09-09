@@ -1,26 +1,26 @@
 
-var __gf_timeout_handle;
+var __kdna_timeout_handle;
 
-gform.addAction( 'gform_input_change', function( elem, formId, fieldId ) {
+kform.addAction( 'kform_input_change', function( elem, formId, fieldId ) {
 	if( ! window.kdna_form_conditional_logic ) {
 		return;
 	}
-	var dependentFieldIds = rgars( kdna_form_conditional_logic, [ formId, 'fields', gformExtractFieldId( fieldId ) ].join( '/' ) );
+	var dependentFieldIds = rgars( kdna_form_conditional_logic, [ formId, 'fields', kformExtractFieldId( fieldId ) ].join( '/' ) );
 	if( dependentFieldIds ) {
-		gf_apply_rules( formId, dependentFieldIds );
+		kdnaform_apply_rules( formId, dependentFieldIds );
 	}
 }, 10 );
 
-function gf_apply_rules(formId, fields, isInit){
+function kdnaform_apply_rules(formId, fields, isInit){
 
-	jQuery(document).trigger( 'gform_pre_conditional_logic', [ formId, fields, isInit ] );
-	gform.utils.trigger( {
-		event: 'gform/conditionalLogic/applyRules/start',
+	jQuery(document).trigger( 'kform_pre_conditional_logic', [ formId, fields, isInit ] );
+	kform.utils.trigger( {
+		event: 'kform/conditionalLogic/applyRules/start',
 		native: false,
 		data: { formId: formId, fields: fields, isInit: isInit },
 	} );
 	for(var i=0; i < fields.length; i++){
-		gf_apply_field_rule(formId, fields[i], isInit, function(){
+		kdna_apply_field_rule(formId, fields[i], isInit, function(){
 			var is_last_field = ( i >= fields.length - 1 );
 			if( is_last_field ) {
 
@@ -35,33 +35,33 @@ function gf_apply_rules(formId, fields, isInit){
 					});
 				}
 
-				jQuery(document).trigger('gform_post_conditional_logic', [formId, fields, isInit]);
-				gform.utils.trigger( {
-					event: 'gform/conditionalLogic/applyRules/end',
+				jQuery(document).trigger('kform_post_conditional_logic', [formId, fields, isInit]);
+				kform.utils.trigger( {
+					event: 'kform/conditionalLogic/applyRules/end',
 					native: false,
 					data: { formId: formId, fields: fields, dependentFields: dependentFields, isInit: isInit },
 				} );
-				if( window.gformCalculateTotalPrice ) {
-					window.gformCalculateTotalPrice( formId );
+				if( window.kformCalculateTotalPrice ) {
+					window.kformCalculateTotalPrice( formId );
 				}
 			}
 		});
 	}
 }
 
-function gf_check_field_rule(formId, fieldId, isInit, callback){
+function kdna_check_field_rule(formId, fieldId, isInit, callback){
 
 	//if conditional logic is not specified for that field, it is supposed to be displayed
-	var conditionalLogic = gf_get_field_logic( formId, fieldId );
+	var conditionalLogic = kdna_get_field_logic( formId, fieldId );
 	if ( ! conditionalLogic ) {
 		return 'show';
 	}
 
-	var action = gf_get_field_action(formId, conditionalLogic["section"]);
+	var action = kdna_get_field_action(formId, conditionalLogic["section"]);
 
 	//If section is hidden, always hide field. If section is displayed, see if field is supposed to be displayed or hidden
 	if(action != "hide")
-		action = gf_get_field_action(formId, conditionalLogic["field"]);
+		action = kdna_get_field_action(formId, conditionalLogic["field"]);
 
 	return action;
 }
@@ -76,7 +76,7 @@ function gf_check_field_rule(formId, fieldId, isInit, callback){
  *
  * @return {(boolean|object)} False or the field conditional logic properties.
  */
-function gf_get_field_logic(formId, fieldId) {
+function kdna_get_field_logic(formId, fieldId) {
 	var formConditionalLogic = rgars( window, 'kdna_form_conditional_logic/' + formId );
 	if ( ! formConditionalLogic ) {
 		return false;
@@ -102,22 +102,22 @@ function gf_get_field_logic(formId, fieldId) {
 	return false;
 }
 
-function gf_apply_field_rule(formId, fieldId, isInit, callback){
+function kdna_apply_field_rule(formId, fieldId, isInit, callback){
 
-	var action = gf_check_field_rule(formId, fieldId, isInit, callback);
+	var action = kdna_check_field_rule(formId, fieldId, isInit, callback);
 
-	gf_do_field_action(formId, action, fieldId, isInit, callback);
+	kdna_do_field_action(formId, action, fieldId, isInit, callback);
 
 	var conditionalLogic = window["kdna_form_conditional_logic"][formId]["logic"][fieldId];
 	//perform conditional logic for the next button
 	if(conditionalLogic["nextButton"]){
-		action = gf_get_field_action(formId, conditionalLogic["nextButton"]);
-		gf_do_next_button_action(formId, action, fieldId, isInit);
+		action = kdna_get_field_action(formId, conditionalLogic["nextButton"]);
+		kdna_do_next_button_action(formId, action, fieldId, isInit);
 	}
 
 }
 
-function gf_get_field_action(formId, conditionalLogic){
+function kdna_get_field_action(formId, conditionalLogic){
 	if(!conditionalLogic)
 		return "show";
 
@@ -132,8 +132,8 @@ function gf_get_field_action(formId, conditionalLogic){
 		 *
 		 * @since 2.4.22
 		 */
-		var rule = gform.applyFilters( 'gform_rule_pre_evaluation', jQuery.extend( {}, conditionalLogic["rules"][i] ), formId, conditionalLogic );
-		if(gf_is_match(formId, rule))
+		var rule = kform.applyFilters( 'kform_rule_pre_evaluation', jQuery.extend( {}, conditionalLogic["rules"][i] ), formId, conditionalLogic );
+		if(kdna_is_match(formId, rule))
 			matches++;
 	}
 
@@ -146,32 +146,32 @@ function gf_get_field_action(formId, conditionalLogic){
 	return action;
 }
 
-function gf_is_match( formId, rule ) {
+function kdna_is_match( formId, rule ) {
 
 	var $               = jQuery,
 		inputId         = rule['fieldId'],
-		fieldId         = gformExtractFieldId( inputId ),
-		inputIndex      = gformExtractInputIndex( inputId ),
+		fieldId         = kformExtractFieldId( inputId ),
+		inputIndex      = kformExtractInputIndex( inputId ),
 		isInputSpecific = inputIndex !== false,
 		$inputs;
 
 	if( isInputSpecific ) {
-		$inputs = $( '#input_{0}_{1}_{2}, #choice_{0}_{1}_{2}'.gformFormat( formId, fieldId, inputIndex ) );
+		$inputs = $( '#input_{0}_{1}_{2}, #choice_{0}_{1}_{2}'.kformFormat( formId, fieldId, inputIndex ) );
 	} else {
-		$inputs = $( 'input[id="input_{0}_{1}"], input[id^="input_{0}_{1}_"], input[id^="choice_{0}_{1}_"], select#input_{0}_{1}, textarea#input_{0}_{1}'.gformFormat( formId, fieldId ) );
+		$inputs = $( 'input[id="input_{0}_{1}"], input[id^="input_{0}_{1}_"], input[id^="choice_{0}_{1}_"], select#input_{0}_{1}, textarea#input_{0}_{1}'.kformFormat( formId, fieldId ) );
 	}
 
 	var isCheckable = $.inArray( $inputs.attr( 'type' ), [ 'checkbox', 'radio' ] ) !== -1;
-	var isMatch     = isCheckable ? gf_is_match_checkable( $inputs, rule, formId, fieldId ) : gf_is_match_default( $inputs.eq( 0 ), rule, formId, fieldId );
+	var isMatch     = isCheckable ? kdna_is_match_checkable( $inputs, rule, formId, fieldId ) : kdna_is_match_default( $inputs.eq( 0 ), rule, formId, fieldId );
 
-	return gform.applyFilters( 'gform_is_value_match', isMatch, formId, rule );
+	return kform.applyFilters( 'kform_is_value_match', isMatch, formId, rule );
 }
 
-function gf_is_match_checkable( $inputs, rule, formId, fieldId ) {
+function kdna_is_match_checkable( $inputs, rule, formId, fieldId ) {
 
 	// Rule is checking if the checkable is/isn't blank. Return a specific check for that use-case.
 	if ( rule.value === '' ) {
-		return rule.operator === 'is' ? gf_is_checkable_empty( $inputs ) : ! gf_is_checkable_empty( $inputs );
+		return rule.operator === 'is' ? kdna_is_checkable_empty( $inputs ) : ! kdna_is_checkable_empty( $inputs );
 	}
 
 	var isMatch = false;
@@ -179,7 +179,7 @@ function gf_is_match_checkable( $inputs, rule, formId, fieldId ) {
 	$inputs.each( function() {
 
 		var $input           = jQuery( this ),
-			fieldValue       = gf_get_value( $input.val() ),
+			fieldValue       = kdna_get_value( $input.val() ),
 			isRangeOperator  = jQuery.inArray( rule.operator, [ '<', '>' ] ) !== -1,
 			isStringOperator = jQuery.inArray( rule.operator, [ 'contains', 'starts_with', 'ends_with' ] ) !== -1;
 
@@ -193,11 +193,11 @@ function gf_is_match_checkable( $inputs, rule, formId, fieldId ) {
 			fieldValue = '';
 		}
 		// if the 'other' choice is selected, get the value from the 'other' text input
-		else if ( fieldValue == 'gf_other_choice' ) {
-			fieldValue = jQuery( '#input_{0}_{1}_other'.gformFormat( formId, fieldId ) ).val();
+		else if ( fieldValue == 'kdna_other_choice' ) {
+			fieldValue = jQuery( '#input_{0}_{1}_other'.kformFormat( formId, fieldId ) ).val();
 		}
 
-		if( gf_matches_operation( fieldValue, rule.value, rule.operator ) ) {
+		if( kdna_matches_operation( fieldValue, rule.value, rule.operator ) ) {
 			isMatch = true;
 			return false; // break
 		}
@@ -215,7 +215,7 @@ function gf_is_match_checkable( $inputs, rule, formId, fieldId ) {
  *
  * @returns {boolean}
  */
-function gf_is_checkable_empty( $inputs ) {
+function kdna_is_checkable_empty( $inputs ) {
 	var isEmpty = true;
 
 	$inputs.each( function() {
@@ -227,7 +227,7 @@ function gf_is_checkable_empty( $inputs ) {
 	return isEmpty;
 }
 
-function gf_is_match_default( $input, rule, formId, fieldId ) {
+function kdna_is_match_default( $input, rule, formId, fieldId ) {
 
 	var val           = $input.val(),
 		values        = ( val instanceof Array ) ? val : [ val ], // transform regular value into array to support multi-select (which returns an array of selected items)
@@ -238,19 +238,19 @@ function gf_is_match_default( $input, rule, formId, fieldId ) {
 
 		// fields with pipes in the value will use the label for conditional logic comparison
 		var hasLabel   = values[i] ? values[i].indexOf( '|' ) >= 0 : true,
-			fieldValue = gf_get_value( values[i] );
+			fieldValue = kdna_get_value( values[i] );
 
-		var fieldNumberFormat = gf_get_field_number_format( rule.fieldId, formId, 'value' );
+		var fieldNumberFormat = kdna_get_field_number_format( rule.fieldId, formId, 'value' );
 		if( fieldNumberFormat && ! hasLabel ) {
-			fieldValue = gf_format_number( fieldValue, fieldNumberFormat );
+			fieldValue = kdna_format_number( fieldValue, fieldNumberFormat );
 		}
 
 		var ruleValue = rule.value;
 		//if ( fieldNumberFormat ) {
-		//	ruleValue = gf_format_number( ruleValue, fieldNumberFormat );
+		//	ruleValue = kdna_format_number( ruleValue, fieldNumberFormat );
 		//}
 
-		if( gf_matches_operation( fieldValue, ruleValue, rule.operator ) ) {
+		if( kdna_matches_operation( fieldValue, ruleValue, rule.operator ) ) {
 			matchCount++;
 		}
 
@@ -262,12 +262,12 @@ function gf_is_match_default( $input, rule, formId, fieldId ) {
 	return isMatch;
 }
 
-function gf_format_number( value, fieldNumberFormat ) {
+function kdna_format_number( value, fieldNumberFormat ) {
 
 	decimalSeparator = '.';
 
 	if( fieldNumberFormat == 'currency' ) {
-		decimalSeparator = gform.Currency.getDecimalSeparator( 'currency' );
+		decimalSeparator = kform.Currency.getDecimalSeparator( 'currency' );
 	} else if( fieldNumberFormat == 'decimal_comma' ) {
 		decimalSeparator = ',';
 	} else if( fieldNumberFormat == 'decimal_dot' ) {
@@ -275,14 +275,14 @@ function gf_format_number( value, fieldNumberFormat ) {
 	}
 
 	// transform to a decimal dot number
-	value = gform.Currency.cleanNumber( value, '', '', decimalSeparator );
+	value = kform.Currency.cleanNumber( value, '', '', decimalSeparator );
 
 	/**
 	 * Looking at format specified by wp locale creates issues. When performing conditional logic, all numbers will be formatted to decimal dot and then compared that way. AC
 	 */
 	// now transform to number specified by locale
-	// if( window['gf_number_format'] && window['gf_number_format'] == 'decimal_comma' ) {
-	//     value = gformFormatNumber( value, -1, ',', '.' );
+	// if( window['kdna_number_format'] && window['kdna_number_format'] == 'decimal_comma' ) {
+	//     value = kformFormatNumber( value, -1, ',', '.' );
 	// }
 
 	if( ! value ) {
@@ -294,23 +294,23 @@ function gf_format_number( value, fieldNumberFormat ) {
 	return number;
 }
 
-function gf_try_convert_float(text){
+function kdna_try_convert_float(text){
 
 	/*
 	 * The only format that should matter is the field format. Attempting to do this by WP locale creates a lot of issues with consistency.
-	 * var format = window["gf_number_format"] == "decimal_comma" ? "decimal_comma" : "decimal_dot";
+	 * var format = window["kdna_number_format"] == "decimal_comma" ? "decimal_comma" : "decimal_dot";
 	 */
 
 	var format = 'decimal_dot';
-	if( gformIsNumeric( text, format ) ) {
+	if( kformIsNumeric( text, format ) ) {
 		var decimal_separator = format == "decimal_comma" ? "," : ".";
-		return gform.Currency.cleanNumber( text, "", "", decimal_separator );
+		return kform.Currency.cleanNumber( text, "", "", decimal_separator );
 	}
 
 	return text;
 }
 
-function gf_matches_operation(val1, val2, operation){
+function kdna_matches_operation(val1, val2, operation){
 	val1 = val1 ? val1.toLowerCase() : "";
 	val2 = val2 ? val2.toLowerCase() : "";
 
@@ -324,17 +324,17 @@ function gf_matches_operation(val1, val2, operation){
 			break;
 
 		case ">" :
-			val1 = gf_try_convert_float(val1);
-			val2 = gf_try_convert_float(val2);
+			val1 = kdna_try_convert_float(val1);
+			val2 = kdna_try_convert_float(val2);
 
-			return gform.utils.isNumber(val1) && gform.utils.isNumber(val2) ? val1 > val2 : false;
+			return kform.utils.isNumber(val1) && kform.utils.isNumber(val2) ? val1 > val2 : false;
 			break;
 
 		case "<" :
-			val1 = gf_try_convert_float(val1);
-			val2 = gf_try_convert_float(val2);
+			val1 = kdna_try_convert_float(val1);
+			val2 = kdna_try_convert_float(val2);
 
-			return gform.utils.isNumber(val1) && gform.utils.isNumber(val2) ? val1 < val2 : false;
+			return kform.utils.isNumber(val1) && kform.utils.isNumber(val2) ? val1 < val2 : false;
 			break;
 
 		case "contains" :
@@ -357,7 +357,7 @@ function gf_matches_operation(val1, val2, operation){
 	return false;
 }
 
-function gf_get_value(val){
+function kdna_get_value(val){
 	if(!val)
 		return "";
 
@@ -365,19 +365,19 @@ function gf_get_value(val){
 	return val[0];
 }
 
-function gf_do_field_action(formId, action, fieldId, isInit, callback){
+function kdna_do_field_action(formId, action, fieldId, isInit, callback){
 	var conditional_logic = window["kdna_form_conditional_logic"][formId];
 	var dependent_fields = conditional_logic["dependents"][fieldId];
 
 	for(var i=0; i < dependent_fields.length; i++){
-		var targetId = fieldId == 0 ? "#gform_submit_button_" + formId : "#field_" + formId + "_" + dependent_fields[i];
+		var targetId = fieldId == 0 ? "#kform_submit_button_" + formId : "#field_" + formId + "_" + dependent_fields[i];
 		var defaultValues = conditional_logic["defaults"][dependent_fields[i]];
 
 		//calling callback function on the last dependent field, to make sure it is only called once
 		do_callback = (i+1) == dependent_fields.length ? callback : null;
 
 		/**
-		 * Allow add-ons to abort gf_do_action() function.
+		 * Allow add-ons to abort kdna_do_action() function.
 		 *
 		 * @since 2.6.2
 		 *
@@ -390,23 +390,23 @@ function gf_do_field_action(formId, action, fieldId, isInit, callback){
 		 * @param array  $formId       The current form ID.
 		 * @param func   $do_callback   Callback function to be executed after conditional logic is executed.
 		 */
-		let abort = gform.applyFilters( 'gform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, formId, do_callback );
+		let abort = kform.applyFilters( 'kform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, formId, do_callback );
 		if ( ! abort ) {
-			gf_do_action( action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, do_callback, formId );
+			kdna_do_action( action, targetId, conditional_logic[ "animation" ], defaultValues, isInit, do_callback, formId );
 		} else if ( do_callback ) {
 			do_callback();
 		}
 
-		gform.doAction('gform_post_conditional_logic_field_action', formId, action, targetId, defaultValues, isInit);
+		kform.doAction('kform_post_conditional_logic_field_action', formId, action, targetId, defaultValues, isInit);
 	}
 }
 
-function gf_do_next_button_action(formId, action, fieldId, isInit){
+function kdna_do_next_button_action(formId, action, fieldId, isInit){
 	var conditional_logic = window["kdna_form_conditional_logic"][formId];
-	var targetId = "#gform_next_button_" + formId + "_" + fieldId;
+	var targetId = "#kform_next_button_" + formId + "_" + fieldId;
 
 	/**
-	 * Allow add-ons to abort gf_do_action() function.
+	 * Allow add-ons to abort kdna_do_action() function.
 	 *
 	 * @since 2.6.2
 	 *
@@ -419,26 +419,26 @@ function gf_do_next_button_action(formId, action, fieldId, isInit){
 	 * @param array  $formId       The current form ID.
 	 * @param func   $do_callback   Callback function to be executed after conditional logic is executed.
 	 */
-	let abort = gform.applyFilters( 'gform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], null, isInit, formId, null );
+	let abort = kform.applyFilters( 'kform_abort_conditional_logic_do_action', false, action, targetId, conditional_logic[ "animation" ], null, isInit, formId, null );
 	if ( ! abort ) {
-		gf_do_action( action, targetId, conditional_logic[ "animation" ], null, isInit, null, formId );
+		kdna_do_action( action, targetId, conditional_logic[ "animation" ], null, isInit, null, formId );
 	}
 }
 
-function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, callback, formId){
+function kdna_do_action(action, targetId, useAnimation, defaultValues, isInit, callback, formId){
 	var $target = jQuery( targetId );
 
 	/**
 	 * Do not re-enable inputs that are disabled by default. Check if field's inputs have been assessed. If not, add
 	 * designator class so these inputs are exempted below.
 	 */
-	if( ! $target.data( 'gf-disabled-assessed' ) ) {
-		$target.find( ':input:disabled' ).addClass( 'gf-default-disabled' );
-		$target.data( 'gf-disabled-assessed', true );
+	if( ! $target.data( 'kdna-disabled-assessed' ) ) {
+		$target.find( ':input:disabled' ).addClass( 'kdna-default-disabled' );
+		$target.data( 'kdna-disabled-assessed', true );
 	}
 
 	// honeypot should not be impacted by conditional logic.
-	if( $target.hasClass( 'gfield--type-honeypot') ) {
+	if( $target.hasClass( 'kfield--type-honeypot') ) {
 		return;
 	}
 
@@ -451,9 +451,9 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 
 		if(useAnimation && !isInit){
 			if($target.length > 0){
-				$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false );
-				if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
-					gf_show_button( $target );
+				$target.find(':input:hidden:not(.kdna-default-disabled)').prop( 'disabled', false );
+				if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kform_next_button' ) ) {
+					kdna_show_button( $target );
 				}
 				$target.slideDown(callback);
 				$target.attr( 'data-conditional-logic', 'visible' );
@@ -462,17 +462,17 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 			}
 		}
 		else{
-			var display = $target.data('gf_display');
+			var display = $target.data('kdna_display');
 
 			// set display if previous (saved) display isn't set for any reason
 			if ( display == '' || display == 'none' ){
-				display = '1' === gf_legacy.is_legacy ? 'list-item' : 'block';
+				display = '1' === kdna_legacy.is_legacy ? 'list-item' : 'block';
 			}
-			$target.find(':input:hidden:not(.gf-default-disabled)').prop( 'disabled', false ).attr( 'data-conditional-logic', 'visible' );
+			$target.find(':input:hidden:not(.kdna-default-disabled)').prop( 'disabled', false ).attr( 'data-conditional-logic', 'visible' );
 
 			// Handle conditional submit and next buttons.
-			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
-				gf_show_button( $target );
+			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kform_next_button' ) ) {
+				kdna_show_button( $target );
 			} else {
 				$target.css( 'display', display );
 				if( display == 'none' ) {
@@ -492,10 +492,10 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		//if field is not already hidden, reset its values to the default
 		var child = $target.children().first();
 		if (child.length > 0){
-			var reset = gform.applyFilters('gform_reset_pre_conditional_logic_field_action', true, formId, targetId, defaultValues, isInit);
+			var reset = kform.applyFilters('kform_reset_pre_conditional_logic_field_action', true, formId, targetId, defaultValues, isInit);
 
-			if(reset && !gformIsHidden(child)){
-				gf_reset_to_default(targetId, defaultValues);
+			if(reset && !kformIsHidden(child)){
+				kdna_reset_to_default(targetId, defaultValues);
 			}
 		}
 
@@ -506,13 +506,13 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		} );
 
 		//Saving existing display so that it can be reset when showing the field
-		if( ! $target.data('gf_display') ){
-			$target.data('gf_display', $target.css('display'));
+		if( ! $target.data('kdna_display') ){
+			$target.data('kdna_display', $target.css('display'));
 		}
 
 		if(useAnimation && !isInit){
-			if( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
-				gf_hide_button( $target );
+			if( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kform_next_button' ) ) {
+				kdna_hide_button( $target );
 			} else if ( $target.length > 0 && $target.is( ":visible" ) ) {
 				$target.slideUp( callback );
 				$target.attr( 'data-conditional-logic', 'hidden' );
@@ -522,13 +522,13 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 		} else{
 
 			// Handle conditional submit and next buttons.
-			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'gform_next_button' ) ) {
-				gf_hide_button( $target );
+			if ( $target.is( 'input[type="submit"]' ) || $target.hasClass( 'kform_next_button' ) ) {
+				kdna_hide_button( $target );
 			} else {
 				$target.css( 'display', 'none' );
 				$target.attr( 'data-conditional-logic', 'hidden' );
 			}
-			$target.find(':input:hidden:not(.gf-default-disabled)').attr( 'disabled', 'disabled' );
+			$target.find(':input:hidden:not(.kdna-default-disabled)').attr( 'disabled', 'disabled' );
 			if(callback){
 				callback();
 			}
@@ -537,47 +537,47 @@ function gf_do_action(action, targetId, useAnimation, defaultValues, isInit, cal
 
 }
 
-function gf_show_button( $target ) {
+function kdna_show_button( $target ) {
 	$target.prop( 'disabled', false ).css( 'display', '' );
 	$target.attr( 'data-conditional-logic', 'visible' );
-	if ( '1' == gf_legacy.is_legacy ) {
+	if ( '1' == kdna_legacy.is_legacy ) {
 		// for legacy markup, remove screen reader class.
 		$target.removeClass( 'screen-reader-text' );
 	}
 
 	// Sometimes the next button is pretending to be a submit button, so it needs conditional logic too.
-	var fauxSubmitButton = jQuery( 'input.gform_next_button[type="button"][value="Submit"]' );
+	var fauxSubmitButton = jQuery( 'input.kform_next_button[type="button"][value="Submit"]' );
 	if ( fauxSubmitButton ) {
 		fauxSubmitButton.prop( 'disabled', false ).css( 'display', '' );
 		fauxSubmitButton.attr( 'data-conditional-logic', 'visible' );
 	}
 }
 
-function gf_hide_button( $target ) {
+function kdna_hide_button( $target ) {
 	$target.attr( 'disabled', 'disabled' ).hide();
 	$target.attr( 'data-conditional-logic', 'hidden' );
-	if ( '1' === gf_legacy.is_legacy ) {
+	if ( '1' === kdna_legacy.is_legacy ) {
 		// for legacy markup, let screen readers read the button.
 		$target.addClass( 'screen-reader-text' );
 	}
 
 	// Sometimes the next button is pretending to be a submit button, so it needs conditional logic too.
-	var fauxSubmitButton = jQuery( 'input.gform_next_button[type="button"][value="Submit"]' );
+	var fauxSubmitButton = jQuery( 'input.kform_next_button[type="button"][value="Submit"]' );
 	if ( fauxSubmitButton ) {
 		fauxSubmitButton.attr( 'disabled', 'disabled' ).hide();
 		fauxSubmitButton.attr( 'data-conditional-logic', 'hidden' );
 	}
 }
 
-function gf_reset_to_default(targetId, defaultValue){
+function kdna_reset_to_default(targetId, defaultValue){
 
 	var $target = jQuery( targetId );
-    if( $target.hasClass('gfield_shipping') || $target.hasClass('gfield_total') ||
-        $target.hasClass('gfield--type-shipping') || $target.hasClass('gfield--type-total') ) {
+    if( $target.hasClass('kfield_shipping') || $target.hasClass('kfield_total') ||
+        $target.hasClass('kfield--type-shipping') || $target.hasClass('kfield--type-total') ) {
         return;
     }
 
-	var dateFields = jQuery( targetId ).find( '.gfield_date_month input, .gfield_date_day input, .gfield_date_year input, .gfield_date_dropdown_month select, .gfield_date_dropdown_day select, .gfield_date_dropdown_year select' );
+	var dateFields = jQuery( targetId ).find( '.kfield_date_month input, .kfield_date_day input, .kfield_date_year input, .kfield_date_dropdown_month select, .kfield_date_dropdown_day select, .kfield_date_dropdown_year select' );
 	if( dateFields.length > 0 ) {
 
 		dateFields.each( function(){
@@ -588,10 +588,10 @@ function gf_reset_to_default(targetId, defaultValue){
 			if( defaultValue ) {
 
 				var key = 'd';
-				if (element.parents().hasClass('gfield_date_month') || element.parents().hasClass('gfield_date_dropdown_month') ){
+				if (element.parents().hasClass('kfield_date_month') || element.parents().hasClass('kfield_date_dropdown_month') ){
 					key = 'm';
 				}
-				else if(element.parents().hasClass('gfield_date_year') || element.parents().hasClass('gfield_date_dropdown_year') ){
+				else if(element.parents().hasClass('kfield_date_year') || element.parents().hasClass('kfield_date_dropdown_year') ){
 					key = 'y';
 				}
 
@@ -623,9 +623,9 @@ function gf_reset_to_default(targetId, defaultValue){
 
 	// When a List field is hidden via conditional logic during a page submission, the markup will be reduced to a
 	// single row. Add enough rows/inputs to satisfy the default value.
-	if( defaultValue && target.parents( '.ginput_list' ).length > 0 && target.length < defaultValue.length ) {
+	if( defaultValue && target.parents( '.kinput_list' ).length > 0 && target.length < defaultValue.length ) {
 		while( target.length < defaultValue.length ) {
-			gformAddListItem( target.eq( 0 ), 0 );
+			kformAddListItem( target.eq( 0 ), 0 );
 			target = jQuery(targetId).find( 'select, input[type="text"]:not([id*="_shim"]), input[type="number"], textarea' );
 		}
 	}
@@ -637,14 +637,14 @@ function gf_reset_to_default(targetId, defaultValue){
 		var element = jQuery(this);
 
 		// Only reset Single Product and Shipping hidden inputs.
-		if( element.is( '[type="hidden"]' ) && ! gf_is_hidden_pricing_input( element ) ) {
+		if( element.is( '[type="hidden"]' ) && ! kdna_is_hidden_pricing_input( element ) ) {
 			return;
 		}
 
 		//get name of previous input field to see if it is the radio button which goes with the "Other" text box
 		//otherwise field is populated with input field name
 		var radio_button_name = element.prevAll("input").first().attr("value");
-		if(radio_button_name == "gf_other_choice"){
+		if(radio_button_name == "kdna_other_choice"){
 			val = element.attr("value");
 		}
 		else if( Array.isArray( defaultValue ) && ! element.is( 'select[multiple]' ) ) {
@@ -676,10 +676,10 @@ function gf_reset_to_default(targetId, defaultValue){
 				element.trigger('chosen:updated');
 			}
 			// Check for Single Product & Shipping input and force visual price update.
-			if( gf_is_hidden_pricing_input( element ) ) {
-				var ids = gf_get_ids_by_html_id( element.parents( '.gfield' ).attr( 'id' ) );
-				jQuery( '#input_' + ids[0] + '_' + ids[1] ).text( gformFormatMoney( element.val() ) );
-				element.val( gformFormatMoney( element.val() ) );
+			if( kdna_is_hidden_pricing_input( element ) ) {
+				var ids = kdna_get_ids_by_html_id( element.parents( '.kfield' ).attr( 'id' ) );
+				jQuery( '#input_' + ids[0] + '_' + ids[1] ).text( kformFormatMoney( element.val() ) );
+				element.val( kformFormatMoney( element.val() ) );
 			}
 		}
 		else{
@@ -716,10 +716,10 @@ function gf_reset_to_default(targetId, defaultValue){
 
 }
 
-function gf_is_hidden_pricing_input( element ) {
+function kdna_is_hidden_pricing_input( element ) {
 
 	// Check for Single Product fields.
-	if( element.attr( 'id' ) && element.attr( 'id' ).indexOf( 'ginput_base_price' ) === 0 ) {
+	if( element.attr( 'id' ) && element.attr( 'id' ).indexOf( 'kinput_base_price' ) === 0 ) {
 		return true;
 	}
 
@@ -728,5 +728,5 @@ function gf_is_hidden_pricing_input( element ) {
 	}
 
 	// Check for Shipping fields.
-	return element.parents( '.gfield_shipping' ).length;
+	return element.parents( '.kfield_shipping' ).length;
 }

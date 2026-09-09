@@ -38,7 +38,7 @@ abstract class KDNAAddOn {
 	 * The minimum KDNA Forms version required to support all the features of an add-on.
 	 *
 	 * Failing to meet this version won't prevent the add-on from loading, but some features of the add-on will not work as expected or will be disabled,
-	 * A notice will be displayed in the admin asking the user to upgrade to the latest Gravity Form version.
+	 * A notice will be displayed in the admin asking the user to upgrade to the latest KDNA Form version.
 	 *
 	 * @var string KDNA Forms minimum version for supporting all features.
 	 *
@@ -237,11 +237,11 @@ abstract class KDNAAddOn {
 	 *
 	 * @param array  $form               The current form object to enqueue styles for.
 	 * @param string $field_type         The field type associated with the add-on. Styles will only be enqueued on the frontend if the form has a field with the specified field type.
-	 * @param string $gravity_theme_path The path to the gravity theme style. Optional. Only needed for add-ons that implement the gravity theme outside the default /assets/css/dist/theme.css path.
+	 * @param string $kdna_theme_path The path to the KDNA theme style. Optional. Only needed for add-ons that implement the KDNA theme outside the default /assets/css/dist/theme.css path.
 	 *
 	 * @return array Returns and array of styles to enqueue in the format accepted by the KDNA Forms theme layer set_styles() method.
 	 */
-	public function get_theme_layer_styles( $form, $field_type = '', $gravity_theme_path = '' ) {
+	public function get_theme_layer_styles( $form, $field_type = '', $kdna_theme_path = '' ) {
 
 		if ( KDNACommon::output_default_css() === false ) {
 			return array();
@@ -260,11 +260,11 @@ abstract class KDNAAddOn {
 			);
 		}
 
-		// Maybe enqueue gravity theme.
-		if ( in_array( 'gravity-theme', $themes ) ) {
-			$path = $gravity_theme_path ? $gravity_theme_path : $this->get_base_url() . "/assets/css/dist/theme{$this->_asset_min}.css";
+		// Maybe enqueue KDNA theme.
+		if ( in_array( 'kdna-theme', $themes ) ) {
+			$path = $kdna_theme_path ? $kdna_theme_path : $this->get_base_url() . "/assets/css/dist/theme{$this->_asset_min}.css";
 			$styles['theme'] = array(
-				array( "{$this->_slug}_gravity_theme", $path ),
+				array( "{$this->_slug}_kdna_theme", $path ),
 			);
 		}
 
@@ -419,7 +419,7 @@ abstract class KDNAAddOn {
 		$meets_requirements = $this->meets_minimum_requirements();
 
 		// If saving form via AJAX initialize add-ons admin to catch any actions hooked to the after form save actions.
-		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
+		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_SAVE_FROM_HELPER );
 		if ( RG_CURRENT_PAGE == 'admin-ajax.php' && $save_form_helper->is_ajax_save_action() ) {
 			$this->init_admin();
 		}
@@ -447,7 +447,7 @@ abstract class KDNAAddOn {
 	 * Override this function to add initialization code (i.e. hooks) for the admin site (WP dashboard)
 	 */
 	public function init_admin() {
-		$this->maybe_cache_gravityapi_oauth_response();
+		$this->maybe_cache_kdnaapi_oauth_response();
 
 		// enqueues admin scripts
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 10, 0 );
@@ -583,13 +583,13 @@ abstract class KDNAAddOn {
 	}
 
 	/**
-	 * Check for a response from the Gravity API and temporarily cache the value to a transient.
+	 * Check for a response from the KDNA API and temporarily cache the value to a transient.
 	 *
 	 * This method cannot be extended because it's intended for use only by first-party KDNA Forms add-ons.
 	 *
 	 * @since 2.4.23
 	 */
-	private function maybe_cache_gravityapi_oauth_response() {
+	private function maybe_cache_kdnaapi_oauth_response() {
 		// OAuth caching removed - KDNA Forms is a free plugin.
 		return;
 
@@ -612,13 +612,13 @@ abstract class KDNAAddOn {
 		if (
 			// Couldn't determine the add-on, no request was cached, or the response doesn't contain what we expect.
 			! $addon
-			|| ! get_transient( "gravityapi_request_{$addon}" )
+			|| ! get_transient( "kdnaapi_request_{$addon}" )
 			|| count( $data ) !== 2
 		) {
 			return;
 		}
 
-		set_transient( "gravityapi_response_{$addon}", $data, 10 * MINUTE_IN_SECONDS );
+		set_transient( "kdnaapi_response_{$addon}", $data, 10 * MINUTE_IN_SECONDS );
 	}
 
 	/**
@@ -626,7 +626,7 @@ abstract class KDNAAddOn {
 	 */
 	public function init_ajax() {
 		// Results and locking removed.
-		// if ( rgpost( 'view' ) == 'gf_results_' . $this->get_slug() ) {
+		// if ( rgpost( 'view' ) == 'kdna_results_' . $this->get_slug() ) {
 		// 	require_once( 'class-kdna-results.php' );
 		// 	...
 		// } elseif ( $this->method_is_overridden( 'get_locking_config' ) ) {
@@ -982,16 +982,16 @@ abstract class KDNAAddOn {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['kdnaform_debug'] ) ? '' : '.min'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		return array(
 			array(
-				'handle'  => 'gaddon_form_settings_css',
-				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/gaddon_settings{$min}.css",
+				'handle'  => 'kaddon_form_settings_css',
+				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/kaddon_settings{$min}.css",
 				'version' => KDNACommon::$version,
 				'enqueue' => array(
 					array( 'admin_page' => array( 'form_settings', 'plugin_settings', 'plugin_page', 'app_settings' ) ),
 				)
 			),
 			array(
-				'handle'  => 'gaddon_results_css',
-				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/gaddon_results{$min}.css",
+				'handle'  => 'kaddon_results_css',
+				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/css/kaddon_results{$min}.css",
 				'version' => KDNACommon::$version,
 				'enqueue' => array(
 					array( 'admin_page' => array( 'results' ) ),
@@ -1090,8 +1090,8 @@ abstract class KDNAAddOn {
 				)
 			),
 			array(
-				'handle'   => 'gaddon_results_js',
-				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_results{$min}.js",
+				'handle'   => 'kaddon_results_js',
+				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/kaddon_results{$min}.js",
 				'version'  => KDNACommon::$version,
 				'deps'     => array( 'jquery', 'sack', 'jquery-ui-resizable', 'kdnaform_datepicker_init', 'google_charts', 'kdnaform_field_filter' ),
 				'callback' => class_exists( 'KDNAResults' ) ? array( 'KDNAResults', 'localize_results_scripts' ) : null,
@@ -1100,7 +1100,7 @@ abstract class KDNAAddOn {
 				)
 			),
 			array(
-				'handle'  => 'gaddon_repeater',
+				'handle'  => 'kaddon_repeater',
 				'src'     => KDNAAddOn::get_gfaddon_base_url() . "/js/repeater{$min}.js",
 				'version' => KDNACommon::$version,
 				'deps'    => array( 'jquery' ),
@@ -1111,19 +1111,19 @@ abstract class KDNAAddOn {
 				),
 			),
 			array(
-				'handle'   => 'gaddon_fieldmap_js',
-				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_fieldmap{$min}.js",
+				'handle'   => 'kaddon_fieldmap_js',
+				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/kaddon_fieldmap{$min}.js",
 				'version'  => KDNACommon::$version,
-				'deps'     => array( 'jquery', 'gaddon_repeater' ),
+				'deps'     => array( 'jquery', 'kaddon_repeater' ),
 				'enqueue'  => array(
 					array( 'admin_page' => array( 'form_settings' ) ),
 				)
 			),
 			array(
-				'handle'   => 'gaddon_genericmap_js',
-				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/gaddon_genericmap{$min}.js",
+				'handle'   => 'kaddon_genericmap_js',
+				'src'      => KDNAAddOn::get_gfaddon_base_url() . "/js/kaddon_genericmap{$min}.js",
 				'version'  => KDNACommon::$version,
-				'deps'     => array( 'jquery', 'gaddon_repeater' ),
+				'deps'     => array( 'jquery', 'kaddon_repeater' ),
 				'enqueue'  => array(
 					array( 'admin_page' => array( 'form_settings' ) ),
 				)
@@ -1260,7 +1260,7 @@ abstract class KDNAAddOn {
 	 * @return string
 	 */
 	public function theme_layer_icon() {
-		return 'gform-icon--user';
+		return 'kform-icon--user';
 	}
 
 	/**
@@ -1386,14 +1386,14 @@ abstract class KDNAAddOn {
 			return $markup;
 		}
 
-		$base_identifier = sprintf( 'gform.extensions.styles.%s', $this->get_slug() );
-		$form_identifier = sprintf( 'gform.extensions.styles.%s[%s]', $this->get_slug(), $form_id );
-		$full_identifier = sprintf( 'gform.extensions.styles.%s[%s][%s]', $this->get_slug(), $form_id, $page_instance );
+		$base_identifier = sprintf( 'kform.extensions.styles.%s', $this->get_slug() );
+		$form_identifier = sprintf( 'kform.extensions.styles.%s[%s]', $this->get_slug(), $form_id );
+		$full_identifier = sprintf( 'kform.extensions.styles.%s[%s][%s]', $this->get_slug(), $form_id, $page_instance );
 
 		ob_start(); ?>
-			if ( typeof gform !== 'undefined' ) {
-				gform.extensions = gform.extensions || {};
-				gform.extensions.styles = gform.extensions.styles || {};
+			if ( typeof kform !== 'undefined' ) {
+				kform.extensions = kform.extensions || {};
+				kform.extensions.styles = kform.extensions.styles || {};
 				<?php echo $base_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> = <?php echo $base_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> || {};
 				<?php echo $form_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> = <?php echo $form_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> || {};
 				<?php echo $full_identifier; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> = <?php echo json_encode( $properties ); ?>;
@@ -1676,8 +1676,8 @@ abstract class KDNAAddOn {
 	public function results_page_init( $results_page_config ) {
 		// Results module removed.
 		// require_once( 'class-kdna-results.php' );
-		// $gf_results = new KDNAResults( $this->get_slug(), $results_page_config );
-		// $gf_results->init();
+		// $kdna_results = new KDNAResults( $this->get_slug(), $results_page_config );
+		// $kdna_results->init();
 	}
 
 	//--------------  Logging integration  --------------------------------------
@@ -1994,7 +1994,7 @@ abstract class KDNAAddOn {
 
 		?>
 
-		<form id="gform-settings" action="" method="post">
+		<form id="kform-settings" action="" method="post">
 			<?php wp_nonce_field( $this->get_slug() . '_save_settings', '_' . $this->get_slug() . '_save_settings_nonce' ) ?>
 			<?php $this->settings( $sections ); ?>
 
@@ -2052,10 +2052,10 @@ abstract class KDNAAddOn {
 
 		$section_fields = $this->prepare_settings_fields( $section['fields'] );
 
-		$classes = array( 'gaddon-section' );
+		$classes = array( 'kaddon-section' );
 
 		if ( $is_first ) {
-			$classes[] = 'gaddon-first-section';
+			$classes[] = 'kaddon-first-section';
 		}
 
 		if ( $class )
@@ -2070,7 +2070,7 @@ abstract class KDNAAddOn {
 			>
 
 			<?php if ( $title ): ?>
-				<h4 class="gaddon-section-title gf_settings_subgroup_title">
+				<h4 class="kaddon-section-title kdna_settings_subgroup_title">
 					<?php echo $title; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php if( $tooltip ): ?>
 						<?php kdnaform_tooltip( $tooltip, $tooltip_class ); ?>
@@ -2079,10 +2079,10 @@ abstract class KDNAAddOn {
 			<?php endif; ?>
 
 			<?php if ( $description ): ?>
-				<div class="gaddon-section-description"><?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></div>
+				<div class="kaddon-section-description"><?php echo $description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped?></div>
 			<?php endif; ?>
 
-			<table class="form-table gforms_form_settings">
+			<table class="form-table kforms_form_settings">
 
 				<?php
 				foreach ( $section_fields as $field ) {
@@ -2131,11 +2131,11 @@ abstract class KDNAAddOn {
 		$display = rgar( $field, 'hidden' ) || rgar( $field, 'type' ) == 'hidden' ? 'style="display:none;"' : '';
 
 		// Prepare setting description.
-		$description = rgar( $field, 'description' ) ? '<span class="gf_settings_description">' . $field['description'] . '</span>' : null;
+		$description = rgar( $field, 'description' ) ? '<span class="kdna_settings_description">' . $field['description'] . '</span>' : null;
 
 		?>
 
-		<tr id="gaddon-setting-row-<?php echo esc_attr( $field['name'] ); ?>" <?php echo $display; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+		<tr id="kaddon-setting-row-<?php echo esc_attr( $field['name'] ); ?>" <?php echo $display; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<th>
 				<?php $this->single_setting_label( $field ); ?>
 			</th>
@@ -2247,22 +2247,22 @@ abstract class KDNAAddOn {
 			return $this->get_settings_renderer()->get_posted_values();
 		}
 
-		global $_gaddon_posted_settings;
+		global $_kaddon_posted_settings;
 
-		if ( isset( $_gaddon_posted_settings ) ) {
-			return $_gaddon_posted_settings;
+		if ( isset( $_kaddon_posted_settings ) ) {
+			return $_kaddon_posted_settings;
 		}
 
-		$_gaddon_posted_settings = array();
+		$_kaddon_posted_settings = array();
 		if ( count( $_POST ) > 0 ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			foreach ( $_POST as $key => $value ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
-				if ( preg_match( '|_gaddon_setting_(.*)|', $key, $matches ) ) {
-					$_gaddon_posted_settings[ $matches[1] ] = self::maybe_decode_json( stripslashes_deep( $value ) );
+				if ( preg_match( '|_kaddon_setting_(.*)|', $key, $matches ) ) {
+					$_kaddon_posted_settings[ $matches[1] ] = self::maybe_decode_json( stripslashes_deep( $value ) );
 				}
 			}
 		}
 
-		return $_gaddon_posted_settings;
+		return $_kaddon_posted_settings;
 	}
 
 	public static function maybe_decode_json( $value ) {
@@ -2623,10 +2623,10 @@ abstract class KDNAAddOn {
 	public function checkbox_item( $choice, $horizontal_class, $attributes, $value, $tooltip, $error_icon = '' ) {
 
 		$hidden_field_value = $value == '1' ? '1' : '0';
-		$icon_class         = rgar( $choice, 'icon' ) ? ' gaddon-setting-choice-visual' : '';
+		$icon_class         = rgar( $choice, 'icon' ) ? ' kaddon-setting-choice-visual' : '';
 
-		$checkbox_item  = '<div id="gaddon-setting-checkbox-choice-' . $choice['id'] . '" class="gaddon-setting-checkbox' . $horizontal_class . $icon_class . '">';
-		$checkbox_item .= '<input type=hidden name="_gaddon_setting_' . esc_attr( $choice['name'] ) . '" value="' . $hidden_field_value . '" />';
+		$checkbox_item  = '<div id="kaddon-setting-checkbox-choice-' . $choice['id'] . '" class="kaddon-setting-checkbox' . $horizontal_class . $icon_class . '">';
+		$checkbox_item .= '<input type=hidden name="_kaddon_setting_' . esc_attr( $choice['name'] ) . '" value="' . $hidden_field_value . '" />';
 
 		if ( is_callable( array( $this, "checkbox_input_{$choice['name']}" ) ) ) {
 			$markup = call_user_func( array( $this, "checkbox_input_{$choice['name']}" ), $choice, $attributes, $value, $tooltip );
@@ -3004,7 +3004,7 @@ abstract class KDNAAddOn {
 		if ( empty( $select_field['choices'] ) ) {
 
 			// Set field value to custom key.
-			$select_field['value'] = 'gf_custom';
+			$select_field['value'] = 'kdna_custom';
 
 			// Display field row.
 			return sprintf(
@@ -3020,14 +3020,14 @@ abstract class KDNAAddOn {
 			$additional_classes = array();
 
 			// Set has custom key flag.
-			$has_gf_custom = false;
+			$has_kdna_custom = false;
 
 			// Loop through key field choices.
 			foreach ( $select_field['choices'] as $choice ) {
 
 				// If choice name or value is the custom key, set custom key flag to true and exit loop.
-				if ( rgar( $choice, 'name' ) == 'gf_custom' || rgar( $choice, 'value' ) == 'gf_custom' ) {
-					$has_gf_custom = true;
+				if ( rgar( $choice, 'name' ) == 'kdna_custom' || rgar( $choice, 'value' ) == 'kdna_custom' ) {
+					$has_kdna_custom = true;
 					break;
 				}
 
@@ -3038,8 +3038,8 @@ abstract class KDNAAddOn {
 					foreach ( $choice['choices'] as $subchoice ) {
 
 						// If sub-choice name or value is the custom key, set custom key flag to true and exit loop.
-						if ( rgar( $subchoice, 'name' ) == 'gf_custom' || rgar( $subchoice, 'value' ) == 'gf_custom' ) {
-							$has_gf_custom = true;
+						if ( rgar( $subchoice, 'name' ) == 'kdna_custom' || rgar( $subchoice, 'value' ) == 'kdna_custom' ) {
+							$has_kdna_custom = true;
 							break;
 						}
 					}
@@ -3049,7 +3049,7 @@ abstract class KDNAAddOn {
 			}
 
 			// If custom key option is not found and we're allowed to add it, add it.
-			if ( ! $has_gf_custom ) {
+			if ( ! $has_kdna_custom ) {
 
 				if ( $type == 'key' ) {
 
@@ -3072,7 +3072,7 @@ abstract class KDNAAddOn {
 				if ( $enable_custom ) {
 					$select_field['choices'][] = array(
 						'label' => $label,
-						'value' => 'gf_custom'
+						'value' => 'kdna_custom'
 					);
 				}
 
@@ -3362,7 +3362,7 @@ abstract class KDNAAddOn {
 			foreach ( $dynamic_fields as $dynamic_field ) {
 
 				// Get mapped key or replace with custom value.
-				$field_key = 'gf_custom' === $dynamic_field['key'] ? $dynamic_field['custom_key'] : $dynamic_field['key'];
+				$field_key = 'kdna_custom' === $dynamic_field['key'] ? $dynamic_field['custom_key'] : $dynamic_field['key'];
 
 				// Add mapped field to return array.
 				$fields[ $field_key ] = $dynamic_field['value'];
@@ -3405,10 +3405,10 @@ abstract class KDNAAddOn {
 			foreach ( $generic_fields as $generic_field ) {
 
 				// Get mapped key or replace with custom value.
-				$field_key = 'gf_custom' === $generic_field['key'] ? $generic_field['custom_key'] : $generic_field['key'];
+				$field_key = 'kdna_custom' === $generic_field['key'] ? $generic_field['custom_key'] : $generic_field['key'];
 
 				// Get mapped field choice or replace with custom value.
-				if ( 'gf_custom' === $generic_field['value'] ) {
+				if ( 'kdna_custom' === $generic_field['value'] ) {
 
 					// If form isn't set, use custom value. Otherwise, replace merge tags.
 					$field_value = empty( $form ) ? $generic_field['custom_value'] : KDNACommon::replace_variables( $generic_field['custom_value'], $form, $entry, false, false, false, 'text' );
@@ -3573,8 +3573,8 @@ abstract class KDNAAddOn {
 		_deprecated_function( __METHOD__, '2.5', 'the \KDNA_Forms\KDNA_Forms\Settings\Fields\Button class to add a save button to your form' );
 
 		$field['type']  = 'submit';
-		$field['name']  = 'gform-settings-save';
-		$field['class'] = 'button-primary gfbutton';
+		$field['name']  = 'kform-settings-save';
+		$field['class'] = 'button-primary kdnabutton';
 
 		if ( ! rgar( $field, 'value' ) ) {
 			$field['value'] = esc_html__( 'Update Settings', 'kdnaforms' );
@@ -3957,10 +3957,10 @@ abstract class KDNAAddOn {
 		$error = $this->get_field_errors( $field );
 
 		return '<span
-			class="gf_tooltip tooltip"
+			class="kdna_tooltip tooltip"
 			title="<h6>' . esc_html__( 'Validation Error', 'kdnaforms' ) . '</h6>' . $error . '"
 			style="display:inline-block;position:relative;right:-3px;top:1px;font-size:14px;">
-				<i class="fa fa-exclamation-circle icon-exclamation-sign gf_invalid"></i>
+				<i class="fa fa-exclamation-circle icon-exclamation-sign kdna_invalid"></i>
 			</span>';
 	}
 
@@ -4263,7 +4263,7 @@ abstract class KDNAAddOn {
 
 			jQuery(document).ready(
 				function(){
-					gform.addFilter( 'kdnaform_conditional_object', 'SimpleConditionObject' );
+					kform.addFilter( 'kdnaform_conditional_object', 'SimpleConditionObject' );
 
 					jQuery('#" . esc_attr( $setting_name_root ) . "_container').html(
 											GetRuleValues('{$object_type}', 0, {$field_id_attribute}, '" . esc_attr( $value ) . "', '_kdnaform_setting_" . esc_attr( $setting_name_root ) . "_value'));
@@ -4367,7 +4367,7 @@ abstract class KDNAAddOn {
 				 *
 				 * @return array
 				 */
-				$sections = gf_apply_filters( array( 'kdnaform_addon_form_settings_fields', rgar( $form, 'id' ), $this->get_slug() ), $sections, $form );
+				$sections = kdna_apply_filters( array( 'kdnaform_addon_form_settings_fields', rgar( $form, 'id' ), $this->get_slug() ), $sections, $form );
 
 
 				$sections = $this->prepare_settings_sections( $sections, 'form_settings' );
@@ -4584,7 +4584,7 @@ abstract class KDNAAddOn {
 			}
 			?>
 
-			<h2 class="gf_admin_page_title"><?php echo $this->plugin_page_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+			<h2 class="kdna_admin_page_title"><?php echo $this->plugin_page_title(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 			<?php
 
 			$this->plugin_page();
@@ -5185,10 +5185,10 @@ abstract class KDNAAddOn {
 					<div class="delete-alert alert_red">
 
 						<h3>
-							<i class="fa fa-exclamation-triangle gf_invalid"></i> <?php esc_html_e( 'Warning', 'kdnaforms' ); ?>
+							<i class="fa fa-exclamation-triangle kdna_invalid"></i> <?php esc_html_e( 'Warning', 'kdnaforms' ); ?>
 						</h3>
 
-						<div class="gf_delete_notice">
+						<div class="kdna_delete_notice">
 							<?php echo $this->uninstall_warning_message(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 
@@ -5221,15 +5221,15 @@ abstract class KDNAAddOn {
 
 		<div class="wrap <?php echo esc_attr( KDNACommon::get_browser_class() ); ?>">
 
-			<?php KDNACommon::gf_header(); ?>
+			<?php KDNACommon::kdna_header(); ?>
 
 			<?php if ( $message ) { ?>
 				<div id="message" class="updated"><p><?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p></div>
 			<?php } ?>
 
-			<div class="gform-settings__wrapper">
+			<div class="kform-settings__wrapper">
 
-				<nav class="gform-settings__navigation">
+				<nav class="kform-settings__navigation">
 				<?php
 				foreach ( $tabs as $tab ) {
 
@@ -5243,7 +5243,7 @@ abstract class KDNAAddOn {
 					$url  = add_query_arg( array( 'view' => $tab['name'] ) );
 
 					// Get tab icon.
-					$icon_markup = KDNACommon::get_icon_markup( $tab, 'gform-icon--cog' );
+					$icon_markup = KDNACommon::get_icon_markup( $tab, 'kform-icon--cog' );
 
 					printf(
 						'<a href="%s"%s><span class="icon">%s</span> <span class="label">%s</span></a>',
@@ -5256,7 +5256,7 @@ abstract class KDNAAddOn {
 				?>
 			</nav>
 
-			<div class="gform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
+			<div class="kform-settings__content" id="tab_<?php echo esc_attr( $current_tab ); ?>">
 
 	<?php
 	}
@@ -5268,9 +5268,9 @@ abstract class KDNAAddOn {
 	public function app_tab_page_footer() {
 					?>
 				</div>
-				<!-- / gform-settings__content -->
+				<!-- / kform-settings__content -->
 			</div>
-			<!-- / gform-settings__wrapper -->
+			<!-- / kform-settings__wrapper -->
 
 		</div> <!-- / wrap -->
 
@@ -5493,12 +5493,12 @@ abstract class KDNAAddOn {
 		// Show different panel styles for the uninstall page and the individual settings pages.
 		if ( rgget( 'subview' ) == 'uninstall' ) {
 			?>
-			<form action="" method="post" class="gform-settings-panel gform-settings-panel__addon-uninstall">
+			<form action="" method="post" class="kform-settings-panel kform-settings-panel__addon-uninstall">
 				<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
-				<div class="gform-settings-panel__content">
+				<div class="kform-settings-panel__content">
 					<div class="addon-logo dashicons"><?php echo $icon_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 					<div class="addon-uninstall-text">
-						<h4 class="gform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
+						<h4 class="kform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
 						<div><?php echo esc_html( $this->uninstall_message() ); ?></div>
 					</div>
 					<div class="addon-uninstall-button">
@@ -5513,23 +5513,23 @@ abstract class KDNAAddOn {
 			<?php
 		} else {
 			?>
-			<form action="" method="post" class="gform-settings-panel gform-settings-panel--collapsible gform-settings-panel--collapsed gform-settings-panel__uninstall">
+			<form action="" method="post" class="kform-settings-panel kform-settings-panel--collapsible kform-settings-panel--collapsed kform-settings-panel__uninstall">
 				<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
-				<header class="gform-settings-panel__header">
-					<h4 class="gform-settings-panel__title"><?php printf( esc_html__( 'Uninstall %s Add-On', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
-					<span class="gform-settings-panel__collapsible-control">
+				<header class="kform-settings-panel__header">
+					<h4 class="kform-settings-panel__title"><?php printf( esc_html__( 'Uninstall %s Add-On', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
+					<span class="kform-settings-panel__collapsible-control">
 						<input
 							type="checkbox"
 							name="kdnaform_settings_section_collapsed_uninstall"
 							id="kdnaform_settings_section_collapsed_uninstall"
 							value="1"
-							onclick="this.checked ? this.closest( '.gform-settings-panel' ).classList.add( 'gform-settings-panel--collapsed' ) : this.closest( '.gform-settings-panel' ).classList.remove( 'gform-settings-panel--collapsed' )"
+							onclick="this.checked ? this.closest( '.kform-settings-panel' ).classList.add( 'kform-settings-panel--collapsed' ) : this.closest( '.kform-settings-panel' ).classList.remove( 'kform-settings-panel--collapsed' )"
 							checked
 						/>
-						<label class="gform-settings-panel__collapsible-toggle" for="kdnaform_settings_section_collapsed_uninstall"><span class="screen-reader-text"><?php esc_html_e( 'Toggle Uninstall Section' ); ?></span></label>
+						<label class="kform-settings-panel__collapsible-toggle" for="kdnaform_settings_section_collapsed_uninstall"><span class="screen-reader-text"><?php esc_html_e( 'Toggle Uninstall Section' ); ?></span></label>
 					</span>
 				</header>
-				<div class="gform-settings-panel__content">
+				<div class="kform-settings-panel__content">
 
 					<div class="alert error">
 						<?php echo $this->uninstall_warning_message(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -5560,17 +5560,17 @@ abstract class KDNAAddOn {
 		$icon_markup = KDNACommon::get_icon_markup( $icon, 'dashicon-admin-generic' );
 		$url         = add_query_arg( array( 'subview' => $this->get_slug() ), admin_url( 'admin.php?page=kdna_settings' ) );
 		?>
-		<form action="" method="post" class="gform-settings-panel gform-settings-panel__addon-uninstall">
+		<form action="" method="post" class="kform-settings-panel kform-settings-panel__addon-uninstall">
 			<?php wp_nonce_field( 'uninstall', 'kdna_addon_uninstall' ); ?>
-			<div class="gform-settings-panel__content">
+			<div class="kform-settings-panel__content">
 				<div class="addon-logo dashicons"><?php echo $icon_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 				<div class="addon-uninstall-text">
-					<h4 class="gform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
+					<h4 class="kform-settings-panel__title"><?php printf( esc_html__( '%s', 'kdnaforms' ), $this->get_short_title() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
 					<div><?php esc_attr_e( 'To continue uninstalling this add-on click the settings button.', 'kdnaforms' ) ?></div>
 				</div>
 				<div class="addon-uninstall-button">
 					<a href="<?php echo esc_url( $url ); ?>" aria-label="<?php echo 'Visit ' . $this->get_short_title() . ' Settings page'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" class="button addon-settings">
-						<i class="gform-icon gform-icon--cog"></i>
+						<i class="kform-icon kform-icon--cog"></i>
 						<?php esc_attr_e( 'Settings', 'kdnaforms' ); ?>
 					</a>
 				</div>
@@ -5823,8 +5823,8 @@ abstract class KDNAAddOn {
 	 *  array(
 	 *     "object_type" => 'contact',
 	 *     "capabilities" => array("kdnaforms_contacts_edit_contacts"),
-	 *     "redirect_url" => admin_url("admin.php?page=gf_contacts"),
-	 *     "edit_url" => admin_url(sprintf("admin.php?page=gf_contacts&id=%d", $contact_id)),
+	 *     "redirect_url" => admin_url("admin.php?page=kdna_contacts"),
+	 *     "edit_url" => admin_url(sprintf("admin.php?page=kdna_contacts&id=%d", $contact_id)),
 	 *     "strings" => $strings
 	 *     );
 	 *
@@ -6010,7 +6010,7 @@ abstract class KDNAAddOn {
 		 *
 		 * @return string
 		 */
-		$field_value = gf_apply_filters( array( 'kdnaform_addon_field_value', $form['id'], $field_id ), $field_value, $form, $entry, $field_id, $this->get_slug() );
+		$field_value = kdna_apply_filters( array( 'kdnaform_addon_field_value', $form['id'], $field_id ), $field_value, $form, $entry, $field_id, $this->get_slug() );
 
 		return $this->maybe_override_field_value( $field_value, $form, $entry, $field_id );
 	}
@@ -6029,7 +6029,7 @@ abstract class KDNAAddOn {
 		/* Get Add-On slug */
 		$slug = str_replace( 'kdnaforms', '', $this->get_slug() );
 
-		return gf_apply_filters( array(
+		return kdna_apply_filters( array(
 			"kdnaform_{$slug}_field_value",
 			$form['id'],
 			$field_id
@@ -6332,7 +6332,7 @@ abstract class KDNAAddOn {
 		);
 		?>
 
-		<div class="gf-notice notice notice-error">
+		<div class="kdna-notice notice notice-error">
 			<p><?php echo wp_kses( $message, array( 'a' => array( 'href' => true ) ) ); ?></p>
 		</div>
 		<?php
@@ -6354,14 +6354,14 @@ abstract class KDNAAddOn {
 	 * @return string
 	 */
 	public function get_menu_icon() {
-		return 'gform-icon--cog';
+		return 'kform-icon--cog';
 	}
 
 	/**
 	 * Return the plugin's icon namespace.
 	 * For implementation of a custom font icon kit.
 	 * Used by KDNACommon::get_icon_markup() and assumes your font icon kit
-	 * is setup in a similar fashion to KDNA Forms (`class="gform-icon gform-icon--icon-name"`).
+	 * is setup in a similar fashion to KDNA Forms (`class="kform-icon kform-icon--icon-name"`).
 	 * The namespace declared here should not include the `-icon`.
 	 *
 	 * @return string|null
@@ -6412,7 +6412,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the settings "Save" button was pressed
 	 */
 	public function is_save_postback() {
-		return ! rgempty( 'gform-settings-save' );
+		return ! rgempty( 'kform-settings-save' );
 	}
 
 	/**
@@ -6422,7 +6422,7 @@ abstract class KDNAAddOn {
 		/**
 		* @var KDNA_Forms\KDNA_Forms\Save_Form\KDNA_Save_Form_Helper $save_form_helper
 		*/
-		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::GF_SAVE_FROM_HELPER );
+		$save_form_helper = KDNAForms::get_service_container()->get( KDNA_Save_Form_Service_Provider::KDNA_SAVE_FROM_HELPER );
 		if (
 				KDNAForms::get_page_query_arg() == 'kdna_edit_forms' && ! rgempty( 'id', $_GET ) && rgempty( 'view', $_GET )  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				|| $save_form_helper->is_ajax_save_action()
@@ -6565,7 +6565,7 @@ abstract class KDNAAddOn {
 	 * Returns TRUE if the current page is the results page. Otherwise, returns FALSE
 	 */
 	public function is_results() {
-		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'gf_results_' . $this->get_slug() ) {
+		if ( KDNAForms::get_page_query_arg() == 'kdna_entries' && rgget( 'view' ) == 'kdna_results_' . $this->get_slug() ) {
 			return true;
 		}
 
@@ -6740,7 +6740,7 @@ abstract class KDNAAddOn {
 	 * @since 2.0.7
 	 */
 	public function load_text_domain() {
-		KDNACommon::load_gf_text_domain( $this->get_slug(), plugin_basename( dirname( $this->_full_path ) ) );
+		KDNACommon::load_kdna_text_domain( $this->get_slug(), plugin_basename( dirname( $this->_full_path ) ) );
 	}
 
 	/**
@@ -6817,7 +6817,7 @@ abstract class KDNAAddOn {
 	 */
 	public static function addons_for_uninstall( $uninstallable_addons ) {
 		?>
-		<div class="gform-addons-uninstall-panel">
+		<div class="kform-addons-uninstall-panel">
 			<?php
 			/* @var KDNAAddOn $addon An add-on instance. */
 			foreach ( $uninstallable_addons as $addon ) {

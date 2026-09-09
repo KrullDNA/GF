@@ -1,11 +1,11 @@
-Gravity Forms REST API v2
+KDNA Forms REST API v2
 =========================
 
 ## Upgrading to Version 2
 
 The API is intended to feel as familiar as possible to developers who have worked with the WordPres REST API.
 The endpoints are largely the same as version 1, however, the responses are slightly different and authentication 
-is no longer handled by Gravity Forms.
+is no longer handled by KDNA Forms.
 
 The following breaking changes are required by clients to consume version 2:
 
@@ -60,7 +60,7 @@ The WP-API will envelope the response if the \_envelope param is included in the
     "payment_method":   null,
     "payment_status":   null,
     "post_id":          null,
-    "source_url":       "http://localhost?gf_page=preview&id=1",
+    "source_url":       "http://localhost?kdna_page=preview&id=1",
     "status":           "active",
     "transaction_id":   null,
     "transaction_type": null,
@@ -87,7 +87,7 @@ The WP-API will envelope the response if the \_envelope param is included in the
         "payment_method":   null,
         "payment_status":   null,
         "post_id":          null,
-        "source_url":       "http://localhost?gf_page=preview&id=1",
+        "source_url":       "http://localhost?kdna_page=preview&id=1",
         "status":           "active",
         "transaction_id":   null,
         "transaction_type": null,
@@ -166,7 +166,7 @@ The API can be accessed as route from the WordPress REST API. This should look s
 
     https://localhost/wp-json/gf/v2/
 
-For example, to obtain the Gravity Forms entry with ID 5, your request would be made to the following:
+For example, to obtain the KDNA Forms entry with ID 5, your request would be made to the following:
 
     https://localhost/wp-json/gf/v2/entries/5
 
@@ -954,7 +954,7 @@ the entry permanently but the response code will be 410 (Gone). Use the 'force' 
 
   ```json
   {
-    "code":    "gf_cannot_delete",
+    "code":    "kdna_cannot_delete",
     "message": "Invalid entry id: 71",
     "data":    {
       "status": 500
@@ -1121,7 +1121,7 @@ the form permanently but the response code will be 410 (Gone). Use the 'force' p
 
   ```json
   {
-    "code":    "gf_form_invalid_id",
+    "code":    "kdna_form_invalid_id",
     "message": "Invalid form id.",
     "data": {
     "status": 404
@@ -1922,7 +1922,7 @@ Submits the specified form ID with the specified values.
   "is_valid":             true,
   "page_number":          0,
   "source_page_number":   1,
-  "confirmation_message": "<div id='gform_confirmation_wrapper_6' class='gform_confirmation_wrapper '><div id='gform_confirmation_message_6' class='gform_confirmation_message_6 gform_confirmation_message'>Thanks for contacting us! We will get in touch with you shortly.<\/div><\/div>"
+  "confirmation_message": "<div id='kform_confirmation_wrapper_6' class='kform_confirmation_wrapper '><div id='kform_confirmation_message_6' class='kform_confirmation_message_6 kform_confirmation_message'>Thanks for contacting us! We will get in touch with you shortly.<\/div><\/div>"
 }
 ```
 
@@ -2000,7 +2000,7 @@ The newly created feed.
 
 ```json
 {
-  "addon_slug": "gravityformstestaddon",
+  "addon_slug": "kdnaformstestaddon",
   "meta": {
     "textField": "My Value"
   }
@@ -2011,7 +2011,7 @@ The newly created feed.
 
 ```json
 {
-  "addon_slug": "gravityformstestaddon",
+  "addon_slug": "kdnaformstestaddon",
   "meta": {
     "textField": "My Value"
   },
@@ -2052,7 +2052,7 @@ An array of feeds.
   {
     "id": "31",
     "form_id": "36",
-    "addon_slug": "gravityformstestaddon",
+    "addon_slug": "kdnaformstestaddon",
     "meta": {
       "textField": "My Value"
     }
@@ -2088,7 +2088,7 @@ The newly created feed.
 
 ```json
 {
-  "addon_slug": "gravityformstestaddon",
+  "addon_slug": "kdnaformstestaddon",
   "meta": {
     "textField": "My Value"
   },
@@ -2102,7 +2102,7 @@ The newly created feed.
 {
     "id": "31",
     "form_id": "36",
-    "addon_slug": "gravityformstestaddon",
+    "addon_slug": "kdnaformstestaddon",
     "meta": {
       "textField": "My Value"
     }
@@ -2141,7 +2141,7 @@ The updated feed.
 
 ```json
 {
-  "addon_slug": "gravityformstestaddon",
+  "addon_slug": "kdnaformstestaddon",
   "meta": {
     "feedName": "My Value2"
   },
@@ -2155,7 +2155,7 @@ The updated feed.
 {
   "id": "34",
   "form_id": "36",
-  "addon_slug": "gravityformstestaddon",
+  "addon_slug": "kdnaformstestaddon",
   "meta": {
     "feedName": "My Value2"
   }
@@ -2184,7 +2184,7 @@ The result and, if successful, the deleted feed.
   "previous": {
     "id": "34",
     "form_id": "36",
-    "addon_slug": "gravityformstestaddon",
+    "addon_slug": "kdnaformstestaddon",
     "meta": {
       "feedName": "My Value2"
     }

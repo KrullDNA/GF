@@ -42,14 +42,14 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--image_choice';
+		return 'kform-icon--image_choice';
 	}
 
 	function get_form_editor_field_settings() {
@@ -93,7 +93,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 						// get the image to check if it has already been resized or not
 						$image = wp_get_attachment_image_src(
 							$choice['attachment_id'],
-							'gform-' .  key( $image_sizes )
+							'kform-' .  key( $image_sizes )
 						);
 
 						if ( is_array( $image ) && $image[3] === false ) {
@@ -119,7 +119,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 	 * @param array $forms The forms being imported.
 	 */
 	public static function resize_images_after_import( $forms ) {
-		if ( ! rgpost( 'gf_import_media' ) ) {
+		if ( ! rgpost( 'kdna_import_media' ) ) {
 			return;
 		}
 
@@ -149,7 +149,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 		 *
 		 * @return string
 		 */
-		return gf_apply_filters( array( 'kdnaform_image_choice_label_visibility_default', $form_id ), 'show' );
+		return kdna_apply_filters( array( 'kdnaform_image_choice_label_visibility_default', $form_id ), 'show' );
 	}
 
 	/**
@@ -185,7 +185,7 @@ class KDNA_Field_Image_Choice extends KDNA_Field_Multiple_Choice {
 		 * @param string $input_visibility The image choice inputs visibility.
 		 * @param object $field            The current field object.
 		 */
-		return gf_apply_filters( array( 'kdnaform_image_choice_input_visibility', $field->formId ), 'show', $field );
+		return kdna_apply_filters( array( 'kdnaform_image_choice_input_visibility', $field->formId ), 'show', $field );
 	}
 
 	public function get_form_editor_inline_script_on_page_render() {

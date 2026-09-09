@@ -12,7 +12,7 @@ var KDNAFeedOrder = function( args ) {
 		self.options = args;
 
 		// Prepare sorting handle.
-		var sortHandleMarkup = '<td class="sort-column"><i class="gform-icon gform-icon--drag-indicator feed-sort-handle"></i></td>';
+		var sortHandleMarkup = '<td class="sort-column"><i class="kform-icon kform-icon--drag-indicator feed-sort-handle"></i></td>';
 
 		// Add sorting handle to table.
 		$( '.wp-list-table thead tr, .wp-list-table tfoot tr' ).append( '<th class="sort-column"></th>' );
@@ -95,7 +95,7 @@ var KDNAFeedOrder = function( args ) {
 				method:   'POST',
 				dataType: 'JSON',
 				data:     {
-					action:     'gf_save_feed_order',
+					action:     'kdna_save_feed_order',
 					addon:      self.options.addon,
 					form_id:    self.options.formId,
 					feed_order: self.getFeedOrder(),

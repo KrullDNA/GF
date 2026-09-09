@@ -96,6 +96,34 @@ class KDNA_Block_Form extends KDNA_Block {
 	}
 
 	/**
+	 * The forms offered in the block's form picker.
+	 *
+	 * localize_script() has always called this and nothing defined it. It does
+	 * not fatal today only because scripts() returns an empty array, so
+	 * KDNA_Block::register_scripts() returns before localizing — the block's JS
+	 * ships inside the admin bundle instead. Anything that gives this block a
+	 * script of its own would have hit an undefined method.
+	 *
+	 * @since 3.5.7
+	 *
+	 * @return array A list of id and title pairs, newest form first.
+	 */
+	public function get_forms() {
+
+		$forms  = KDNAFormsModel::get_forms( null, 'title' );
+		$picker = array();
+
+		foreach ( $forms as $form ) {
+			$picker[] = array(
+				'id'    => absint( $form->id ),
+				'title' => $form->title,
+			);
+		}
+
+		return $picker;
+	}
+
+	/**
 	 * Localize Form block script.
 	 *
 	 * @since  2.4.10
@@ -134,7 +162,7 @@ class KDNA_Block_Form extends KDNA_Block {
 
 		// Add KDNA Forms styling if CSS is enabled.
 		if ( ! KDNACommon::is_frontend_default_css_disabled() ) {
-			$deps = array_merge( $deps, array( 'gforms_reset_css', 'kdnaform_basic', 'gforms_formsmain_css', 'gforms_ready_class_css', 'gforms_browsers_css', 'kdnaform_theme' ) );
+			$deps = array_merge( $deps, array( 'kforms_reset_css', 'kdnaform_basic', 'kforms_formsmain_css', 'kforms_ready_class_css', 'kforms_browsers_css', 'kdnaform_theme' ) );
 
 			/**
 			 * Allows users to disable the main theme.css file from being loaded on the Front End.
@@ -205,7 +233,7 @@ class KDNA_Block_Form extends KDNA_Block {
 			}
 
 			// Get form output string.
-			$form_string = gravity_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) );
+			$form_string = kdna_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) );
 
 			// Get output buffer contents.
 			$buffer_contents = ob_get_contents();
@@ -227,7 +255,7 @@ class KDNA_Block_Form extends KDNA_Block {
 			$field_values = '';
 		}
 
-		return gravity_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) ); // nosemgrep audit.php.wp.security.xss.block-attr
+		return kdna_form( $form_id, $title, $description, false, $field_values, $ajax, $tabindex, false, rgar( $attributes, 'theme' ), json_encode( $attributes ) ); // nosemgrep audit.php.wp.security.xss.block-attr
 
 	}
 

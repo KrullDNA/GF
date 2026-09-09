@@ -7,7 +7,7 @@ defined( 'ABSPATH' ) || die();
 use KDNACommon;
 
 /**
- * Class GF_Submitted_Fields_Endpoint
+ * Class KDNA_Submitted_Fields_Endpoint
  *
  * Endpoint for retrieving submitted fields data for the form editor.
  *
@@ -15,7 +15,7 @@ use KDNACommon;
  *
  * @package KDNA_Forms\KDNA_Forms\Form_Editor\Submitted_Fields\Endpoints
  */
-class GF_Submitted_Fields_Endpoint {
+class KDNA_Submitted_Fields_Endpoint {
 
 	/**
 	 * The action name for this endpoint.
@@ -24,7 +24,7 @@ class GF_Submitted_Fields_Endpoint {
 	 *
 	 * @var string
 	 */
-	const ACTION_NAME = 'gf_get_submitted_fields';
+	const ACTION_NAME = 'kdna_get_submitted_fields';
 
 	/**
 	 * The nonce action for this endpoint.
@@ -33,7 +33,7 @@ class GF_Submitted_Fields_Endpoint {
 	 *
 	 * @var string
 	 */
-	const NONCE_ACTION = 'gf_get_submitted_fields';
+	const NONCE_ACTION = 'kdna_get_submitted_fields';
 
 	/**
 	 * @var array

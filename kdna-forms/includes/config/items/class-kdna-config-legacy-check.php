@@ -13,7 +13,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Configurator;
  */
 class KDNA_Config_Legacy_Check extends KDNA_Config {
 
-	protected $name               = 'gf_legacy';
+	protected $name               = 'kdna_legacy';
 	protected $script_to_localize = 'kdnaform_layout_editor';
 
 	/**

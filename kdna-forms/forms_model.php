@@ -101,9 +101,9 @@ class KDNAFormsModel {
 	 */
 	public static function get_database_version() {
 		// KDNA Forms: Always return modern version to prevent legacy table fallback.
-		// The legacy tables (rg_form, rg_lead, etc.) are from Gravity Forms < 2.3
+		// The legacy tables (rg_form, rg_lead, etc.) are from KDNA Forms < 2.3
 		// and do not exist in KDNA Forms installations. Returning >= 2.3 keeps
-		// legacy code paths (e.g. GF_Forms_Model_Legacy) from ever being called.
+		// legacy code paths (e.g. KDNA_Forms_Model_Legacy) from ever being called.
 		// This is the DB schema version, not the plugin version.
 		return '2.3';
 	}
@@ -177,7 +177,7 @@ class KDNAFormsModel {
 	public static function get_form_table_name() {
 		global $wpdb;
 
-		// KDNA Forms always uses the modern gf_ table prefix.
+		// KDNA Forms always uses the modern kdna_ table prefix.
 		return $wpdb->prefix . 'gf_form';
 	}
 
@@ -242,7 +242,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) table name.
 	 */
 	public static function get_lead_table_name() {
-		return GF_Forms_Model_Legacy::get_lead_table_name();
+		return KDNA_Forms_Model_Legacy::get_lead_table_name();
 	}
 
 	/**
@@ -255,7 +255,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) meta table name.
 	 */
 	public static function get_lead_meta_table_name() {
-		return GF_Forms_Model_Legacy::get_lead_meta_table_name();
+		return KDNA_Forms_Model_Legacy::get_lead_meta_table_name();
 	}
 
 	/**
@@ -268,7 +268,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) notes table name.
 	 */
 	public static function get_lead_notes_table_name() {
-		return GF_Forms_Model_Legacy::get_lead_notes_table_name();
+		return KDNA_Forms_Model_Legacy::get_lead_notes_table_name();
 	}
 
 	/**
@@ -281,7 +281,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) details table name.
 	 */
 	public static function get_lead_details_table_name() {
-		return GF_Forms_Model_Legacy::get_lead_details_table_name();
+		return KDNA_Forms_Model_Legacy::get_lead_details_table_name();
 	}
 
 	/**
@@ -294,7 +294,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) details long table name.
 	 */
 	public static function get_lead_details_long_table_name() {
-		return GF_Forms_Model_Legacy::get_lead_details_long_table_name();
+		return KDNA_Forms_Model_Legacy::get_lead_details_long_table_name();
 	}
 
 	/**
@@ -307,7 +307,7 @@ class KDNAFormsModel {
 	 * @return string The lead (entry) view table name.
 	 */
 	public static function get_lead_view_name() {
-		return GF_Forms_Model_Legacy::get_lead_view_name();
+		return KDNA_Forms_Model_Legacy::get_lead_view_name();
 	}
 
 	/**
@@ -320,7 +320,7 @@ class KDNAFormsModel {
 	 * @return string he incomplete submissions table name.
 	 */
 	public static function get_incomplete_submissions_table_name() {
-		return GF_Forms_Model_Legacy::get_incomplete_submissions_table_name();
+		return KDNA_Forms_Model_Legacy::get_incomplete_submissions_table_name();
 	}
 
 	/**
@@ -586,7 +586,7 @@ class KDNAFormsModel {
 	public static function get_entry_count_per_form() {
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_entry_count_per_form();
+			return KDNA_Forms_Model_Legacy::get_entry_count_per_form();
 		}
 
 		global $wpdb;
@@ -705,7 +705,7 @@ class KDNAFormsModel {
 	public static function get_form_counts( $form_id ) {
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_form_counts( $form_id );
+			return KDNA_Forms_Model_Legacy::get_form_counts( $form_id );
 		}
 
 		global $wpdb;
@@ -1084,7 +1084,7 @@ class KDNAFormsModel {
 		 *
 		 * @param array $form The Form object
 		 */
-		$form = gf_apply_filters( array( 'kdnaform_form_post_get_meta', $form_id ), $form );
+		$form = kdna_apply_filters( array( 'kdnaform_form_post_get_meta', $form_id ), $form );
 
 		// Cached form meta for cheaper retrieval on subsequent requests
 		self::$_current_forms[ $key ] = $form;
@@ -1486,7 +1486,7 @@ class KDNAFormsModel {
 
 	public static function get_lead_detail_id( $current_fields, $field_number, $item_index = '' ) {
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_lead_detail_id( $current_fields, $field_number );
+			return KDNA_Forms_Model_Legacy::get_lead_detail_id( $current_fields, $field_number );
 		}
 
 		foreach ( $current_fields as $field ) {
@@ -1694,7 +1694,7 @@ class KDNAFormsModel {
 		global $wpdb, $current_user;
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::update_lead_property( $lead_id, $property_name, $property_value, $update_akismet, $disable_hook );
+			return KDNA_Forms_Model_Legacy::update_lead_property( $lead_id, $property_name, $property_value, $update_akismet, $disable_hook );
 		}
 
 		$entry_table = self::get_entry_table_name();
@@ -1756,6 +1756,10 @@ class KDNAFormsModel {
 				 * @since 2.3.3.9
 				 */
 				do_action( "kdnaform_post_update_entry_property", $lead_id, $property_name, $property_value, $previous_value );
+				if ( ! function_exists( 'kdna_feed_processor' ) ) {
+					require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+				}
+
 				kdna_feed_processor()->save()->dispatch_on_shutdown();
 			}
 		}
@@ -1811,7 +1815,7 @@ class KDNAFormsModel {
 		global $wpdb, $current_user;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::delete_leads_by_form( $form_id, $status );
+			KDNA_Forms_Model_Legacy::delete_leads_by_form( $form_id, $status );
 			return;
 		}
 
@@ -2211,7 +2215,7 @@ class KDNAFormsModel {
 	public static function update_form_meta( $form_id, $form_meta, $meta_name = 'display_meta' ) {
 		global $wpdb;
 
-		$form_meta = gf_apply_filters( array( 'kdnaform_form_update_meta', $form_id ), $form_meta, $form_id, $meta_name );
+		$form_meta = kdna_apply_filters( array( 'kdnaform_form_update_meta', $form_id ), $form_meta, $form_id, $meta_name );
 
 		$meta_table_name = self::get_meta_table_name();
 		$new_display_meta = $form_meta;
@@ -2236,7 +2240,7 @@ class KDNAFormsModel {
 		 * @param int    $form_id   The ID of the form data was updated
 		 * @param string $meta_name The name of the meta updated
 		 */
-		gf_do_action( array( 'kdnaform_post_update_form_meta', $form_id ), $form_meta, $form_id, $meta_name );
+		kdna_do_action( array( 'kdnaform_post_update_form_meta', $form_id ), $form_meta, $form_id, $meta_name );
 
 		return $result;
 	}
@@ -2380,7 +2384,7 @@ class KDNAFormsModel {
 		 * @param array $field_types Field types which contain file uploads
 		 * @param array $form The Form Object
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_types_delete_files', $form['id'] ), $field_types, $form );
+		return kdna_apply_filters( array( 'kdnaform_field_types_delete_files', $form['id'] ), $field_types, $form );
 	}
 
 	/**
@@ -2431,7 +2435,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::delete_file( $entry_id, $field_id, $file_index );
+			KDNA_Forms_Model_Legacy::delete_file( $entry_id, $field_id, $file_index );
 			return;
 		}
 
@@ -2744,7 +2748,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::delete_field_values( $form_id, $field_id );
+			KDNA_Forms_Model_Legacy::delete_field_values( $form_id, $field_id );
 			return;
 		}
 
@@ -2787,7 +2791,7 @@ class KDNAFormsModel {
 		}
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::delete_lead( $entry_id );
+			KDNA_Forms_Model_Legacy::delete_lead( $entry_id );
 			return;
 		}
 
@@ -2853,7 +2857,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::add_note( $entry_id, $user_id, $user_name, $note, $note_type );
+			KDNA_Forms_Model_Legacy::add_note( $entry_id, $user_id, $user_name, $note, $note_type );
 			return;
 		}
 
@@ -2933,7 +2937,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::delete_note( $note_id );
+			KDNA_Forms_Model_Legacy::delete_note( $note_id );
 			return;
 		}
 
@@ -3070,7 +3074,7 @@ class KDNAFormsModel {
 		global $wpdb, $current_user;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			GF_Forms_Model_Legacy::save_lead( $form, $entry );
+			KDNA_Forms_Model_Legacy::save_lead( $form, $entry );
 			$entry = KDNAAPI::get_entry( $entry['id'] );
 			return;
 		}
@@ -3123,7 +3127,7 @@ class KDNAFormsModel {
 			 * @param array $form The form currently being processed.
 			 *
 			 */
-			$currency = gf_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form['id'] ), KDNACommon::get_submission_currency(), $form );
+			$currency = kdna_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form['id'] ), KDNACommon::get_submission_currency(), $form );
 
 			$ip        = rgars( $form, 'personalData/preventIP' ) ? '' : self::get_ip();
 			$source_id = self::get_source_id( $form );
@@ -3243,7 +3247,7 @@ class KDNAFormsModel {
 			 * @param array $form                The current form object.
 			 * @param array $entry               The current entry object.
 			 */
-			$read_value_from_post = gf_apply_filters( array( 'kdnaform_use_post_value_for_conditional_logic_save_entry', $form['id'] ), $is_new_lead || ! isset( $entry[ 'date_created' ] ), $form, $entry );
+			$read_value_from_post = kdna_apply_filters( array( 'kdnaform_use_post_value_for_conditional_logic_save_entry', $form['id'] ), $is_new_lead || ! isset( $entry[ 'date_created' ] ), $form, $entry );
 
 			// Only save fields that are not hidden (except when updating an entry)
 			if ( $is_entry_detail || ! KDNAFormsModel::is_field_hidden( $form, $field, array(), $read_value_from_post ? null : $entry ) ) {
@@ -3340,7 +3344,7 @@ class KDNAFormsModel {
 
 			if ( is_array( $inputs ) ) {
 				foreach ( $inputs as $input ) {
-					$entry[ (string) $input['id'] ] = gf_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id, $input['id'] ), rgar( $entry, (string) $input['id'] ), $entry, $field, $input['id'] );
+					$entry[ (string) $input['id'] ] = kdna_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id, $input['id'] ), rgar( $entry, (string) $input['id'] ), $entry, $field, $input['id'] );
 				}
 			} else {
 
@@ -3350,7 +3354,7 @@ class KDNAFormsModel {
 					$value = KDNACommon::openssl_decrypt( $value );
 				}
 
-				$entry[ (string) $field->id ] = gf_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id ), $value, $entry, $field, '' );
+				$entry[ (string) $field->id ] = kdna_apply_filters( array( 'kdnaform_get_input_value', $form['id'], $field->id ), $value, $entry, $field, '' );
 
 			}
 
@@ -3392,7 +3396,7 @@ class KDNAFormsModel {
 		 * @param int|null  $id     The ID of the post or page where the form submission originated.
 		 * @param array     $form   The form the entry is being created for.
 		 */
-		return gf_apply_filters( array( 'kdnaform_source_id_pre_save_entry', (int) rgar( $form, 'id' ) ), ! empty( $id ) ? $id : null, $form );
+		return kdna_apply_filters( array( 'kdnaform_source_id_pre_save_entry', (int) rgar( $form, 'id' ) ), ! empty( $id ) ? $id : null, $form );
 	}
 
 	/**
@@ -3534,7 +3538,7 @@ class KDNAFormsModel {
 		 * @param array $form The form currently being processed.
 		 *
 		 */
-		$lead['currency'] = gf_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form_id ), KDNACommon::get_submission_currency(), $form );
+		$lead['currency'] = kdna_apply_filters( array( 'kdnaform_currency_pre_save_entry', $form_id ), KDNACommon::get_submission_currency(), $form );
 
 		foreach ( $form['fields'] as $field ) {
 			/* @var $field KDNA_Field */
@@ -3737,7 +3741,7 @@ class KDNAFormsModel {
 
 		}
 
-		return gf_apply_filters( array( 'kdnaform_save_field_value', $form_id, $field->id ), $value, $lead, $field, $form, $input_id );
+		return kdna_apply_filters( array( 'kdnaform_save_field_value', $form_id, $field->id ), $value, $lead, $field, $form, $input_id );
 	}
 
 	public static function refresh_product_cache( $form, $lead, $use_choice_text = false, $use_admin_label = false ) {
@@ -4305,7 +4309,7 @@ class KDNAFormsModel {
 		$submission['field_values']     = $field_values;
 		$submission['page_number']      = $page_number;
 		$submission['files']            = $files;
-		$submission['gform_unique_id']  = $form_unique_id;
+		$submission['kform_unique_id']  = $form_unique_id;
 
 		// Issue a new token if no longer valid
 		if ( ! empty( $resume_token ) ) {
@@ -4679,7 +4683,7 @@ class KDNAFormsModel {
 			}
 		}
 
-		return gf_apply_filters( array( 'kdnaform_field_value', $name ), $value, $field, $name );
+		return kdna_apply_filters( array( 'kdnaform_field_value', $name ), $value, $field, $name );
 	}
 
 	public static function get_default_value( $field, $input_id ) {
@@ -4877,7 +4881,7 @@ class KDNAFormsModel {
 		 *
 		 * @param bool $disable_query Indicates if the custom field names query should be disabled. Default is false.
 		 */
-		$disable_query = gf_apply_filters( array( 'kdnaform_disable_custom_field_names_query', $form_id ), false );
+		$disable_query = kdna_apply_filters( array( 'kdnaform_disable_custom_field_names_query', $form_id ), false );
 
 		if ( $disable_query ) {
 			return array();
@@ -5023,17 +5027,17 @@ class KDNAFormsModel {
 	 */
 	public static function get_fileupload_value( $form_id, $input_name ) {
 		_deprecated_function( 'KDNAFormsModel::get_fileupload_value', '1.9', 'KDNA_Field_Fileupload::get_fileupload_value' );
-		global $_gf_uploaded_files;
+		global $_kdna_uploaded_files;
 
 		KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Starting.' );
 
-		if ( empty( $_gf_uploaded_files ) ) {
+		if ( empty( $_kdna_uploaded_files ) ) {
 			KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): No files uploaded. Exiting.' );
-			$_gf_uploaded_files = array();
+			$_kdna_uploaded_files = array();
 		}
 
 
-		if ( ! isset( $_gf_uploaded_files[ $input_name ] ) ) {
+		if ( ! isset( $_kdna_uploaded_files[ $input_name ] ) ) {
 
 			//check if file has already been uploaded by previous step
 			$file_info     = self::get_temp_filename( $form_id, $input_name );
@@ -5042,20 +5046,20 @@ class KDNAFormsModel {
 			KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Temp file path: ' . $temp_filepath );
 			if ( $file_info && file_exists( $temp_filepath ) ) {
 				KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Moving temp file: ' . $temp_filepath );
-				$_gf_uploaded_files[ $input_name ] = self::move_temp_file( $form_id, $file_info );
+				$_kdna_uploaded_files[ $input_name ] = self::move_temp_file( $form_id, $file_info );
 			} else if ( ! empty( $_FILES[ $input_name ]['name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 				KDNACommon::log_debug( 'KDNAFormsModel::get_fileupload_value(): Uploading file: ' . $_FILES[ $input_name ]['name'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				$_gf_uploaded_files[ $input_name ] = self::upload_file( $form_id, $_FILES[ $input_name ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				$_kdna_uploaded_files[ $input_name ] = self::upload_file( $form_id, $_FILES[ $input_name ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			}
 		}
 
-		return rgget( $input_name, $_gf_uploaded_files );
+		return rgget( $input_name, $_kdna_uploaded_files );
 	}
 
 	public static function get_form_unique_id( $form_id ) {
 		$unique_id = '';
-		if ( rgpost( 'gform_submit' ) == $form_id ) {
-			$posted_uid = rgpost( 'gform_unique_id' );
+		if ( rgpost( 'kform_submit' ) == $form_id ) {
+			$posted_uid = rgpost( 'kform_unique_id' );
 			if ( false === empty( $posted_uid ) && ctype_alnum( $posted_uid )) {
 				$unique_id = $posted_uid;
 				self::$unique_ids[ $form_id ] = $unique_id;
@@ -5181,7 +5185,7 @@ class KDNAFormsModel {
 		$post_data = self::get_post_fields( $form, $lead );
 
 		//allowing users to change post fields before post gets created
-		$post_data = gf_apply_filters( array( 'kdnaform_post_data', $form['id'] ), $post_data, $form, $lead );
+		$post_data = kdna_apply_filters( array( 'kdnaform_post_data', $form['id'] ), $post_data, $form, $lead );
 
 		//adding default title if none of the required post fields are in the form (will make sure wp_insert_post() inserts the post)
 		if ( empty( $post_data['post_title'] ) && empty( $post_data['post_content'] ) && empty( $post_data['post_excerpt'] ) ) {
@@ -5209,8 +5213,8 @@ class KDNAFormsModel {
 		$lead['post_id'] = $post_id;
 
 		//adding form id and entry id hidden custom fields
-		add_post_meta( $post_id, '_gform-form-id', $form['id'] );
-		add_post_meta( $post_id, '_gform-entry-id', $lead['id'] );
+		add_post_meta( $post_id, '_kform-form-id', $form['id'] );
+		add_post_meta( $post_id, '_kform-entry-id', $lead['id'] );
 
 		$post_images = array();
 		if ( ! empty( $post_data['images'] ) ) {
@@ -5377,7 +5381,7 @@ class KDNAFormsModel {
 		self::update_lead_property( $lead['id'], 'post_id', $post_id );
 
 		$kdnaform_after_create_post_args = array( 'kdnaform_after_create_post', $form['id'] );
-		if ( gf_has_action( $kdnaform_after_create_post_args ) ) {
+		if ( kdna_has_action( $kdnaform_after_create_post_args ) ) {
 			KDNACommon::log_debug( __METHOD__ . '(): Executing functions hooked to kdnaform_after_create_post.' );
 			/**
 			 * Fires after a post, from a form with post fields, is created
@@ -5387,7 +5391,7 @@ class KDNAFormsModel {
 			 * @param array $lead    The Lead Object
 			 * @param array $form    The Form Object for the form used to create the post
 			 */
-			gf_do_action( $kdnaform_after_create_post_args, $post_id, $lead, $form );
+			kdna_do_action( $kdnaform_after_create_post_args, $post_id, $lead, $form );
 			KDNACommon::log_debug( __METHOD__ . '(): Completed kdnaform_after_create_post.' );
 		}
 
@@ -5473,7 +5477,7 @@ class KDNAFormsModel {
 			return false;
 		}
 
-		$form_id = get_post_meta( $post_id, '_gform-form-id', true );
+		$form_id = get_post_meta( $post_id, '_kform-form-id', true );
 
 		/**
 		 * Filter the media upload location.
@@ -5482,7 +5486,7 @@ class KDNAFormsModel {
 		 * @param int $form_id The ID of the form currently being processed.
 		 * @param int $post_id The ID of the post created from the entry currently being processed.
 		 */
-		$upload_dir = gf_apply_filters( 'kdnaform_media_upload_path', $form_id, $upload_dir, $form_id, $post_id );
+		$upload_dir = kdna_apply_filters( 'kdnaform_media_upload_path', $form_id, $upload_dir, $form_id, $post_id );
 
 		if ( ! file_exists( $upload_dir['path'] ) ) {
 			if ( ! wp_mkdir_p( $upload_dir['path'] ) ) {
@@ -5740,7 +5744,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::update_lead_field_value( $form, $entry, $field, $entry_meta_id, $input_id, $value );
+			return KDNA_Forms_Model_Legacy::update_lead_field_value( $form, $entry, $field, $entry_meta_id, $input_id, $value );
 		}
 
 		/**
@@ -6079,7 +6083,7 @@ class KDNAFormsModel {
 			 * @param array $location An array containing the path and url of the temporary upload directory.
 			 * @param int   $form_id  The ID of the form.
 			 */
-			$locations[ $form_id ] = (array) gf_apply_filters( array( 'kdnaform_file_upload_tmp_dir', $form_id ), $location, $form_id );
+			$locations[ $form_id ] = (array) kdna_apply_filters( array( 'kdnaform_file_upload_tmp_dir', $form_id ), $location, $form_id );
 		}
 
 		return $locations[ $form_id ];
@@ -6173,7 +6177,7 @@ class KDNAFormsModel {
 
 	public static function drop_tables() {
 		global $wpdb;
-		foreach ( GF_Forms_Model_Legacy::get_legacy_tables() as $table ) {
+		foreach ( KDNA_Forms_Model_Legacy::get_legacy_tables() as $table ) {
 			$wpdb->query( $wpdb->prepare( "DROP TABLE IF EXISTS %i", $table ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		}
 		foreach ( self::get_tables() as $table ) {
@@ -6194,8 +6198,8 @@ class KDNAFormsModel {
 
 		$addon_tables = array(
 			self::get_addon_feed_table_name(),
-			$wpdb->prefix . 'gf_addon_payment_callback',
-			$wpdb->prefix . 'gf_addon_payment_transaction',
+			$wpdb->prefix . 'kdna_addon_payment_callback',
+			$wpdb->prefix . 'kdna_addon_payment_transaction',
 		);
 
 		$drop_tables = array_merge( $drop_tables, $addon_tables );
@@ -6204,7 +6208,7 @@ class KDNAFormsModel {
 
 		$drop_tables = array_merge( $drop_tables, $core_tables );
 
-		$legacy_tables = GF_Forms_Model_Legacy::get_legacy_tables();
+		$legacy_tables = KDNA_Forms_Model_Legacy::get_legacy_tables();
 
 		$drop_tables = array_merge( $drop_tables, $legacy_tables );
 
@@ -6230,7 +6234,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::is_duplicate( $form_id, $field, $value );
+			return KDNA_Forms_Model_Legacy::is_duplicate( $form_id, $field, $value );
 		}
 
 		$entry_meta_table_name   = self::get_entry_meta_table_name();
@@ -6284,7 +6288,7 @@ class KDNAFormsModel {
                 GROUP BY entry_id
                 ORDER BY match_count DESC";
 
-		$count = gf_apply_filters( array( 'kdnaform_is_duplicate', $form_id ), $wpdb->get_var( $sql ), $form_id, $field, $value ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$count = kdna_apply_filters( array( 'kdnaform_is_duplicate', $form_id ), $wpdb->get_var( $sql ), $form_id, $field, $value ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		return $count != null && $count >= $input_count;
 	}
@@ -6305,7 +6309,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_lead_notes( $lead_id );
+			return KDNA_Forms_Model_Legacy::get_lead_notes( $lead_id );
 		}
 
 		$notes_table = self::get_entry_notes_table_name();
@@ -6526,7 +6530,7 @@ class KDNAFormsModel {
 		if ( $apply_filter ) {
 			$field    = KDNAFormsModel::get_field( $form, $field_number );
 			$input_id = (string) $field_number == (string) $field->id ? '' : $field_number;
-			$val      = gf_apply_filters( array( 'kdnaform_get_input_value', $field->formId, $field->id, $input_id ), $val, $lead, $field, $input_id );
+			$val      = kdna_apply_filters( array( 'kdnaform_get_input_value', $field->formId, $field->id, $input_id ), $val, $lead, $field, $input_id );
 		}
 
 		return $val;
@@ -6554,7 +6558,7 @@ class KDNAFormsModel {
 	 */
 	public static function get_entries_by_meta( $meta_key, $meta_value ) {
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_leads_by_meta( $meta_key, $meta_value );
+			return KDNA_Forms_Model_Legacy::get_leads_by_meta( $meta_key, $meta_value );
 		}
 
 		// phpcs:disable WordPress.DB.SlowDBQuery.slow_db_query_meta_key, WordPress.DB.SlowDBQuery.slow_db_query_meta_value
@@ -6652,7 +6656,7 @@ class KDNAFormsModel {
 	public static function get_leads_where_sql( $args ) {
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_leads_where_sql( $args ) ;
+			return KDNA_Forms_Model_Legacy::get_leads_where_sql( $args ) ;
 		}
 
 		return self::get_entries_where_sql( $args );
@@ -6668,7 +6672,7 @@ class KDNAFormsModel {
 	 */
 	public static function build_lead_array( $results ) {
 		_deprecated_function(__METHOD__, '2.3');
-		return GF_Forms_Model_Legacy::build_lead_array( $results );
+		return KDNA_Forms_Model_Legacy::build_lead_array( $results );
 	}
 
 	/***
@@ -6707,7 +6711,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_lead_count( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
+			return KDNA_Forms_Model_Legacy::get_lead_count( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
 		}
 
 		if ( ! is_numeric( $form_id ) ) {
@@ -6820,7 +6824,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_lead_ids( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
+			return KDNA_Forms_Model_Legacy::get_lead_ids( $form_id, $search, $star, $read, $start_date, $end_date, $status, $payment_status ) ;
 		}
 
 		if ( ! is_numeric( $form_id ) ) {
@@ -7032,24 +7036,24 @@ class KDNAFormsModel {
 		switch( $required_indicator ) {
 			case 'text':
 				$indicator       = esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = 'gfield_required_text';
+				$indicator_class = 'kfield_required_text';
 				break;
 			case 'asterisk':
 				$indicator       = '*';
-				$indicator_class = 'gfield_required_asterisk';
+				$indicator_class = 'kfield_required_asterisk';
 				break;
 			case 'custom':
 				$indicator       = rgar( $meta, 'customRequiredIndicator' ) ? $meta['customRequiredIndicator'] : esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = 'gfield_required_custom';
+				$indicator_class = 'kfield_required_custom';
 				break;
 			default:
 				$legacy_markup   = KDNACommon::is_legacy_markup_enabled( $meta );
 				$indicator       = $legacy_markup ? '*' : esc_html__( '(Required)', 'kdnaforms' );
-				$indicator_class = $legacy_markup ? 'gfield_required_asterisk' : 'gfield_required_text';
+				$indicator_class = $legacy_markup ? 'kfield_required_asterisk' : 'kfield_required_text';
 				break;
 		}
 
-		return '<span class="gfield_required ' . $indicator_class . '">' . $indicator . '</span>';
+		return '<span class="kfield_required ' . $indicator_class . '">' . $indicator . '</span>';
 	}
 
 	/**
@@ -7112,7 +7116,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_submitted_fields( $form_id );
+			return KDNA_Forms_Model_Legacy::get_submitted_fields( $form_id );
 		}
 
 		$entry_meta_table_name = self::get_entry_meta_table_name();
@@ -7223,7 +7227,7 @@ class KDNAFormsModel {
 	 * @return false|array
 	 */
 	public static function get_current_lead( $form = array() ) {
-		$form_id = absint( rgpost( 'gform_submit' ) );
+		$form_id = absint( rgpost( 'kform_submit' ) );
 
 		// If a GF submission is not in process, always return false.
 		if ( empty( $form_id ) ) {
@@ -7671,7 +7675,7 @@ class KDNAFormsModel {
 		global $wpdb;
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_lead_count_all_forms( $status );
+			return KDNA_Forms_Model_Legacy::get_lead_count_all_forms( $status );
 		}
 
 		$entry_table_name   = self::get_entry_table_name();
@@ -7692,7 +7696,7 @@ class KDNAFormsModel {
 
 
 		if ( version_compare( self::get_database_version(), '2.3-dev-1', '<' ) ) {
-			return GF_Forms_Model_Legacy::get_entry_meta_counts();
+			return KDNA_Forms_Model_Legacy::get_entry_meta_counts();
 		}
 
 		$meta_table_name = self::get_entry_meta_table_name();
@@ -7763,8 +7767,8 @@ class KDNAFormsModel {
 			KDNAFormsModel::get_lead_meta_table_name(),
 			KDNAFormsModel::get_incomplete_submissions_table_name(),
 			self::get_addon_feed_table_name(),
-			"{$wpdb->prefix}gf_addon_payment_transaction",
-			"{$wpdb->prefix}gf_addon_payment_callback",
+			"{$wpdb->prefix}kdna_addon_payment_transaction",
+			"{$wpdb->prefix}kdna_addon_payment_callback",
 
 			KDNAFormsModel::get_entry_table_name(),
 			KDNAFormsModel::get_entry_notes_table_name(),
@@ -8494,7 +8498,7 @@ class KDNAFormsModel {
 
 	/**
 	 * Sanitizes the names of the files that have been uploaded to the tmp directory and sent in
-	 * $_POST['gform_uploaded_files'] and caches them in KDNAFormsModel::$uploaded_files.
+	 * $_POST['kform_uploaded_files'] and caches them in KDNAFormsModel::$uploaded_files.
 	 *
 	 * @since 2.4.3.5
 	 * @since 2.9.18 Deprecated the string-based (file/basename) input value. Added support for dynamically populated file URLs using the `url` key.
@@ -8504,7 +8508,7 @@ class KDNAFormsModel {
 	 * @return array
 	 */
 	public static function set_uploaded_files( $form_id ) {
-		$files = KDNACommon::json_decode( rgpost( 'gform_uploaded_files' ) );
+		$files = KDNACommon::json_decode( rgpost( 'kform_uploaded_files' ) );
 		if ( ! is_array( $files ) ) {
 			$files = array();
 		}
@@ -8694,7 +8698,7 @@ $_kdnaform_lead_meta = array();
 function kdnaform_get_meta( $entry_id, $meta_key ) {
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		return GF_Forms_Model_Legacy::kdnaform_get_meta( $entry_id, $meta_key );
+		return KDNA_Forms_Model_Legacy::kdnaform_get_meta( $entry_id, $meta_key );
 	}
 
 	global $wpdb, $_kdnaform_lead_meta;
@@ -8718,7 +8722,7 @@ function kdnaform_get_meta_values_for_entries( $entry_ids, $meta_keys ) {
 	global $wpdb;
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		return GF_Forms_Model_Legacy::kdnaform_get_meta_values_for_entries( $entry_ids, $meta_keys );
+		return KDNA_Forms_Model_Legacy::kdnaform_get_meta_values_for_entries( $entry_ids, $meta_keys );
 	}
 
 	if ( empty( $meta_keys ) || empty( $entry_ids ) ) {
@@ -8782,7 +8786,7 @@ function kdnaform_update_meta( $entry_id, $meta_key, $meta_value, $form_id = nul
 	}
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		GF_Forms_Model_Legacy::kdnaform_update_meta( $entry_id, $meta_key, $meta_value, $form_id );
+		KDNA_Forms_Model_Legacy::kdnaform_update_meta( $entry_id, $meta_key, $meta_value, $form_id );
 		return;
 	}
 	$table_name = KDNAFormsModel::get_entry_meta_table_name();
@@ -8846,7 +8850,7 @@ function kdnaform_add_meta( $entry_id, $meta_key, $meta_value, $form_id = null )
 	}
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		GF_Forms_Model_Legacy::kdnaform_add_meta( $entry_id, $meta_key, $meta_value, $form_id );
+		KDNA_Forms_Model_Legacy::kdnaform_add_meta( $entry_id, $meta_key, $meta_value, $form_id );
 		return;
 	}
 
@@ -8893,7 +8897,7 @@ function kdnaform_delete_meta( $entry_id, $meta_key = '' ) {
 	}
 
 	if ( version_compare( KDNAFormsModel::get_database_version(), '2.3-dev-1', '<' ) ) {
-		GF_Forms_Model_Legacy::kdnaform_delete_meta( $entry_id, $meta_key );
+		KDNA_Forms_Model_Legacy::kdnaform_delete_meta( $entry_id, $meta_key );
 		return;
 	}
 

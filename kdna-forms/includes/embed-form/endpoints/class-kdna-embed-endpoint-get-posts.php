@@ -12,7 +12,7 @@ namespace KDNA_Forms\KDNA_Forms\Embed_Form\Endpoints;
 class KDNA_Embed_Endpoint_Get_Posts {
 
 	// Strings
-	const ACTION_NAME = 'gf_embed_query_posts';
+	const ACTION_NAME = 'kdna_embed_query_posts';
 
 	// Parameters
 	const PARAM_OFFSET    = 'offset';

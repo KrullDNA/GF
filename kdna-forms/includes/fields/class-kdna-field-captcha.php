@@ -95,14 +95,14 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--recaptcha';
+		return 'kform-icon--recaptcha';
 	}
 
 	function get_form_editor_field_settings() {
@@ -142,7 +142,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 				return array(
 					'type'             => 'notice',
 					'content'          => sprintf(
-						'<div class="gform-typography--weight-regular">%s</div>',
+						'<div class="kform-typography--weight-regular">%s</div>',
 						__( 'The reCAPTCHA v2 field is not supported in Conversational Forms and will be removed, but will continue to work as expected in other contexts.', 'kdnaforms' )
 					),
                     'icon_helper_text' => __( 'This field is not supported in Conversational Forms', 'kdnaforms' ),
@@ -156,13 +156,13 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 		return array(
 			'type'             => 'notice',
 			'content'          => sprintf(
-                    '%s<div class="gform-spacing gform-spacing--top-1">%s</div>',
+                    '%s<div class="kform-spacing kform-spacing--top-1">%s</div>',
                     __( 'Configuration Required', 'kdnaforms' ),
                     // Translators: 1. Opening <a> tag with link to the Forms > Settings > reCAPTCHA page. 2. closing <a> tag.
 				sprintf(
 					esc_html__( 'To use the reCAPTCHA field, please configure your %1$sreCAPTCHA settings.%2$s', 'kdnaforms' ),
 					'<a href="?page=kdna_settings&subview=recaptcha" target="_blank">',
-					'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+					'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 				)
 			),
 			'icon_helper_text' => __( 'This field requires additional configuration', 'kdnaforms' ),
@@ -440,7 +440,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 
 				$dimensions = $is_entry_detail || $is_form_editor ? '' : "width='" . esc_attr( rgar( $captcha, 'width' ) ) . "' height='" . esc_attr( rgar( $captcha, 'height' ) ) . "'";
 
-				return "<div class='gfield_captcha_container'><img class='gfield_captcha' src='" . esc_url( rgar( $captcha, 'url' ) ) . "' alt='' {$dimensions} /><div class='gfield_captcha_input_container simple_captcha_{$size}'><input type='text' autocomplete='off' name='input_{$id}' id='{$field_id}' {$tabindex}/><input type='hidden' name='input_captcha_prefix_{$id}' value='" . esc_attr( rgar( $captcha, 'prefix' ) ) . "' /></div></div>";
+				return "<div class='kfield_captcha_container'><img class='kfield_captcha' src='" . esc_url( rgar( $captcha, 'url' ) ) . "' alt='' {$dimensions} /><div class='kfield_captcha_input_container simple_captcha_{$size}'><input type='text' autocomplete='off' name='input_{$id}' id='{$field_id}' {$tabindex}/><input type='hidden' name='input_captcha_prefix_{$id}' value='" . esc_attr( rgar( $captcha, 'prefix' ) ) . "' /></div></div>";
 				break;
 
 			case 'math' :
@@ -454,7 +454,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 				$dimensions   = $is_entry_detail || $is_form_editor ? '' : "width='" . esc_attr( rgar( $captcha_1, 'width' ) ) . "' height='" . esc_attr( rgar( $captcha_1, 'height' ) ) . "'";
 				$prefix_value = rgar( $captcha_1, 'prefix' ) . ',' . rgar( $captcha_2, 'prefix' ) . ',' . rgar( $captcha_3, 'prefix' );
 
-				return "<div class='gfield_captcha_container'><img class='gfield_captcha' src='" . esc_url( rgar( $captcha_1, 'url' ) ) . "' alt='' {$dimensions} /><img class='gfield_captcha' src='" . esc_url( rgar( $captcha_2, 'url' ) ) . "' alt='' {$dimensions} /><img class='gfield_captcha' src='" . esc_url( rgar( $captcha_3, 'url' ) ) . "' alt='' {$dimensions} /><div class='gfield_captcha_input_container math_{$size}'><input type='text' autocomplete='off' name='input_{$id}' id='{$field_id}' {$tabindex}/><input type='hidden' name='input_captcha_prefix_{$id}' value='" . esc_attr( $prefix_value ) . "' /></div></div>";
+				return "<div class='kfield_captcha_container'><img class='kfield_captcha' src='" . esc_url( rgar( $captcha_1, 'url' ) ) . "' alt='' {$dimensions} /><img class='kfield_captcha' src='" . esc_url( rgar( $captcha_2, 'url' ) ) . "' alt='' {$dimensions} /><img class='kfield_captcha' src='" . esc_url( rgar( $captcha_3, 'url' ) ) . "' alt='' {$dimensions} /><div class='kfield_captcha_input_container math_{$size}'><input type='text' autocomplete='off' name='input_{$id}' id='{$field_id}' {$tabindex}/><input type='hidden' name='input_captcha_prefix_{$id}' value='" . esc_attr( $prefix_value ) . "' /></div></div>";
 				break;
 
 			default:
@@ -466,21 +466,21 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 				if ( $is_entry_detail || $is_form_editor ){
 
 					if ( empty( $this->site_key ) || empty( $this->secret_key ) ) {
-						return '<div class="ginput_container ginput_container_addon_message ginput_container_addon_message_captcha">
-							<div class="gform-alert gform-alert--info gform-alert--theme-cosmos gform-spacing gform-spacing--bottom-0 gform-theme__disable">
+						return '<div class="kinput_container kinput_container_addon_message kinput_container_addon_message_captcha">
+							<div class="kform-alert kform-alert--info kform-alert--theme-cosmos kform-spacing kform-spacing--bottom-0 kform-theme__disable">
 								<span
-									class="gform-icon gform-icon--information-simple gform-icon--preset-active gform-icon-preset--status-info gform-alert__icon"
+									class="kform-icon kform-icon--information-simple kform-icon--preset-active kform-icon-preset--status-info kform-alert__icon"
 									aria-hidden="true"
 								></span>
-								<div class="gform-alert__message-wrap">
-									<div class="gform-alert__message">
+								<div class="kform-alert__message-wrap">
+									<div class="kform-alert__message">
 										'. __( 'Configuration Required', 'kdnaforms' ) .'
-										<div class="gform-spacing gform-spacing--top-1">'. sprintf(
+										<div class="kform-spacing kform-spacing--top-1">'. sprintf(
 									'%s %s%s.%s',
 									__( 'To use the reCAPTCHA field, please configure your', 'kdnaforms' ),
 											'<a href="?page=kdna_settings&subview=recaptcha" target="_blank">',
 											__( 'reCAPTCHA settings', 'kdnaforms' ),
-											'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+											'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 										) .'</div>
 									</div>
 								</div>
@@ -491,7 +491,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 					$type_suffix = $type == 'invisible' ? 'invisible_' : '';
 					$alt         = esc_attr__( 'An example of reCAPTCHA', 'kdnaforms' );
 
-					return "<div class='ginput_container'><img class='gfield_captcha' src='" . KDNACommon::get_base_url() . "/images/captcha_{$type_suffix}{$theme}.svg' alt='{$alt}' /></div>";
+					return "<div class='kinput_container'><img class='kfield_captcha' src='" . KDNACommon::get_base_url() . "/images/captcha_{$type_suffix}{$theme}.svg' alt='{$alt}' /></div>";
 				}
 
 				if ( empty( $this->site_key ) || empty( $this->secret_key ) ) {
@@ -518,7 +518,7 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 					$tabindex = KDNACommon::$tab_index > 0 ? KDNACommon::$tab_index++ : 0;
 				}
 
-				$output = "<div id='" . esc_attr( $field_id ) ."' class='ginput_container ginput_recaptcha' data-sitekey='" . esc_attr( $this->site_key ) . "' {$stoken} data-theme='" . esc_attr( $theme ) . "' data-tabindex='{$tabindex}' {$size} data-badge='{$badge}'></div>";
+				$output = "<div id='" . esc_attr( $field_id ) ."' class='kinput_container kinput_recaptcha' data-sitekey='" . esc_attr( $this->site_key ) . "' {$stoken} data-theme='" . esc_attr( $theme ) . "' data-tabindex='{$tabindex}' {$size} data-badge='{$badge}'></div>";
 
 				$recaptcha_response = $this->get_posted_recaptcha_response();
 
@@ -790,18 +790,18 @@ class KDNA_Field_CAPTCHA extends KDNA_Field {
 	}
 
 	/**
-	 * Returns the gf-download URL for the given image filename.
+	 * Returns the kdna-download URL for the given image filename.
 	 *
 	 * @since 2.9.21
 	 *
 	 * @param string $filename The filename.
 	 *
-	 * @return string The gf-download URL.
+	 * @return string The kdna-download URL.
 	 */
 	private function get_image_url( $filename ) {
 		return add_query_arg(
 			array(
-				'gf-download' => urlencode( $filename ),
+				'kdna-download' => urlencode( $filename ),
 				'form-id'     => 'captcha',
 				'field-id'    => $this->id,
 				'hash'        => KDNACommon::generate_download_hash( 'captcha', $this->id, $filename ),

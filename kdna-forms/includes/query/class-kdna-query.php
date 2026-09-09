@@ -810,7 +810,7 @@ class KDNA_Query {
 		 *
 		 * @param array $sql An array with all the SQL fragments: select, from, join, where, order, paginate.
 		 */
-		$sql = apply_filters( 'kdnaform_gf_query_sql', compact( 'select', 'from', 'join', 'where', 'order', 'paginate' ) );
+		$sql = apply_filters( 'kdnaform_kdna_query_sql', compact( 'select', 'from', 'join', 'where', 'order', 'paginate' ) );
 		$sql = implode( ' ', array_filter( $sql, 'strlen' ) );
 
 		KDNACommon::log_debug( __METHOD__ . '(): sql => ' . $sql );
@@ -1534,7 +1534,7 @@ AND ( meta_key REGEXP '^[0-9|.]+$'
 				$inputs = $field->get_entry_inputs();
 				if ( is_array( $inputs ) ) {
 					foreach ( $inputs as $input ) {
-						$entries[ $entry['id'] ][ (string) $input['id'] ] = gf_apply_filters( array(
+						$entries[ $entry['id'] ][ (string) $input['id'] ] = kdna_apply_filters( array(
 							'kdnaform_get_input_value',
 							$form['id'],
 							$field->id,
@@ -1546,7 +1546,7 @@ AND ( meta_key REGEXP '^[0-9|.]+$'
 					if ( in_array( (string) $field->id, $openssl_encrypted_fields ) ) {
 						$value = KDNACommon::openssl_decrypt( $value );
 					}
-					$entries[ $entry['id'] ][ $field->id ] = gf_apply_filters( array(
+					$entries[ $entry['id'] ][ $field->id ] = kdna_apply_filters( array(
 						'kdnaform_get_input_value',
 						$form['id'],
 						$field->id

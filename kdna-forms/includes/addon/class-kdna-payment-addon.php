@@ -217,6 +217,29 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		return $wpdb->prefix . 'kdna_addon_payment_callback';
 	}
 
+	/**
+	 * Records a payment failure where it can actually be found.
+	 *
+	 * log_error() only writes when the Logging add-on is present, so on a site
+	 * without it a fatal in the payment path left no trace at all — the symptom
+	 * was a bare 500 and an empty log. This writes to both, and PHP's error log
+	 * is the one that is always there.
+	 *
+	 * @since 3.5.5
+	 *
+	 * @param string $message What happened.
+	 *
+	 * @return void
+	 */
+	protected function log_payment_failure( $message ) {
+		$message = '[KDNA Forms payment] ' . $message;
+
+		$this->log_error( $message );
+
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $message );
+	}
+
 	// -------------------------------------------------------------------------
 	// Submission flow
 	// -------------------------------------------------------------------------
@@ -260,6 +283,52 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		$this->is_payment_gateway      = true;
 		$this->current_feed            = $feed;
 		$this->current_submission_data = $submission_data;
+
+		// Authorize while the submission can still be stopped. Doing it here
+		// rather than after the entry is saved is what lets a declined card
+		// come back as a validation error on the form instead of an entry that
+		// exists but was never paid for.
+		//
+		// Wrapped because a gateway throwing here takes the whole submission
+		// down as a 500 with nothing in the response to say why — the customer
+		// sees a dead form and the site owner sees a blank error log entry at
+		// best. Catching it turns that into a logged reason and a message on
+		// the form.
+		try {
+			if ( 'subscription' === rgars( $feed, 'meta/transactionType' ) ) {
+				$this->authorization = $this->subscribe( $feed, $submission_data, $form, $entry );
+			} else {
+				$this->authorization = $this->authorize( $feed, $submission_data, $form, $entry );
+			}
+		} catch ( \Throwable $e ) {
+			$this->log_payment_failure(
+				sprintf(
+					'%s(): the gateway threw %s in %s on line %d: %s',
+					__METHOD__,
+					get_class( $e ),
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
+			$this->authorization = array(
+				'is_authorized' => false,
+				'error_message' => esc_html__( 'The payment could not be processed. Please try again, or contact us if the problem continues.', 'kdnaforms' ),
+			);
+		}
+
+		if ( ! is_array( $this->authorization ) ) {
+			$this->authorization = array();
+		}
+
+		// A gateway that reports neither outcome has authorized nothing, and
+		// treating silence as success would save an unpaid entry as Paid.
+		$succeeded = rgar( $this->authorization, 'is_authorized' ) || rgar( $this->authorization, 'is_success' );
+
+		if ( ! $succeeded ) {
+			$validation_result = $this->get_validation_result( $validation_result, $this->authorization );
+		}
 
 		return $validation_result;
 	}
@@ -331,10 +400,29 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 
 		$transaction_type = rgars( $feed, 'meta/transactionType' );
 
-		if ( 'subscription' === $transaction_type ) {
-			$entry = $this->process_subscription( $this->authorization, $feed, $submission_data, $form, $entry );
-		} else {
-			$entry = $this->process_capture( $this->authorization, $feed, $submission_data, $form, $entry );
+		// Same reasoning as validation(): by this point the entry exists, so a
+		// throw here loses the submission entirely rather than recording it
+		// unpaid.
+		try {
+			if ( 'subscription' === $transaction_type ) {
+				$entry = $this->process_subscription( $this->authorization, $feed, $submission_data, $form, $entry );
+			} else {
+				$entry = $this->process_capture( $this->authorization, $feed, $submission_data, $form, $entry );
+			}
+		} catch ( \Throwable $e ) {
+			$this->log_payment_failure(
+				sprintf(
+					'%s(): processing threw %s in %s on line %d: %s',
+					__METHOD__,
+					get_class( $e ),
+					$e->getFile(),
+					$e->getLine(),
+					$e->getMessage()
+				)
+			);
+
+			$entry['payment_status'] = 'Failed';
+			$this->add_note( rgar( $entry, 'id' ), $e->getMessage(), 'error' );
 		}
 
 		KDNAAPI::update_entry( $entry );
@@ -529,6 +617,154 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		}
 
 		$this->add_note( $entry['id'], $note, 'success' );
+
+		return true;
+	}
+
+	/**
+	 * Record a payment that the gateway rejected.
+	 *
+	 * The entry is kept rather than discarded: someone has filled the form in,
+	 * and a failed payment is something the site owner needs to see, not
+	 * something to lose quietly.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array $entry  The entry, by reference.
+	 * @param array $action The action describing the failure.
+	 *
+	 * @return bool
+	 */
+	public function fail_payment( &$entry, $action ) {
+		$entry['payment_status'] = 'Failed';
+		$entry['is_fulfilled']   = 0;
+
+		KDNAAPI::update_entry( $entry );
+
+		$note = rgar( $action, 'note' );
+
+		if ( empty( $note ) ) {
+			$note = esc_html__( 'The payment failed.', 'kdnaforms' );
+		}
+
+		$this->add_note( $entry['id'], $note, 'error' );
+
+		return true;
+	}
+
+	/**
+	 * Record a successful recurring payment against a subscription.
+	 *
+	 * Each renewal is its own transaction row, so the entry carries the whole
+	 * billing history rather than only the most recent charge.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array $entry  The entry, by reference.
+	 * @param array $action The action describing the payment.
+	 *
+	 * @return bool
+	 */
+	public function add_subscription_payment( &$entry, $action ) {
+		$entry['payment_status'] = 'Active';
+		$entry['is_fulfilled']   = 1;
+
+		KDNAAPI::update_entry( $entry );
+
+		$this->insert_transaction(
+			$entry['id'],
+			'payment',
+			rgar( $action, 'transaction_id' ),
+			rgar( $action, 'amount' ),
+			true
+		);
+
+		$note = rgar( $action, 'note' );
+
+		if ( empty( $note ) ) {
+			$note = sprintf(
+				/* translators: 1: formatted amount, 2: the subscription id. */
+				esc_html__( 'Subscription payment received. Amount: %1$s. Subscription: %2$s', 'kdnaforms' ),
+				KDNACommon::to_money( rgar( $action, 'amount' ), rgar( $entry, 'currency' ) ),
+				rgar( $action, 'subscription_id' )
+			);
+		}
+
+		$this->add_note( $entry['id'], $note, 'success' );
+
+		return true;
+	}
+
+	/**
+	 * Record a recurring payment the gateway could not take.
+	 *
+	 * The subscription itself is left alone. A card can fail once and succeed
+	 * on the gateway's retry, so cancelling here would end subscriptions that
+	 * are about to recover on their own.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array $entry  The entry, by reference.
+	 * @param array $action The action describing the failure.
+	 *
+	 * @return bool
+	 */
+	public function fail_subscription_payment( &$entry, $action ) {
+		$entry['payment_status'] = 'Failed';
+
+		KDNAAPI::update_entry( $entry );
+
+		$note = rgar( $action, 'note' );
+
+		if ( empty( $note ) ) {
+			$note = sprintf(
+				/* translators: 1: formatted amount, 2: the subscription id. */
+				esc_html__( 'Subscription payment failed. Amount: %1$s. Subscription: %2$s', 'kdnaforms' ),
+				KDNACommon::to_money( rgar( $action, 'amount' ), rgar( $entry, 'currency' ) ),
+				rgar( $action, 'subscription_id' )
+			);
+		}
+
+		$this->add_note( $entry['id'], $note, 'error' );
+
+		return true;
+	}
+
+	/**
+	 * Mark a subscription as cancelled.
+	 *
+	 * @since 3.5.1
+	 *
+	 * @param array       $entry The entry, by reference.
+	 * @param array|false $feed  The feed the subscription belongs to.
+	 * @param string      $note  Optional note to record instead of the default.
+	 *
+	 * @return bool
+	 */
+	public function cancel_subscription( &$entry, $feed = false, $note = '' ) {
+		$entry['payment_status'] = 'Cancelled';
+
+		KDNAAPI::update_entry( $entry );
+
+		if ( empty( $note ) ) {
+			$note = sprintf(
+				/* translators: %s: the subscription id. */
+				esc_html__( 'Subscription cancelled. Subscription: %s', 'kdnaforms' ),
+				rgar( $entry, 'transaction_id' )
+			);
+		}
+
+		$this->add_note( $entry['id'], $note, 'success' );
+
+		/**
+		 * Fires once a subscription has been marked cancelled.
+		 *
+		 * @since 3.5.1
+		 *
+		 * @param array       $entry The entry.
+		 * @param array|false $feed  The feed the subscription belongs to.
+		 */
+		do_action( 'kdnaform_subscription_canceled', $entry, $feed );
 
 		return true;
 	}
@@ -1146,6 +1382,33 @@ abstract class KDNAPaymentAddOn extends KDNAFeedAddOn {
 		}
 
 		return $entries[0];
+	}
+
+	/**
+	 * Says whether, and where, a feed add-on may add its "Post Payment Actions"
+	 * checkbox to this add-on's feed settings.
+	 *
+	 * KDNAFeedAddOn::add_post_payment_actions() calls this on every payment
+	 * add-on whose feed settings are being rendered, so it must exist on the
+	 * base class: without it, opening a payment feed fatals the moment any feed
+	 * add-on has declared delayed payment support.
+	 *
+	 * Returning an empty array switches the feature off, which is the default —
+	 * a payment add-on has to name a setting to anchor the checkbox to before
+	 * the checkbox can be placed.
+	 *
+	 * @since 3.5.7
+	 *
+	 * @param string $feed_slug The slug of the feed add-on asking to be delayed.
+	 *
+	 * @return array {
+	 *     @type string $setting       The name of the field to anchor to.
+	 *     @type string $position      'before' or 'after'. Defaults to 'after'.
+	 *     @type bool   $default_value Whether the checkbox starts ticked.
+	 * }
+	 */
+	public function get_post_payment_actions_config( $feed_slug ) {
+		return array();
 	}
 
 	/**

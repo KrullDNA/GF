@@ -13,7 +13,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Configurator;
  */
 class KDNA_Config_Legacy_Check_Multi extends KDNA_Config {
 
-	protected $name               = 'gf_legacy_multi';
+	protected $name               = 'kdna_legacy_multi';
 	protected $script_to_localize = 'kdnaform_kdnaforms';
 
 	/**
@@ -29,6 +29,6 @@ class KDNA_Config_Legacy_Check_Multi extends KDNA_Config {
 		 *
 		 * @param array
 		 */
-		return apply_filters( 'kdnaform_gf_legacy_multi', array() );
+		return apply_filters( 'kdnaform_kdna_legacy_multi', array() );
 	}
 }

@@ -36,14 +36,14 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--credit-card';
+		return 'kform-icon--credit-card';
 	}
 
 	function get_form_editor_field_settings() {
@@ -205,7 +205,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 
 		// If SSL is not used, display warning message.
 		if ( ! KDNACommon::is_ssl() && ! $is_admin ) {
-			$field_content = "<div class='gfield_description gfield_validation_message gfield_creditcard_warning_message' id='field_{$form['id']}_{$this->id}_creditcard_warning_message'><span>" . esc_html__( 'This page is unsecured. Do not enter a real credit card number! Use this field only for testing purposes. ', 'kdnaforms' ) . '</span></div>' . $field_content;
+			$field_content = "<div class='kfield_description kfield_validation_message kfield_creditcard_warning_message' id='field_{$form['id']}_{$this->id}_creditcard_warning_message'><span>" . esc_html__( 'This page is unsecured. Do not enter a real credit card number! Use this field only for testing purposes. ', 'kdnaforms' ) . '</span></div>' . $field_content;
 		}
 
 		return $field_content;
@@ -253,7 +253,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 			$security_code = esc_attr( rgget( $this->id . '.3', $value ) );
 		}
 
-		$action = ! ( $is_entry_detail || $is_form_editor ) ? "gformMatchCard(\"{$field_id}_1\");" : '';
+		$action = ! ( $is_entry_detail || $is_form_editor ) ? "kformMatchCard(\"{$field_id}_1\");" : '';
 
 		$onchange = "onchange='{$action}'";
 		$onkeyup  = "onkeyup='{$action}'";
@@ -285,11 +285,11 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		if ( is_array( $payment_methods ) ) {
 			foreach ( $payment_methods as $payment_method ) {
 				$checked = rgpost( 'kdnaform_payment_method' ) == $payment_method['key'] ? "checked='checked'" : '';
-				$payment_options .= "<div class='kdnaform_payment_option kdnaform_payment_{$payment_method['key']}'><input type='radio' name='kdnaform_payment_method' value='{$payment_method['key']}' id='kdnaform_payment_method_{$payment_method['key']}' onclick='gformToggleCreditCard();' onkeypress='gformToggleCreditCard();' {$checked}/> {$payment_method['label']}</div>";
+				$payment_options .= "<div class='kdnaform_payment_option kdnaform_payment_{$payment_method['key']}'><input type='radio' name='kdnaform_payment_method' value='{$payment_method['key']}' id='kdnaform_payment_method_{$payment_method['key']}' onclick='kformToggleCreditCard();' onkeypress='kformToggleCreditCard();' {$checked}/> {$payment_method['label']}</div>";
 			}
 		}
 		$checked           = rgpost( 'kdnaform_payment_method' ) == 'creditcard' || rgempty( 'kdnaform_payment_method' ) ? "checked='checked'" : '';
-		$card_radio_button = empty( $payment_options ) ? '' : "<input type='radio' name='kdnaform_payment_method' id='kdnaform_payment_method_creditcard' value='creditcard' onclick='gformToggleCreditCard();' onkeypress='gformToggleCreditCard();' {$checked}/>";
+		$card_radio_button = empty( $payment_options ) ? '' : "<input type='radio' name='kdnaform_payment_method' id='kdnaform_payment_method_creditcard' value='creditcard' onclick='kformToggleCreditCard();' onkeypress='kformToggleCreditCard();' {$checked}/>";
 		$card_describer    = sprintf(
 			"<span class='screen-reader-text' id='field_%d_%d_supported_creditcards'>%s %s</span>",
 			$form_id,
@@ -311,20 +311,20 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$card_number_field_input = KDNAFormsModel::get_input( $this, $this->id . '.1' );
 		$validation_helper       = ! is_admin() ? "pattern='[0-9]*' title='" . esc_attr__( 'Only digits are allowed', 'kdnaforms' ) . "'" : '';
 		$card_number_label       = rgar( $card_number_field_input, 'customLabel' ) != '' ? $card_number_field_input['customLabel'] : esc_html__( 'Card Number', 'kdnaforms' );
-		$card_number_label       = gf_apply_filters( array( 'kdnaform_card_number', $form_id ), $card_number_label, $form_id );
+		$card_number_label       = kdna_apply_filters( array( 'kdnaform_card_number', $form_id ), $card_number_label, $form_id );
 
 		$card_number_placeholder = $this->get_input_placeholder_attribute( $card_number_field_input );
 		if ( $is_sub_label_above ) {
-			$card_field = "<span class='ginput_full{$class_suffix} gform-grid-col' id='{$field_id}_1_container' >
+			$card_field = "<span class='kinput_full{$class_suffix} kform-grid-col' id='{$field_id}_1_container' >
                                     {$card_icons}
-                                    <label for='{$field_id}_1' id='{$field_id}_1_label' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$card_number_label}</label>
+                                    <label for='{$field_id}_1' id='{$field_id}_1_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$card_number_label}</label>
                                     <input type='text' name='input_{$id}.1' id='{$field_id}_1' value='{$card_number}' {$tabindex} {$disabled_text} {$onchange} {$onkeyup} {$autocomplete} {$validation_helper} {$card_number_placeholder} {$number_aria_attributes}/>
                                  </span>";
 		} else {
-			$card_field = "<span class='ginput_full{$class_suffix} gform-grid-col' id='{$field_id}_1_container' >
+			$card_field = "<span class='kinput_full{$class_suffix} kform-grid-col' id='{$field_id}_1_container' >
                                     {$card_icons}
                                     <input type='text' name='input_{$id}.1' id='{$field_id}_1' value='{$card_number}' {$tabindex} {$disabled_text} {$onchange} {$onkeyup} {$autocomplete} {$validation_helper} {$card_number_placeholder} {$number_aria_attributes}/>
-                                    <label for='{$field_id}_1' id='{$field_id}_1_label' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$card_number_label}</label>
+                                    <label for='{$field_id}_1' id='{$field_id}_1_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$card_number_label}</label>
                                  </span>";
 		}
 
@@ -335,10 +335,10 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$expiration_month_input       = KDNAFormsModel::get_input( $this, $this->id . '.2_month' );
 
 		$expiration_label             = rgar( $expiration_month_input, 'customLabel' ) != '' ? esc_html( $expiration_month_input['customLabel'] ) : esc_html__( 'Expiration Date', 'kdnaforms' );
-		$expiration_label             = gf_apply_filters( array( 'kdnaform_card_expiration', $form_id ), $expiration_label, $form_id );
+		$expiration_label             = kdna_apply_filters( array( 'kdnaform_card_expiration', $form_id ), $expiration_label, $form_id );
 
 		// Expiration Date: Month
-		$expiration_month_label       = $expiration_wrapper_tag === 'fieldset' ? "<label for='{$field_id}_2_month' class='gform-field-label gform-field-label--type-sub screen-reader-text'>" . esc_html__( 'Month', 'kdnaforms' ) . "</label>" : '';
+		$expiration_month_label       = $expiration_wrapper_tag === 'fieldset' ? "<label for='{$field_id}_2_month' class='kform-field-label kform-field-label--type-sub screen-reader-text'>" . esc_html__( 'Month', 'kdnaforms' ) . "</label>" : '';
 		$expiration_month_tab_index   = $this->get_tabindex();
 		$expiration_month_placeholder = $this->get_input_placeholder_value( $expiration_month_input );
 		$expiration_months            = $this->get_expiration_months( $expiration_month, $expiration_month_placeholder );
@@ -351,7 +351,7 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 
 		if ( $expiration_wrapper_tag === 'fieldset' ) {
 			$expiration_year_label_for = $is_form_editor ? '' : $field_id . '_2_year';
-			$expiration_year_label     = "<label for='{$expiration_year_label_for}' class='gform-field-label gform-field-label--type-sub screen-reader-text'>" . esc_html__( 'Year', 'kdnaforms' ) . "</label>";
+			$expiration_year_label     = "<label for='{$expiration_year_label_for}' class='kform-field-label kform-field-label--type-sub screen-reader-text'>" . esc_html__( 'Year', 'kdnaforms' ) . "</label>";
 		} else {
 			$expiration_year_label = '';
 		}
@@ -359,19 +359,19 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		// legend tag should be the first child of fieldset, so we are putting out this markup for fieldset
 		// even if the sub-label is below or hidden.
 		if ( $expiration_wrapper_tag === 'fieldset' || $is_sub_label_above ) {
-			$expiration_field = "<span class='ginput_full{$class_suffix} ginput_cardextras gform-grid-col gform-grid-row' id='{$field_id}_2_container'>
-                                            <{$expiration_wrapper_tag} class='ginput_cardinfo_left{$class_suffix} gform-grid-col' id='{$field_id}_2_cardinfo_left'>
-                                            <{$expiration_label_tag}{$expiration_label_for} class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$expiration_label}</{$expiration_label_tag}>
-                                                <span class='ginput_card_expiration_container ginput_card_field gform-grid-row'>
-                                                   " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='ginput_card_expiration_month_container gform-grid-col'>" : "" ) . "
+			$expiration_field = "<span class='kinput_full{$class_suffix} kinput_cardextras kform-grid-col kform-grid-row' id='{$field_id}_2_container'>
+                                            <{$expiration_wrapper_tag} class='kinput_cardinfo_left{$class_suffix} kform-grid-col' id='{$field_id}_2_cardinfo_left'>
+                                            <{$expiration_label_tag}{$expiration_label_for} class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$expiration_label}</{$expiration_label_tag}>
+                                                <span class='kinput_card_expiration_container kinput_card_field kform-grid-row'>
+                                                   " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='kinput_card_expiration_month_container kform-grid-col'>" : "" ) . "
                                                        {$expiration_month_label}
-                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_month' {$expiration_month_tab_index} {$disabled_text} class='ginput_card_expiration ginput_card_expiration_month' {$expiration_month_aria_attributes}>
+                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_month' {$expiration_month_tab_index} {$disabled_text} class='kinput_card_expiration kinput_card_expiration_month' {$expiration_month_aria_attributes}>
                                                            {$expiration_months}
                                                        </select>
                                                    " . ( $expiration_wrapper_tag === 'fieldset' ? "</span>" : "" ) . "
-                                                   " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='ginput_card_expiration_year_container gform-grid-col'>" : "" ) . "
+                                                   " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='kinput_card_expiration_year_container kform-grid-col'>" : "" ) . "
                                                        {$expiration_year_label}
-                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_year' {$expiration_year_tab_index} {$disabled_text} class='ginput_card_expiration ginput_card_expiration_year' {$expiration_year_aria_attributes}>
+                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_year' {$expiration_year_tab_index} {$disabled_text} class='kinput_card_expiration kinput_card_expiration_year' {$expiration_year_aria_attributes}>
                                                            {$expiration_years}
                                                        </select>
                                                    " . ( $expiration_wrapper_tag === 'fieldset' ? "</span>" : "" ) . "
@@ -379,44 +379,44 @@ class KDNA_Field_CreditCard extends KDNA_Field {
                                             </{$expiration_wrapper_tag}>";
 
 		} else {
-			$expiration_field = "<span class='ginput_full{$class_suffix} ginput_cardextras gform-grid-col gform-grid-row' id='{$field_id}_2_container'>
-                                            <{$expiration_wrapper_tag} class='ginput_cardinfo_left{$class_suffix}' id='{$field_id}_2_cardinfo_left'>
-                                                <span class='ginput_card_expiration_container ginput_card_field'>
-                                                    " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='ginput_card_expiration_month_container'>" : "" ) . "
-                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_month' {$expiration_month_tab_index} {$disabled_text} class='ginput_card_expiration ginput_card_expiration_month' {$expiration_month_aria_attributes}>
+			$expiration_field = "<span class='kinput_full{$class_suffix} kinput_cardextras kform-grid-col kform-grid-row' id='{$field_id}_2_container'>
+                                            <{$expiration_wrapper_tag} class='kinput_cardinfo_left{$class_suffix}' id='{$field_id}_2_cardinfo_left'>
+                                                <span class='kinput_card_expiration_container kinput_card_field'>
+                                                    " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='kinput_card_expiration_month_container'>" : "" ) . "
+                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_month' {$expiration_month_tab_index} {$disabled_text} class='kinput_card_expiration kinput_card_expiration_month' {$expiration_month_aria_attributes}>
                                                            {$expiration_months}
                                                        </select>
                                                        {$expiration_month_label}
                                                    " . ( $expiration_wrapper_tag === 'fieldset' ? "</span>" : "" ) . "
-                                                   " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='ginput_card_expiration_year_container'>" : "" ) . "
-                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_year' {$expiration_year_tab_index} {$disabled_text} class='ginput_card_expiration ginput_card_expiration_year' {$expiration_year_aria_attributes}>
+                                                   " . ( $expiration_wrapper_tag === 'fieldset' ? "<span class='kinput_card_expiration_year_container'>" : "" ) . "
+                                                       <select name='input_{$id}.2[]' id='{$field_id}_2_year' {$expiration_year_tab_index} {$disabled_text} class='kinput_card_expiration kinput_card_expiration_year' {$expiration_year_aria_attributes}>
                                                            {$expiration_years}
                                                        </select>
                                                        {$expiration_year_label}
                                                        " . ( $expiration_wrapper_tag === 'fieldset' ? "</span>" : "" ) . "
                                                 </span>
-                                                 <{$expiration_label_tag}{$expiration_label_for} class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$expiration_label}</{$expiration_label_tag}>
+                                                 <{$expiration_label_tag}{$expiration_label_for} class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$expiration_label}</{$expiration_label_tag}>
                                             </{$expiration_wrapper_tag}>";
 		}
 		//security code field
 		$tabindex                  = $this->get_tabindex();
 		$security_code_field_input = KDNAFormsModel::get_input( $this, $this->id . '.3' );
 		$security_code_label       = rgar( $security_code_field_input, 'customLabel' ) != '' ? $security_code_field_input['customLabel'] : esc_html__( 'Security Code', 'kdnaforms' );
-		$security_code_label       = gf_apply_filters( array( 'kdnaform_card_security_code', $form_id ), $security_code_label, $form_id );
+		$security_code_label       = kdna_apply_filters( array( 'kdnaform_card_security_code', $form_id ), $security_code_label, $form_id );
 		$validation_helper         = "pattern='[0-9]*' title='" . esc_attr__( 'Only digits are allowed', 'kdnaforms' ) . "'";
 		$security_code_placeholder = $this->get_input_placeholder_attribute( $security_code_field_input );
 		if ( $is_sub_label_above ) {
-			$security_field = "<span class='ginput_cardinfo_right{$class_suffix} gform-grid-col' id='{$field_id}_2_cardinfo_right'>
-                                                <label for='{$field_id}_3' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>$security_code_label</label>
-                                                <input type='text' name='input_{$id}.3' id='{$field_id}_3' {$tabindex} {$disabled_text} class='ginput_card_security_code' value='{$security_code}' {$autocomplete} {$validation_helper} {$security_code_placeholder} {$security_aria_attributes}/>
-                                                <span class='ginput_card_security_code_icon'>&nbsp;</span>
+			$security_field = "<span class='kinput_cardinfo_right{$class_suffix} kform-grid-col' id='{$field_id}_2_cardinfo_right'>
+                                                <label for='{$field_id}_3' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>$security_code_label</label>
+                                                <input type='text' name='input_{$id}.3' id='{$field_id}_3' {$tabindex} {$disabled_text} class='kinput_card_security_code' value='{$security_code}' {$autocomplete} {$validation_helper} {$security_code_placeholder} {$security_aria_attributes}/>
+                                                <span class='kinput_card_security_code_icon'>&nbsp;</span>
                                              </span>
                                         </span>";
 		} else {
-			$security_field = "<span class='ginput_cardinfo_right{$class_suffix} gform-grid-col' id='{$field_id}_2_cardinfo_right'>
-                                                <input type='text' name='input_{$id}.3' id='{$field_id}_3' {$tabindex} {$disabled_text} class='ginput_card_security_code' value='{$security_code}' {$autocomplete} {$validation_helper} {$security_code_placeholder} {$security_aria_attributes}/>
-                                                <span class='ginput_card_security_code_icon'>&nbsp;</span>
-                                                <label for='{$field_id}_3' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>$security_code_label</label>
+			$security_field = "<span class='kinput_cardinfo_right{$class_suffix} kform-grid-col' id='{$field_id}_2_cardinfo_right'>
+                                                <input type='text' name='input_{$id}.3' id='{$field_id}_3' {$tabindex} {$disabled_text} class='kinput_card_security_code' value='{$security_code}' {$autocomplete} {$validation_helper} {$security_code_placeholder} {$security_aria_attributes}/>
+                                                <span class='kinput_card_security_code_icon'>&nbsp;</span>
+                                                <label for='{$field_id}_3' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>$security_code_label</label>
                                              </span>
                                         </span>";
 		}
@@ -424,22 +424,22 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		$tabindex              = $this->get_tabindex();
 		$card_name_field_input = KDNAFormsModel::get_input( $this, $this->id . '.5' );
 		$card_name_label       = rgar( $card_name_field_input, 'customLabel' ) != '' ? $card_name_field_input['customLabel'] : esc_html__( 'Cardholder Name', 'kdnaforms' );
-		$card_name_label       = gf_apply_filters( array( 'kdnaform_card_name', $form_id ), $card_name_label, $form_id );
+		$card_name_label       = kdna_apply_filters( array( 'kdnaform_card_name', $form_id ), $card_name_label, $form_id );
 
 		$card_name_placeholder = $this->get_input_placeholder_attribute( $card_name_field_input );
 		if ( $is_sub_label_above ) {
-			$card_name_field = "<span class='ginput_full{$class_suffix} gform-grid-col' id='{$field_id}_5_container'>
-                                            <label for='{$field_id}_5' id='{$field_id}_5_label' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$card_name_label}</label>
+			$card_name_field = "<span class='kinput_full{$class_suffix} kform-grid-col' id='{$field_id}_5_container'>
+                                            <label for='{$field_id}_5' id='{$field_id}_5_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$card_name_label}</label>
                                             <input type='text' name='input_{$id}.5' id='{$field_id}_5' value='{$card_name}' {$tabindex} {$disabled_text} {$card_name_placeholder} {$name_aria_attributes}/>
                                         </span>";
 		} else {
-			$card_name_field = "<span class='ginput_full{$class_suffix} gform-grid-col' id='{$field_id}_5_container'>
+			$card_name_field = "<span class='kinput_full{$class_suffix} kform-grid-col' id='{$field_id}_5_container'>
                                             <input type='text' name='input_{$id}.5' id='{$field_id}_5' value='{$card_name}' {$tabindex} {$disabled_text} {$card_name_placeholder} {$name_aria_attributes}/>
-                                            <label for='{$field_id}_5' id='{$field_id}_5_label' class='gform-field-label gform-field-label--type-sub {$sub_label_class}'>{$card_name_label}</label>
+                                            <label for='{$field_id}_5' id='{$field_id}_5_label' class='kform-field-label kform-field-label--type-sub {$sub_label_class}'>{$card_name_label}</label>
                                         </span>";
 		}
 
-		return "<div class='ginput_complex{$class_suffix} ginput_container ginput_container_creditcard gform-grid-row' id='{$field_id}'>" . $card_field . $expiration_field . $security_field . $card_name_field . ' </div>';
+		return "<div class='kinput_complex{$class_suffix} kinput_container kinput_container_creditcard kform-grid-row' id='{$field_id}'>" . $card_field . $expiration_field . $security_field . $card_name_field . ' </div>';
 
 	}
 
@@ -540,11 +540,11 @@ class KDNA_Field_CreditCard extends KDNA_Field {
 		if ( $this->forceSSL && ! KDNACommon::is_ssl() && ! KDNACommon::is_preview() ) {
 			$script = "document.location.href='" . esc_js( KDNAFormsModel::get_current_page_url( true ) ) . "';";
 		} else {
-			$script = "jQuery(document).ready(function(){ { gformMatchCard(\"{$field_id}_1\"); } } );";
+			$script = "jQuery(document).ready(function(){ { kformMatchCard(\"{$field_id}_1\"); } } );";
 		}
 
 		$card_rules = $this->get_credit_card_rules();
-		$script     = "if(!window['gf_cc_rules']){window['gf_cc_rules'] = new Array(); } window['gf_cc_rules'] = " . KDNACommon::json_encode( $card_rules ) . "; $script";
+		$script     = "if(!window['kdna_cc_rules']){window['kdna_cc_rules'] = new Array(); } window['kdna_cc_rules'] = " . KDNACommon::json_encode( $card_rules ) . "; $script";
 
 		return $script;
 	}

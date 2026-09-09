@@ -66,6 +66,6 @@ class KDNA_Save_Form_Helper {
 		 *
 		 * @param boolean $is_ajax_save_disabled Defaults to false.
 		 */
-		return gf_apply_filters( array( 'kdnaform_disable_ajax_save', $form_id ), $is_ajax_save_disabled );
+		return kdna_apply_filters( array( 'kdnaform_disable_ajax_save', $form_id ), $is_ajax_save_disabled );
 	}
 }

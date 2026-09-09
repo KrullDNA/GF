@@ -14,7 +14,7 @@ use KDNA_Forms\KDNA_Forms\Config\KDNA_Config;
 class KDNA_Editor_Save_Editor_Settings {
 
 	// Strings
-	const ACTION_NAME = 'gf_save_editor_settings';
+	const ACTION_NAME = 'kdna_save_editor_settings';
 
 	/**
 	 * Handle the AJAX request.

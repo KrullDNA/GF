@@ -2,7 +2,7 @@
 
 namespace KDNA_Forms\KDNA_Forms;
 
-use KDNA_Forms\KDNA_Forms\Config\GF_App_Config;
+use KDNA_Forms\KDNA_Forms\Config\KDNA_App_Config;
 use KDNA_Forms\KDNA_Forms\Config\KDNA_Config_Service_Provider;
 
 /**
@@ -52,7 +52,7 @@ abstract class KDNA_Service_Provider {
 	 * @param array $args
 	 */
 	public function register_app( $args ) {
-		$config = new GF_App_Config( $this->container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
+		$config = new KDNA_App_Config( $this->container->get( KDNA_Config_Service_Provider::DATA_PARSER ) );
 		$config->set_data( $args );
 
 		$this->container->get( KDNA_Config_Service_Provider::CONFIG_COLLECTION )->add_config( $config );

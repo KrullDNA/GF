@@ -247,7 +247,7 @@ class KDNASelectColumns {
 					 * @param KDNA_Field $field
 					 * @param array    $form
 					 */
-					$display = gf_apply_filters( array( 'kdnaform_display_field_select_columns_entry_list', $form_id, $field->id ), $display, $field, $form );
+					$display = kdna_apply_filters( array( 'kdnaform_display_field_select_columns_entry_list', $form_id, $field->id ), $display, $field, $form );
 
 					if ( is_array( $inputs ) ) {
 						foreach ( $inputs as $input ) {

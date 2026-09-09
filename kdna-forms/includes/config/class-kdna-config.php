@@ -149,7 +149,7 @@ abstract class KDNA_Config {
 	 * @return array
 	 */
 	public function get_data() {
-		if ( ( ! defined( 'GFORMS_DOING_MOCK' ) || ! GFORMS_DOING_MOCK ) && ! $this->should_enqueue() ) {
+		if ( ( ! defined( 'KFORMS_DOING_MOCK' ) || ! KFORMS_DOING_MOCK ) && ! $this->should_enqueue() ) {
 			return false;
 		}
 
@@ -229,7 +229,7 @@ abstract class KDNA_Config {
 
 	/**
 	 * Validates the config data against a hash to ensure it has not been tampered with.
-	 * This method is called via AJAX, initiated by the gform.config.isValid() JS method.
+	 * This method is called via AJAX, initiated by the kform.config.isValid() JS method.
 	 *
 	 * @since 2.9.0
 	 *

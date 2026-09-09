@@ -3,7 +3,7 @@
 namespace KDNA_Forms\KDNA_Forms\External_API;
 
 /**
- * Class GF_API_Response
+ * Class KDNA_API_Response
  *
  * An abstracted Response class used to standardize the responses we send back from an API Connector. Includes
  * standardized serialization and JSON methods to support saving the class to the Database.
@@ -12,7 +12,7 @@ namespace KDNA_Forms\KDNA_Forms\External_API;
  *
  * @package KDNA_Forms\KDNA_Forms\External_API
  */
-abstract class GF_API_Response implements \JsonSerializable, \Serializable {
+abstract class KDNA_API_Response implements \JsonSerializable, \Serializable {
 
 	/**
 	 * The data for this response.

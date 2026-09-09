@@ -166,9 +166,9 @@ class Dismissable_Messages {
 
 				$need_script = true;
 				?>
-				<div class="notice below-h1 notice-<?php echo esc_attr( $class ); ?> is-dismissible gf-notice"
-				     data-gf_dismissible_key="<?php echo esc_attr( $message['key'] ) ?>"
-				     data-gf_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'kdna_dismissible_nonce' ) ) ?>">
+				<div class="notice below-h1 notice-<?php echo esc_attr( $class ); ?> is-dismissible kdna-notice"
+				     data-kdna_dismissible_key="<?php echo esc_attr( $message['key'] ) ?>"
+				     data-kdna_dismissible_nonce="<?php echo esc_attr( wp_create_nonce( 'kdna_dismissible_nonce' ) ) ?>">
 					<p>
 						<?php echo $message['text']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</p>
@@ -182,7 +182,7 @@ class Dismissable_Messages {
 						$( document ).on( 'click', '.notice-dismiss', function() {
 							var $div = $( this ).closest( 'div.notice' );
 							if ( $div.length > 0 ) {
-								var messageKey = $div.data( 'gf_dismissible_key' );
+								var messageKey = $div.data( 'kdna_dismissible_key' );
 								var nonce      = $div.data( 'kdna_dismissible_nonce' );
 								if ( messageKey ) {
 									jQuery.ajax( {

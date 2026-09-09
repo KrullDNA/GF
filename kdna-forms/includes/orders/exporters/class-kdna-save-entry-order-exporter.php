@@ -11,7 +11,7 @@ use \KDNACommon;
 class KDNA_Save_Entry_Order_Exporter extends KDNA_Order_Exporter {
 
 	/**
-	 * GF_Default_Order_Formatter constructor.
+	 * KDNA_Default_Order_Formatter constructor.
 	 *
 	 * @param KDNA_Order $order  The order to be formatted.
 	 * @param array    $config Any specific configurations required while formatting the order.

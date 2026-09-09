@@ -144,6 +144,43 @@ if ( ! class_exists( 'KDNA_Forms\KDNA_Forms\Async\KDNA_Background_Process' ) ) {
 		}
 
 		/**
+		 * Current task (no-op).
+		 *
+		 * KDNA_Feed_Processor::handle_error() calls this while reporting a fatal
+		 * that happened during feed processing. Without it the report itself
+		 * fatals and hides the error it was called to describe.
+		 *
+		 * @return array
+		 */
+		protected function get_current_task() {
+			return array();
+		}
+
+		/**
+		 * Current batch (no-op).
+		 *
+		 * @return object
+		 */
+		protected function get_current_batch() {
+			return (object) array(
+				'key'  => '',
+				'data' => array(),
+			);
+		}
+
+		/**
+		 * Update a batch (no-op).
+		 *
+		 * @param string $key  The batch key.
+		 * @param array  $data The batch data.
+		 *
+		 * @return $this
+		 */
+		protected function update( $key, $data ) {
+			return $this;
+		}
+
+		/**
 		 * Log debug message (no-op).
 		 *
 		 * @param string $message The message.

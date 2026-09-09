@@ -127,10 +127,18 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	 * @since 2.5.2
 	 */
 	public function bootstrap() {
+		// The processor is loaded for every feed add-on, payment ones included.
+		// maybe_process_feed() calls kdna_feed_processor() unconditionally, so
+		// loading it only for non-payment add-ons left the function undefined
+		// for exactly the add-ons that reach that line — a fatal on submission
+		// that no other add-on could ever trigger.
+		if ( ! function_exists( 'kdna_feed_processor' ) ) {
+			require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+		}
+
+		// A payment add-on still skips the eager instance: its queue is created
+		// when a feed is actually deferred, not at bootstrap.
 		if ( ! $this instanceof KDNAPaymentAddOn ) {
-			if ( ! function_exists( 'kdna_feed_processor' ) ) {
-				require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
-			}
 			kdna_feed_processor( $this );
 		}
 
@@ -281,8 +289,8 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		if ( $this->_supports_feed_ordering ) {
 			$scripts[] = array(
-				'handle'    => 'gaddon_feedorder',
-				'src'       => $this->get_gfaddon_base_url() . "/js/gaddon_feedorder{$min}.js",
+				'handle'    => 'kaddon_feedorder',
+				'src'       => $this->get_gfaddon_base_url() . "/js/kaddon_feedorder{$min}.js",
 				'version'   => KDNACommon::$version,
 				'deps'      => array( 'jquery', 'jquery-ui-sortable' ),
 				'in_footer' => false,
@@ -296,8 +304,8 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		if( $this->_supports_frontend_feeds ) {
 			$scripts[] = array(
-				'handle'  => 'gaddon_frontend',
-				'src'     => $this->get_gfaddon_base_url() . "/js/gaddon_frontend{$min}.js",
+				'handle'  => 'kaddon_frontend',
+				'src'     => $this->get_gfaddon_base_url() . "/js/kaddon_frontend{$min}.js",
 				'deps'    => array( 'jquery', 'kdnaform_conditional_logic' ),
 				'version' => KDNACommon::$version,
 				'enqueue' => array( array( $this, 'has_frontend_feeds' ) ),
@@ -383,6 +391,12 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		// Initialize array of feeds that have been processed.
 		$processed_feeds = array();
+
+		// Belt and braces: this is the line that fataled, and it is reached from
+		// the submission path where a fatal takes the whole form down.
+		if ( ! function_exists( 'kdna_feed_processor' ) ) {
+			require_once KDNA_PLUGIN_DIR_PATH . 'includes/addon/class-kdna-feed-processor.php';
+		}
 
 		$background_processor = kdna_feed_processor( $this );
 
@@ -656,7 +670,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		 * @param array  $entry           The Entry Object currently being processed.
 		 * @param array  $form            The Form Object currently being processed.
 		 */
-		$is_asynchronous = gf_apply_filters( array( 'kdnaform_is_feed_asynchronous', $form['id'], $feed['id'] ), $this->_async_feed_processing, $feed, $entry, $form );
+		$is_asynchronous = kdna_apply_filters( array( 'kdnaform_is_feed_asynchronous', $form['id'], $feed['id'] ), $this->_async_feed_processing, $feed, $entry, $form );
 
 		return $is_asynchronous;
 
@@ -1485,7 +1499,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			esc_html__( 'The table `%1$s` does not exist. Please visit the %2$sForms > System Status%3$s page and click the "Re-run database upgrade" link (under the Database section) to create the missing table.', 'kdnaforms' ),
 			esc_html( $table ),
 			'<a href="' . esc_attr( $status_page_url ) . '" target="_blank" rel="noopener">',
-			'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+			'<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 		);
 	}
 
@@ -1503,7 +1517,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		}
 
 		$error   = $this->get_table_not_exists_error( $table );
-		$classes = $this->is_kdnaforms_supported( '2.5-beta' ) ? 'notice notice-error gf-notice' : 'notice notice-error';
+		$classes = $this->is_kdnaforms_supported( '2.5-beta' ) ? 'notice notice-error kdna-notice' : 'notice notice-error';
 
 		$notice = sprintf(
 			'<div class="%s"><p>%s</p></div>',
@@ -1611,7 +1625,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	}
 
 	/**
-	 * Sets $gf_payment_gateway global for the current entry.
+	 * Sets $kdna_payment_gateway global for the current entry.
 	 *
 	 * @since 2.8.1
 	 *
@@ -1625,11 +1639,11 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 			return;
 		}
 
-		global $gf_payment_gateway;
+		global $kdna_payment_gateway;
 		$entry_id = rgar( $entry, 'id' );
 
-		if ( ! empty( $gf_payment_gateway[ $entry_id ] ) ) {
-			$this->log_debug( __METHOD__ . '(): Already set to ' . $gf_payment_gateway[ $entry_id ] );
+		if ( ! empty( $kdna_payment_gateway[ $entry_id ] ) ) {
+			$this->log_debug( __METHOD__ . '(): Already set to ' . $kdna_payment_gateway[ $entry_id ] );
 
 			return;
 		}
@@ -1637,7 +1651,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$gateway = kdnaform_get_meta( $entry_id, 'payment_gateway' );
 		if ( ! empty( $gateway ) ) {
 			$this->log_debug( __METHOD__ . '(): Setting using payment_gateway entry meta to ' . $gateway );
-			$gf_payment_gateway[ $entry_id ] = $gateway;
+			$kdna_payment_gateway[ $entry_id ] = $gateway;
 
 			return;
 		}
@@ -1662,7 +1676,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 			$slug = $addon->get_slug();
 			$this->log_debug( __METHOD__ . '(): Setting to ' . $slug );
-			$gf_payment_gateway[ $entry_id ] = $slug;
+			$kdna_payment_gateway[ $entry_id ] = $slug;
 
 			return;
 		}
@@ -1827,7 +1841,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 					 * @param string $before_fields The content to be displayed before the feed settings fields.
 					 * @param array  $form          The form associated with the feed.
 					 */
-					return gf_apply_filters( array( 'kdnaform_feed_settings_before_fields', rgar( $form, 'id' ) ), $before_fields, $form );
+					return kdna_apply_filters( array( 'kdnaform_feed_settings_before_fields', rgar( $form, 'id' ) ), $before_fields, $form );
 				},
 			)
 		);
@@ -1978,13 +1992,13 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		?>
 
-		<div class="gform-settings-panel">
-			<header class="gform-settings-panel__header">
-				<h4 class="gform-settings-panel__title"><span><?php echo $this->feed_list_title(); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></h4>
+		<div class="kform-settings-panel">
+			<header class="kform-settings-panel__header">
+				<h4 class="kform-settings-panel__title"><span><?php echo $this->feed_list_title(); // phpcs:ignore WordPress.Security.EscapeOutput ?></span></h4>
 			</header>
 
-			<div class="gform-settings-panel__content">
-				<form id="gform-settings" action="" method="post">
+			<div class="kform-settings-panel__content">
+				<form id="kform-settings" action="" method="post">
 					<?php
 					$feed_list = $this->get_feed_table( $form );
 					$feed_list->prepare_items();
@@ -1992,7 +2006,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 					?>
 
 					<!--Needed to save state after bulk operations-->
-					<input type="hidden" value="gf_edit_forms" name="page">
+					<input type="hidden" value="kdna_edit_forms" name="page">
 					<input type="hidden" value="settings" name="view">
 					<input type="hidden" value="<?php echo esc_attr( $this->get_slug() ); ?>" name="subview">
 					<input type="hidden" value="<?php echo esc_attr( rgar( $form, 'id' ) ); ?>" name="id">
@@ -2006,7 +2020,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		<script type="text/javascript">
 			<?php
 
-				KDNACommon::gf_vars();
+				KDNACommon::kdna_vars();
 
 				if ( $this->_supports_feed_ordering ) {
 
@@ -2048,7 +2062,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 	public function maybe_save_feed_settings( $feed_id, $form_id ) {
 
-		if ( ! rgpost( 'gform-settings-save' ) ) {
+		if ( ! rgpost( 'kform-settings-save' ) ) {
 			return $feed_id;
 		}
 
@@ -2256,8 +2270,8 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		$edit_url      = add_query_arg( array( 'fid' => $feed_id ) );
 		$links         = array(
 			'edit'      => '<a href="' . esc_url( $edit_url ) . '">' . esc_html__( 'Edit', 'kdnaforms' ) . '</a>',
-			'duplicate' => '<a href="#" onclick="gaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');" onkeypress="gaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');">' . esc_html__( 'Duplicate', 'kdnaforms' ) . '</a>',
-			'delete'    => '<a class="submitdelete" onclick="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ gaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" onkeypress="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ gaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" style="cursor:pointer;">' . esc_html__( 'Delete', 'kdnaforms' ) . '</a>'
+			'duplicate' => '<a href="#" onclick="kaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');" onkeypress="kaddon.duplicateFeed(\'' . esc_js( $feed_id ) . '\');">' . esc_html__( 'Duplicate', 'kdnaforms' ) . '</a>',
+			'delete'    => '<a class="submitdelete" onclick="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ kaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" onkeypress="javascript: if(confirm(\'' . esc_js( __( 'WARNING: You are about to delete this item.', 'kdnaforms' ) ) . esc_js( __( "'Cancel' to stop, 'OK' to delete.", 'kdnaforms' ) ) . '\')){ kaddon.deleteFeed(\'' . esc_js( $feed_id ) . '\'); }" style="cursor:pointer;">' . esc_html__( 'Delete', 'kdnaforms' ) . '</a>'
 		);
 
 		return $links;
@@ -2624,7 +2638,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 		 * @param array  $feed          The form which was being processed when the error occurred.
 		 * @param string $error_message The error message.
 		 */
-		gf_do_action( array( "kdnaform_{$slug}_error", $form['id'] ), $feed, $entry, $form, $error_message );
+		kdna_do_action( array( "kdnaform_{$slug}_error", $form['id'] ), $feed, $entry, $form, $error_message );
 
 	}
 
@@ -2855,7 +2869,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 	}
 
 	/***
-	 * Registers frontend feeds by rendering the GFFrontEndFeeds() JS object.
+	 * Registers frontend feeds by rendering the KDNAFrontendFeeds() JS object.
 	 *
 	 * @since 2.4
 	 *
@@ -2875,7 +2889,7 @@ abstract class KDNAFeedAddOn extends KDNAAddOn {
 
 		$script = sprintf( '; new KDNAFrontendFeeds( %s );', json_encode( $args ) );
 
-		KDNAFormDisplay::add_init_script( $form['id'], 'gaddon_frontend_feeds', KDNAFormDisplay::ON_PAGE_RENDER, $script );
+		KDNAFormDisplay::add_init_script( $form['id'], 'kaddon_frontend_feeds', KDNAFormDisplay::ON_PAGE_RENDER, $script );
 
 	}
 
@@ -3024,20 +3038,20 @@ class KDNAAddOnFeedsTable extends WP_List_Table {
 
 		// Display the active/inactive toggle button.
 		if ( rgar( $item, 'is_active' ) ) {
-			$class = 'gform-status--active';
+			$class = 'kform-status--active';
 			$text  = esc_html__( 'Active', 'kdnaforms' );
 		} else {
-			$class = 'gform-status--inactive';
+			$class = 'kform-status--inactive';
 			$text  = esc_html__( 'Inactive', 'kdnaforms' );
 		}
 		?>
 		<button
 			type="button"
-			class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
-			onclick="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
-			onkeypress="gaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
+			class="kform-status-indicator kform-status-indicator--size-sm kform-status-indicator--theme-cosmos <?php echo esc_attr( $class ); ?>"
+			onclick="kaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
+			onkeypress="kaddon.toggleFeedActive( this, '<?php echo esc_js( $this->_slug ); ?>', '<?php echo esc_js( $item['id'] ); ?>' );"
 		>
-			<span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs">
+			<span class="kform-status-indicator-status kform-typography--weight-medium kform-typography--size-text-xs">
 				<?php echo esc_html( $text ); ?>
 			</span>
 		</button>

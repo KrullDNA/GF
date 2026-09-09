@@ -1,6 +1,6 @@
 // Utility variables
-var GF_CONDITIONAL_INSTANCE = false;
-var GF_CONDITIONAL_INSTANCES_COLLECTION = [];
+var KDNA_CONDITIONAL_INSTANCE = false;
+var KDNA_CONDITIONAL_INSTANCES_COLLECTION = [];
 var FOCUSABLE_ELEMENTS      = [ 'a[href]', 'area[href]', 'input:not([disabled])', 'select:not([disabled])', 'textarea:not([disabled])', 'button:not([disabled])', 'iframe', 'object', 'embed', '[contenteditable]', '[tabindex]:not([tabindex^="-"])' ];
 var TAB_KEY                 = 9;
 var ESCAPE_KEY              = 27;
@@ -14,7 +14,7 @@ var FOCUSED_BEFORE_RENDER = null;
  * @param {Event} event Passed event from some handlers
  */
 function setFocusToFirstItem( node, event ) {
-	if ( event && event.target && ! gform.tools.getClosest( event.target, '#' + node.id ) ) {
+	if ( event && event.target && ! kform.tools.getClosest( event.target, '#' + node.id ) ) {
 		return;
 	}
 	var focusableChildren = getFocusableChildren( node );
@@ -72,7 +72,7 @@ function trapTabKey( node, event ) {
  * @return {Array<Element>}
  */
 function $$( selector, context ) {
-	return gform.tools.convertElements( (context || document).querySelectorAll( selector ) );
+	return kform.tools.convertElements( (context || document).querySelectorAll( selector ) );
 }
 
 /**
@@ -189,7 +189,7 @@ function useFieldId( field ) {
 function getOptionsFromSelect( field, value ) {
 	var options = [];
 
-	var emptyLabel = gf_vars.emptyChoice;
+	var emptyLabel = kdna_vars.emptyChoice;
 
 	if ( field.placeholder ) {
 		emptyLabel = field.placeholder;
@@ -227,7 +227,7 @@ function getOptionsFromSelect( field, value ) {
  * @return {[]}
  */
 function getCategoryOptions( field, value ) {
-	var cats    = gf_vars.conditionalLogic.categories;
+	var cats    = kdna_vars.conditionalLogic.categories;
 	var options = [];
 
 	for ( var i = 0; i < cats.length; i++ ) {
@@ -255,7 +255,7 @@ function getCategoryOptions( field, value ) {
  */
 function getAddressOptions( field, inputId, value ) {
 	var options        = [];
-	var addressOptions = gf_vars.conditionalLogic.addressOptions;
+	var addressOptions = kdna_vars.conditionalLogic.addressOptions;
 
 	if ( !field.inputs ) {
 		return options;
@@ -268,7 +268,7 @@ function getAddressOptions( field, inputId, value ) {
 	var fieldAddressOptions = addressOptions[ field.addressType ];
 
 	// Associative arrays are expected to have alphanumeric keys (country codes).
-	// If asort() is used in the gform_countries filter, the resulting array will be
+	// If asort() is used in the kform_countries filter, the resulting array will be
 	// associative even if the original array was plain, we only need the values.
 	if ( ! Array.isArray( fieldAddressOptions ) ) {
 		var allNumericKeys = true;
@@ -332,15 +332,15 @@ function getAddressOptions( field, inputId, value ) {
 }
 
 /**
- * Generate a GFConditionalLogic instance from the given field ID and object type.
+ * Generate a KDNAConditionalLogic instance from the given field ID and object type.
  *
  * @param {int}    fieldId    The ID for the current field.
  * @param {string} objectType The object type of the current field.
  */
-function generateGFConditionalLogic( fieldId, objectType ) {
+function generateKDNAConditionalLogic( fieldId, objectType ) {
 
 	// If this flyout is already loaded, do nothing.
-	const isAlreadyLoaded = GF_CONDITIONAL_INSTANCES_COLLECTION.filter( function( instance ) {
+	const isAlreadyLoaded = KDNA_CONDITIONAL_INSTANCES_COLLECTION.filter( function( instance ) {
 		return instance.deactivated !== true && instance.fieldId === fieldId && instance.objectType === objectType;
 	}).length > 0;
 	if ( isAlreadyLoaded ) {
@@ -348,23 +348,23 @@ function generateGFConditionalLogic( fieldId, objectType ) {
 	}
 
 	// If we're changing fields, deactivate and hide all current instances of the flyout and update the flyout collection.
-	const isChangingFields = GF_CONDITIONAL_INSTANCE && GF_CONDITIONAL_INSTANCE.fieldId !== fieldId;
+	const isChangingFields = KDNA_CONDITIONAL_INSTANCE && KDNA_CONDITIONAL_INSTANCE.fieldId !== fieldId;
 	if ( isChangingFields ) {
-		GF_CONDITIONAL_INSTANCES_COLLECTION.forEach(function (instance, instanceIndex) {
+		KDNA_CONDITIONAL_INSTANCES_COLLECTION.forEach(function (instance, instanceIndex) {
 			instance.hideFlyout();
 			instance.removeEventListeners();
 			instance.deactivated = true;
 		});
 
 		// Remove deactivated instances from the collection.
-		GF_CONDITIONAL_INSTANCES_COLLECTION = GF_CONDITIONAL_INSTANCES_COLLECTION.filter( function( instance ) {
+		KDNA_CONDITIONAL_INSTANCES_COLLECTION = KDNA_CONDITIONAL_INSTANCES_COLLECTION.filter( function( instance ) {
 			return instance.deactivated !== true;
 		});
 	}
 
 	// Create new flyout instance and add it to the collection.
-	GF_CONDITIONAL_INSTANCE = new GFConditionalLogic( fieldId, objectType );
-	GF_CONDITIONAL_INSTANCES_COLLECTION.push( GF_CONDITIONAL_INSTANCE );
+	KDNA_CONDITIONAL_INSTANCE = new KDNAConditionalLogic( fieldId, objectType );
+	KDNA_CONDITIONAL_INSTANCES_COLLECTION.push( KDNA_CONDITIONAL_INSTANCE );
 }
 
 /**
@@ -379,10 +379,10 @@ function isValidFlyoutClick( e ) {
 		'jsConditonalToggle' in e.target.dataset ||
 		'jsAddRule' in e.target.dataset ||
 		'jsDeleteRule' in e.target.dataset ||
-		e.target.classList.contains( 'gform-field__toggle-input' ) ||
-		e.target.closest( '.gform-dialog__mask' ) !== null
+		e.target.classList.contains( 'kform-field__toggle-input' ) ||
+		e.target.closest( '.kform-dialog__mask' ) !== null
 	);
-	return gform.applyFilters( 'gform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
+	return kform.applyFilters( 'kform_conditional_logic_is_valid_flyout_click', isValidFlyoutClick, e );
 }
 
 /**
@@ -397,7 +397,7 @@ function ruleNeedsTextValue( rule ) {
 }
 
 /**
- * Class GFConditionalLogic
+ * Class KDNAConditionalLogic
  *
  * A JS class encapsulating all of the logic and state for a conditional flyout.
  *
@@ -406,7 +406,7 @@ function ruleNeedsTextValue( rule ) {
  *
  * @constructor
  */
-function GFConditionalLogic( fieldId, objectType ) {
+function KDNAConditionalLogic( fieldId, objectType ) {
 
 	// State and Flyout data
 	this.fieldId    = fieldId;
@@ -432,18 +432,18 @@ function GFConditionalLogic( fieldId, objectType ) {
 /**
  * Render the sidebar view.
  */
-GFConditionalLogic.prototype.renderSidebar = function() {
+KDNAConditionalLogic.prototype.renderSidebar = function() {
 	var config = {
 		title: this.getAccordionTitle(),
-		toggleText: gf_vars.configure + ' ' + gf_vars.conditional_logic_text,
-		active_class: this.isEnabled() ? 'gform-status--active' : '',
+		toggleText: kdna_vars.configure + ' ' + kdna_vars.conditional_logic_text,
+		active_class: this.isEnabled() ? 'kform-status--active' : '',
 		active_text: this.isEnabled() ? 'Active' : 'Inactive',
 		desc_class: GetFirstRuleField() <= 0 ? 'active' : '',
 		toggle_class: GetFirstRuleField() <= 0 ? '' : 'active',
-		desc: gf_vars.conditionalLogic.conditionalLogicHelperText,
+		desc: kdna_vars.conditionalLogic.conditionalLogicHelperText,
 	}
 
-	var html = gf_vars.conditionalLogic.views.sidebar;
+	var html = kdna_vars.conditionalLogic.views.sidebar;
 
 	renderView( html, this.els[ this.objectType ], config, true );
 };
@@ -451,25 +451,25 @@ GFConditionalLogic.prototype.renderSidebar = function() {
 /**
  * Render the flyout view.
  */
-GFConditionalLogic.prototype.renderFlyout = function() {
+KDNAConditionalLogic.prototype.renderFlyout = function() {
 	var config = {
 		objectType: this.objectType,
 		fieldId: this.fieldId,
 		checked: this.state.enabled ? 'checked' : '',
 		activeClass: this.visible ? 'active' : 'inactive',
-		enabledText: this.state.enabled ? gf_vars.enabled : gf_vars.disabled,
-		configure: gf_vars.configure,
-		conditionalLogic: gf_vars.conditional_logic_text,
-		enable: gf_vars.enable,
-		desc: gf_vars.conditional_logic_desc,
+		enabledText: this.state.enabled ? kdna_vars.enabled : kdna_vars.disabled,
+		configure: kdna_vars.configure,
+		conditionalLogic: kdna_vars.conditional_logic_text,
+		enable: kdna_vars.enable,
+		desc: kdna_vars.conditional_logic_desc,
 		main: this.renderMainControls( false ),
 	};
 
-	var html = gf_vars.conditionalLogic.views.flyout;
+	var html = kdna_vars.conditionalLogic.views.flyout;
 
 	renderView( html, this.els.flyouts[ this.objectType ], config, true );
 
-	gform.tools.trigger( 'gform_render_simplebars' );
+	kform.tools.trigger( 'kform_render_simplebars' );
 };
 
 /**
@@ -479,7 +479,7 @@ GFConditionalLogic.prototype.renderFlyout = function() {
  *
  * @return {boolean|string}
  */
-GFConditionalLogic.prototype.renderLogicDescription = function() {
+KDNAConditionalLogic.prototype.renderLogicDescription = function() {
 
 	var config = {
 		actionType: this.state.actionType,
@@ -487,21 +487,21 @@ GFConditionalLogic.prototype.renderLogicDescription = function() {
 		objectTypeText: this.getObjectTypeText(),
 		objectShowText: this.getObjectShowText(),
 		objectHideText: this.getObjectHideText(),
-		matchText: gf_vars.ofTheFollowingMatch,
-		allText: gf_vars.all,
-		anyText: gf_vars.any,
+		matchText: kdna_vars.ofTheFollowingMatch,
+		allText: kdna_vars.all,
+		anyText: kdna_vars.any,
 		hideSelected: this.state.actionType === 'hide' ? 'selected="selected"' : '',
 		showSelected: this.state.actionType === 'show' ? 'selected="selected"' : '',
 		allSelected: this.state.logicType === 'all' ? 'selected="selected"' : '',
 		anySelected: this.state.logicType === 'any' ? 'selected="selected"' : '',
 	};
 
-	var html = gf_vars.conditionalLogic.views.logicDescription;
+	var html = kdna_vars.conditionalLogic.views.logicDescription;
 
 	var markup = renderView( html, this.els.flyouts[ this.objectType ], config, false );
 
 	/**
-	 * @filter gform_conditional_logic_description
+	 * @filter kform_conditional_logic_description
 	 *
 	 * Allows add-ons to modify the markup returned for the Conditional Logic description area.
 	 *
@@ -515,7 +515,7 @@ GFConditionalLogic.prototype.renderLogicDescription = function() {
 	 *
 	 * @return {string}
 	 */
-	return gform.applyFilters( 'gform_conditional_logic_description', markup, [], this.objectType, this );
+	return kform.applyFilters( 'kform_conditional_logic_description', markup, [], this.objectType, this );
 };
 
 /**
@@ -525,16 +525,16 @@ GFConditionalLogic.prototype.renderLogicDescription = function() {
  *
  * @return {boolean|string}
  */
-GFConditionalLogic.prototype.renderMainControls = function( echo ) {
+KDNAConditionalLogic.prototype.renderMainControls = function( echo ) {
 
 	var config = {
 		enabledClass: this.state.enabled ? 'active' : '',
 		logicDescription: this.renderLogicDescription(),
-		a11yWarning: this.objectType === 'button' ? gf_vars.conditionalLogic.views.a11yWarning : '',
-		a11yWarningText: gf_vars.conditional_logic_a11y,
+		a11yWarning: this.objectType === 'button' ? kdna_vars.conditionalLogic.views.a11yWarning : '',
+		a11yWarningText: kdna_vars.conditional_logic_a11y,
 	};
 
-	var html = gf_vars.conditionalLogic.views.main;
+	var html = kdna_vars.conditionalLogic.views.main;
 
 	if ( ! echo ) {
 		return renderView( html, this.els.flyouts[ this.objectType ], config, false );
@@ -550,9 +550,9 @@ GFConditionalLogic.prototype.renderMainControls = function( echo ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
+KDNAConditionalLogic.prototype.renderFieldOptions = function( rule ) {
 	var html     = '';
-	var template = gf_vars.conditionalLogic.views.option;
+	var template = kdna_vars.conditionalLogic.views.option;
 	var options  = [];
 
 	for ( var i = 0; i < form.fields.length; i++ ) {
@@ -591,7 +591,7 @@ GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
 		}
 	}
 
-	options = gform.applyFilters( 'gform_conditional_logic_fields', options, form, rule.fieldId );
+	options = kform.applyFilters( 'kform_conditional_logic_fields', options, form, rule.fieldId );
 
 	for ( var i = 0; i < options.length; i++ ) {
 		var config = options[ i ];
@@ -613,20 +613,20 @@ GFConditionalLogic.prototype.renderFieldOptions = function( rule ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
+KDNAConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
 	var html      = '';
-	var template  = gf_vars.conditionalLogic.views.option;
+	var template  = kdna_vars.conditionalLogic.views.option;
 	var operators = {
-		is: gf_vars.is,
-		isnot: gf_vars.isNot,
-		'>': gf_vars.greaterThan,
-		'<': gf_vars.lessThan,
-		contains: gf_vars.contains,
-		starts_with: gf_vars.startsWith,
-		ends_with: gf_vars.endsWith,
+		is: kdna_vars.is,
+		isnot: kdna_vars.isNot,
+		'>': kdna_vars.greaterThan,
+		'<': kdna_vars.lessThan,
+		contains: kdna_vars.contains,
+		starts_with: kdna_vars.startsWith,
+		ends_with: kdna_vars.endsWith,
 	};
 
-	operators = gform.applyFilters( 'gform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
+	operators = kform.applyFilters( 'kform_conditional_logic_operators', operators, this.objectType, rule.fieldId );
 
 	for ( key in operators ) {
 		var label  = operators[ key ];
@@ -649,10 +649,10 @@ GFConditionalLogic.prototype.renderOperatorOptions = function( rule ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderValueOptions = function( rule, idx ) {
+KDNAConditionalLogic.prototype.renderValueOptions = function( rule, idx ) {
 	var field    = getFieldById( rule.fieldId );
 	var html     = '';
-	var template = gf_vars.conditionalLogic.views.option;
+	var template = kdna_vars.conditionalLogic.views.option;
 	var options  = [];
 
 	// Field is actually a sub-field (such as the First Name or Country field), get the correct field from its ID.
@@ -698,13 +698,13 @@ GFConditionalLogic.prototype.renderValueOptions = function( rule, idx ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderInput = function( rule, idx ) {
+KDNAConditionalLogic.prototype.renderInput = function( rule, idx ) {
 	var config = {
 		ruleIdx: idx,
 		value: rule.value,
 	};
 
-	var html = gf_vars.conditionalLogic.views.input;
+	var html = kdna_vars.conditionalLogic.views.input;
 
 	return renderView( html, null, config, false );
 };
@@ -717,13 +717,13 @@ GFConditionalLogic.prototype.renderInput = function( rule, idx ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderSelect = function( rule, idx ) {
+KDNAConditionalLogic.prototype.renderSelect = function( rule, idx ) {
 	var config = {
 		ruleIdx: idx,
 		fieldValueOptions: this.renderValueOptions( rule, idx ),
 	};
 
-	var html = gf_vars.conditionalLogic.views.select;
+	var html = kdna_vars.conditionalLogic.views.select;
 
 	return renderView( html, null, config, false );
 };
@@ -736,7 +736,7 @@ GFConditionalLogic.prototype.renderSelect = function( rule, idx ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
+KDNAConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 	var fieldValueOptions = this.renderValueOptions( rule, idx );
 	var isSelect          = fieldValueOptions.length;
 	var html              = '';
@@ -748,9 +748,9 @@ GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 		html = this.renderSelect( rule, idx );
 	}
 
-	html = gform.applyFilters( 'gform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
+	html = kform.applyFilters( 'kform_conditional_logic_values_input', html, this.objectType, idx, rule.fieldId, rule.value );
 
-	var el = gform.tools.htmlToElement( html );
+	var el = kform.tools.htmlToElement( html );
 
 	if ( ! el.classList.contains( 'active' ) ) {
 		el.classList.add( 'active' );
@@ -760,7 +760,7 @@ GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
 		el.setAttribute( 'data-js-rule-input', 'value' );
 	}
 
-	return gform.tools.elementToHTML( el );
+	return kform.tools.elementToHTML( el );
 };
 
 /**
@@ -771,7 +771,7 @@ GFConditionalLogic.prototype.renderRuleValue = function( rule, idx ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderRule = function( rule, idx ) {
+KDNAConditionalLogic.prototype.renderRule = function( rule, idx ) {
 	var field = getFieldById( rule.fieldId );
 
 	if ( ! field ) {
@@ -787,11 +787,11 @@ GFConditionalLogic.prototype.renderRule = function( rule, idx ) {
 		deleteClass: this.state.rules.length > 1 ? 'active' : '',
 		value: rule.value,
 		valueMarkup: this.renderRuleValue( rule, idx ),
-		addRuleText: gf_vars.conditionalLogic.addRuleText,
-		removeRuleText: gf_vars.conditionalLogic.removeRuleText,
+		addRuleText: kdna_vars.conditionalLogic.addRuleText,
+		removeRuleText: kdna_vars.conditionalLogic.removeRuleText,
 	};
 
-	var html = gf_vars.conditionalLogic.views.rule;
+	var html = kdna_vars.conditionalLogic.views.rule;
 
 	return renderView( html, null, config, false );
 }
@@ -801,7 +801,7 @@ GFConditionalLogic.prototype.renderRule = function( rule, idx ) {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.renderRules = function() {
+KDNAConditionalLogic.prototype.renderRules = function() {
 	var container = this.els.flyouts[ this.objectType ].querySelector( '.conditional_logic_flyout__logic' );
 
 	var html = '';
@@ -815,12 +815,12 @@ GFConditionalLogic.prototype.renderRules = function() {
 /**
  * Update the visibility of the conditional logic icon in compact view.
  */
-GFConditionalLogic.prototype.updateCompactView = function() {
+KDNAConditionalLogic.prototype.updateCompactView = function() {
 	if( this.objectType == 'next_button' ) {
 		return;
 	}
 
-	const icon = document.querySelector( '#gfield_' + this.fieldId + '-conditional-logic-icon' );
+	const icon = document.querySelector( '#kfield_' + this.fieldId + '-conditional-logic-icon' );
 	if ( ! icon ) {
 		return;
 	}
@@ -837,7 +837,7 @@ GFConditionalLogic.prototype.updateCompactView = function() {
  *
  * @return {object}
  */
-GFConditionalLogic.prototype.gatherElements = function() {
+KDNAConditionalLogic.prototype.gatherElements = function() {
 	return {
 		field: document.querySelector( '.conditional_logic_field_setting' ),
 		page: document.querySelector( '.conditional_logic_page_setting' ),
@@ -857,7 +857,7 @@ GFConditionalLogic.prototype.gatherElements = function() {
  *
  * @return {{value: string, operator: string, fieldId: number}}
  */
-GFConditionalLogic.prototype.getDefaultRule = function() {
+KDNAConditionalLogic.prototype.getDefaultRule = function() {
 	var fieldId = GetFirstRuleField();
 	var field   = GetFieldById( fieldId );
 
@@ -873,7 +873,7 @@ GFConditionalLogic.prototype.getDefaultRule = function() {
  *
  * @return {{actionType: string, logicType: string, rules: [*], enabled: boolean}}
  */
-GFConditionalLogic.prototype.getDefaultState = function() {
+KDNAConditionalLogic.prototype.getDefaultState = function() {
 	return {
 		enabled: false,
 		actionType: 'show',
@@ -891,7 +891,7 @@ GFConditionalLogic.prototype.getDefaultState = function() {
  *
  * @return {obj}
  */
-GFConditionalLogic.prototype.getStateForField = function( fieldId ) {
+KDNAConditionalLogic.prototype.getStateForField = function( fieldId ) {
 	// The submit field in the editor has a non-numeric ID.
 	if( 'submit' === fieldId ) {
 		var logic = form.button.conditionalLogic;
@@ -928,27 +928,27 @@ GFConditionalLogic.prototype.getStateForField = function( fieldId ) {
  *
  * @return {boolean}
  */
-GFConditionalLogic.prototype.isEnabled = function() {
+KDNAConditionalLogic.prototype.isEnabled = function() {
 	return this.state.enabled && GetFirstRuleField() > 0;
 }
 
-GFConditionalLogic.prototype.getAccordionTitle = function() {
+KDNAConditionalLogic.prototype.getAccordionTitle = function() {
 	var prefix = '';
 	switch ( this.objectType ) {
 		case 'page':
-			prefix = gf_vars.page + ' ';
+			prefix = kdna_vars.page + ' ';
 			break;
 		case 'next_button':
-			prefix = gf_vars.next_button + ' ';
+			prefix = kdna_vars.next_button + ' ';
 			break;
 		case 'button':
-			prefix = gf_vars.button + ' ';
+			prefix = kdna_vars.button + ' ';
 		case 'field':
 		default:
 			break;
 	}
 
-	return prefix + gf_vars.conditional_logic_text;
+	return prefix + kdna_vars.conditional_logic_text;
 };
 
 /**
@@ -956,20 +956,20 @@ GFConditionalLogic.prototype.getAccordionTitle = function() {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.getObjectTypeText = function() {
+KDNAConditionalLogic.prototype.getObjectTypeText = function() {
 	switch ( this.objectType ) {
 		case 'section':
-			return gf_vars.thisSectionIf;
+			return kdna_vars.thisSectionIf;
 		case 'field':
-			return gf_vars.thisFieldIf;
+			return kdna_vars.thisFieldIf;
 		case 'page':
-			return gf_vars.thisPage;
+			return kdna_vars.thisPage;
 		case 'confirmation':
-			return gf_vars.thisConfirmation;
+			return kdna_vars.thisConfirmation;
 		case 'notification':
-			return gf_vars.thisNotification;
+			return kdna_vars.thisNotification;
 		default:
-			return gf_vars.thisFormButton;
+			return kdna_vars.thisFormButton;
 	}
 }
 
@@ -978,11 +978,11 @@ GFConditionalLogic.prototype.getObjectTypeText = function() {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.getObjectShowText = function() {
+KDNAConditionalLogic.prototype.getObjectShowText = function() {
 	if ( this.objectType === "next_button" ) {
-		return gf_vars.enable;
+		return kdna_vars.enable;
 	} else {
-		return gf_vars.show;
+		return kdna_vars.show;
 	}
 }
 
@@ -991,18 +991,18 @@ GFConditionalLogic.prototype.getObjectShowText = function() {
  *
  * @return {string}
  */
-GFConditionalLogic.prototype.getObjectHideText = function() {
+KDNAConditionalLogic.prototype.getObjectHideText = function() {
 	if ( this.objectType === "next_button" ) {
-		return gf_vars.disable;
+		return kdna_vars.disable;
 	} else {
-		return gf_vars.hide;
+		return kdna_vars.hide;
 	}
 }
 
 /**
  * Hide the flyout.
  */
-GFConditionalLogic.prototype.hideFlyout = function() {
+KDNAConditionalLogic.prototype.hideFlyout = function() {
 	var thisFlyout = this.els.flyouts[ this.objectType ];
 	if ( ! thisFlyout.classList.contains( 'anim-in-active' ) ) {
 		return;
@@ -1025,7 +1025,7 @@ GFConditionalLogic.prototype.hideFlyout = function() {
 /**
  * Show the flyout.
  */
-GFConditionalLogic.prototype.showFlyout = function() {
+KDNAConditionalLogic.prototype.showFlyout = function() {
 	for ( type in this.els.flyouts ) {
 		var flyout = this.els.flyouts[ type ];
 		flyout.classList.remove( 'anim-in-ready' );
@@ -1045,7 +1045,7 @@ GFConditionalLogic.prototype.showFlyout = function() {
 /**
  * Toggle the flyout when button is clicked.
  */
-GFConditionalLogic.prototype.toggleFlyout = function( restoreFocus ) {
+KDNAConditionalLogic.prototype.toggleFlyout = function( restoreFocus ) {
 	this.renderFlyout();
 	this.renderRules();
 
@@ -1076,7 +1076,7 @@ GFConditionalLogic.prototype.toggleFlyout = function( restoreFocus ) {
  *
  * @return void
  */
-GFConditionalLogic.prototype.updateState = function( stateKey, stateValue ) {
+KDNAConditionalLogic.prototype.updateState = function( stateKey, stateValue ) {
 	this.state[ stateKey ] = stateValue;
 	this.updateForm();
 
@@ -1097,7 +1097,7 @@ GFConditionalLogic.prototype.updateState = function( stateKey, stateValue ) {
  *
  * @return void
  */
-GFConditionalLogic.prototype.updateRule = function( key, value, idx ) {
+KDNAConditionalLogic.prototype.updateRule = function( key, value, idx ) {
 	this.state.rules[ idx ][ key ] = value;
 	this.renderRules();
 	this.updateForm();
@@ -1108,7 +1108,7 @@ GFConditionalLogic.prototype.updateRule = function( key, value, idx ) {
  *
  * @return void
  */
-GFConditionalLogic.prototype.addRule = function() {
+KDNAConditionalLogic.prototype.addRule = function() {
 	this.state.rules.push( this.getDefaultRule() );
 	this.renderRules();
 	this.updateForm();
@@ -1121,7 +1121,7 @@ GFConditionalLogic.prototype.addRule = function() {
  *
  * @return void
  */
-GFConditionalLogic.prototype.deleteRule = function( idx ) {
+KDNAConditionalLogic.prototype.deleteRule = function( idx ) {
 	this.state.rules.splice( idx, 1 );
 	this.renderRules();
 	this.updateForm();
@@ -1135,7 +1135,7 @@ GFConditionalLogic.prototype.deleteRule = function( idx ) {
  *
  * @return void
  */
-GFConditionalLogic.prototype.updateFormConditionalData = function( index, data ) {
+KDNAConditionalLogic.prototype.updateFormConditionalData = function( index, data ) {
 	if ( this.objectType === 'next_button' ) {
 		form.fields[ index ].nextButton.conditionalLogic = data;
 		return;
@@ -1152,7 +1152,7 @@ GFConditionalLogic.prototype.updateFormConditionalData = function( index, data )
 /**
  * Update the global form object so that data saves correctly.
  */
-GFConditionalLogic.prototype.updateForm = function() {
+KDNAConditionalLogic.prototype.updateForm = function() {
 
 	if ( 'submit' === this.fieldId ) {
 		this.updateFormButtonConditionalData( this.state );
@@ -1182,7 +1182,7 @@ GFConditionalLogic.prototype.updateForm = function() {
  *
  * @params {array} data
  */
-GFConditionalLogic.prototype.updateFormButtonConditionalData = function( data ) {
+KDNAConditionalLogic.prototype.updateFormButtonConditionalData = function( data ) {
 	if ( !this.isEnabled() ) {
 		form.button.conditionalLogic = '';
 		return;
@@ -1195,7 +1195,7 @@ GFConditionalLogic.prototype.updateFormButtonConditionalData = function( data ) 
  *
  * @param {Event} e
  */
-GFConditionalLogic.prototype.handleToggleClick = function( e ) {
+KDNAConditionalLogic.prototype.handleToggleClick = function( e ) {
 	if ( e.target.classList.contains( 'conditional_logic_accordion__toggle_button' ) || e.target.classList.contains( 'conditional_logic_accordion__toggle_button_icon' ) ) {
 		this.toggleFlyout( true );
 	}
@@ -1206,7 +1206,7 @@ GFConditionalLogic.prototype.handleToggleClick = function( e ) {
  *
  * @param {Event} e
  */
-GFConditionalLogic.prototype.handleSidebarClick = function( e ) {
+KDNAConditionalLogic.prototype.handleSidebarClick = function( e ) {
 	if ( ('jsConditonalToggle' in e.target.dataset) ) {
 		this.updateState( 'enabled', e.target.checked );
 	}
@@ -1216,7 +1216,7 @@ GFConditionalLogic.prototype.handleSidebarClick = function( e ) {
 	}
 
 	if ( ('jsDeleteRule' in e.target.dataset) ) {
-		var parent = gform.tools.getClosest( e.target, '[data-js-rule-idx]' );
+		var parent = kform.tools.getClosest( e.target, '[data-js-rule-idx]' );
 		this.deleteRule( parent.dataset.jsRuleIdx );
 	}
 
@@ -1230,7 +1230,7 @@ GFConditionalLogic.prototype.handleSidebarClick = function( e ) {
  *
  * @param {Event} e
  */
-GFConditionalLogic.prototype.handleFlyoutChange = function( e ) {
+KDNAConditionalLogic.prototype.handleFlyoutChange = function( e ) {
 	if ( ('jsStateUpdate' in e.target.dataset) ) {
 		var key = e.target.dataset.jsStateUpdate;
 		var val = e.target.value;
@@ -1252,7 +1252,7 @@ GFConditionalLogic.prototype.handleFlyoutChange = function( e ) {
  *
  * @param {Event} e
  */
-GFConditionalLogic.prototype.handleBodyClick = function( e ) {
+KDNAConditionalLogic.prototype.handleBodyClick = function( e ) {
 	if ( isValidFlyoutClick( e ) || this.pointerDownInside ) {
 		return;
 	}
@@ -1268,7 +1268,7 @@ GFConditionalLogic.prototype.handleBodyClick = function( e ) {
  *
  * @param {Event} e
  */
-GFConditionalLogic.prototype.handleAccordionClick = function( e ) {
+KDNAConditionalLogic.prototype.handleAccordionClick = function( e ) {
 	if (
 		this.visible &&
 		! e.target.classList.contains( 'conditional_logic_accordion__toggle_button') &&
@@ -1281,12 +1281,12 @@ GFConditionalLogic.prototype.handleAccordionClick = function( e ) {
 /**
  * Add all event listeners to flyout.
  */
-GFConditionalLogic.prototype.addEventListeners = function() {
+KDNAConditionalLogic.prototype.addEventListeners = function() {
 	this.els[ this.objectType ].addEventListener( 'click', this._handleToggleClick );
 	this.els.flyouts[ this.objectType ].addEventListener( 'click', this._handleSidebarClick );
 	this.els.flyouts[ this.objectType ].addEventListener( 'change', this._handleFlyoutChange );
 	document.body.addEventListener( 'click', this._handleBodyClick );
-	gform.addAction( 'formEditorNullClick', this._handleAccordionClick );
+	kform.addAction( 'formEditorNullClick', this._handleAccordionClick );
 	this.els.flyouts[ this.objectType ].addEventListener( 'mousedown', ( event ) => {
 		this.pointerDownInside = this.els.flyouts[ this.objectType ].contains( event.target );
 	} );
@@ -1295,7 +1295,7 @@ GFConditionalLogic.prototype.addEventListeners = function() {
 /**
  * Remove all event listeners from flyout.
  */
-GFConditionalLogic.prototype.removeEventListeners = function() {
+KDNAConditionalLogic.prototype.removeEventListeners = function() {
 	this.els[ this.objectType ].removeEventListener( 'click', this._handleToggleClick );
 	this.els.flyouts[ this.objectType ].removeEventListener( 'click', this._handleSidebarClick );
 	this.els.flyouts[ this.objectType ].removeEventListener( 'change', this._handleFlyoutChange );
@@ -1308,7 +1308,7 @@ GFConditionalLogic.prototype.removeEventListeners = function() {
  *
  * @param {Event} event
  */
-GFConditionalLogic.prototype._bindKeypress = function( event ) {
+KDNAConditionalLogic.prototype._bindKeypress = function( event ) {
 	// If the dialog is shown and the ESCAPE key is being pressed, prevent any
 	// further effects from the ESCAPE key and hide the dialog
 	if ( this.visible && event.which === ESCAPE_KEY ) {
@@ -1326,7 +1326,7 @@ GFConditionalLogic.prototype._bindKeypress = function( event ) {
 /**
  * Add focus to the flyout.
  */
-GFConditionalLogic.prototype.addFocusToFlyout = function() {
+KDNAConditionalLogic.prototype.addFocusToFlyout = function() {
 	// Keep a reference to the currently focused element to be able to restore
 	// it later, then set the focus to the first focusable child of the dialog
 	// element
@@ -1344,7 +1344,7 @@ GFConditionalLogic.prototype.addFocusToFlyout = function() {
 /**
  * Remove focus from the flyout.
  */
-GFConditionalLogic.prototype.removeFocusFromFlyout = function() {
+KDNAConditionalLogic.prototype.removeFocusFromFlyout = function() {
 	// If their was a focused element before the dialog was opened, restore the
 	// focus back to it
 	if ( FOCUSED_BEFORE_DIALOG ) {
@@ -1360,7 +1360,7 @@ GFConditionalLogic.prototype.removeFocusFromFlyout = function() {
 /**
  * Handle the focus event callback.
  */
-GFConditionalLogic.prototype.handleFocus = function() {
+KDNAConditionalLogic.prototype.handleFocus = function() {
 	if ( this.visible ) {
 		this.addFocusToFlyout();
 	} else {
@@ -1376,7 +1376,7 @@ GFConditionalLogic.prototype.handleFocus = function() {
  *
  * @return void
  */
-GFConditionalLogic.prototype._maintainFocus = function( event ) {
+KDNAConditionalLogic.prototype._maintainFocus = function( event ) {
 	// If the dialog is shown and the focus is not within the dialog element,
 	// move it back to its first focusable child
 	if ( this.visible && !this.els.flyouts[ this.objectType ].contains( event.target ) ) {
@@ -1387,7 +1387,7 @@ GFConditionalLogic.prototype._maintainFocus = function( event ) {
 /**
  * Render the markup for this Conditional Flyout.
  */
-GFConditionalLogic.prototype.render = function() {
+KDNAConditionalLogic.prototype.render = function() {
 	this.renderSidebar();
 	this.renderFlyout();
 	this.renderRules();
@@ -1398,7 +1398,7 @@ GFConditionalLogic.prototype.render = function() {
 /**
  * Initialize the Conditional Flyout.
  */
-GFConditionalLogic.prototype.init = function() {
+KDNAConditionalLogic.prototype.init = function() {
 	this.addEventListeners();
 
 	this.renderSidebar();

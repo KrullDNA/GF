@@ -79,7 +79,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 			parent::init();
 
-			global $_gaddon_posted_settings;
+			global $_kaddon_posted_settings;
 
 			if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
 				add_action( 'kdnaforms_results_cron_' . $this->get_slug(), array( $this, 'results_cron' ), 10, 3 );
@@ -100,7 +100,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			}
 
 			// Clear the settings cache because it was checked very early before other add-ons have a chance to make adjustments.
-			$_gaddon_posted_settings = null;
+			$_kaddon_posted_settings = null;
 
 		}
 
@@ -274,7 +274,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		}
 
 		public function load_text_domain() {
-			KDNACommon::load_gf_text_domain();
+			KDNACommon::load_kdna_text_domain();
 		}
 
 		// Scripts
@@ -338,7 +338,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( !empty( $_GET['subview'] ) && $_GET['subview'] === 'kdnaformswebapi' ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 				// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<script>
-				var gf_webapi_vars = {
+				var kdna_webapi_vars = {
 					"api_enabled": ' . $this->is_api_enabled() . ',
 					"enable_api_checkbox_checked": ' . $this->get_setting( "enabled" ) . ',
 				};</script>';
@@ -358,7 +358,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		 */
 		public function get_menu_icon() {
 
-			return 'gform-icon--api';
+			return 'kform-icon--api';
 
 		}
 
@@ -375,28 +375,28 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 			?>
 
-			<div id="gform-webapi-edit-container" style="display: none;" role="dialog" aria-modal="true">
-				<form id="gform-webapi-edit" class="gform-settings__wrapper">
-					<fieldset class="gform-settings-panel__content">
+			<div id="kform-webapi-edit-container" style="display: none;" role="dialog" aria-modal="true">
+				<form id="kform-webapi-edit" class="kform-settings__wrapper">
+					<fieldset class="kform-settings-panel__content">
                         <legend class="screen-reader-text"><?php esc_html__( 'Add New Key', 'kdnaforms' ); ?></legend>
 
 						<!-- Nonce -->
-						<?php wp_nonce_field( 'gf_restapi_edit_key' ); ?>
+						<?php wp_nonce_field( 'kdna_restapi_edit_key' ); ?>
 
 						<!-- Key ID -->
-						<input id="gform-webapi-key" type="hidden" />
+						<input id="kform-webapi-key" type="hidden" />
 
 						<!-- Description -->
-						<div class="gform-settings-field gform-settings-field__text" role="group">
-							<label class="gform-settings-label" for="gform-webapi-description"><?php esc_html_e( 'Description', 'kdnaforms' ); ?></label>
-							<input id="gform-webapi-description" type="text" value="" aria-describedby="gform-webapi-description-help"/>
-                            <span id="gform-webapi-description-help" class="screen-reader-text"><?php esc_html_e( 'Enter a description for this API key.', 'kdnaforms' ); ?></span>
+						<div class="kform-settings-field kform-settings-field__text" role="group">
+							<label class="kform-settings-label" for="kform-webapi-description"><?php esc_html_e( 'Description', 'kdnaforms' ); ?></label>
+							<input id="kform-webapi-description" type="text" value="" aria-describedby="kform-webapi-description-help"/>
+                            <span id="kform-webapi-description-help" class="screen-reader-text"><?php esc_html_e( 'Enter a description for this API key.', 'kdnaforms' ); ?></span>
                         </div>
 
 						<!-- User -->
-						<div class="gform-settings-field gform-settings-field__select">
-							<label id="label-user" class="gform-settings-label" for="gform-webapi-user"><?php esc_html_e( 'User', 'kdnaforms' ); ?></label>
-							<select id="gform-webapi-user" aria-labelledby="label-user">
+						<div class="kform-settings-field kform-settings-field__select">
+							<label id="label-user" class="kform-settings-label" for="kform-webapi-user"><?php esc_html_e( 'User', 'kdnaforms' ); ?></label>
+							<select id="kform-webapi-user" aria-labelledby="label-user">
 								<?php
 								$users = $this->get_users();
 								foreach ( $users as $user ) {
@@ -411,9 +411,9 @@ if ( class_exists( 'KDNAForms' ) ) {
 						</div>
 
 						<!-- Permissions -->
-						<div class="gform-settings-field gform-settings-field__select">
-							<label id="label-permissions" class="gform-settings-label" for="gform-webapi-permissions"><?php esc_html_e( 'Permissions', 'kdnaforms' ); ?></label>
-							<select id="gform-webapi-permissions" aria-labelledby="label-permissions">
+						<div class="kform-settings-field kform-settings-field__select">
+							<label id="label-permissions" class="kform-settings-label" for="kform-webapi-permissions"><?php esc_html_e( 'Permissions', 'kdnaforms' ); ?></label>
+							<select id="kform-webapi-permissions" aria-labelledby="label-permissions">
 								<option value="read"><?php esc_html_e( 'Read', 'kdnaforms' ); ?></option>
 								<option value="write"><?php esc_html_e( 'Write', 'kdnaforms' ); ?></option>
 								<option value="read_write"><?php esc_html_e( 'Read/Write', 'kdnaforms' ); ?></option>
@@ -421,48 +421,48 @@ if ( class_exists( 'KDNAForms' ) ) {
 						</div>
 
 						<!-- Last Updated -->
-						<div class="gform-settings-field gform-settings-field__html">
-							<label class="gform-settings-label"><?php esc_html_e( 'Last Access:', 'kdnaforms' ); ?></label>
-							<span class="gform-status-indicator gform-status-indicator--size-sm gform-status-indicator--theme-cosmos gform-status--active gform-status--no-icon gform-status--no-hover" id="gform-webapi-last-access">
-                                <span class="gform-status-indicator-status gform-typography--weight-medium gform-typography--size-text-xs"></span>
+						<div class="kform-settings-field kform-settings-field__html">
+							<label class="kform-settings-label"><?php esc_html_e( 'Last Access:', 'kdnaforms' ); ?></label>
+							<span class="kform-status-indicator kform-status-indicator--size-sm kform-status-indicator--theme-cosmos kform-status--active kform-status--no-icon kform-status--no-hover" id="kform-webapi-last-access">
+                                <span class="kform-status-indicator-status kform-typography--weight-medium kform-typography--size-text-xs"></span>
                             </span>
 						</div>
 
 						<!-- Consumer Key -->
-                        <div class="gform-input-wrapper gform-input-wrapper--theme-cosmos gform-input-wrapper--input gform-input-wrapper--with-action gform-input-wrapper--border-default gform-input-wrapper--with-icon" style="margin-bottom: 10px" >
-                            <label for="gform-webapi-consumer-key" class="gform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Key', 'kdnaforms' ); ?></label>
-                            <div class="gform-input__action-wrapper">
-                                <div class="gform-input__wrapper">
-                                    <input class="gform-input gform-typography--size-text-sm gform-input--size-r gform-input--text"
-                                           id="gform-webapi-consumer-key"
+                        <div class="kform-input-wrapper kform-input-wrapper--theme-cosmos kform-input-wrapper--input kform-input-wrapper--with-action kform-input-wrapper--border-default kform-input-wrapper--with-icon" style="margin-bottom: 10px" >
+                            <label for="kform-webapi-consumer-key" class="kform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Key', 'kdnaforms' ); ?></label>
+                            <div class="kform-input__action-wrapper">
+                                <div class="kform-input__wrapper">
+                                    <input class="kform-input kform-typography--size-text-sm kform-input--size-r kform-input--text"
+                                           id="kform-webapi-consumer-key"
                                            type="text"
                                            value=""
                                            aria-describedby="consumer-key-description"
                                     />
                                 </div>
-                                <button class="gform-button gform-button--size-r gform-button--white gform-button--width-auto gform-button--icon-leading gform-input__action-button">
-                                    <span class="gform-icon gform-icon--copy gform-button__icon"></span>
-                                    <span class="gform-button__text gform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
+                                <button class="kform-button kform-button--size-r kform-button--white kform-button--width-auto kform-button--icon-leading kform-input__action-button">
+                                    <span class="kform-icon kform-icon--copy kform-button__icon"></span>
+                                    <span class="kform-button__text kform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
                                 </button>
                                 <span id="consumer-key-description" class="screen-reader-text"><?php esc_html_e( 'This is your generated consumer key. Click "Copy" to copy it to the clipboard.', 'kdnaforms' ); ?></span>
                             </div>
                         </div>
 
 						<!-- Consumer Secret -->
-                        <div class="gform-input-wrapper gform-input-wrapper--theme-cosmos gform-input-wrapper--input gform-input-wrapper--with-action gform-input-wrapper--border-default gform-input-wrapper--with-icon" style="margin-bottom: 10px" >
-                            <label for="gform-webapi-consumer-secret" class="gform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Secret', 'kdnaforms' ); ?></label>
-                            <div class="gform-input__action-wrapper">
-                                <div class="gform-input__wrapper">
-                                    <input class="gform-input gform-typography--size-text-sm gform-input--size-r gform-input--text"
-                                           id="gform-webapi-consumer-secret"
+                        <div class="kform-input-wrapper kform-input-wrapper--theme-cosmos kform-input-wrapper--input kform-input-wrapper--with-action kform-input-wrapper--border-default kform-input-wrapper--with-icon" style="margin-bottom: 10px" >
+                            <label for="kform-webapi-consumer-secret" class="kform-settings-label" tabindex="0"><?php esc_html_e( 'Consumer Secret', 'kdnaforms' ); ?></label>
+                            <div class="kform-input__action-wrapper">
+                                <div class="kform-input__wrapper">
+                                    <input class="kform-input kform-typography--size-text-sm kform-input--size-r kform-input--text"
+                                           id="kform-webapi-consumer-secret"
                                            type="text"
                                            value=""
                                            aria-describedby="consumer-secret-description"
                                     />
                                 </div>
-                                <button class="gform-button gform-button--size-r gform-button--white gform-button--width-auto gform-button--icon-leading gform-input__action-button">
-                                    <span class="gform-icon gform-icon--copy gform-button__icon"></span>
-                                    <span class="gform-button__text gform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
+                                <button class="kform-button kform-button--size-r kform-button--white kform-button--width-auto kform-button--icon-leading kform-input__action-button">
+                                    <span class="kform-icon kform-icon--copy kform-button__icon"></span>
+                                    <span class="kform-button__text kform-button__text--inactive"><?php echo esc_html__( 'Copy', 'kdnaforms' ); ?></span>
                                 </button>
                                 <span id="consumer-secret-description" class="screen-reader-text"><?php esc_html_e( 'This is your generated consumer secret. Click "Copy" to copy it to the clipboard.', 'kdnaforms' ); ?></span>
                             </div>
@@ -470,7 +470,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 					</fieldset>
 
-					<button type="submit" class="gform-button gform-button--white" data-add="<?php esc_html_e( 'Add', 'kdnaforms' ); ?>" data-edit="<?php esc_html_e( 'Update', 'kdnaforms' ); ?>" style=" align-self: flex-start; margin-top: 0.3rem;"><?php esc_html_e( 'Update', 'kdnaforms' ); ?></button>
+					<button type="submit" class="kform-button kform-button--white" data-add="<?php esc_html_e( 'Add', 'kdnaforms' ); ?>" data-edit="<?php esc_html_e( 'Update', 'kdnaforms' ); ?>" style=" align-self: flex-start; margin-top: 0.3rem;"><?php esc_html_e( 'Update', 'kdnaforms' ); ?></button>
 
 				</form>
 			</div>
@@ -594,7 +594,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 					'description' => sprintf(
 						esc_html__( 'Create an API Key below to use the REST API version 2. Alternatively, you can use cookie authentication which is supported for logged in users. %1$sVisit our documentation pages%2$s for more information.', 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/rest-api-v2/" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 					),
 					'dependency'  => array( $this, 'is_v2_enabled' ),
 					'fields'      => array(
@@ -611,7 +611,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 					'description' => sprintf(
 						esc_html__( 'Configure your API Key below to use the REST API version 1. Alternatively, you can use cookie authentication which is supported for logged in users. %1$sVisit our documentation pages%2$s for more information.', 'kdnaforms' ),
 						'<a href="https://docs.kdnaforms.com/web-api/" target="_blank">',
-						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>'
+						'<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . '</span>&nbsp;<span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>'
 					),
 					'dependency'  => array( $this, 'is_v1_enabled' ),
 					'fields'      => array(
@@ -695,7 +695,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		 * @return bool
 		 */
 		public function is_v2_enabled( $settings = null ) {
-			return $this->get_setting( 'enabled', '', $settings ) && ! is_callable( 'gf_rest_api' );
+			return $this->get_setting( 'enabled', '', $settings ) && ! is_callable( 'kdna_rest_api' );
 		}
 
 		public function settings_api_keys( $section, $is_first = false ) {
@@ -714,12 +714,12 @@ if ( class_exists( 'KDNAForms' ) ) {
 		public function settings_requirements_check() {
 			$permalinks_url = admin_url( 'options-permalink.php' );
 			?>
-			<i class="fa fa-exclamation-triangle gf_invalid"></i>
-			<span class="gf_invalid">
+			<i class="fa fa-exclamation-triangle kdna_invalid"></i>
+			<span class="kdna_invalid">
 					<?php esc_html_e( 'Permalinks are not in the correct format.', 'kdnaforms' ); ?>
 				</span>
 			<br/>
-			<span class='gf_settings_description'>
+			<span class='kdna_settings_description'>
 				<?php
 				printf( esc_html__( 'Change the %sWordPress Permalink Settings%s from default to any of the other options to get started.', 'kdnaforms' ), '<a href="' . esc_url( $permalinks_url ) . '">', '</a>' );
 				?>
@@ -729,9 +729,9 @@ if ( class_exists( 'KDNAForms' ) ) {
 
 		public function settings_qrcode() {
 			?>
-			<button type="button" class="gform-button gform-button--white" id="gfwebapi-qrbutton"><?php esc_html_e( 'Show/hide QR Code', 'kdnaforms' ); ?></button>
-			<div id="gfwebapi-qrcode-container" style="display:none; padding-left: unset">
-				<img id="gfwebapi-qrcode" alt="API QR code" src="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/images/spinner.svg"/>
+			<button type="button" class="kform-button kform-button--white" id="kdnawebapi-qrbutton"><?php esc_html_e( 'Show/hide QR Code', 'kdnaforms' ); ?></button>
+			<div id="kdnawebapi-qrcode-container" style="display:none; padding-left: unset">
+				<img id="kdnawebapi-qrcode" alt="API QR code" src="<?php echo esc_url( KDNACommon::get_base_url() ); ?>/images/spinner.svg"/>
 			</div>
 
 			<?php
@@ -1071,7 +1071,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		public function ajax_delete_key() {
 
 			// Verify nonce.
-			check_ajax_referer( 'gf_revoke_key' );
+			check_ajax_referer( 'kdna_revoke_key' );
 
 			// Verify capabilities.
 			if ( ! KDNACommon::current_user_can_any( $this->_capabilities_settings_page ) ) {
@@ -1099,7 +1099,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( rgget( 'key_id' ) ) {
 
 				// Verify nonce.
-				if ( ! wp_verify_nonce( rgget( 'nonce' ), 'gf_restapi_edit_key' ) ) {
+				if ( ! wp_verify_nonce( rgget( 'nonce' ), 'kdna_restapi_edit_key' ) ) {
 					wp_send_json_error( array( 'message' => __( 'Access denied.', 'kdnaforms' ) ) );
 				}
 
@@ -1131,7 +1131,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			if ( isset( $_POST['key_id'] ) ) {
 
 				// Verify nonce.
-				if ( ! wp_verify_nonce( rgpost( 'nonce' ), 'gf_restapi_edit_key' ) ) {
+				if ( ! wp_verify_nonce( rgpost( 'nonce' ), 'kdna_restapi_edit_key' ) ) {
 					wp_send_json_error( array( 'message' => __( 'Access denied.', 'kdnaforms' ) ) );
 				}
 
@@ -1844,7 +1844,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 					 * @var bool   $include_totals Whether to include totals; defaults to true.
 					 * @var object $form           The current form object.
 					 */
-					$include_totals = gf_apply_filters( array( 'kdnaform_web_api_retrieve_form_totals', $form->id ), true, $form );
+					$include_totals = kdna_apply_filters( array( 'kdnaform_web_api_retrieve_form_totals', $form->id ), true, $form );
 
 					$form_id   = $form->id;
 					$form_info = array(
@@ -2067,7 +2067,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 			global $blog_id;
 
 			$key = is_multisite() ? $blog_id . '-' : '';
-			$key .= 'gfresults-cache-meta-form-' . $form_id;
+			$key .= 'kdnaresults-cache-meta-form-' . $form_id;
 
 			return $key;
 		}
@@ -2236,10 +2236,10 @@ if ( class_exists( 'KDNAForms' ) ) {
 		private function authenticate() {
 			$this->log_debug( __METHOD__ . '(): Running.' );
 
-			if ( isset( $_REQUEST['_gf_json_nonce'] ) && is_user_logged_in() ) {
+			if ( isset( $_REQUEST['_kdna_json_nonce'] ) && is_user_logged_in() ) {
 				$this->log_debug( __METHOD__ . '(): Using WP cookie authentication.' );
 				// WordPress cookie authentication for plugins and themes on this server.
-				check_admin_referer( 'gf_api', '_gf_json_nonce' );
+				check_admin_referer( 'kdna_api', '_kdna_json_nonce' );
 
 				return true;
 			}
@@ -2531,7 +2531,7 @@ if ( class_exists( 'KDNAForms' ) ) {
 		 * @return string Hashed data
 		 */
 		public static function api_hash( $data ) {
-			return hash_hmac( 'sha256', $data, 'gf-api' );
+			return hash_hmac( 'sha256', $data, 'kdna-api' );
 		}
 	}
 

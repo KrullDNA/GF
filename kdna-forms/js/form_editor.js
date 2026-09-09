@@ -27,14 +27,14 @@ function InitializeEditor() {
 		clearInput( this );
 	} );
 
-	jQuery( '.gf-topmenu-dynamic' ).on( 'click', function( e ) {
+	jQuery( '.kdna-topmenu-dynamic' ).on( 'click', function( e ) {
 		var position = jQuery( this ).position();
-		jQuery( '.gf-popover' ).css( 'left', ( position.left + ( jQuery( this ).width() / 2 ) + 6 ) + 'px' );
-		var currentDisplay = jQuery( '.gf-popover' ).css( 'display' );
-		jQuery( '.gf-popover' ).css( 'display', ( currentDisplay === 'block' ? 'none' : 'block' ) );
+		jQuery( '.kdna-popover' ).css( 'left', ( position.left + ( jQuery( this ).width() / 2 ) + 6 ) + 'px' );
+		var currentDisplay = jQuery( '.kdna-popover' ).css( 'display' );
+		jQuery( '.kdna-popover' ).css( 'display', ( currentDisplay === 'block' ? 'none' : 'block' ) );
 	} );
 
-	jQuery( '.gf-popover__button' ).on( 'click', function() {
+	jQuery( '.kdna-popover__button' ).on( 'click', function() {
 		var url = jQuery( this ).data( 'url' );
 		if ( url !== '' ) {
 			window.location.href = url;
@@ -42,9 +42,9 @@ function InitializeEditor() {
 	} );
 
 	jQuery( document ).on( 'click', function( e ) {
-		var container = jQuery( ".gf-topmenu-dynamic" );
+		var container = jQuery( ".kdna-topmenu-dynamic" );
 		if ( ! container.is( e.target ) && container.has( e.target ).length === 0 ) {
-			jQuery( '.gf-popover' ).hide();
+			jQuery( '.kdna-popover' ).hide();
 		}
 	} );
 
@@ -90,11 +90,11 @@ function InitializeEditor() {
 		},
 	} );
 
-	if ( typeof gf_global[ 'view' ] == 'undefined' || gf_global[ 'view' ] != 'settings' )
+	if ( typeof kdna_global[ 'view' ] == 'undefined' || kdna_global[ 'view' ] != 'settings' )
 		InitializeForm( form );
 
 	//for backwards compatibility <1.7
-	jQuery( document ).trigger( 'gform_load_form_settings', [ form ] );
+	jQuery( document ).trigger( 'kform_load_form_settings', [ form ] );
 
 	SetupUnsavedChangesWarning();
 
@@ -103,10 +103,10 @@ function InitializeEditor() {
 		var doc = jQuery( document )[ 0 ];
 		var data = jQuery.hasData( doc ) && jQuery._data( doc );
 		if ( data ){
-			var deprecatedEvents = new Array( 'gform_load_form_settings' );
+			var deprecatedEvents = new Array( 'kform_load_form_settings' );
 			for ( var e in data.events ) {
 				if ( jQuery.inArray( e, deprecatedEvents ) !== -1 ) {
-					console.log( 'Gravity Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
+					console.log( 'KDNA Forms API warning: The jQuery event "' + e + '" is deprecated on this page since version 1.7' );
 				}
 			}
 		}
@@ -125,8 +125,8 @@ function InitializeEditor() {
 		}
 	});
 	jQuery( '#field_settings' ).tabs();
-	jQuery( '.field_settings' ).accordion( gform.options.jqEditorAccordions );
-	jQuery( '#add_fields_menu .panel-block-tabs__wrapper' ).accordion( gform.options.jqAddFieldAccordions );
+	jQuery( '.field_settings' ).accordion( kform.options.jqEditorAccordions );
+	jQuery( '#add_fields_menu .panel-block-tabs__wrapper' ).accordion( kform.options.jqAddFieldAccordions );
 	jQuery( '.panel-block-tabs' ).find( '.panel-block-tabs__toggle' ).each( function( i, element ) {
 		jQuery( element ).append( '<i aria-hidden="true"></i>' );
 	} );
@@ -138,7 +138,7 @@ function InitializeEditor() {
 	jQuery( '.panel-block > .field_settings' ).on( 'keydown', function( e ) {
 		// esc key, refocus the settings trigger in the editor preview for the active field
 		if ( e.keyCode === 27 ) {
-			jQuery( '.gfield.field_selected .gfield-edit').focus();
+			jQuery( '.kfield.field_selected .kfield-edit').focus();
 			return;
 		}
 		// not tab key, exit
@@ -146,7 +146,7 @@ function InitializeEditor() {
 			return;
 		}
 		// get visible focusable items
-		var focusable = gform.tools.getFocusable( this );
+		var focusable = kform.tools.getFocusable( this );
 		// store first and last visible item
 		var firstFocusableEl = focusable[0];
 		var lastFocusableEl = focusable[ focusable.length - 1 ];
@@ -167,12 +167,12 @@ function InitializeEditor() {
 	} );
 
 	// Prior to gravityformsppcp 2.3, the PayPal buttons show up in the editor instead of in the sidebar.
-	jQuery( '#field_submit #gform_ppcp_smart_payment_buttons' ).remove();
+	jQuery( '#field_submit #kform_ppcp_smart_payment_buttons' ).remove();
 }
 
 function InitializeFieldSettings(){
 
-	gform.addFilter( 'gform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
+	kform.addFilter( 'kform_editor_field_settings', 'hideDefaultMarginOnTopLabelAlignment' );
 
 	jQuery('#field_max_file_size').on('input propertychange', function(){
 		var $this = jQuery(this),
@@ -236,7 +236,7 @@ function InitializeFieldSettings(){
 		});
 
 	jQuery('.field_input_choice_values_enabled').on('click keypress', function(){
-		var $container = jQuery(this).parent().siblings('.gfield_settings_input_choices_container');
+		var $container = jQuery(this).parent().siblings('.kfield_settings_input_choices_container');
 		ToggleInputChoiceValue($container, this.checked);
 		var $ul = $container.find('ul');
 		SetInputChoices($ul);
@@ -274,14 +274,14 @@ function InitializeFieldSettings(){
 		});
 
 	jQuery( '.custom_inputs_setting, .custom_inputs_sub_setting, .sub_labels_setting' )
-		.on( 'change', '.gform-field__toggle-input', function() {
-			var inputId = jQuery( this ).closest( '.gform-field__toggle' ).data( 'input_id' );
+		.on( 'change', '.kform-field__toggle-input', function() {
+			var inputId = jQuery( this ).closest( '.kform-field__toggle' ).data( 'input_id' );
 			ToggleInputHidden( jQuery( this ), inputId );
 		} )
-		.on( 'click', '#field_password_fields_container .gform-field__toggle', function() {
+		.on( 'click', '#field_password_fields_container .kform-field__toggle', function() {
 			// special handling for the password field checkboxes
 			var inputId = jQuery( this ).data( 'input_id' );
-			var toggleInput = jQuery( this ).find( '.gform-field__toggle-input' );
+			var toggleInput = jQuery( this ).find( '.kform-field__toggle-input' );
 			toggleInput[ 0 ].focus();
 			toggleInput[ 0 ].checked = ! toggleInput[ 0 ].checked;
 			ToggleInputHidden( toggleInput, inputId );
@@ -358,7 +358,7 @@ function InitializeFieldSettings(){
 		} );
 
 	jQuery('#submit_text').on('input propertychange', function(){
-		jQuery('#gform_submit_button_' + form.id ).val( this.value );
+		jQuery('#kform_submit_button_' + form.id ).val( this.value );
 	});
 
 	jQuery('#submit_image').on('input propertychange', function(){
@@ -384,10 +384,10 @@ function InitializeFieldSettings(){
 	jQuery( 'input[ name="field_visibility" ]' ).on( 'DOMSubTreeModified change', function() {
 		var field = GetSelectedField();
 		SetFieldProperty( 'visibility', this.value );
-		var hidden_markup = '<div class="admin-hidden-markup"><i class="gform-icon gform-icon--hidden" aria-hidden="true" title="This field is hidden when viewing the form"></i><span>This field is hidden when viewing the form</span></div>';
+		var hidden_markup = '<div class="admin-hidden-markup"><i class="kform-icon kform-icon--hidden" aria-hidden="true" title="This field is hidden when viewing the form"></i><span>This field is hidden when viewing the form</span></div>';
 		if ( field[ 'visibility' ] === 'hidden' ) {
-			jQuery( '#field_' + field.id + ' .gfield_label' ).before( hidden_markup );
-			jQuery( '#field_' + field.id + ' .gsection_title' ).before( hidden_markup );
+			jQuery( '#field_' + field.id + ' .kfield_label' ).before( hidden_markup );
+			jQuery( '#field_' + field.id + ' .ksection_title' ).before( hidden_markup );
 			jQuery( '#field_' + field.id ).addClass( 'admin-hidden' );
 		} else {
 			jQuery( '#field_' + field.id ).removeClass( 'admin-hidden' );
@@ -428,7 +428,7 @@ function InitializeFieldSettings(){
 		SetCustomFieldTemplate();
 	});
 
-	jQuery('#gfield_calendar_icon_url').on('input propertychange', function(){
+	jQuery('#kfield_calendar_icon_url').on('input propertychange', function(){
 		SetFieldProperty('calendarIconUrl', this.value);
 	});
 
@@ -526,9 +526,9 @@ async function conditionalLogicWarningDependency( field ) {
 	const hasDependency = await HasConditionalLogicDependency( field.id, field.value );
 
 	if (hasDependency) {
-		const confirmed = await gform.instances.dialogConfirmAsync(
-			gf_vars.conditionalLogicWarningTitle,
-			gf_vars.conditionalLogicRichTextEditorWarning
+		const confirmed = await kform.instances.dialogConfirmAsync(
+			kdna_vars.conditionalLogicWarningTitle,
+			kdna_vars.conditionalLogicRichTextEditorWarning
 		)
 		if ( ! confirmed ) {
 			jQuery( '#field_rich_text_editor' ).prop( 'checked', false );
@@ -594,7 +594,7 @@ function InitializeForm(form){
 	else if(!form.lastPageButton || form.lastPageButton.type !== 'image')
 		jQuery('#last_page_button_text').prop('checked', true);
 
-	jQuery('#last_page_button_text_input').val(form.lastPageButton ? form.lastPageButton.text : gf_vars['previousLabel']);
+	jQuery('#last_page_button_text_input').val(form.lastPageButton ? form.lastPageButton.text : kdna_vars['previousLabel']);
 	jQuery('#last_page_button_image_url').val(form.lastPageButton ? form.lastPageButton.imageUrl : '');
 	TogglePageButton('last_page', true);
 
@@ -608,7 +608,7 @@ function InitializeForm(form){
 	if(form.useCurrentUserAsAuthor === undefined)
 		form.useCurrentUserAsAuthor = true;
 
-	jQuery('#gfield_current_user_as_author').prop('checked', form.useCurrentUserAsAuthor ? true : false);
+	jQuery('#kfield_current_user_as_author').prop('checked', form.useCurrentUserAsAuthor ? true : false);
 
 	if(form.postCategory)
 		jQuery('#field_post_category').val(form.postCategory);
@@ -617,31 +617,31 @@ function InitializeForm(form){
 		jQuery('#field_post_format').val(form.postFormat);
 
 	if(form.postContentTemplateEnabled){
-		jQuery('#gfield_post_content_enabled').prop('checked', true);
+		jQuery('#kfield_post_content_enabled').prop('checked', true);
 		jQuery('#field_post_content_template').val(form.postContentTemplate);
 	}
 	else{
-		jQuery('#gfield_post_content_enabled').prop('checked', false);
+		jQuery('#kfield_post_content_enabled').prop('checked', false);
 		jQuery('#field_post_content_template').val('');
 	}
 	TogglePostContentTemplate(true);
 
 	if(form.postTitleTemplateEnabled){
-		jQuery('#gfield_post_title_enabled').prop('checked', true);
+		jQuery('#kfield_post_title_enabled').prop('checked', true);
 		jQuery('#field_post_title_template').val(form.postTitleTemplate);
 	}
 	else{
-		jQuery('#gfield_post_title_enabled').prop('checked', false);
+		jQuery('#kfield_post_title_enabled').prop('checked', false);
 		jQuery('#field_post_title_template').val('');
 	}
 	TogglePostTitleTemplate(true);
 
-	jQuery('#gform_pagination, #gform_last_page_settings').on('click', function ( event ) {
+	jQuery('#kform_pagination, #kform_last_page_settings').on('click', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
 
-	jQuery('#gform_fields').on('click', '.gfield', function ( event ) {
+	jQuery('#kform_fields').on('click', '.kfield', function ( event ) {
 		FieldClick(this);
 		event.stopPropagation();
 	});
@@ -769,19 +769,19 @@ function LoadFieldSettings() {
 	jQuery('#field_other_choice').prop('checked', field.enableOtherChoice ? true : false);
 	jQuery('#field_add_icon_url').val(field.addIconUrl ? field.addIconUrl : "");
 	jQuery('#field_delete_icon_url').val(field.deleteIconUrl ? field.deleteIconUrl : "");
-	jQuery('#gfield_enable_enhanced_ui').prop('checked', field.enableEnhancedUI ? true : false);
-	jQuery("#gfield_password_strength_enabled").prop("checked", field.passwordStrengthEnabled == true ? true : false);
-	jQuery("#gfield_password_visibility_enabled").prop("checked", field.passwordVisibilityEnabled == true ? true : false);
+	jQuery('#kfield_enable_enhanced_ui').prop('checked', field.enableEnhancedUI ? true : false);
+	jQuery("#kfield_password_strength_enabled").prop("checked", field.passwordStrengthEnabled == true ? true : false);
+	jQuery("#kfield_password_visibility_enabled").prop("checked", field.passwordVisibilityEnabled == true ? true : false);
 	TogglePasswordVisibility(true);
-	jQuery("#gfield_min_strength").val(field.minPasswordStrength == undefined ? "" : field.minPasswordStrength);
+	jQuery("#kfield_min_strength").val(field.minPasswordStrength == undefined ? "" : field.minPasswordStrength);
 	TogglePasswordStrength(true);
 
-	jQuery("#gfield_email_confirm_enabled").prop("checked", field.emailConfirmEnabled == true ? true : false);
+	jQuery("#kfield_email_confirm_enabled").prop("checked", field.emailConfirmEnabled == true ? true : false);
 
 	//Creating blank item for number format to existing number fields so that user is not force into a format (for backwards compatibility)
 	if (!field.numberFormat) {
 		if (jQuery("#field_number_format #field_number_format_blank").length == 0) {
-			jQuery("#field_number_format").prepend("<option id='field_number_format_blank' value=''>" + gf_vars["selectFormat"] + "</option>");
+			jQuery("#field_number_format").prepend("<option id='field_number_format_blank' value=''>" + kdna_vars["selectFormat"] + "</option>");
 		}
 	} else
 		jQuery("#field_number_format_blank").remove();
@@ -808,7 +808,7 @@ function LoadFieldSettings() {
 	ToggleCalculationOptions(field.enableCalculation, field);
 
 	jQuery('#field_calculation_formula').val(field.calculationFormula);
-	var rounding = gform.utils.isNumber(field.calculationRounding) ? field.calculationRounding : "norounding";
+	var rounding = kform.utils.isNumber(field.calculationRounding) ? field.calculationRounding : "norounding";
 	jQuery('#field_calculation_rounding').val(rounding);
 
 	jQuery("#option_field_type").val(field.inputType);
@@ -864,32 +864,32 @@ function LoadFieldSettings() {
 
 	SetAddressType(true);
 
-	jQuery("#gfield_display_alt").prop("checked", field.displayAlt == true ? true : false);
-	jQuery("#gfield_display_title").prop("checked", field.displayTitle == true ? true : false);
-	jQuery("#gfield_display_caption").prop("checked", field.displayCaption == true ? true : false);
-	jQuery("#gfield_display_description").prop("checked", field.displayDescription == true ? true : false);
+	jQuery("#kfield_display_alt").prop("checked", field.displayAlt == true ? true : false);
+	jQuery("#kfield_display_title").prop("checked", field.displayTitle == true ? true : false);
+	jQuery("#kfield_display_caption").prop("checked", field.displayCaption == true ? true : false);
+	jQuery("#kfield_display_description").prop("checked", field.displayDescription == true ? true : false);
 
 	jQuery("#field_custom_field_name_text").val( field.postCustomFieldName == undefined ? "" : field.postCustomFieldName );
 
 	ToggleCustomField(true);
 
-	jQuery('#gfield_customfield_content_enabled').prop("checked", field.customFieldTemplateEnabled ? true : false);
+	jQuery('#kfield_customfield_content_enabled').prop("checked", field.customFieldTemplateEnabled ? true : false);
 	jQuery('#field_customfield_content_template').val(field.customFieldTemplateEnabled ? field.customFieldTemplate : "");
 	ToggleCustomFieldTemplate(true);
 
 	if (field.displayAllCategories)
-		jQuery("#gfield_category_all").prop("checked", true);
+		jQuery("#kfield_category_all").prop("checked", true);
 	else
-		jQuery("#gfield_category_select").prop("checked", true);
+		jQuery("#kfield_category_select").prop("checked", true);
 
 	ToggleCategory(true);
 
-	jQuery('#gfield_post_category_initial_item_enabled').prop("checked", field.categoryInitialItemEnabled ? true : false);
+	jQuery('#kfield_post_category_initial_item_enabled').prop("checked", field.categoryInitialItemEnabled ? true : false);
 	jQuery('#field_post_category_initial_item').val(field.categoryInitialItemEnabled ? field.categoryInitialItem : "");
 	TogglePostCategoryInitialItem(true);
 
 	var hasPostFeaturedImage = field.postFeaturedImage ? true : false;
-	jQuery('#gfield_featured_image').prop('checked', hasPostFeaturedImage);
+	jQuery('#kfield_featured_image').prop('checked', hasPostFeaturedImage);
 
 	if (typeof field.inputMaskIsCustom != 'boolean') {
 		field.inputMaskIsCustom = !IsStandardMask(field.inputMaskValue);
@@ -945,7 +945,7 @@ function LoadFieldSettings() {
 	}
 
 	jQuery("#field_date_input_type").val(field["dateType"]);
-	jQuery("#gfield_calendar_icon_url").val(field["calendarIconUrl"] == undefined ? "" : field["calendarIconUrl"]);
+	jQuery("#kfield_calendar_icon_url").val(field["calendarIconUrl"] == undefined ? "" : field["calendarIconUrl"]);
 	jQuery('#field_date_format').val(field['dateFormat'] == undefined ? "mdy" : field['dateFormat']);
 	jQuery('#field_time_format').val(field['timeFormat'] == "24" ? "24" : "12");
 
@@ -1020,7 +1020,7 @@ function LoadFieldSettings() {
 	TogglePageButton("next", true);
 	TogglePageButton("previous", true);
 
-	jQuery(".gfield_category_checkbox").each(function () {
+	jQuery(".kfield_category_checkbox").each(function () {
 		if (field["choices"]) {
 			for (var i = 0; i < field["choices"].length; i++) {
 				if (this.value == field["choices"][i].value) {
@@ -1076,7 +1076,7 @@ function LoadFieldSettings() {
 	// hide "Display placeholder" option for post category field if input type is not a select
 	if (field.type == 'post_category' && inputType != 'select') {
 		jQuery('.post_category_initial_item_setting').hide();
-		jQuery('#gfield_post_category_initial_item_enabled').prop('checked', false);
+		jQuery('#kfield_post_category_initial_item_enabled').prop('checked', false);
 		SetCategoryInitialItem();
 	}
 
@@ -1207,7 +1207,7 @@ function LoadFieldSettings() {
 		var passwordFields = GetCustomizeInputsUI(field);
 		jQuery('#field_password_fields_container').html(passwordFields);
 		// remove the toggle from the "Enter Password" field
-		jQuery('#field_password_fields_container .field_custom_input_row').first().find('.gform-field__toggle').remove();
+		jQuery('#field_password_fields_container .field_custom_input_row').first().find('.kform-field__toggle').remove();
 
 		// Show/Hide Size setting.
 		var confirmEnabled = field.inputs[1].isHidden == 'undefined' ? true : !field.inputs[1].isHidden;
@@ -1216,7 +1216,7 @@ function LoadFieldSettings() {
 		}
 
 		// Hide Password sub-label.
-		jQuery('.password_setting .custom_inputs_setting ').on('click keypress', '.gform-field__toggle', function () {
+		jQuery('.password_setting .custom_inputs_setting ').on('click keypress', '.kform-field__toggle', function () {
 			var field = GetSelectedField(),
 				confirmEnabled = !field.inputs[1].isHidden,
 				passwordSubLabel = jQuery('label[for="input_' + field.id + '"]');
@@ -1283,9 +1283,9 @@ function LoadFieldSettings() {
 
 	ToggleSubmitType( true );
 
-	jQuery(document).trigger('gform_load_field_settings', [field, form]);
+	jQuery(document).trigger('kform_load_field_settings', [field, form]);
 
-	gform.doAction('gform_post_load_field_settings', [field, form]);
+	kform.doAction('kform_post_load_field_settings', [field, form]);
 
 	if (field.choiceAlignment == "horizontal") {
 		jQuery( "#choice_alignment_horizontal" ).prop( "checked", true );
@@ -1316,17 +1316,22 @@ function LoadFieldSettings() {
  * @return {string} A comma-deliniated string of the settings values.
  */
 function getAllFieldSettings(field) {
-	var allSettings = fieldSettings[field.type];
+	// A field type is only present in fieldSettings if it declared a non-empty
+	// settings array; inline_scripts() skips the rest. Reading .length or
+	// .split() off a missing entry throws, and this runs inside ShowSettings
+	// before the sidebar switches to Field Settings — so one unmapped field
+	// type leaves the editor stuck on Add Fields reporting no field selected.
+	var allSettings = fieldSettings[field.type] || '';
 
 	if (field.inputType && field.type !== 'post_category') {
-		var additionalSettings = fieldSettings[field.inputType];
+		var additionalSettings = fieldSettings[field.inputType] || '';
 
 		if (additionalSettings.length > 0) {
-			allSettings += ", " + additionalSettings;
+			allSettings += (allSettings ? ", " : "") + additionalSettings;
 		}
 	}
 
-	var settingsArray = allSettings.split(', ');
+	var settingsArray = allSettings ? allSettings.split(', ') : [];
 
 	// Remove display_choices_columns_setting from the image choice and multiple choice fields
 	if (field.type === 'image_choice' || field.type === 'multi_choice') {
@@ -1336,7 +1341,7 @@ function getAllFieldSettings(field) {
 	}
 
 	/**
-	 * gform_editor_field_settings
+	 * kform_editor_field_settings
 	 *
 	 * Modify the editor settings that are used for the current field, including those inherited from the inputType.
 	 *
@@ -1347,7 +1352,7 @@ function getAllFieldSettings(field) {
 	 *
 	 * @return {array} The modified array of settings values.
 	 */
-	settingsArray = gform.applyFilters( 'gform_editor_field_settings', settingsArray, field );
+	settingsArray = kform.applyFilters( 'kform_editor_field_settings', settingsArray, field );
 
 	return settingsArray.join( ', ' );
 }
@@ -1380,10 +1385,10 @@ function SetUpAdvancedNameField(){
 
 	ToggleNamePrefixUI(!prefixInput.isHidden);
 
-	jQuery( '.name_setting .custom_inputs_setting' ).on( 'click', '.gform-field__toggle', function() {
+	jQuery( '.name_setting .custom_inputs_setting' ).on( 'click', '.kform-field__toggle', function() {
 		var inputId = jQuery( this ).data( 'input_id' );
 		if ( inputId.toString().indexOf( ".2" ) >= 0 ) {
-			var isActive = jQuery( this ).find( '.gform-field__toggle-input' ).is( ':checked' );
+			var isActive = jQuery( this ).find( '.kform-field__toggle-input' ).is( ':checked' );
 			ToggleNamePrefixUI( isActive );
 		}
 	} );
@@ -1422,22 +1427,22 @@ function ToggleNamePrefixUI(isActive){
 
 function TogglePageBreakSettings(){
 	if(HasPageBreak()){
-		jQuery("#gform_last_page_settings").show();
-		jQuery("#gform_pagination").show();
+		jQuery("#kform_last_page_settings").show();
+		jQuery("#kform_pagination").show();
 	}
 	else
 	{
-		jQuery("#gform_last_page_settings").hide();
-		jQuery("#gform_pagination").hide();
+		jQuery("#kform_last_page_settings").hide();
+		jQuery("#kform_pagination").hide();
 	}
 }
 
 function SetDisableQuantity(isChecked){
 	SetFieldProperty('disableQuantity', isChecked);
 	if(isChecked)
-		jQuery(".field_selected .ginput_quantity_label, .field_selected .ginput_quantity").hide();
+		jQuery(".field_selected .kinput_quantity_label, .field_selected .kinput_quantity").hide();
 	else
-		jQuery(".field_selected .ginput_quantity_label, .field_selected .ginput_quantity").show();
+		jQuery(".field_selected .kinput_quantity_label, .field_selected .kinput_quantity").show();
 }
 
 function SetBasePrice(number){
@@ -1452,8 +1457,8 @@ function SetBasePrice(number){
 	jQuery("#field_base_price").val(price);
 
 	SetFieldProperty('basePrice', price);
-	jQuery(".field_selected .ginput_product_price, .field_selected .ginput_shipping_price").html(price);
-	jQuery(".field_selected .ginput_amount").val(price);
+	jQuery(".field_selected .kinput_product_price, .field_selected .kinput_shipping_price").html(price);
+	jQuery(".field_selected .kinput_amount").val(price);
 }
 
 function ChangeAddressType(){
@@ -1481,7 +1486,7 @@ function SetAddressType( isInit ){
 		return;
 
 	SetAddressProperties();
-	jQuery(".gfield_address_type_container").hide();
+	jQuery(".kfield_address_type_container").hide();
 	jQuery("#address_type_container_" + jQuery("#field_address_type").val()).show();
 	CreatePlaceholdersUI(field);
 	CreateAutocompleteUI(field);
@@ -1515,7 +1520,7 @@ function UpdateAddressFields(){
 	// hide country drop down and setting.
 	var isInternational = jQuery( "#field_address_country_" + addressType ).val() == "";
 	var hideCountrySetting = ! isInternational;
-	var hideCountryField = ! isInternational || ! jQuery( '#field_address_fields_container [id="gforms-editor-toggle-' + field.id + '.6"' ).is( ':checked' );
+	var hideCountryField = ! isInternational || ! jQuery( '#field_address_fields_container [id="kforms-editor-toggle-' + field.id + '.6"' ).is( ':checked' );
 
 	// hide country setting if this address type applies to a specific country.
 	if ( hideCountrySetting ) {
@@ -1674,32 +1679,32 @@ function UpgradeConsentField(field) {
 }
 
 function TogglePasswordVisibility( isInit ){
-	if ( jQuery( '#gfield_password_visibility_enabled' ).is( ":checked" ) ) {
-		jQuery( '.gfield.field_selected .ginput_container_password span button' ).show();
+	if ( jQuery( '#kfield_password_visibility_enabled' ).is( ":checked" ) ) {
+		jQuery( '.kfield.field_selected .kinput_container_password span button' ).show();
 	} else {
-		jQuery( '.gfield.field_selected .ginput_container_password span button' ).hide();
+		jQuery( '.kfield.field_selected .kinput_container_password span button' ).hide();
 	}
 }
 
 function TogglePasswordStrength( isInit ){
 
-	if(jQuery("#gfield_password_strength_enabled").is(":checked")){
-		jQuery("#gfield_min_strength_container").show();
+	if(jQuery("#kfield_password_strength_enabled").is(":checked")){
+		jQuery("#kfield_min_strength_container").show();
 	}
 	else{
-		jQuery("#gfield_min_strength_container").hide();
+		jQuery("#kfield_min_strength_container").hide();
 	}
 }
 
 function ToggleCategory( isInit ){
 
-	if(jQuery("#gfield_category_all").is(":checked")){
-		jQuery("#gfield_settings_category_container").hide();
+	if(jQuery("#kfield_category_all").is(":checked")){
+		jQuery("#kfield_settings_category_container").hide();
 		 SetFieldProperty("displayAllCategories", true);
 		 SetFieldProperty("choices", new Array()); //reset selected categories
 	}
 	else{
-		jQuery("#gfield_settings_category_container").show();
+		jQuery("#kfield_settings_category_container").show();
 		SetFieldProperty("displayAllCategories", false);
 	}
 }
@@ -1710,13 +1715,13 @@ function SetCopyValuesOptionLabel(value){
 }
 
 function SetCustomFieldTemplate(){
-	var enabled = jQuery("#gfield_customfield_content_enabled").is(":checked");
+	var enabled = jQuery("#kfield_customfield_content_enabled").is(":checked");
 	SetFieldProperty("customFieldTemplate", enabled ? jQuery("#field_customfield_content_template").val() : null);
 	SetFieldProperty("customFieldTemplateEnabled", enabled );
 }
 
 function SetCategoryInitialItem(){
-	var enabled = jQuery("#gfield_post_category_initial_item_enabled").is(":checked");
+	var enabled = jQuery("#kfield_post_category_initial_item_enabled").is(":checked");
 	SetFieldProperty("categoryInitialItem", enabled ? jQuery("#field_post_category_initial_item").val() : null);
 	SetFieldProperty("categoryInitialItemEnabled", enabled );
 }
@@ -1729,38 +1734,38 @@ function PopulateContentTemplate(fieldName){
 }
 
 function TogglePostContentTemplate(isInit){
-	if(jQuery("#gfield_post_content_enabled").is(":checked")){
-		jQuery("#gfield_post_content_container").show();
+	if(jQuery("#kfield_post_content_enabled").is(":checked")){
+		jQuery("#kfield_post_content_container").show();
 		if(!isInit){
 			PopulateContentTemplate("field_post_content_template");
 		}
 	}
 	else{
-		jQuery("#gfield_post_content_container").hide();
+		jQuery("#kfield_post_content_container").hide();
 	}
 }
 
 function TogglePostTitleTemplate(isInit){
-	if(jQuery("#gfield_post_title_enabled").is(":checked")){
-		jQuery("#gfield_post_title_container").show();
+	if(jQuery("#kfield_post_title_enabled").is(":checked")){
+		jQuery("#kfield_post_title_container").show();
 		if(!isInit)
 			PopulateContentTemplate("field_post_title_template");
 
 	}
 	else{
-		jQuery("#gfield_post_title_container").hide();
+		jQuery("#kfield_post_title_container").hide();
 	}
 }
 
 function ToggleCustomFieldTemplate(isInit){
-	if(jQuery("#gfield_customfield_content_enabled").is(":checked")){
-		jQuery("#gfield_customfield_content_container").show();
+	if(jQuery("#kfield_customfield_content_enabled").is(":checked")){
+		jQuery("#kfield_customfield_content_container").show();
 		if(!isInit){
 			PopulateContentTemplate("field_customfield_content_template");
 		}
 	}
 	else{
-		jQuery("#gfield_customfield_content_container").hide();
+		jQuery("#kfield_customfield_content_container").hide();
 	}
 }
 
@@ -1783,7 +1788,7 @@ function SetFieldColumns(){
 function ToggleChoiceValue( isInit ){
 	var field = GetSelectedField();
 	var suffix = field.enablePrice ? "_and_price" : "";
-	var container = jQuery('#gfield_settings_choices_container');
+	var container = jQuery('#kfield_settings_choices_container');
 
 	//removing all classes
 	container.removeClass("choice_with_price choice_with_value choice_with_value_and_price");
@@ -1856,8 +1861,8 @@ function ToggleCustomField( isInit ){
     jQuery("#field_custom_existing").prop("checked", true);
   }
 
-  show_element = isExisting ? "#gform-post-custom-select-container" : "#field_custom_field_name_text"
-	hide_element = isExisting ? "#field_custom_field_name_text"  : "#gform-post-custom-select-container";
+  show_element = isExisting ? "#kform-post-custom-select-container" : "#field_custom_field_name_text"
+	hide_element = isExisting ? "#field_custom_field_name_text"  : "#kform-post-custom-select-container";
 
 	jQuery(hide_element).hide();
 	jQuery(show_element).show();
@@ -1867,7 +1872,7 @@ function ToggleCustomField( isInit ){
 function ToggleInputMask(isInit){
 
 	if(jQuery("#field_input_mask").is(":checked")){
-		jQuery("#gform_input_mask").show();
+		jQuery("#kform_input_mask").show();
 		jQuery(".maxlen_setting").hide();
 
 		SetFieldProperty('inputMask', true);
@@ -1877,7 +1882,7 @@ function ToggleInputMask(isInit){
 		SetFieldProperty('maxLength', "");
 	}
 	else{
-		jQuery("#gform_input_mask").hide();
+		jQuery("#kform_input_mask").hide();
 		jQuery(".maxlen_setting").show();
 		SetFieldProperty('inputMask', false);
 		SetFieldProperty('inputMaskValue', '');
@@ -1910,16 +1915,16 @@ function ToggleAutoresponder(){
 function ToggleMultiFile(isInit){
 
 	if(jQuery("#field_multiple_files").prop("checked")) {
-		jQuery("#gform_multiple_files_options").show();
-		var $uploadField = jQuery('.gform_fileupload_multifile');
+		jQuery("#kform_multiple_files_options").show();
+		var $uploadField = jQuery('.kform_fileupload_multifile');
 		var pluploadSettings = $uploadField.data('settings');
 		if ( pluploadSettings && typeof pluploadSettings.chunk_size != 'undefined' ) {
-			jQuery('#gform_server_max_file_size_notice').hide();
+			jQuery('#kform_server_max_file_size_notice').hide();
 		}
 		SetFieldProperty('multipleFiles', true);
 	}
 	else {
-		jQuery("#gform_multiple_files_options").hide();
+		jQuery("#kform_multiple_files_options").hide();
 		SetFieldProperty('multipleFiles', false);
 		jQuery("#field_max_files").val("");
 		SetFieldProperty('maxFiles', "");
@@ -2040,28 +2045,28 @@ function UpdateFormObject(){
 		jQuery('#field_submit').attr( 'data-field-position', 'bottom' );
 		jQuery('input[name="submit_location"][value="bottom"]').prop( 'checked', true );
 	} else {
-		jQuery( '.submit_location_setting' ).prev( '.gform-alert--notice' ).remove();
+		jQuery( '.submit_location_setting' ).prev( '.kform-alert--notice' ).remove();
 	}
 
 	if(HasPostField()){
 		form.postAuthor = jQuery('#field_post_author').val() ? jQuery('#field_post_author').val() : "";
-		form.useCurrentUserAsAuthor = jQuery('#gfield_current_user_as_author').is(":checked");
+		form.useCurrentUserAsAuthor = jQuery('#kfield_current_user_as_author').is(":checked");
 		form.postCategory = jQuery('#field_post_category').val();
 		form.postFormat = jQuery('#field_post_format').length != 0 ? jQuery('#field_post_format').val() : 0;
 		form.postStatus = jQuery('#field_post_status').val();
 	}
 
-	if(jQuery("#gfield_post_content_enabled").is(":checked") && HasPostContentField()){
+	if(jQuery("#kfield_post_content_enabled").is(":checked") && HasPostContentField()){
 		form.postContentTemplateEnabled = true;
 		form.postContentTemplate = jQuery("#field_post_content_template").val();
 	}
 
-	if(jQuery("#gfield_post_title_enabled").is(":checked")  && HasPostTitleField()){
+	if(jQuery("#kfield_post_title_enabled").is(":checked")  && HasPostTitleField()){
 		form.postTitleTemplateEnabled = true;
 		form.postTitleTemplate = jQuery("#field_post_title_template").val();
 	}
 
-	if(jQuery("#gform_last_page_settings").is(":visible")){
+	if(jQuery("#kform_last_page_settings").is(":visible")){
 		form.lastPageButton = new Button();
 		form.lastPageButton.type = jQuery("#last_page_button_text").is(":checked") ? "text" : "image";
 		if(form.lastPageButton.type == "image"){
@@ -2077,12 +2082,12 @@ function UpdateFormObject(){
 		form.lastPageButton = null;
 	}
 
-	if(jQuery("#gform_pagination").is(":visible")){
+	if(jQuery("#kform_pagination").is(":visible")){
 		form["pagination"] = new Object();
 		var type = jQuery("input[name=\"pagination_type\"]:checked").val();
 		form["pagination"]["type"] = type;
 
-		var pageNames = jQuery(".gform_page_names input");
+		var pageNames = jQuery(".kform_page_names input");
 		form["pagination"]["pages"] = new Array();
 		for(var i=0; i<pageNames.length; i++){
 			form["pagination"]["pages"].push(jQuery(pageNames[i]).val());
@@ -2112,22 +2117,22 @@ function UpdateFormObject(){
 	SortFields();
 
 	// allow users to update form with custom function before save
-	if(window["gform_before_update"]){
-		form = window["gform_before_update"](form);
+	if(window["kform_before_update"]){
+		form = window["kform_before_update"](form);
 		if(window.console)
-			console.log('"gform_before_update" is deprecated since version 1.7! Use the "gform_pre_form_editor_save" filter instead.');
+			console.log('"kform_before_update" is deprecated since version 1.7! Use the "kform_pre_form_editor_save" filter instead.');
 	}
 
 	// new method for filtering the form object before save
-	form = gform.applyFilters('gform_pre_form_editor_save', form);
+	form = kform.applyFilters('kform_pre_form_editor_save', form);
 	return form;
 
 }
 
 function SortFields(){
 	var fields = new Array();
-	jQuery(".gfield").each(function(){
-		if( jQuery(this).hasClass('spacer') || 'gform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
+	jQuery(".kfield").each(function(){
+		if( jQuery(this).hasClass('spacer') || 'kform_editor_submit_container' == jQuery(this).attr('data-field-class') ) {
 			return;
 		}
 		id = this.id.substr(6);
@@ -2148,10 +2153,10 @@ function EditField( element ) {
 		return;
 	}
 
-	FieldClick( gform.tools.getClosest( element, '.gfield' ) );
+	FieldClick( kform.tools.getClosest( element, '.kfield' ) );
 
-	var settingsPane = gform.tools.getNodes( '.sidebar__panel--settings', false, document, true )[0];
-	var focusableSettings = gform.tools.getFocusable( settingsPane );
+	var settingsPane = kform.tools.getNodes( '.sidebar__panel--settings', false, document, true )[0];
+	var focusableSettings = kform.tools.getFocusable( settingsPane );
 
 	if ( focusableSettings[0]) {
 		setTimeout( function() { focusableSettings[0].focus(); }, 50 );
@@ -2169,19 +2174,19 @@ async function DeleteField( element ) {
 	// Get field ID from element.
 	var fieldId = jQuery( element )[0].id.split( '_' )[2];
 	var field = GetFieldById( fieldId );
-	var confirmDeleteMessage = field.displayOnly ? gf_vars.confirmationDeleteDisplayField : gf_vars.confirmationDeleteField;
+	var confirmDeleteMessage = field.displayOnly ? kdna_vars.confirmationDeleteDisplayField : kdna_vars.confirmationDeleteField;
 
 	var conditionalLogicDependency = await HasConditionalLogicDependency(fieldId);
 	if (!conditionalLogicDependency) {
-		gform.instances.dialogConfirmAsync( gf_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
+		kform.instances.dialogConfirmAsync( kdna_vars.confirmationDeleteDisplayFieldTitle, confirmDeleteMessage ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
 			proceedWithDeletion(fieldId);
 		});
 	} else {
-		var message = gf_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
-		gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
+		var message = kdna_vars.conditionalLogicDependency.replace('{type}', conditionalLogicDependency);
+		kform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then((userConfirmed) => {
 			if (!userConfirmed) {
 				return;
 			}
@@ -2237,7 +2242,7 @@ function proceedWithDeletion(fieldId) {
 				 * @param object form    The current form object.
 				 * @param int    fieldId The ID of the current field.
 				 */
-				gform.doAction( 'gform_after_field_removed', form, fieldId );
+				kform.doAction( 'kform_after_field_removed', form, fieldId );
 
 			} );
 
@@ -2255,7 +2260,7 @@ function proceedWithDeletion(fieldId) {
 	TogglePageBreakSettings();
 
 	// Run field deleted action.
-	jQuery( document ).trigger( 'gform_field_deleted', [ form, fieldId ] );
+	jQuery( document ).trigger( 'kform_field_deleted', [ form, fieldId ] );
 }
 
 /**
@@ -2281,7 +2286,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 
 	// check form button conditional logic
 	if(completeForm.button && ObjectHasConditionalLogicDependency(completeForm.button, fieldId, value) ) {
-		return gf_vars.conditionalLogicTypeButton;
+		return kdna_vars.conditionalLogicTypeButton;
 	}
 
 
@@ -2292,7 +2297,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.confirmations[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeConfirmation;
+			return kdna_vars.conditionalLogicTypeConfirmation;
 		}
 
 	}
@@ -2304,11 +2309,11 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.notifications[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeNotification;
+			return kdna_vars.conditionalLogicTypeNotification;
 		}
 
 		if( ObjectHasRoutingDependency(completeForm.notifications[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeNoficationRouting;
+			return kdna_vars.conditionalLogicTypeNoficationRouting;
 		}
 	}
 
@@ -2321,12 +2326,12 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 		var field = completeForm.fields[i];
 
 		if( ObjectHasConditionalLogicDependency(field, fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeField;
+			return kdna_vars.conditionalLogicTypeField;
 		}
 
 		// if this is a page field, check the next button conditional logic as well
 		if( GetInputType(field) == 'page' && ObjectHasConditionalLogicDependency(field.nextButton, fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeField;
+			return kdna_vars.conditionalLogicTypeField;
 		}
 
 	}
@@ -2338,7 +2343,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 			continue;
 
 		if( ObjectHasConditionalLogicDependency(completeForm.feeds_conditions[i], fieldId, value) ) {
-			return gf_vars.conditionalLogicTypeFeed;
+			return kdna_vars.conditionalLogicTypeFeed;
 		}
 
 	}
@@ -2358,7 +2363,7 @@ async function HasConditionalLogicDependencyLegwork(fieldId, value) {
 */
 async function HasConditionalLogicDependency(fieldId, value) {
 	var result = await HasConditionalLogicDependencyLegwork(fieldId, value);
-	return gform.applyFilters('gform_has_conditional_logic_dependency', result, fieldId, value);
+	return kform.applyFilters('kform_has_conditional_logic_dependency', result, fieldId, value);
 }
 
 /**
@@ -2498,11 +2503,11 @@ async function CheckChoiceConditionalLogicDependency(input) {
 			return;
 		}
 
-		var message = gf_vars.conditionalLogicDependencyChoiceEdit.replace('{type}', hasDependency);
+		var message = kdna_vars.conditionalLogicDependencyChoiceEdit.replace('{type}', hasDependency);
 
 		// confirm that the user wants to make the modification.
 		setTimeout( ()=>
-			gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
+			kform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle, message ).then( ( confirmed ) => {
 				if ( ! confirmed ) {
 					// if user does not want to make modification, replace with original value.
 					jQuery( input ).val( previousValue ).trigger( 'blur' );
@@ -2519,7 +2524,7 @@ function StartDuplicateField(element) {
 
 	var sourcefieldId = jQuery(element)[0].id.split("_")[2];
 
-	gform.doAction( 'gform_before_field_duplicated', sourcefieldId );
+	kform.doAction( 'kform_before_field_duplicated', sourcefieldId );
 
 	for(fieldIndex in form.fields){
 
@@ -2555,8 +2560,8 @@ function StartDuplicateField(element) {
 			 *
 			 * @since @todo
 			 */
-			field = gform.applyFilters( 'gform_duplicate_field', field, form );
-			field = gform.applyFilters( 'gform_duplicate_field_{0}'.gformFormat( GetInputType( field ) ), field, form );
+			field = kform.applyFilters( 'kform_duplicate_field', field, form );
+			field = kform.applyFilters( 'kform_duplicate_field_{0}'.kformFormat( GetInputType( field ) ), field, form );
 
 			form.fields.splice(fieldIndex, 0, field);
 
@@ -2568,9 +2573,9 @@ function StartDuplicateField(element) {
 
 function EndDuplicateField(field, fieldString, sourceFieldId) {
 
-	gform.doAction( 'gform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
+	kform.doAction( 'kform_field_duplicated', form, field, jQuery( fieldString ), sourceFieldId );
 
-	var nativeEvent = new Event('gform/form_editor/field-duplicated-native');
+	var nativeEvent = new Event('kform/form_editor/field-duplicated-native');
 	document.dispatchEvent(nativeEvent);
 
 }
@@ -2616,26 +2621,26 @@ function GetFirstField() {
 }
 
 function EndAddField(field, fieldString, index){
-	gf_vars['currentlyAddingField'] = false;
+	kdna_vars['currentlyAddingField'] = false;
 
 	// We just added a field. Let's hide the No Fields placeholder.
 	jQuery( '#no-fields' ).hide();
 
-	jQuery('#gform_adding_field_spinner').remove();
+	jQuery('#kform_adding_field_spinner').remove();
 
 	//sets up DOM for new field
 	if(typeof index != 'undefined'){
 		form.fields.splice(index, 0, field);
 		if (index === 0) {
-			jQuery('#gform_fields').prepend(fieldString);
+			jQuery('#kform_fields').prepend(fieldString);
 		} else {
-			jQuery('#gform_fields').children().eq(index - 1).after(fieldString);
+			jQuery('#kform_fields').children().eq(index - 1).after(fieldString);
 		}
 	} else {
 		if ( jQuery( '#field_submit' ).length ) {
 			jQuery( fieldString ).insertBefore ( jQuery( '#field_submit' ) );
 		} else {
-			jQuery('#gform_fields').append(fieldString);
+			jQuery('#kform_fields').append(fieldString);
 		}
 		//creates new javascript field
 		form.fields.push(field);
@@ -2670,10 +2675,10 @@ function EndAddField(field, fieldString, index){
 	var focusedElement = document.activeElement;
 	if ( focusedElement.tagName === 'BUTTON' ) {
 		var fieldType = focusedElement.value;
-		wp.a11y.speak( fieldType + gf_vars.FieldAdded );
+		wp.a11y.speak( fieldType + kdna_vars.FieldAdded );
 	}
 
-	jQuery(document).trigger('gform_field_added', [form, field]);
+	jQuery(document).trigger('kform_field_added', [form, field]);
 }
 
 function StartChangeNameFormat(format) {
@@ -2792,7 +2797,7 @@ function EndChangeInputType(params){
 	 *
 	 * @param int fieldId The ID of the field for which the input type changed.
 	 */
-	gform.doAction( 'gform_after_change_input_type', fieldId );
+	kform.doAction( 'kform_after_change_input_type', fieldId );
 }
 
 function InitializeFields(){
@@ -2836,7 +2841,7 @@ function InitializeFields(){
 		 *
 		 * @param {DomEvent} event The dom event.
 		 */
-		gform.doAction( 'formEditorNullClick', event );
+		kform.doAction( 'formEditorNullClick', event );
 
 		event.stopPropagation();
 	});
@@ -2847,13 +2852,13 @@ function InitializeFields(){
 function FieldClick( field ) {
 
 	//disable click that happens right after dragging ends
-	if ( gforms_dragging == field.id ) {
-		gforms_dragging = 0;
+	if ( kforms_dragging == field.id ) {
+		kforms_dragging = 0;
 		return;
 	}
 
 	// force focus to ensure onblur events fire for field setting inputs
-	jQuery( 'input#gform_force_focus' ).focus();
+	jQuery( 'input#kform_force_focus' ).focus();
 
 	//unselects all fields
 	jQuery( '.selectable' ).removeClass( 'field_selected' );
@@ -2878,30 +2883,30 @@ function FieldClick( field ) {
 }
 
 function ShowSettings( element ) {
-	if ( element.id === 'gform_last_page_settings' ) {
+	if ( element.id === 'kform_last_page_settings' ) {
 		//hide field and form pagination setting fields
 		jQuery( '.field_setting' ).hide();
 		jQuery( '.pagination_setting' ).hide();
-		jQuery("#gfield_post_category_initial_item_container").hide();
-		jQuery("#gfield_min_strength_container").hide();
+		jQuery("#kfield_post_category_initial_item_container").hide();
+		jQuery("#kfield_min_strength_container").hide();
 		// Show last pagination setting fields
 		fieldObject = GetSelectedField();
 		jQuery( '.last_pagination_setting' ).show();
-		var label = jQuery( '#gform_last_page_settings' ).data( 'title' );
-		var description = jQuery( '#gform_last_page_settings' ).data( 'description' );
+		var label = jQuery( '#kform_last_page_settings' ).data( 'title' );
+		var description = jQuery( '#kform_last_page_settings' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
-	} else if ( element.id === 'gform_pagination' ) {
+	} else if ( element.id === 'kform_pagination' ) {
 		//hide field and last pagination setting fields
 		fieldObject = typeof fieldObject !== 'undefined' ? fieldObject : GetFirstField();
 		jQuery( '.field_setting' ).hide();
 		jQuery( '.last_pagination_setting' ).hide();
 		// Show form pagination setting fields
 		jQuery( '.pagination_setting' ).show();
-		jQuery("#gfield_post_category_initial_item_container").hide();
-		jQuery("#gfield_min_strength_container").hide();
+		jQuery("#kfield_post_category_initial_item_container").hide();
+		jQuery("#kfield_min_strength_container").hide();
 		InitPaginationOptions();
-		var label = jQuery( '#gform_pagination' ).data( 'title' );
-		var description = jQuery( '#gform_pagination' ).data( 'description' );
+		var label = jQuery( '#kform_pagination' ).data( 'title' );
+		var description = jQuery( '#kform_pagination' ).data( 'description' );
 		var icon_classes = 'button-icon dashicons-media-text';
 	} else if ( element.id === 'field_submit' ) {
 		// Hide form pagination and last pagination setting fields
@@ -2910,9 +2915,9 @@ function ShowSettings( element ) {
 		// Load and show field setting fields
 		LoadFieldSettings();
 		fieldObject = GetSubmitField();
-		var label = gf_vars.button;
-		var description = gf_vars.buttonDescription;
-		var icon_classes = 'gform-icon gform-icon--smart-button';
+		var label = kdna_vars.button;
+		var description = kdna_vars.buttonDescription;
+		var icon_classes = 'kform-icon kform-icon--smart-button';
 	} else {
 		// Hide form pagination and last pagination setting fields
 		jQuery( '.pagination_setting' ).hide();
@@ -2934,7 +2939,7 @@ function ShowSettings( element ) {
 	jQuery( '#sidebar_field_label' )
 		.removeClass( 'no-id' )
 		.text( label )
-		.attr( 'data-fieldId-label', gf_vars.idString )
+		.attr( 'data-fieldId-label', kdna_vars.idString )
 		.attr( 'data-fieldId', fieldObject.id );
 	if( 'submit' === fieldObject.type ) {
 		jQuery( '#sidebar_field_label' ).addClass( 'no-id' );
@@ -2970,17 +2975,17 @@ function ShowSettings( element ) {
 	// Show field settings tab
 	jQuery('.sidebar').tabs( 'option', 'active', 1 );
 
-	var visibleChoicesSettings = gform.tools
+	var visibleChoicesSettings = kform.tools
 		.getNodes( '[data-js="choices-ui-content"] > li', true, document, true )
 		.filter( function( element ) {
 			return window.getComputedStyle( element ).getPropertyValue( 'display' ) !== 'none';
 		} );
 
 	if ( ! visibleChoicesSettings.length ) {
-		gform.tools.trigger( 'gform/flyout/close-all' );
+		kform.tools.trigger( 'kform/flyout/close-all' );
 	}
 
-	gform.tools.trigger( 'gform/form_editor/setting_selected', document, false, element );
+	kform.tools.trigger( 'kform/form_editor/setting_selected', document, false, element );
 }
 
 function TogglePercentageStyle( isInit ){
@@ -3027,9 +3032,9 @@ function LoadFieldChoices(field){
 	//loading bulk input
 	LoadBulkChoices(field);
 	ToggleClearDefaultChoicesButton();
-	jQuery(document).trigger('gform_load_field_choices', [field]);
+	jQuery(document).trigger('kform_load_field_choices', [field]);
 
-	gform.doAction('gform_load_field_choices', [field]);
+	kform.doAction('kform_load_field_choices', [field]);
 }
 
 function LoadInputChoices($ul, input){
@@ -3060,7 +3065,7 @@ function LoadBulkChoices(field){
 		/**
 		 * Filter each individual choice as it is loaded.
 		 *
-		 * This filter is generally used in combination with gform_insert_bulk_choices_choice, and is useful
+		 * This filter is generally used in combination with kform_insert_bulk_choices_choice, and is useful
 		 * for generating unique text patterns for adding arbitrary data to a choice.
 		 *
 		 * @since 2.5
@@ -3071,7 +3076,7 @@ function LoadBulkChoices(field){
 		 *
 		 * @return {string} The updated text pattern, e.g. Label|Value|Meta|Other
 		 */
-		choice = gform.applyFilters( 'gform_load_bulk_choices_choice', choice, field.choices[i], field );
+		choice = kform.applyFilters( 'kform_load_bulk_choices_choice', choice, field.choices[i], field );
 
 		choices.push(choice);
 	}
@@ -3086,9 +3091,9 @@ function LoadBulkChoices(field){
 	 * @param array bulkChoices The formatted choices.
 	 * @param array choices     The choice objects from the current field.
 	 */
-	choices = gform.applyFilters( 'gform_choices_post_bulk_load', choices, field.choices );
+	choices = kform.applyFilters( 'kform_choices_post_bulk_load', choices, field.choices );
 
-	jQuery("#gfield_bulk_add_input").val(choices.join("\n"));
+	jQuery("#kfield_bulk_add_input").val(choices.join("\n"));
 }
 
 /**
@@ -3232,37 +3237,37 @@ function LoadCustomChoices(){
 
 	jQuery(".choice_section_header, .bulk_custom_choice").remove();
 
-	if(!IsEmpty(gform_custom_choices)){
-		var str = "<li class='choice_section_header'>" + gf_vars.customChoices + "</li>";
-		for(key in gform_custom_choices){
+	if(!IsEmpty(kform_custom_choices)){
+		var str = "<li class='choice_section_header'>" + kdna_vars.customChoices + "</li>";
+		for(key in kform_custom_choices){
 
-			if(!gform_custom_choices.hasOwnProperty(key))
+			if(!kform_custom_choices.hasOwnProperty(key))
 				continue;
 
 			var selectChoiceAction = 'SelectCustomChoice( jQuery(this).data("key") );';
 
 			str += "<li class='bulk_custom_choice'><a href='javascript:void(0);' data-key='" + escapeAttr( key ) + "' onclick='" + selectChoiceAction + "' onkeypress='" + selectChoiceAction + "' class='bulk-choice bulk_custom_choice'>" + escapeHtml( key ) + "</a></li>";
 		}
-		str += "<li class='choice_section_header'>" + gf_vars.predefinedChoices + "</li>";
+		str += "<li class='choice_section_header'>" + kdna_vars.predefinedChoices + "</li>";
 		jQuery("#bulk_items").prepend(str);
 	}
 }
 
 function SelectCustomChoice( name ){
 
-	jQuery("#gfield_bulk_add_input").val(gform_custom_choices[name].join("\n"));
-	gform_selected_custom_choice = name;
+	jQuery("#kfield_bulk_add_input").val(kform_custom_choices[name].join("\n"));
+	kform_selected_custom_choice = name;
 	InitBulkCustomPanel();
 }
 
 function SelectPredefinedChoice(name){
 	var list = kdnaform_predefined_choices[name];
-	// Countries can also be an object if the gform_countries filter is used, so convert to array with just the values.
+	// Countries can also be an object if the kform_countries filter is used, so convert to array with just the values.
 	if( name == "Countries" && Array.isArray( list ) !== true ) {
 		list = Object.values( list );
 	}
-	jQuery('#gfield_bulk_add_input').val(list.join('\n'));
-	gform_selected_custom_choice = "";
+	jQuery('#kfield_bulk_add_input').val(list.join('\n'));
+	kform_selected_custom_choice = "";
 	InitBulkCustomPanel();
 }
 
@@ -3291,7 +3296,7 @@ function InsertBulkChoices(choices){
 		/**
 		 * Filter each individual Choice object as it is inserted into the UI.
 		 *
-		 * This filter is generally used in combination with gform_load_bulk_choices_choice, and is useful
+		 * This filter is generally used in combination with kform_load_bulk_choices_choice, and is useful
 		 * for parsing a unique text pattern (e.g., Label|Value|Other) and adding the additional data to
 		 * the resulting Choice object.
 		 *
@@ -3303,7 +3308,7 @@ function InsertBulkChoices(choices){
 		 *
 		 * @return {Choice} The updated Choice object containing any additional data needed.
 		 */
-		choice = gform.applyFilters( 'gform_insert_bulk_choices_choice', choice, choices[i], field );
+		choice = kform.applyFilters( 'kform_insert_bulk_choices_choice', choice, choices[i], field );
 
 		if ( FieldIsChoiceType( field ) ) {
 			InsertFieldForChoice( choice, field );
@@ -3321,7 +3326,7 @@ function InsertBulkChoices(choices){
 	 *
 	 * @param array field The currently selected field object.
 	 */
-	gform.doAction( 'gform_bulk_insert_choices', field );
+	kform.doAction( 'kform_bulk_insert_choices', field );
 
 	if(enableValue){
 		field["enableChoiceValue"] = true;
@@ -3334,7 +3339,7 @@ function InsertBulkChoices(choices){
 }
 
 function InitBulkCustomPanel(){
-	if(gform_selected_custom_choice.length == 0){
+	if(kform_selected_custom_choice.length == 0){
 		CloseCustomChoicesPanel();
 	}
 	else{
@@ -3345,13 +3350,13 @@ function InitBulkCustomPanel(){
 function LoadCustomChoicesPanel(isNew, speed){
 	if(isNew){
 		jQuery("#custom_choice_name").val("");
-		jQuery("#bulk_save_button").html(gf_vars.save);
+		jQuery("#bulk_save_button").html(kdna_vars.save);
 		jQuery("#bulk_cancel_link").show();
 		jQuery("#bulk_delete_link").hide();
 	}
 	else{
-		jQuery("#custom_choice_name").val(gform_selected_custom_choice);
-		jQuery("#bulk_save_button").html(gf_vars.update);
+		jQuery("#custom_choice_name").val(kform_selected_custom_choice);
+		jQuery("#bulk_save_button").html(kdna_vars.update);
 		jQuery("#bulk_cancel_link").hide();
 		jQuery("#bulk_delete_link").show();
 	}
@@ -3457,10 +3462,10 @@ function SetInputChoice(inputId, index, value, text){
  * Deprecated in 2.9.0
  */
 function UpdateFieldChoices(fieldType){
-	console.log( 'UpdateFieldChoices is deprecated as of Gravity Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
+	console.log( 'UpdateFieldChoices is deprecated as of KDNA Forms 2.9.0 and will be removed in a future version. Please use RefreshSelectedFieldPreview instead.' );
 	var choices = '';
 	var selector = '';
-	var inputContainer = ( "1" === gf_legacy.is_legacy ) ? 'li' : 'div';
+	var inputContainer = ( "1" === kdna_legacy.is_legacy ) ? 'li' : 'div';
 	var inputContainerClass;
 
 	if(field.inputType == "checkbox")
@@ -3496,7 +3501,7 @@ function UpdateFieldChoices(fieldType){
 				field.inputs.push(new Input(field_number, field.choices[i].text));
 
 				var id = 'choice_' + field.id + '_' + (i + 1);
-				inputContainerClass = "gchoice g" + id;
+				inputContainerClass = "kchoice g" + id;
 				checked = field.choices[i].isSelected ? "checked" : "";
 
 				if(i < 5) {
@@ -3505,10 +3510,10 @@ function UpdateFieldChoices(fieldType){
 
 			}
 			if(field.choices.length > 5)
-				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='kchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 
 			if ( field.enableSelectAll ) {
-				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + gf_vars["selectAll"] + '</button>';
+				choices += '<button type="button" id="button_' + id + '_select_all" disabled="disabled">' + kdna_vars["selectAll"] + '</button>';
 			}
 			break;
 
@@ -3516,7 +3521,7 @@ function UpdateFieldChoices(fieldType){
 			for(var i=0; i<field.choices.length; i++)
 			{
 				var id = 'choice_' + field.id + '_' + (i + 1);
-				inputContainerClass = "gchoice g" + id;
+				inputContainerClass = "kchoice g" + id;
 				checked = field.choices[i].isSelected ? "checked" : "";
 				if(i < 5) {
 					choices += "<" + inputContainer + " class='" + inputContainerClass + "'><input name='input_" + field.id + "' type='" + fieldType + "' " + checked + " value='" + field.choices[i].value + "' id='" + id +"' disabled='disabled'><label for='" + id + "'>" + field.choices[i].text + "</label></" + inputContainer + ">";
@@ -3524,10 +3529,10 @@ function UpdateFieldChoices(fieldType){
 
 			}
 
-			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + gf_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
+			choices += field.enableOtherChoice ? "<" + inputContainer + "><input type='" + fieldType + "' " + checked + " id='" + id +"' disabled='disabled'><input type='text' value='" + kdna_vars.otherChoiceValue + "'  disabled='disabled' /></" + inputContainer + ">" : "";
 
 			if(field.choices.length > 5) {
-				choices += "<" + inputContainer + " class='gchoice_total'>" + gf_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
+				choices += "<" + inputContainer + " class='kchoice_total'>" + kdna_vars["editToViewAll"].replace("%d", field.choices.length) + "</" + inputContainer + ">";
 			}
 
 			break;
@@ -3537,7 +3542,7 @@ function UpdateFieldChoices(fieldType){
 			break;
 	}
 
-	selector = '.gfield_' + fieldType;
+	selector = '.kfield_' + fieldType;
 
 	jQuery(".field_selected " + selector).html(choices);
 }
@@ -3565,14 +3570,14 @@ function InsertFieldChoice( index ) {
 	var file_url = "";
 
 	if ( inputType === 'list' ) {
-		text = window.gf_vars.column + " " + (index + 1);
-		value = window.gf_vars.column + " " + (index + 1);
+		text = window.kdna_vars.column + " " + (index + 1);
+		value = window.kdna_vars.column + " " + (index + 1);
 	}
 
 	var newChoice = new Choice( text, value, price );
 
-	if ( window[ "gform_new_choice_" + field.type ] ) {
-		newChoice = window[ "gform_new_choice_" + field.type ]( field, newChoice );
+	if ( window[ "kform_new_choice_" + field.type ] ) {
+		newChoice = window[ "kform_new_choice_" + field.type ]( field, newChoice );
 	}
 
 	if ( typeof field.choices !== 'object' ) {
@@ -3669,8 +3674,8 @@ async function DeleteFieldChoice(index){
 
 	var hasDependency = await HasConditionalLogicDependency(field.id, value);
 	if( hasDependency ) {
-		var message = gf_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync( gf_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
+		var message = kdna_vars.conditionalLogicDependencyChoice.replace('{type}', hasDependency);
+		kform.instances.dialogConfirmAsync( kdna_vars.conditionalLogicWarningTitle , message ).then( ( confirmed ) => {
 			if ( ! confirmed ) {
 				return;
 			}
@@ -3780,11 +3785,11 @@ function ToggleDateCalendar( isInit ){
 function ToggleCalendarIconUrl( isInit ){
 
 	if(jQuery("#gsetting_icon_custom").is(":checked")){
-		jQuery("#gfield_icon_url_container").show();
+		jQuery("#kfield_icon_url_container").show();
 	}
 	else{
-		jQuery("#gfield_icon_url_container").hide();
-		jQuery("#gfield_calendar_icon_url").val("");
+		jQuery("#kfield_icon_url_container").hide();
+		jQuery("#kfield_calendar_icon_url").val("");
 		SetFieldProperty('calendarIconUrl', '');
 	}
 }
@@ -3804,13 +3809,13 @@ function LoadTimeInputs(){
 
 	if(format == "24"){
 		jQuery('#input_default_value_row_input_' + field.id +'_3').hide();
-		jQuery(".field_selected .gfield_time_ampm").hide();
+		jQuery(".field_selected .kfield_time_ampm").hide();
 	} else {
 		jQuery('#input_default_value_row_input_' + field.id +'_3').show();
-		jQuery(".field_selected .gfield_time_ampm").show();
+		jQuery(".field_selected .kfield_time_ampm").show();
 	}
 	jQuery('#input_placeholder_row_input_' + field.id +'_3').hide(); // No support for placeholder.
-	// AM/PM Sub label is hidden in the time field class after `gform_post_load_field_settings` is fired.
+	// AM/PM Sub label is hidden in the time field class after `kform_post_load_field_settings` is fired.
 }
 
 /**
@@ -3830,7 +3835,7 @@ function SetDateFormat( format ) {
 		var formatLabel = jQuery( '#field_date_format option:selected' ).text();
 
 		if ( field.placeholder === '' ) {
-			jQuery( '.field_selected input[name="ginput_datepicker"]' )
+			jQuery( '.field_selected input[name="kinput_datepicker"]' )
 				.attr( 'placeholder', formatLabel );
 		}
 	}
@@ -3848,75 +3853,75 @@ function LoadDateInputs(){
 	if(type == "datefield") {
 		switch(position){
 			case "ymd" :
-				jQuery(".field_selected #gfield_input_date_month").remove().insertBefore(".field_selected #gfield_input_date_day");
-				jQuery(".field_selected #gfield_input_date_year").remove().insertBefore(".field_selected #gfield_input_date_month");
+				jQuery(".field_selected #kfield_input_date_month").remove().insertBefore(".field_selected #kfield_input_date_day");
+				jQuery(".field_selected #kfield_input_date_year").remove().insertBefore(".field_selected #kfield_input_date_month");
 			break;
 
 			case "mdy" :
-				jQuery(".field_selected #gfield_input_date_day").remove().insertBefore(".field_selected #gfield_input_date_year");
-				jQuery(".field_selected #gfield_input_date_month").remove().insertBefore(".field_selected #gfield_input_date_day");
+				jQuery(".field_selected #kfield_input_date_day").remove().insertBefore(".field_selected #kfield_input_date_year");
+				jQuery(".field_selected #kfield_input_date_month").remove().insertBefore(".field_selected #kfield_input_date_day");
 			break;
 
 			case "dmy" :
-				jQuery(".field_selected #gfield_input_date_month").remove().insertBefore(".field_selected #gfield_input_date_year");
-				jQuery(".field_selected #gfield_input_date_day").remove().insertBefore(".field_selected #gfield_input_date_month");
+				jQuery(".field_selected #kfield_input_date_month").remove().insertBefore(".field_selected #kfield_input_date_year");
+				jQuery(".field_selected #kfield_input_date_day").remove().insertBefore(".field_selected #kfield_input_date_month");
 			break;
 		}
 
 		jQuery('.field_selected')
-			.removeClass( 'gfield--datepicker-default-icon gfield--datepicker-no-icon' )
-			.removeClass( 'gfield--input-type-datedropdown gfield--input-type-datepicker' )
-			.addClass( 'gfield--input-type-datefield' );
+			.removeClass( 'kfield--datepicker-default-icon kfield--datepicker-no-icon' )
+			.removeClass( 'kfield--input-type-datedropdown kfield--input-type-datepicker' )
+			.addClass( 'kfield--input-type-datefield' );
 
-		jQuery(".field_selected [id^='gfield_input_date']").show();
-		jQuery(".field_selected [id^='gfield_dropdown_date']").hide();
-		jQuery(".field_selected #gfield_input_datepicker").hide();
-		jQuery(".field_selected #gfield_input_datepicker_icon").hide();
+		jQuery(".field_selected [id^='kfield_input_date']").show();
+		jQuery(".field_selected [id^='kfield_dropdown_date']").hide();
+		jQuery(".field_selected #kfield_input_datepicker").hide();
+		jQuery(".field_selected #kfield_input_datepicker_icon").hide();
 	}
 	else if(type == "datedropdown") {
 		switch(position) {
 			case "ymd" :
-				jQuery(".field_selected #gfield_dropdown_date_month").remove().insertBefore(".field_selected #gfield_dropdown_date_day");
-				jQuery(".field_selected #gfield_dropdown_date_year").remove().insertBefore(".field_selected #gfield_dropdown_date_month");
+				jQuery(".field_selected #kfield_dropdown_date_month").remove().insertBefore(".field_selected #kfield_dropdown_date_day");
+				jQuery(".field_selected #kfield_dropdown_date_year").remove().insertBefore(".field_selected #kfield_dropdown_date_month");
 			break;
 
 			case "mdy" :
-				jQuery(".field_selected #gfield_dropdown_date_day").remove().insertBefore(".field_selected #gfield_dropdown_date_year");
-				jQuery(".field_selected #gfield_dropdown_date_month").remove().insertBefore(".field_selected #gfield_dropdown_date_day");
+				jQuery(".field_selected #kfield_dropdown_date_day").remove().insertBefore(".field_selected #kfield_dropdown_date_year");
+				jQuery(".field_selected #kfield_dropdown_date_month").remove().insertBefore(".field_selected #kfield_dropdown_date_day");
 			break;
 
 			case "dmy" :
-				jQuery(".field_selected #gfield_dropdown_date_month").remove().insertBefore(".field_selected #gfield_dropdown_date_year");
-				jQuery(".field_selected #gfield_dropdown_date_day").remove().insertBefore(".field_selected #gfield_dropdown_date_month");
+				jQuery(".field_selected #kfield_dropdown_date_month").remove().insertBefore(".field_selected #kfield_dropdown_date_year");
+				jQuery(".field_selected #kfield_dropdown_date_day").remove().insertBefore(".field_selected #kfield_dropdown_date_month");
 			break;
 		}
 
 		jQuery('.field_selected')
-			.removeClass( 'gfield--datepicker-default-icon gfield--datepicker-no-icon' )
-			.removeClass( 'gfield--input-type-datefield gfield--input-type-datepicker' )
-			.addClass( 'gfield--input-type-datedropdown' );
+			.removeClass( 'kfield--datepicker-default-icon kfield--datepicker-no-icon' )
+			.removeClass( 'kfield--input-type-datefield kfield--input-type-datepicker' )
+			.addClass( 'kfield--input-type-datedropdown' );
 
-		jQuery(".field_selected [id^='gfield_dropdown_date']").css('display', 'flex');
-		jQuery(".field_selected [id^='gfield_input_date']").hide();
-		jQuery(".field_selected #gfield_input_datepicker").hide();
-		jQuery(".field_selected #gfield_input_datepicker_icon").hide();
+		jQuery(".field_selected [id^='kfield_dropdown_date']").css('display', 'flex');
+		jQuery(".field_selected [id^='kfield_input_date']").hide();
+		jQuery(".field_selected #kfield_input_datepicker").hide();
+		jQuery(".field_selected #kfield_input_datepicker_icon").hide();
 	}
 	else {
 		jQuery('.field_selected')
-			.removeClass( 'gfield--input-type-datefield gfield--input-type-datedropdown' )
-			.addClass( 'gfield--input-type-datepicker' );
+			.removeClass( 'kfield--input-type-datefield kfield--input-type-datedropdown' )
+			.addClass( 'kfield--input-type-datepicker' );
 
-		jQuery(".field_selected [id^='gfield_input_date']").hide();
-		jQuery(".field_selected [id^='gfield_dropdown_date']").hide();
-		jQuery(".field_selected #gfield_input_datepicker").css( 'display', 'flex' );
+		jQuery(".field_selected [id^='kfield_input_date']").hide();
+		jQuery(".field_selected [id^='kfield_dropdown_date']").hide();
+		jQuery(".field_selected #kfield_input_datepicker").css( 'display', 'flex' );
 
 		// Displaying or hiding the calendar icon
 		if(jQuery("#gsetting_icon_calendar").is(":checked")) {
-			jQuery(".field_selected").removeClass( 'gfield--datepicker-no-icon' ).addClass( 'gfield--datepicker-default-icon' );
-			jQuery(".field_selected #gfield_input_datepicker_icon").show();
+			jQuery(".field_selected").removeClass( 'kfield--datepicker-no-icon' ).addClass( 'kfield--datepicker-default-icon' );
+			jQuery(".field_selected #kfield_input_datepicker_icon").show();
 		} else {
-			jQuery(".field_selected").removeClass( 'gfield--datepicker-default-icon' ).addClass( 'gfield--datepicker-no-icon' );
-			jQuery(".field_selected #gfield_input_datepicker_icon").hide();
+			jQuery(".field_selected").removeClass( 'kfield--datepicker-default-icon' ).addClass( 'kfield--datepicker-no-icon' );
+			jQuery(".field_selected #kfield_input_datepicker_icon").hide();
 		}
 	}
 }
@@ -3967,10 +3972,10 @@ function SetDateInputType(type){
 }
 
 function SetPostImageMeta(){
-	var displayAlt = jQuery('#gfield_display_alt').is(":checked");
-	var displayTitle = jQuery('#gfield_display_title').is(":checked");
-	var displayCaption = jQuery('#gfield_display_caption').is(":checked");
-	var displayDescription = jQuery('#gfield_display_description').is(":checked");
+	var displayAlt = jQuery('#kfield_display_alt').is(":checked");
+	var displayTitle = jQuery('#kfield_display_title').is(":checked");
+	var displayCaption = jQuery('#kfield_display_caption').is(":checked");
+	var displayDescription = jQuery('#kfield_display_description').is(":checked");
 	var displayLabel = (displayAlt || displayTitle || displayCaption || displayDescription);
 
 	//setting property
@@ -3980,16 +3985,16 @@ function SetPostImageMeta(){
 	SetFieldProperty('displayDescription', displayDescription);
 
 	//updating UI
-	jQuery('.field_selected .ginput_post_image_alt').css("display", displayAlt ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_title').css("display", displayTitle ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_caption').css("display", displayCaption ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_description').css("display", displayDescription ? "block" : "none");
-	jQuery('.field_selected .ginput_post_image_file').css("display", displayLabel ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_alt').css("display", displayAlt ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_title').css("display", displayTitle ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_caption').css("display", displayCaption ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_description').css("display", displayDescription ? "block" : "none");
+	jQuery('.field_selected .kinput_post_image_file').css("display", displayLabel ? "block" : "none");
 }
 
 function SetFeaturedImage() {
 
-	var isChecked = jQuery('#gfield_featured_image').is(':checked');
+	var isChecked = jQuery('#kfield_featured_image').is(':checked');
 
 	if(isChecked) {
 
@@ -4027,7 +4032,7 @@ function SetFieldProperty(name, value){
 	 * @param {(string|number|boolean|array)} value         The current value of the specified property.
 	 * @param {(string|number|boolean|array)} previousValue The previous value of the specified property.
 	 */
-	window.gform.doAction( 'gform_post_set_field_property', name, field, value, previousValue );
+	window.kform.doAction( 'kform_post_set_field_property', name, field, value, previousValue );
 }
 
 function SetInputName(value, inputId){
@@ -4174,7 +4179,7 @@ function SetInputCustomLabel( value, inputId ) {
 
 			elementID = 'input_' + field.inputs[ i ].id;
 			elementID = elementID.replace( '.', '_' );
-			elementID = '.ginput_container label[for=' + elementID + "]";
+			elementID = '.kinput_container label[for=' + elementID + "]";
 			jQuery( elementID ).text( label );
 
 			// Toggle the screen-reader-text class based on if the customLabel is set.
@@ -4205,7 +4210,7 @@ function SetSelectedCategories(){
 	var field = GetSelectedField();
 	field["choices"] = new Array();
 
-	jQuery(".gfield_category_checkbox").each(function(){
+	jQuery(".kfield_category_checkbox").each(function(){
 		if(this.checked)
 			field["choices"].push(new Choice(this.name, this.value));
 	});
@@ -4214,11 +4219,11 @@ function SetSelectedCategories(){
 }
 
 function SetFieldLabel(label){
-	var requiredElement = jQuery(".field_selected .gfield_required")[0];
-	jQuery(".field_selected label.gfield_label, .field_selected .gsection_title, .field_selected legend.gfield_label > span").text(label).append(requiredElement);
+	var requiredElement = jQuery(".field_selected .kfield_required")[0];
+	jQuery(".field_selected label.kfield_label, .field_selected .ksection_title, .field_selected legend.kfield_label > span").text(label).append(requiredElement);
 	SetFieldProperty("label", label);
 
-	var nativeEvent = new Event('gform/form_editor/set_field_label');
+	var nativeEvent = new Event('kform/form_editor/set_field_label');
 	document.dispatchEvent(nativeEvent);
 }
 
@@ -4232,12 +4237,12 @@ function SetFieldLabel(label){
 function SetAriaLabel(label){
 	var fieldId   = jQuery( ".field_selected" )[0].id.split( '_' )[1];
 	var field     = GetFieldById( fieldId );
-	var ariaLabel = window.gf_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
-	jQuery( ".field_selected .gfield-edit" ).attr( 'aria-label', ariaLabel );
+	var ariaLabel = window.kdna_vars.fieldLabelAriaLabel.replace('{field_label}', label).replace('{field_type}', field.type);
+	jQuery( ".field_selected .kfield-edit" ).attr( 'aria-label', ariaLabel );
 }
 
 function SetCaptchaTheme(theme, thumbnailUrl){
-	jQuery(".field_selected .gfield_captcha").attr("src", thumbnailUrl);
+	jQuery(".field_selected .kfield_captcha").attr("src", thumbnailUrl);
 	SetFieldProperty("captchaTheme", theme);
 }
 
@@ -4246,7 +4251,7 @@ function SetCaptchaSize(size){
 	var type = jQuery("#field_captcha_type").val();
 	SetFieldProperty("simpleCaptchaSize", size);
 	RedrawCaptcha();
-	jQuery(".field_selected .gfield_captcha_input_container").removeClass(type + "_small").removeClass(type + "_medium").removeClass(type + "_large").addClass(type + "_" + size);
+	jQuery(".field_selected .kfield_captcha_input_container").removeClass(type + "_small").removeClass(type + "_medium").removeClass(type + "_large").addClass(type + "_" + size);
 }
 
 function SetCaptchaFontColor(color){
@@ -4266,13 +4271,13 @@ function RedrawCaptcha(){
 		url_1 = GetCaptchaUrl(1);
 		url_2 = GetCaptchaUrl(2);
 		url_3 = GetCaptchaUrl(3);
-		jQuery(".field_selected .gfield_captcha:eq(0)").attr("src", url_1);
-		jQuery(".field_selected .gfield_captcha:eq(1)").attr("src", url_2);
-		jQuery(".field_selected .gfield_captcha:eq(2)").attr("src", url_3);
+		jQuery(".field_selected .kfield_captcha:eq(0)").attr("src", url_1);
+		jQuery(".field_selected .kfield_captcha:eq(1)").attr("src", url_2);
+		jQuery(".field_selected .kfield_captcha:eq(2)").attr("src", url_3);
 	}
 	else{
 		url = GetCaptchaUrl();
-		jQuery(".field_selected .gfield_captcha").attr("src", url);
+		jQuery(".field_selected .kfield_captcha").attr("src", url);
 	}
 }
 
@@ -4328,8 +4333,8 @@ function SetFieldSubLabelPlacement( subLabelPlacement ) {
 async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 	var hasDependency = await HasConditionalLogicDependency(field.id);
 	if (!isInit && visibility === 'administrative' && hasDependency) {
-		var message =  gf_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
-		gform.instances.dialogConfirmAsync(gf_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
+		var message =  kdna_vars.conditionalLogicDependencyAdminOnly.replace('{type}', hasDependency);
+		kform.instances.dialogConfirmAsync(kdna_vars.conditionalLogicWarningTitle , message).then((confirmed) => {
 			if (confirmed) {
 				proceedWithVisibilityChange(visibility, handleInputs);
 			} else {
@@ -4342,7 +4347,7 @@ async function SetFieldVisibility( visibility, handleInputs, isInit ) {
 }
 
 function proceedWithVisibilityChange( visibility, handleInputs ) {
-	const isWhitelisted = gf_vars.visibilityOptions.some(option => option.value === visibility);
+	const isWhitelisted = kdna_vars.visibilityOptions.some(option => option.value === visibility);
 
 	if( ! isWhitelisted ) {
 		visibility = 'visible';
@@ -4426,13 +4431,13 @@ function SetFieldCheckboxInputs(field) {
 
 function SetPasswordStrength(isEnabled){
 	if(isEnabled){
-		jQuery(".field_selected .gfield_password_strength").show();
+		jQuery(".field_selected .kfield_password_strength").show();
 	}
 	else{
-		jQuery(".field_selected .gfield_password_strength").hide();
+		jQuery(".field_selected .kfield_password_strength").hide();
 
 		//resetting min strength
-		jQuery("#gfield_min_strength").val("");
+		jQuery("#kfield_min_strength").val("");
 		SetFieldProperty('minPasswordStrength', "");
 	}
 
@@ -4452,12 +4457,12 @@ function ToggleEmailSettings(field){
 function SetEmailConfirmation(isEnabled){
 	var field = GetSelectedField();
 	if(isEnabled){
-		jQuery(".field_selected .ginput_single_email").hide();
-		jQuery(".field_selected .ginput_confirm_email").show();
+		jQuery(".field_selected .kinput_single_email").hide();
+		jQuery(".field_selected .kinput_confirm_email").show();
 	}
 	else{
-		jQuery(".field_selected .ginput_confirm_email").hide();
-		jQuery(".field_selected .ginput_single_email").show();
+		jQuery(".field_selected .kinput_confirm_email").hide();
+		jQuery(".field_selected .kinput_single_email").show();
 	}
 
 	field['emailConfirmEnabled'] = isEnabled;
@@ -4481,7 +4486,7 @@ function SetCardType(elem, value) {
 	if(jQuery(elem).is(':checked')) {
 
 		if(jQuery.inArray(value, cards) == -1) {
-			jQuery('.gform_card_icon_' + value).fadeIn();
+			jQuery('.kform_card_icon_' + value).fadeIn();
 			cards[cards.length] = value;
 		}
 
@@ -4490,7 +4495,7 @@ function SetCardType(elem, value) {
 		var index = jQuery.inArray(value, cards);
 
 		if(index != -1) {
-			jQuery('.gform_card_icon_' + value).fadeOut();
+			jQuery('.kform_card_icon_' + value).fadeOut();
 			cards.splice(index, 1);
 		}
 
@@ -4500,8 +4505,8 @@ function SetCardType(elem, value) {
 }
 
 function SetFieldRequired( isRequired ) {
-	var required = gform_form_strings.requiredIndicator;
-	var requiredSelector = '.field_selected .gfield_required';
+	var required = kform_form_strings.requiredIndicator;
+	var requiredSelector = '.field_selected .kfield_required';
 	var appendRequired = false;
 
 	if ( field.type === 'consent' ) {
@@ -4520,8 +4525,8 @@ function SetFieldRequired( isRequired ) {
 	}
 
 	if ( appendRequired ) {
-		var labelSelector = field.type === 'consent' && field.labelPlacement === 'hidden_label' ? '.field_selected .gfield_consent_label' : '.field_selected legend.gfield_label span, .field_selected label.gfield_label';
-		jQuery( labelSelector ).append( '<span class="gfield_required">' + required + '</span>' );
+		var labelSelector = field.type === 'consent' && field.labelPlacement === 'hidden_label' ? '.field_selected .kfield_consent_label' : '.field_selected legend.kfield_label span, .field_selected label.kfield_label';
+		jQuery( labelSelector ).append( '<span class="kfield_required">' + required + '</span>' );
 	}
 
 	SetFieldProperty( 'isRequired', isRequired );
@@ -4604,7 +4609,7 @@ function ToggleCalculationOptions(isEnabled, field) {
 	SetFieldProperty('enableCalculation', isEnabled);
 
 	if ( field.type === 'number' ) {
-		var nativeEvent = new Event('gform/form_editor/toggle_calculation_options');
+		var nativeEvent = new Event('kform/form_editor/toggle_calculation_options');
 		document.dispatchEvent(nativeEvent);
 	}
 }
@@ -4615,16 +4620,16 @@ function FormulaContentCallback() {
 
 function SetupUnsavedChangesWarning() {
 	// check if form is in legacy mode
-	var legacyHtml = window.gf_legacy && window.gf_legacy.is_legacy === '1';
+	var legacyHtml = window.kdna_legacy && window.kdna_legacy.is_legacy === '1';
 	// apply system changes to the form, unsaved notification should only apply for user-made changes
 	UpdateFormObject();
 
 	// store a json copy of original form to determine if user-made changes were made
-	gforms_original_json = jQuery.toJSON(form);
+	kforms_original_json = jQuery.toJSON(form);
 
 	window.onbeforeunload = function(){
 		UpdateFormObject();
-		var original = JSON.parse( JSON.stringify( JSON.parse( window.gforms_original_json ) ) );
+		var original = JSON.parse( JSON.stringify( JSON.parse( window.kforms_original_json ) ) );
 		var current = JSON.parse( JSON.stringify( window.form ) );
 		if ( legacyHtml ) {
 			original.fields.forEach( function( field, i ) {
@@ -4634,7 +4639,7 @@ function SetupUnsavedChangesWarning() {
 				delete current.fields[ i ].layoutGroupId;
 			} );
 		}
-		if ( JSON.stringify( original ) !== JSON.stringify( current ) && ! gf_vars.isFormTrash ) {
+		if ( JSON.stringify( original ) !== JSON.stringify( current ) && ! kdna_vars.isFormTrash ) {
 			return "You have unsaved changes.";
 		}
 	}
@@ -4663,7 +4668,7 @@ function SetHTMLMargins( value ) {
 	var field      = GetSelectedField(),
 		$container = jQuery( '#field_' + field.id );
 
-	$container.toggleClass( 'gfield_html_formatted' );
+	$container.toggleClass( 'kfield_html_formatted' );
 	SetFieldProperty('disableMargins', value );
 }
 
@@ -4680,27 +4685,27 @@ function SetSubmitLocation( location ) {
 		jQuery( '#field_submit' ).next( '.spacer' ).remove();
 
 		// Assign the correct position property.
-		jQuery( '*[data-field-class="gform_editor_submit_container"]' ).attr( 'data-field-position', 'inline' );
+		jQuery( '*[data-field-class="kform_editor_submit_container"]' ).attr( 'data-field-position', 'inline' );
 	} else {
 		// Move the submit button out of the group and make it full-width.
 		var groupID = jQuery( '#field_submit' ).attr( 'data-groupid' );
 		jQuery( '#field_submit' )
 			.removeAttr( 'data-groupid' )
-			.addClass( 'gfield--width-full' )
+			.addClass( 'kfield--width-full' )
 			.setGridColumnSpan( 12 )
 			.resizeGroup( groupID );
 
 		// Assign the correct position property.
-		jQuery( '*[data-field-class="gform_editor_submit_container"]' ).attr( 'data-field-position', 'bottom' );
+		jQuery( '*[data-field-class="kform_editor_submit_container"]' ).attr( 'data-field-position', 'bottom' );
 	}
 
 }
 
 function SetSubmitWidth( width ) {
 	if( 'full' === width ) {
-		jQuery( '#field_submit .gform-button' ).addClass( 'gform-button--width-full' );
+		jQuery( '#field_submit .kform-button' ).addClass( 'kform-button--width-full' );
 	} else {
-		jQuery( '#field_submit .gform-button' ).removeClass( 'gform-button--width-full' );
+		jQuery( '#field_submit .kform-button' ).removeClass( 'kform-button--width-full' );
 	}
 }
 
@@ -4715,7 +4720,7 @@ function ToggleSubmitType( isInit ) {
 		form.button.type = type;
 	}
 
-	var $formSubmitButton        = jQuery( '#gform_submit_button_' + form.id );
+	var $formSubmitButton        = jQuery( '#kform_submit_button_' + form.id );
 	var $submitImageSetting      = jQuery( '#submit_image' );
 	var $submitImageSettingValue = $submitImageSetting.val();
 	var $submitTextSetting       = jQuery( '#submit_text' );
@@ -4739,15 +4744,15 @@ function ToggleSubmitType( isInit ) {
 	}
 
 	if( 'text' === type || ( 'image' === type && ! $submitImageSettingValue ) ) {
-		var text = $submitTextSettingValue ? $submitTextSettingValue : gform_form_strings.defaultSubmit;
-		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'gform_image_button' );
+		var text = $submitTextSettingValue ? $submitTextSettingValue : kform_form_strings.defaultSubmit;
+		$formSubmitButton.attr( 'type', 'submit' ).attr( 'value', text ).removeClass( 'kform_image_button' );
 		$submitTextSetting.val( text );
 	}
 
 	if( 'image' === type && $submitImageSettingValue ) {
 		ResetFieldNotice( 'submit_image_setting' );
 		var src = $submitImageSettingValue ? $submitImageSettingValue : '';
-		$formSubmitButton.attr( 'type', 'image' ).attr( 'src', src ).removeAttr( 'value' ).addClass( 'gform_image_button' );
+		$formSubmitButton.attr( 'type', 'image' ).attr( 'src', src ).removeAttr( 'value' ).addClass( 'kform_image_button' );
 		$submitImageSetting.val( src );
 	}
 }
@@ -4951,14 +4956,14 @@ function SearchWithinFieldGroup( group, search ) {
 
 	var resultsDisplay = results ? 'none' : 'block';
 
-	jQuery( group ).parent().find( '.gf-field-group__no-results' ).css( 'display', resultsDisplay );
+	jQuery( group ).parent().find( '.kdna-field-group__no-results' ).css( 'display', resultsDisplay );
 }
 
 /**
 * Quick jQuery plugin that allows a variable to be passed which determins whether to
 * instantly hide the element or slideUp instead.
 */
-jQuery.fn.gfSlide = function(direction) {
+jQuery.fn.kdnaSlide = function(direction) {
 
 	var isVisible = jQuery('.field_settings').is(':visible');
 
@@ -4983,7 +4988,7 @@ jQuery.fn.gfSlide = function(direction) {
  * Form Editor conditional logic should not allow adminOnly fields to be selectable. Also exclude the current field from being
  * set in conditional logic for itself.
  */
-gform.addFilter( 'gform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
+kform.addFilter( 'kform_is_conditional_logic_field', function( isConditionalLogicField, field ) {
 
 	if( field.visibility == 'administrative' ) {
 		isConditionalLogicField = false;
@@ -5036,7 +5041,7 @@ function IsValidFormula(formula) {
 	 * @param result The validation result.
 	 * @param formula The calculation formula being validated.
 	 */
-	return gform.applyFilters( 'gform_is_valid_formula_form_editor', result, formula );
+	return kform.applyFilters( 'kform_is_valid_formula_form_editor', result, formula );
 }
 
 /**
@@ -5049,8 +5054,8 @@ function IsValidFormula(formula) {
 function ResetFieldNotice( fieldSetting ) {
 	if ( typeof fieldSetting !== 'undefined' ) {
 		jQuery( '.' + fieldSetting )
-			.nextAll( '.gform-alert--notice' ).remove()
-			.prevAll( '.gform-alert--notice' ).remove();
+			.nextAll( '.kform-alert--notice' ).remove()
+			.prevAll( '.kform-alert--notice' ).remove();
 	}
 }
 
@@ -5060,8 +5065,8 @@ function ResetFieldNotice( fieldSetting ) {
  * @since 2.6
  */
 function resetAllFieldNotices() {
-	if ( jQuery('.editor-sidebar').find('.gform-alert--notice').length ) {
-		jQuery('.editor-sidebar').find('.gform-alert--notice:not(.gform-visible-notice)').remove();
+	if ( jQuery('.editor-sidebar').find('.kform-alert--notice').length ) {
+		jQuery('.editor-sidebar').find('.kform-alert--notice:not(.kform-visible-notice)').remove();
 	}
 }
 
@@ -5072,7 +5077,7 @@ function resetAllFieldNotices() {
  */
 function ResetFieldAccessibilityWarning( fieldSetting ) {
 	if ( typeof fieldSetting !== 'undefined' ) {
-		jQuery( '.gform-alert--accessibility[data-field-setting="' + fieldSetting + '"]' ).remove()
+		jQuery( '.kform-alert--accessibility[data-field-setting="' + fieldSetting + '"]' ).remove()
 	}
 }
 
@@ -5082,8 +5087,8 @@ function ResetFieldAccessibilityWarning( fieldSetting ) {
  * @since 2.5.8
  */
 function resetAllFieldAccessibilityWarnings() {
-	if ( jQuery('.editor-sidebar').find('.gform-alert--accessibility').length ) {
-		jQuery('.editor-sidebar').find('.gform-alert--accessibility').remove();
+	if ( jQuery('.editor-sidebar').find('.kform-alert--accessibility').length ) {
+		jQuery('.editor-sidebar').find('.kform-alert--accessibility').remove();
 	}
 }
 
@@ -5095,11 +5100,11 @@ function resetAllFieldAccessibilityWarnings() {
 function setSidebarFieldMessage() {
 
 	let types = [
-		{ type: 'warning', iconClasses: ['gform-icon--exclamation-simple', 'gform-icon-preset--status-error'] },
-		{ type: 'error', iconClasses: ['gform-icon--exclamation-simple', 'gform-icon-preset--status-error'] },
-		{ type: 'info', iconClasses: ['gform-icon--information-simple', 'gform-icon-preset--status-info'] },
-		{ type: 'notice', iconClasses: ['gform-icon--information-simple', 'gform-icon-preset--status-info'] },
-		{ type: 'success', iconClasses: ['gform-icon--checkmark-simple', 'gform-icon-preset--status-correct'] },
+		{ type: 'warning', iconClasses: ['kform-icon--exclamation-simple', 'kform-icon-preset--status-error'] },
+		{ type: 'error', iconClasses: ['kform-icon--exclamation-simple', 'kform-icon-preset--status-error'] },
+		{ type: 'info', iconClasses: ['kform-icon--information-simple', 'kform-icon-preset--status-info'] },
+		{ type: 'notice', iconClasses: ['kform-icon--information-simple', 'kform-icon-preset--status-info'] },
+		{ type: 'success', iconClasses: ['kform-icon--checkmark-simple', 'kform-icon-preset--status-correct'] },
 	];
 
 	/**
@@ -5109,25 +5114,25 @@ function setSidebarFieldMessage() {
 	 *
 	 * @param Object types The types of sidebar messages, each with a type and iconClasses property.
 	 */
-	types = gform.applyFilters( 'gform_field_sidebar_messages_types', types );
+	types = kform.applyFilters( 'kform_field_sidebar_messages_types', types );
 
 	let showSidebarMessage = false;
 	types.forEach(
 		( { type, iconClasses } ) => {
 			$container = jQuery( '.field_selected .field-sidebar-message-content--type-' + type );
-			messageMarkup = $container && $container.length ? gform_strip_scripts( $container.html() ) : '';
+			messageMarkup = $container && $container.length ? kform_strip_scripts( $container.html() ) : '';
 			if ( messageMarkup ) {
-				jQuery( '#sidebar_field_message_container' ).html( '<div class="gform-alert gform-alert--theme-cosmos"><span class="gform-icon gform-icon--preset-active gform-alert__icon" aria-hidden="true"></span><div class="gform-alert__message-wrap"><div class="gform-alert__message"></div></div></div>' );
-				jQuery( '#sidebar_field_message_container .gform-alert__message' ).html( messageMarkup );
-				jQuery( '#sidebar_field_message_container .gform-alert' ).addClass( 'gform-alert--' + ( type === 'warning' ? 'error' : type ) );
+				jQuery( '#sidebar_field_message_container' ).html( '<div class="kform-alert kform-alert--theme-cosmos"><span class="kform-icon kform-icon--preset-active kform-alert__icon" aria-hidden="true"></span><div class="kform-alert__message-wrap"><div class="kform-alert__message"></div></div></div>' );
+				jQuery( '#sidebar_field_message_container .kform-alert__message' ).html( messageMarkup );
+				jQuery( '#sidebar_field_message_container .kform-alert' ).addClass( 'kform-alert--' + ( type === 'warning' ? 'error' : type ) );
 				iconClasses.forEach(
 					( className ) => {
-						jQuery( '#sidebar_field_message_container .gform-alert__icon' ).addClass( className );
+						jQuery( '#sidebar_field_message_container .kform-alert__icon' ).addClass( className );
 					}
 				);
 				// Add class to force this notice visible, as all field notices are reset when a field is selected.
 				if ( type === 'notice' ) {
-					jQuery( '#sidebar_field_message_container .gform-alert' ).addClass( 'gform-visible-notice' );
+					jQuery( '#sidebar_field_message_container .kform-alert' ).addClass( 'kform-visible-notice' );
 				}
 				showSidebarMessage = true;
 				wp.a11y.speak( messageMarkup );
@@ -5139,7 +5144,7 @@ function setSidebarFieldMessage() {
 
 	if ( showSidebarMessage ) {
 		jQuery( '#sidebar_field_message_container' ).show();
-		jQuery( '#sidebar_field_message_container .gform-alert' ).show();
+		jQuery( '#sidebar_field_message_container .kform-alert' ).show();
 	}
 }
 
@@ -5194,15 +5199,15 @@ function setFieldError( fieldSetting, position, message ) {
 		message = getFieldErrorMessage( fieldSetting );
 	}
 
-	var errorDiv = '<div class="gform-alert gform-alert--error gform-alert--inline" data-field-setting="' + fieldSetting + '">';
-		errorDiv += '<span class="gform-alert__icon gform-icon gform-icon--circle-error-fine" aria-hidden="true"></span>';
-		errorDiv += '<div class="gform-alert__message-wrap">' + message + '</div>';
+	var errorDiv = '<div class="kform-alert kform-alert--error kform-alert--inline" data-field-setting="' + fieldSetting + '">';
+		errorDiv += '<span class="kform-alert__icon kform-icon kform-icon--circle-error-fine" aria-hidden="true"></span>';
+		errorDiv += '<div class="kform-alert__message-wrap">' + message + '</div>';
 		errorDiv += '</div>';
 
 	// Display the error message.
 	var fieldSettingContainer = jQuery( '.' + fieldSetting );
 	fieldSettingContainer.addClass( 'error' );
-	jQuery( '.gform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove();
+	jQuery( '.kform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove();
 	if ( position === 'above' ) {
 		fieldSettingContainer.before( errorDiv );
 	} else {
@@ -5223,7 +5228,7 @@ function resetFieldError( fieldSetting ) {
 
 	if ( typeof fieldSetting !== 'undefined' ) {
 
-		jQuery( '.gform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove()
+		jQuery( '.kform-alert--error[data-field-setting="' + fieldSetting + '"]' ).remove()
 		jQuery( '.' + fieldSetting ).removeClass( 'error' );
 
 		var index = errorProperties.indexOf( fieldSetting );
@@ -5250,7 +5255,7 @@ function resetAllFieldErrors() {
 		return;
 	}
 
-	jQuery('.editor-sidebar .gform-alert--error').remove();
+	jQuery('.editor-sidebar .kform-alert--error').remove();
 	jQuery('.field_setting').filter('.error').removeClass( 'error' );
 
 	if ( form.fields.length > 0 ) {

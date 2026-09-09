@@ -15,7 +15,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 		$image_style_classes = $this->get_field_classes( $form_id, $this->field );
 
-		return sprintf( "<div class='ginput_container ginput_container_radio ginput_container_image_choice {$image_style_classes}'>%s</div>", $this->get_radio_choices( $value, $disabled_text, $form, $field_id ) );
+		return sprintf( "<div class='kinput_container kinput_container_radio kinput_container_image_choice {$image_style_classes}'>%s</div>", $this->get_radio_choices( $value, $disabled_text, $form, $field_id ) );
 	}
 
 	public function get_radio_choices( $value, $disabled_text, $form, $field_id ) {
@@ -42,9 +42,9 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 			 * @param int    $max_choices_visible_count The default number of choices visible is 8.
 			 * @param object $field                     The current field object.
 			 */
-			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
+			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $this->field->formId ), 8, $this->field );
 
-			$choices .= sprintf( '<div class="gfield_radio" id="%s">', esc_attr( $field_id ) );
+			$choices .= sprintf( '<div class="kfield_radio" id="%s">', esc_attr( $field_id ) );
 
 			foreach ( $field_choices as $choice ) {
 				if ( rgar( $choice, 'isOtherChoice' ) ) {
@@ -67,7 +67,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 			if ( $needs_other_choice ) {
 				$other_choice    = array(
 					'text'          => KDNACommon::get_other_choice_value( $this ),
-					'value'         => 'gf_other_choice',
+					'value'         => 'kdna_other_choice',
 					'isSelected'    => false,
 					'isOtherChoice' => true,
 				);
@@ -83,7 +83,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 			$total = sizeof( $field_choices );
 			if ( $is_form_editor && ( $count < $total ) ) {
-				$choices .= "<div class='gchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></div>";
+				$choices .= "<div class='kchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></div>";
 			}
 		}
 
@@ -95,7 +95,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		 * @param string $choices The choices HTML.
 		 * @param object $field   The current field object.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
+		return kdna_apply_filters( array( 'kdnaform_field_choices', $this->field->formId ), $choices, $this->field );
 	}
 
 	public function get_choice_html( $choice, &$choice_id, $value, $disabled_text, $is_admin, $form = null ) {
@@ -127,18 +127,18 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		$tabindex = $this->field->get_tabindex();
 
 		$image                  = $this->get_image_markup( $choice, $id, $choice_id, $form );
-		$image_aria_describedby = 'gchoice_image_' . $id;
+		$image_aria_describedby = 'kchoice_image_' . $id;
 
 		// Handle 'other' choice.
 		$other = '';
 		if ( $this->field->enableOtherChoice && rgar( $choice, 'isOtherChoice' ) ) {
 			$input_disabled_text = $disabled_text;
 
-			if ( $value == 'gf_other_choice' && rgpost( "input_{$this->field->id}_other" ) ) {
+			if ( $value == 'kdna_other_choice' && rgpost( "input_{$this->field->id}_other" ) ) {
 				$other_value = rgpost( "input_{$this->field->id}_other" );
 			} elseif ( ! empty( $value ) && ! KDNAFormsModel::choices_value_match( $this->field, $this->field->choices, $value ) ) {
 				$other_value = $value;
-				$value       = 'gf_other_choice';
+				$value       = 'kdna_other_choice';
 				$checked     = "checked='checked'";
 			} else {
 				if ( ! $input_disabled_text ) {
@@ -147,7 +147,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 				$other_value = empty( $choice['text'] ) ? KDNACommon::get_other_choice_value( $this->field ) : $choice['text'];
 			}
 
-			$other = "<br /><input id='input_{$this->field->formId}_{$this->field->id}_other' class='gchoice_other_control' name='input_{$this->field->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
+			$other = "<br /><input id='input_{$this->field->formId}_{$this->field->id}_other' class='kchoice_other_control' name='input_{$this->field->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
 		}
 
 		// Handling of input/image aria-describedby
@@ -161,12 +161,12 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 
 		$choice_value = esc_attr( $field_value );
 
-		$choice_markup = "<div class='gchoice gchoice_{$id}'>
-			<span class='gfield-image-choice-wrapper-outer'>
-				<label for='choice_{$id}' class='gfield-choice-image-label'>{$image}</label>
-				<span class='gfield-image-choice-wrapper-inner'>
-					<input class='gfield-choice-input' name='input_{$this->field->id}' type='radio' value='{$choice_value}' {$checked} id='choice_{$id}' onchange='gformToggleRadioOther( this )' {$tabindex} {$disabled_text} {$aria_describedby}/>
-					<label for='choice_{$id}' id='label_{$id}' class='gform-field-label gform-field-label--type-inline'>
+		$choice_markup = "<div class='kchoice kchoice_{$id}'>
+			<span class='kfield-image-choice-wrapper-outer'>
+				<label for='choice_{$id}' class='kfield-choice-image-label'>{$image}</label>
+				<span class='kfield-image-choice-wrapper-inner'>
+					<input class='kfield-choice-input' name='input_{$this->field->id}' type='radio' value='{$choice_value}' {$checked} id='choice_{$id}' onchange='kformToggleRadioOther( this )' {$tabindex} {$disabled_text} {$aria_describedby}/>
+					<label for='choice_{$id}' id='label_{$id}' class='kform-field-label kform-field-label--type-inline'>
 						{$choice['text']}
 					</label>
 				</span>
@@ -186,7 +186,7 @@ class KDNA_Field_Decorator_Choice_Radio_Markup extends ChoiceDecorator {
 		 * @param KDNA_Field_Radio $field         The current field object.
 		 * @param string         $value         The current field value.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->field->formId, $this->field->id ), $choice_markup, $choice, $this->field, $value );
+		return kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->field->formId, $this->field->id ), $choice_markup, $choice, $this->field, $value );
 	}
 
 }

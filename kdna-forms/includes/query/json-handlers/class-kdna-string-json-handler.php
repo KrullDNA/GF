@@ -3,12 +3,12 @@
 namespace KDNA_Forms\KDNA_Forms\Query\JSON_Handlers;
 
 /**
- * GF_JSON_Handler implementation which uses a MySQL "LIKE" query. Not as performant as JSON_CONTAINS, but
+ * KDNA_JSON_Handler implementation which uses a MySQL "LIKE" query. Not as performant as JSON_CONTAINS, but
  * available on older (pre-5.7) versions of MySQL.
  *
  * @since 2.7
  */
-class KDNA_String_JSON_Handler extends GF_JSON_Handler {
+class KDNA_String_JSON_Handler extends KDNA_JSON_Handler {
 
 	public function query( $slug ) {
 		global $wpdb;

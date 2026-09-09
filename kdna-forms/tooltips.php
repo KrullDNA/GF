@@ -4,8 +4,8 @@ if ( ! class_exists( 'KDNAForms' ) ) {
 	die();
 }
 
-global $__gf_tooltips;
-$__gf_tooltips = array(
+global $__kdna_tooltips;
+$__kdna_tooltips = array(
 	'notification_send_to_email'                  => '<strong>' . __( 'Send To Email Address', 'kdnaforms' ) . '</strong>' . __( 'Enter the email address you would like the notification email sent to.', 'kdnaforms' ),
 	'notification_autoformat'                     => '<strong>' . __( 'Disable Auto-Formatting', 'kdnaforms' ) . '</strong>' . __( 'When enabled, auto-formatting will insert paragraph breaks automatically. Disable auto-formatting when using HTML to create email notification content.', 'kdnaforms' ),
 	'notification_send_to_routing'                => '<strong>' . __( 'Routing', 'kdnaforms' ) . '</strong>' . __( 'Allows notification to be sent to different email addresses depending on values selected in the form.', 'kdnaforms' ),
@@ -40,7 +40,7 @@ $__gf_tooltips = array(
 	'form_redirect_to_webpage'                    => '<strong>' . __( 'Redirect Form to Page', 'kdnaforms' ) . '</strong>' . __( 'Select the page you would like the user to be redirected to after they have submitted the form.', 'kdnaforms' ),
 	'form_redirect_to_url'                        => '<strong>' . __( 'Redirect Form to URL', 'kdnaforms' ) . '</strong>' . __( 'Enter the URL of the webpage you would like the user to be redirected to after they have submitted the form.', 'kdnaforms' ),
 	                                                 /* Translators: %s: Link to article about query strings. */
-	'form_redirect_querystring'                   => '<strong>' . __( 'Pass Data Via Query String', 'kdnaforms' ) . '</strong>' . sprintf( __( "To pass field data to the confirmation page, build a Query String using the 'Insert Merge Tag' drop down. %s..more info on querystrings &raquo;%s", 'kdnaforms' ), "<a href='https://en.wikipedia.org/wiki/Query_string' target='_blank'>", '<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span><span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>' ),
+	'form_redirect_querystring'                   => '<strong>' . __( 'Pass Data Via Query String', 'kdnaforms' ) . '</strong>' . sprintf( __( "To pass field data to the confirmation page, build a Query String using the 'Insert Merge Tag' drop down. %s..more info on querystrings &raquo;%s", 'kdnaforms' ), "<a href='https://en.wikipedia.org/wiki/Query_string' target='_blank'>", '<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span><span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>' ),
 	'form_field_label'                            => '<strong>' . __( 'Field Label', 'kdnaforms' ) . '</strong>' . __( 'Enter the label of the form field.  This is the field title the user will see when filling out the form.', 'kdnaforms' ),
 	'form_field_label_html'                       => '<strong>' . __( 'Field Label', 'kdnaforms' ) . '</strong>' . __( 'Enter the label for this HTML block. It will help you identify your HTML blocks in the form editor, but it will not be displayed on the form.', 'kdnaforms' ),
 	'form_field_disable_margins'                  => '<strong>' . __( 'Disable Default Margins', 'kdnaforms' ) . '</strong>' . __( 'When enabled, margins are added to properly align the HTML content with other form fields.', 'kdnaforms' ),
@@ -96,7 +96,7 @@ $__gf_tooltips = array(
 	'form_field_copy_values_option_label'         => '<strong>' . __( 'Option Label', 'kdnaforms' ) . '</strong>' . __( 'Enter the label to be displayed next to the check box. For example, &quot;same as shipping address&quot;.', 'kdnaforms' ),
 	'form_field_copy_values_option_field'         => '<strong>' . __( 'Source Field', 'kdnaforms' ) . '</strong>' . __( 'Select the field to be used as the source for the values for this field.', 'kdnaforms' ),
 	'form_field_copy_values_option_default'       => '<strong>' . __( 'Activated by Default', 'kdnaforms' ) . '</strong>' . __( 'Select this setting to display the option as activated by default when the form first loads.', 'kdnaforms' ),
-	'form_field_autocomplete'                     => '<strong>' . __( 'Autocomplete Attribute', 'kdnaforms' ) . '</strong>' . sprintf( __( 'Select this setting to let browsers help a user fill in a field with autocomplete.  You can enter a single autocomplete attribute or multiple attributes separated with a space.  Only use valid attributes: invalid attributes will not be saved.  Learn more about autocomplete in the %s accessibility documentation %s.', 'kdnaforms' ), '<a href="https://docs.kdnaforms.com/accessibility-for-developers/#h-autocomplete" target="_blank">', '<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span><span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>' ),
+	'form_field_autocomplete'                     => '<strong>' . __( 'Autocomplete Attribute', 'kdnaforms' ) . '</strong>' . sprintf( __( 'Select this setting to let browsers help a user fill in a field with autocomplete.  You can enter a single autocomplete attribute or multiple attributes separated with a space.  Only use valid attributes: invalid attributes will not be saved.  Learn more about autocomplete in the %s accessibility documentation %s.', 'kdnaforms' ), '<a href="https://docs.kdnaforms.com/accessibility-for-developers/#h-autocomplete" target="_blank">', '<span class="screen-reader-text">' . esc_html__('(opens in a new tab)', 'kdnaforms') . '</span><span class="kform-icon kform-icon--external-link" aria-hidden="true"></span></a>' ),
 	'form_field_validation_message'               => '<strong>' . __( 'Validation Message', 'kdnaforms' ) . '</strong>' . __( 'If you would like to override the default error validation for a field, enter it here.  This message will be displayed if there is an error with this field when the user submits the form.', 'kdnaforms' ),
 	'form_field_recaptcha_language'               => '<strong>' . __( 'reCAPTCHA Language', 'kdnaforms' ) . '</strong>' . __( 'Select the language you would like to use for the reCAPTCHA display from the available options.', 'kdnaforms' ),
 	'form_field_css_class'                        => '<strong>' . __( 'CSS Class Name', 'kdnaforms' ) . '</strong>' . __( 'Enter the CSS class name you would like to use in order to override the default styles for this field.', 'kdnaforms' ),
@@ -105,7 +105,7 @@ $__gf_tooltips = array(
 	'form_field_choice_values'                    => '<strong>' . __( 'Enable Choice Values', 'kdnaforms' ) . '</strong>' . __( 'Check this option to specify a value for each choice. Choice values are not displayed to the user viewing the form, but are accessible to administrators when viewing the entry.', 'kdnaforms' ),
 	'form_field_conditional_logic'                => '<strong>' . __( 'Conditional Logic', 'kdnaforms' ) . '</strong>' . __( 'Create rules to dynamically display or hide this field based on values from another field.', 'kdnaforms' ),
 	                                                 /* Translators: %s: Link to Chosen jQuery framework. */
-	'form_field_enable_enhanced_ui'               => '<strong>' . __( 'Enable Enhanced UI', 'kdnaforms' ) . '</strong>' . sprintf( __( "By selecting this option, the %s jQuery script will be applied to this field, enabling search capabilities to Drop Down fields and a more user-friendly interface for Multi Select fields.", 'kdnaforms' ), "<a href='https://harvesthq.github.io/chosen/' target='_blank' title='Chosen'>Chosen<span class=\"screen-reader-text\">" . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . "</span>&nbsp;<span class=\"gform-icon gform-icon--external-link\" aria-hidden=\"true\"></span></a>" ),
+	'form_field_enable_enhanced_ui'               => '<strong>' . __( 'Enable Enhanced UI', 'kdnaforms' ) . '</strong>' . sprintf( __( "By selecting this option, the %s jQuery script will be applied to this field, enabling search capabilities to Drop Down fields and a more user-friendly interface for Multi Select fields.", 'kdnaforms' ), "<a href='https://harvesthq.github.io/chosen/' target='_blank' title='Chosen'>Chosen<span class=\"screen-reader-text\">" . esc_html__( '(opens in a new tab)', 'kdnaforms' ) . "</span>&nbsp;<span class=\"kform-icon kform-icon--external-link\" aria-hidden=\"true\"></span></a>" ),
 	'form_field_checkbox_label'                   => '<strong>' . __( 'Checkbox Text', 'kdnaforms' ) . '</strong>' . __( 'Text of the consent checkbox.', 'kdnaforms' ),
 	'form_field_select_all_choices'               => '<strong>' . __( '"Select All" Choice', 'kdnaforms' ) . '</strong>' . __( 'Check this option to add a "Select All" checkbox before the checkbox choices to allow users to check all the checkboxes with one click.', 'kdnaforms' ),
 	'form_field_other_choice'                     => '<strong>' . __( '"Other" Choice', 'kdnaforms' ) . '</strong>' . __( 'Check this option to add a text input as the final choice of your radio button field. This allows the user to specify a value that is not a predefined choice.', 'kdnaforms' ),
@@ -159,7 +159,7 @@ $__gf_tooltips = array(
 	'settings_currency'                           => '<strong>' . __( 'Currency', 'kdnaforms' ) . '</strong>' . __( 'Please select the currency for your location.  Currency is used for pricing fields and price calculations.', 'kdnaforms' ),
 	'settings_akismet'                            => '<strong>' . __( 'Akismet Integration', 'kdnaforms' ) . '</strong>' . __( 'Protect your form entries from spam using Akismet.', 'kdnaforms' ),
 	'entries_conversion'                          => '<strong>' . __( 'Entries Conversion', 'kdnaforms' ) . '</strong>' . __( 'Conversion is the percentage of form views that generated an entry. If a form was viewed twice, and one entry was generated, the conversion will be 50%.', 'kdnaforms' ),
-	'widget_tabindex'                             => '<strong>' . __( 'Tab Index Start Value', 'kdnaforms' ) . '</strong>' . __( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your Gravity Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ),
+	'widget_tabindex'                             => '<strong>' . __( 'Tab Index Start Value', 'kdnaforms' ) . '</strong>' . __( 'If you have other forms on the page (i.e. Comments Form), specify a higher tabindex start value so that your KDNA Form does not end up with the same tabindices as your other forms. To disable the tabindex, enter 0 (zero).', 'kdnaforms' ),
 	'notification_override_email'                 => '<strong>' . __( 'Override Notifications', 'kdnaforms' ) . '</strong>' . __( 'Enter a comma separated list of email addresses you would like to receive the selected notification emails.', 'kdnaforms' ),
 	'form_percentage_confirmation_display'        => '<strong>' . __( 'Progress Bar Confirmation Display', 'kdnaforms' ) . '</strong>' . __( 'Check this box if you would like the progress bar to display with the confirmation text.', 'kdnaforms' ),
 	'percentage_confirmation_page_name'           => '<strong>' . __( 'Progress Bar Completion Text', 'kdnaforms' ) . '</strong>' . __( 'Enter text to display at the top of the progress bar.', 'kdnaforms' ),
@@ -176,7 +176,7 @@ $__gf_tooltips = array(
 /**
  * Displays the tooltip
  *
- * @global $__gf_tooltips
+ * @global $__kdna_tooltips
  *
  * @param string $name      The name of the tooltip to be displayed
  * @param string $css_class Optional. The CSS class to apply toi the element. Defaults to empty string.
@@ -185,28 +185,28 @@ $__gf_tooltips = array(
  * @return string
  */
 function kdnaform_tooltip( $name, $css_class = '', $return = false ) {
-	global $__gf_tooltips; //declared as global to improve WPML performance
+	global $__kdna_tooltips; //declared as global to improve WPML performance
 
 	$css_class     = empty( $css_class ) ? 'tooltip' : $css_class;
 	/**
 	 * Filters the tooltips available
 	 *
-	 * @param array $__gf_tooltips Array containing the available tooltips
+	 * @param array $__kdna_tooltips Array containing the available tooltips
 	 */
-	$__gf_tooltips = apply_filters( 'kdnaform_tooltips', $__gf_tooltips );
+	$__kdna_tooltips = apply_filters( 'kdnaform_tooltips', $__kdna_tooltips );
 
 	//AC: the $name parameter is a key when it has only one word. Maybe try to improve this later.
 	$parameter_is_key = count( explode( ' ', $name ) ) == 1;
 
-	$tooltip_text  = $parameter_is_key ? rgar( $__gf_tooltips, $name ) : $name;
-	$tooltip_class = isset( $__gf_tooltips[ $name ] ) ? "tooltip_{$name}" : '';
+	$tooltip_text  = $parameter_is_key ? rgar( $__kdna_tooltips, $name ) : $name;
+	$tooltip_class = isset( $__kdna_tooltips[ $name ] ) ? "tooltip_{$name}" : '';
 
 	if ( empty( $tooltip_text ) ) {
 		return '';
 	}
 	$tooltip = sprintf(
-		'<button onclick="return false;" onkeypress="return false;" class="gf_tooltip %s %s" aria-label="%s">
-			<i class="gform-icon gform-icon--question-mark" aria-hidden="true"></i>
+		'<button onclick="return false;" onkeypress="return false;" class="kdna_tooltip %s %s" aria-label="%s">
+			<i class="kform-icon kform-icon--question-mark" aria-hidden="true"></i>
 		</button>',
 		esc_attr( $css_class ),
 		esc_attr( $tooltip_class ),

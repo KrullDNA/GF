@@ -23,7 +23,7 @@ class KDNA_Honeypot_Service_Provider extends KDNA_Service_Provider {
 	const KDNA_HONEYPOT_HANDLER = 'kdna_honeypot_handler';
 
 	// configs
-	const GF_HONEYPOT_CONFIG = 'gf_honeypot_config';
+	const KDNA_HONEYPOT_CONFIG = 'kdna_honeypot_config';
 
 	/**
 	 * Array mapping config class names to their container ID.
@@ -33,7 +33,7 @@ class KDNA_Honeypot_Service_Provider extends KDNA_Service_Provider {
 	 * @var string[]
 	 */
 	protected $configs = array(
-		self::GF_HONEYPOT_CONFIG => KDNA_Honeypot_Config::class,
+		self::KDNA_HONEYPOT_CONFIG => KDNA_Honeypot_Config::class,
 	);
 
 	/**
@@ -77,7 +77,7 @@ class KDNA_Honeypot_Service_Provider extends KDNA_Service_Provider {
 
 		add_filter( 'kdnaform_entry_meta', array( $honeypot_handler, 'submission_speeds_entry_meta' ) );
 		add_filter( 'kdnaform_entries_field_value', array( $honeypot_handler, 'submission_speeds_entries_field_value' ), 10, 4 );
-		add_filter( 'gform_entry_detail_meta_boxes', array( $honeypot_handler, 'submission_speeds_entry_detail_meta_box' ), 10, 2 );
+		add_filter( 'kform_entry_detail_meta_boxes', array( $honeypot_handler, 'submission_speeds_entry_detail_meta_box' ), 10, 2 );
 	}
 
 	/**

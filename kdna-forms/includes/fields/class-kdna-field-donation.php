@@ -75,8 +75,8 @@ class KDNA_Field_Donation extends KDNA_Field {
 
 		$tabindex = $this->get_tabindex();
 
-		return "<div class='ginput_container ginput_container_donation'>
-					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class} ginput_donation_amount' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
+		return "<div class='kinput_container kinput_container_donation'>
+					<input name='input_{$id}' id='{$field_id}' type='text' value='{$value}' class='{$class} kinput_donation_amount' {$tabindex} {$placeholder_attribute} {$required_attribute} {$invalid_attribute} {$disabled_text}/>
 				</div>";
 
 	}

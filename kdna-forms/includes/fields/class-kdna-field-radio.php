@@ -37,14 +37,14 @@ class KDNA_Field_Radio extends KDNA_Field {
 	/**
 	 * Returns the field's form editor icon.
 	 *
-	 * This could be an icon url or a gform-icon class.
+	 * This could be an icon url or a kform-icon class.
 	 *
 	 * @since 2.5
 	 *
 	 * @return string
 	 */
 	public function get_form_editor_field_icon() {
-		return 'gform-icon--radio-button';
+		return 'kform-icon--radio-button';
 	}
 
 	function get_form_editor_field_settings() {
@@ -78,7 +78,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 	 * @return bool
 	 */
 	public function is_state_validation_supported() {
-		if ( $this->enableOtherChoice && rgpost( "is_submit_{$this->formId}" ) && rgpost( "input_{$this->id}" ) == 'gf_other_choice' ) {
+		if ( $this->enableOtherChoice && rgpost( "is_submit_{$this->formId}" ) && rgpost( "input_{$this->id}" ) == 'kdna_other_choice' ) {
 			return false;
 		}
 
@@ -86,7 +86,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 	}
 
 	public function validate( $value, $form ) {
-		if ( $this->isRequired && $this->enableOtherChoice && rgpost( "input_{$this->id}" ) == 'gf_other_choice' ) {
+		if ( $this->isRequired && $this->enableOtherChoice && rgpost( "input_{$this->id}" ) == 'kdna_other_choice' ) {
 			if ( empty( $value ) || strtolower( $value ) == strtolower( KDNACommon::get_other_choice_value( $this ) ) ) {
 				$this->failed_validation  = true;
 				$this->validation_message = empty( $this->errorMessage ) ? esc_html__( 'This field is required.', 'kdnaforms' ) : $this->errorMessage;
@@ -133,7 +133,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		$disabled_text = $is_form_editor ? 'disabled="disabled"' : '';
 		$tag           = KDNACommon::is_legacy_markup_enabled( $form ) ? 'ul' : 'div';
 
-		return sprintf( "<div class='ginput_container ginput_container_radio'><{$tag} class='gfield_radio' id='%s'>%s</{$tag}></div>", $field_id, $this->get_radio_choices( $value, $disabled_text, $form_id ) );
+		return sprintf( "<div class='kinput_container kinput_container_radio'><{$tag} class='kfield_radio' id='%s'>%s</{$tag}></div>", $field_id, $this->get_radio_choices( $value, $disabled_text, $form_id ) );
 
 	}
 
@@ -163,7 +163,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 			 * @param int    $max_choices_visible_count The default number of choices visible is 5.
 			 * @param object $field                     The current field object.
 			 */
-			$max_choices_count = gf_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $form_id ), $max_choices, $this );
+			$max_choices_count = kdna_apply_filters( array( 'kdnaform_field_choices_max_count_visible', $form_id ), $max_choices, $this );
 
 			$tag = KDNACommon::is_legacy_markup_enabled( $form_id ) ? 'li' : 'div';
 
@@ -188,7 +188,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 			if ( $needs_other_choice ) {
 				$other_choice    = array(
 					'text'          => KDNACommon::get_other_choice_value( $this ),
-					'value'         => 'gf_other_choice',
+					'value'         => 'kdna_other_choice',
 					'isSelected'    => false,
 					'isOtherChoice' => true,
 				);
@@ -202,7 +202,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 
 			$total = sizeof( $field_choices );
 			if ( $is_form_editor && ( $count < $total ) ) {
-				$choices .= "<{$tag} class='gchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
+				$choices .= "<{$tag} class='kchoice_total'><span>" . sprintf( esc_html__( '%d of %d items shown. Edit choices to view all.', 'kdnaforms' ), $count, $total ) . "</span></{$tag}>";
 			}
 		}
 
@@ -214,7 +214,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		 * @param string $choices The choices HTML.
 		 * @param object $field   The current field object.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choices', $this->formId ), $choices, $this );
+		return kdna_apply_filters( array( 'kdnaform_field_choices', $this->formId ), $choices, $this );
 	}
 
 	/**
@@ -246,7 +246,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 	 * Returns the choice HTML.
 	 *
 	 * @since 2.4.17
-	 * @since 2.7 Added `gchoice_other_control` class to Other choice text input.
+	 * @since 2.7 Added `kchoice_other_control` class to Other choice text input.
 	 *
 	 * @param array  $choice        The choice properties.
 	 * @param int    &$choice_id    The choice number.
@@ -285,17 +285,17 @@ class KDNA_Field_Radio extends KDNA_Field {
 		$aria_describedby = $this->add_aria_description( $checked, $choice_id ) ? $this->get_aria_describedby() : '';
 
 		$tabindex = $this->get_tabindex();
-		$label    = sprintf( "<label for='choice_%s' id='label_%s' class='gform-field-label gform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
+		$label    = sprintf( "<label for='choice_%s' id='label_%s' class='kform-field-label kform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
 
 		// Handle 'other' choice.
 		if ( $this->enableOtherChoice && rgar( $choice, 'isOtherChoice' ) ) {
 			$input_disabled_text = $disabled_text;
 
-			if ( $value == 'gf_other_choice' && rgpost( "input_{$this->id}_other" ) ) {
+			if ( $value == 'kdna_other_choice' && rgpost( "input_{$this->id}_other" ) ) {
 				$other_value = rgpost( "input_{$this->id}_other" );
 			} elseif ( ! empty( $value ) && ! KDNAFormsModel::choices_value_match( $this, $this->choices, $value ) ) {
 				$other_value = $value;
-				$value       = 'gf_other_choice';
+				$value       = 'kdna_other_choice';
 				$checked     = "checked='checked'";
 			} else {
 				if ( ! $input_disabled_text ) {
@@ -304,12 +304,12 @@ class KDNA_Field_Radio extends KDNA_Field {
 				$other_value = empty( $choice['text'] ) ? KDNACommon::get_other_choice_value( $this ) : $choice['text'];
 			}
 
-			$label .= "<br /><input id='input_{$this->formId}_{$this->id}_other' class='gchoice_other_control' name='input_{$this->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
+			$label .= "<br /><input id='input_{$this->formId}_{$this->id}_other' class='kchoice_other_control' name='input_{$this->id}_other' type='text' value='" . esc_attr( $other_value ) . "' aria-label='" . esc_attr__( 'Other Choice, please specify', 'kdnaforms' ) . "' $tabindex $input_disabled_text />";
 		}
 
 		$choice_markup = sprintf( "
-			<div class='gchoice gchoice_$id'>
-					<input class='gfield-choice-input' name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='gformToggleRadioOther( this )' %s $tabindex %s />
+			<div class='kchoice kchoice_$id'>
+					<input class='kfield-choice-input' name='input_%d' type='radio' value='%s' %s id='choice_%s' onchange='kformToggleRadioOther( this )' %s $tabindex %s />
 					%s
 			</div>",
 			$this->id, esc_attr( $field_value ), $checked, $id, $aria_describedby, $disabled_text, $label
@@ -327,7 +327,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		 * @param KDNA_Field_Radio $field         The current field object.
 		 * @param string         $value         The current field value.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, $choice, $this, $value );
+		return kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, $choice, $this, $value );
 	}
 
 	/**
@@ -366,7 +366,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		}
 
 		$tabindex    = $this->get_tabindex();
-		$label       = sprintf( "<label for='choice_%s' id='label_%s' class='gform-field-label gform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
+		$label       = sprintf( "<label for='choice_%s' id='label_%s' class='kform-field-label kform-field-label--type-inline'>%s</label>", $id, $id, $choice['text'] );
 		$input_focus = '';
 
 		// Handle 'other' choice.
@@ -379,11 +379,11 @@ class KDNA_Field_Radio extends KDNA_Field {
 			$input_focus  = ! $is_admin ? "onfocus=\"jQuery(this).next('input').focus();\"" : '';
 			$value_exists = KDNAFormsModel::choices_value_match( $this, $this->choices, $value );
 
-			if ( $value == 'gf_other_choice' && rgpost( "input_{$this->id}_other" ) ) {
+			if ( $value == 'kdna_other_choice' && rgpost( "input_{$this->id}_other" ) ) {
 				$other_value = rgpost( "input_{$this->id}_other" );
 			} elseif ( ! $value_exists && ! empty( $value ) ) {
 				$other_value = $value;
-				$value       = 'gf_other_choice';
+				$value       = 'kdna_other_choice';
 				$checked     = "checked='checked'";
 			} else {
 				$other_value = $other_default_value;
@@ -393,7 +393,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		}
 
 		$choice_markup = sprintf( "
-			<li class='gchoice gchoice_$id'>
+			<li class='kchoice kchoice_$id'>
 				<input name='input_%d' type='radio' value='%s' %s id='choice_%s' $tabindex %s %s />
 				%s
 			</li>",
@@ -412,7 +412,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 		 * @param KDNA_Field_Radio $field         The current field object.
 		 * @param string         $value         The current field value.
 		 */
-		return gf_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, $choice, $this, $value );
+		return kdna_apply_filters( array( 'kdnaform_field_choice_markup_pre_render', $this->formId, $this->id ), $choice_markup, $choice, $this, $value );
 	}
 
 	public function get_value_default() {
@@ -422,7 +422,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 	public function get_value_submission( $field_values, $get_from_post_global_var = true ) {
 
 		$value = $this->get_input_value_submission( 'input_' . $this->id, $this->inputName, $field_values, $get_from_post_global_var );
-		if ( $value == 'gf_other_choice' ) {
+		if ( $value == 'kdna_other_choice' ) {
 			//get value from text box
 			$value = $this->get_input_value_submission( 'input_' . $this->id . '_other', $this->inputName, $field_values, $get_from_post_global_var );
 		}
@@ -532,7 +532,7 @@ class KDNA_Field_Radio extends KDNA_Field {
 
 	public function get_value_save_entry( $value, $form, $input_name, $lead_id, $lead ) {
 
-		if ( $this->enableOtherChoice && $value == 'gf_other_choice' ) {
+		if ( $this->enableOtherChoice && $value == 'kdna_other_choice' ) {
 			$value = rgpost( "input_{$this->id}_other" );
 		}
 
