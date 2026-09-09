@@ -802,10 +802,10 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 					'name'       => 'early_bird_expiry',
 					'label'      => esc_html__( 'Expires', 'kdnaforms-stripe' ),
 					'type'       => 'text',
+					'input_type' => 'datetime-local',
 					'class'      => 'medium',
 					'required'   => true,
-					'placeholder' => 'YYYY-MM-DD HH:MM',
-					'tooltip'    => esc_html__( 'The moment the early bird price stops applying, in your site\'s timezone. A submission at or after this time pays the full price. Leave the time off to mean midnight at the start of that day.', 'kdnaforms-stripe' ),
+					'tooltip'    => esc_html__( 'The moment the early bird price stops applying, in your site\'s timezone. A submission at or after this time pays the full price. Pick the date and time from the calendar, or type them.', 'kdnaforms-stripe' ),
 					'validation_callback' => array( $this, 'validate_early_bird_expiry' ),
 					'dependency' => array(
 						'live'   => true,
@@ -863,8 +863,71 @@ class KDNA_Stripe extends KDNAPaymentAddOn {
 		}
 
 		if ( null === $this->parse_expiry( $value ) ) {
-			$this->set_field_error( $field, esc_html__( 'Enter the expiry as YYYY-MM-DD or YYYY-MM-DD HH:MM.', 'kdnaforms-stripe' ) );
+			$this->set_field_error( $field, esc_html__( 'Pick a date and time for the early bird price to expire.', 'kdnaforms-stripe' ) );
 		}
+	}
+
+	/**
+	 * Puts a stored expiry into the shape a date and time picker will accept.
+	 *
+	 * The field used to be free text, so a saved feed can hold "2026-10-01" or
+	 * "2026-10-01 09:00". A datetime-local input normalises a space to a T
+	 * itself, but silently blanks a value with no time at all — which would show
+	 * an empty picker over a setting that is really there, and wipe it on the
+	 * next save. Giving a date-only value midnight avoids that.
+	 *
+	 * Nothing downstream needs to change: parse_expiry() reads all three shapes.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @param string $value The stored expiry.
+	 *
+	 * @return string The expiry as YYYY-MM-DDTHH:MM, or the value untouched if
+	 *                it is not a date this can recognise.
+	 */
+	protected function normalize_expiry( $value ) {
+
+		if ( ! is_string( $value ) || '' === trim( $value ) ) {
+			return $value;
+		}
+
+		$value = trim( $value );
+
+		if ( preg_match( '/^(\d{4}-\d{2}-\d{2})$/', $value, $m ) ) {
+			return $m[1] . 'T00:00';
+		}
+
+		if ( preg_match( '/^(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2})/', $value, $m ) ) {
+			return $m[1] . 'T' . $m[2];
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Normalises the early bird expiry on the way out of the database.
+	 *
+	 * The feed settings screen reads the feed through here, so this is where a
+	 * legacy expiry becomes something the picker can display. There is no filter
+	 * on the feed the framework loads, and its initial values are captured
+	 * before the settings fields are built, so the override is the only seam
+	 * that runs early enough.
+	 *
+	 * @since 1.2.7
+	 *
+	 * @param int $id The feed ID.
+	 *
+	 * @return array|false
+	 */
+	public function get_feed( $id ) {
+
+		$feed = parent::get_feed( $id );
+
+		if ( is_array( $feed ) && isset( $feed['meta']['early_bird_expiry'] ) ) {
+			$feed['meta']['early_bird_expiry'] = $this->normalize_expiry( $feed['meta']['early_bird_expiry'] );
+		}
+
+		return $feed;
 	}
 
 	/**
