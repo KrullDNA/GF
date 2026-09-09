@@ -183,14 +183,28 @@ executed, so it carried faults nothing else could reach:
 - **Run the gate before every zip. Never skip it.**
 
   ```bash
-  python3 .tools/check-build.py --baseline <last version known to work>
+  python3 .tools/check-build.py --baseline <git rev of the last build that worked>
   ```
 
-  It lints, walks the Save chain end to end — the form id, the hidden meta input,
-  the functions `SaveForm()` calls, and the localized object `ValidateForm()`
-  reads — and pins the admin body classes. Save has broken twice, both times
-  invisibly: the button is wired correctly and the JS is fine, and the click just
-  lands on something else. The gate is what checks it without a browser.
+  `--baseline` is a **git revision**, not a version string. Given a tag that does
+  not exist it compares against nothing, every pinned token looks new, and it
+  blocks the build claiming the body classes moved. There are no tags in this
+  repo; use `HEAD` or a commit sha.
+
+  It lints, walks both Save chains, and pins the admin body classes. Save has
+  broken three times, always invisibly: the button is wired correctly and the JS
+  is fine, and the click lands on something else or on nothing. The gate is what
+  checks it without a browser.
+
+- **There are two Save buttons and they fail differently.** `form_detail.php`
+  emits `<button class="update-form" onclick="SaveForm();">` only when
+  `is_ajax_save_disabled()` is true. Otherwise — the default, so most sites — it
+  emits `<button id="ajax-save-form-menu-bar" data-js="ajax-save-form">` with no
+  handler in its markup at all, wired from JS by chunk 10 (`form-ajax-save`),
+  which needs module 1281 from `281.<hash>.min.js` and reads `admin_save_form`
+  off the `kform_admin_config` global. On such a site `SaveForm()` is never
+  called, so instrumenting it proves nothing. `check_ajax_save_path()` walks that
+  half. Establish which button a site renders before diagnosing anything.
 - Version lives in the `Version:` header and `KDNAForms::$version`. Both must match
   the zip filename.
 - **Numbering.** A fix or incremental change moves the third digit (3.4.2 → 3.4.3).
@@ -223,6 +237,25 @@ executed, so it carried faults nothing else could reach:
   and registered no chunk. `missing` therefore means HTTP 200 with a body that is
   not the chunk, i.e. an HTML page, which pairs with `Uncaught SyntaxError:
   Unexpected token '<'`. It never means the file is absent from the build.
+- **Purging the server cache is only half of it.** Those 404 pages were also
+  stored in the *browser's* cache, under the same URLs, with the far-future
+  expiry the host sets on `.js`. So after the LiteSpeed purge the server served
+  the chunks correctly and the editor stayed broken, because a normal reload
+  reused the cached HTML without revalidating. A hard reload is not enough
+  either, since chunks are injected after load: open DevTools, tick **Disable
+  cache** on the Network tab, and reload with it open — or clear site data.
+
+  The one-line test that separates the two layers: `fetch(url, {cache:'reload'})`
+  bypasses the browser cache. If a fetch returns the file but the page load
+  failed, the server is fixed and the browser is stale.
+
+  The whole chain, once: a file is missing → WordPress's rewrite answers with the
+  404 page at **HTTP 200** → LiteSpeed caches that against the file's URL → the
+  browser caches it too → webpack loads a chunk that is really an HTML page →
+  the module never registers → the Save button's handler never binds → the
+  button shows a hand cursor and does nothing. Six steps, one missing file, and
+  every step after the first survives fixing the one before it.
+
 - **Probe the server rather than reasoning about the upload.** `.tools/probe-dist-files.js`
   pastes into the browser console and fetches all 45 files in `assets/js/dist/`,
   comparing status, content type and length against the shipped zip, with a
@@ -231,3 +264,14 @@ executed, so it carried faults nothing else could reach:
   what distinguishes a caching fault from a missing file, since the cache is
   keyed on the URL the browser asks for. Compare `t.length` (characters) with
   care: it undercounts bytes for the vendor bundles, which contain non-ASCII.
+
+  `.tools/probe-save.js` instruments the Save chain — every link `SaveForm()`
+  needs, which element actually receives a click at the button's centre, and
+  wrappers that print a thrown exception instead of swallowing it. Its log
+  survives the reload a successful save causes.
+
+  `.tools/probe-save-binding.js` answers the one question that decides an ajax
+  Save: does `kform.instances.adminFormSaver` exist? The saver chunk assigns it,
+  so its absence means the chunk never ran, and nothing about the button, the
+  config or the endpoint matters until that changes. It also prints which
+  scripts this page load took from the browser cache rather than the network.
