@@ -277,6 +277,64 @@ def check_audit(baseline):
 
 
 # --------------------------------------------------------------------------
+def check_ajax_save_path():
+    """Walk the *other* Save button -- the one that is actually the default.
+
+    form_detail.php emits two. Only when is_ajax_save_disabled() is true does it
+    emit the button carrying onclick="SaveForm();" that check_save_path() walks.
+    The default is a button with no handler in its markup at all, wired from JS
+    through its data-js hook, and nothing here had ever checked it. Saying "the
+    save path is intact" on the strength of check_save_path() alone overstated
+    what was verified.
+    """
+    detail = read(os.path.join(ROOT, 'form_detail.php'))
+
+    m = re.search(r'''data-js=["']([a-z-]+)["']''', detail)
+    if not m:
+        notes.append('form_detail.php emits no ajax save button; only SaveForm() applies')
+        return
+    hook = m.group(1)
+
+    # The saver is a lazily loaded chunk. Its name must be in the runtime's
+    # chunk map, and the hashed file that name resolves to must be on disk.
+    dist = os.path.join(ROOT, 'assets', 'js', 'dist')
+    runtime = read(os.path.join(dist, 'scripts-admin.min.js'))
+    chunk_map = dict(re.findall(r'(\d+):"([a-f0-9]{16,})"', runtime))
+    names = dict(re.findall(r'(\d+):"(scripts-admin\.[a-z-]+)"', runtime))
+
+    saver_id = next((cid for cid, n in names.items() if n.endswith('form-ajax-save')), None)
+    if not saver_id:
+        fail(f'the save button is wired through data-js="{hook}" but the admin '
+             'runtime has no form-ajax-save chunk')
+        return
+
+    on_disk = set(os.listdir(dist))
+    expected = f'{names[saver_id]}.{chunk_map.get(saver_id, "")}.min.js'
+    if expected not in on_disk:
+        fail(f'the ajax save chunk {expected} is missing from assets/js/dist')
+        return
+
+    # The chunk reads its settings off a global. PHP has to emit that exact
+    # name, carrying that exact key, or the saver binds to nothing and the
+    # button is inert while looking perfectly healthy.
+    saver = read(os.path.join(dist, expected))
+    php = ''.join(read(p) for p in walk('.php'))
+    src = runtime + saver
+    for key in sorted(set(re.findall(r'\.(admin_save_form)\b', src))):
+        if f"'{key}'" not in php and f'"{key}"' not in php:
+            fail(f'the ajax saver reads {key} from its config but no PHP file provides it')
+        else:
+            notes.append(f'ajax save chunk resolves, reads {key}, which PHP provides')
+
+    # And the config global itself has to be emitted under the name JS imports.
+    for cfg in sorted(set(re.findall(r'e\.exports=([a-z]\w*_config)\b', runtime))):
+        if not re.search(rf"""\$name\s*=\s*['"]{re.escape(cfg)}['"]""", php):
+            fail(f'the admin bundle imports the global {cfg} but no config class '
+                 f'declares $name = \'{cfg}\'')
+        else:
+            notes.append(f'ajax save config global {cfg} is declared in PHP')
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--baseline', required=True,
@@ -286,6 +344,7 @@ def main():
 
     check_lint()
     check_save_path()
+    check_ajax_save_path()
     check_asset_names()
     check_audit(args.baseline)
     if not args.allow_body_class_change:
